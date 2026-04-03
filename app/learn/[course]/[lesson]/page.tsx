@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 
@@ -353,6 +353,10 @@ export default function ReaderPage() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [completedLessons, setCompletedLessons] = useState<Set<string>>(new Set());
   const [activeLesson, setActiveLesson] = useState(lessonSlug);
+
+  useEffect(() => {
+    if (lessonSlug) setActiveLesson(lessonSlug);
+  }, [lessonSlug]);
 
   const course = courseData[courseSlug];
   if (!course) {
