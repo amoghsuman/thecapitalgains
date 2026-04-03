@@ -82,7 +82,7 @@ const plans = [
   },
 ];
 
-const tableFeatures = [
+const tableFeatures: { label: string; free: boolean | "soon"; learner: boolean | "soon"; pro: boolean | "soon"; elite: boolean | "soon" }[] = [
   { label: "Free lesson previews", free: true, learner: true, pro: true, elite: true },
   { label: "Full course access", free: false, learner: true, pro: true, elite: true },
   { label: "Interactive exercises", free: false, learner: true, pro: true, elite: true },
