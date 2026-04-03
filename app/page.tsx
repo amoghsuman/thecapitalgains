@@ -494,24 +494,32 @@ export default function HomePage() {
                 Text-first, exercise-driven courses for Indian retail investors and traders. Built for people who want to understand markets — not just follow tips.
               </div>
             </div>
-            {[
-              { title: "LEARN", links: ["All Courses", "Model Portfolios", "Free Resources", "Newsletter"] },
-              { title: "PLATFORM", links: ["Pricing", "Sign In", "Create Account"] },
-              { title: "FOLLOW", links: ["Instagram", "Substack", "Telegram"] },
-            ].map((col) => (
-              <div key={col.title}>
-                <div className="font-mono text-[10px] text-[#9494A8] tracking-widest uppercase mb-4">
-                  {col.title}
-                </div>
-                <div className="flex flex-col gap-2">
-                  {col.links.map((link) => (
-                    <span key={link} className="text-[13px] text-[#5A5A72] hover:text-[#0F2348] cursor-pointer transition-colors">
-                      {link}
-                    </span>
-                  ))}
-                </div>
+            <div>
+              <div className="font-mono text-[10px] text-[#9494A8] tracking-widest uppercase mb-4">LEARN</div>
+              <div className="flex flex-col gap-2">
+                <Link href="/courses" className="text-[13px] text-[#5A5A72] hover:text-[#0F2348] transition-colors">All Courses</Link>
+                <Link href="/portfolios" className="text-[13px] text-[#5A5A72] hover:text-[#0F2348] transition-colors">Model Portfolios</Link>
+                <span className="text-[13px] text-[#5A5A72]">Free Resources</span>
+                <Link href="/newsletter" className="text-[13px] text-[#5A5A72] hover:text-[#0F2348] transition-colors">Newsletter</Link>
+                <Link href="/about" className="text-[13px] text-[#5A5A72] hover:text-[#0F2348] transition-colors">About</Link>
               </div>
-            ))}
+            </div>
+            <div>
+              <div className="font-mono text-[10px] text-[#9494A8] tracking-widest uppercase mb-4">PLATFORM</div>
+              <div className="flex flex-col gap-2">
+                <Link href="/pricing" className="text-[13px] text-[#5A5A72] hover:text-[#0F2348] transition-colors">Pricing</Link>
+                <span className="text-[13px] text-[#5A5A72]">Sign In</span>
+                <span className="text-[13px] text-[#5A5A72]">Create Account</span>
+              </div>
+            </div>
+            <div>
+              <div className="font-mono text-[10px] text-[#9494A8] tracking-widest uppercase mb-4">FOLLOW</div>
+              <div className="flex flex-col gap-2">
+                <span className="text-[13px] text-[#5A5A72]">Instagram</span>
+                <span className="text-[13px] text-[#5A5A72]">Substack</span>
+                <span className="text-[13px] text-[#5A5A72]">Telegram</span>
+              </div>
+            </div>
           </div>
           <div className="border-t border-[rgba(15,35,72,0.1)] pt-6 flex flex-col md:flex-row justify-between gap-4">
             <div className="font-mono text-[11px] text-[#9494A8]">
