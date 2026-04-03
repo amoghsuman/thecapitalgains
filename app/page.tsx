@@ -127,7 +127,7 @@ export default function HomePage() {
 
       {/* ── TRUST BAR ── */}
       <div className="bg-[#F4F1EB] border-y border-[rgba(15,35,72,0.1)]">
-        <div className="max-w-6xl mx-auto px-8 py-7 flex justify-center gap-14 flex-wrap">
+        <div className="max-w-6xl mx-auto px-6 md:px-8 py-7 flex justify-center gap-14 flex-wrap">
           {[
             { icon: "📖", title: "Structured learning", sub: "Chapter-by-chapter, not a playlist" },
             { icon: "✎", title: "No jargon, no fluff", sub: "Written by an active market practitioner" },
@@ -148,7 +148,7 @@ export default function HomePage() {
       </div>
 
       {/* ── PROBLEM SECTION ── */}
-      <section className="max-w-6xl mx-auto px-8 py-20">
+      <section className="max-w-6xl mx-auto px-6 md:px-8 py-20">
         <div className="font-mono text-[11px] text-[#9494A8] tracking-widest uppercase mb-3">
           The Problem
         </div>
@@ -206,7 +206,7 @@ export default function HomePage() {
 
       {/* ── HOW IT WORKS ── */}
       <div className="bg-[#0F2348]">
-        <div className="max-w-6xl mx-auto px-8 py-20">
+        <div className="max-w-6xl mx-auto px-6 md:px-8 py-20">
           <div className="font-mono text-[11px] text-[rgba(255,255,255,0.4)] tracking-widest uppercase mb-3">
             How It Works
           </div>
@@ -235,7 +235,7 @@ export default function HomePage() {
       </div>
 
       {/* ── COURSES ── */}
-      <section className="max-w-6xl mx-auto px-8 py-20">
+      <section className="max-w-6xl mx-auto px-6 md:px-8 py-20">
         <div className="flex justify-between items-end mb-3">
           <div className="font-mono text-[11px] text-[#9494A8] tracking-widest uppercase">
             Courses
@@ -342,7 +342,7 @@ export default function HomePage() {
 
       {/* ── MODEL PORTFOLIOS ── */}
       <div className="bg-[#F4F1EB]">
-        <div className="max-w-6xl mx-auto px-8 py-20">
+        <div className="max-w-6xl mx-auto px-6 md:px-8 py-20">
           <div className="font-mono text-[11px] text-[#9494A8] tracking-widest uppercase mb-3">
             Model Portfolios
           </div>
@@ -387,7 +387,7 @@ export default function HomePage() {
       </div>
 
       {/* ── PRICING SUMMARY ── */}
-      <section className="max-w-6xl mx-auto px-8 py-20">
+      <section className="max-w-6xl mx-auto px-6 md:px-8 py-20">
         <div className="font-mono text-[11px] text-[#9494A8] tracking-widest uppercase mb-3">
           Pricing
         </div>
@@ -458,7 +458,7 @@ export default function HomePage() {
       </section>
 
       {/* ── NEWSLETTER ── */}
-      <section className="max-w-6xl mx-auto px-8 pb-20">
+      <section className="max-w-6xl mx-auto px-6 md:px-8 pb-20">
         <div className="bg-[#0F2348] rounded-2xl px-12 py-14 text-center">
           <h2 className="font-serif text-[30px] text-white mb-3">
             One market insight, every week.
@@ -484,7 +484,7 @@ export default function HomePage() {
 
       {/* ── FOOTER ── */}
       <footer className="bg-[#F4F1EB] border-t border-[rgba(15,35,72,0.1)]">
-        <div className="max-w-6xl mx-auto px-8 pt-12 pb-8">
+        <div className="max-w-6xl mx-auto px-6 md:px-8 pt-12 pb-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-10">
             <div>
               <div className="font-serif font-bold text-[16px] text-[#0F2348] mb-3">
