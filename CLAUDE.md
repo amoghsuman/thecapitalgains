@@ -17,7 +17,7 @@ thecapitalgains.com
 ## Key Business Rules
 - Educational content only — not SEBI investment advice
 - SEBI RA registration in progress
-- Subscription tiers: Free / Learner ₹299 / Trader Pro ₹999 / Elite ₹2499
+- Subscription tiers: Free / Learner ₹499 / Trader Pro ₹999 / Elite ₹2499
 - Individual course purchases also available
 - Anonymous brand — founder identity not on platform
 
@@ -35,15 +35,18 @@ thecapitalgains.com
 - Access: free lesson OR active subscription OR enrolled
 
 ## Current Status
-- [ ] Homepage
-- [ ] Courses page
-- [ ] Course detail page
-- [ ] Course reader
-- [ ] Pricing page
-- [ ] Model portfolios page
-- [ ] Auth (login/signup)
+- [x] Homepage
+- [x] Courses page
+- [x] Course detail page
+- [x] Pricing page
+- [x] Model portfolios page
+- [x] Newsletter page
+- [x] About page
+- [x] Auth (login/signup)
+- [x] Supabase setup
 - [ ] Razorpay integration
-- [ ] Supabase wired up
+- [ ] Course reader wired to Supabase
+- [ ] Domain connected
 
 ## Open Items
 - SEBI RA registration number pending

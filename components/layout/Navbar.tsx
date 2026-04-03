@@ -36,12 +36,12 @@ export default function Navbar() {
 
         {/* CTAs */}
         <div className="hidden md:flex items-center gap-2 ml-auto">
-          <button className="border border-[rgba(15,35,72,0.2)] rounded-lg px-5 py-2 text-[13px] text-[#5A5A72] hover:border-[#0F2348] hover:text-[#0F2348] transition-all">
+          <Link href="/auth/login" className="border border-[rgba(15,35,72,0.2)] rounded-lg px-5 py-2 text-[13px] text-[#5A5A72] hover:border-[#0F2348] hover:text-[#0F2348] transition-all">
             Sign in
-          </button>
-          <button className="bg-[#0F2348] text-white rounded-lg px-5 py-2 text-[13px] font-medium hover:bg-[#1a3460] transition-all">
+          </Link>
+          <Link href="/auth/signup" className="bg-[#0F2348] text-white rounded-lg px-5 py-2 text-[13px] font-medium hover:bg-[#1a3460] transition-all">
             Get started free
-          </button>
+          </Link>
         </div>
 
         {/* Mobile hamburger */}
@@ -80,12 +80,12 @@ export default function Navbar() {
             </Link>
           ))}
           <div className="flex gap-2 pt-2 border-t border-[rgba(15,35,72,0.08)]">
-            <button className="flex-1 border border-[rgba(15,35,72,0.2)] rounded-lg px-4 py-2 text-[13px] text-[#5A5A72]">
+            <Link href="/auth/login" className="flex-1 text-center border border-[rgba(15,35,72,0.2)] rounded-lg px-4 py-2 text-[13px] text-[#5A5A72]">
               Sign in
-            </button>
-            <button className="flex-1 bg-[#0F2348] text-white rounded-lg px-4 py-2 text-[13px] font-medium">
+            </Link>
+            <Link href="/auth/signup" className="flex-1 text-center bg-[#0F2348] text-white rounded-lg px-4 py-2 text-[13px] font-medium">
               Get started free
-            </button>
+            </Link>
           </div>
         </div>
       )}
