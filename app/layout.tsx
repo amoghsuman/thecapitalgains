@@ -50,7 +50,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-[#FAFAF7] text-[#1A1A2E]">
         <DisclaimerBar />
         <Navbar />
-        <main className="flex-1">
+        <main className="flex-1 w-full">
           {children}
         </main>
       </body>

@@ -4,28 +4,10 @@
   --font-playfair: 'Playfair Display', Georgia, serif;
   --font-dm-sans: 'DM Sans', system-ui, sans-serif;
   --font-dm-mono: 'DM Mono', monospace;
-
-  --navy: #0F2348;
-  --navy-light: #1a3460;
-  --amber: #D4860A;
-  --amber-light: #F0A020;
-  --amber-pale: #FDF3E3;
-  --bg: #FAFAF7;
-  --surface: #F4F1EB;
-  --surface2: #EDE9E0;
-  --text: #1A1A2E;
-  --text-muted: #5A5A72;
-  --text-hint: #9494A8;
-  --green: #1A7A4A;
-  --green-pale: #E8F5EE;
-  --border: rgba(15,35,72,0.1);
-  --border-strong: rgba(15,35,72,0.2);
 }
 
-* {
+*, *::before, *::after {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
 }
 
 html {
@@ -34,25 +16,12 @@ html {
 
 body {
   font-family: var(--font-dm-sans), system-ui, sans-serif;
-  background: var(--bg);
-  color: var(--text);
+  background: #FAFAF7;
+  color: #1A1A2E;
   line-height: 1.6;
+  overflow-x: hidden;
 }
 
 h1, h2, h3, h4 {
   font-family: var(--font-playfair), Georgia, serif;
-}
-
-body {
-  padding-left: 0;
-  padding-right: 0;
-}
-
-main {
-  width: 100%;
-}
-
-section, .section-wrap {
-  padding-left: max(1.5rem, env(safe-area-inset-left));
-  padding-right: max(1.5rem, env(safe-area-inset-right));
 }
