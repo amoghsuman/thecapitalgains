@@ -11,7 +11,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link
           href="/"
-          className="font-serif font-bold text-[17px] text-[#0F2348] tracking-wide mr-10 flex-shrink-0"
+          className="font-serif font-bold text-[17px] text-[#0F2348] tracking-wide mr-12 flex-shrink-0"
         >
           The Capital Gains
         </Link>

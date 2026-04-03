@@ -5,7 +5,7 @@ export default function HomePage() {
     <div className="bg-[#FAFAF7]">
 
       {/* ── HERO ── */}
-      <section className="max-w-6xl mx-auto px-8 pt-20 pb-16 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <section className="max-w-6xl mx-auto px-6 md:px-8 pt-20 pb-16 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         {/* Left */}
         <div>
           <div className="inline-flex items-center gap-2 bg-[#E8F5EE] border border-[rgba(26,122,74,0.2)] rounded-full px-4 py-1.5 mb-6">
