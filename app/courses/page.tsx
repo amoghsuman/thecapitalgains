@@ -44,21 +44,21 @@ export default function CoursesPage() {
     <div className="bg-[#FAFAF7]">
 
       {/* ── HERO ── */}
-      <section className="max-w-6xl mx-auto px-6 md:px-8 pt-16 pb-14">
-        <div className="font-mono text-[11px] text-[#9494A8] tracking-widest uppercase mb-3">
+      <section className="max-w-6xl mx-auto px-8 pt-12 pb-10">
+        <div className="font-mono text-[11px] text-[#9494A8] tracking-widest uppercase pt-12 mb-2">
           Courses
         </div>
-        <h1 className="font-serif text-5xl font-bold text-[#0F2348] leading-[1.1] mb-4">
+        <h1 className="font-serif text-5xl font-bold text-[#0F2348] leading-[1.1] mb-3">
           All Courses
         </h1>
-        <p className="text-[17px] text-[#5A5A72] leading-relaxed max-w-xl">
+        <p className="text-[17px] text-[#5A5A72] leading-relaxed max-w-xl mb-12">
           Text-first, exercise-driven playbooks. Buy individually or subscribe for all access.
         </p>
       </section>
 
       {/* ── COURSE GRID ── */}
-      <section className="max-w-6xl mx-auto px-6 md:px-8 pb-20">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <section className="max-w-6xl mx-auto px-8 pb-20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {courses.map((course) => (
             <div
               key={course.slug}
@@ -84,7 +84,7 @@ export default function CoursesPage() {
                 <p className="text-[13px] text-[#5A5A72] leading-relaxed mb-4">
                   {course.desc}
                 </p>
-                <div className="flex flex-wrap gap-1.5 mb-4">
+                <div className="flex flex-wrap gap-2 mb-3">
                   {course.topics.map((t) => (
                     <span
                       key={t}
@@ -115,7 +115,7 @@ export default function CoursesPage() {
         </div>
 
         {/* ── SUBSCRIPTION NUDGE ── */}
-        <div className="mt-5 bg-[#FDF3E3] border border-[rgba(212,134,10,0.2)] rounded-xl px-7 py-5 flex justify-between items-center flex-wrap gap-4">
+        <div className="mt-6 bg-[#FDF3E3] border border-[rgba(212,134,10,0.2)] rounded-xl px-8 py-5 flex justify-between items-center flex-wrap gap-4">
           <div>
             <div className="font-mono text-[11px] text-[#D4860A] mb-1">BETTER VALUE</div>
             <div className="text-[15px] font-medium text-[#0F2348]">
