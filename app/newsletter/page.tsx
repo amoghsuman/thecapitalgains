@@ -1,6 +1,4 @@
-"use client";
-
-import { useState } from "react";
+import NewsletterForm from '@/components/NewsletterForm'
 
 const whatYouGet = [
   {
@@ -18,7 +16,7 @@ const whatYouGet = [
     title: "Concept of the Month",
     desc: "One deep-dive concept pulled from our courses — free for all subscribers. Learn the idea before you pay for the playbook.",
   },
-];
+]
 
 const recentIssues = [
   {
@@ -42,37 +40,7 @@ const recentIssues = [
     preview:
       "How to use open interest build-up, PCR and max pain to position yourself rationally before a high-volatility event.",
   },
-];
-
-function EmailForm({
-  dark = false,
-  id,
-}: {
-  dark?: boolean;
-  id: string;
-}) {
-  const [email, setEmail] = useState("");
-
-  return (
-    <div className="flex gap-3 max-w-md mx-auto">
-      <input
-        id={id}
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="your@email.com"
-        className={`flex-1 rounded-lg px-4 py-3 text-[14px] outline-none transition-colors ${
-          dark
-            ? "bg-[rgba(255,255,255,0.1)] border border-[rgba(255,255,255,0.15)] text-white placeholder:text-[rgba(255,255,255,0.35)] focus:border-[rgba(255,255,255,0.4)]"
-            : "bg-white border border-[rgba(15,35,72,0.15)] text-[#1A1A2E] placeholder:text-[#9494A8] focus:border-[rgba(15,35,72,0.35)]"
-        }`}
-      />
-      <button className="bg-[#D4860A] hover:bg-[#F0A020] text-white rounded-lg px-6 py-3 text-[14px] font-medium transition-colors whitespace-nowrap">
-        Subscribe free
-      </button>
-    </div>
-  );
-}
+]
 
 export default function NewsletterPage() {
   return (
@@ -89,7 +57,7 @@ export default function NewsletterPage() {
         <p className="text-[16px] text-[#5A5A72] leading-relaxed mb-8 max-w-xl mx-auto">
           A concise, no-noise breakdown of what&apos;s moving Indian markets — and why it matters for your trades and investments. Free, always.
         </p>
-        <EmailForm id="hero-email" />
+        <NewsletterForm />
         <p className="font-mono text-[12px] text-[#9494A8] mt-4">
           No spam. Unsubscribe anytime. Join 500+ readers.
         </p>
@@ -166,7 +134,7 @@ export default function NewsletterPage() {
           <p className="text-[rgba(255,255,255,0.55)] text-[15px] mb-8 max-w-sm mx-auto">
             Drop your email below and the next issue lands in your inbox on Sunday morning.
           </p>
-          <EmailForm id="bottom-email" dark />
+          <NewsletterForm dark />
           <p className="font-mono text-[11px] text-[rgba(255,255,255,0.3)] mt-4">
             Educational content only. Not investment advice.
           </p>
@@ -174,5 +142,5 @@ export default function NewsletterPage() {
       </section>
 
     </div>
-  );
+  )
 }

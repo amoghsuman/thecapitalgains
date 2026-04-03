@@ -1,4 +1,5 @@
 import Link from "next/link";
+import NewsletterForm from "@/components/NewsletterForm";
 
 export default function HomePage() {
   return (
@@ -466,16 +467,7 @@ export default function HomePage() {
           <p className="text-[rgba(255,255,255,0.55)] text-[15px] mb-8 max-w-md mx-auto">
             Join readers who get a concise, no-noise breakdown of what&apos;s moving Indian markets — and why it matters for your portfolio.
           </p>
-          <div className="flex gap-3 max-w-md mx-auto">
-            <input
-              type="email"
-              placeholder="your@email.com"
-              className="flex-1 bg-[rgba(255,255,255,0.1)] border border-[rgba(255,255,255,0.15)] rounded-lg px-4 py-3 text-white text-[14px] placeholder:text-[rgba(255,255,255,0.35)] outline-none focus:border-[rgba(255,255,255,0.4)]"
-            />
-            <button className="bg-[#D4860A] hover:bg-[#F0A020] text-white rounded-lg px-6 py-3 text-[14px] font-medium transition-colors whitespace-nowrap">
-              Subscribe free
-            </button>
-          </div>
+          <NewsletterForm dark />
           <div className="font-mono text-[11px] text-[rgba(255,255,255,0.3)] mt-4">
             No spam. Unsubscribe anytime. Educational content only.
           </div>
