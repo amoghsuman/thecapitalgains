@@ -376,7 +376,10 @@ export default function ReaderPage() {
   const prevLesson = lessonIndex > 0 ? allLessons[lessonIndex - 1] : null;
   const progressPct = allLessons.length > 0 ? Math.round((completedLessons.size / allLessons.length) * 100) : 0;
   const content = lessonContent[activeLesson];
-  const currentMeta = allLessons.find((l) => l.slug === activeLesson);
+
+  if (!lessonSlug) return <div className="flex-1 flex items-center justify-center text-[#9494A8] font-mono text-[13px]">Loading...</div>
+
+  const currentMeta = allLessons.find((l) => l.slug === activeLesson) || allLessons.find((l) => l.slug === lessonSlug);
   const isLocked = currentMeta ? !currentMeta.free : true;
 
   function markCompleteAndNext() {
