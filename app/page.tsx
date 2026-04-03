@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function HomePage() {
   return (
-    <div className="bg-[#FAFAF7] px-6 md:px-12 lg:px-0">
+    <div className="bg-[#FAFAF7]">
 
       {/* ── HERO ── */}
       <section className="max-w-6xl mx-auto px-8 pt-20 pb-16 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
