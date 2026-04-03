@@ -500,8 +500,11 @@ export default function HomePage() {
               <div className="font-mono text-[10px] text-[#9494A8] tracking-widest uppercase mb-4">PLATFORM</div>
               <div className="flex flex-col gap-2">
                 <Link href="/pricing" className="text-[13px] text-[#5A5A72] hover:text-[#0F2348] transition-colors">Pricing</Link>
-                <span className="text-[13px] text-[#5A5A72]">Sign In</span>
-                <span className="text-[13px] text-[#5A5A72]">Create Account</span>
+                <Link href="/auth/login" className="text-[13px] text-[#5A5A72] hover:text-[#0F2348] transition-colors">Sign In</Link>
+                <Link href="/auth/signup" className="text-[13px] text-[#5A5A72] hover:text-[#0F2348] transition-colors">Create Account</Link>
+                <Link href="/terms" className="text-[13px] text-[#5A5A72] hover:text-[#0F2348] transition-colors">Terms of Service</Link>
+                <Link href="/privacy" className="text-[13px] text-[#5A5A72] hover:text-[#0F2348] transition-colors">Privacy Policy</Link>
+                <Link href="/refund" className="text-[13px] text-[#5A5A72] hover:text-[#0F2348] transition-colors">Refund Policy</Link>
               </div>
             </div>
             <div>
