@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getCourseBySlug } from "@/lib/sanity/queries";
 
+export const revalidate = 0
 
 export default async function CourseDetailPage({
   params,

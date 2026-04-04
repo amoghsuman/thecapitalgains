@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { getAllCourses } from "@/lib/sanity/queries";
 
+export const revalidate = 0
+
 // Card backgrounds cycle by index
 const cardBgs = ["bg-[#0F2348]", "bg-[#1A3460]", "bg-[#2A1A5E]"];
 
