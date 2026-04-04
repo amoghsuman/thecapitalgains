@@ -281,7 +281,7 @@ export default function PricingPage() {
                   <Cell val={row[col]} />
                 </div>
               ))}
-            </div>
+            </div>  
           ))}
         </div>
       </section>

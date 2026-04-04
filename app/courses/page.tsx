@@ -11,8 +11,12 @@ function badgeColor(badge: string | null): string {
   return "bg-[rgba(255,255,255,0.15)] text-white";
 }
 
-function priceFormatted(price: number): string {
-  return `₹${price.toLocaleString("en-IN")}`;
+function AccessBadge({ level }: { level?: string }) {
+  if (level === "free")
+    return <span className="font-mono text-[10px] font-medium bg-[#E8F5EE] text-[#1A7A4A] rounded px-2 py-1">FREE</span>;
+  if (level === "pro")
+    return <span className="font-mono text-[10px] font-medium bg-[rgba(212,134,10,0.15)] text-[#D4860A] rounded px-2 py-1">PRO</span>;
+  return <span className="font-mono text-[10px] font-medium bg-[rgba(15,35,72,0.1)] text-[#0F2348] rounded px-2 py-1">LEARNER+</span>;
 }
 
 export default async function CoursesPage() {
@@ -87,17 +91,12 @@ export default async function CoursesPage() {
                     <div className="text-[12px] text-[#9494A8] mb-4">{meta}</div>
                   )}
                   <div className="flex justify-between items-center pt-4 border-t border-[rgba(15,35,72,0.08)]">
-                    <div>
-                      <span className="font-mono text-[18px] font-medium text-[#0F2348]">
-                        {priceFormatted(course.price)}
-                      </span>
-                      <span className="text-[11px] text-[#9494A8] ml-1.5">one-time</span>
-                    </div>
+                    <AccessBadge level={course.accessLevel} />
                     <Link
                       href={`/courses/${course.slug}`}
                       className="font-mono text-[12px] text-[#D4860A] hover:text-[#F0A020] transition-colors"
                     >
-                      Preview free →
+                      {course.accessLevel === "free" ? "Start free lesson →" : "Preview →"}
                     </Link>
                   </div>
                 </div>

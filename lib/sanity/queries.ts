@@ -8,6 +8,7 @@ export async function getAllCourses() {
       "slug": slug.current,
       tag,
       price,
+      accessLevel,
       badge,
       subtitle,
       lessonsCount,
@@ -26,6 +27,7 @@ export async function getCourseBySlug(slug: string) {
       "slug": slug.current,
       tag,
       price,
+      accessLevel,
       badge,
       subtitle,
       lessonsCount,
@@ -52,6 +54,7 @@ export async function getLessonContent(courseSlug: string, lessonSlug: string) {
     *[_type == "course" && slug.current == $courseSlug][0] {
       title,
       price,
+      accessLevel,
       "lesson": chapters[].lessons[slug.current == $lessonSlug][0] {
         title,
         "slug": slug.current,

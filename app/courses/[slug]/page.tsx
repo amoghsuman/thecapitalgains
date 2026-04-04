@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { getCourseBySlug } from "@/lib/sanity/queries";
 
-const priceFormatted = (price: number) => `₹${price.toLocaleString("en-IN")}`;
 
 export default async function CourseDetailPage({
   params,
@@ -188,42 +187,48 @@ export default async function CourseDetailPage({
           )}
         </div>
 
-        {/* ── RIGHT COLUMN — STICKY PURCHASE CARD ── */}
+        {/* ── RIGHT COLUMN — STICKY ACCESS CARD ── */}
         <div className="lg:col-span-1">
           <div className="sticky top-24 bg-white border border-[rgba(15,35,72,0.1)] rounded-2xl p-6 shadow-[0_4px_32px_rgba(15,35,72,0.08)]">
 
-            {/* Price */}
-            <div className="mb-1">
-              <span className="font-mono text-[36px] font-bold text-[#0F2348] leading-none">
-                {priceFormatted(course.price)}
-              </span>
-            </div>
-            <div className="text-[12px] text-[#9494A8] mb-5">
-              one-time · lifetime access
+            {/* Access level badge */}
+            <div className="mb-4">
+              {course.accessLevel === "free" && (
+                <span className="font-mono text-[11px] font-medium bg-[#E8F5EE] text-[#1A7A4A] rounded px-3 py-1.5">FREE — Open access</span>
+              )}
+              {course.accessLevel === "pro" && (
+                <span className="font-mono text-[11px] font-medium bg-[rgba(212,134,10,0.15)] text-[#D4860A] rounded px-3 py-1.5">PRO — Trader Pro required</span>
+              )}
+              {(!course.accessLevel || course.accessLevel === "learner") && (
+                <span className="font-mono text-[11px] font-medium bg-[rgba(15,35,72,0.08)] text-[#0F2348] rounded px-3 py-1.5">LEARNER+ — Subscription required</span>
+              )}
             </div>
 
-            {/* Enroll CTA */}
-            <button className="w-full bg-[#D4860A] hover:bg-[#F0A020] text-white rounded-lg py-3.5 text-[15px] font-medium transition-colors mb-4">
-              Enroll Now — {priceFormatted(course.price)}
-            </button>
+            {/* Primary CTA */}
+            {course.accessLevel === "free" ? (
+              <Link
+                href={`/learn/${slug}/${course.chapters?.[0]?.lessons?.[0]?.slug ?? ""}`}
+                className="block w-full text-center bg-[#1A7A4A] hover:bg-[#15623C] text-white rounded-lg py-3.5 text-[15px] font-medium transition-colors mb-4"
+              >
+                Start Learning →
+              </Link>
+            ) : (
+              <Link
+                href="/pricing"
+                className="block w-full text-center bg-[#D4860A] hover:bg-[#F0A020] text-white rounded-lg py-3.5 text-[15px] font-medium transition-colors mb-4"
+              >
+                Subscribe to Access
+              </Link>
+            )}
 
-            {/* Divider + subscription nudge */}
-            <div className="border-t border-[rgba(15,35,72,0.08)] pt-4 mb-5">
-              <div className="text-[13px] text-[#5A5A72] mb-1">
-                Or subscribe for all courses
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-[14px] font-medium text-[#0F2348]">
-                  from ₹299
-                  <span className="font-normal text-[#9494A8] text-[12px]">/month</span>
-                </span>
-                <Link
-                  href="/pricing"
-                  className="font-mono text-[12px] text-[#D4860A] hover:text-[#F0A020] transition-colors"
-                >
-                  Compare plans →
-                </Link>
-              </div>
+            {/* Sign in nudge */}
+            <div className="text-center mb-5">
+              <Link
+                href="/auth/login"
+                className="font-mono text-[12px] text-[#9494A8] hover:text-[#D4860A] transition-colors"
+              >
+                Already subscribed? Sign in →
+              </Link>
             </div>
 
             {/* Included */}
@@ -233,10 +238,10 @@ export default async function CourseDetailPage({
               </div>
               <div className="flex flex-col gap-2">
                 {[
-                  "Lifetime access",
-                  "All exercises",
+                  "All lessons and exercises",
                   "Mobile friendly",
-                  "Certificate on completion",
+                  "Progress tracking",
+                  "New courses as added",
                 ].map((item) => (
                   <div key={item} className="flex gap-2 text-[13px] text-[#5A5A72]">
                     <span className="text-[#1A7A4A] flex-shrink-0">✓</span>
@@ -246,9 +251,9 @@ export default async function CourseDetailPage({
               </div>
             </div>
 
-            {/* Refund note */}
+            {/* Cancel note */}
             <p className="text-[12px] text-[#9494A8] text-center leading-snug">
-              30-day refund if you&apos;re not satisfied. No questions asked.
+              Cancel subscription anytime. No lock-in.
             </p>
           </div>
         </div>

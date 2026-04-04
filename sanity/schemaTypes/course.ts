@@ -10,7 +10,20 @@ export const courseSchema = defineType({
     defineField({ name: 'subtitle', title: 'Subtitle', type: 'string' }),
     defineField({ name: 'tag', title: 'Level Tag', type: 'string', description: 'e.g. Beginner → Intermediate' }),
     defineField({ name: 'badge', title: 'Badge', type: 'string', description: 'e.g. BESTSELLER, NEW' }),
-    defineField({ name: 'price', title: 'Price (₹)', type: 'number', validation: Rule => Rule.required() }),
+    defineField({ name: 'price', title: 'Price (₹)', type: 'number', description: 'Optional — for one-off workshops only' }),
+    defineField({
+      name: 'accessLevel',
+      title: 'Access Level',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Free — anyone can access', value: 'free' },
+          { title: 'Learner — requires subscription', value: 'learner' },
+          { title: 'Pro — requires Trader Pro', value: 'pro' },
+        ],
+      },
+      initialValue: 'learner',
+    }),
     defineField({ name: 'lessonsCount', title: 'Total Lessons', type: 'number' }),
     defineField({ name: 'duration', title: 'Duration', type: 'string', description: 'e.g. ~4 hrs' }),
     defineField({ name: 'description', title: 'Description', type: 'text', rows: 4 }),
