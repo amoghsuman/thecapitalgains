@@ -1,197 +1,15 @@
-"use client";
-
-import { useParams } from "next/navigation";
 import Link from "next/link";
+import { getCourseBySlug } from "@/lib/sanity/queries";
 
-type Chapter = {
-  title: string;
-  lessons: { title: string; free: boolean }[];
-};
+const priceFormatted = (price: number) => `₹${price.toLocaleString("en-IN")}`;
 
-type Course = {
-  title: string;
-  tag: string;
-  price: number;
-  lessons: number;
-  duration: string;
-  exercises: number;
-  badge: string | null;
-  description: string;
-  what_you_learn: string[];
-  chapters: Chapter[];
-};
-
-const courses: Record<string, Course> = {
-  "options-trading-from-zero": {
-    title: "Options Trading from Zero",
-    tag: "Beginner → Intermediate",
-    price: 1499,
-    lessons: 12,
-    duration: "~4 hrs",
-    exercises: 8,
-    badge: "BESTSELLER",
-    description:
-      "A complete mental model for trading F&O profitably. From understanding what you're actually buying, to reading the options chain, to building your own entry checklist — this is the course that replaces 50 hours of YouTube.",
-    what_you_learn: [
-      "Understand options pricing and time decay",
-      "Read the NSE options chain like a pro",
-      "Use Delta, Theta and IV in real trade decisions",
-      "Build a Bull Call Spread and Iron Condor",
-      "Create your personal entry/exit checklist",
-      "Size positions to survive losing streaks",
-    ],
-    chapters: [
-      {
-        title: "Chapter 1 — The Mental Model",
-        lessons: [
-          { title: "Why Most Retail Traders Lose", free: true },
-          { title: "Options Basics: What You're Actually Buying", free: true },
-          { title: "The Buyer vs Seller Asymmetry", free: false },
-        ],
-      },
-      {
-        title: "Chapter 2 — The Greeks",
-        lessons: [
-          { title: "Delta: Directional Exposure Explained", free: false },
-          { title: "Theta: Time Decay & Premium Erosion", free: false },
-          { title: "IV & Vega: Trading Volatility, Not Just Direction", free: false },
-        ],
-      },
-      {
-        title: "Chapter 3 — Reading the Chain",
-        lessons: [
-          { title: "How to Read the NSE Options Chain", free: false },
-          { title: "OI, PCR and Max Pain — What They Actually Mean", free: false },
-          { title: "Building Your Pre-Trade Checklist", free: false },
-        ],
-      },
-      {
-        title: "Chapter 4 — Strategies & Risk",
-        lessons: [
-          { title: "Bull Call Spread: Setup and Exit Rules", free: false },
-          { title: "Iron Condor: When and How to Use It", free: false },
-          { title: "Position Sizing for Options Traders", free: false },
-        ],
-      },
-    ],
-  },
-
-  "equity-investing-first-portfolio": {
-    title: "Equity Investing: Build Your First Portfolio",
-    tag: "Beginner",
-    price: 999,
-    lessons: 10,
-    duration: "~3.5 hrs",
-    exercises: 6,
-    badge: "NEW",
-    description:
-      "A systematic approach to picking stocks and building a portfolio that compounds over time. No tips, no FOMO — just a repeatable process.",
-    what_you_learn: [
-      "Screen stocks using fundamental filters",
-      "Read a P&L and balance sheet in 20 minutes",
-      "Value a business using PE, PB and DCF",
-      "Build a diversified portfolio with allocation rules",
-      "Set up a SIP strategy that matches your goals",
-      "Rebalance your portfolio without emotional decisions",
-    ],
-    chapters: [
-      {
-        title: "Chapter 1 — Foundations",
-        lessons: [
-          { title: "What Equity Investing Actually Is", free: true },
-          { title: "How the Stock Market Prices Businesses", free: true },
-          { title: "The Long-Term Compounding Edge", free: false },
-        ],
-      },
-      {
-        title: "Chapter 2 — Stock Screening",
-        lessons: [
-          { title: "Building Your Screening Criteria", free: false },
-          { title: "Reading Financials Without an MBA", free: false },
-          { title: "Valuation: PE, PB and What They Mean", free: false },
-        ],
-      },
-      {
-        title: "Chapter 3 — Portfolio Construction",
-        lessons: [
-          { title: "Sector Allocation and Diversification Rules", free: false },
-          { title: "Setting Up Your SIP Strategy", free: false },
-        ],
-      },
-      {
-        title: "Chapter 4 — Ongoing Management",
-        lessons: [
-          { title: "When to Exit: Sell Rules That Remove Emotion", free: false },
-          { title: "Rebalancing Without Overtrading", free: false },
-        ],
-      },
-    ],
-  },
-
-  "technical-analysis-playbook": {
-    title: "Technical Analysis Playbook",
-    tag: "Intermediate",
-    price: 1999,
-    lessons: 14,
-    duration: "~5 hrs",
-    exercises: 10,
-    badge: null,
-    description:
-      "Chart patterns, indicators, and entry/exit setups that actually work in Indian markets. Built around price action first, indicators second.",
-    what_you_learn: [
-      "Identify support and resistance levels with precision",
-      "Read candlestick patterns that actually signal reversals",
-      "Use RSI, MACD and Volume as confirmation tools",
-      "Set up a complete entry, stop, and target framework",
-      "Trade breakouts without getting faked out",
-      "Build a trading journal that improves your edge over time",
-    ],
-    chapters: [
-      {
-        title: "Chapter 1 — Price Action First",
-        lessons: [
-          { title: "Why Price Action Beats Indicators", free: true },
-          { title: "Support and Resistance: Drawing Levels That Hold", free: true },
-          { title: "Trend Structure: Higher Highs, Lower Lows", free: false },
-          { title: "Candlestick Patterns That Actually Matter", free: false },
-        ],
-      },
-      {
-        title: "Chapter 2 — Indicators as Confirmation",
-        lessons: [
-          { title: "RSI: Using It Without Getting Trapped", free: false },
-          { title: "MACD: Signal Line Crossovers and Divergence", free: false },
-          { title: "Volume Analysis: Reading Conviction in a Move", free: false },
-        ],
-      },
-      {
-        title: "Chapter 3 — Setups and Execution",
-        lessons: [
-          { title: "Breakout Trades: Entry, Stop, Target Rules", free: false },
-          { title: "Pullback to Support: The High-Probability Setup", free: false },
-          { title: "Failed Breakouts and How to Spot Them Early", free: false },
-        ],
-      },
-      {
-        title: "Chapter 4 — Process and Edge",
-        lessons: [
-          { title: "Building Your Pre-Market Routine", free: false },
-          { title: "Keeping a Trading Journal That Actually Helps", free: false },
-          { title: "Reviewing Trades to Find Your Edge", free: false },
-          { title: "Managing Drawdowns Without Blowing Up", free: false },
-        ],
-      },
-    ],
-  },
-};
-
-const priceFormatted = (price: number) =>
-  `₹${price.toLocaleString("en-IN")}`;
-
-export default function CourseDetailPage() {
-  const params = useParams();
-  const slug = typeof params.slug === "string" ? params.slug : "";
-  const course = courses[slug];
+export default async function CourseDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const course = await getCourseBySlug(slug);
 
   if (!course) {
     return (
@@ -217,10 +35,13 @@ export default function CourseDetailPage() {
     );
   }
 
-  const totalLessons = course.chapters.reduce(
-    (sum, ch) => sum + ch.lessons.length,
-    0
-  );
+  const totalLessons =
+    course.lessonsCount ||
+    course.chapters?.reduce(
+      (sum: number, ch: any) => sum + (ch.lessons?.length ?? 0),
+      0
+    ) ||
+    0;
 
   return (
     <div className="bg-[#FAFAF7] min-h-screen overflow-x-hidden">
@@ -261,7 +82,7 @@ export default function CourseDetailPage() {
 
           {/* Description */}
           <p className="text-[16px] text-[#5A5A72] leading-relaxed mb-6">
-            {course.description}
+            {course.description || course.subtitle}
           </p>
 
           {/* Stats row */}
@@ -269,85 +90,102 @@ export default function CourseDetailPage() {
             {[
               { label: "Lessons", val: `${totalLessons}` },
               { label: "Duration", val: course.duration },
-              { label: "Exercises", val: `${course.exercises}` },
               { label: "Level", val: course.tag },
             ].map((s) => (
-              <div key={s.label} className="flex flex-col">
-                <span className="font-mono text-[11px] text-[#9494A8] tracking-widest uppercase mb-1">
-                  {s.label}
-                </span>
-                <span className="font-mono text-[15px] font-medium text-[#0F2348]">
-                  {s.val}
-                </span>
-              </div>
+              s.val ? (
+                <div key={s.label} className="flex flex-col">
+                  <span className="font-mono text-[11px] text-[#9494A8] tracking-widest uppercase mb-1">
+                    {s.label}
+                  </span>
+                  <span className="font-mono text-[15px] font-medium text-[#0F2348]">
+                    {s.val}
+                  </span>
+                </div>
+              ) : null
             ))}
           </div>
 
           {/* What you'll learn */}
-          <div className="mb-10">
-            <h2 className="font-serif text-[22px] font-bold text-[#0F2348] mb-5">
-              What you&apos;ll learn
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {course.what_you_learn.map((point) => (
-                <div key={point} className="flex gap-3 items-start">
-                  <span className="text-[#1A7A4A] mt-0.5 flex-shrink-0">✓</span>
-                  <span className="text-[14px] text-[#5A5A72] leading-snug">{point}</span>
-                </div>
-              ))}
+          {course.whatYouLearn?.length > 0 && (
+            <div className="mb-10">
+              <h2 className="font-serif text-[22px] font-bold text-[#0F2348] mb-5">
+                What you&apos;ll learn
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {course.whatYouLearn.map((point: string) => (
+                  <div key={point} className="flex gap-3 items-start">
+                    <span className="text-[#1A7A4A] mt-0.5 flex-shrink-0">✓</span>
+                    <span className="text-[14px] text-[#5A5A72] leading-snug">{point}</span>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Curriculum */}
-          <div>
-            <h2 className="font-serif text-[22px] font-bold text-[#0F2348] mb-5">
-              Curriculum
-            </h2>
-            <div className="flex flex-col gap-4">
-              {course.chapters.map((chapter) => (
-                <div
-                  key={chapter.title}
-                  className="border border-[rgba(15,35,72,0.1)] rounded-xl overflow-hidden"
-                >
-                  <div className="bg-[#F4F1EB] px-5 py-3">
-                    <span className="font-mono text-[12px] font-medium text-[#0F2348]">
-                      {chapter.title}
-                    </span>
-                  </div>
-                  <div className="flex flex-col">
-                    {chapter.lessons.map((lesson, i) => (
-                      <div
-                        key={lesson.title}
-                        className={`flex items-center justify-between px-5 py-3 ${
-                          i !== chapter.lessons.length - 1
-                            ? "border-b border-[rgba(15,35,72,0.06)]"
-                            : ""
-                        }`}
-                      >
-                        <div className="flex items-center gap-3">
-                          <span className="text-[14px] text-[#9494A8] flex-shrink-0">
-                            {lesson.free ? "▶" : "🔒"}
-                          </span>
-                          <span
-                            className={`text-[14px] ${
-                              lesson.free ? "text-[#0F2348]" : "text-[#9494A8]"
-                            }`}
-                          >
-                            {lesson.title}
-                          </span>
+          {course.chapters?.length > 0 && (
+            <div>
+              <h2 className="font-serif text-[22px] font-bold text-[#0F2348] mb-5">
+                Curriculum
+              </h2>
+              <div className="flex flex-col gap-4">
+                {course.chapters.map((chapter: any) => (
+                  <div
+                    key={chapter.title}
+                    className="border border-[rgba(15,35,72,0.1)] rounded-xl overflow-hidden"
+                  >
+                    <div className="bg-[#F4F1EB] px-5 py-3">
+                      <span className="font-mono text-[12px] font-medium text-[#0F2348]">
+                        {chapter.title}
+                      </span>
+                    </div>
+                    <div className="flex flex-col">
+                      {chapter.lessons?.map((lesson: any, i: number) => (
+                        <div
+                          key={lesson.slug || lesson.title}
+                          className={`flex items-center justify-between px-5 py-3 ${
+                            i !== chapter.lessons.length - 1
+                              ? "border-b border-[rgba(15,35,72,0.06)]"
+                              : ""
+                          }`}
+                        >
+                          <div className="flex items-center gap-3">
+                            <span className="text-[14px] text-[#9494A8] flex-shrink-0">
+                              {lesson.isFree ? "▶" : "🔒"}
+                            </span>
+                            {lesson.isFree && lesson.slug ? (
+                              <Link
+                                href={`/learn/${slug}/${lesson.slug}`}
+                                className="text-[14px] text-[#0F2348] hover:text-[#D4860A] transition-colors"
+                              >
+                                {lesson.title}
+                              </Link>
+                            ) : (
+                              <span className="text-[14px] text-[#9494A8]">
+                                {lesson.title}
+                              </span>
+                            )}
+                          </div>
+                          <div className="flex items-center gap-3 flex-shrink-0 ml-3">
+                            {lesson.duration && (
+                              <span className="font-mono text-[11px] text-[#9494A8]">
+                                {lesson.duration}
+                              </span>
+                            )}
+                            {lesson.isFree && (
+                              <span className="font-mono text-[10px] text-[#1A7A4A] bg-[#E8F5EE] rounded px-2 py-0.5">
+                                Free preview
+                              </span>
+                            )}
+                          </div>
                         </div>
-                        {lesson.free && (
-                          <span className="font-mono text-[10px] text-[#1A7A4A] bg-[#E8F5EE] rounded px-2 py-0.5 flex-shrink-0 ml-3">
-                            Free preview
-                          </span>
-                        )}
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* ── RIGHT COLUMN — STICKY PURCHASE CARD ── */}

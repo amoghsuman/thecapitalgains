@@ -1,45 +1,23 @@
 import Link from "next/link";
+import { getAllCourses } from "@/lib/sanity/queries";
 
-const courses = [
-  {
-    slug: "options-trading-from-zero",
-    bg: "bg-[#0F2348]",
-    badge: "BESTSELLER",
-    badgeColor: "bg-[rgba(212,134,10,0.2)] text-[#D4860A]",
-    tag: "BEGINNER → INTERMEDIATE",
-    title: "Options Trading from Zero",
-    desc: "A complete mental model for F&O. From basics to strategies to your personal trading system.",
-    topics: ["Options basics", "Greeks", "Strategies", "Risk rules"],
-    meta: "12 lessons · ~4 hrs",
-    price: "₹1,499",
-  },
-  {
-    slug: "equity-investing-build-your-first-portfolio",
-    bg: "bg-[#1A3460]",
-    badge: "NEW",
-    badgeColor: "bg-[rgba(26,122,74,0.2)] text-[#1A7A4A]",
-    tag: "BEGINNER",
-    title: "Equity Investing: Build Your First Portfolio",
-    desc: "Systematic stock picking and portfolio construction for long-term wealth building.",
-    topics: ["Stock screening", "Valuation", "SIP strategy"],
-    meta: "10 lessons · ~3.5 hrs",
-    price: "₹999",
-  },
-  {
-    slug: "technical-analysis-playbook",
-    bg: "bg-[#2A1A5E]",
-    badge: null,
-    badgeColor: "",
-    tag: "INTERMEDIATE",
-    title: "Technical Analysis Playbook",
-    desc: "Chart patterns, indicators, and entry/exit setups that actually work in Indian markets.",
-    topics: ["Price action", "S&R levels", "Entry setups"],
-    meta: "14 lessons · ~5 hrs",
-    price: "₹1,999",
-  },
-];
+// Card backgrounds cycle by index
+const cardBgs = ["bg-[#0F2348]", "bg-[#1A3460]", "bg-[#2A1A5E]"];
 
-export default function CoursesPage() {
+// Badge colour mapping
+function badgeColor(badge: string | null): string {
+  if (badge === "BESTSELLER") return "bg-[rgba(212,134,10,0.2)] text-[#D4860A]";
+  if (badge === "NEW") return "bg-[rgba(26,122,74,0.2)] text-[#1A7A4A]";
+  return "bg-[rgba(255,255,255,0.15)] text-white";
+}
+
+function priceFormatted(price: number): string {
+  return `₹${price.toLocaleString("en-IN")}`;
+}
+
+export default async function CoursesPage() {
+  const courses = await getAllCourses();
+
   return (
     <div className="bg-[#FAFAF7] min-h-screen">
       <div className="max-w-6xl mx-auto px-6 md:px-8">
@@ -59,59 +37,73 @@ export default function CoursesPage() {
 
         {/* ── COURSE GRID ── */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {courses.map((course) => (
-            <div
-              key={course.slug}
-              className="rounded-2xl overflow-hidden border border-[rgba(15,35,72,0.1)] bg-white hover:shadow-[0_8px_40px_rgba(15,35,72,0.1)] hover:-translate-y-0.5 transition-all"
-            >
-              {/* Dark top */}
-              <div className={`${course.bg} p-6 min-h-[140px] flex flex-col justify-end`}>
-                {course.badge && (
-                  <span className={`font-mono text-[9px] font-medium rounded px-2 py-1 tracking-wider ${course.badgeColor} inline-block mb-3 self-start`}>
-                    {course.badge}
-                  </span>
-                )}
-                <div className="font-mono text-[10px] text-[rgba(255,255,255,0.4)] tracking-widest mb-2">
-                  {course.tag}
-                </div>
-                <div className="font-serif text-[17px] text-white leading-snug">
-                  {course.title}
-                </div>
-              </div>
+          {courses.map((course: any, i: number) => {
+            const bg = cardBgs[i % cardBgs.length];
+            const meta = [
+              course.lessonsCount ? `${course.lessonsCount} lessons` : null,
+              course.duration,
+            ]
+              .filter(Boolean)
+              .join(" · ");
 
-              {/* White bottom */}
-              <div className="p-6">
-                <p className="text-[13px] text-[#5A5A72] leading-relaxed mb-4">
-                  {course.desc}
-                </p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {course.topics.map((t) => (
-                    <span
-                      key={t}
-                      className="font-mono text-[10px] text-[#9494A8] bg-[#F4F1EB] rounded px-2 py-1"
-                    >
-                      {t}
+            return (
+              <div
+                key={course.slug}
+                className="rounded-2xl overflow-hidden border border-[rgba(15,35,72,0.1)] bg-white hover:shadow-[0_8px_40px_rgba(15,35,72,0.1)] hover:-translate-y-0.5 transition-all"
+              >
+                {/* Dark top */}
+                <div className={`${bg} p-6 min-h-[140px] flex flex-col justify-end`}>
+                  {course.badge && (
+                    <span className={`font-mono text-[9px] font-medium rounded px-2 py-1 tracking-wider ${badgeColor(course.badge)} inline-block mb-3 self-start`}>
+                      {course.badge}
                     </span>
-                  ))}
-                </div>
-                <div className="text-[12px] text-[#9494A8] mb-4">{course.meta}</div>
-                <div className="flex justify-between items-center pt-4 border-t border-[rgba(15,35,72,0.08)]">
-                  <div>
-                    <span className="font-mono text-[18px] font-medium text-[#0F2348]">
-                      {course.price}
-                    </span>
-                    <span className="text-[11px] text-[#9494A8] ml-1.5">one-time</span>
+                  )}
+                  <div className="font-mono text-[10px] text-[rgba(255,255,255,0.4)] tracking-widest mb-2">
+                    {course.tag?.toUpperCase()}
                   </div>
-                  <Link
-                    href={`/courses/${course.slug}`}
-                    className="font-mono text-[12px] text-[#D4860A] hover:text-[#F0A020] transition-colors"
-                  >
-                    Preview free →
-                  </Link>
+                  <div className="font-serif text-[17px] text-white leading-snug">
+                    {course.title}
+                  </div>
+                </div>
+
+                {/* White bottom */}
+                <div className="p-6">
+                  <p className="text-[13px] text-[#5A5A72] leading-relaxed mb-4">
+                    {course.subtitle || course.description}
+                  </p>
+                  {course.topics?.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {course.topics.map((t: string) => (
+                        <span
+                          key={t}
+                          className="font-mono text-[10px] text-[#9494A8] bg-[#F4F1EB] rounded px-2 py-1"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                  {meta && (
+                    <div className="text-[12px] text-[#9494A8] mb-4">{meta}</div>
+                  )}
+                  <div className="flex justify-between items-center pt-4 border-t border-[rgba(15,35,72,0.08)]">
+                    <div>
+                      <span className="font-mono text-[18px] font-medium text-[#0F2348]">
+                        {priceFormatted(course.price)}
+                      </span>
+                      <span className="text-[11px] text-[#9494A8] ml-1.5">one-time</span>
+                    </div>
+                    <Link
+                      href={`/courses/${course.slug}`}
+                      className="font-mono text-[12px] text-[#D4860A] hover:text-[#F0A020] transition-colors"
+                    >
+                      Preview free →
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* ── SUBSCRIPTION NUDGE ── */}
