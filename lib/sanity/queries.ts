@@ -79,7 +79,21 @@ export async function getLessonBySlug(courseSlug: string, lessonSlug: string) {
         "slug": slug.current,
         duration,
         isFree,
-        body
+        body[] {
+          ...,
+          _type == "callout" => {
+            _type,
+            _key,
+            type,
+            text
+          },
+          _type == "exercise" => {
+            _type,
+            _key,
+            title,
+            steps
+          }
+        }
       }
     }
   `, { courseSlug, lessonSlug })
