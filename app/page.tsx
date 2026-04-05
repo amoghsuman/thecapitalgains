@@ -45,9 +45,9 @@ export default function HomePage() {
           <div className="flex gap-8 flex-wrap">
             {[
               { num: "3", label: "Courses live" },
-              { num: "100%", label: "Text-based" },
+              { num: "3", label: "Subscription stacks" },
               { num: "₹0", label: "To start" },
-              { num: "4.8★", label: "Avg rating" },
+              { num: "₹499", label: "Entry research tier" },
             ].map((s) => (
               <div key={s.label} className="flex flex-col">
                 <span className="font-mono text-[22px] font-medium text-[#0F2348]">
@@ -260,7 +260,8 @@ export default function HomePage() {
               desc: "A complete mental model for F&O. From basics to strategies to your personal trading system.",
               topics: ["Options basics", "Greeks", "Strategies", "Risk rules"],
               lessons: "12 lessons · ~4 hrs · 8 exercises",
-              accessBadge: { label: "FREE PREVIEW", style: "bg-[#E8F5EE] text-[#1A7A4A]" },
+              accessBadge: { label: "FREE PREVIEW AVAILABLE", style: "bg-[#E8F5EE] text-[#1A7A4A]" },
+              cta: "Start free lesson →",
             },
             {
               bg: "bg-[#1A3460]",
@@ -271,7 +272,8 @@ export default function HomePage() {
               desc: "Systematic stock picking and portfolio construction for long-term wealth building.",
               topics: ["Stock screening", "Valuation", "SIP strategy"],
               lessons: "10 lessons · ~3.5 hrs · 6 exercises",
-              accessBadge: { label: "STARTER+", style: "bg-[rgba(15,35,72,0.1)] text-[#0F2348]" },
+              accessBadge: { label: "LEARN STACK", style: "bg-[rgba(15,35,72,0.1)] text-[#0F2348]" },
+              cta: "Preview →",
             },
             {
               bg: "bg-[#2A1A5E]",
@@ -282,7 +284,8 @@ export default function HomePage() {
               desc: "Chart patterns, indicators, and entry/exit setups that actually work in Indian markets.",
               topics: ["Price action", "S&R levels", "Entry setups"],
               lessons: "14 lessons · ~5 hrs · 10 exercises",
-              accessBadge: { label: "PRO", style: "bg-[rgba(212,134,10,0.15)] text-[#D4860A]" },
+              accessBadge: { label: "LEARN STACK", style: "bg-[rgba(15,35,72,0.1)] text-[#0F2348]" },
+              cta: "Preview →",
             },
           ].map((course) => (
             <div
@@ -316,7 +319,7 @@ export default function HomePage() {
                   <span className={`font-mono text-[10px] font-medium rounded px-2 py-1 ${course.accessBadge.style}`}>
                     {course.accessBadge.label}
                   </span>
-                  <span className="font-mono text-[12px] text-[#D4860A]">Preview free →</span>
+                  <span className="font-mono text-[12px] text-[#D4860A]">{course.cta}</span>
                 </div>
               </div>
             </div>
@@ -326,16 +329,18 @@ export default function HomePage() {
         {/* Subscription nudge */}
         <div className="mt-5 bg-[#FDF3E3] border border-[rgba(212,134,10,0.2)] rounded-xl px-7 py-5 flex justify-between items-center flex-wrap gap-4">
           <div>
-            <div className="font-mono text-[11px] text-[#D4860A] mb-1">BETTER VALUE</div>
-            <div className="text-[15px] font-medium text-[#0F2348]">
-              Subscribe once. Access everything. From ₹1,499/month.
+            <div className="font-serif text-[18px] font-semibold text-[#0F2348] mb-1">
+              One subscription. Three stacks. Everything you need.
+            </div>
+            <div className="text-[14px] text-[#5A5A72]">
+              Build your bundle — Learn, Research, Community. Pay one monthly total.
             </div>
           </div>
           <Link
             href="/pricing"
             className="bg-[#D4860A] hover:bg-[#F0A020] text-white rounded-lg px-6 py-2.5 text-[13px] font-medium transition-colors whitespace-nowrap"
           >
-            Compare plans →
+            See pricing →
           </Link>
         </div>
       </section>
@@ -393,68 +398,88 @@ export default function HomePage() {
         </div>
         <div className="flex justify-between items-end flex-wrap gap-4 mb-12">
           <h2 className="font-serif text-[34px] font-bold text-[#0F2348]">
-            Simple, transparent pricing
+            Three stacks. One bundle.
           </h2>
           <Link href="/pricing" className="font-mono text-[12px] text-[#D4860A]">
-            Full comparison →
+            Build your bundle →
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {[
-            { name: "FREE", price: "₹0", period: "always free", highlight: false, disabled: false, features: ["1 free lesson per course", "Weekly newsletter"], missing: ["Full course access", "Model portfolios"], cta: "Get started", ctaHref: "/auth/signup", ctaStyle: "border" },
-            { name: "STARTER", price: "₹1,499", period: "per month", highlight: false, disabled: false, features: ["All courses, all lessons", "Interactive exercises", "New courses as added"], missing: ["WhatsApp community"], cta: "Start learning", ctaHref: "/pricing", ctaStyle: "secondary" },
-            { name: "PRO", price: "₹3,999", period: "per month", highlight: true, disabled: false, features: ["Everything in Starter", "WhatsApp community", "Monthly live Q&A", "Downloadable playbooks"], missing: [], cta: "Go Pro", ctaHref: "/pricing", ctaStyle: "primary" },
-            { name: "ELITE", price: "₹14,999", period: "coming soon", highlight: false, disabled: true, features: ["Everything in Pro", "Model portfolio research", "1:1 monthly session", "Early access"], missing: [], cta: "Join waitlist", ctaHref: "/newsletter", ctaStyle: "disabled" },
-          ].map((plan) => (
+            {
+              stackNum: "STACK 01",
+              title: "Learn",
+              headerBg: "bg-[#0F2348]",
+              from: "From ₹999/month",
+              fromSub: "or free preview",
+              features: ["All courses & lessons", "PDF playbooks", "Monthly live workshop (Pro)"],
+              cta: "Explore Learn →",
+            },
+            {
+              stackNum: "STACK 02",
+              title: "Research",
+              headerBg: "bg-[#1A3460]",
+              from: "From ₹499/month",
+              fromSub: "newsletter to full research",
+              features: ["Weekly market newsletter", "3 model portfolios", "F&O strategy notes"],
+              cta: "Explore Research →",
+            },
+            {
+              stackNum: "STACK 03",
+              title: "Community",
+              headerBg: "bg-[#2A1A5E]",
+              from: "From ₹999/month",
+              fromSub: "group to 1:1 access",
+              features: ["Private WhatsApp community", "Monthly group Q&A", "Unlimited 1:1 async access (Elite)"],
+              cta: "Explore Community →",
+            },
+          ].map((stack) => (
             <div
-              key={plan.name}
-              className={`rounded-2xl p-6 relative ${
-                plan.highlight
-                  ? "border-2 border-[#D4860A] bg-white"
-                  : plan.disabled
-                  ? "border border-dashed border-[rgba(15,35,72,0.15)] bg-[#F4F1EB]"
-                  : "border border-[rgba(15,35,72,0.1)] bg-white"
-              }`}
+              key={stack.stackNum}
+              className="bg-white border border-[rgba(15,35,72,0.1)] rounded-2xl overflow-hidden hover:shadow-[0_8px_40px_rgba(15,35,72,0.08)] hover:-translate-y-0.5 transition-all"
             >
-              {plan.highlight && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#D4860A] text-white font-mono text-[9px] font-medium rounded-full px-3 py-1 tracking-wider whitespace-nowrap">
-                  MOST POPULAR
+              <div className={`${stack.headerBg} px-6 py-5`}>
+                <div className="font-mono text-[10px] text-[rgba(255,255,255,0.4)] tracking-widest mb-2">
+                  {stack.stackNum}
                 </div>
-              )}
-              <div className="font-mono text-[11px] text-[#9494A8] tracking-widest mb-2">{plan.name}</div>
-              <div className={`font-mono text-[28px] font-medium mb-0.5 ${plan.disabled ? "text-[#9494A8]" : "text-[#0F2348]"}`}>
-                {plan.price}
+                <div className="font-serif text-[20px] text-white">{stack.title}</div>
               </div>
-              <div className="text-[12px] text-[#9494A8] mb-5">{plan.period}</div>
-              <div className="flex flex-col gap-2 mb-6">
-                {plan.features.map((f) => (
-                  <div key={f} className="flex gap-2 text-[13px] text-[#5A5A72]">
-                    <span className="text-[#1A7A4A]">✓</span>{f}
-                  </div>
-                ))}
-                {plan.missing.map((f) => (
-                  <div key={f} className="flex gap-2 text-[13px] text-[#9494A8]">
-                    <span>—</span>{f}
-                  </div>
-                ))}
+              <div className="p-6">
+                <div className="font-mono text-[22px] font-bold text-[#0F2348] leading-none mb-1">
+                  {stack.from}
+                </div>
+                <div className="text-[12px] text-[#9494A8] mb-5">{stack.fromSub}</div>
+                <div className="flex flex-col gap-2 mb-6">
+                  {stack.features.map((f) => (
+                    <div key={f} className="flex gap-2 items-start text-[13px] text-[#5A5A72]">
+                      <span className="text-[#1A7A4A] flex-shrink-0">✓</span>
+                      {f}
+                    </div>
+                  ))}
+                </div>
+                <Link
+                  href="/pricing"
+                  className="font-mono text-[12px] text-[#D4860A] hover:text-[#F0A020] transition-colors"
+                >
+                  {stack.cta}
+                </Link>
               </div>
-              <Link
-                href={plan.ctaHref}
-                className={`block w-full text-center rounded-lg py-2.5 text-[13px] font-medium transition-all ${
-                  plan.ctaStyle === "primary"
-                    ? "bg-[#D4860A] hover:bg-[#F0A020] text-white"
-                    : plan.ctaStyle === "secondary"
-                    ? "bg-[#F4F1EB] hover:bg-[#EDE9E0] text-[#0F2348]"
-                    : plan.ctaStyle === "border"
-                    ? "border border-[rgba(15,35,72,0.2)] text-[#5A5A72] hover:border-[#0F2348] hover:text-[#0F2348]"
-                    : "bg-[#F4F1EB] text-[#9494A8] pointer-events-none"
-                }`}
-              >
-                {plan.cta}
-              </Link>
             </div>
           ))}
+        </div>
+
+        {/* CTA strip */}
+        <div className="mt-5 bg-[#FDF3E3] border border-[rgba(212,134,10,0.2)] rounded-xl px-7 py-5 flex justify-between items-center flex-wrap gap-4">
+          <div className="font-serif text-[18px] text-[#0F2348]">
+            Mix and match. Pay one total.
+          </div>
+          <Link
+            href="/pricing"
+            className="bg-[#D4860A] hover:bg-[#F0A020] text-white rounded-lg px-6 py-2.5 text-[13px] font-medium transition-colors whitespace-nowrap"
+          >
+            Build your bundle →
+          </Link>
         </div>
       </section>
 
