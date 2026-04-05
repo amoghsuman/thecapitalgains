@@ -137,10 +137,13 @@ function LockedLesson() {
         href="/pricing"
         className="bg-[#D4860A] hover:bg-[#F0A020] text-white rounded-lg px-8 py-3.5 text-[15px] font-medium transition-colors mb-3"
       >
-        View plans →
+        View Subscription Plans →
       </Link>
-      <Link href="/auth/login" className="font-mono text-[12px] text-[#9494A8] hover:text-[#D4860A] transition-colors">
-        Already subscribed? Sign in →
+      <Link
+        href="/auth/login"
+        className="border border-[rgba(15,35,72,0.2)] hover:border-[#0F2348] text-[#5A5A72] hover:text-[#0F2348] rounded-lg px-8 py-3.5 text-[15px] font-medium transition-colors"
+      >
+        Sign in if subscribed →
       </Link>
     </div>
   );

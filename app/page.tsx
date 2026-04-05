@@ -260,7 +260,7 @@ export default function HomePage() {
               desc: "A complete mental model for F&O. From basics to strategies to your personal trading system.",
               topics: ["Options basics", "Greeks", "Strategies", "Risk rules"],
               lessons: "12 lessons · ~4 hrs · 8 exercises",
-              price: "₹1,499",
+              accessBadge: { label: "FREE PREVIEW", style: "bg-[#E8F5EE] text-[#1A7A4A]" },
             },
             {
               bg: "bg-[#1A3460]",
@@ -271,7 +271,7 @@ export default function HomePage() {
               desc: "Systematic stock picking and portfolio construction for long-term wealth building.",
               topics: ["Stock screening", "Valuation", "SIP strategy"],
               lessons: "10 lessons · ~3.5 hrs · 6 exercises",
-              price: "₹999",
+              accessBadge: { label: "STARTER+", style: "bg-[rgba(15,35,72,0.1)] text-[#0F2348]" },
             },
             {
               bg: "bg-[#2A1A5E]",
@@ -282,7 +282,7 @@ export default function HomePage() {
               desc: "Chart patterns, indicators, and entry/exit setups that actually work in Indian markets.",
               topics: ["Price action", "S&R levels", "Entry setups"],
               lessons: "14 lessons · ~5 hrs · 10 exercises",
-              price: "₹1,999",
+              accessBadge: { label: "PRO", style: "bg-[rgba(212,134,10,0.15)] text-[#D4860A]" },
             },
           ].map((course) => (
             <div
@@ -313,10 +313,9 @@ export default function HomePage() {
                 </div>
                 <div className="text-[12px] text-[#9494A8] mb-4">{course.lessons}</div>
                 <div className="flex justify-between items-center pt-4 border-t border-[rgba(15,35,72,0.08)]">
-                  <div>
-                    <span className="font-mono text-[18px] font-medium text-[#0F2348]">{course.price}</span>
-                    <span className="text-[11px] text-[#9494A8] ml-1.5">one-time</span>
-                  </div>
+                  <span className={`font-mono text-[10px] font-medium rounded px-2 py-1 ${course.accessBadge.style}`}>
+                    {course.accessBadge.label}
+                  </span>
                   <span className="font-mono text-[12px] text-[#D4860A]">Preview free →</span>
                 </div>
               </div>
@@ -329,7 +328,7 @@ export default function HomePage() {
           <div>
             <div className="font-mono text-[11px] text-[#D4860A] mb-1">BETTER VALUE</div>
             <div className="text-[15px] font-medium text-[#0F2348]">
-              Access all courses from ₹299/month — cheaper than buying individually.
+              Subscribe once. Access everything. From ₹1,499/month.
             </div>
           </div>
           <Link
@@ -403,10 +402,10 @@ export default function HomePage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
-            { name: "FREE", price: "₹0", period: "always free", highlight: false, disabled: false, features: ["1 free lesson per course", "Weekly newsletter"], missing: ["Full course access", "Model portfolios"], cta: "Get started", ctaStyle: "border" },
-            { name: "LEARNER", price: "₹299", period: "per month", highlight: false, disabled: false, features: ["All courses, all lessons", "Interactive exercises", "New courses as added"], missing: ["WhatsApp community"], cta: "Start learning", ctaStyle: "secondary" },
-            { name: "TRADER PRO", price: "₹999", period: "per month", highlight: true, disabled: false, features: ["Everything in Learner", "WhatsApp community", "Monthly live Q&A", "Downloadable playbooks"], missing: [], cta: "Go Pro", ctaStyle: "primary" },
-            { name: "ELITE", price: "₹2,499", period: "coming soon", highlight: false, disabled: true, features: ["Everything in Pro", "Model portfolio research", "1:1 monthly session", "Early access"], missing: [], cta: "Join waitlist", ctaStyle: "disabled" },
+            { name: "FREE", price: "₹0", period: "always free", highlight: false, disabled: false, features: ["1 free lesson per course", "Weekly newsletter"], missing: ["Full course access", "Model portfolios"], cta: "Get started", ctaHref: "/auth/signup", ctaStyle: "border" },
+            { name: "STARTER", price: "₹1,499", period: "per month", highlight: false, disabled: false, features: ["All courses, all lessons", "Interactive exercises", "New courses as added"], missing: ["WhatsApp community"], cta: "Start learning", ctaHref: "/pricing", ctaStyle: "secondary" },
+            { name: "PRO", price: "₹3,999", period: "per month", highlight: true, disabled: false, features: ["Everything in Starter", "WhatsApp community", "Monthly live Q&A", "Downloadable playbooks"], missing: [], cta: "Go Pro", ctaHref: "/pricing", ctaStyle: "primary" },
+            { name: "ELITE", price: "₹14,999", period: "coming soon", highlight: false, disabled: true, features: ["Everything in Pro", "Model portfolio research", "1:1 monthly session", "Early access"], missing: [], cta: "Join waitlist", ctaHref: "/newsletter", ctaStyle: "disabled" },
           ].map((plan) => (
             <div
               key={plan.name}
@@ -440,19 +439,20 @@ export default function HomePage() {
                   </div>
                 ))}
               </div>
-              <button
-                className={`w-full rounded-lg py-2.5 text-[13px] font-medium transition-all ${
+              <Link
+                href={plan.ctaHref}
+                className={`block w-full text-center rounded-lg py-2.5 text-[13px] font-medium transition-all ${
                   plan.ctaStyle === "primary"
                     ? "bg-[#D4860A] hover:bg-[#F0A020] text-white"
                     : plan.ctaStyle === "secondary"
                     ? "bg-[#F4F1EB] hover:bg-[#EDE9E0] text-[#0F2348]"
                     : plan.ctaStyle === "border"
                     ? "border border-[rgba(15,35,72,0.2)] text-[#5A5A72] hover:border-[#0F2348] hover:text-[#0F2348]"
-                    : "bg-[#F4F1EB] text-[#9494A8] cursor-default"
+                    : "bg-[#F4F1EB] text-[#9494A8] pointer-events-none"
                 }`}
               >
                 {plan.cta}
-              </button>
+              </Link>
             </div>
           ))}
         </div>

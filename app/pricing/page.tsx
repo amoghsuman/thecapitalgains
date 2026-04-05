@@ -16,14 +16,14 @@ const plans = [
     features: ["1 free lesson per course", "Weekly newsletter"],
     missing: ["Full course access", "Model portfolios", "Community"],
     cta: "Get started",
-    ctaHref: "/courses",
+    ctaHref: "/auth/signup",
     ctaStyle: "border" as const,
   },
   {
-    id: "learner",
-    name: "LEARNER",
-    monthlyPrice: "₹299",
-    annualPrice: "₹239",
+    id: "starter",
+    name: "STARTER",
+    monthlyPrice: "₹1,499",
+    annualPrice: "₹1,199",
     period: "per month",
     badge: null,
     highlight: false,
@@ -36,20 +36,20 @@ const plans = [
     ],
     missing: ["WhatsApp community", "Live Q&A"],
     cta: "Start learning",
-    ctaHref: "#",
+    ctaHref: "/auth/signup?plan=starter",
     ctaStyle: "secondary" as const,
   },
   {
     id: "pro",
-    name: "TRADER PRO",
-    monthlyPrice: "₹999",
-    annualPrice: "₹799",
+    name: "PRO",
+    monthlyPrice: "₹3,999",
+    annualPrice: "₹3,199",
     period: "per month",
     badge: "MOST POPULAR",
     highlight: true,
     disabled: false,
     features: [
-      "Everything in Learner",
+      "Everything in Starter",
       "Private WhatsApp community",
       "Monthly live Q&A",
       "Downloadable PDF playbooks",
@@ -57,14 +57,14 @@ const plans = [
     ],
     missing: [],
     cta: "Go Pro",
-    ctaHref: "#",
+    ctaHref: "/auth/signup?plan=pro",
     ctaStyle: "primary" as const,
   },
   {
     id: "elite",
     name: "ELITE",
-    monthlyPrice: "₹2,499",
-    annualPrice: "₹1,999",
+    monthlyPrice: "₹14,999",
+    annualPrice: "₹11,999",
     period: "coming soon",
     badge: "COMING SOON",
     highlight: false,
@@ -77,21 +77,21 @@ const plans = [
     ],
     missing: [],
     cta: "Join waitlist",
-    ctaHref: "#",
+    ctaHref: "/newsletter",
     ctaStyle: "disabled" as const,
   },
 ];
 
-const tableFeatures: { label: string; free: boolean | "soon"; learner: boolean | "soon"; pro: boolean | "soon"; elite: boolean | "soon" }[] = [
-  { label: "Free lesson previews", free: true, learner: true, pro: true, elite: true },
-  { label: "Full course access", free: false, learner: true, pro: true, elite: true },
-  { label: "Interactive exercises", free: false, learner: true, pro: true, elite: true },
-  { label: "Progress tracking", free: false, learner: true, pro: true, elite: true },
-  { label: "Downloadable PDFs", free: false, learner: false, pro: true, elite: true },
-  { label: "WhatsApp community", free: false, learner: false, pro: true, elite: true },
-  { label: "Monthly live Q&A", free: false, learner: false, pro: true, elite: true },
-  { label: "Model portfolios", free: false, learner: false, pro: false, elite: "soon" },
-  { label: "1:1 monthly session", free: false, learner: false, pro: false, elite: "soon" },
+const tableFeatures: { label: string; free: boolean | "soon"; starter: boolean | "soon"; pro: boolean | "soon"; elite: boolean | "soon" }[] = [
+  { label: "Free lesson previews", free: true, starter: true, pro: true, elite: true },
+  { label: "Full course access", free: false, starter: true, pro: true, elite: true },
+  { label: "Interactive exercises", free: false, starter: true, pro: true, elite: true },
+  { label: "Progress tracking", free: false, starter: true, pro: true, elite: true },
+  { label: "Downloadable PDFs", free: false, starter: false, pro: true, elite: true },
+  { label: "WhatsApp community", free: false, starter: false, pro: true, elite: true },
+  { label: "Monthly live Q&A", free: false, starter: false, pro: true, elite: true },
+  { label: "Model portfolios", free: false, starter: false, pro: false, elite: "soon" },
+  { label: "1:1 monthly session", free: false, starter: false, pro: false, elite: "soon" },
 ];
 
 const faqs = [
@@ -253,7 +253,7 @@ export default function PricingPage() {
             <div className="px-5 py-4 font-mono text-[11px] text-[rgba(255,255,255,0.5)] tracking-widest uppercase">
               Feature
             </div>
-            {["Free", "Learner", "Pro", "Elite"].map((col) => (
+            {["Free", "Starter", "Pro", "Elite"].map((col) => (
               <div
                 key={col}
                 className="px-5 py-4 font-mono text-[11px] text-white tracking-widest uppercase text-center"
@@ -273,7 +273,7 @@ export default function PricingPage() {
               <div className="px-5 py-3.5 text-[13px] text-[#0F2348] font-medium">
                 {row.label}
               </div>
-              {(["free", "learner", "pro", "elite"] as const).map((col) => (
+              {(["free", "starter", "pro", "elite"] as const).map((col) => (
                 <div
                   key={col}
                   className="px-5 py-3.5 flex items-center justify-center"
