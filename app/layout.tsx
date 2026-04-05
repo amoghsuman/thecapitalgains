@@ -45,7 +45,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${dmSans.variable} ${dmMono.variable} h-full antialiased`}
+      className={`${playfair.variable} ${dmSans.variable} ${dmMono.variable} h-full antialiased font-serif`}
     >
       <body className="min-h-full flex flex-col bg-[#FAFAF7] text-[#1A1A2E] font-serif">
         <DisclaimerBar />
