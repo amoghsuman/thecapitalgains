@@ -406,12 +406,6 @@ export default function ReaderPage() {
 
               {/* Content */}
               <div className="flex flex-col gap-5">
-                {lesson?.body && lesson.body.length === 0 && (
-                  <p className="text-red-500 font-mono text-sm">Body is empty array</p>
-                )}
-                {!lesson?.body && (
-                  <p className="text-red-500 font-mono text-sm">Body is null/undefined</p>
-                )}
                 <PortableText value={lesson.body || []} components={portableTextComponents} />
               </div>
 

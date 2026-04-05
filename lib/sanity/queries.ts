@@ -53,7 +53,24 @@ export async function getFullCourseForReader(courseSlug: string) {
   return client.fetch(`
     *[_type == "course" && slug.current == $courseSlug][0] {
       title,
-      price,
+      "slug": slug.current,
+      chapters[] {
+        title,
+        lessons[] {
+          title,
+          "slug": slug.current,
+          duration,
+          isFree
+        }
+      }
+    }
+  `, { courseSlug })
+}
+
+export async function getLessonBySlug(courseSlug: string, lessonSlug: string) {
+  const course = await client.fetch(`
+    *[_type == "course" && slug.current == $courseSlug][0] {
+      title,
       "slug": slug.current,
       chapters[] {
         title,
@@ -62,41 +79,41 @@ export async function getFullCourseForReader(courseSlug: string) {
           "slug": slug.current,
           duration,
           isFree,
-        }
-      }
-    }
-  `, { courseSlug })
-}
-
-export async function getLessonBySlug(courseSlug: string, lessonSlug: string) {
-  return client.fetch(`
-    *[_type == "course" && slug.current == $courseSlug][0] {
-      title,
-      price,
-      "slug": slug.current,
-      "lesson": chapters[].lessons[slug.current == $lessonSlug][0] {
-        title,
-        "slug": slug.current,
-        duration,
-        isFree,
-        body[] {
-          ...,
-          _type == "callout" => {
-            _type,
-            _key,
-            type,
-            text
-          },
-          _type == "exercise" => {
-            _type,
-            _key,
-            title,
-            steps
+          body[] {
+            ...,
+            _type == "callout" => {
+              _type,
+              _key,
+              type,
+              text
+            },
+            _type == "exercise" => {
+              _type,
+              _key,
+              title,
+              steps
+            }
           }
         }
       }
     }
-  `, { courseSlug, lessonSlug })
+  `, { courseSlug })
+
+  if (!course) return null
+
+  for (const chapter of course.chapters || []) {
+    for (const lesson of chapter.lessons || []) {
+      if (lesson.slug === lessonSlug) {
+        return {
+          title: course.title,
+          slug: course.slug,
+          lesson,
+        }
+      }
+    }
+  }
+
+  return null
 }
 
 export async function getLessonContent(courseSlug: string, lessonSlug: string) {
