@@ -1,4 +1,4 @@
-const sections = [
+﻿const sections = [
   {
     title: "Acceptance of Terms",
     body: "Using The Capital Gains platform means you agree to these terms. If you disagree, please do not use the platform.",
@@ -40,7 +40,7 @@ export default function TermsPage() {
         <div className="font-mono text-[11px] text-[#9494A8] tracking-widest uppercase mb-3">
           Legal
         </div>
-        <h1 className="font-serif text-4xl font-bold text-[#0F2348] mb-3">
+        <h1 className="font-serif text-4xl font-bold text-[#1E1245] mb-3">
           Terms of Service
         </h1>
         <div className="font-mono text-[12px] text-[#9494A8] mb-10">
@@ -48,7 +48,7 @@ export default function TermsPage() {
         </div>
         {sections.map((s) => (
           <div key={s.title}>
-            <h2 className="font-serif text-[20px] font-bold text-[#0F2348] mb-3 mt-8">
+            <h2 className="font-serif text-[20px] font-bold text-[#1E1245] mb-3 mt-8">
               {s.title}
             </h2>
             <p className="text-[15px] text-[#5A5A72] leading-relaxed">{s.body}</p>

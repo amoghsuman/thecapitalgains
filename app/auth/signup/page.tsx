@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from 'react'
 import Link from 'next/link'
@@ -57,19 +57,19 @@ export default function SignupPage() {
       <div className="bg-[#FAFAF7] min-h-screen flex items-center justify-center px-8">
         <div className="max-w-sm w-full">
           <div className="text-center mb-8">
-            <div className="font-serif font-bold text-[18px] text-[#0F2348]">
+            <div className="font-serif font-bold text-[18px] text-[#1E1245]">
               The Capital Gains
             </div>
           </div>
-          <div className="bg-white border border-[rgba(15,35,72,0.1)] rounded-2xl p-8 shadow-[0_4px_32px_rgba(15,35,72,0.06)] text-center">
+          <div className="bg-white border border-[rgba(30,18,69,0.1)] rounded-2xl p-8 shadow-[0_4px_32px_rgba(30,18,69,0.06)] text-center">
             <div className="w-12 h-12 bg-[#E8F5EE] rounded-full flex items-center justify-center mx-auto mb-5">
               <span className="text-[#1A7A4A] text-[20px]">✓</span>
             </div>
-            <h2 className="font-serif text-[22px] font-bold text-[#0F2348] mb-2">
+            <h2 className="font-serif text-[22px] font-bold text-[#1E1245] mb-2">
               Check your email
             </h2>
             <p className="text-[14px] text-[#5A5A72] leading-relaxed">
-              We&apos;ve sent a confirmation link to <span className="font-medium text-[#0F2348]">{email}</span>. Click it to activate your account.
+              We&apos;ve sent a confirmation link to <span className="font-medium text-[#1E1245]">{email}</span>. Click it to activate your account.
             </p>
           </div>
           <p className="text-center text-[13px] text-[#5A5A72] mt-5">
@@ -89,13 +89,13 @@ export default function SignupPage() {
 
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="font-serif font-bold text-[18px] text-[#0F2348]">
+          <div className="font-serif font-bold text-[18px] text-[#1E1245]">
             The Capital Gains
           </div>
         </div>
 
-        <div className="bg-white border border-[rgba(15,35,72,0.1)] rounded-2xl p-8 shadow-[0_4px_32px_rgba(15,35,72,0.06)]">
-          <h1 className="font-serif text-[28px] font-bold text-[#0F2348] mb-1">
+        <div className="bg-white border border-[rgba(30,18,69,0.1)] rounded-2xl p-8 shadow-[0_4px_32px_rgba(30,18,69,0.06)]">
+          <h1 className="font-serif text-[28px] font-bold text-[#1E1245] mb-1">
             Create your account
           </h1>
           <p className="text-[14px] text-[#5A5A72] mb-6">
@@ -113,7 +113,7 @@ export default function SignupPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.com"
                 required
-                className="w-full bg-[#FAFAF7] border border-[rgba(15,35,72,0.15)] rounded-lg px-4 py-3 text-[14px] text-[#1A1A2E] placeholder:text-[#9494A8] outline-none focus:border-[#0F2348] transition-colors"
+                className="w-full bg-[#FAFAF7] border border-[rgba(30,18,69,0.15)] rounded-lg px-4 py-3 text-[14px] text-[#1A1A2E] placeholder:text-[#9494A8] outline-none focus:border-[#1E1245] transition-colors"
               />
             </div>
 
@@ -127,7 +127,7 @@ export default function SignupPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Min. 8 characters"
                 required
-                className="w-full bg-[#FAFAF7] border border-[rgba(15,35,72,0.15)] rounded-lg px-4 py-3 text-[14px] text-[#1A1A2E] placeholder:text-[#9494A8] outline-none focus:border-[#0F2348] transition-colors"
+                className="w-full bg-[#FAFAF7] border border-[rgba(30,18,69,0.15)] rounded-lg px-4 py-3 text-[14px] text-[#1A1A2E] placeholder:text-[#9494A8] outline-none focus:border-[#1E1245] transition-colors"
               />
             </div>
 
@@ -141,7 +141,7 @@ export default function SignupPage() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="••••••••"
                 required
-                className="w-full bg-[#FAFAF7] border border-[rgba(15,35,72,0.15)] rounded-lg px-4 py-3 text-[14px] text-[#1A1A2E] placeholder:text-[#9494A8] outline-none focus:border-[#0F2348] transition-colors"
+                className="w-full bg-[#FAFAF7] border border-[rgba(30,18,69,0.15)] rounded-lg px-4 py-3 text-[14px] text-[#1A1A2E] placeholder:text-[#9494A8] outline-none focus:border-[#1E1245] transition-colors"
               />
             </div>
 
@@ -161,15 +161,15 @@ export default function SignupPage() {
           </form>
           {/* Divider */}
           <div className="flex items-center gap-3 my-5">
-            <div className="flex-1 h-px bg-[rgba(15,35,72,0.1)]" />
+            <div className="flex-1 h-px bg-[rgba(30,18,69,0.1)]" />
             <span className="font-mono text-[11px] text-[#9494A8]">or</span>
-            <div className="flex-1 h-px bg-[rgba(15,35,72,0.1)]" />
+            <div className="flex-1 h-px bg-[rgba(30,18,69,0.1)]" />
           </div>
 
           {/* Google */}
           <button
             onClick={handleGoogleSignIn}
-            className="w-full flex items-center justify-center gap-3 bg-white border border-[rgba(15,35,72,0.15)] hover:border-[rgba(15,35,72,0.3)] rounded-lg py-3 text-[14px] text-[#0F2348] font-medium transition-colors"
+            className="w-full flex items-center justify-center gap-3 bg-white border border-[rgba(30,18,69,0.15)] hover:border-[rgba(30,18,69,0.3)] rounded-lg py-3 text-[14px] text-[#1E1245] font-medium transition-colors"
           >
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
               <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>

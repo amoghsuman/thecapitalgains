@@ -1,4 +1,4 @@
-const sections = [
+﻿const sections = [
   {
     title: "Information We Collect",
     body: "We collect email address, name, and payment information when you create an account or make a purchase. We also collect usage data such as lessons completed and progress tracking.",
@@ -36,7 +36,7 @@ export default function PrivacyPage() {
         <div className="font-mono text-[11px] text-[#9494A8] tracking-widest uppercase mb-3">
           Legal
         </div>
-        <h1 className="font-serif text-4xl font-bold text-[#0F2348] mb-3">
+        <h1 className="font-serif text-4xl font-bold text-[#1E1245] mb-3">
           Privacy Policy
         </h1>
         <div className="font-mono text-[12px] text-[#9494A8] mb-10">
@@ -44,7 +44,7 @@ export default function PrivacyPage() {
         </div>
         {sections.map((s) => (
           <div key={s.title}>
-            <h2 className="font-serif text-[20px] font-bold text-[#0F2348] mb-3 mt-8">
+            <h2 className="font-serif text-[20px] font-bold text-[#1E1245] mb-3 mt-8">
               {s.title}
             </h2>
             <p className="text-[15px] text-[#5A5A72] leading-relaxed">{s.body}</p>

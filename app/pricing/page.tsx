@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import Link from "next/link";
@@ -176,8 +176,8 @@ function TierCard({
         onClick={onClick}
         className={`w-full text-left rounded-xl px-4 py-3 border transition-all ${
           selected
-            ? "border-[rgba(15,35,72,0.2)] bg-[#EDE9E0]"
-            : "border-[rgba(15,35,72,0.07)] bg-[#FAFAF7] hover:border-[rgba(15,35,72,0.15)]"
+            ? "border-[rgba(30,18,69,0.2)] bg-[#EDE9E0]"
+            : "border-[rgba(30,18,69,0.07)] bg-[#FAFAF7] hover:border-[rgba(30,18,69,0.15)]"
         }`}
       >
         <div className="flex justify-between items-center">
@@ -194,7 +194,7 @@ function TierCard({
       className={`w-full text-left rounded-xl px-4 py-4 border-2 transition-all relative ${
         selected
           ? "border-[#D4860A] bg-white shadow-[0_2px_16px_rgba(212,134,10,0.1)]"
-          : "border-[rgba(15,35,72,0.1)] bg-white hover:border-[rgba(15,35,72,0.25)]"
+          : "border-[rgba(30,18,69,0.1)] bg-white hover:border-[rgba(30,18,69,0.25)]"
       }`}
     >
       {/* Selected checkmark */}
@@ -216,7 +216,7 @@ function TierCard({
       <div className="font-mono text-[10px] text-[#9494A8] tracking-widest mb-1.5 pr-10">
         {tier.name}
       </div>
-      <div className="font-mono text-[20px] font-medium text-[#0F2348] leading-none mb-3">
+      <div className="font-mono text-[20px] font-medium text-[#1E1245] leading-none mb-3">
         {price === 0 ? "₹0" : fmt(price)}
         {price > 0 && (
           <span className="text-[11px] font-normal text-[#9494A8] ml-1">/month</span>
@@ -269,7 +269,7 @@ function StackColumn({
       </div>
 
       {/* Tier cards */}
-      <div className="flex flex-col gap-2 bg-[#F4F1EB] px-4 py-4 rounded-b-2xl border-x border-b border-[rgba(15,35,72,0.1)]">
+      <div className="flex flex-col gap-2 bg-[#F4F1EB] px-4 py-4 rounded-b-2xl border-x border-b border-[rgba(30,18,69,0.1)]">
         {tiers.map((tier) => {
           const price = resolvePrice(tier, annual);
           // Clicking the currently selected (non-none) tier deselects it back to none.
@@ -347,7 +347,7 @@ export default function PricingPage() {
         <div className="font-mono text-[11px] text-[#9494A8] tracking-widest uppercase mb-2">
           Pricing
         </div>
-        <h1 className="font-serif text-5xl font-bold text-[#0F2348] leading-[1.1] mb-3">
+        <h1 className="font-serif text-5xl font-bold text-[#1E1245] leading-[1.1] mb-3">
           Build your subscription
         </h1>
         <p className="text-[16px] text-[#5A5A72] mb-8 max-w-xl">
@@ -360,8 +360,8 @@ export default function PricingPage() {
             onClick={() => setAnnual(false)}
             className={`px-5 py-2 rounded-md text-[13px] font-medium transition-all ${
               !annual
-                ? "bg-white text-[#0F2348] shadow-sm"
-                : "text-[#5A5A72] hover:text-[#0F2348]"
+                ? "bg-white text-[#1E1245] shadow-sm"
+                : "text-[#5A5A72] hover:text-[#1E1245]"
             }`}
           >
             Monthly
@@ -370,8 +370,8 @@ export default function PricingPage() {
             onClick={() => setAnnual(true)}
             className={`px-5 py-2 rounded-md text-[13px] font-medium transition-all ${
               annual
-                ? "bg-white text-[#0F2348] shadow-sm"
-                : "text-[#5A5A72] hover:text-[#0F2348]"
+                ? "bg-white text-[#1E1245] shadow-sm"
+                : "text-[#5A5A72] hover:text-[#1E1245]"
             }`}
           >
             Annual — save 20%
@@ -388,7 +388,7 @@ export default function PricingPage() {
             stackNum="STACK 01"
             title="Learn"
             subtitle="Self-paced courses & playbooks"
-            headerBg="bg-[#0F2348]"
+            headerBg="bg-[#1E1245]"
             tiers={learnTiers}
             selected={selectedLearn}
             onSelect={(id) => setSelectedLearn(id as LearnTier)}
@@ -400,7 +400,7 @@ export default function PricingPage() {
             stackNum="STACK 02"
             title="Research"
             subtitle="Market analysis & model portfolios"
-            headerBg="bg-[#1A3460]"
+            headerBg="bg-[#2D1B69]"
             tiers={researchTiers}
             selected={selectedResearch}
             onSelect={(id) => setSelectedResearch(id as ResearchTier)}
@@ -411,7 +411,7 @@ export default function PricingPage() {
                   For institutional / non-individual pricing, write to{" "}
                   <span className="text-[#5A5A72]">hello@thecapitalgains.com</span>
                 </p>
-                <div className="bg-white border border-[rgba(15,35,72,0.1)] rounded-lg px-3 py-2.5">
+                <div className="bg-white border border-[rgba(30,18,69,0.1)] rounded-lg px-3 py-2.5">
                   <p className="font-mono text-[9px] text-[#9494A8] leading-relaxed">
                     ⚖ Research services provided under SEBI Research Analyst regulations.
                     Individual client fees capped at ₹1,50,000 per annum.
@@ -426,7 +426,7 @@ export default function PricingPage() {
             stackNum="STACK 03"
             title="Community"
             subtitle="Live sessions & direct access"
-            headerBg="bg-[#2A1A5E]"
+            headerBg="bg-[#3D2785]"
             tiers={communityTiers}
             selected={selectedCommunity}
             onSelect={(id) => setSelectedCommunity(id as CommunityTier)}
@@ -437,7 +437,7 @@ export default function PricingPage() {
 
       {/* ── BUNDLE SUMMARY ── */}
       <section className="max-w-6xl mx-auto px-8 mt-10 mb-20">
-        <div className="bg-white border border-[rgba(15,35,72,0.1)] rounded-2xl p-8 shadow-[0_4px_32px_rgba(15,35,72,0.06)]">
+        <div className="bg-white border border-[rgba(30,18,69,0.1)] rounded-2xl p-8 shadow-[0_4px_32px_rgba(30,18,69,0.06)]">
           <div className="flex flex-col lg:flex-row gap-8 items-start lg:items-center justify-between">
 
             {/* Left — itemised selections */}
@@ -457,7 +457,7 @@ export default function PricingPage() {
                       className="flex justify-between items-center gap-8"
                     >
                       <span className="text-[14px] text-[#5A5A72]">{item.label}</span>
-                      <span className="font-mono text-[14px] text-[#0F2348] whitespace-nowrap">
+                      <span className="font-mono text-[14px] text-[#1E1245] whitespace-nowrap">
                         {item.price === 0 ? "Free" : `${fmt(item.price)}/mo`}
                       </span>
                     </div>
@@ -467,7 +467,7 @@ export default function PricingPage() {
             </div>
 
             {/* Vertical divider — desktop only */}
-            <div className="hidden lg:block w-px self-stretch bg-[rgba(15,35,72,0.08)]" />
+            <div className="hidden lg:block w-px self-stretch bg-[rgba(30,18,69,0.08)]" />
 
             {/* Right — total + CTA */}
             <div className="flex flex-col items-start lg:items-end gap-3 flex-shrink-0">
@@ -475,7 +475,7 @@ export default function PricingPage() {
                 <div className="font-mono text-[11px] text-[#9494A8] tracking-widest uppercase mb-1">
                   Monthly total
                 </div>
-                <div className="font-mono text-[40px] font-medium text-[#0F2348] leading-none">
+                <div className="font-mono text-[40px] font-medium text-[#1E1245] leading-none">
                   {fmt(total)}
                   <span className="text-[14px] font-normal text-[#9494A8] ml-1.5">/mo</span>
                 </div>
@@ -510,20 +510,20 @@ export default function PricingPage() {
 
       {/* ── FAQ ── */}
       <section className="max-w-3xl mx-auto px-8 mt-4 pb-20">
-        <h2 className="font-serif text-[28px] font-bold text-[#0F2348] mb-8">
+        <h2 className="font-serif text-[28px] font-bold text-[#1E1245] mb-8">
           Common questions
         </h2>
         <div className="flex flex-col gap-3">
           {faqs.map((faq, i) => (
             <div
               key={i}
-              className="bg-white border border-[rgba(15,35,72,0.1)] rounded-xl overflow-hidden"
+              className="bg-white border border-[rgba(30,18,69,0.1)] rounded-xl overflow-hidden"
             >
               <button
                 onClick={() => setOpenFaq(openFaq === i ? null : i)}
                 className="w-full flex justify-between items-center px-6 py-4 text-left"
               >
-                <span className="text-[15px] font-medium text-[#0F2348]">
+                <span className="text-[15px] font-medium text-[#1E1245]">
                   {faq.q}
                 </span>
                 <span
@@ -535,7 +535,7 @@ export default function PricingPage() {
                 </span>
               </button>
               {openFaq === i && (
-                <div className="px-6 pb-5 text-[14px] text-[#5A5A72] leading-relaxed border-t border-[rgba(15,35,72,0.07)]">
+                <div className="px-6 pb-5 text-[14px] text-[#5A5A72] leading-relaxed border-t border-[rgba(30,18,69,0.07)]">
                   <div className="pt-4">{faq.a}</div>
                 </div>
               )}

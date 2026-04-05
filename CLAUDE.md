@@ -1,4 +1,4 @@
-@AGENTS.md
+﻿@AGENTS.md
 # The Capital Gains — Project Briefing
 
 ## What This Is
@@ -47,6 +47,18 @@ thecapitalgains.com
 - [ ] Razorpay integration
 - [ ] Course reader wired to Supabase
 - [ ] Domain connected
+
+## Colour Palette
+- Navy (primary): #1E1245 — was #0F2348
+- Navy light: #2D1B69 — was #1A3460
+- Navy deep: #3D2785 — was #2A1A5E
+- Amber: #D4860A
+- Amber hover: #F0A020
+- Background: #FAFAF7
+- Text muted: #5A5A72
+- Text label: #9494A8
+- Green: #1A7A4A
+- Border (rgba): rgba(30,18,69,0.1) — was rgba(15,35,72,0.1)
 
 ## Open Items
 - SEBI RA registration number pending
