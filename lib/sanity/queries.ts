@@ -49,6 +49,42 @@ export async function getCourseBySlug(slug: string) {
   `, { slug })
 }
 
+export async function getFullCourseForReader(courseSlug: string) {
+  return client.fetch(`
+    *[_type == "course" && slug.current == $courseSlug][0] {
+      title,
+      price,
+      "slug": slug.current,
+      chapters[] {
+        title,
+        lessons[] {
+          title,
+          "slug": slug.current,
+          duration,
+          isFree,
+        }
+      }
+    }
+  `, { courseSlug })
+}
+
+export async function getLessonBySlug(courseSlug: string, lessonSlug: string) {
+  return client.fetch(`
+    *[_type == "course" && slug.current == $courseSlug][0] {
+      title,
+      price,
+      "slug": slug.current,
+      "lesson": chapters[].lessons[slug.current == $lessonSlug][0] {
+        title,
+        "slug": slug.current,
+        duration,
+        isFree,
+        body
+      }
+    }
+  `, { courseSlug, lessonSlug })
+}
+
 export async function getLessonContent(courseSlug: string, lessonSlug: string) {
   return client.fetch(`
     *[_type == "course" && slug.current == $courseSlug][0] {
