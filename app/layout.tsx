@@ -7,7 +7,7 @@ import Navbar from "@/components/layout/Navbar";
 const playfair = Playfair_Display({
   variable: "--font-playfair",
   subsets: ["latin"],
-  weight: ["400", "600", "700"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const dmSans = DM_Sans({
@@ -47,7 +47,7 @@ export default function RootLayout({
       lang="en"
       className={`${playfair.variable} ${dmSans.variable} ${dmMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#FAFAF7] text-[#1A1A2E]">
+      <body className="min-h-full flex flex-col bg-[#FAFAF7] text-[#1A1A2E] font-serif">
         <DisclaimerBar />
         <Navbar />
         <main className="flex-1 w-full">

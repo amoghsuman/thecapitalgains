@@ -75,28 +75,28 @@ function ExerciseBlock({ title, steps }: { title: string; steps: string[] }) {
 const portableTextComponents: PortableTextComponents = {
   block: {
     normal: ({ children }) => (
-      <p className="text-[15px] text-[#5A5A72] leading-relaxed">{children}</p>
+      <p className="font-serif text-[17px] text-[#5A5A72] leading-[1.85]">{children}</p>
     ),
     h2: ({ children }) => (
-      <h2 className="font-serif text-[22px] font-bold text-[#0F2348] mt-4 mb-0">{children}</h2>
+      <h2 className="font-serif text-[24px] font-bold text-[#0F2348] mt-4 mb-0">{children}</h2>
     ),
     blockquote: ({ children }) => (
-      <p className="text-[17px] text-[#1A1A2E] leading-relaxed italic border-l-[3px] border-[#D4860A] pl-5 py-1">
+      <p className="font-serif text-[17px] text-[#1A1A2E] leading-[1.85] italic border-l-[3px] border-[#D4860A] pl-5 py-1">
         {children}
       </p>
     ),
   },
   list: {
     bullet: ({ children }) => (
-      <ul className="flex flex-col gap-2 pl-4 list-disc text-[15px] text-[#5A5A72]">{children}</ul>
+      <ul className="flex flex-col gap-2 pl-4 list-disc text-[16px] text-[#5A5A72]">{children}</ul>
     ),
     number: ({ children }) => (
-      <ol className="flex flex-col gap-2 pl-4 list-decimal text-[15px] text-[#5A5A72]">{children}</ol>
+      <ol className="flex flex-col gap-2 pl-4 list-decimal text-[16px] text-[#5A5A72]">{children}</ol>
     ),
   },
   listItem: {
-    bullet: ({ children }) => <li className="leading-relaxed">{children}</li>,
-    number: ({ children }) => <li className="leading-relaxed">{children}</li>,
+    bullet: ({ children }) => <li className="font-serif leading-relaxed">{children}</li>,
+    number: ({ children }) => <li className="font-serif leading-relaxed">{children}</li>,
   },
   types: {
     callout: ({ value }: { value: { type?: string; text?: string } }) => {
