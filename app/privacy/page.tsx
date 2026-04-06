@@ -33,13 +33,13 @@ export default function PrivacyPage() {
   return (
     <div className="bg-[#FAFAF7] min-h-screen">
       <div className="max-w-3xl mx-auto px-8 pt-16 pb-20">
-        <div className="font-mono text-[11px] text-[#9494A8] tracking-widest uppercase mb-3">
+        <div className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase mb-3">
           Legal
         </div>
         <h1 className="font-serif text-4xl font-bold text-[#1E1245] mb-3">
           Privacy Policy
         </h1>
-        <div className="font-mono text-[12px] text-[#9494A8] mb-10">
+        <div className="font-mono text-[12px] text-[#7A7A8A] mb-10">
           Last updated: April 2025
         </div>
         {sections.map((s) => (
@@ -47,7 +47,7 @@ export default function PrivacyPage() {
             <h2 className="font-serif text-[20px] font-bold text-[#1E1245] mb-3 mt-8">
               {s.title}
             </h2>
-            <p className="text-[15px] text-[#5A5A72] leading-relaxed">{s.body}</p>
+            <p className="text-[15px] text-[#3D3D3D] leading-relaxed">{s.body}</p>
           </div>
         ))}
       </div>

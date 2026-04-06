@@ -92,6 +92,19 @@ export async function getLessonBySlug(courseSlug: string, lessonSlug: string) {
               _key,
               title,
               steps
+            },
+            _type == "mathBlock" => {
+              _type,
+              _key,
+              latex,
+              caption
+            },
+            _type == "keyFact" => {
+              _type,
+              _key,
+              label,
+              "value": value,
+              context
             }
           }
         }

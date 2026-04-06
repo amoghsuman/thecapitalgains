@@ -27,7 +27,7 @@ export default function Navbar() {
             <Link
               key={item.label}
               href={item.href}
-              className="px-4 py-2 text-[14px] text-[#5A5A72] hover:text-[#1E1245] hover:bg-[#F4F1EB] rounded-md transition-all"
+              className="px-4 py-2 text-[14px] text-[#3D3D3D] hover:text-[#1E1245] hover:bg-[#F4F1EB] rounded-md transition-all"
             >
               {item.label}
             </Link>
@@ -36,7 +36,7 @@ export default function Navbar() {
 
         {/* CTAs */}
         <div className="hidden md:flex items-center gap-2 ml-auto">
-          <Link href="/auth/login" className="border border-[rgba(30,18,69,0.2)] rounded-lg px-5 py-2 text-[13px] text-[#5A5A72] hover:border-[#1E1245] hover:text-[#1E1245] transition-all">
+          <Link href="/auth/login" className="border border-[rgba(30,18,69,0.2)] rounded-lg px-5 py-2 text-[13px] text-[#3D3D3D] hover:border-[#1E1245] hover:text-[#1E1245] transition-all">
             Sign in
           </Link>
           <Link href="/auth/signup" className="bg-[#1E1245] text-white rounded-lg px-5 py-2 text-[13px] font-medium hover:bg-[#2D1B69] transition-all">
@@ -73,14 +73,14 @@ export default function Navbar() {
             <Link
               key={item.label}
               href={item.href}
-              className="py-2 text-[14px] text-[#5A5A72] hover:text-[#1E1245]"
+              className="py-2 text-[14px] text-[#3D3D3D] hover:text-[#1E1245]"
               onClick={() => setMenuOpen(false)}
             >
               {item.label}
             </Link>
           ))}
           <div className="flex gap-2 pt-2 border-t border-[rgba(30,18,69,0.08)]">
-            <Link href="/auth/login" className="flex-1 text-center border border-[rgba(30,18,69,0.2)] rounded-lg px-4 py-2 text-[13px] text-[#5A5A72]">
+            <Link href="/auth/login" className="flex-1 text-center border border-[rgba(30,18,69,0.2)] rounded-lg px-4 py-2 text-[13px] text-[#3D3D3D]">
               Sign in
             </Link>
             <Link href="/auth/signup" className="flex-1 text-center bg-[#1E1245] text-white rounded-lg px-4 py-2 text-[13px] font-medium">

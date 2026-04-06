@@ -21,7 +21,7 @@ export default function HomePage() {
             <span className="text-[#D4860A]">Not gamble like a beginner.</span>
           </h1>
 
-          <p className="text-[17px] text-[#5A5A72] leading-relaxed mb-9 max-w-lg">
+          <p className="text-[17px] text-[#3D3D3D] leading-relaxed mb-9 max-w-lg">
             Playbook-style courses for Indian retail investors and traders.
             Read, apply, repeat. No fluff, no video lectures, no jargon.
           </p>
@@ -35,7 +35,7 @@ export default function HomePage() {
             </Link>
             <Link
               href="/pricing"
-              className="border border-[rgba(30,18,69,0.2)] hover:border-[#1E1245] hover:text-[#1E1245] text-[#5A5A72] rounded-lg px-6 py-3.5 text-[15px] transition-all"
+              className="border border-[rgba(30,18,69,0.2)] hover:border-[#1E1245] hover:text-[#1E1245] text-[#3D3D3D] rounded-lg px-6 py-3.5 text-[15px] transition-all"
             >
               View plans
             </Link>
@@ -53,7 +53,7 @@ export default function HomePage() {
                 <span className="font-mono text-[22px] font-medium text-[#1E1245]">
                   {s.num}
                 </span>
-                <span className="text-[12px] text-[#9494A8] mt-0.5">{s.label}</span>
+                <span className="text-[12px] text-[#7A7A8A] mt-0.5">{s.label}</span>
               </div>
             ))}
           </div>
@@ -63,13 +63,13 @@ export default function HomePage() {
         <div className="bg-white border border-[rgba(30,18,69,0.1)] rounded-2xl p-7 shadow-[0_4px_32px_rgba(30,18,69,0.08)]">
           <div className="flex justify-between items-start mb-5">
             <div>
-              <div className="font-mono text-[10px] text-[#9494A8] tracking-widest mb-2">
+              <div className="font-mono text-[10px] text-[#7A7A8A] tracking-widest mb-2">
                 BEGINNER → INTERMEDIATE
               </div>
               <h3 className="font-serif text-[18px] text-[#1E1245] leading-snug">
                 Options Trading from Zero
               </h3>
-              <div className="text-[12px] text-[#9494A8] mt-1">
+              <div className="text-[12px] text-[#7A7A8A] mt-1">
                 12 lessons · ~4 hrs reading
               </div>
             </div>
@@ -80,7 +80,7 @@ export default function HomePage() {
 
           {/* Progress */}
           <div className="mb-4">
-            <div className="flex justify-between text-[12px] text-[#5A5A72] mb-1.5">
+            <div className="flex justify-between text-[12px] text-[#3D3D3D] mb-1.5">
               <span>Your progress</span>
               <span>2 / 12</span>
             </div>
@@ -113,13 +113,13 @@ export default function HomePage() {
                       ? "bg-[#1A7A4A] text-white"
                       : lesson.status === "active"
                       ? "bg-[#D4860A] text-white"
-                      : "bg-[#EDE9E0] text-[#9494A8]"
+                      : "bg-[#EDE9E0] text-[#7A7A8A]"
                   }`}
                 >
                   {lesson.status === "done" ? "✓" : lesson.status === "active" ? "▶" : "🔒"}
                 </div>
                 <span className="flex-1 text-[13px] text-[#1A1A2E]">{lesson.title}</span>
-                <span className="font-mono text-[11px] text-[#9494A8]">{lesson.time}</span>
+                <span className="font-mono text-[11px] text-[#7A7A8A]">{lesson.time}</span>
               </div>
             ))}
           </div>
@@ -141,7 +141,7 @@ export default function HomePage() {
               </div>
               <div>
                 <div className="text-[13px] font-medium text-[#1E1245]">{item.title}</div>
-                <div className="text-[11px] text-[#9494A8]">{item.sub}</div>
+                <div className="text-[11px] text-[#7A7A8A]">{item.sub}</div>
               </div>
             </div>
           ))}
@@ -150,7 +150,7 @@ export default function HomePage() {
 
       {/* ── PROBLEM SECTION ── */}
       <section className="max-w-6xl mx-auto px-8 py-20">
-        <div className="font-mono text-[11px] text-[#9494A8] tracking-widest uppercase mb-3">
+        <div className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase mb-3">
           The Problem
         </div>
         <div className="flex justify-between items-end flex-wrap gap-6 mb-12">
@@ -158,7 +158,7 @@ export default function HomePage() {
             <h2 className="font-serif text-[34px] font-bold text-[#1E1245] leading-snug">
               Why 90% of retail traders<br />blow up in 12 months
             </h2>
-            <p className="text-[16px] text-[#5A5A72] leading-relaxed mt-3 max-w-lg">
+            <p className="text-[16px] text-[#3D3D3D] leading-relaxed mt-3 max-w-lg">
               It&apos;s not bad luck. It&apos;s a predictable set of structural
               mistakes — and every single one is fixable with the right process.
             </p>
@@ -181,7 +181,7 @@ export default function HomePage() {
                 {card.num}
               </div>
               <div className="text-[15px] font-medium text-[#1E1245] mb-2">{card.title}</div>
-              <div className="text-[13px] text-[#5A5A72] leading-relaxed">{card.body}</div>
+              <div className="text-[13px] text-[#3D3D3D] leading-relaxed">{card.body}</div>
             </div>
           ))}
 
@@ -238,7 +238,7 @@ export default function HomePage() {
       {/* ── COURSES ── */}
       <section className="max-w-6xl mx-auto px-8 py-20">
         <div className="flex justify-between items-end mb-3">
-          <div className="font-mono text-[11px] text-[#9494A8] tracking-widest uppercase">
+          <div className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase">
             Courses
           </div>
           <Link href="/courses" className="font-mono text-[12px] text-[#D4860A]">
@@ -306,15 +306,15 @@ export default function HomePage() {
                 </div>
               </div>
               <div className="p-6">
-                <p className="text-[13px] text-[#5A5A72] leading-relaxed mb-4">{course.desc}</p>
+                <p className="text-[13px] text-[#3D3D3D] leading-relaxed mb-4">{course.desc}</p>
                 <div className="flex flex-wrap gap-1.5 mb-4">
                   {course.topics.map((t) => (
-                    <span key={t} className="font-mono text-[10px] text-[#9494A8] bg-[#F4F1EB] rounded px-2 py-1">
+                    <span key={t} className="font-mono text-[10px] text-[#7A7A8A] bg-[#F4F1EB] rounded px-2 py-1">
                       {t}
                     </span>
                   ))}
                 </div>
-                <div className="text-[12px] text-[#9494A8] mb-4">{course.lessons}</div>
+                <div className="text-[12px] text-[#7A7A8A] mb-4">{course.lessons}</div>
                 <div className="flex justify-between items-center pt-4 border-t border-[rgba(30,18,69,0.08)]">
                   <span className={`font-mono text-[10px] font-medium rounded px-2 py-1 ${course.accessBadge.style}`}>
                     {course.accessBadge.label}
@@ -332,7 +332,7 @@ export default function HomePage() {
             <div className="font-serif text-[18px] font-semibold text-[#1E1245] mb-1">
               One subscription. Three stacks. Everything you need.
             </div>
-            <div className="text-[14px] text-[#5A5A72]">
+            <div className="text-[14px] text-[#3D3D3D]">
               Build your bundle — Learn, Research, Community. Pay one monthly total.
             </div>
           </div>
@@ -348,13 +348,13 @@ export default function HomePage() {
       {/* ── MODEL PORTFOLIOS ── */}
       <div className="bg-[#F4F1EB]">
         <div className="max-w-6xl mx-auto px-8 py-20">
-          <div className="font-mono text-[11px] text-[#9494A8] tracking-widest uppercase mb-3">
+          <div className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase mb-3">
             Model Portfolios
           </div>
           <h2 className="font-serif text-[34px] font-bold text-[#1E1245] mb-3">
             See how a portfolio is built
           </h2>
-          <p className="text-[16px] text-[#5A5A72] leading-relaxed mb-12 max-w-xl">
+          <p className="text-[16px] text-[#3D3D3D] leading-relaxed mb-12 max-w-xl">
             Three illustrative portfolios maintained for educational purposes — showing how allocation, selection, and rebalancing decisions are made.
           </p>
 
@@ -365,9 +365,9 @@ export default function HomePage() {
               { num: "03", name: "Active Trader Watchlist", desc: "High-liquidity stocks with strong F&O interest. Illustrates how an active trader scans for setups.", horizon: "Short-term", stocks: "12", risk: "High", riskColor: "text-[#D4860A]", rebalance: "Weekly" },
             ].map((p) => (
               <div key={p.num} className="bg-white border border-[rgba(30,18,69,0.1)] rounded-xl p-6">
-                <div className="font-mono text-[10px] text-[#9494A8] tracking-widest mb-2">PORTFOLIO {p.num}</div>
+                <div className="font-mono text-[10px] text-[#7A7A8A] tracking-widest mb-2">PORTFOLIO {p.num}</div>
                 <div className="font-serif text-[16px] text-[#1E1245] mb-2">{p.name}</div>
-                <div className="text-[12px] text-[#5A5A72] leading-relaxed mb-5">{p.desc}</div>
+                <div className="text-[12px] text-[#3D3D3D] leading-relaxed mb-5">{p.desc}</div>
                 <div className="grid grid-cols-2 gap-2.5">
                   {[
                     { label: "HORIZON", val: p.horizon, color: "" },
@@ -376,7 +376,7 @@ export default function HomePage() {
                     { label: "REBALANCE", val: p.rebalance, color: "" },
                   ].map((stat) => (
                     <div key={stat.label} className="bg-[#F4F1EB] rounded-lg p-3">
-                      <div className="font-mono text-[10px] text-[#9494A8] mb-1">{stat.label}</div>
+                      <div className="font-mono text-[10px] text-[#7A7A8A] mb-1">{stat.label}</div>
                       <div className={`font-mono text-[14px] font-medium text-[#1E1245] ${stat.color}`}>{stat.val}</div>
                     </div>
                   ))}
@@ -385,7 +385,7 @@ export default function HomePage() {
             ))}
           </div>
 
-          <div className="mt-8 bg-white border border-[rgba(30,18,69,0.08)] rounded-lg px-5 py-4 font-mono text-[10px] text-[#9494A8] leading-relaxed">
+          <div className="mt-8 bg-white border border-[rgba(30,18,69,0.08)] rounded-lg px-5 py-4 font-mono text-[10px] text-[#7A7A8A] leading-relaxed">
             ⚠ These model portfolios are maintained purely for educational purposes to illustrate portfolio construction principles. They do not constitute investment advice or SEBI-registered research. Past illustrative performance does not guarantee future results. Do not invest based on this content without consulting a registered financial advisor.
           </div>
         </div>
@@ -393,7 +393,7 @@ export default function HomePage() {
 
       {/* ── PRICING SUMMARY ── */}
       <section className="max-w-6xl mx-auto px-8 py-20">
-        <div className="font-mono text-[11px] text-[#9494A8] tracking-widest uppercase mb-3">
+        <div className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase mb-3">
           Pricing
         </div>
         <div className="flex justify-between items-end flex-wrap gap-4 mb-12">
@@ -449,10 +449,10 @@ export default function HomePage() {
                 <div className="font-mono text-[22px] font-bold text-[#1E1245] leading-none mb-1">
                   {stack.from}
                 </div>
-                <div className="text-[12px] text-[#9494A8] mb-5">{stack.fromSub}</div>
+                <div className="text-[12px] text-[#7A7A8A] mb-5">{stack.fromSub}</div>
                 <div className="flex flex-col gap-2 mb-6">
                   {stack.features.map((f) => (
-                    <div key={f} className="flex gap-2 items-start text-[13px] text-[#5A5A72]">
+                    <div key={f} className="flex gap-2 items-start text-[13px] text-[#3D3D3D]">
                       <span className="text-[#1A7A4A] flex-shrink-0">✓</span>
                       {f}
                     </div>
@@ -507,45 +507,45 @@ export default function HomePage() {
               <div className="font-serif font-bold text-[16px] text-[#1E1245] mb-3">
                 The Capital Gains
               </div>
-              <div className="text-[13px] text-[#9494A8] leading-relaxed">
+              <div className="text-[13px] text-[#7A7A8A] leading-relaxed">
                 Text-first, exercise-driven courses for Indian retail investors and traders. Built for people who want to understand markets — not just follow tips.
               </div>
             </div>
             <div>
-              <div className="font-mono text-[10px] text-[#9494A8] tracking-widest uppercase mb-4">LEARN</div>
+              <div className="font-mono text-[10px] text-[#7A7A8A] tracking-widest uppercase mb-4">LEARN</div>
               <div className="flex flex-col gap-2">
-                <Link href="/courses" className="text-[13px] text-[#5A5A72] hover:text-[#1E1245] transition-colors">All Courses</Link>
-                <Link href="/portfolios" className="text-[13px] text-[#5A5A72] hover:text-[#1E1245] transition-colors">Model Portfolios</Link>
-                <span className="text-[13px] text-[#5A5A72]">Free Resources</span>
-                <Link href="/newsletter" className="text-[13px] text-[#5A5A72] hover:text-[#1E1245] transition-colors">Newsletter</Link>
-                <Link href="/about" className="text-[13px] text-[#5A5A72] hover:text-[#1E1245] transition-colors">About</Link>
+                <Link href="/courses" className="text-[13px] text-[#3D3D3D] hover:text-[#1E1245] transition-colors">All Courses</Link>
+                <Link href="/portfolios" className="text-[13px] text-[#3D3D3D] hover:text-[#1E1245] transition-colors">Model Portfolios</Link>
+                <span className="text-[13px] text-[#3D3D3D]">Free Resources</span>
+                <Link href="/newsletter" className="text-[13px] text-[#3D3D3D] hover:text-[#1E1245] transition-colors">Newsletter</Link>
+                <Link href="/about" className="text-[13px] text-[#3D3D3D] hover:text-[#1E1245] transition-colors">About</Link>
               </div>
             </div>
             <div>
-              <div className="font-mono text-[10px] text-[#9494A8] tracking-widest uppercase mb-4">PLATFORM</div>
+              <div className="font-mono text-[10px] text-[#7A7A8A] tracking-widest uppercase mb-4">PLATFORM</div>
               <div className="flex flex-col gap-2">
-                <Link href="/pricing" className="text-[13px] text-[#5A5A72] hover:text-[#1E1245] transition-colors">Pricing</Link>
-                <Link href="/auth/login" className="text-[13px] text-[#5A5A72] hover:text-[#1E1245] transition-colors">Sign In</Link>
-                <Link href="/auth/signup" className="text-[13px] text-[#5A5A72] hover:text-[#1E1245] transition-colors">Create Account</Link>
-                <Link href="/terms" className="text-[13px] text-[#5A5A72] hover:text-[#1E1245] transition-colors">Terms of Service</Link>
-                <Link href="/privacy" className="text-[13px] text-[#5A5A72] hover:text-[#1E1245] transition-colors">Privacy Policy</Link>
-                <Link href="/refund" className="text-[13px] text-[#5A5A72] hover:text-[#1E1245] transition-colors">Refund Policy</Link>
+                <Link href="/pricing" className="text-[13px] text-[#3D3D3D] hover:text-[#1E1245] transition-colors">Pricing</Link>
+                <Link href="/auth/login" className="text-[13px] text-[#3D3D3D] hover:text-[#1E1245] transition-colors">Sign In</Link>
+                <Link href="/auth/signup" className="text-[13px] text-[#3D3D3D] hover:text-[#1E1245] transition-colors">Create Account</Link>
+                <Link href="/terms" className="text-[13px] text-[#3D3D3D] hover:text-[#1E1245] transition-colors">Terms of Service</Link>
+                <Link href="/privacy" className="text-[13px] text-[#3D3D3D] hover:text-[#1E1245] transition-colors">Privacy Policy</Link>
+                <Link href="/refund" className="text-[13px] text-[#3D3D3D] hover:text-[#1E1245] transition-colors">Refund Policy</Link>
               </div>
             </div>
             <div>
-              <div className="font-mono text-[10px] text-[#9494A8] tracking-widest uppercase mb-4">FOLLOW</div>
+              <div className="font-mono text-[10px] text-[#7A7A8A] tracking-widest uppercase mb-4">FOLLOW</div>
               <div className="flex flex-col gap-2">
-                <span className="text-[13px] text-[#5A5A72]">Instagram</span>
-                <span className="text-[13px] text-[#5A5A72]">Substack</span>
-                <span className="text-[13px] text-[#5A5A72]">Telegram</span>
+                <span className="text-[13px] text-[#3D3D3D]">Instagram</span>
+                <span className="text-[13px] text-[#3D3D3D]">Substack</span>
+                <span className="text-[13px] text-[#3D3D3D]">Telegram</span>
               </div>
             </div>
           </div>
           <div className="border-t border-[rgba(30,18,69,0.1)] pt-6 flex flex-col md:flex-row justify-between gap-4">
-            <div className="font-mono text-[11px] text-[#9494A8]">
+            <div className="font-mono text-[11px] text-[#7A7A8A]">
               © 2025 The Capital Gains · thecapitalgains.com
             </div>
-            <div className="font-mono text-[10px] text-[#9494A8] max-w-lg leading-relaxed">
+            <div className="font-mono text-[10px] text-[#7A7A8A] max-w-lg leading-relaxed">
               All content is for educational purposes only and does not constitute investment advice, trading recommendations, or SEBI-registered research. Trading in equity and derivatives involves substantial risk of loss.
             </div>
           </div>

@@ -15,13 +15,13 @@ export default async function CourseDetailPage({
     return (
       <div className="bg-[#FAFAF7] min-h-screen">
         <div className="max-w-6xl mx-auto px-8 pt-20 text-center">
-          <div className="font-mono text-[11px] text-[#9494A8] tracking-widest uppercase mb-4">
+          <div className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase mb-4">
             404
           </div>
           <h1 className="font-serif text-4xl font-bold text-[#1E1245] mb-4">
             Course not found
           </h1>
-          <p className="text-[16px] text-[#5A5A72] mb-8">
+          <p className="text-[16px] text-[#3D3D3D] mb-8">
             We couldn&apos;t find a course at this URL.
           </p>
           <Link
@@ -48,7 +48,7 @@ export default async function CourseDetailPage({
 
       {/* ── BREADCRUMB ── */}
       <div className="max-w-6xl mx-auto px-8 pt-8">
-        <div className="flex items-center gap-2 font-mono text-[12px] text-[#9494A8]">
+        <div className="flex items-center gap-2 font-mono text-[12px] text-[#7A7A8A]">
           <Link href="/courses" className="hover:text-[#1E1245] transition-colors">
             Courses
           </Link>
@@ -70,7 +70,7 @@ export default async function CourseDetailPage({
                 {course.badge}
               </span>
             )}
-            <span className="font-mono text-[11px] text-[#9494A8] tracking-widest uppercase">
+            <span className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase">
               {course.tag}
             </span>
           </div>
@@ -81,7 +81,7 @@ export default async function CourseDetailPage({
           </h1>
 
           {/* Description */}
-          <p className="text-[16px] text-[#5A5A72] leading-relaxed mb-6">
+          <p className="text-[16px] text-[#3D3D3D] leading-relaxed mb-6">
             {course.description || course.subtitle}
           </p>
 
@@ -94,7 +94,7 @@ export default async function CourseDetailPage({
             ].map((s) => (
               s.val ? (
                 <div key={s.label} className="flex flex-col">
-                  <span className="font-mono text-[11px] text-[#9494A8] tracking-widest uppercase mb-1">
+                  <span className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase mb-1">
                     {s.label}
                   </span>
                   <span className="font-mono text-[15px] font-medium text-[#1E1245]">
@@ -115,7 +115,7 @@ export default async function CourseDetailPage({
                 {course.whatYouLearn.map((point: string) => (
                   <div key={point} className="flex gap-3 items-start">
                     <span className="text-[#1A7A4A] mt-0.5 flex-shrink-0">✓</span>
-                    <span className="text-[14px] text-[#5A5A72] leading-snug">{point}</span>
+                    <span className="text-[14px] text-[#3D3D3D] leading-snug">{point}</span>
                   </div>
                 ))}
               </div>
@@ -150,7 +150,7 @@ export default async function CourseDetailPage({
                           }`}
                         >
                           <div className="flex items-center gap-3">
-                            <span className="text-[14px] text-[#9494A8] flex-shrink-0">
+                            <span className="text-[14px] text-[#7A7A8A] flex-shrink-0">
                               {lesson.isFree ? "▶" : "🔒"}
                             </span>
                             {lesson.isFree && lesson.slug ? (
@@ -161,14 +161,14 @@ export default async function CourseDetailPage({
                                 {lesson.title}
                               </Link>
                             ) : (
-                              <span className="text-[14px] text-[#9494A8]">
+                              <span className="text-[14px] text-[#7A7A8A]">
                                 {lesson.title}
                               </span>
                             )}
                           </div>
                           <div className="flex items-center gap-3 flex-shrink-0 ml-3">
                             {lesson.duration && (
-                              <span className="font-mono text-[11px] text-[#9494A8]">
+                              <span className="font-mono text-[11px] text-[#7A7A8A]">
                                 {lesson.duration}
                               </span>
                             )}
@@ -226,7 +226,7 @@ export default async function CourseDetailPage({
             <div className="text-center mb-5">
               <Link
                 href="/auth/login"
-                className="font-mono text-[12px] text-[#9494A8] hover:text-[#D4860A] transition-colors"
+                className="font-mono text-[12px] text-[#7A7A8A] hover:text-[#D4860A] transition-colors"
               >
                 Already subscribed? Sign in →
               </Link>
@@ -234,7 +234,7 @@ export default async function CourseDetailPage({
 
             {/* Included */}
             <div className="border-t border-[rgba(30,18,69,0.08)] pt-4 mb-5">
-              <div className="font-mono text-[11px] text-[#9494A8] tracking-widest uppercase mb-3">
+              <div className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase mb-3">
                 What&apos;s included
               </div>
               <div className="flex flex-col gap-2">
@@ -244,7 +244,7 @@ export default async function CourseDetailPage({
                   "Progress tracking",
                   "New courses as added",
                 ].map((item) => (
-                  <div key={item} className="flex gap-2 text-[13px] text-[#5A5A72]">
+                  <div key={item} className="flex gap-2 text-[13px] text-[#3D3D3D]">
                     <span className="text-[#1A7A4A] flex-shrink-0">✓</span>
                     {item}
                   </div>
@@ -253,7 +253,7 @@ export default async function CourseDetailPage({
             </div>
 
             {/* Cancel note */}
-            <p className="text-[12px] text-[#9494A8] text-center leading-snug">
+            <p className="text-[12px] text-[#7A7A8A] text-center leading-snug">
               Cancel subscription anytime. No lock-in.
             </p>
           </div>

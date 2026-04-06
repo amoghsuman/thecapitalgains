@@ -1,13 +1,27 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
+@import "katex/dist/katex.min.css";
 
 :root {
   --font-playfair: 'Playfair Display', Georgia, serif;
-  --font-dm-sans: 'DM Sans', system-ui, sans-serif;
-  --font-dm-mono: 'DM Mono', monospace;
-  /* Override Tailwind's font-serif token so the utility class uses Playfair */
-  --font-serif: var(--font-playfair), Georgia, serif;
+  --font-jakarta: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-mono: 'DM Mono', monospace;
+  --font-serif: var(--font-playfair);
+  --font-sans: var(--font-jakarta);
   --navy: #1E1245;
   --navy-light: #2D1B69;
+  --amber: #D4860A;
+  --amber-light: #F0A020;
+  --amber-pale: #FDF3E3;
+  --bg: #FAFAF7;
+  --surface: #F4F1EB;
+  --surface2: #EDE9E0;
+  --text: #111111;
+  --text-muted: #3D3D3D;
+  --text-hint: #7A7A8A;
+  --green: #1A7A4A;
+  --green-pale: #E8F5EE;
+  --border: rgba(30,18,69,0.1);
+  --border-strong: rgba(30,18,69,0.2);
 }
 
 *, *::before, *::after {
@@ -19,33 +33,22 @@ html {
 }
 
 body {
-  font-family: var(--font-playfair), Georgia, serif;
+  font-family: var(--font-jakarta), system-ui, sans-serif;
   background: #FAFAF7;
-  color: #1A1A2E;
-  line-height: 1.75;
-  overflow-x: hidden;
+  color: #111111;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4 {
+h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-playfair), Georgia, serif;
+  color: #1E1245;
 }
 
-p {
-  font-family: var(--font-playfair), Georgia, serif;
+p, li, span, div, a, button, input, textarea, label {
+  font-family: var(--font-jakarta), system-ui, sans-serif;
 }
 
-li {
-  font-family: var(--font-playfair), Georgia, serif;
-}
-
-button {
-  font-family: var(--font-playfair), Georgia, serif;
-}
-
-a {
-  font-family: var(--font-playfair), Georgia, serif;
-}
-
-input {
-  font-family: var(--font-playfair), Georgia, serif;
+code, pre, .mono {
+  font-family: var(--font-mono), monospace;
 }

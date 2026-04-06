@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
+import katex from "katex";
 import { getFullCourseForReader, getLessonBySlug } from "@/lib/sanity/queries";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -53,7 +54,7 @@ function ExerciseBlock({ title, steps }: { title: string; steps: string[] }) {
             <span
               onClick={() => toggle(i)}
               className={`text-[14px] leading-relaxed select-none ${
-                checked.has(i) ? "text-[#9494A8] line-through" : "text-[#5A5A72]"
+                checked.has(i) ? "text-[#7A7A8A] line-through" : "text-[#3D3D3D]"
               }`}
             >
               {step}
@@ -75,28 +76,31 @@ function ExerciseBlock({ title, steps }: { title: string; steps: string[] }) {
 const portableTextComponents: PortableTextComponents = {
   block: {
     normal: ({ children }) => (
-      <p className="font-serif text-[17px] text-[#5A5A72] leading-[1.85]">{children}</p>
+      <p className="text-[17px] text-[#111111] leading-[1.85] mb-5">{children}</p>
     ),
     h2: ({ children }) => (
-      <h2 className="font-serif text-[24px] font-bold text-[#1E1245] mt-4 mb-0">{children}</h2>
+      <h2 className="font-serif text-[22px] font-bold text-[#1E1245] mt-8 mb-4 leading-snug">{children}</h2>
+    ),
+    h3: ({ children }) => (
+      <h3 className="font-serif text-[18px] font-bold text-[#1E1245] mt-6 mb-3">{children}</h3>
     ),
     blockquote: ({ children }) => (
-      <p className="font-serif text-[17px] text-[#1A1A2E] leading-[1.85] italic border-l-[3px] border-[#D4860A] pl-5 py-1">
+      <p className="text-[17px] text-[#111111] leading-[1.85] italic border-l-[3px] border-[#D4860A] pl-5 py-1">
         {children}
       </p>
     ),
   },
   list: {
     bullet: ({ children }) => (
-      <ul className="flex flex-col gap-2 pl-4 list-disc text-[16px] text-[#5A5A72]">{children}</ul>
+      <ul className="flex flex-col gap-2 pl-4 list-disc text-[16px] text-[#111111]">{children}</ul>
     ),
     number: ({ children }) => (
-      <ol className="flex flex-col gap-2 pl-4 list-decimal text-[16px] text-[#5A5A72]">{children}</ol>
+      <ol className="flex flex-col gap-2 pl-4 list-decimal text-[16px] text-[#111111]">{children}</ol>
     ),
   },
   listItem: {
-    bullet: ({ children }) => <li className="font-serif leading-relaxed">{children}</li>,
-    number: ({ children }) => <li className="font-serif leading-relaxed">{children}</li>,
+    bullet: ({ children }) => <li className="text-[16px] text-[#111111] leading-relaxed">{children}</li>,
+    number: ({ children }) => <li className="text-[16px] text-[#111111] leading-relaxed">{children}</li>,
   },
   types: {
     callout: ({ value }: { value: { type?: string; text?: string } }) => {
@@ -104,17 +108,42 @@ const portableTextComponents: PortableTextComponents = {
       return isWarning ? (
         <div className="bg-[#FEF2F2] border border-[rgba(220,38,38,0.2)] rounded-xl px-5 py-4">
           <div className="font-mono text-[10px] text-[#DC2626] tracking-widest uppercase mb-2">⚠ Watch Out</div>
-          <p className="text-[14px] text-[#7F1D1D] leading-relaxed">{value.text}</p>
+          <p className="text-[14px] text-[#7A2010] leading-relaxed">{value.text}</p>
         </div>
       ) : (
         <div className="bg-[#FDF3E3] border border-[rgba(212,134,10,0.25)] rounded-xl px-5 py-4">
           <div className="font-mono text-[10px] text-[#D4860A] tracking-widest uppercase mb-2">Key Insight</div>
-          <p className="text-[14px] text-[#1E1245] leading-relaxed font-medium">{value.text}</p>
+          <p className="text-[14px] text-[#6A4A00] leading-relaxed font-medium">{value.text}</p>
         </div>
       );
     },
     exercise: ({ value }: { value: { title?: string; steps?: string[] } }) => (
       <ExerciseBlock title={value.title ?? ""} steps={value.steps ?? []} />
+    ),
+    mathBlock: ({ value }: { value: { latex?: string; caption?: string } }) => {
+      let html = "";
+      try {
+        html = katex.renderToString(value.latex ?? "", { displayMode: true, throwOnError: false });
+      } catch {
+        html = `<span style="color:#DC2626">${value.latex}</span>`;
+      }
+      return (
+        <div className="my-6 overflow-x-auto">
+          <div className="bg-[#F4F1EB] rounded-xl px-6 py-5 text-center" dangerouslySetInnerHTML={{ __html: html }} />
+          {value.caption && (
+            <p className="font-mono text-[11px] text-[#7A7A8A] text-center mt-2 tracking-wide">{value.caption}</p>
+          )}
+        </div>
+      );
+    },
+    keyFact: ({ value }: { value: { label?: string; value?: string; context?: string } }) => (
+      <div className="my-5 border border-[rgba(30,18,69,0.12)] rounded-xl px-6 py-4 flex flex-col gap-1">
+        <div className="font-mono text-[10px] text-[#7A7A8A] tracking-widest uppercase">{value.label}</div>
+        <div className="font-serif text-[22px] font-bold text-[#1E1245] leading-tight">{value.value}</div>
+        {value.context && (
+          <div className="text-[13px] text-[#3D3D3D]">{value.context}</div>
+        )}
+      </div>
     ),
   },
 };
@@ -130,7 +159,7 @@ function LockedLesson() {
       <h2 className="font-serif text-[22px] font-bold text-[#1E1245] mb-2">
         Subscribe to access this lesson
       </h2>
-      <p className="text-[15px] text-[#5A5A72] mb-8 max-w-sm">
+      <p className="text-[15px] text-[#3D3D3D] mb-8 max-w-sm">
         This lesson is part of the full course. Subscribe for access to all courses.
       </p>
       <Link
@@ -141,7 +170,7 @@ function LockedLesson() {
       </Link>
       <Link
         href="/auth/login"
-        className="border border-[rgba(30,18,69,0.2)] hover:border-[#1E1245] text-[#5A5A72] hover:text-[#1E1245] rounded-lg px-8 py-3.5 text-[15px] font-medium transition-colors"
+        className="border border-[rgba(30,18,69,0.2)] hover:border-[#1E1245] text-[#3D3D3D] hover:text-[#1E1245] rounded-lg px-8 py-3.5 text-[15px] font-medium transition-colors"
       >
         Sign in if subscribed →
       </Link>
@@ -194,7 +223,7 @@ export default function ReaderPage() {
 
   if (!lessonSlug) {
     return (
-      <div className="flex-1 flex items-center justify-center text-[#9494A8] font-mono text-[13px]">
+      <div className="flex-1 flex items-center justify-center text-[#7A7A8A] font-mono text-[13px]">
         Loading...
       </div>
     );
@@ -202,7 +231,7 @@ export default function ReaderPage() {
 
   if (error) {
     return (
-      <div className="flex items-center justify-center h-64 text-[#5A5A72]">
+      <div className="flex items-center justify-center h-64 text-[#3D3D3D]">
         Course not found.{" "}
         <Link href="/courses" className="text-[#D4860A] ml-1">
           Browse courses →
@@ -213,7 +242,7 @@ export default function ReaderPage() {
 
   if (!course) {
     return (
-      <div className="flex-1 flex items-center justify-center text-[#9494A8] font-mono text-[13px]">
+      <div className="flex-1 flex items-center justify-center text-[#7A7A8A] font-mono text-[13px]">
         Loading...
       </div>
     );
@@ -247,14 +276,14 @@ export default function ReaderPage() {
         <div className="px-4 py-4 border-b border-[rgba(30,18,69,0.07)]">
           <Link
             href="/courses"
-            className="inline-flex items-center gap-1.5 font-mono text-[11px] text-[#9494A8] hover:text-[#D4860A] transition-colors mb-3"
+            className="inline-flex items-center gap-1.5 font-mono text-[11px] text-[#7A7A8A] hover:text-[#D4860A] transition-colors mb-3"
           >
             ← All courses
           </Link>
           <div className="font-serif text-[14px] text-[#1E1245] leading-snug mb-1">
             {course.title}
           </div>
-          <div className="font-mono text-[11px] text-[#9494A8]">
+          <div className="font-mono text-[11px] text-[#7A7A8A]">
             {allLessons.length} lessons
           </div>
         </div>
@@ -262,7 +291,7 @@ export default function ReaderPage() {
         {/* Progress bar */}
         <div className="px-4 py-3 border-b border-[rgba(30,18,69,0.07)]">
           <div className="flex justify-between items-center mb-1.5">
-            <span className="font-mono text-[10px] text-[#9494A8] tracking-widest uppercase">Progress</span>
+            <span className="font-mono text-[10px] text-[#7A7A8A] tracking-widest uppercase">Progress</span>
             <span className="font-mono text-[11px] text-[#1E1245]">{progressPct}%</span>
           </div>
           <div className="h-[3px] bg-[#EDE9E0] rounded-full overflow-hidden">
@@ -277,7 +306,7 @@ export default function ReaderPage() {
         <div className="flex-1 py-2">
           {course.chapters.map((chapter) => (
             <div key={chapter.title} className="mb-1">
-              <div className="px-4 py-2 font-mono text-[9px] text-[#9494A8] tracking-widest uppercase">
+              <div className="px-4 py-2 font-mono text-[9px] text-[#7A7A8A] tracking-widest uppercase">
                 {chapter.title}
               </div>
               {chapter.lessons.map((l) => {
@@ -302,8 +331,8 @@ export default function ReaderPage() {
                           : isActive
                           ? "bg-[#D4860A] text-white"
                           : isAccessible
-                          ? "border-2 border-[rgba(30,18,69,0.2)] text-[#9494A8]"
-                          : "bg-[#EDE9E0] text-[#9494A8]"
+                          ? "border-2 border-[rgba(30,18,69,0.2)] text-[#7A7A8A]"
+                          : "bg-[#EDE9E0] text-[#7A7A8A]"
                       }`}
                     >
                       {isDone ? "✓" : isActive ? "▶" : isAccessible ? "" : "🔒"}
@@ -311,12 +340,12 @@ export default function ReaderPage() {
                     <div className="flex-1 min-w-0">
                       <div
                         className={`text-[13px] leading-snug ${
-                          isActive ? "text-[#1E1245] font-medium" : isDone ? "text-[#9494A8]" : "text-[#5A5A72]"
+                          isActive ? "text-[#1E1245] font-medium" : isDone ? "text-[#7A7A8A]" : "text-[#3D3D3D]"
                         }`}
                       >
                         {l.title}
                       </div>
-                      <div className="font-mono text-[10px] text-[#9494A8] mt-0.5">{l.duration}</div>
+                      <div className="font-mono text-[10px] text-[#7A7A8A] mt-0.5">{l.duration}</div>
                     </div>
                   </button>
                 );
@@ -327,8 +356,8 @@ export default function ReaderPage() {
 
         {/* Subscribe card */}
         <div className="p-4 border-t border-[rgba(30,18,69,0.08)] bg-[#F4F1EB]">
-          <div className="font-mono text-[10px] text-[#9494A8] tracking-widest uppercase mb-2">Full Access</div>
-          <div className="font-mono text-[13px] text-[#5A5A72] mb-3">
+          <div className="font-mono text-[10px] text-[#7A7A8A] tracking-widest uppercase mb-2">Full Access</div>
+          <div className="font-mono text-[13px] text-[#3D3D3D] mb-3">
             Subscribe once. Access all courses.
           </div>
           <Link
@@ -356,7 +385,7 @@ export default function ReaderPage() {
           <div className="flex items-center gap-4">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="text-[#5A5A72] hover:text-[#1E1245] transition-colors"
+              className="text-[#3D3D3D] hover:text-[#1E1245] transition-colors"
               aria-label="Toggle sidebar"
             >
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -370,7 +399,7 @@ export default function ReaderPage() {
                   style={{ width: `${progressPct}%` }}
                 />
               </div>
-              <span className="font-mono text-[11px] text-[#9494A8]">{progressPct}% complete</span>
+              <span className="font-mono text-[11px] text-[#7A7A8A]">{progressPct}% complete</span>
             </div>
           </div>
           <span className="font-mono text-[12px] text-[#1E1245] hidden sm:block">The Capital Gains</span>
@@ -381,13 +410,13 @@ export default function ReaderPage() {
           {isLocked ? (
             <LockedLesson />
           ) : loading ? (
-            <div className="flex items-center justify-center py-24 font-mono text-[13px] text-[#9494A8]">
+            <div className="flex items-center justify-center py-24 font-mono text-[13px] text-[#7A7A8A]">
               Loading lesson...
             </div>
           ) : lesson ? (
             <div className="max-w-[720px] mx-auto px-8 py-12">
               {/* Disclaimer */}
-              <div className="font-mono text-[11px] text-[#9494A8] mb-6">
+              <div className="font-mono text-[11px] text-[#7A7A8A] mb-6">
                 Educational content only · Not investment advice
               </div>
 
@@ -396,7 +425,7 @@ export default function ReaderPage() {
                 {lesson.title}
               </h1>
               <div className="flex items-center gap-3 mb-8 pb-6 border-b border-[rgba(30,18,69,0.08)]">
-                <span className="font-mono text-[12px] text-[#9494A8]">{lesson.duration} read</span>
+                <span className="font-mono text-[12px] text-[#7A7A8A]">{lesson.duration} read</span>
                 {lesson.isFree && (
                   <span className="font-mono text-[10px] text-[#1A7A4A] bg-[#E8F5EE] rounded px-2 py-0.5">
                     Free preview
@@ -414,7 +443,7 @@ export default function ReaderPage() {
                 {prevLesson ? (
                   <button
                     onClick={() => setActiveLesson(prevLesson.slug)}
-                    className="font-mono text-[13px] text-[#5A5A72] hover:text-[#1E1245] transition-colors"
+                    className="font-mono text-[13px] text-[#3D3D3D] hover:text-[#1E1245] transition-colors"
                   >
                     ← {prevLesson.title}
                   </button>
@@ -440,8 +469,8 @@ export default function ReaderPage() {
             </div>
           ) : (
             <div className="max-w-[720px] mx-auto px-8 py-12">
-              <div className="font-mono text-[11px] text-[#9494A8] mb-6">Educational content only · Not investment advice</div>
-              <div className="font-mono text-[12px] text-[#9494A8]">Content coming soon for this lesson.</div>
+              <div className="font-mono text-[11px] text-[#7A7A8A] mb-6">Educational content only · Not investment advice</div>
+              <div className="font-mono text-[12px] text-[#7A7A8A]">Content coming soon for this lesson.</div>
             </div>
           )}
         </div>

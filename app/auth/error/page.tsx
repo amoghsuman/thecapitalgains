@@ -14,7 +14,7 @@ export default function AuthErrorPage() {
           <h1 className="font-serif text-[22px] font-bold text-[#1E1245] mb-2">
             Authentication error
           </h1>
-          <p className="text-[14px] text-[#5A5A72] leading-relaxed mb-6">
+          <p className="text-[14px] text-[#3D3D3D] leading-relaxed mb-6">
             Something went wrong with authentication. Please try again.
           </p>
           <Link

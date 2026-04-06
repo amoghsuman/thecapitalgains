@@ -30,13 +30,13 @@ export default async function CoursesPage() {
 
         {/* ── HERO ── */}
         <div className="pt-14 pb-10">
-          <div className="font-mono text-[11px] text-[#9494A8] tracking-widest uppercase mb-2">
+          <div className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase mb-2">
             Courses
           </div>
           <h1 className="font-serif text-5xl font-bold text-[#1E1245] leading-[1.1]">
             All Courses
           </h1>
-          <p className="text-[16px] text-[#5A5A72] mt-3 mb-12">
+          <p className="text-[16px] text-[#3D3D3D] mt-3 mb-12">
             Subscribe to access all courses. Free previews available — no card required.
           </p>
         </div>
@@ -74,7 +74,7 @@ export default async function CoursesPage() {
 
                 {/* White bottom */}
                 <div className="p-6">
-                  <p className="text-[13px] text-[#5A5A72] leading-relaxed mb-4">
+                  <p className="text-[13px] text-[#3D3D3D] leading-relaxed mb-4">
                     {course.subtitle || course.description}
                   </p>
                   {course.topics?.length > 0 && (
@@ -82,7 +82,7 @@ export default async function CoursesPage() {
                       {course.topics.map((t: string) => (
                         <span
                           key={t}
-                          className="font-mono text-[10px] text-[#9494A8] bg-[#F4F1EB] rounded px-2 py-1"
+                          className="font-mono text-[10px] text-[#7A7A8A] bg-[#F4F1EB] rounded px-2 py-1"
                         >
                           {t}
                         </span>
@@ -90,7 +90,7 @@ export default async function CoursesPage() {
                     </div>
                   )}
                   {meta && (
-                    <div className="text-[12px] text-[#9494A8] mb-4">{meta}</div>
+                    <div className="text-[12px] text-[#7A7A8A] mb-4">{meta}</div>
                   )}
                   <div className="flex justify-between items-center pt-4 border-t border-[rgba(30,18,69,0.08)]">
                     <AccessBadge level={course.accessLevel} />

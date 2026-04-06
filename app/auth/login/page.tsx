@@ -52,13 +52,13 @@ export default function LoginPage() {
           <h1 className="font-serif text-[28px] font-bold text-[#1E1245] mb-1">
             Welcome back
           </h1>
-          <p className="text-[14px] text-[#5A5A72] mb-6">
+          <p className="text-[14px] text-[#3D3D3D] mb-6">
             Sign in to access your courses and progress
           </p>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <div>
-              <label className="font-mono text-[11px] text-[#9494A8] tracking-widest uppercase block mb-1.5">
+              <label className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase block mb-1.5">
                 Email
               </label>
               <input
@@ -67,12 +67,12 @@ export default function LoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.com"
                 required
-                className="w-full bg-[#FAFAF7] border border-[rgba(30,18,69,0.15)] rounded-lg px-4 py-3 text-[14px] text-[#1A1A2E] placeholder:text-[#9494A8] outline-none focus:border-[#1E1245] transition-colors"
+                className="w-full bg-[#FAFAF7] border border-[rgba(30,18,69,0.15)] rounded-lg px-4 py-3 text-[14px] text-[#1A1A2E] placeholder:text-[#7A7A8A] outline-none focus:border-[#1E1245] transition-colors"
               />
             </div>
 
             <div>
-              <label className="font-mono text-[11px] text-[#9494A8] tracking-widest uppercase block mb-1.5">
+              <label className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase block mb-1.5">
                 Password
               </label>
               <input
@@ -81,7 +81,7 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
                 required
-                className="w-full bg-[#FAFAF7] border border-[rgba(30,18,69,0.15)] rounded-lg px-4 py-3 text-[14px] text-[#1A1A2E] placeholder:text-[#9494A8] outline-none focus:border-[#1E1245] transition-colors"
+                className="w-full bg-[#FAFAF7] border border-[rgba(30,18,69,0.15)] rounded-lg px-4 py-3 text-[14px] text-[#1A1A2E] placeholder:text-[#7A7A8A] outline-none focus:border-[#1E1245] transition-colors"
               />
             </div>
 
@@ -103,7 +103,7 @@ export default function LoginPage() {
           {/* Divider */}
           <div className="flex items-center gap-3 my-5">
             <div className="flex-1 h-px bg-[rgba(30,18,69,0.1)]" />
-            <span className="font-mono text-[11px] text-[#9494A8]">or</span>
+            <span className="font-mono text-[11px] text-[#7A7A8A]">or</span>
             <div className="flex-1 h-px bg-[rgba(30,18,69,0.1)]" />
           </div>
 
@@ -122,7 +122,7 @@ export default function LoginPage() {
           </button>
         </div>
 
-        <p className="text-center text-[13px] text-[#5A5A72] mt-5">
+        <p className="text-center text-[13px] text-[#3D3D3D] mt-5">
           Don&apos;t have an account?{' '}
           <Link href="/auth/signup" className="text-[#D4860A] hover:text-[#F0A020] font-medium transition-colors">
             Sign up

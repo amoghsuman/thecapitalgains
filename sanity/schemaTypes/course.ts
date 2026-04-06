@@ -77,6 +77,27 @@ export const courseSchema = defineType({
                         defineField({ name: 'steps', title: 'Steps', type: 'array', of: [defineArrayMember({ type: 'string' })] })
                       ],
                       preview: { select: { title: 'title' } }
+                    }),
+                    defineArrayMember({
+                      type: 'object',
+                      name: 'mathBlock',
+                      title: 'Math Equation (KaTeX)',
+                      fields: [
+                        defineField({ name: 'latex', title: 'LaTeX Expression', type: 'text', description: 'e.g. P = S \\cdot N(d_1) - K e^{-rT} N(d_2)' }),
+                        defineField({ name: 'caption', title: 'Caption (optional)', type: 'string' })
+                      ],
+                      preview: { select: { title: 'latex', subtitle: 'caption' } }
+                    }),
+                    defineArrayMember({
+                      type: 'object',
+                      name: 'keyFact',
+                      title: 'Key Fact',
+                      fields: [
+                        defineField({ name: 'label', title: 'Label', type: 'string', description: 'e.g. "Max Loss"' }),
+                        defineField({ name: 'value', title: 'Value', type: 'string', description: 'e.g. "₹6,000 (premium paid)"' }),
+                        defineField({ name: 'context', title: 'Context (optional)', type: 'string', description: 'Brief explanation shown below the value' })
+                      ],
+                      preview: { select: { title: 'label', subtitle: 'value' } }
                     })
                   ]
                 })

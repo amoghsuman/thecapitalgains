@@ -50,7 +50,7 @@ export default function NewsletterForm({ dark = false }: { dark?: boolean }) {
           className={`flex-1 rounded-lg px-4 py-3 text-[14px] outline-none transition-colors ${
             dark
               ? 'bg-[rgba(255,255,255,0.1)] border border-[rgba(255,255,255,0.15)] text-white placeholder:text-[rgba(255,255,255,0.35)] focus:border-[rgba(255,255,255,0.4)]'
-              : 'bg-white border border-[rgba(30,18,69,0.15)] text-[#1A1A2E] placeholder:text-[#9494A8] focus:border-[rgba(30,18,69,0.35)]'
+              : 'bg-white border border-[rgba(30,18,69,0.15)] text-[#1A1A2E] placeholder:text-[#7A7A8A] focus:border-[rgba(30,18,69,0.35)]'
           }`}
         />
         <button

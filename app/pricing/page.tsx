@@ -181,8 +181,8 @@ function TierCard({
         }`}
       >
         <div className="flex justify-between items-center">
-          <span className="text-[12px] text-[#9494A8]">{tier.name}</span>
-          {selected && <span className="text-[#9494A8] text-[11px]">✓</span>}
+          <span className="text-[12px] text-[#7A7A8A]">{tier.name}</span>
+          {selected && <span className="text-[#7A7A8A] text-[11px]">✓</span>}
         </div>
       </button>
     );
@@ -213,20 +213,20 @@ function TierCard({
         </div>
       )}
 
-      <div className="font-mono text-[10px] text-[#9494A8] tracking-widest mb-1.5 pr-10">
+      <div className="font-mono text-[10px] text-[#7A7A8A] tracking-widest mb-1.5 pr-10">
         {tier.name}
       </div>
       <div className="font-mono text-[20px] font-medium text-[#1E1245] leading-none mb-3">
         {price === 0 ? "₹0" : fmt(price)}
         {price > 0 && (
-          <span className="text-[11px] font-normal text-[#9494A8] ml-1">/month</span>
+          <span className="text-[11px] font-normal text-[#7A7A8A] ml-1">/month</span>
         )}
       </div>
       <div className="flex flex-col gap-1.5">
         {tier.features.map((f) => (
           <div key={f} className="flex gap-2 items-start">
             <span className="text-[#1A7A4A] text-[11px] flex-shrink-0 mt-0.5">✓</span>
-            <span className="text-[12px] text-[#5A5A72] leading-snug">{f}</span>
+            <span className="text-[12px] text-[#3D3D3D] leading-snug">{f}</span>
           </div>
         ))}
       </div>
@@ -344,13 +344,13 @@ export default function PricingPage() {
 
       {/* ── HERO ── */}
       <section className="max-w-6xl mx-auto px-8 pt-16 pb-8">
-        <div className="font-mono text-[11px] text-[#9494A8] tracking-widest uppercase mb-2">
+        <div className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase mb-2">
           Pricing
         </div>
         <h1 className="font-serif text-5xl font-bold text-[#1E1245] leading-[1.1] mb-3">
           Build your subscription
         </h1>
-        <p className="text-[16px] text-[#5A5A72] mb-8 max-w-xl">
+        <p className="text-[16px] text-[#3D3D3D] mb-8 max-w-xl">
           Choose what you need from each stack. Pay one monthly total. Cancel anytime.
         </p>
 
@@ -361,7 +361,7 @@ export default function PricingPage() {
             className={`px-5 py-2 rounded-md text-[13px] font-medium transition-all ${
               !annual
                 ? "bg-white text-[#1E1245] shadow-sm"
-                : "text-[#5A5A72] hover:text-[#1E1245]"
+                : "text-[#3D3D3D] hover:text-[#1E1245]"
             }`}
           >
             Monthly
@@ -371,7 +371,7 @@ export default function PricingPage() {
             className={`px-5 py-2 rounded-md text-[13px] font-medium transition-all ${
               annual
                 ? "bg-white text-[#1E1245] shadow-sm"
-                : "text-[#5A5A72] hover:text-[#1E1245]"
+                : "text-[#3D3D3D] hover:text-[#1E1245]"
             }`}
           >
             Annual — save 20%
@@ -407,12 +407,12 @@ export default function PricingPage() {
             annual={annual}
             footer={
               <div className="flex flex-col gap-2 mt-1">
-                <p className="font-mono text-[10px] text-[#9494A8] leading-relaxed">
+                <p className="font-mono text-[10px] text-[#7A7A8A] leading-relaxed">
                   For institutional / non-individual pricing, write to{" "}
-                  <span className="text-[#5A5A72]">hello@thecapitalgains.com</span>
+                  <span className="text-[#3D3D3D]">hello@thecapitalgains.com</span>
                 </p>
                 <div className="bg-white border border-[rgba(30,18,69,0.1)] rounded-lg px-3 py-2.5">
-                  <p className="font-mono text-[9px] text-[#9494A8] leading-relaxed">
+                  <p className="font-mono text-[9px] text-[#7A7A8A] leading-relaxed">
                     ⚖ Research services provided under SEBI Research Analyst regulations.
                     Individual client fees capped at ₹1,50,000 per annum.
                   </p>
@@ -442,11 +442,11 @@ export default function PricingPage() {
 
             {/* Left — itemised selections */}
             <div className="flex-1 min-w-0">
-              <div className="font-mono text-[11px] text-[#9494A8] tracking-widest uppercase mb-4">
+              <div className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase mb-4">
                 Your bundle
               </div>
               {summaryItems.length === 0 ? (
-                <p className="text-[14px] text-[#9494A8]">
+                <p className="text-[14px] text-[#7A7A8A]">
                   No tiers selected yet. Choose from the stacks above.
                 </p>
               ) : (
@@ -456,7 +456,7 @@ export default function PricingPage() {
                       key={item.label}
                       className="flex justify-between items-center gap-8"
                     >
-                      <span className="text-[14px] text-[#5A5A72]">{item.label}</span>
+                      <span className="text-[14px] text-[#3D3D3D]">{item.label}</span>
                       <span className="font-mono text-[14px] text-[#1E1245] whitespace-nowrap">
                         {item.price === 0 ? "Free" : `${fmt(item.price)}/mo`}
                       </span>
@@ -472,12 +472,12 @@ export default function PricingPage() {
             {/* Right — total + CTA */}
             <div className="flex flex-col items-start lg:items-end gap-3 flex-shrink-0">
               <div className="lg:text-right">
-                <div className="font-mono text-[11px] text-[#9494A8] tracking-widest uppercase mb-1">
+                <div className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase mb-1">
                   Monthly total
                 </div>
                 <div className="font-mono text-[40px] font-medium text-[#1E1245] leading-none">
                   {fmt(total)}
-                  <span className="text-[14px] font-normal text-[#9494A8] ml-1.5">/mo</span>
+                  <span className="text-[14px] font-normal text-[#7A7A8A] ml-1.5">/mo</span>
                 </div>
                 {annual && total > 0 && (
                   <div className="font-mono text-[11px] text-[#1A7A4A] mt-1.5">
@@ -496,13 +496,13 @@ export default function PricingPage() {
               ) : (
                 <button
                   disabled
-                  className="bg-[#F4F1EB] text-[#9494A8] rounded-lg px-8 py-3.5 text-[15px] font-medium cursor-default whitespace-nowrap"
+                  className="bg-[#F4F1EB] text-[#7A7A8A] rounded-lg px-8 py-3.5 text-[15px] font-medium cursor-default whitespace-nowrap"
                 >
                   Select at least one tier
                 </button>
               )}
 
-              <div className="font-mono text-[10px] text-[#9494A8]">Prices exclude GST</div>
+              <div className="font-mono text-[10px] text-[#7A7A8A]">Prices exclude GST</div>
             </div>
           </div>
         </div>
@@ -527,7 +527,7 @@ export default function PricingPage() {
                   {faq.q}
                 </span>
                 <span
-                  className={`font-mono text-[18px] text-[#9494A8] ml-4 flex-shrink-0 transition-transform duration-200 ${
+                  className={`font-mono text-[18px] text-[#7A7A8A] ml-4 flex-shrink-0 transition-transform duration-200 ${
                     openFaq === i ? "rotate-45" : ""
                   }`}
                 >
@@ -535,7 +535,7 @@ export default function PricingPage() {
                 </span>
               </button>
               {openFaq === i && (
-                <div className="px-6 pb-5 text-[14px] text-[#5A5A72] leading-relaxed border-t border-[rgba(30,18,69,0.07)]">
+                <div className="px-6 pb-5 text-[14px] text-[#3D3D3D] leading-relaxed border-t border-[rgba(30,18,69,0.07)]">
                   <div className="pt-4">{faq.a}</div>
                 </div>
               )}

@@ -55,10 +55,16 @@ thecapitalgains.com
 - Amber: #D4860A
 - Amber hover: #F0A020
 - Background: #FAFAF7
-- Text muted: #5A5A72
-- Text label: #9494A8
+- Text: #111111 — was #1A1A2E
+- Text muted: #3D3D3D — was #5A5A72
+- Text hint: #7A7A8A — was #9494A8
 - Green: #1A7A4A
 - Border (rgba): rgba(30,18,69,0.1) — was rgba(15,35,72,0.1)
+
+## Font System
+- Headings: Playfair Display (font-serif) — weights 400/500/600/700
+- Body: Plus Jakarta Sans (--font-jakarta) — weights 400/500/600 — replaced DM Sans
+- Mono: DM Mono (font-mono) — prices, tags, labels, badges, eyebrow text only
 
 ## Open Items
 - SEBI RA registration number pending

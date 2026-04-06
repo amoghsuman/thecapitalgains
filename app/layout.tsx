@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display, DM_Sans, DM_Mono } from "next/font/google";
+import { Playfair_Display, Plus_Jakarta_Sans, DM_Mono } from "next/font/google";
 import "./globals.css";
 import DisclaimerBar from "@/components/layout/DisclaimerBar";
 import Navbar from "@/components/layout/Navbar";
@@ -10,14 +10,14 @@ const playfair = Playfair_Display({
   weight: ["400", "500", "600", "700"],
 });
 
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
+const plusJakarta = Plus_Jakarta_Sans({
+  variable: "--font-jakarta",
   subsets: ["latin"],
-  weight: ["300", "400", "500"],
+  weight: ["400", "500", "600"],
 });
 
 const dmMono = DM_Mono({
-  variable: "--font-dm-mono",
+  variable: "--font-mono",
   subsets: ["latin"],
   weight: ["400", "500"],
 });
@@ -45,9 +45,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${dmSans.variable} ${dmMono.variable} h-full antialiased font-serif`}
+      className={`${playfair.variable} ${plusJakarta.variable} ${dmMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#FAFAF7] text-[#1A1A2E] font-serif">
+      <body className="min-h-full flex flex-col bg-[#FAFAF7] text-[#111111]">
         <DisclaimerBar />
         <Navbar />
         <main className="flex-1 w-full">

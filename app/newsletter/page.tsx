@@ -48,17 +48,17 @@ export default function NewsletterPage() {
 
       {/* ── HERO ── */}
       <section className="max-w-3xl mx-auto px-8 pt-16 pb-10 text-center">
-        <div className="font-mono text-[11px] text-[#9494A8] tracking-widest uppercase mb-3">
+        <div className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase mb-3">
           Newsletter
         </div>
         <h1 className="font-serif text-5xl font-bold text-[#1E1245] leading-[1.1] mb-4">
           One market insight,<br />every week.
         </h1>
-        <p className="text-[16px] text-[#5A5A72] leading-relaxed mb-8 max-w-xl mx-auto">
+        <p className="text-[16px] text-[#3D3D3D] leading-relaxed mb-8 max-w-xl mx-auto">
           A concise, no-noise breakdown of what&apos;s moving Indian markets — and why it matters for your trades and investments. Free, always.
         </p>
         <NewsletterForm />
-        <p className="font-mono text-[12px] text-[#9494A8] mt-4">
+        <p className="font-mono text-[12px] text-[#7A7A8A] mt-4">
           No spam. Unsubscribe anytime. Join 500+ readers.
         </p>
       </section>
@@ -80,7 +80,7 @@ export default function NewsletterPage() {
               <div className="font-serif text-[17px] text-[#1E1245] mb-2 leading-snug">
                 {item.title}
               </div>
-              <p className="text-[13px] text-[#5A5A72] leading-relaxed">
+              <p className="text-[13px] text-[#3D3D3D] leading-relaxed">
                 {item.desc}
               </p>
             </div>
@@ -104,14 +104,14 @@ export default function NewsletterPage() {
                   <span className="font-mono text-[11px] text-[#D4860A] tracking-wider">
                     {issue.num}
                   </span>
-                  <span className="font-mono text-[11px] text-[#9494A8]">
+                  <span className="font-mono text-[11px] text-[#7A7A8A]">
                     {issue.date}
                   </span>
                 </div>
                 <div className="font-serif text-[16px] text-[#1E1245] mb-1 leading-snug">
                   {issue.title}
                 </div>
-                <p className="text-[13px] text-[#5A5A72] leading-relaxed">
+                <p className="text-[13px] text-[#3D3D3D] leading-relaxed">
                   {issue.preview}
                 </p>
               </div>

@@ -32,13 +32,13 @@ export default function AboutPage() {
 
       {/* ── HERO ── */}
       <section className="max-w-3xl mx-auto px-8 pt-16 pb-10">
-        <div className="font-mono text-[11px] text-[#9494A8] tracking-widest uppercase mb-3">
+        <div className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase mb-3">
           About
         </div>
         <h1 className="font-serif text-5xl font-bold text-[#1E1245] leading-[1.1] mb-4">
           Built by a practitioner,<br />for practitioners.
         </h1>
-        <p className="text-[17px] text-[#5A5A72] leading-relaxed">
+        <p className="text-[17px] text-[#3D3D3D] leading-relaxed">
           The Capital Gains was built out of frustration with how financial education works in India — too much theory, too many tips, not enough process.
         </p>
       </section>
@@ -46,13 +46,13 @@ export default function AboutPage() {
       {/* ── STORY ── */}
       <section className="max-w-3xl mx-auto px-8 mt-8">
         <div className="flex flex-col gap-5">
-          <p className="text-[16px] text-[#5A5A72] leading-relaxed">
+          <p className="text-[16px] text-[#3D3D3D] leading-relaxed">
             Most financial content online falls into one of two traps. Either it&apos;s so basic it insults your intelligence — or it&apos;s so jargon-heavy it&apos;s useless without a finance degree. Neither helps a retail investor make a single better decision.
           </p>
-          <p className="text-[16px] text-[#5A5A72] leading-relaxed">
+          <p className="text-[16px] text-[#3D3D3D] leading-relaxed">
             This platform was built differently. Every course starts with the real question a retail investor faces — not the textbook version. Every lesson ends with something you can actually do in your broker terminal today.
           </p>
-          <p className="text-[16px] text-[#5A5A72] leading-relaxed">
+          <p className="text-[16px] text-[#3D3D3D] leading-relaxed">
             We&apos;re not here to give you tips or tell you what to buy. We&apos;re here to give you the frameworks, the vocabulary, and the process to make your own decisions confidently.
           </p>
         </div>
@@ -73,7 +73,7 @@ export default function AboutPage() {
               <div className="font-serif text-[18px] text-[#1E1245] mb-2 leading-snug">
                 {p.title}
               </div>
-              <p className="text-[13px] text-[#5A5A72] leading-relaxed">{p.body}</p>
+              <p className="text-[13px] text-[#3D3D3D] leading-relaxed">{p.body}</p>
             </div>
           ))}
         </div>
@@ -87,7 +87,7 @@ export default function AboutPage() {
               <span className="font-mono text-[28px] font-medium text-[#1E1245] leading-none mb-1">
                 {s.num}
               </span>
-              <span className="text-[12px] text-[#9494A8]">{s.label}</span>
+              <span className="text-[12px] text-[#7A7A8A]">{s.label}</span>
             </div>
           ))}
         </div>
