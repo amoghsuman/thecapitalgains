@@ -3,8 +3,7 @@ import { getAllCourses } from "@/lib/sanity/queries";
 
 export const revalidate = 0
 
-// Card backgrounds cycle by index
-const cardBgs = ["bg-[#111111]", "bg-[#2A2A2A]", "bg-[#333333]"];
+const cardBg = "bg-[#111111]";
 
 // Badge colour mapping
 function badgeColor(badge: string | null): string {
@@ -43,8 +42,7 @@ export default async function CoursesPage() {
 
         {/* ── COURSE GRID ── */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {courses.map((course: any, i: number) => {
-            const bg = cardBgs[i % cardBgs.length];
+          {courses.map((course: any) => {
             const meta = [
               course.lessonsCount ? `${course.lessonsCount} lessons` : null,
               course.duration,
@@ -58,7 +56,7 @@ export default async function CoursesPage() {
                 className="rounded-2xl overflow-hidden border border-[rgba(17,17,17,0.1)] bg-white hover:shadow-[0_8px_40px_rgba(17,17,17,0.1)] hover:-translate-y-0.5 transition-all"
               >
                 {/* Dark top */}
-                <div className={`${bg} p-6 min-h-[140px] flex flex-col justify-end`}>
+                <div className={`${cardBg} p-6 min-h-[140px] flex flex-col justify-end`}>
                   {course.badge && (
                     <span className={`font-mono text-[9px] font-medium rounded px-2 py-1 tracking-wider ${badgeColor(course.badge)} inline-block mb-3 self-start`}>
                       {course.badge}
@@ -112,7 +110,7 @@ export default async function CoursesPage() {
           <div>
             <div className="font-mono text-[11px] text-[#D4860A] mb-1">BETTER VALUE</div>
             <div className="text-[15px] font-medium text-[#111111]">
-              Access all courses from ₹299/month — cheaper than buying individually.
+              Subscribe once. Access everything. From ₹999/month.
             </div>
           </div>
           <Link

@@ -264,7 +264,7 @@ export default function HomePage() {
               cta: "Start free lesson →",
             },
             {
-              bg: "bg-[#2A2A2A]",
+              bg: "bg-[#111111]",
               badge: "NEW",
               badgeColor: "bg-[rgba(26,122,74,0.2)] text-[#1A7A4A]",
               tag: "BEGINNER",
@@ -276,7 +276,7 @@ export default function HomePage() {
               cta: "Preview →",
             },
             {
-              bg: "bg-[#333333]",
+              bg: "bg-[#111111]",
               badge: null,
               badgeColor: "",
               tag: "INTERMEDIATE",
@@ -419,7 +419,7 @@ export default function HomePage() {
             {
               stackNum: "STACK 02",
               title: "Research",
-              headerBg: "bg-[#2A2A2A]",
+              headerBg: "bg-[#111111]",
               from: "From ₹499/month",
               fromSub: "newsletter to full research",
               features: ["Weekly market newsletter", "3 model portfolios", "F&O strategy notes"],
@@ -428,7 +428,7 @@ export default function HomePage() {
             {
               stackNum: "STACK 03",
               title: "Community",
-              headerBg: "bg-[#333333]",
+              headerBg: "bg-[#111111]",
               from: "From ₹999/month",
               fromSub: "group to 1:1 access",
               features: ["Private WhatsApp community", "Monthly group Q&A", "Unlimited 1:1 async access (Elite)"],
