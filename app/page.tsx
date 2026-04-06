@@ -118,7 +118,7 @@ export default function HomePage() {
                 >
                   {lesson.status === "done" ? "✓" : lesson.status === "active" ? "▶" : "🔒"}
                 </div>
-                <span className="flex-1 text-[13px] text-[#1A1A2E]">{lesson.title}</span>
+                <span className="flex-1 text-[13px] text-[#1E1245]">{lesson.title}</span>
                 <span className="font-mono text-[11px] text-[#7A7A8A]">{lesson.time}</span>
               </div>
             ))}
