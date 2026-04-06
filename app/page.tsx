@@ -1,7 +1,11 @@
 ﻿import Link from "next/link";
 import NewsletterForm from "@/components/NewsletterForm";
+import { getAllCourses } from "@/lib/sanity/queries";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const courses = await getAllCourses();
+  const courseCount = courses?.length || 0;
+
   return (
     <div className="bg-[#FAFAF7]">
 
@@ -44,10 +48,10 @@ export default function HomePage() {
           {/* Proof stats */}
           <div className="flex gap-8 flex-wrap">
             {[
-              { num: "3", label: "Courses live" },
-              { num: "3", label: "Subscription stacks" },
+              { num: courseCount.toString(), label: "Courses" },
+              { num: "3", label: "Ways to subscribe" },
               { num: "₹0", label: "To start" },
-              { num: "₹499", label: "Entry research tier" },
+              { num: "₹499", label: "Research from" },
             ].map((s) => (
               <div key={s.label} className="flex flex-col">
                 <span className="font-mono text-[22px] font-medium text-[#111111]">
