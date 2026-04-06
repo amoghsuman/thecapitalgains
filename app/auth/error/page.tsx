@@ -4,14 +4,14 @@ export default function AuthErrorPage() {
   return (
     <div className="bg-[#FAFAF7] min-h-screen flex items-center justify-center px-8">
       <div className="max-w-sm w-full text-center">
-        <div className="font-serif font-bold text-[18px] text-[#1E1245] mb-8">
+        <div className="font-serif font-bold text-[18px] text-[#111111] mb-8">
           The Capital Gains
         </div>
-        <div className="bg-white border border-[rgba(30,18,69,0.1)] rounded-2xl p-8 shadow-[0_4px_32px_rgba(30,18,69,0.06)]">
+        <div className="bg-white border border-[rgba(17,17,17,0.1)] rounded-2xl p-8 shadow-[0_4px_32px_rgba(17,17,17,0.06)]">
           <div className="w-12 h-12 bg-[#FDF3E3] rounded-full flex items-center justify-center mx-auto mb-5">
             <span className="text-[#D4860A] text-[20px]">⚠</span>
           </div>
-          <h1 className="font-serif text-[22px] font-bold text-[#1E1245] mb-2">
+          <h1 className="font-serif text-[22px] font-bold text-[#111111] mb-2">
             Authentication error
           </h1>
           <p className="text-[14px] text-[#3D3D3D] leading-relaxed mb-6">

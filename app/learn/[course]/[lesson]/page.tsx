@@ -32,8 +32,8 @@ function ExerciseBlock({ title, steps }: { title: string; steps: string[] }) {
   const allDone = checked.size === steps.length;
 
   return (
-    <div className={`rounded-xl p-6 mt-10 border-2 ${allDone ? "border-[#1A7A4A] bg-[#E8F5EE]" : "border-[#1E1245] bg-white"}`}>
-      <div className={`font-mono text-[11px] tracking-widest uppercase mb-4 ${allDone ? "text-[#1A7A4A]" : "text-[#1E1245]"}`}>
+    <div className={`rounded-xl p-6 mt-10 border-2 ${allDone ? "border-[#1A7A4A] bg-[#E8F5EE]" : "border-[#111111] bg-white"}`}>
+      <div className={`font-mono text-[11px] tracking-widest uppercase mb-4 ${allDone ? "text-[#1A7A4A]" : "text-[#111111]"}`}>
         Exercise · {title}
       </div>
       <div className="flex flex-col gap-3">
@@ -44,7 +44,7 @@ function ExerciseBlock({ title, steps }: { title: string; steps: string[] }) {
               className={`mt-0.5 w-5 h-5 flex-shrink-0 rounded border-2 flex items-center justify-center transition-all ${
                 checked.has(i)
                   ? "border-[#1A7A4A] bg-[#1A7A4A]"
-                  : "border-[rgba(30,18,69,0.25)] group-hover:border-[#D4860A]"
+                  : "border-[rgba(17,17,17,0.25)] group-hover:border-[#D4860A]"
               }`}
             >
               {checked.has(i) && (
@@ -79,10 +79,10 @@ const portableTextComponents: PortableTextComponents = {
       <p className="text-[17px] text-[#111111] leading-[1.85] mb-5">{children}</p>
     ),
     h2: ({ children }) => (
-      <h2 className="font-serif text-[22px] font-bold text-[#1E1245] mt-8 mb-4 leading-snug">{children}</h2>
+      <h2 className="font-serif text-[22px] font-bold text-[#111111] mt-8 mb-4 leading-snug">{children}</h2>
     ),
     h3: ({ children }) => (
-      <h3 className="font-serif text-[18px] font-bold text-[#1E1245] mt-6 mb-3">{children}</h3>
+      <h3 className="font-serif text-[18px] font-bold text-[#111111] mt-6 mb-3">{children}</h3>
     ),
     blockquote: ({ children }) => (
       <p className="text-[17px] text-[#111111] leading-[1.85] italic border-l-[3px] border-[#D4860A] pl-5 py-1">
@@ -137,9 +137,9 @@ const portableTextComponents: PortableTextComponents = {
       );
     },
     keyFact: ({ value }: { value: { label?: string; value?: string; context?: string } }) => (
-      <div className="my-5 border border-[rgba(30,18,69,0.12)] rounded-xl px-6 py-4 flex flex-col gap-1">
+      <div className="my-5 border border-[rgba(17,17,17,0.12)] rounded-xl px-6 py-4 flex flex-col gap-1">
         <div className="font-mono text-[10px] text-[#7A7A8A] tracking-widest uppercase">{value.label}</div>
-        <div className="font-serif text-[22px] font-bold text-[#1E1245] leading-tight">{value.value}</div>
+        <div className="font-serif text-[22px] font-bold text-[#111111] leading-tight">{value.value}</div>
         {value.context && (
           <div className="text-[13px] text-[#3D3D3D]">{value.context}</div>
         )}
@@ -156,7 +156,7 @@ function LockedLesson() {
       <div className="w-16 h-16 bg-[#F4F1EB] rounded-full flex items-center justify-center text-[28px] mb-5">
         🔒
       </div>
-      <h2 className="font-serif text-[22px] font-bold text-[#1E1245] mb-2">
+      <h2 className="font-serif text-[22px] font-bold text-[#111111] mb-2">
         Subscribe to access this lesson
       </h2>
       <p className="text-[15px] text-[#3D3D3D] mb-8 max-w-sm">
@@ -170,7 +170,7 @@ function LockedLesson() {
       </Link>
       <Link
         href="/auth/login"
-        className="border border-[rgba(30,18,69,0.2)] hover:border-[#1E1245] text-[#3D3D3D] hover:text-[#1E1245] rounded-lg px-8 py-3.5 text-[15px] font-medium transition-colors"
+        className="border border-[rgba(17,17,17,0.2)] hover:border-[#111111] text-[#3D3D3D] hover:text-[#111111] rounded-lg px-8 py-3.5 text-[15px] font-medium transition-colors"
       >
         Sign in if subscribed →
       </Link>
@@ -269,18 +269,18 @@ export default function ReaderPage() {
       <aside
         className={`${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } absolute lg:relative lg:translate-x-0 z-30 flex-shrink-0 flex flex-col bg-white border-r border-[rgba(30,18,69,0.1)] overflow-y-auto transition-transform duration-200`}
+        } absolute lg:relative lg:translate-x-0 z-30 flex-shrink-0 flex flex-col bg-white border-r border-[rgba(17,17,17,0.1)] overflow-y-auto transition-transform duration-200`}
         style={{ width: 280, height: "100%" }}
       >
         {/* Back + course info */}
-        <div className="px-4 py-4 border-b border-[rgba(30,18,69,0.07)]">
+        <div className="px-4 py-4 border-b border-[rgba(17,17,17,0.07)]">
           <Link
             href="/courses"
             className="inline-flex items-center gap-1.5 font-mono text-[11px] text-[#7A7A8A] hover:text-[#D4860A] transition-colors mb-3"
           >
             ← All courses
           </Link>
-          <div className="font-serif text-[14px] text-[#1E1245] leading-snug mb-1">
+          <div className="font-serif text-[14px] text-[#111111] leading-snug mb-1">
             {course.title}
           </div>
           <div className="font-mono text-[11px] text-[#7A7A8A]">
@@ -289,10 +289,10 @@ export default function ReaderPage() {
         </div>
 
         {/* Progress bar */}
-        <div className="px-4 py-3 border-b border-[rgba(30,18,69,0.07)]">
+        <div className="px-4 py-3 border-b border-[rgba(17,17,17,0.07)]">
           <div className="flex justify-between items-center mb-1.5">
             <span className="font-mono text-[10px] text-[#7A7A8A] tracking-widest uppercase">Progress</span>
-            <span className="font-mono text-[11px] text-[#1E1245]">{progressPct}%</span>
+            <span className="font-mono text-[11px] text-[#111111]">{progressPct}%</span>
           </div>
           <div className="h-[3px] bg-[#EDE9E0] rounded-full overflow-hidden">
             <div
@@ -331,7 +331,7 @@ export default function ReaderPage() {
                           : isActive
                           ? "bg-[#D4860A] text-white"
                           : isAccessible
-                          ? "border-2 border-[rgba(30,18,69,0.2)] text-[#7A7A8A]"
+                          ? "border-2 border-[rgba(17,17,17,0.2)] text-[#7A7A8A]"
                           : "bg-[#EDE9E0] text-[#7A7A8A]"
                       }`}
                     >
@@ -340,7 +340,7 @@ export default function ReaderPage() {
                     <div className="flex-1 min-w-0">
                       <div
                         className={`text-[13px] leading-snug ${
-                          isActive ? "text-[#1E1245] font-medium" : isDone ? "text-[#7A7A8A]" : "text-[#3D3D3D]"
+                          isActive ? "text-[#111111] font-medium" : isDone ? "text-[#7A7A8A]" : "text-[#3D3D3D]"
                         }`}
                       >
                         {l.title}
@@ -355,7 +355,7 @@ export default function ReaderPage() {
         </div>
 
         {/* Subscribe card */}
-        <div className="p-4 border-t border-[rgba(30,18,69,0.08)] bg-[#F4F1EB]">
+        <div className="p-4 border-t border-[rgba(17,17,17,0.08)] bg-[#F4F1EB]">
           <div className="font-mono text-[10px] text-[#7A7A8A] tracking-widest uppercase mb-2">Full Access</div>
           <div className="font-mono text-[13px] text-[#3D3D3D] mb-3">
             Subscribe once. Access all courses.
@@ -381,11 +381,11 @@ export default function ReaderPage() {
       <div className="flex-1 flex flex-col min-w-0 h-full">
 
         {/* Top bar */}
-        <div className="flex-shrink-0 flex items-center justify-between px-5 py-3 bg-white border-b border-[rgba(30,18,69,0.1)]">
+        <div className="flex-shrink-0 flex items-center justify-between px-5 py-3 bg-white border-b border-[rgba(17,17,17,0.1)]">
           <div className="flex items-center gap-4">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="text-[#3D3D3D] hover:text-[#1E1245] transition-colors"
+              className="text-[#3D3D3D] hover:text-[#111111] transition-colors"
               aria-label="Toggle sidebar"
             >
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -402,7 +402,7 @@ export default function ReaderPage() {
               <span className="font-mono text-[11px] text-[#7A7A8A]">{progressPct}% complete</span>
             </div>
           </div>
-          <span className="font-mono text-[12px] text-[#1E1245] hidden sm:block">The Capital Gains</span>
+          <span className="font-mono text-[12px] text-[#111111] hidden sm:block">The Capital Gains</span>
         </div>
 
         {/* Scrollable content area */}
@@ -421,10 +421,10 @@ export default function ReaderPage() {
               </div>
 
               {/* Lesson header */}
-              <h1 className="font-serif text-[30px] font-bold text-[#1E1245] leading-[1.1] mb-3">
+              <h1 className="font-serif text-[30px] font-bold text-[#111111] leading-[1.1] mb-3">
                 {lesson.title}
               </h1>
-              <div className="flex items-center gap-3 mb-8 pb-6 border-b border-[rgba(30,18,69,0.08)]">
+              <div className="flex items-center gap-3 mb-8 pb-6 border-b border-[rgba(17,17,17,0.08)]">
                 <span className="font-mono text-[12px] text-[#7A7A8A]">{lesson.duration} read</span>
                 {lesson.isFree && (
                   <span className="font-mono text-[10px] text-[#1A7A4A] bg-[#E8F5EE] rounded px-2 py-0.5">
@@ -439,11 +439,11 @@ export default function ReaderPage() {
               </div>
 
               {/* Nav footer */}
-              <div className="flex items-center justify-between mt-12 pt-6 border-t border-[rgba(30,18,69,0.08)]">
+              <div className="flex items-center justify-between mt-12 pt-6 border-t border-[rgba(17,17,17,0.08)]">
                 {prevLesson ? (
                   <button
                     onClick={() => setActiveLesson(prevLesson.slug)}
-                    className="font-mono text-[13px] text-[#3D3D3D] hover:text-[#1E1245] transition-colors"
+                    className="font-mono text-[13px] text-[#3D3D3D] hover:text-[#111111] transition-colors"
                   >
                     ← {prevLesson.title}
                   </button>

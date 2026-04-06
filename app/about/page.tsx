@@ -35,7 +35,7 @@ export default function AboutPage() {
         <div className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase mb-3">
           About
         </div>
-        <h1 className="font-serif text-5xl font-bold text-[#1E1245] leading-[1.1] mb-4">
+        <h1 className="font-serif text-5xl font-bold text-[#111111] leading-[1.1] mb-4">
           Built by a practitioner,<br />for practitioners.
         </h1>
         <p className="text-[17px] text-[#3D3D3D] leading-relaxed">
@@ -60,17 +60,17 @@ export default function AboutPage() {
 
       {/* ── PRINCIPLES GRID ── */}
       <section className="max-w-4xl mx-auto px-8 mt-16">
-        <h2 className="font-serif text-[28px] font-bold text-[#1E1245] mb-8">
+        <h2 className="font-serif text-[28px] font-bold text-[#111111] mb-8">
           How we think about financial education
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           {principles.map((p) => (
             <div
               key={p.title}
-              className="bg-white border border-[rgba(30,18,69,0.1)] rounded-2xl p-6"
+              className="bg-white border border-[rgba(17,17,17,0.1)] rounded-2xl p-6"
             >
               <div className="w-8 h-0.5 bg-[#D4860A] mb-4 rounded-full" />
-              <div className="font-serif text-[18px] text-[#1E1245] mb-2 leading-snug">
+              <div className="font-serif text-[18px] text-[#111111] mb-2 leading-snug">
                 {p.title}
               </div>
               <p className="text-[13px] text-[#3D3D3D] leading-relaxed">{p.body}</p>
@@ -84,7 +84,7 @@ export default function AboutPage() {
         <div className="bg-[#F4F1EB] rounded-2xl px-8 py-8 grid grid-cols-2 sm:grid-cols-4 gap-6">
           {stats.map((s) => (
             <div key={s.label} className="flex flex-col items-center text-center">
-              <span className="font-mono text-[28px] font-medium text-[#1E1245] leading-none mb-1">
+              <span className="font-mono text-[28px] font-medium text-[#111111] leading-none mb-1">
                 {s.num}
               </span>
               <span className="text-[12px] text-[#7A7A8A]">{s.label}</span>
@@ -95,7 +95,7 @@ export default function AboutPage() {
 
       {/* ── CTA ── */}
       <section className="max-w-3xl mx-auto px-8 mt-12 pb-20">
-        <div className="bg-[#1E1245] rounded-2xl px-10 py-12 text-center">
+        <div className="bg-[#111111] rounded-2xl px-10 py-12 text-center">
           <h2 className="font-serif text-[30px] text-white mb-3">
             Start learning for free
           </h2>

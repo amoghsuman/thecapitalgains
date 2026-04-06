@@ -49,17 +49,17 @@ thecapitalgains.com
 - [ ] Domain connected
 
 ## Colour Palette
-- Navy (primary): #1E1245 — was #0F2348
-- Navy light: #2D1B69 — was #1A3460
-- Navy deep: #3D2785 — was #2A1A5E
+- Navy (primary): #111111
+- Navy light: #2A2A2A
+- Navy deep: #333333
 - Amber: #D4860A
 - Amber hover: #F0A020
 - Background: #FAFAF7
-- Text: #111111 — was #1A1A2E
-- Text muted: #3D3D3D — was #5A5A72
-- Text hint: #7A7A8A — was #9494A8
+- Text: #111111
+- Text muted: #3D3D3D
+- Text hint: #7A7A8A
 - Green: #1A7A4A
-- Border (rgba): rgba(30,18,69,0.1) — was rgba(15,35,72,0.1)
+- Border (rgba): rgba(17,17,17,0.1)
 
 ## Font System
 - Headings: Playfair Display (font-serif) — weights 400/500/600/700

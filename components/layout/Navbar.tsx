@@ -6,12 +6,12 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-[#FAFAF7] border-b border-[rgba(30,18,69,0.1)] sticky top-0 z-50">
+    <nav className="bg-[#FAFAF7] border-b border-[rgba(17,17,17,0.1)] sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-8 h-[60px] flex items-center gap-0">
         {/* Logo */}
         <Link
           href="/"
-          className="font-serif font-bold text-[17px] text-[#1E1245] tracking-wide mr-12 flex-shrink-0"
+          className="font-serif font-bold text-[17px] text-[#111111] tracking-wide mr-12 flex-shrink-0"
         >
           The Capital Gains
         </Link>
@@ -27,7 +27,7 @@ export default function Navbar() {
             <Link
               key={item.label}
               href={item.href}
-              className="px-4 py-2 text-[14px] text-[#3D3D3D] hover:text-[#1E1245] hover:bg-[#F4F1EB] rounded-md transition-all"
+              className="px-4 py-2 text-[14px] text-[#3D3D3D] hover:text-[#111111] hover:bg-[#F4F1EB] rounded-md transition-all"
             >
               {item.label}
             </Link>
@@ -36,17 +36,17 @@ export default function Navbar() {
 
         {/* CTAs */}
         <div className="hidden md:flex items-center gap-2 ml-auto">
-          <Link href="/auth/login" className="border border-[rgba(30,18,69,0.2)] rounded-lg px-5 py-2 text-[13px] text-[#3D3D3D] hover:border-[#1E1245] hover:text-[#1E1245] transition-all">
+          <Link href="/auth/login" className="border border-[rgba(17,17,17,0.2)] rounded-lg px-5 py-2 text-[13px] text-[#3D3D3D] hover:border-[#111111] hover:text-[#111111] transition-all">
             Sign in
           </Link>
-          <Link href="/auth/signup" className="bg-[#1E1245] text-white rounded-lg px-5 py-2 text-[13px] font-medium hover:bg-[#2D1B69] transition-all">
+          <Link href="/auth/signup" className="bg-[#111111] text-white rounded-lg px-5 py-2 text-[13px] font-medium hover:bg-[#2A2A2A] transition-all">
             Get started free
           </Link>
         </div>
 
         {/* Mobile hamburger */}
         <button
-          className="md:hidden ml-auto text-[#1E1245]"
+          className="md:hidden ml-auto text-[#111111]"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -63,7 +63,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden border-t border-[rgba(30,18,69,0.1)] px-8 py-4 flex flex-col gap-2 bg-[#FAFAF7]">
+        <div className="md:hidden border-t border-[rgba(17,17,17,0.1)] px-8 py-4 flex flex-col gap-2 bg-[#FAFAF7]">
           {[
             { label: "Courses", href: "/courses" },
             { label: "Portfolios", href: "/portfolios" },
@@ -73,17 +73,17 @@ export default function Navbar() {
             <Link
               key={item.label}
               href={item.href}
-              className="py-2 text-[14px] text-[#3D3D3D] hover:text-[#1E1245]"
+              className="py-2 text-[14px] text-[#3D3D3D] hover:text-[#111111]"
               onClick={() => setMenuOpen(false)}
             >
               {item.label}
             </Link>
           ))}
-          <div className="flex gap-2 pt-2 border-t border-[rgba(30,18,69,0.08)]">
-            <Link href="/auth/login" className="flex-1 text-center border border-[rgba(30,18,69,0.2)] rounded-lg px-4 py-2 text-[13px] text-[#3D3D3D]">
+          <div className="flex gap-2 pt-2 border-t border-[rgba(17,17,17,0.08)]">
+            <Link href="/auth/login" className="flex-1 text-center border border-[rgba(17,17,17,0.2)] rounded-lg px-4 py-2 text-[13px] text-[#3D3D3D]">
               Sign in
             </Link>
-            <Link href="/auth/signup" className="flex-1 text-center bg-[#1E1245] text-white rounded-lg px-4 py-2 text-[13px] font-medium">
+            <Link href="/auth/signup" className="flex-1 text-center bg-[#111111] text-white rounded-lg px-4 py-2 text-[13px] font-medium">
               Get started free
             </Link>
           </div>

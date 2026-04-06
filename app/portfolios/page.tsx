@@ -14,7 +14,7 @@ const portfolios = [
       { label: "REBALANCE", val: "Quarterly", color: "" },
     ],
     bars: [
-      { label: "Large Cap", pct: 80, color: "bg-[#1E1245]" },
+      { label: "Large Cap", pct: 80, color: "bg-[#111111]" },
       { label: "Mid Cap", pct: 20, color: "bg-[#D4860A]" },
     ],
     holdings: [
@@ -35,7 +35,7 @@ const portfolios = [
       { label: "REBALANCE", val: "Half-yearly", color: "" },
     ],
     bars: [
-      { label: "Dividend Stocks", pct: 70, color: "bg-[#1E1245]" },
+      { label: "Dividend Stocks", pct: 70, color: "bg-[#111111]" },
       { label: "REITs/Bonds", pct: 30, color: "bg-[#D4860A]" },
     ],
     holdings: [
@@ -56,7 +56,7 @@ const portfolios = [
       { label: "REBALANCE", val: "Weekly", color: "" },
     ],
     bars: [
-      { label: "Large Cap F&O", pct: 60, color: "bg-[#1E1245]" },
+      { label: "Large Cap F&O", pct: 60, color: "bg-[#111111]" },
       { label: "Mid Cap F&O", pct: 40, color: "bg-[#D4860A]" },
     ],
     holdings: [
@@ -92,7 +92,7 @@ export default function PortfoliosPage() {
         <div className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase mb-2">
           Model Portfolios
         </div>
-        <h1 className="font-serif text-5xl font-bold text-[#1E1245] leading-[1.1] mb-3">
+        <h1 className="font-serif text-5xl font-bold text-[#111111] leading-[1.1] mb-3">
           See how a portfolio is built
         </h1>
         <p className="text-[16px] text-[#3D3D3D] max-w-2xl mb-6">
@@ -112,13 +112,13 @@ export default function PortfoliosPage() {
           {portfolios.map((p) => (
             <div
               key={p.tag}
-              className="bg-white border border-[rgba(30,18,69,0.1)] rounded-2xl p-6"
+              className="bg-white border border-[rgba(17,17,17,0.1)] rounded-2xl p-6"
             >
               {/* Tag + name */}
               <div className="font-mono text-[10px] text-[#7A7A8A] tracking-widest mb-1">
                 {p.tag}
               </div>
-              <div className="font-serif text-[18px] text-[#1E1245] mb-3 leading-snug">
+              <div className="font-serif text-[18px] text-[#111111] mb-3 leading-snug">
                 {p.name}
               </div>
               <p className="text-[13px] text-[#3D3D3D] leading-relaxed mb-5">
@@ -132,7 +132,7 @@ export default function PortfoliosPage() {
                     <div className="font-mono text-[9px] text-[#7A7A8A] tracking-widest mb-1">
                       {s.label}
                     </div>
-                    <div className={`font-mono text-[13px] font-medium text-[#1E1245] ${s.color}`}>
+                    <div className={`font-mono text-[13px] font-medium text-[#111111] ${s.color}`}>
                       {s.val}
                     </div>
                   </div>
@@ -178,7 +178,7 @@ export default function PortfoliosPage() {
                       }`}
                     >
                       <div>
-                        <div className="font-mono text-[12px] font-medium text-[#1E1245]">
+                        <div className="font-mono text-[12px] font-medium text-[#111111]">
                           {h.name}
                         </div>
                         <div className="text-[11px] text-[#7A7A8A]">{h.sector}</div>
@@ -198,7 +198,7 @@ export default function PortfoliosPage() {
 
       {/* ── HOW WE MAINTAIN THESE ── */}
       <section className="max-w-6xl mx-auto px-8 mt-16">
-        <div className="bg-[#1E1245] rounded-2xl px-10 py-10">
+        <div className="bg-[#111111] rounded-2xl px-10 py-10">
           <div className="font-mono text-[11px] text-[rgba(255,255,255,0.4)] tracking-widest uppercase mb-3">
             Methodology
           </div>
@@ -228,7 +228,7 @@ export default function PortfoliosPage() {
             <div className="font-mono text-[11px] text-[#D4860A] tracking-widest uppercase mb-2">
               Subscriber Access
             </div>
-            <h3 className="font-serif text-[24px] font-bold text-[#1E1245] mb-2">
+            <h3 className="font-serif text-[24px] font-bold text-[#111111] mb-2">
               Subscribe to follow along
             </h3>
             <p className="text-[15px] text-[#3D3D3D] max-w-md">
@@ -246,7 +246,7 @@ export default function PortfoliosPage() {
 
       {/* ── LEGAL DISCLAIMER ── */}
       <section className="max-w-6xl mx-auto px-8 pb-10 mt-8">
-        <div className="bg-white border border-[rgba(30,18,69,0.08)] rounded-lg px-6 py-5 font-mono text-[10px] text-[#7A7A8A] leading-relaxed">
+        <div className="bg-white border border-[rgba(17,17,17,0.08)] rounded-lg px-6 py-5 font-mono text-[10px] text-[#7A7A8A] leading-relaxed">
           These model portfolios are maintained purely for educational purposes to illustrate portfolio construction principles. Stock names mentioned are for illustrative purposes only and do not constitute buy, sell, or hold recommendations. They do not constitute investment advice or SEBI-registered research. Past illustrative performance does not guarantee future results. Do not invest based on this content without consulting a SEBI-registered financial advisor or research analyst.
         </div>
       </section>

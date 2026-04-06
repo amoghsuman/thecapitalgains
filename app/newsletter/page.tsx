@@ -51,7 +51,7 @@ export default function NewsletterPage() {
         <div className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase mb-3">
           Newsletter
         </div>
-        <h1 className="font-serif text-5xl font-bold text-[#1E1245] leading-[1.1] mb-4">
+        <h1 className="font-serif text-5xl font-bold text-[#111111] leading-[1.1] mb-4">
           One market insight,<br />every week.
         </h1>
         <p className="text-[16px] text-[#3D3D3D] leading-relaxed mb-8 max-w-xl mx-auto">
@@ -65,19 +65,19 @@ export default function NewsletterPage() {
 
       {/* ── WHAT YOU GET ── */}
       <section className="max-w-4xl mx-auto px-8 mt-16">
-        <h2 className="font-serif text-[28px] font-bold text-[#1E1245] text-center mb-10">
+        <h2 className="font-serif text-[28px] font-bold text-[#111111] text-center mb-10">
           What lands in your inbox
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {whatYouGet.map((item) => (
             <div
               key={item.title}
-              className="bg-white border border-[rgba(30,18,69,0.1)] rounded-2xl p-6"
+              className="bg-white border border-[rgba(17,17,17,0.1)] rounded-2xl p-6"
             >
               <div className="w-10 h-10 bg-[#F4F1EB] rounded-xl flex items-center justify-center text-[20px] mb-4">
                 {item.icon}
               </div>
-              <div className="font-serif text-[17px] text-[#1E1245] mb-2 leading-snug">
+              <div className="font-serif text-[17px] text-[#111111] mb-2 leading-snug">
                 {item.title}
               </div>
               <p className="text-[13px] text-[#3D3D3D] leading-relaxed">
@@ -90,14 +90,14 @@ export default function NewsletterPage() {
 
       {/* ── RECENT ISSUES ── */}
       <section className="max-w-4xl mx-auto px-8 mt-16">
-        <h2 className="font-serif text-[28px] font-bold text-[#1E1245] mb-6">
+        <h2 className="font-serif text-[28px] font-bold text-[#111111] mb-6">
           Recent issues
         </h2>
         <div className="flex flex-col gap-4">
           {recentIssues.map((issue) => (
             <div
               key={issue.num}
-              className="bg-white border border-[rgba(30,18,69,0.1)] rounded-xl px-6 py-5 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4"
+              className="bg-white border border-[rgba(17,17,17,0.1)] rounded-xl px-6 py-5 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4"
             >
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
@@ -108,7 +108,7 @@ export default function NewsletterPage() {
                     {issue.date}
                   </span>
                 </div>
-                <div className="font-serif text-[16px] text-[#1E1245] mb-1 leading-snug">
+                <div className="font-serif text-[16px] text-[#111111] mb-1 leading-snug">
                   {issue.title}
                 </div>
                 <p className="text-[13px] text-[#3D3D3D] leading-relaxed">
@@ -127,7 +127,7 @@ export default function NewsletterPage() {
 
       {/* ── BOTTOM CTA ── */}
       <section className="max-w-3xl mx-auto px-8 mt-16 pb-20">
-        <div className="bg-[#1E1245] rounded-2xl px-10 py-12 text-center">
+        <div className="bg-[#111111] rounded-2xl px-10 py-12 text-center">
           <h2 className="font-serif text-[30px] text-white mb-3">
             Start reading this week
           </h2>

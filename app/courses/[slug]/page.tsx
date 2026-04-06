@@ -18,7 +18,7 @@ export default async function CourseDetailPage({
           <div className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase mb-4">
             404
           </div>
-          <h1 className="font-serif text-4xl font-bold text-[#1E1245] mb-4">
+          <h1 className="font-serif text-4xl font-bold text-[#111111] mb-4">
             Course not found
           </h1>
           <p className="text-[16px] text-[#3D3D3D] mb-8">
@@ -49,11 +49,11 @@ export default async function CourseDetailPage({
       {/* ── BREADCRUMB ── */}
       <div className="max-w-6xl mx-auto px-8 pt-8">
         <div className="flex items-center gap-2 font-mono text-[12px] text-[#7A7A8A]">
-          <Link href="/courses" className="hover:text-[#1E1245] transition-colors">
+          <Link href="/courses" className="hover:text-[#111111] transition-colors">
             Courses
           </Link>
           <span>→</span>
-          <span className="text-[#1E1245]">{course.title}</span>
+          <span className="text-[#111111]">{course.title}</span>
         </div>
       </div>
 
@@ -76,7 +76,7 @@ export default async function CourseDetailPage({
           </div>
 
           {/* Title */}
-          <h1 className="font-serif text-4xl font-bold text-[#1E1245] leading-[1.1] mb-4">
+          <h1 className="font-serif text-4xl font-bold text-[#111111] leading-[1.1] mb-4">
             {course.title}
           </h1>
 
@@ -86,7 +86,7 @@ export default async function CourseDetailPage({
           </p>
 
           {/* Stats row */}
-          <div className="flex flex-wrap gap-5 mb-8 pb-8 border-b border-[rgba(30,18,69,0.1)]">
+          <div className="flex flex-wrap gap-5 mb-8 pb-8 border-b border-[rgba(17,17,17,0.1)]">
             {[
               { label: "Lessons", val: `${totalLessons}` },
               { label: "Duration", val: course.duration },
@@ -97,7 +97,7 @@ export default async function CourseDetailPage({
                   <span className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase mb-1">
                     {s.label}
                   </span>
-                  <span className="font-mono text-[15px] font-medium text-[#1E1245]">
+                  <span className="font-mono text-[15px] font-medium text-[#111111]">
                     {s.val}
                   </span>
                 </div>
@@ -108,7 +108,7 @@ export default async function CourseDetailPage({
           {/* What you'll learn */}
           {course.whatYouLearn?.length > 0 && (
             <div className="mb-10">
-              <h2 className="font-serif text-[22px] font-bold text-[#1E1245] mb-5">
+              <h2 className="font-serif text-[22px] font-bold text-[#111111] mb-5">
                 What you&apos;ll learn
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -125,17 +125,17 @@ export default async function CourseDetailPage({
           {/* Curriculum */}
           {course.chapters?.length > 0 && (
             <div>
-              <h2 className="font-serif text-[22px] font-bold text-[#1E1245] mb-5">
+              <h2 className="font-serif text-[22px] font-bold text-[#111111] mb-5">
                 Curriculum
               </h2>
               <div className="flex flex-col gap-4">
                 {course.chapters.map((chapter: any) => (
                   <div
                     key={chapter.title}
-                    className="border border-[rgba(30,18,69,0.1)] rounded-xl overflow-hidden"
+                    className="border border-[rgba(17,17,17,0.1)] rounded-xl overflow-hidden"
                   >
                     <div className="bg-[#F4F1EB] px-5 py-3">
-                      <span className="font-mono text-[12px] font-medium text-[#1E1245]">
+                      <span className="font-mono text-[12px] font-medium text-[#111111]">
                         {chapter.title}
                       </span>
                     </div>
@@ -145,7 +145,7 @@ export default async function CourseDetailPage({
                           key={lesson.slug || lesson.title}
                           className={`flex items-center justify-between px-5 py-3 ${
                             i !== chapter.lessons.length - 1
-                              ? "border-b border-[rgba(30,18,69,0.06)]"
+                              ? "border-b border-[rgba(17,17,17,0.06)]"
                               : ""
                           }`}
                         >
@@ -156,7 +156,7 @@ export default async function CourseDetailPage({
                             {lesson.isFree && lesson.slug ? (
                               <Link
                                 href={`/learn/${slug}/${lesson.slug}`}
-                                className="text-[14px] text-[#1E1245] hover:text-[#D4860A] transition-colors"
+                                className="text-[14px] text-[#111111] hover:text-[#D4860A] transition-colors"
                               >
                                 {lesson.title}
                               </Link>
@@ -190,7 +190,7 @@ export default async function CourseDetailPage({
 
         {/* ── RIGHT COLUMN — STICKY ACCESS CARD ── */}
         <div className="lg:col-span-1">
-          <div className="sticky top-24 bg-white border border-[rgba(30,18,69,0.1)] rounded-2xl p-6 shadow-[0_4px_32px_rgba(30,18,69,0.08)]">
+          <div className="sticky top-24 bg-white border border-[rgba(17,17,17,0.1)] rounded-2xl p-6 shadow-[0_4px_32px_rgba(17,17,17,0.08)]">
 
             {/* Access level badge */}
             <div className="mb-4">
@@ -201,7 +201,7 @@ export default async function CourseDetailPage({
                 <span className="font-mono text-[11px] font-medium bg-[rgba(212,134,10,0.15)] text-[#D4860A] rounded px-3 py-1.5">PRO — Trader Pro required</span>
               )}
               {(!course.accessLevel || course.accessLevel === "learner") && (
-                <span className="font-mono text-[11px] font-medium bg-[rgba(30,18,69,0.08)] text-[#1E1245] rounded px-3 py-1.5">LEARNER+ — Subscription required</span>
+                <span className="font-mono text-[11px] font-medium bg-[rgba(17,17,17,0.08)] text-[#111111] rounded px-3 py-1.5">LEARNER+ — Subscription required</span>
               )}
             </div>
 
@@ -233,7 +233,7 @@ export default async function CourseDetailPage({
             </div>
 
             {/* Included */}
-            <div className="border-t border-[rgba(30,18,69,0.08)] pt-4 mb-5">
+            <div className="border-t border-[rgba(17,17,17,0.08)] pt-4 mb-5">
               <div className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase mb-3">
                 What&apos;s included
               </div>

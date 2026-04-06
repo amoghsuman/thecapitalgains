@@ -28,7 +28,7 @@ export default function RefundPage() {
         <div className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase mb-3">
           Legal
         </div>
-        <h1 className="font-serif text-4xl font-bold text-[#1E1245] mb-3">
+        <h1 className="font-serif text-4xl font-bold text-[#111111] mb-3">
           Refund Policy
         </h1>
         <div className="font-mono text-[12px] text-[#7A7A8A] mb-10">
@@ -36,7 +36,7 @@ export default function RefundPage() {
         </div>
         {sections.map((s) => (
           <div key={s.title}>
-            <h2 className="font-serif text-[20px] font-bold text-[#1E1245] mb-3 mt-8">
+            <h2 className="font-serif text-[20px] font-bold text-[#111111] mb-3 mt-8">
               {s.title}
             </h2>
             <p className="text-[15px] text-[#3D3D3D] leading-relaxed">{s.body}</p>
