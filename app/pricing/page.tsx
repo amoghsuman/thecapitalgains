@@ -400,7 +400,7 @@ export default function PricingPage() {
             stackNum="STACK 02"
             title="Research"
             subtitle="Market analysis & model portfolios"
-            headerBg="bg-[#2A2A2A]"
+            headerBg="bg-[#111111]"
             tiers={researchTiers}
             selected={selectedResearch}
             onSelect={(id) => setSelectedResearch(id as ResearchTier)}
@@ -426,7 +426,7 @@ export default function PricingPage() {
             stackNum="STACK 03"
             title="Community"
             subtitle="Live sessions & direct access"
-            headerBg="bg-[#333333]"
+            headerBg="bg-[#111111]"
             tiers={communityTiers}
             selected={selectedCommunity}
             onSelect={(id) => setSelectedCommunity(id as CommunityTier)}

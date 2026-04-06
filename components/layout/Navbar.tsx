@@ -39,7 +39,7 @@ export default function Navbar() {
           <Link href="/auth/login" className="border border-[rgba(17,17,17,0.2)] rounded-lg px-5 py-2 text-[13px] text-[#3D3D3D] hover:border-[#111111] hover:text-[#111111] transition-all">
             Sign in
           </Link>
-          <Link href="/auth/signup" className="bg-[#111111] text-white rounded-lg px-5 py-2 text-[13px] font-medium hover:bg-[#2A2A2A] transition-all">
+          <Link href="/auth/signup" className="bg-[#111111] text-white rounded-lg px-5 py-2 text-[13px] font-medium hover:bg-[#111111] transition-all">
             Get started free
           </Link>
         </div>

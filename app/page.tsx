@@ -346,7 +346,7 @@ export default function HomePage() {
       </section>
 
       {/* ── MODEL PORTFOLIOS ── */}
-      <div className="bg-[#F4F1EB]">
+      <div className="bg-[#EFEFEF] border-t border-b border-[rgba(17,17,17,0.12)]">
         <div className="max-w-6xl mx-auto px-8 py-20">
           <div className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase mb-3">
             Model Portfolios
