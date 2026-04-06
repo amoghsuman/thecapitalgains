@@ -35,7 +35,7 @@ export default function HomePage() {
             </Link>
             <Link
               href="/pricing"
-              className="border border-[rgba(17,17,17,0.2)] hover:border-[#111111] hover:text-[#111111] text-[#3D3D3D] rounded-lg px-6 py-3.5 text-[15px] transition-all"
+              className="border border-[rgba(17,17,17,0.2)] hover:border-[#111111] text-[#111111] rounded-lg px-6 py-3.5 text-[15px] transition-all"
             >
               View plans
             </Link>
