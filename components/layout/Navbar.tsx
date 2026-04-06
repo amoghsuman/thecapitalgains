@@ -36,11 +36,11 @@ export default function Navbar() {
 
         {/* CTAs */}
         <div className="hidden md:flex items-center gap-2 ml-auto">
-          <Link href="/auth/login" className="border border-[rgba(17,17,17,0.2)] rounded-lg px-5 py-2 text-[13px] text-[#3D3D3D] hover:border-[#111111] hover:text-[#111111] transition-all">
-            Sign in
+          <Link href="/auth/login" className="border border-[rgba(17,17,17,0.25)] rounded-lg px-5 py-2 text-[13px] text-[#3D3D3D] hover:border-[#111111] hover:text-[#111111] transition-all">
+            Sign In
           </Link>
-          <Link href="/auth/signup" className="bg-[#111111] text-white rounded-lg px-5 py-2 text-[13px] font-medium hover:bg-[#111111] transition-all">
-            Get started free
+          <Link href="/auth/signup" className="bg-[#111111] text-white rounded-lg px-5 py-2 text-[13px] font-medium hover:bg-[#333333] transition-all border border-[#111111]">
+            Get Started Free
           </Link>
         </div>
 
