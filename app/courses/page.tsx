@@ -37,7 +37,7 @@ export default async function CoursesPage() {
             All Courses
           </h1>
           <p className="text-[16px] text-[#5A5A72] mt-3 mb-12">
-            Text-first, exercise-driven playbooks. Buy individually or subscribe for all access.
+            Subscribe to access all courses. Free previews available — no card required.
           </p>
         </div>
 
