@@ -48,6 +48,11 @@ thecapitalgains.com
 - [ ] Course reader wired to Supabase
 - [ ] Domain connected
 
+## Course Schema — Key Fields
+- `learningPath` — groups course into a learning path (see list below); replaces deprecated `track` field
+- `orderRank` — controls sort order within a learning path (lower = first, default 99)
+- Learning Paths: stock-market-basics, value-investing, momentum-investing, technical-trading, options-derivatives, mutual-funds-etfs, investment-banking, equity-research, private-equity-vc, cfa-prep, frm-prep, financial-modelling, quant-finance, algo-trading, python-finance, corporate-finance, ma-valuation
+
 ## Colour Palette
 - Navy (primary): #111111
 - Navy light: #2A2A2A

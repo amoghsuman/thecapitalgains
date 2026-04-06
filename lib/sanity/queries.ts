@@ -1,8 +1,8 @@
 import { client } from './client'
 
-export async function getAllCourses(track?: string) {
-  const filter = track
-    ? `*[_type == "course" && track == "${track}"]`
+export async function getAllCourses(learningPath?: string) {
+  const filter = learningPath
+    ? `*[_type == "course" && learningPath == "${learningPath}"]`
     : `*[_type == "course"]`
 
   return client.fetch(`
@@ -19,7 +19,7 @@ export async function getAllCourses(track?: string) {
       duration,
       description,
       topics,
-      track,
+      learningPath,
       orderRank
     }
   `)

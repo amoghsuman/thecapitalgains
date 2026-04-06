@@ -19,41 +19,97 @@ export default defineConfig({
           .title('Content')
           .items([
             S.listItem()
-              .title('Courses by Track')
+              .title('Courses by Learning Path')
               .child(
                 S.list()
-                  .title('Tracks')
+                  .title('Learning Paths')
                   .items([
                     S.listItem()
-                      .title('Retail Investor')
+                      .title('Stock Market Basics')
                       .child(
                         S.documentList()
-                          .title('Retail Investor Courses')
-                          .filter('_type == "course" && track == "retail"')
+                          .title('Stock Market Basics')
+                          .filter('_type == "course" && learningPath == "stock-market-basics"')
                           .defaultOrdering([{ field: 'orderRank', direction: 'asc' }, { field: 'title', direction: 'asc' }])
                       ),
                     S.listItem()
-                      .title('Career Pathways')
+                      .title('Value Investing')
                       .child(
                         S.documentList()
-                          .title('Career Pathways Courses')
-                          .filter('_type == "course" && track == "career"')
+                          .title('Value Investing')
+                          .filter('_type == "course" && learningPath == "value-investing"')
                           .defaultOrdering([{ field: 'orderRank', direction: 'asc' }, { field: 'title', direction: 'asc' }])
                       ),
                     S.listItem()
-                      .title('Quant & Tech')
+                      .title('Momentum Investing')
                       .child(
                         S.documentList()
-                          .title('Quant & Tech Courses')
-                          .filter('_type == "course" && track == "quant"')
+                          .title('Momentum Investing')
+                          .filter('_type == "course" && learningPath == "momentum-investing"')
                           .defaultOrdering([{ field: 'orderRank', direction: 'asc' }, { field: 'title', direction: 'asc' }])
                       ),
                     S.listItem()
-                      .title('Corporate Finance')
+                      .title('Technical Trading')
                       .child(
                         S.documentList()
-                          .title('Corporate Finance Courses')
-                          .filter('_type == "course" && track == "corporate"')
+                          .title('Technical Trading')
+                          .filter('_type == "course" && learningPath == "technical-trading"')
+                          .defaultOrdering([{ field: 'orderRank', direction: 'asc' }, { field: 'title', direction: 'asc' }])
+                      ),
+                    S.listItem()
+                      .title('Options & Derivatives')
+                      .child(
+                        S.documentList()
+                          .title('Options & Derivatives')
+                          .filter('_type == "course" && learningPath == "options-derivatives"')
+                          .defaultOrdering([{ field: 'orderRank', direction: 'asc' }, { field: 'title', direction: 'asc' }])
+                      ),
+                    S.listItem()
+                      .title('Mutual Funds & ETFs')
+                      .child(
+                        S.documentList()
+                          .title('Mutual Funds & ETFs')
+                          .filter('_type == "course" && learningPath == "mutual-funds-etfs"')
+                          .defaultOrdering([{ field: 'orderRank', direction: 'asc' }, { field: 'title', direction: 'asc' }])
+                      ),
+                    S.listItem()
+                      .title('Investment Banking')
+                      .child(
+                        S.documentList()
+                          .title('Investment Banking')
+                          .filter('_type == "course" && learningPath == "investment-banking"')
+                          .defaultOrdering([{ field: 'orderRank', direction: 'asc' }, { field: 'title', direction: 'asc' }])
+                      ),
+                    S.listItem()
+                      .title('CFA Preparation')
+                      .child(
+                        S.documentList()
+                          .title('CFA Preparation')
+                          .filter('_type == "course" && learningPath == "cfa-prep"')
+                          .defaultOrdering([{ field: 'orderRank', direction: 'asc' }, { field: 'title', direction: 'asc' }])
+                      ),
+                    S.listItem()
+                      .title('FRM Preparation')
+                      .child(
+                        S.documentList()
+                          .title('FRM Preparation')
+                          .filter('_type == "course" && learningPath == "frm-prep"')
+                          .defaultOrdering([{ field: 'orderRank', direction: 'asc' }, { field: 'title', direction: 'asc' }])
+                      ),
+                    S.listItem()
+                      .title('Financial Modelling')
+                      .child(
+                        S.documentList()
+                          .title('Financial Modelling')
+                          .filter('_type == "course" && learningPath == "financial-modelling"')
+                          .defaultOrdering([{ field: 'orderRank', direction: 'asc' }, { field: 'title', direction: 'asc' }])
+                      ),
+                    S.listItem()
+                      .title('Quant Finance')
+                      .child(
+                        S.documentList()
+                          .title('Quant Finance')
+                          .filter('_type == "course" && learningPath == "quant-finance"')
                           .defaultOrdering([{ field: 'orderRank', direction: 'asc' }, { field: 'title', direction: 'asc' }])
                       ),
                     S.listItem()
@@ -62,7 +118,7 @@ export default defineConfig({
                         S.documentList()
                           .title('All Courses')
                           .filter('_type == "course"')
-                          .defaultOrdering([{ field: 'track', direction: 'asc' }, { field: 'orderRank', direction: 'asc' }, { field: 'title', direction: 'asc' }])
+                          .defaultOrdering([{ field: 'learningPath', direction: 'asc' }, { field: 'orderRank', direction: 'asc' }, { field: 'title', direction: 'asc' }])
                       ),
                   ])
               ),
