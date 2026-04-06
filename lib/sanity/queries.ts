@@ -1,8 +1,12 @@
 import { client } from './client'
 
-export async function getAllCourses() {
+export async function getAllCourses(track?: string) {
+  const filter = track
+    ? `*[_type == "course" && track == "${track}"]`
+    : `*[_type == "course"]`
+
   return client.fetch(`
-    *[_type == "course"] | order(_createdAt asc) {
+    ${filter} | order(orderRank asc, title asc) {
       _id,
       title,
       "slug": slug.current,
@@ -14,7 +18,9 @@ export async function getAllCourses() {
       lessonsCount,
       duration,
       description,
-      topics
+      topics,
+      track,
+      orderRank
     }
   `)
 }

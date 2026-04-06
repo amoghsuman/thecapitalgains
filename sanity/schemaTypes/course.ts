@@ -24,6 +24,27 @@ export const courseSchema = defineType({
       },
       initialValue: 'learner',
     }),
+    defineField({
+      name: 'track',
+      title: 'Track',
+      type: 'string',
+      description: 'Which learning track this course belongs to',
+      options: {
+        list: [
+          { title: 'Retail Investor', value: 'retail' },
+          { title: 'Career Pathways', value: 'career' },
+          { title: 'Quant & Tech', value: 'quant' },
+          { title: 'Corporate Finance', value: 'corporate' },
+        ],
+      },
+    }),
+    defineField({
+      name: 'orderRank',
+      title: 'Order within track',
+      type: 'number',
+      description: 'Lower number = appears first. e.g. 1, 2, 3...',
+      initialValue: 99,
+    }),
     defineField({ name: 'lessonsCount', title: 'Total Lessons', type: 'number' }),
     defineField({ name: 'duration', title: 'Duration', type: 'string', description: 'e.g. ~4 hrs' }),
     defineField({ name: 'description', title: 'Description', type: 'text', rows: 4 }),
