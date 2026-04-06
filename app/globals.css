@@ -62,3 +62,36 @@ a {
 button, [role="button"], input[type="submit"], input[type="button"] {
   cursor: pointer;
 }
+
+/* Force Tailwind to include critical utility classes */
+.bg-black-force { background-color: #111111; color: white; }
+
+.btn-primary {
+  background-color: #111111;
+  color: white;
+  border-radius: 8px;
+  padding: 8px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.btn-primary:hover {
+  opacity: 0.8;
+}
+
+.btn-outline {
+  border: 1px solid rgba(17,17,17,0.2);
+  border-radius: 8px;
+  padding: 8px 20px;
+  font-size: 13px;
+  color: #111111;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: transparent;
+}
+
+.btn-outline:hover {
+  border-color: #111111;
+}

@@ -36,10 +36,10 @@ export default function Navbar() {
 
         {/* CTAs */}
         <div className="hidden md:flex items-center gap-2 ml-auto">
-          <Link href="/auth/login" className="border border-[rgba(17,17,17,0.2)] rounded-lg px-5 py-2 text-[13px] text-[#111111] hover:border-[#111111] transition-all">
+          <Link href="/auth/login" className="btn-outline">
             Sign In
           </Link>
-          <Link href="/auth/signup" className="bg-[#111111] text-white rounded-lg px-5 py-2 text-[13px] font-medium hover:opacity-80 transition-all">
+          <Link href="/auth/signup" className="btn-primary">
             Get Started Free
           </Link>
         </div>
@@ -80,11 +80,11 @@ export default function Navbar() {
             </Link>
           ))}
           <div className="flex gap-2 pt-2 border-t border-[rgba(17,17,17,0.08)]">
-            <Link href="/auth/login" className="flex-1 text-center border border-[rgba(17,17,17,0.2)] rounded-lg px-4 py-2 text-[13px] text-[#111111]">
+            <Link href="/auth/login" className="flex-1 text-center btn-outline">
               Sign in
             </Link>
-            <Link href="/auth/signup" className="flex-1 text-center bg-[#111111] text-white rounded-lg px-4 py-2 text-[13px] font-medium">
-              Get started free
+            <Link href="/auth/signup" className="flex-1 text-center btn-primary">
+              Get Started Free
             </Link>
           </div>
         </div>
