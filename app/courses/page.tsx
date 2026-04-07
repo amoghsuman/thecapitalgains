@@ -31,7 +31,8 @@ type SortDir = "asc" | "desc";
 
 function parseDurationHrs(duration: string | null): number {
   if (!duration) return 0;
-  return parseFloat(duration.replace(/[^0-9.]/g, "") || "0");
+  const match = duration.match(/[\d.]+/);
+  return match ? parseFloat(match[0]) : 0;
 }
 
 function durBucket(hrs: number): string {
@@ -40,13 +41,13 @@ function durBucket(hrs: number): string {
   return "gt4";
 }
 
-function levelColor(tag: string | null): string {
-  if (!tag) return "bg-[#F4F1EB] text-[#7A7A8A]";
+function getLevelStyle(tag: string | null): string {
+  if (!tag) return "bg-[#F1EFE8] text-[#555555]";
   const t = tag.toLowerCase();
-  if (t.includes("advanced")) return "bg-[#FEF2F2] text-[#DC2626]";
-  if (t.includes("intermediate")) return "bg-[#FDF3E3] text-[#D4860A]";
-  if (t.includes("beginner")) return "bg-[#E8F5EE] text-[#1A7A4A]";
-  return "bg-[#F4F1EB] text-[#7A7A8A]";
+  if (t.includes("advanced")) return "bg-[#FCEBEB] text-[#A32D2D]";
+  if (t.includes("intermediate")) return "bg-[#FAEEDA] text-[#854F0B]";
+  if (t.includes("beginner")) return "bg-[#EAF3DE] text-[#3B6D11]";
+  return "bg-[#F1EFE8] text-[#555555]";
 }
 
 function accessColor(level: string | null): string {
@@ -399,7 +400,7 @@ export default function CoursesPage() {
                     {/* Level */}
                     <td className="px-3 py-[7px] border-r border-[rgba(17,17,17,0.04)]">
                       {course.tag ? (
-                        <span className={`font-mono text-[9px] font-medium rounded px-2 py-0.5 ${levelColor(course.tag)}`}>
+                        <span className={`font-mono text-[10px] px-2 py-0.5 rounded whitespace-nowrap ${getLevelStyle(course.tag)}`}>
                           {course.tag}
                         </span>
                       ) : (
