@@ -31,8 +31,7 @@ type SortDir = "asc" | "desc";
 
 function parseDurationHrs(duration: string | null): number {
   if (!duration) return 0;
-  const match = duration.match(/[\d.]+/);
-  return match ? parseFloat(match[0]) : 0;
+  return parseFloat(duration.replace(/[^0-9.]/g, "") || "0");
 }
 
 function durBucket(hrs: number): string {
@@ -44,9 +43,9 @@ function durBucket(hrs: number): string {
 function levelColor(tag: string | null): string {
   if (!tag) return "bg-[#F4F1EB] text-[#7A7A8A]";
   const t = tag.toLowerCase();
-  if (t.includes("beginner")) return "bg-[#E8F5EE] text-[#1A7A4A]";
-  if (t.includes("intermediate")) return "bg-[#FDF3E3] text-[#D4860A]";
   if (t.includes("advanced")) return "bg-[#FEF2F2] text-[#DC2626]";
+  if (t.includes("intermediate")) return "bg-[#FDF3E3] text-[#D4860A]";
+  if (t.includes("beginner")) return "bg-[#E8F5EE] text-[#1A7A4A]";
   return "bg-[#F4F1EB] text-[#7A7A8A]";
 }
 
@@ -110,6 +109,13 @@ export default function CoursesPage() {
     return Array.from(seen).sort();
   }, [courses]);
 
+  // Unique level tags from fetched data
+  const uniqueTags = useMemo(() => {
+    const seen = new Set<string>();
+    courses.forEach((c) => { if (c.tag) seen.add(c.tag); });
+    return Array.from(seen).sort();
+  }, [courses]);
+
   // Filtered + sorted courses
   const displayed = useMemo(() => {
     let list = courses.filter((c) => {
@@ -123,11 +129,8 @@ export default function CoursesPage() {
       }
       // Learning path
       if (filterPath !== "all" && c.learningPath !== filterPath) return false;
-      // Level
-      if (filterLevel !== "all") {
-        const tag = (c.tag ?? "").toLowerCase();
-        if (!tag.includes(filterLevel.toLowerCase())) return false;
-      }
+      // Level — exact match on stored tag string
+      if (filterLevel !== "all" && c.tag !== filterLevel) return false;
       // Access
       if (filterAccess !== "all") {
         const map: Record<string, string> = { "Free": "free", "Learner+": "learner", "Pro": "pro" };
@@ -258,9 +261,9 @@ export default function CoursesPage() {
         {/* Level */}
         <select value={filterLevel} onChange={(e) => setFilterLevel(e.target.value)} className={dropdownClass}>
           <option value="all">All levels</option>
-          <option value="Beginner">Beginner</option>
-          <option value="Intermediate">Intermediate</option>
-          <option value="Advanced">Advanced</option>
+          {uniqueTags.map((t) => (
+            <option key={t} value={t}>{t}</option>
+          ))}
         </select>
 
         {/* Access */}
@@ -425,9 +428,9 @@ export default function CoursesPage() {
                       </span>
                     </td>
 
-                    {/* Badge */}
+                    {/* Badge — exclude FREE/free (already shown in Access column) */}
                     <td className="px-3 py-[7px] border-r border-[rgba(17,17,17,0.04)]">
-                      {course.badge ? (
+                      {course.badge && course.badge.toLowerCase() !== "free" ? (
                         <span className={`font-mono text-[9px] font-medium rounded px-2 py-0.5 ${badgeColor(course.badge)}`}>
                           {course.badge}
                         </span>
