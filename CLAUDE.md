@@ -17,8 +17,9 @@ thecapitalgains.com
 ## Key Business Rules
 - Educational content only — not SEBI investment advice
 - SEBI RA registration in progress
-- Subscription tiers: Free / Learner ₹499 / Trader Pro ₹999 / Elite ₹2499
-- Individual course purchases also available
+- Two subscription stacks: Learn + Research (Stack 3 Community removed — no live sessions, WhatsApp, or 1:1 access)
+- Learn tiers: Free / Learner ₹999/mo / Pro ₹2499/mo
+- Research tiers: Newsletter ₹499/mo / Essential ₹4999/mo / Premium ₹12499/mo
 - Anonymous brand — founder identity not on platform
 
 ## Supabase Tables

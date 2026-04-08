@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import Link from "next/link";
@@ -7,7 +7,6 @@ import Link from "next/link";
 
 type LearnTier = "none" | "free" | "learner" | "pro";
 type ResearchTier = "none" | "newsletter" | "essential" | "premium";
-type CommunityTier = "none" | "community" | "elite";
 
 type Tier = {
   id: string;
@@ -49,7 +48,13 @@ const learnTiers: Tier[] = [
     name: "PRO",
     monthlyPrice: 2499,
     annualPrice: 1999,
-    features: ["Everything in Learner", "Live monthly workshop", "Session recordings", "Workbooks"],
+    features: [
+      "Everything in Learner",
+      "Early access to new courses",
+      "Downloadable PDF playbooks",
+      "Session recordings",
+      "Workbooks",
+    ],
     badge: "MOST POPULAR",
   },
 ];
@@ -93,40 +98,10 @@ const researchTiers: Tier[] = [
   },
 ];
 
-const communityTiers: Tier[] = [
-  {
-    id: "none",
-    name: "No community subscription",
-    monthlyPrice: 0,
-    annualPrice: 0,
-    features: [],
-    muted: true,
-  },
-  {
-    id: "community",
-    name: "COMMUNITY",
-    monthlyPrice: 999,
-    annualPrice: 799,
-    features: ["Private WhatsApp group", "Monthly group Q&A"],
-  },
-  {
-    id: "elite",
-    name: "ELITE ACCESS",
-    monthlyPrice: 9999,
-    annualPrice: 7999,
-    features: [
-      "Community included",
-      "Unlimited 1:1 async WhatsApp",
-      "Custom learning path",
-    ],
-    badge: "PREMIUM",
-  },
-];
-
 const faqs = [
   {
     q: "Can I subscribe to just one stack?",
-    a: "Yes, absolutely. Pick any combination you like — one stack, two stacks, or all three. There is no minimum bundle requirement. You only pay for what you select.",
+    a: "Yes, absolutely. Pick Learn, Research, or both. There is no minimum bundle requirement. You only pay for what you select.",
   },
   {
     q: "Can I change my bundle later?",
@@ -272,8 +247,6 @@ function StackColumn({
       <div className="flex flex-col gap-2 bg-[#F4F1EB] px-4 py-4 rounded-b-2xl border-x border-b border-[rgba(17,17,17,0.1)]">
         {tiers.map((tier) => {
           const price = resolvePrice(tier, annual);
-          // Clicking the currently selected (non-none) tier deselects it back to none.
-          // Clicking "none" always sets to none.
           const handleClick = () => {
             if (tier.id === "none") {
               onSelect("none");
@@ -303,41 +276,28 @@ export default function PricingPage() {
   const [annual, setAnnual] = useState(false);
   const [selectedLearn, setSelectedLearn] = useState<LearnTier>("none");
   const [selectedResearch, setSelectedResearch] = useState<ResearchTier>("none");
-  const [selectedCommunity, setSelectedCommunity] = useState<CommunityTier>("none");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-
-  // ── Prices ─────────────────────────────────────────────────────────────────
 
   const learnTier = learnTiers.find((t) => t.id === selectedLearn)!;
   const researchTier = researchTiers.find((t) => t.id === selectedResearch)!;
-  const communityTier = communityTiers.find((t) => t.id === selectedCommunity)!;
 
   const learnPrice = resolvePrice(learnTier, annual);
   const researchPrice = resolvePrice(researchTier, annual);
-  const communityPrice = resolvePrice(communityTier, annual);
-  const total = learnPrice + researchPrice + communityPrice;
+  const total = learnPrice + researchPrice;
 
-  const hasSelection =
-    selectedLearn !== "none" || selectedResearch !== "none" || selectedCommunity !== "none";
-
-  // ── CTA URL ────────────────────────────────────────────────────────────────
+  const hasSelection = selectedLearn !== "none" || selectedResearch !== "none";
 
   const params = new URLSearchParams();
   if (selectedLearn !== "none") params.set("learn", selectedLearn);
   if (selectedResearch !== "none") params.set("research", selectedResearch);
-  if (selectedCommunity !== "none") params.set("community", selectedCommunity);
   if (annual) params.set("billing", "annual");
   const ctaUrl = `/auth/signup?${params.toString()}`;
-
-  // ── Summary items ──────────────────────────────────────────────────────────
 
   const summaryItems: { label: string; price: number }[] = [];
   if (selectedLearn !== "none")
     summaryItems.push({ label: `Learn — ${learnTier.name}`, price: learnPrice });
   if (selectedResearch !== "none")
     summaryItems.push({ label: `Research — ${researchTier.name}`, price: researchPrice });
-  if (selectedCommunity !== "none")
-    summaryItems.push({ label: `Community — ${communityTier.name}`, price: communityPrice });
 
   return (
     <div className="bg-[#FAFAF7] min-h-screen overflow-x-hidden">
@@ -351,7 +311,7 @@ export default function PricingPage() {
           Build your subscription
         </h1>
         <p className="text-[16px] text-[#3D3D3D] mb-8 max-w-xl">
-          Choose what you need from each stack. Pay one monthly total. Cancel anytime.
+          Choose what you need. Pay one monthly total. Cancel anytime.
         </p>
 
         {/* Billing toggle */}
@@ -379,9 +339,9 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* ── THREE STACKS ── */}
+      {/* ── TWO STACKS ── */}
       <section className="max-w-6xl mx-auto px-8 mt-10">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
           {/* STACK 01 — LEARN */}
           <StackColumn
@@ -420,18 +380,6 @@ export default function PricingPage() {
               </div>
             }
           />
-
-          {/* STACK 03 — COMMUNITY */}
-          <StackColumn
-            stackNum="STACK 03"
-            title="Community"
-            subtitle="Live sessions & direct access"
-            headerBg="bg-[#111111]"
-            tiers={communityTiers}
-            selected={selectedCommunity}
-            onSelect={(id) => setSelectedCommunity(id as CommunityTier)}
-            annual={annual}
-          />
         </div>
       </section>
 
@@ -452,10 +400,7 @@ export default function PricingPage() {
               ) : (
                 <div className="flex flex-col gap-2.5">
                   {summaryItems.map((item) => (
-                    <div
-                      key={item.label}
-                      className="flex justify-between items-center gap-8"
-                    >
+                    <div key={item.label} className="flex justify-between items-center gap-8">
                       <span className="text-[14px] text-[#3D3D3D]">{item.label}</span>
                       <span className="font-mono text-[14px] text-[#111111] whitespace-nowrap">
                         {item.price === 0 ? "Free" : `${fmt(item.price)}/mo`}

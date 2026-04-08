@@ -49,7 +49,7 @@ export default async function HomePage() {
           <div className="flex gap-8 flex-wrap">
             {[
               { num: courseCount.toString(), label: "Courses" },
-              { num: "3", label: "Ways to subscribe" },
+              { num: "2", label: "Ways to subscribe" },
               { num: "₹0", label: "To start" },
               { num: "₹499", label: "Research from" },
             ].map((s) => (
@@ -402,14 +402,14 @@ export default async function HomePage() {
         </div>
         <div className="flex justify-between items-end flex-wrap gap-4 mb-12">
           <h2 className="font-serif text-[34px] font-bold text-[#111111]">
-            Three stacks. One bundle.
+            Two stacks. One bundle.
           </h2>
           <Link href="/pricing" className="font-mono text-[12px] text-[#D4860A]">
-            Build your bundle →
+            See pricing →
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {[
             {
               stackNum: "STACK 01",
@@ -417,7 +417,7 @@ export default async function HomePage() {
               headerBg: "bg-[#111111]",
               from: "From ₹999/month",
               fromSub: "or free preview",
-              features: ["All courses & lessons", "PDF playbooks", "Monthly live workshop (Pro)"],
+              features: ["All courses & lessons", "PDF playbooks", "Early access to new courses"],
               cta: "Explore Learn →",
             },
             {
@@ -428,15 +428,6 @@ export default async function HomePage() {
               fromSub: "newsletter to full research",
               features: ["Weekly market newsletter", "3 model portfolios", "F&O strategy notes"],
               cta: "Explore Research →",
-            },
-            {
-              stackNum: "STACK 03",
-              title: "Community",
-              headerBg: "bg-[#111111]",
-              from: "From ₹999/month",
-              fromSub: "group to 1:1 access",
-              features: ["Private WhatsApp community", "Monthly group Q&A", "Unlimited 1:1 async access (Elite)"],
-              cta: "Explore Community →",
             },
           ].map((stack) => (
             <div
@@ -476,13 +467,13 @@ export default async function HomePage() {
         {/* CTA strip */}
         <div className="mt-5 bg-[#FDF3E3] border border-[rgba(212,134,10,0.2)] rounded-xl px-7 py-5 flex justify-between items-center flex-wrap gap-4">
           <div className="font-serif text-[18px] text-[#111111]">
-            Mix and match. Pay one total.
+            Two stacks. Learn and Research. Subscribe to what you need.
           </div>
           <Link
             href="/pricing"
             className="bg-[#D4860A] hover:bg-[#F0A020] text-white rounded-lg px-6 py-2.5 text-[13px] font-medium transition-colors whitespace-nowrap"
           >
-            Build your bundle →
+            See pricing →
           </Link>
         </div>
       </section>
