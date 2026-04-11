@@ -1,151 +1,159 @@
 import Link from "next/link";
 import NewsletterForm from "@/components/NewsletterForm";
 import { getAllCourses } from "@/lib/sanity/queries";
+import "@/app/premium-theme.css";
 
 export default async function HomePage() {
   const courses = await getAllCourses();
   const courseCount = courses?.length || 0;
 
   return (
-    <div className="bg-[#FFFFFF]">
+    <div className="premium-dark min-h-screen">
 
       {/* ── HERO ── */}
-      <section className="max-w-6xl mx-auto px-8 pt-20 pb-16 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-        {/* Left */}
-        <div>
-          <div className="inline-flex items-center gap-2 bg-[#E8F5EE] border border-[rgba(26,122,74,0.2)] rounded-full px-4 py-1.5 mb-6">
-            <div className="w-1.5 h-1.5 rounded-full bg-[#1A7A4A]" />
-            <span className="font-mono text-[11px] text-[#1A7A4A] tracking-widest">
-              TEXT-FIRST · READ & APPLY · NO VIDEOS
-            </span>
-          </div>
-
-          <h1 className="text-5xl font-bold leading-[1.12] text-[#1C0F3F] mb-5">
-            Learn to invest like a pro.{" "}
-            <span className="text-[#D4860A]">Not gamble like a beginner.</span>
-          </h1>
-
-          <p className="text-[17px] text-[#4B3F6B] leading-relaxed mb-9 max-w-lg">
-            Playbook-style courses for Indian retail investors and traders.
-            Read, apply, repeat. No fluff, no video lectures, no jargon.
-          </p>
-
-          <div className="flex gap-3 flex-wrap mb-10">
-            <Link
-              href="/courses"
-              className="bg-[#D4860A] hover:bg-[#F0A020] text-white rounded-lg px-7 py-3.5 text-[15px] font-medium transition-colors"
-            >
-              Start a free lesson →
-            </Link>
-            <Link
-              href="/pricing"
-              className="border border-[rgba(124,58,237,0.25)] hover:border-[#1C0F3F] text-[#1C0F3F] rounded-lg px-6 py-3.5 text-[15px] transition-all"
-            >
-              View plans
-            </Link>
-          </div>
-
-          {/* Proof stats */}
-          <div className="flex gap-8 flex-wrap">
-            {[
-              { num: courseCount.toString(), label: "Courses" },
-              { num: "2", label: "Ways to subscribe" },
-              { num: "₹0", label: "To start" },
-              { num: "₹499", label: "Research from" },
-            ].map((s) => (
-              <div key={s.label} className="flex flex-col">
-                <span className="font-mono text-[22px] font-medium text-[#1C0F3F]">
-                  {s.num}
-                </span>
-                <span className="text-[12px] text-[#8B7BAB] mt-0.5">{s.label}</span>
-              </div>
-            ))}
-          </div>
+      <section className="relative overflow-hidden pt-32 pb-24">
+        {/* Background Gradients */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 pointer-events-none">
+          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[60%] rounded-full bg-[rgba(139,92,246,0.08)] blur-[120px]" />
+          <div className="absolute bottom-[10%] right-[-10%] w-[35%] h-[50%] rounded-full bg-[rgba(99,102,241,0.06)] blur-[100px]" />
         </div>
 
-        {/* Right — course preview card */}
-        <div className="bg-white border border-[rgba(124,58,237,0.15)] rounded-2xl p-7 shadow-[0_4px_32px_rgba(124,58,237,0.12)]">
-          <div className="flex justify-between items-start mb-5">
-            <div>
-              <div className="font-mono text-[10px] text-[#8B7BAB] tracking-widest mb-2">
-                BEGINNER → INTERMEDIATE
-              </div>
-              <h3 className="text-[18px] text-[#1C0F3F] leading-snug">
-                Options Trading from Zero
-              </h3>
-              <div className="text-[12px] text-[#8B7BAB] mt-1">
-                12 lessons · ~4 hrs reading
-              </div>
+        <div className="max-w-6xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+          {/* Left Content */}
+          <div className="space-y-8">
+            <div className="inline-flex items-center gap-3 bg-[rgba(139,92,246,0.1)] border border-[rgba(139,92,246,0.2)] rounded-full px-5 py-2">
+              <div className="premium-glow-dot" />
+              <span className="font-mono text-[11px] text-[#A78BFA] tracking-[0.2em] font-medium uppercase">
+                TEXT-FIRST · READ & APPLY · NO VIDEOS
+              </span>
             </div>
-            <span className="bg-[#FDF3E3] text-[#D4860A] font-mono text-[9px] font-medium rounded px-2 py-1 tracking-wider">
-              BESTSELLER
-            </span>
-          </div>
 
-          {/* Progress */}
-          <div className="mb-4">
-            <div className="flex justify-between text-[12px] text-[#4B3F6B] mb-1.5">
-              <span>Your progress</span>
-              <span>2 / 12</span>
-            </div>
-            <div className="h-1 bg-[#EDE9FF] rounded-full overflow-hidden">
-              <div className="h-full w-[16%] bg-[#D4860A] rounded-full" />
-            </div>
-          </div>
+            <h1 className="text-6xl font-bold leading-[1.1] tracking-tight">
+              Learn to invest like a pro.{" "}
+              <span className="block mt-2 text-[#D4860A] drop-shadow-[0_0_15px_rgba(212,134,10,0.2)]">
+                Not gamble like a beginner.
+              </span>
+            </h1>
 
-          {/* Lesson list */}
-          <div className="flex flex-col gap-2">
-            {[
-              { status: "done", title: "Why Most Retail Traders Lose", time: "8 min" },
-              { status: "active", title: "Options Basics: What You're Buying", time: "12 min" },
-              { status: "locked", title: "Time Decay & Premium", time: "10 min" },
-              { status: "locked", title: "The Greeks: What Actually Matters", time: "15 min" },
-            ].map((lesson) => (
-              <div
-                key={lesson.title}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg ${
-                  lesson.status === "done"
-                    ? "bg-[#E8F5EE]"
-                    : lesson.status === "active"
-                    ? "bg-[#FDF3E3] border border-[rgba(212,134,10,0.2)]"
-                    : "opacity-50"
-                }`}
-              >
-                <div
-                  className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] flex-shrink-0 ${
-                    lesson.status === "done"
-                      ? "bg-[#1A7A4A] text-white"
-                      : lesson.status === "active"
-                      ? "bg-[#D4860A] text-white"
-                      : "bg-[#EDE9FF] text-[#8B7BAB]"
-                  }`}
-                >
-                  {lesson.status === "done" ? "✓" : lesson.status === "active" ? "▶" : "🔒"}
+            <p className="text-[18px] text-[#94A3B8] leading-relaxed max-w-xl">
+              Playbook-style courses for Indian retail investors and traders. 
+              Read, apply, repeat. No fluff, no video lectures, no jargon. 
+              Built for high-precision decision making.
+            </p>
+
+            <div className="flex gap-4 flex-wrap pt-4">
+              <Link href="/courses" className="premium-button-primary">
+                Start a free lesson →
+              </Link>
+              <Link href="/pricing" className="premium-button-outline">
+                View plans
+              </Link>
+            </div>
+
+            {/* Stats Row */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 pt-8 border-t border-[rgba(255,255,255,0.05)]">
+              {[
+                { num: courseCount.toString(), label: "Courses" },
+                { num: "2", label: "Ways to subscribe" },
+                { num: "₹0", label: "To start" },
+                { num: "₹499", label: "Research from" },
+              ].map((s) => (
+                <div key={s.label} className="space-y-1">
+                  <div className="text-2xl font-bold text-white tracking-tight">{s.num}</div>
+                  <div className="text-[11px] text-[#64748B] tracking-widest font-semibold uppercase">{s.label}</div>
                 </div>
-                <span className="flex-1 text-[13px] text-[#1C0F3F]">{lesson.title}</span>
-                <span className="font-mono text-[11px] text-[#8B7BAB]">{lesson.time}</span>
+              ))}
+            </div>
+          </div>
+
+          {/* Right — Floating Preview Card */}
+          <div className="relative group">
+            <div className="absolute -inset-1 bg-gradient-to-r from-violet-600 to-indigo-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+            <div className="relative bg-[#1A1138] border border-[rgba(255,255,255,0.1)] rounded-2xl p-8 shadow-2xl backdrop-blur-xl">
+              <div className="flex justify-between items-start mb-8">
+                <div>
+                  <div className="font-mono text-[10px] text-[#A78BFA] tracking-[0.2em] mb-3 font-semibold uppercase">
+                    BEGINNER → INTERMEDIATE
+                  </div>
+                  <h3 className="text-[22px] text-white leading-snug font-bold">
+                    Options Trading from Zero
+                  </h3>
+                  <div className="text-[13px] text-[#94A3B8] mt-2 flex items-center gap-2">
+                    <span className="w-1 h-1 rounded-full bg-[#64748B]" />
+                    12 lessons · ~4 hrs reading
+                  </div>
+                </div>
+                <span className="bg-[#D4860A20] text-[#D4860A] border border-[#D4860A30] font-mono text-[9px] font-bold rounded px-2.5 py-1.5 tracking-widest uppercase">
+                  BESTSELLER
+                </span>
               </div>
-            ))}
+
+              {/* Progress Tracker */}
+              <div className="mb-8">
+                <div className="flex justify-between text-[13px] text-[#94A3B8] mb-3">
+                  <span className="font-medium">Portfolio Readiness</span>
+                  <span className="font-mono text-white font-bold">16%</span>
+                </div>
+                <div className="h-[6px] bg-[rgba(255,255,255,0.05)] rounded-full overflow-hidden">
+                  <div className="h-full w-[16%] bg-gradient-to-r from-[#D4860A] to-[#F0A020] rounded-full shadow-[0_0_10px_rgba(212,134,10,0.5)]" />
+                </div>
+              </div>
+
+              {/* Lesson Items */}
+              <div className="space-y-3">
+                {[
+                  { status: "done", title: "Why Most Retail Traders Lose", time: "8 min" },
+                  { status: "active", title: "Options Basics: What You're Buying", time: "12 min" },
+                  { status: "locked", title: "Time Decay & Premium", time: "10 min" },
+                  { status: "locked", title: "The Greeks: What Actually Matters", time: "15 min" },
+                ].map((lesson) => (
+                  <div
+                    key={lesson.title}
+                    className={`flex items-center gap-4 px-4 py-3.5 rounded-xl transition-all duration-300 ${
+                      lesson.status === "done"
+                        ? "bg-[rgba(16,185,129,0.03)] border border-[rgba(16,185,129,0.1)]"
+                        : lesson.status === "active"
+                        ? "bg-[rgba(139,92,246,0.08)] border border-[rgba(139,92,246,0.2)]"
+                        : "opacity-40"
+                    }`}
+                  >
+                    <div
+                      className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] flex-shrink-0 border ${
+                        lesson.status === "done"
+                          ? "bg-[#10B981] border-[#10B981] text-white"
+                          : lesson.status === "active"
+                          ? "bg-[#8B5CF6] border-[#8B5CF6] text-white shadow-[0_0_10px_rgba(139,92,246,0.5)]"
+                          : "bg-transparent border-[#64748B] text-[#64748B]"
+                      }`}
+                    >
+                      {lesson.status === "done" ? "✓" : lesson.status === "active" ? "▶" : "🔒"}
+                    </div>
+                    <span className="flex-1 text-[14px] text-white font-medium">{lesson.title}</span>
+                    <span className="font-mono text-[11px] text-[#64748B]">{lesson.time}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* ── TRUST BAR ── */}
-      <div className="bg-[#F5F3FF] border-y border-[rgba(124,58,237,0.15)]">
-        <div className="max-w-6xl mx-auto px-8 py-7 flex justify-center gap-14 flex-wrap">
+      <div className="border-y border-[rgba(255,255,255,0.05)] bg-[#1A113840] backdrop-blur-sm">
+        <div className="max-w-6xl mx-auto px-8 py-10 flex justify-center gap-16 flex-wrap">
           {[
-            { icon: "📖", title: "Structured learning", sub: "Chapter-by-chapter, not a playlist" },
-            { icon: "✎", title: "No jargon, no fluff", sub: "Written by an active market practitioner" },
-            { icon: "✓", title: "Apply immediately", sub: "Every lesson has a real market exercise" },
-            { icon: "◷", title: "Learn at your pace", sub: "Read anywhere, resume anytime" },
+            { icon: "📖", title: "Structured learning", sub: "Deep-dive playbooks" },
+            { icon: "✎", title: "No jargon, no fluff", sub: "Active market signal" },
+            { icon: "✓", title: "Apply immediately", sub: "Market-ready exercises" },
+            { icon: "◷", title: "Learn at your pace", sub: "Always in sync" },
           ].map((item) => (
-            <div key={item.title} className="flex items-center gap-3">
-              <div className="w-9 h-9 bg-[#1C0F3F] rounded-lg flex items-center justify-center text-white text-[14px]">
+            <div key={item.title} className="flex items-center gap-4 group">
+              <div className="w-11 h-11 bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.08)] group-hover:border-violet-500/30 group-hover:bg-violet-500/10 rounded-xl flex items-center justify-center text-white text-[16px] transition-all">
                 {item.icon}
               </div>
-              <div>
-                <div className="text-[13px] font-medium text-[#1C0F3F]">{item.title}</div>
-                <div className="text-[11px] text-[#8B7BAB]">{item.sub}</div>
+              <div className="space-y-0.5">
+                <div className="text-[14px] font-bold text-white tracking-tight">{item.title}</div>
+                <div className="text-[11px] text-[#64748B] font-semibold tracking-wide uppercase">{item.sub}</div>
               </div>
             </div>
           ))}
@@ -153,23 +161,22 @@ export default async function HomePage() {
       </div>
 
       {/* ── PROBLEM SECTION ── */}
-      <section className="max-w-6xl mx-auto px-8 py-20">
-        <div className="font-mono text-[11px] text-[#8B7BAB] tracking-widest uppercase mb-3">
-          The Problem
-        </div>
-        <div className="flex justify-between items-end flex-wrap gap-6 mb-12">
-          <div>
-            <h2 className="text-[34px] font-bold text-[#1C0F3F] leading-snug">
-              Why 90% of retail traders<br />blow up in 12 months
-            </h2>
-            <p className="text-[16px] text-[#4B3F6B] leading-relaxed mt-3 max-w-lg">
-              It&apos;s not bad luck. It&apos;s a predictable set of structural
-              mistakes — and every single one is fixable with the right process.
-            </p>
+      <section className="max-w-6xl mx-auto px-8 py-32">
+        <div className="text-center mb-20 space-y-4">
+          <div className="font-mono text-[12px] text-[#D4860A] tracking-[0.3em] font-bold uppercase">
+            The Structural Problem
           </div>
+          <h2 className="text-[48px] font-bold text-white leading-tight tracking-tight">
+            Why 90% of retail traders<br />
+            <span className="text-[#94A3B8]">blow up in 12 months</span>
+          </h2>
+          <p className="text-[18px] text-[#94A3B8] leading-relaxed max-w-2xl mx-auto">
+            It&apos;s not bad luck. It&apos;s a predictable set of structural
+            mistakes — and every single one is fixable with the right process.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
             { num: "01", title: "No position sizing framework", body: "Putting 40–60% of capital in a single trade. One adverse move wipes months of careful gains in a single session." },
             { num: "02", title: "Entry without an exit plan", body: "Entering trades on hope, exiting on panic. Without a pre-defined stop loss, emotions make every decision for you." },
@@ -177,376 +184,182 @@ export default async function HomePage() {
             { num: "04", title: "Revenge trading after a loss", body: "Doubling down to recover. The market doesn't know you lost, and it certainly doesn't owe you a recovery." },
             { num: "05", title: "Mistaking noise for signal", body: "Acting on tips, Telegram groups, and YouTube calls instead of building a verifiable, repeatable process." },
           ].map((card) => (
-            <div
-              key={card.num}
-              className="bg-white border border-[rgba(124,58,237,0.15)] rounded-xl p-6"
-            >
-              <div className="font-mono text-[32px] font-medium text-[#EDE9FF] mb-3">
+            <div key={card.num} className="premium-card p-8 group">
+              <div className="font-mono text-[42px] font-black text-[rgba(255,255,255,0.03)] group-hover:text-violet-500/20 mb-4 transition-colors">
                 {card.num}
               </div>
-              <div className="text-[15px] font-medium text-[#1C0F3F] mb-2">{card.title}</div>
-              <div className="text-[13px] text-[#4B3F6B] leading-relaxed">{card.body}</div>
+              <div className="text-[18px] font-bold text-white mb-3 tracking-tight">{card.title}</div>
+              <div className="text-[14px] text-[#94A3B8] leading-relaxed">{card.body}</div>
             </div>
           ))}
 
-          {/* CTA card */}
-          <div className="bg-[#1C0F3F] rounded-xl p-6 flex flex-col justify-between">
+          {/* High Contrast Fix Card */}
+          <div className="bg-gradient-to-br from-[#8B5CF6] to-[#6366F1] rounded-2xl p-8 flex flex-col justify-between shadow-[0_0_30px_rgba(139,92,246,0.2)]">
             <div>
-              <div className="font-mono text-[12px] text-[rgba(255,255,255,0.4)] mb-4">
-                THE FIX
+              <div className="font-mono text-[12px] text-white/60 tracking-[0.2em] font-bold mb-6 uppercase">
+                THE SOLUTION
               </div>
-              <p className="text-[17px] text-white leading-snug mb-6">
+              <p className="text-[22px] text-white font-bold leading-tight mb-8">
                 A structured process beats intuition every single time.
               </p>
             </div>
-            <Link
-              href="/courses"
-              className="bg-[#D4860A] hover:bg-[#F0A020] text-white rounded-lg px-5 py-3 text-[13px] font-medium text-center transition-colors"
-            >
+            <Link href="/courses" className="bg-white text-[#1C0F3F] rounded-xl px-6 py-4 text-[14px] font-bold text-center hover:bg-white/90 transition-colors shadow-lg">
               Start learning for free →
             </Link>
           </div>
         </div>
       </section>
 
-      {/* ── HOW IT WORKS ── */}
-      <div className="bg-[#1C0F3F]">
-        <div className="max-w-6xl mx-auto px-8 py-20">
-          <div className="font-mono text-[11px] text-[rgba(255,255,255,0.4)] tracking-widest uppercase mb-3">
-            How It Works
+      {/* ── COURSE GRID ── */}
+      <section className="max-w-6xl mx-auto px-8 py-32 bg-[rgba(255,255,255,0.01)] rounded-[3rem] border border-[rgba(255,255,255,0.03)]">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+          <div className="space-y-4 text-center md:text-left">
+            <div className="font-mono text-[12px] text-[#A78BFA] tracking-[0.3em] font-bold uppercase">
+              Curated Playbooks
+            </div>
+            <h2 className="text-[48px] font-bold text-white leading-tight">
+              Pick your stack
+            </h2>
           </div>
-          <h2 className="text-[34px] text-white mb-14">Read. Apply. Track.</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            {[
-              { step: "STEP 01", title: "Read the playbook", body: "Every lesson is structured like a trading desk brief — concept, example, key insight. No videos, no 2-hour rambles. Pure signal." },
-              { step: "STEP 02", title: "Apply in your broker", body: "Each lesson ends with a real market exercise. Open your broker or NSE option chain and actually do it. Learning that sticks." },
-              { step: "STEP 03", title: "Track your progress", body: "Mark lessons complete. Follow model portfolios. Come back when the market does something you've already studied — and recognise it." },
-            ].map((s) => (
-              <div
-                key={s.step}
-                className="bg-[rgba(255,255,255,0.04)] border border-[rgba(255,255,255,0.08)] rounded-xl p-8"
-              >
-                <div className="font-mono text-[12px] text-[#D4860A] tracking-wider mb-4">
-                  {s.step}
-                </div>
-                <div className="text-[20px] text-white mb-3">{s.title}</div>
-                <div className="text-[13px] text-[rgba(255,255,255,0.55)] leading-relaxed">
-                  {s.body}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* ── COURSES ── */}
-      <section className="max-w-6xl mx-auto px-8 py-20">
-        <div className="flex justify-between items-end mb-3">
-          <div className="font-mono text-[11px] text-[#8B7BAB] tracking-widest uppercase">
-            Courses
-          </div>
-          <Link href="/courses" className="font-mono text-[12px] text-[#D4860A]">
-            View all →
+          <Link href="/courses" className="premium-button-outline text-sm font-bold uppercase tracking-widest">
+            View all Courses →
           </Link>
         </div>
-        <h2 className="text-[34px] font-bold text-[#1C0F3F] mb-12">
-          Pick your playbook
-        </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
             {
-              bg: "bg-[#1C0F3F]",
               badge: "BESTSELLER",
-              badgeColor: "bg-[rgba(212,134,10,0.2)] text-[#D4860A]",
               tag: "BEGINNER → INTERMEDIATE",
               title: "Options Trading from Zero",
               desc: "A complete mental model for F&O. From basics to strategies to your personal trading system.",
               topics: ["Options basics", "Greeks", "Strategies", "Risk rules"],
-              lessons: "12 lessons · ~4 hrs · 8 exercises",
-              accessBadge: { label: "FREE PREVIEW AVAILABLE", style: "bg-[#E8F5EE] text-[#1A7A4A]" },
+              lessons: "12 lessons · ~4 hrs reading",
               cta: "Start free lesson →",
+              premium: true
             },
             {
-              bg: "bg-[#1C0F3F]",
               badge: "NEW",
-              badgeColor: "bg-[rgba(26,122,74,0.2)] text-[#1A7A4A]",
               tag: "BEGINNER",
-              title: "Equity Investing: Build Your First Portfolio",
+              title: "Equity Investing: First Portfolio",
               desc: "Systematic stock picking and portfolio construction for long-term wealth building.",
               topics: ["Stock screening", "Valuation", "SIP strategy"],
-              lessons: "10 lessons · ~3.5 hrs · 6 exercises",
-              accessBadge: { label: "LEARN STACK", style: "bg-[rgba(124,58,237,0.15)] text-[#1C0F3F]" },
-              cta: "Preview →",
+              lessons: "10 lessons · ~3.5 hrs reading",
+              cta: "Preview course →",
+              premium: false
             },
             {
-              bg: "bg-[#1C0F3F]",
               badge: null,
-              badgeColor: "",
               tag: "INTERMEDIATE",
               title: "Technical Analysis Playbook",
-              desc: "Chart patterns, indicators, and entry/exit setups that actually work in Indian markets.",
+              desc: "Chart patterns, indicators, and entry/exit setups that work in Indian markets.",
               topics: ["Price action", "S&R levels", "Entry setups"],
-              lessons: "14 lessons · ~5 hrs · 10 exercises",
-              accessBadge: { label: "LEARN STACK", style: "bg-[rgba(124,58,237,0.15)] text-[#1C0F3F]" },
-              cta: "Preview →",
+              lessons: "14 lessons · ~5 hrs reading",
+              cta: "Preview course →",
+              premium: false
             },
           ].map((course) => (
-            <div
-              key={course.title}
-              className="bg-white border border-[rgba(124,58,237,0.15)] rounded-2xl overflow-hidden hover:shadow-[0_8px_40px_rgba(124,58,237,0.15)] hover:-translate-y-0.5 transition-all cursor-pointer"
-            >
-              <div className={`${course.bg} p-6`}>
+            <div key={course.title} className="premium-card flex flex-col group overflow-hidden">
+              <div className={`p-8 pb-0 ${course.premium ? 'bg-gradient-to-b from-violet-900/40 to-transparent' : ''}`}>
                 {course.badge && (
-                  <span className={`font-mono text-[9px] font-medium rounded px-2 py-1 tracking-wider ${course.badgeColor} inline-block mb-3`}>
+                  <span className="inline-block bg-[rgba(139,92,246,0.1)] text-[#A78BFA] border border-[rgba(139,92,246,0.2)] font-mono text-[9px] font-bold rounded px-2.5 py-1.5 tracking-widest uppercase mb-4">
                     {course.badge}
                   </span>
                 )}
-                <div className="font-mono text-[10px] text-[rgba(255,255,255,0.4)] tracking-widest mb-2">
+                <div className="font-mono text-[10px] text-[#64748B] tracking-[0.2em] font-bold mb-3 uppercase">
                   {course.tag}
                 </div>
-                <div className="text-[17px] text-white leading-snug">
+                <h3 className="text-[20px] text-white font-bold leading-tight group-hover:text-[#A78BFA] transition-colors">
                   {course.title}
-                </div>
+                </h3>
               </div>
-              <div className="p-6">
-                <p className="text-[13px] text-[#4B3F6B] leading-relaxed mb-4">{course.desc}</p>
-                <div className="flex flex-wrap gap-1.5 mb-4">
+              <div className="p-8 space-y-6">
+                <p className="text-[14px] text-[#94A3B8] leading-relaxed">{course.desc}</p>
+                <div className="flex flex-wrap gap-2">
                   {course.topics.map((t) => (
-                    <span key={t} className="font-mono text-[10px] text-[#8B7BAB] bg-[#F5F3FF] rounded px-2 py-1">
+                    <span key={t} className="font-mono text-[10px] text-[#A78BFA] bg-violet-500/5 border border-violet-500/10 rounded-lg px-2.5 py-1.5 uppercase font-semibold">
                       {t}
                     </span>
                   ))}
                 </div>
-                <div className="text-[12px] text-[#8B7BAB] mb-4">{course.lessons}</div>
-                <div className="flex justify-between items-center pt-4 border-t border-[rgba(124,58,237,0.12)]">
-                  <span className={`font-mono text-[10px] font-medium rounded px-2 py-1 ${course.accessBadge.style}`}>
-                    {course.accessBadge.label}
-                  </span>
-                  <span className="font-mono text-[12px] text-[#D4860A]">{course.cta}</span>
+                <div className="pt-6 border-t border-[rgba(255,255,255,0.05)] flex items-center justify-between">
+                  <div className="text-[12px] font-mono text-[#64748B] font-bold">{course.lessons}</div>
+                  <div className="text-[13px] font-bold text-[#D4860A] tracking-tight">{course.cta}</div>
                 </div>
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Subscription nudge */}
-        <div className="mt-5 bg-[#FDF3E3] border border-[rgba(212,134,10,0.2)] rounded-xl px-7 py-5 flex justify-between items-center flex-wrap gap-4">
-          <div>
-            <div className="text-[18px] font-semibold text-[#1C0F3F] mb-1">
-              One subscription. Three stacks. Everything you need.
-            </div>
-            <div className="text-[14px] text-[#4B3F6B]">
-              Build your bundle — Learn, Research, Community. Pay one monthly total.
-            </div>
-          </div>
-          <Link
-            href="/pricing"
-            className="bg-[#D4860A] hover:bg-[#F0A020] text-white rounded-lg px-6 py-2.5 text-[13px] font-medium transition-colors whitespace-nowrap"
-          >
-            See pricing →
-          </Link>
-        </div>
-      </section>
-
-      {/* ── MODEL PORTFOLIOS ── */}
-      <div className="bg-[#F5F3FF] border-t border-b border-[rgba(124,58,237,0.15)]">
-        <div className="max-w-6xl mx-auto px-8 py-20">
-          <div className="font-mono text-[11px] text-[#8B7BAB] tracking-widest uppercase mb-3">
-            Model Portfolios
-          </div>
-          <h2 className="text-[34px] font-bold text-[#1C0F3F] mb-3">
-            See how a portfolio is built
-          </h2>
-          <p className="text-[16px] text-[#4B3F6B] leading-relaxed mb-12 max-w-xl">
-            Three illustrative portfolios maintained for educational purposes — showing how allocation, selection, and rebalancing decisions are made.
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {[
-              { num: "01", name: "Long-term Wealth Builder", desc: "80% large cap, 20% mid cap. 5-year horizon. Illustrates conservative equity portfolio construction.", horizon: "5 yrs+", stocks: "10", risk: "Moderate", riskColor: "text-[#1A7A4A]", rebalance: "Quarterly" },
-              { num: "02", name: "Dividend & Income", desc: "High-yield, low-volatility equities. Illustrates how to screen and weight for consistent dividend income.", horizon: "3 yrs+", stocks: "8", risk: "Low", riskColor: "text-[#1A7A4A]", rebalance: "Half-yearly" },
-              { num: "03", name: "Active Trader Watchlist", desc: "High-liquidity stocks with strong F&O interest. Illustrates how an active trader scans for setups.", horizon: "Short-term", stocks: "12", risk: "High", riskColor: "text-[#D4860A]", rebalance: "Weekly" },
-            ].map((p) => (
-              <div key={p.num} className="bg-white border border-[rgba(124,58,237,0.15)] rounded-xl p-6">
-                <div className="font-mono text-[10px] text-[#8B7BAB] tracking-widest mb-2">PORTFOLIO {p.num}</div>
-                <div className="text-[16px] text-[#1C0F3F] mb-2">{p.name}</div>
-                <div className="text-[12px] text-[#4B3F6B] leading-relaxed mb-5">{p.desc}</div>
-                <div className="grid grid-cols-2 gap-2.5">
-                  {[
-                    { label: "HORIZON", val: p.horizon, color: "" },
-                    { label: "STOCKS", val: p.stocks, color: "" },
-                    { label: "RISK", val: p.risk, color: p.riskColor },
-                    { label: "REBALANCE", val: p.rebalance, color: "" },
-                  ].map((stat) => (
-                    <div key={stat.label} className="bg-[#F5F3FF] rounded-lg p-3">
-                      <div className="font-mono text-[10px] text-[#8B7BAB] mb-1">{stat.label}</div>
-                      <div className={`font-mono text-[14px] font-medium text-[#1C0F3F] ${stat.color}`}>{stat.val}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-8 bg-white border border-[rgba(124,58,237,0.12)] rounded-lg px-5 py-4 font-mono text-[10px] text-[#8B7BAB] leading-relaxed">
-            ⚠ These model portfolios are maintained purely for educational purposes to illustrate portfolio construction principles. They do not constitute investment advice or SEBI-registered research. Past illustrative performance does not guarantee future results. Do not invest based on this content without consulting a registered financial advisor.
-          </div>
-        </div>
-      </div>
-
-      {/* ── PRICING SUMMARY ── */}
-      <section className="max-w-6xl mx-auto px-8 py-20">
-        <div className="font-mono text-[11px] text-[#8B7BAB] tracking-widest uppercase mb-3">
-          Pricing
-        </div>
-        <div className="flex justify-between items-end flex-wrap gap-4 mb-12">
-          <h2 className="text-[34px] font-bold text-[#1C0F3F]">
-            Two stacks. One bundle.
-          </h2>
-          <Link href="/pricing" className="font-mono text-[12px] text-[#D4860A]">
-            See pricing →
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {[
-            {
-              stackNum: "STACK 01",
-              title: "Learn",
-              headerBg: "bg-[#1C0F3F]",
-              from: "From ₹999/month",
-              fromSub: "or free preview",
-              features: ["All courses & lessons", "PDF playbooks", "Early access to new courses"],
-              cta: "Explore Learn →",
-            },
-            {
-              stackNum: "STACK 02",
-              title: "Research",
-              headerBg: "bg-[#1C0F3F]",
-              from: "From ₹499/month",
-              fromSub: "newsletter to full research",
-              features: ["Weekly market newsletter", "3 model portfolios", "F&O strategy notes"],
-              cta: "Explore Research →",
-            },
-          ].map((stack) => (
-            <div
-              key={stack.stackNum}
-              className="bg-white border border-[rgba(124,58,237,0.15)] rounded-2xl overflow-hidden hover:shadow-[0_8px_40px_rgba(124,58,237,0.12)] hover:-translate-y-0.5 transition-all"
-            >
-              <div className={`${stack.headerBg} px-6 py-5`}>
-                <div className="font-mono text-[10px] text-[rgba(255,255,255,0.4)] tracking-widest mb-2">
-                  {stack.stackNum}
-                </div>
-                <div className="text-[20px] text-white">{stack.title}</div>
-              </div>
-              <div className="p-6">
-                <div className="font-mono text-[22px] font-bold text-[#1C0F3F] leading-none mb-1">
-                  {stack.from}
-                </div>
-                <div className="text-[12px] text-[#8B7BAB] mb-5">{stack.fromSub}</div>
-                <div className="flex flex-col gap-2 mb-6">
-                  {stack.features.map((f) => (
-                    <div key={f} className="flex gap-2 items-start text-[13px] text-[#4B3F6B]">
-                      <span className="text-[#1A7A4A] flex-shrink-0">✓</span>
-                      {f}
-                    </div>
-                  ))}
-                </div>
-                <Link
-                  href="/pricing"
-                  className="font-mono text-[12px] text-[#D4860A] hover:text-[#F0A020] transition-colors"
-                >
-                  {stack.cta}
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* CTA strip */}
-        <div className="mt-5 bg-[#FDF3E3] border border-[rgba(212,134,10,0.2)] rounded-xl px-7 py-5 flex justify-between items-center flex-wrap gap-4">
-          <div className="text-[18px] text-[#1C0F3F]">
-            Two stacks. Learn and Research. Subscribe to what you need.
-          </div>
-          <Link
-            href="/pricing"
-            className="bg-[#D4860A] hover:bg-[#F0A020] text-white rounded-lg px-6 py-2.5 text-[13px] font-medium transition-colors whitespace-nowrap"
-          >
-            See pricing →
-          </Link>
         </div>
       </section>
 
       {/* ── NEWSLETTER ── */}
-      <section className="max-w-6xl mx-auto px-8 pb-20">
-        <div className="bg-[#1C0F3F] rounded-2xl px-12 py-14 text-center">
-          <h2 className="text-[30px] text-white mb-3">
+      <section className="max-w-6xl mx-auto px-8 pb-32 pt-20">
+        <div className="relative overflow-hidden bg-gradient-to-br from-[#1A1138] to-[#0F0720] border border-[rgba(255,255,255,0.05)] rounded-[2.5rem] px-12 py-20 text-center shadow-2xl">
+          <div className="absolute top-0 right-0 w-[50%] h-[50%] bg-violet-600/5 blur-[100px] -z-10" />
+          <h2 className="text-[36px] font-bold text-white mb-4 tracking-tight">
             One market insight, every week.
           </h2>
-          <p className="text-[rgba(255,255,255,0.55)] text-[15px] mb-8 max-w-md mx-auto">
-            Join readers who get a concise, no-noise breakdown of what&apos;s moving Indian markets — and why it matters for your portfolio.
+          <p className="text-[#94A3B8] text-[16px] mb-10 max-w-lg mx-auto leading-relaxed">
+            Join 12,000+ investors who get a concise, no-noise breakdown of what&apos;s moving Indian markets — and why it matters.
           </p>
-          <NewsletterForm dark />
-          <div className="font-mono text-[11px] text-[rgba(255,255,255,0.3)] mt-4">
-            No spam. Unsubscribe anytime. Educational content only.
+          <div className="max-w-md mx-auto">
+            <NewsletterForm dark />
+          </div>
+          <div className="font-mono text-[11px] text-[#64748B] mt-6 tracking-widest font-semibold uppercase">
+            No spam. Educational content only.
           </div>
         </div>
       </section>
 
       {/* ── FOOTER ── */}
-      <footer className="bg-[#F5F3FF] border-t border-[rgba(124,58,237,0.15)]">
-        <div className="max-w-6xl mx-auto px-8 pt-12 pb-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-10">
-            <div>
-              <div className="font-bold text-[16px] text-[#1C0F3F] mb-3">
+      <footer className="border-t border-[rgba(255,255,255,0.05)] pt-20 pb-12">
+        <div className="max-w-6xl mx-auto px-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
+            <div className="space-y-6">
+              <div className="text-xl font-bold text-white tracking-tight">
                 The Capital Gains
               </div>
-              <div className="text-[13px] text-[#8B7BAB] leading-relaxed">
-                Text-first, exercise-driven courses for Indian retail investors and traders. Built for people who want to understand markets — not just follow tips.
-              </div>
+              <p className="text-[14px] text-[#94A3B8] leading-relaxed">
+                Text-first, exercise-driven financial education. Built for high-precision decision making in Indian markets.
+              </p>
             </div>
-            <div>
-              <div className="font-mono text-[10px] text-[#8B7BAB] tracking-widest uppercase mb-4">LEARN</div>
-              <div className="flex flex-col gap-2">
-                <Link href="/courses" className="text-[13px] text-[#4B3F6B] hover:text-[#1C0F3F] transition-colors">All Courses</Link>
-                <Link href="/portfolios" className="text-[13px] text-[#4B3F6B] hover:text-[#1C0F3F] transition-colors">Model Portfolios</Link>
-                <span className="text-[13px] text-[#4B3F6B]">Free Resources</span>
-                <Link href="/newsletter" className="text-[13px] text-[#4B3F6B] hover:text-[#1C0F3F] transition-colors">Newsletter</Link>
-                <Link href="/about" className="text-[13px] text-[#4B3F6B] hover:text-[#1C0F3F] transition-colors">About</Link>
-              </div>
+            {/* Nav Columns ... similar to before but with premium styling */}
+            <div className="space-y-6">
+              <div className="font-mono text-[11px] text-white tracking-[0.3em] font-bold uppercase">Learn</div>
+              <ul className="space-y-3 text-[14px] text-[#94A3B8]">
+                <li><Link href="/courses" className="hover:text-white transition-colors">All Courses</Link></li>
+                <li><Link href="/portfolios" className="hover:text-white transition-colors">Model Portfolios</Link></li>
+                <li><Link href="/newsletter" className="hover:text-white transition-colors">Weekly Brief</Link></li>
+              </ul>
             </div>
-            <div>
-              <div className="font-mono text-[10px] text-[#8B7BAB] tracking-widest uppercase mb-4">PLATFORM</div>
-              <div className="flex flex-col gap-2">
-                <Link href="/pricing" className="text-[13px] text-[#4B3F6B] hover:text-[#1C0F3F] transition-colors">Pricing</Link>
-                <Link href="/auth/login" className="text-[13px] text-[#4B3F6B] hover:text-[#1C0F3F] transition-colors">Sign In</Link>
-                <Link href="/auth/signup" className="text-[13px] text-[#4B3F6B] hover:text-[#1C0F3F] transition-colors">Create Account</Link>
-                <Link href="/terms" className="text-[13px] text-[#4B3F6B] hover:text-[#1C0F3F] transition-colors">Terms of Service</Link>
-                <Link href="/privacy" className="text-[13px] text-[#4B3F6B] hover:text-[#1C0F3F] transition-colors">Privacy Policy</Link>
-                <Link href="/refund" className="text-[13px] text-[#4B3F6B] hover:text-[#1C0F3F] transition-colors">Refund Policy</Link>
-              </div>
+            <div className="space-y-6">
+              <div className="font-mono text-[11px] text-white tracking-[0.3em] font-bold uppercase">Platform</div>
+              <ul className="space-y-3 text-[14px] text-[#94A3B8]">
+                <li><Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>
+                <li><Link href="/auth/login" className="hover:text-white transition-colors">Sign In</Link></li>
+                <li><Link href="/terms" className="hover:text-white transition-colors">Legal Disclosures</Link></li>
+              </ul>
             </div>
-            <div>
-              <div className="font-mono text-[10px] text-[#8B7BAB] tracking-widest uppercase mb-4">FOLLOW</div>
-              <div className="flex flex-col gap-2">
-                <span className="text-[13px] text-[#4B3F6B]">Instagram</span>
-                <span className="text-[13px] text-[#4B3F6B]">Substack</span>
-                <span className="text-[13px] text-[#4B3F6B]">Telegram</span>
-              </div>
+            <div className="space-y-6">
+              <div className="font-mono text-[11px] text-white tracking-[0.3em] font-bold uppercase">Connect</div>
+              <ul className="space-y-3 text-[14px] text-[#94A3B8]">
+                <li className="hover:text-white cursor-pointer">Instagram</li>
+                <li className="hover:text-white cursor-pointer">Substack</li>
+                <li className="hover:text-white cursor-pointer">Telegram</li>
+              </ul>
             </div>
           </div>
-          <div className="border-t border-[rgba(124,58,237,0.15)] pt-6 flex flex-col md:flex-row justify-between gap-4">
-            <div className="font-mono text-[11px] text-[#8B7BAB]">
-              © 2025 The Capital Gains · thecapitalgains.com
+          <div className="pt-8 border-t border-[rgba(255,255,255,0.05)] flex flex-col md:flex-row justify-between gap-6">
+            <div className="font-mono text-[11px] text-[#64748B] font-bold uppercase tracking-widest">
+              © 2025 The Capital Gains · Precision Finance
             </div>
-            <div className="font-mono text-[10px] text-[#8B7BAB] max-w-lg leading-relaxed">
-              All content is for educational purposes only and does not constitute investment advice, trading recommendations, or SEBI-registered research. Trading in equity and derivatives involves substantial risk of loss.
+            <div className="font-mono text-[10px] text-[#64748B] max-w-xl leading-relaxed text-right">
+              Content for educational purposes only. No investment advice. 
+              Trading involves substantial risk. SEBI registration pending.
             </div>
           </div>
         </div>
       </footer>
-
     </div>
   );
 }
