@@ -41,14 +41,14 @@ export default async function HomePage() {
 
             <div className="flex gap-4 flex-wrap pt-4 pb-8">
               <Link href="/courses" className="premium-button-primary">
-                Start a free lesson →
+                Explore Curriculum →
               </Link>
               <Link href="/pricing" className="premium-button-outline">
                 View plans
               </Link>
             </div>
 
-            {/* Updated Stats Row from Screenshot */}
+            {/* Stats Row */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-12 gap-y-8 pt-10 border-t border-[rgba(255,255,255,0.08)]">
               {[
                 { num: courseCount.toString(), label: "PREMIUM COURSES" },
@@ -127,9 +127,9 @@ export default async function HomePage() {
                       <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
                     </div>
                   </div>
-                  {course.level && (
+                  {course.tag && (
                     <span className="text-[10px] font-bold tracking-widest text-slate-400 uppercase">
-                      {course.level}
+                      {course.tag}
                     </span>
                   )}
                 </div>
@@ -137,11 +137,11 @@ export default async function HomePage() {
                   {course.title}
                 </h3>
                 <p className="text-sm text-[#4B3F6B] leading-relaxed mb-6 flex-1">
-                  {course.description}
+                  {course.subtitle || course.description}
                 </p>
                 <div className="pt-6 border-t border-slate-100 flex items-center justify-between">
                   <span className="text-xs font-bold text-violet-600 uppercase tracking-wider">Start Learning →</span>
-                  <span className="text-[11px] text-slate-400 font-mono">NEXT.JS + SANITY</span>
+                  <span className="text-[11px] text-slate-400 font-mono uppercase tracking-widest">{course.accessLevel || 'LEARNER+'}</span>
                 </div>
               </div>
             </Link>
@@ -153,7 +153,7 @@ export default async function HomePage() {
       <section className="bg-violet-50/50 py-24 border-y border-violet-100">
         <div className="max-w-4xl mx-auto px-8 text-center">
           <h2 className="text-3xl font-bold text-[#1C0F3F] mb-4">Join The Capital Gains Newsletter</h2>
-          <p className="text-[#4B3F6B] mb-10 max-w-xl mx-auto">
+          <p className="text-[#4B3F6B] mb-10 max-w-xl mx-auto font-medium">
             Weekly insights on market trends, trading psychology, and new course announcements. 
             Directly to your inbox.
           </p>
@@ -162,48 +162,6 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* ── FOOTER ── */}
-      <footer className="premium-dark py-20">
-        <div className="max-w-6xl mx-auto px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-16">
-            <div className="col-span-2">
-              <div className="flex items-center gap-2 mb-6">
-                <div className="premium-glow-dot" />
-                <span className="font-bold text-xl tracking-tight text-white">THE CAPITAL GAINS</span>
-              </div>
-              <p className="text-[#94A3B8] text-sm max-w-xs leading-relaxed">
-                Everything about finance. Playbook-style education for the modern Indian investor.
-              </p>
-            </div>
-            <div>
-              <div className="font-mono text-[10px] text-[#A78BFA] tracking-[0.2em] uppercase mb-6 font-bold">RESOURCES</div>
-              <div className="flex flex-col gap-4">
-                <Link href="/courses" className="text-sm text-[#94A3B8] hover:text-white transition-colors">Courses</Link>
-                <Link href="/pricing" className="text-sm text-[#94A3B8] hover:text-white transition-colors">Pricing</Link>
-                <Link href="/terms" className="text-sm text-[#94A3B8] hover:text-white transition-colors">Terms</Link>
-                <Link href="/privacy" className="text-sm text-[#94A3B8] hover:text-white transition-colors">Privacy</Link>
-              </div>
-            </div>
-            <div>
-              <div className="font-mono text-[10px] text-[#A78BFA] tracking-[0.2em] uppercase mb-6 font-bold">COMMUNITY</div>
-              <div className="flex flex-col gap-4">
-                <span className="text-sm text-[#94A3B8]">Instagram</span>
-                <span className="text-sm text-[#94A3B8]">Telegram</span>
-                <span className="text-sm text-[#94A3B8]">Substack</span>
-              </div>
-            </div>
-          </div>
-          <div className="pt-8 border-t border-[rgba(255,255,255,0.05)] flex flex-col md:flex-row justify-between gap-6">
-            <div className="text-[11px] font-mono text-[#64748B]">
-              © 2025 THE CAPITAL GAINS · THECAPITALGAINS.COM
-            </div>
-            <p className="text-[10px] text-[#64748B] max-w-xl leading-relaxed italic">
-              All content is for educational purposes only. Investing involves risk. Please consult with a SEBI-registered professional before making financial decisions.
-            </p>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
