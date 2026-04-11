@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import "@/app/premium-theme.css";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -16,25 +17,19 @@ type Tier = {
   features: string[];
   muted?: boolean;
   badge?: string;
+  color?: string;
 };
 
 // ─── Pricing Data ─────────────────────────────────────────────────────────────
 
 const learnTiers: Tier[] = [
   {
-    id: "none",
-    name: "No education subscription",
-    monthlyPrice: 0,
-    annualPrice: 0,
-    features: [],
-    muted: true,
-  },
-  {
     id: "free",
     name: "FREE",
     monthlyPrice: 0,
     annualPrice: 0,
     features: ["1 free lesson per course", "Newsletter preview"],
+    color: "emerald"
   },
   {
     id: "learner",
@@ -42,6 +37,7 @@ const learnTiers: Tier[] = [
     monthlyPrice: 999,
     annualPrice: 799,
     features: ["All courses & lessons", "Progress tracking", "PDF playbooks"],
+    color: "violet"
   },
   {
     id: "pro",
@@ -51,36 +47,30 @@ const learnTiers: Tier[] = [
     features: [
       "Everything in Learner",
       "Early access to new courses",
-      "Downloadable PDF playbooks",
       "Session recordings",
       "Workbooks",
     ],
     badge: "MOST POPULAR",
+    color: "amber"
   },
 ];
 
 const researchTiers: Tier[] = [
-  {
-    id: "none",
-    name: "No research subscription",
-    monthlyPrice: 0,
-    annualPrice: 0,
-    features: [],
-    muted: true,
-  },
   {
     id: "newsletter",
     name: "NEWSLETTER",
     monthlyPrice: 499,
     annualPrice: 399,
     features: ["Weekly deep-dive", "One setup per week", "One concept per week"],
+    color: "slate"
   },
   {
     id: "essential",
     name: "ESSENTIAL",
     monthlyPrice: 4999,
     annualPrice: 3999,
-    features: ["Newsletter included", "3 model portfolios", "Rebalancing alerts", "Sector notes"],
+    features: ["Newsletter included", "3 model portfolios", "Rebalancing alerts"],
+    color: "violet"
   },
   {
     id: "premium",
@@ -90,34 +80,11 @@ const researchTiers: Tier[] = [
     features: [
       "Everything in Essential",
       "F&O notes",
-      "Earnings previews",
       "Stock idea notes",
       "Monthly digest",
     ],
     badge: "MAX",
-  },
-];
-
-const faqs = [
-  {
-    q: "Can I subscribe to just one stack?",
-    a: "Yes, absolutely. Pick Learn, Research, or both. There is no minimum bundle requirement. You only pay for what you select.",
-  },
-  {
-    q: "Can I change my bundle later?",
-    a: "Yes. Write to hello@thecapitalgains.com and we'll update your plan at the next billing cycle. Upgrades take effect immediately; downgrades take effect at the end of your current billing period.",
-  },
-  {
-    q: "Is there a free trial?",
-    a: "Every course has free preview lessons — no account or card required. The newsletter also has a free weekly edition. We believe that's more honest than a time-limited trial where you can't tell if the content is actually good.",
-  },
-  {
-    q: "What is the research fee cap for retail investors?",
-    a: "SEBI regulations cap research advisory fees for individual investors at ₹1,50,000 per annum. Our Premium Research tier at ₹12,499/month equals ₹1,49,988/year — within this limit. For institutional or non-individual clients, please write to hello@thecapitalgains.com for custom pricing.",
-  },
-  {
-    q: "Can I cancel anytime?",
-    a: "Yes. Cancel from your account settings or write to hello@thecapitalgains.com. Access continues until the end of your current billing period. No questions asked.",
+    color: "amber"
   },
 ];
 
@@ -145,63 +112,45 @@ function TierCard({
   selected: boolean;
   onClick: () => void;
 }) {
-  if (tier.muted) {
-    return (
-      <button
-        onClick={onClick}
-        className={`w-full text-left rounded-xl px-4 py-3 border transition-all ${
-          selected
-            ? "border-[rgba(124,58,237,0.25)] bg-[#EDE9FF]"
-            : "border-[rgba(124,58,237,0.10)] bg-[#FFFFFF] hover:border-[rgba(124,58,237,0.20)]"
-        }`}
-      >
-        <div className="flex justify-between items-center">
-          <span className="text-[12px] text-[#8B7BAB]">{tier.name}</span>
-          {selected && <span className="text-[#8B7BAB] text-[11px]">✓</span>}
-        </div>
-      </button>
-    );
-  }
-
   return (
     <button
       onClick={onClick}
-      className={`w-full text-left rounded-xl px-4 py-4 border-2 transition-all relative ${
+      className={`w-full text-left rounded-2xl p-6 border-2 transition-all relative group flex flex-col h-full ${
         selected
-          ? "border-[#D4860A] bg-white shadow-[0_2px_16px_rgba(212,134,10,0.1)]"
-          : "border-[rgba(124,58,237,0.15)] bg-white hover:border-[rgba(124,58,237,0.25)]"
+          ? "border-violet-600 bg-white shadow-2xl shadow-violet-500/10 ring-4 ring-violet-500/5"
+          : "border-slate-200 bg-white hover:border-slate-300 hover:shadow-lg"
       }`}
     >
-      {/* Selected checkmark */}
-      {selected && (
-        <div className="absolute top-3 right-3 w-5 h-5 bg-[#D4860A] rounded-full flex items-center justify-center flex-shrink-0">
-          <span className="text-white text-[10px] leading-none">✓</span>
+      <div className="flex justify-between items-start mb-6">
+        <div className={`p-2 rounded-lg ${selected ? 'bg-violet-600 text-white' : 'bg-slate-100 text-slate-400 group-hover:bg-slate-200'} transition-colors`}>
+          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+          </svg>
         </div>
-      )}
-
-      {/* Badge (only when not selected) */}
-      {tier.badge && !selected && (
-        <div className="absolute top-3 right-3">
-          <span className="font-mono text-[8px] font-medium bg-[rgba(212,134,10,0.12)] text-[#D4860A] rounded px-1.5 py-0.5 tracking-wider">
+        {tier.badge && (
+          <span className="bg-amber-50 text-amber-600 text-[9px] font-bold px-2 py-1 rounded tracking-widest uppercase border border-amber-100">
             {tier.badge}
           </span>
-        </div>
-      )}
-
-      <div className="font-mono text-[10px] text-[#8B7BAB] tracking-widest mb-1.5 pr-10">
-        {tier.name}
-      </div>
-      <div className="font-mono text-[20px] font-medium text-[#1C0F3F] leading-none mb-3">
-        {price === 0 ? "₹0" : fmt(price)}
-        {price > 0 && (
-          <span className="text-[11px] font-normal text-[#8B7BAB] ml-1">/month</span>
         )}
       </div>
-      <div className="flex flex-col gap-1.5">
+
+      <div className="font-mono text-[10px] text-slate-400 tracking-[0.2em] mb-1.5 uppercase font-bold">
+        {tier.name}
+      </div>
+      <div className="text-2xl font-bold text-[#1C0F3F] leading-none mb-6">
+        {price === 0 ? "Free" : fmt(price)}
+        {price > 0 && (
+          <span className="text-xs font-normal text-slate-400 ml-1">/ mo</span>
+        )}
+      </div>
+      
+      <div className="flex flex-col gap-3 flex-1">
         {tier.features.map((f) => (
-          <div key={f} className="flex gap-2 items-start">
-            <span className="text-[#1A7A4A] text-[11px] flex-shrink-0 mt-0.5">✓</span>
-            <span className="text-[12px] text-[#4B3F6B] leading-snug">{f}</span>
+          <div key={f} className="flex gap-3 items-start">
+            <div className="w-4 h-4 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg width="10" height="10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path d="M5 13l4 4L19 7" /></svg>
+            </div>
+            <span className="text-[13px] text-slate-600 leading-snug font-medium">{f}</span>
           </div>
         ))}
       </div>
@@ -209,286 +158,169 @@ function TierCard({
   );
 }
 
-// ─── Stack Column ─────────────────────────────────────────────────────────────
-
-function StackColumn({
-  stackNum,
-  title,
-  subtitle,
-  headerBg,
-  tiers,
-  selected,
-  onSelect,
-  annual,
-  footer,
-}: {
-  stackNum: string;
-  title: string;
-  subtitle: string;
-  headerBg: string;
-  tiers: Tier[];
-  selected: string;
-  onSelect: (id: string) => void;
-  annual: boolean;
-  footer?: React.ReactNode;
-}) {
-  return (
-    <div className="flex flex-col">
-      {/* Stack header */}
-      <div className={`${headerBg} rounded-t-2xl px-6 py-5`}>
-        <div className="font-mono text-[10px] text-[rgba(255,255,255,0.4)] tracking-widest mb-2">
-          {stackNum}
-        </div>
-        <div className="text-[22px] text-white mb-1">{title}</div>
-        <div className="text-[12px] text-[rgba(255,255,255,0.55)]">{subtitle}</div>
-      </div>
-
-      {/* Tier cards */}
-      <div className="flex flex-col gap-2 bg-[#F5F3FF] px-4 py-4 rounded-b-2xl border-x border-b border-[rgba(124,58,237,0.15)]">
-        {tiers.map((tier) => {
-          const price = resolvePrice(tier, annual);
-          const handleClick = () => {
-            if (tier.id === "none") {
-              onSelect("none");
-            } else {
-              onSelect(selected === tier.id ? "none" : tier.id);
-            }
-          };
-          return (
-            <TierCard
-              key={tier.id}
-              tier={tier}
-              price={price}
-              selected={selected === tier.id}
-              onClick={handleClick}
-            />
-          );
-        })}
-        {footer && <div className="mt-2">{footer}</div>}
-      </div>
-    </div>
-  );
-}
-
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function PricingPage() {
   const [annual, setAnnual] = useState(false);
-  const [selectedLearn, setSelectedLearn] = useState<LearnTier>("none");
+  const [selectedLearn, setSelectedLearn] = useState<LearnTier>("learner");
   const [selectedResearch, setSelectedResearch] = useState<ResearchTier>("none");
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  const learnTier = learnTiers.find((t) => t.id === selectedLearn)!;
-  const researchTier = researchTiers.find((t) => t.id === selectedResearch)!;
+  const learnTier = learnTiers.find((t) => t.id === selectedLearn);
+  const researchTier = researchTiers.find((t) => t.id === selectedResearch);
 
-  const learnPrice = resolvePrice(learnTier, annual);
-  const researchPrice = resolvePrice(researchTier, annual);
+  const learnPrice = learnTier ? resolvePrice(learnTier, annual) : 0;
+  const researchPrice = researchTier ? resolvePrice(researchTier, annual) : 0;
   const total = learnPrice + researchPrice;
 
-  const hasSelection = selectedLearn !== "none" || selectedResearch !== "none";
-
-  const params = new URLSearchParams();
-  if (selectedLearn !== "none") params.set("learn", selectedLearn);
-  if (selectedResearch !== "none") params.set("research", selectedResearch);
-  if (annual) params.set("billing", "annual");
-  const ctaUrl = `/auth/signup?${params.toString()}`;
-
-  const summaryItems: { label: string; price: number }[] = [];
-  if (selectedLearn !== "none")
-    summaryItems.push({ label: `Learn — ${learnTier.name}`, price: learnPrice });
-  if (selectedResearch !== "none")
-    summaryItems.push({ label: `Research — ${researchTier.name}`, price: researchPrice });
-
   return (
-    <div className="bg-[#FFFFFF] min-h-screen overflow-x-hidden">
-
-      {/* ── HERO ── */}
-      <section className="max-w-6xl mx-auto px-8 pt-16 pb-8">
-        <div className="font-mono text-[11px] text-[#8B7BAB] tracking-widest uppercase mb-2">
-          Pricing
+    <div className="bg-[#F8FAFC] min-h-screen pb-20 font-sans">
+      
+      {/* ── HEADER (Premium Dark) ── */}
+      <header className="premium-dark pt-32 pb-40 border-b border-[rgba(255,255,255,0.05)] text-center relative overflow-hidden">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 pointer-events-none">
+          <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[100%] rounded-full bg-[rgba(139,92,246,0.1)] blur-[120px]" />
+          <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[100%] rounded-full bg-[rgba(99,102,241,0.08)] blur-[100px]" />
         </div>
-        <h1 className="text-5xl font-bold text-[#1C0F3F] leading-[1.1] mb-3">
-          Build your subscription
-        </h1>
-        <p className="text-[16px] text-[#4B3F6B] mb-8 max-w-xl">
-          Choose what you need. Pay one monthly total. Cancel anytime.
-        </p>
 
-        {/* Billing toggle */}
-        <div className="inline-flex items-center bg-[#F5F3FF] rounded-lg p-1 gap-1">
-          <button
-            onClick={() => setAnnual(false)}
-            className={`px-5 py-2 rounded-md text-[13px] font-medium transition-all ${
-              !annual
-                ? "bg-white text-[#1C0F3F] shadow-sm"
-                : "text-[#4B3F6B] hover:text-[#1C0F3F]"
-            }`}
-          >
-            Monthly
-          </button>
-          <button
-            onClick={() => setAnnual(true)}
-            className={`px-5 py-2 rounded-md text-[13px] font-medium transition-all ${
-              annual
-                ? "bg-white text-[#1C0F3F] shadow-sm"
-                : "text-[#4B3F6B] hover:text-[#1C0F3F]"
-            }`}
-          >
-            Annual — save 20%
-          </button>
-        </div>
-      </section>
+        <div className="max-w-4xl mx-auto px-8">
+          <div className="inline-flex items-center gap-3 bg-violet-500/10 border border-violet-500/20 rounded-full px-5 py-2 mb-8">
+            <div className="premium-glow-dot" />
+            <span className="font-mono text-[11px] text-[#A78BFA] tracking-[0.3em] font-bold uppercase">Pricing</span>
+          </div>
+          <h1 className="text-6xl font-bold text-white tracking-tight leading-tight mb-6">
+            Build your stack. <span className="text-violet-400">Own your edge.</span>
+          </h1>
+          <p className="text-[#94A3B8] text-xl leading-relaxed max-w-2xl mx-auto mb-10">
+            Combine education and high-performance research. 
+            No complex contracts. Just pure signal.
+          </p>
 
-      {/* ── TWO STACKS ── */}
-      <section className="max-w-6xl mx-auto px-8 mt-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-
-          {/* STACK 01 — LEARN */}
-          <StackColumn
-            stackNum="STACK 01"
-            title="Learn"
-            subtitle="Self-paced courses & playbooks"
-            headerBg="bg-[#1C0F3F]"
-            tiers={learnTiers}
-            selected={selectedLearn}
-            onSelect={(id) => setSelectedLearn(id as LearnTier)}
-            annual={annual}
-          />
-
-          {/* STACK 02 — RESEARCH */}
-          <StackColumn
-            stackNum="STACK 02"
-            title="Research"
-            subtitle="Market analysis & model portfolios"
-            headerBg="bg-[#1C0F3F]"
-            tiers={researchTiers}
-            selected={selectedResearch}
-            onSelect={(id) => setSelectedResearch(id as ResearchTier)}
-            annual={annual}
-            footer={
-              <div className="flex flex-col gap-2 mt-1">
-                <p className="font-mono text-[10px] text-[#8B7BAB] leading-relaxed">
-                  For institutional / non-individual pricing, write to{" "}
-                  <span className="text-[#4B3F6B]">hello@thecapitalgains.com</span>
-                </p>
-                <div className="bg-white border border-[rgba(124,58,237,0.15)] rounded-lg px-3 py-2.5">
-                  <p className="font-mono text-[9px] text-[#8B7BAB] leading-relaxed">
-                    ⚖ Research services provided under SEBI Research Analyst regulations.
-                    Individual client fees capped at ₹1,50,000 per annum.
-                  </p>
-                </div>
-              </div>
-            }
-          />
-        </div>
-      </section>
-
-      {/* ── BUNDLE SUMMARY ── */}
-      <section className="max-w-6xl mx-auto px-8 mt-10 mb-20">
-        <div className="bg-white border border-[rgba(124,58,237,0.15)] rounded-2xl p-8 shadow-[0_4px_32px_rgba(124,58,237,0.08)]">
-          <div className="flex flex-col lg:flex-row gap-8 items-start lg:items-center justify-between">
-
-            {/* Left — itemised selections */}
-            <div className="flex-1 min-w-0">
-              <div className="font-mono text-[11px] text-[#8B7BAB] tracking-widest uppercase mb-4">
-                Your bundle
-              </div>
-              {summaryItems.length === 0 ? (
-                <p className="text-[14px] text-[#8B7BAB]">
-                  No tiers selected yet. Choose from the stacks above.
-                </p>
-              ) : (
-                <div className="flex flex-col gap-2.5">
-                  {summaryItems.map((item) => (
-                    <div key={item.label} className="flex justify-between items-center gap-8">
-                      <span className="text-[14px] text-[#4B3F6B]">{item.label}</span>
-                      <span className="font-mono text-[14px] text-[#1C0F3F] whitespace-nowrap">
-                        {item.price === 0 ? "Free" : `${fmt(item.price)}/mo`}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Vertical divider — desktop only */}
-            <div className="hidden lg:block w-px self-stretch bg-[rgba(124,58,237,0.12)]" />
-
-            {/* Right — total + CTA */}
-            <div className="flex flex-col items-start lg:items-end gap-3 flex-shrink-0">
-              <div className="lg:text-right">
-                <div className="font-mono text-[11px] text-[#8B7BAB] tracking-widest uppercase mb-1">
-                  Monthly total
-                </div>
-                <div className="font-mono text-[40px] font-medium text-[#1C0F3F] leading-none">
-                  {fmt(total)}
-                  <span className="text-[14px] font-normal text-[#8B7BAB] ml-1.5">/mo</span>
-                </div>
-                {annual && total > 0 && (
-                  <div className="font-mono text-[11px] text-[#1A7A4A] mt-1.5">
-                    Billed annually · 20% saved
-                  </div>
-                )}
-              </div>
-
-              {hasSelection ? (
-                <Link
-                  href={ctaUrl}
-                  className="bg-[#D4860A] hover:bg-[#F0A020] text-white rounded-lg px-8 py-3.5 text-[15px] font-medium transition-colors whitespace-nowrap"
-                >
-                  Subscribe Now — {fmt(total)}/month →
-                </Link>
-              ) : (
-                <button
-                  disabled
-                  className="bg-[#F5F3FF] text-[#8B7BAB] rounded-lg px-8 py-3.5 text-[15px] font-medium cursor-default whitespace-nowrap"
-                >
-                  Select at least one tier
-                </button>
-              )}
-
-              <div className="font-mono text-[10px] text-[#8B7BAB]">Prices exclude GST</div>
-            </div>
+          {/* Billing toggle */}
+          <div className="inline-flex items-center bg-white/5 border border-white/10 rounded-2xl p-1.5 backdrop-blur-md">
+            <button
+              onClick={() => setAnnual(false)}
+              className={`px-8 py-3 rounded-xl text-sm font-bold tracking-tight transition-all ${
+                !annual ? "bg-white text-[#1C0F3F] shadow-xl" : "text-slate-400 hover:text-white"
+              }`}
+            >
+              Monthly
+            </button>
+            <button
+              onClick={() => setAnnual(true)}
+              className={`px-8 py-3 rounded-xl text-sm font-bold tracking-tight transition-all ${
+                annual ? "bg-white text-[#1C0F3F] shadow-xl" : "text-slate-400 hover:text-white"
+              }`}
+            >
+              Annual — Save 20%
+            </button>
           </div>
         </div>
-      </section>
+      </header>
 
-      {/* ── FAQ ── */}
-      <section className="max-w-3xl mx-auto px-8 mt-4 pb-20">
-        <h2 className="text-[28px] font-bold text-[#1C0F3F] mb-8">
-          Common questions
-        </h2>
-        <div className="flex flex-col gap-3">
-          {faqs.map((faq, i) => (
-            <div
-              key={i}
-              className="bg-white border border-[rgba(124,58,237,0.15)] rounded-xl overflow-hidden"
-            >
-              <button
-                onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                className="w-full flex justify-between items-center px-6 py-4 text-left"
-              >
-                <span className="text-[15px] font-medium text-[#1C0F3F]">
-                  {faq.q}
-                </span>
-                <span
-                  className={`font-mono text-[18px] text-[#8B7BAB] ml-4 flex-shrink-0 transition-transform duration-200 ${
-                    openFaq === i ? "rotate-45" : ""
-                  }`}
-                >
-                  +
-                </span>
-              </button>
-              {openFaq === i && (
-                <div className="px-6 pb-5 text-[14px] text-[#4B3F6B] leading-relaxed border-t border-[rgba(124,58,237,0.10)]">
-                  <div className="pt-4">{faq.a}</div>
-                </div>
-              )}
+      {/* ── BUILDER SECTION ── */}
+      <main className="max-w-6xl mx-auto px-8 -mt-24 relative z-10 space-y-24">
+        
+        {/* Stack 01: Learn */}
+        <section>
+          <div className="flex items-center gap-4 mb-8">
+            <div className="w-10 h-10 rounded-xl bg-violet-600 text-white flex items-center justify-center font-bold shadow-lg shadow-violet-600/20">01</div>
+            <div>
+              <h2 className="text-2xl font-bold text-[#1C0F3F] tracking-tight">The Learning Stack</h2>
+              <p className="text-slate-500 text-sm font-medium">Step-by-step playbooks for market mastery.</p>
             </div>
-          ))}
-        </div>
-      </section>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {learnTiers.map((tier) => (
+              <TierCard
+                key={tier.id}
+                tier={tier}
+                price={resolvePrice(tier, annual)}
+                selected={selectedLearn === tier.id}
+                onClick={() => setSelectedLearn(selectedLearn === tier.id ? "none" : tier.id as LearnTier)}
+              />
+            ))}
+          </div>
+        </section>
 
+        {/* Stack 02: Research */}
+        <section>
+          <div className="flex items-center gap-4 mb-8">
+            <div className="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center font-bold shadow-lg shadow-amber-500/20">02</div>
+            <div>
+              <h2 className="text-2xl font-bold text-[#1C0F3F] tracking-tight">The Research Stack</h2>
+              <p className="text-slate-500 text-sm font-medium">Model portfolios and sectoral deep-dives.</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {researchTiers.map((tier) => (
+              <TierCard
+                key={tier.id}
+                tier={tier}
+                price={resolvePrice(tier, annual)}
+                selected={selectedResearch === tier.id}
+                onClick={() => setSelectedResearch(selectedResearch === tier.id ? "none" : tier.id as ResearchTier)}
+              />
+            ))}
+          </div>
+          <div className="mt-8 p-6 bg-slate-50 rounded-2xl border border-slate-200 flex items-center justify-between gap-8">
+            <p className="text-xs font-medium text-slate-500 leading-relaxed max-w-xl">
+              ⚖ Research services are provided under SEBI Research Analyst regulations.
+              Individual fees are capped at ₹1.5L per annum. For institutional pricing, 
+              please write to <span className="text-violet-600 font-bold">hello@thecapitalgains.com</span>
+            </p>
+            <div className="hidden sm:block px-4 py-2 bg-white rounded-lg border border-slate-200 text-[10px] font-bold text-slate-400 tracking-widest uppercase">Certified</div>
+          </div>
+        </section>
+
+        {/* BUNDLE SUMMARY */}
+        <section className="sticky bottom-10">
+          <div className="bg-[#1A1138] rounded-3xl p-10 shadow-2xl shadow-violet-900/40 border border-white/10 backdrop-blur-xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-violet-600/10 blur-[80px] rounded-full -mr-32 -mt-32" />
+            
+            <div className="flex flex-col lg:flex-row gap-12 items-center justify-between relative z-10">
+              <div className="flex-1">
+                <div className="font-mono text-[10px] text-violet-400 tracking-[0.3em] font-bold uppercase mb-6">Your Performance Bundle</div>
+                <div className="flex flex-wrap gap-4">
+                  {selectedLearn !== "none" && (
+                    <div className="px-5 py-3 bg-white/5 border border-white/10 rounded-2xl">
+                      <div className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">Learn</div>
+                      <div className="text-white font-bold">{learnTier?.name}</div>
+                    </div>
+                  )}
+                  {selectedResearch !== "none" && (
+                    <div className="px-5 py-3 bg-white/5 border border-white/10 rounded-2xl">
+                      <div className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">Research</div>
+                      <div className="text-white font-bold">{researchTier?.name}</div>
+                    </div>
+                  )}
+                  {selectedLearn === "none" && selectedResearch === "none" && (
+                    <div className="text-[#94A3B8] font-medium italic">No tiers selected. Choose from the stacks above.</div>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-center gap-10">
+                <div className="text-center sm:text-right">
+                  <div className="font-mono text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-2">Total Monthly</div>
+                  <div className="text-5xl font-bold text-white tracking-tight">
+                    {fmt(total)}
+                    <span className="text-lg font-normal text-slate-400 ml-2">/mo</span>
+                  </div>
+                  {annual && total > 0 && <div className="text-xs font-bold text-emerald-400 mt-2">Annual Billing Applied · Save 20%</div>}
+                </div>
+
+                <Link 
+                  href="/auth/signup" 
+                  className={`premium-button-primary !py-5 !px-10 text-base font-bold tracking-tight shadow-xl shadow-violet-600/30 transition-all ${total === 0 ? 'opacity-50 pointer-events-none' : ''}`}
+                >
+                  Confirm Subscription →
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
     </div>
   );
 }

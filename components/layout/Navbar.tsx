@@ -1,61 +1,104 @@
 ﻿"use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import "@/app/premium-theme.css";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
+  // Handle scroll effect for glassmorphism
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Check if we are on a page that should have a dark navbar by default (like Home)
+  const isHomePage = pathname === "/";
+  
   return (
-    <nav className="bg-[#FFFFFF] border-b border-[rgba(124,58,237,0.15)] sticky top-0 z-50">
-      <div className="max-w-6xl mx-auto px-8 h-[60px] flex items-center gap-0">
+    <nav 
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+        scrolled 
+          ? "premium-glass-nav py-3" 
+          : isHomePage 
+            ? "bg-transparent py-5" 
+            : "bg-white border-b border-slate-200 py-4"
+      }`}
+    >
+      <div className="max-w-6xl mx-auto px-8 flex items-center justify-between">
         {/* Logo */}
         <Link
           href="/"
-          className="font-bold text-[17px] text-[#1C0F3F] tracking-wide mr-12 flex-shrink-0"
+          className="flex items-center gap-2 group flex-shrink-0"
         >
-          The Capital Gains
+          <div className="premium-glow-dot group-hover:scale-125 transition-transform" />
+          <span className={`font-bold text-lg tracking-tight transition-colors ${
+            (isHomePage && !scrolled) || (scrolled) ? "text-white" : "text-[#1C0F3F]"
+          }`}>
+            THE CAPITAL GAINS
+          </span>
         </Link>
 
         {/* Desktop nav links */}
-        <div className="hidden md:flex gap-1 flex-1">
+        <div className="hidden md:flex items-center gap-1 bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.05)] rounded-full px-1 py-1 backdrop-blur-md">
           {[
             { label: "Courses", href: "/courses" },
             { label: "Portfolios", href: "/portfolios" },
             { label: "Pricing", href: "/pricing" },
             { label: "Newsletter", href: "/newsletter" },
-          ].map((item) => (
-            <Link
-              key={item.label}
-              href={item.href}
-              className="px-4 py-2 text-[14px] text-[#4B3F6B] hover:text-[#1C0F3F] hover:bg-[#F5F3FF] rounded-md transition-all"
-            >
-              {item.label}
-            </Link>
-          ))}
+          ].map((item) => {
+            const isActive = pathname === item.href;
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={`px-5 py-2 text-[13px] font-semibold tracking-wide rounded-full transition-all ${
+                  isActive
+                    ? "bg-white text-[#1C0F3F] shadow-sm"
+                    : (isHomePage && !scrolled) || scrolled
+                      ? "text-[#94A3B8] hover:text-white"
+                      : "text-[#4B3F6B] hover:text-[#1C0F3F] hover:bg-slate-50"
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </div>
 
         {/* CTAs */}
-        <div className="hidden md:flex items-center gap-2 ml-auto">
-          <Link href="/auth/login" className="btn-outline">
+        <div className="hidden md:flex items-center gap-4">
+          <Link 
+            href="/auth/login" 
+            className={`text-[13px] font-bold tracking-wide transition-colors ${
+              (isHomePage && !scrolled) || scrolled ? "text-[#94A3B8] hover:text-white" : "text-[#4B3F6B] hover:text-[#1C0F3F]"
+            }`}
+          >
             Sign In
           </Link>
-          <Link href="/auth/signup" className="btn-primary">
+          <Link href="/auth/signup" className="premium-button-primary !py-2 !px-5 text-[13px] font-bold tracking-tight">
             Get Started Free
           </Link>
         </div>
 
         {/* Mobile hamburger */}
         <button
-          className="md:hidden ml-auto text-[#1C0F3F]"
+          className={`md:hidden transition-colors ${
+            (isHomePage && !scrolled) || scrolled ? "text-white" : "text-[#1C0F3F]"
+          }`}
           onClick={() => setMenuOpen(!menuOpen)}
         >
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
             {menuOpen ? (
-              <path d="M4 4l14 14M4 18L18 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              <path d="M6 18L18 6M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
             ) : (
-              <>
-                <path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-              </>
+              <path d="M4 8h16M4 16h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
             )}
           </svg>
         </button>
@@ -63,7 +106,11 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden border-t border-[rgba(124,58,237,0.15)] px-8 py-4 flex flex-col gap-2 bg-[#FFFFFF]">
+        <div className={`md:hidden absolute top-full left-0 w-full border-t p-8 flex flex-col gap-4 shadow-2xl animate-in slide-in-from-top duration-300 ${
+          (isHomePage && !scrolled) || scrolled 
+            ? "premium-glass-nav border-[rgba(255,255,255,0.1)]" 
+            : "bg-white border-slate-200 text-[#1C0F3F]"
+        }`}>
           {[
             { label: "Courses", href: "/courses" },
             { label: "Portfolios", href: "/portfolios" },
@@ -73,18 +120,20 @@ export default function Navbar() {
             <Link
               key={item.label}
               href={item.href}
-              className="py-2 text-[14px] text-[#4B3F6B] hover:text-[#1C0F3F]"
+              className={`text-lg font-bold tracking-tight ${
+                (isHomePage && !scrolled) || scrolled ? "text-white hover:text-[#A78BFA]" : "text-[#1C0F3F] hover:text-violet-600"
+              }`}
               onClick={() => setMenuOpen(false)}
             >
               {item.label}
             </Link>
           ))}
-          <div className="flex gap-2 pt-2 border-t border-[rgba(124,58,237,0.15)]">
-            <Link href="/auth/login" className="flex-1 text-center btn-outline">
-              Sign in
-            </Link>
-            <Link href="/auth/signup" className="flex-1 text-center btn-primary">
+          <div className="flex flex-col gap-3 pt-6 border-t border-[rgba(255,255,255,0.1)]">
+            <Link href="/auth/signup" className="w-full text-center premium-button-primary font-bold">
               Get Started Free
+            </Link>
+            <Link href="/auth/login" className="w-full text-center py-3 border border-[rgba(255,255,255,0.1)] rounded-xl text-sm font-bold text-[#94A3B8]">
+              Sign in
             </Link>
           </div>
         </div>

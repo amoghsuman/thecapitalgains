@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { getAllCourses } from "@/lib/sanity/queries";
+import "@/app/premium-theme.css";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -24,55 +25,6 @@ type Course = {
   orderRank: number | null;
 };
 
-type SortCol = "title" | "learningPath" | "tag" | "accessLevel" | "lessonsCount" | "duration" | "badge";
-type SortDir = "asc" | "desc";
-
-// ─── Helpers ─────────────────────────────────────────────────────────────────
-
-function parseDurationHrs(duration: string | null): number {
-  if (!duration) return 0;
-  const match = duration.match(/[\d.]+/);
-  return match ? parseFloat(match[0]) : 0;
-}
-
-function durBucket(hrs: number): string {
-  if (hrs < 2) return "lt2";
-  if (hrs <= 4) return "2to4";
-  return "gt4";
-}
-
-function getLevelStyle(tag: string | null): string {
-  if (!tag) return "bg-[#F1EFE8] text-[#555555]";
-  const t = tag.toLowerCase();
-  if (t.includes("advanced")) return "bg-[#FCEBEB] text-[#A32D2D]";
-  if (t.includes("intermediate")) return "bg-[#FAEEDA] text-[#854F0B]";
-  if (t.includes("beginner")) return "bg-[#EAF3DE] text-[#3B6D11]";
-  return "bg-[#F1EFE8] text-[#555555]";
-}
-
-function accessColor(level: string | null): string {
-  if (level === "free") return "bg-[#E8F5EE] text-[#1A7A4A]";
-  if (level === "pro") return "bg-[#FDF3E3] text-[#D4860A]";
-  return "bg-[#F5F3FF] text-[#8B7BAB]";
-}
-
-function accessLabel(level: string | null): string {
-  if (level === "free") return "FREE";
-  if (level === "pro") return "PRO";
-  return "LEARNER+";
-}
-
-function badgeColor(badge: string | null): string {
-  if (badge === "BESTSELLER") return "bg-[rgba(212,134,10,0.15)] text-[#D4860A]";
-  if (badge === "NEW") return "bg-[rgba(26,122,74,0.15)] text-[#1A7A4A]";
-  return "bg-[#F5F3FF] text-[#8B7BAB]";
-}
-
-function formatPath(path: string | null): string {
-  if (!path) return "—";
-  return path.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
-}
-
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function CoursesPage() {
@@ -84,12 +36,6 @@ export default function CoursesPage() {
 
   const [search, setSearch] = useState("");
   const [filterPath, setFilterPath] = useState("all");
-  const [filterLevel, setFilterLevel] = useState("all");
-  const [filterAccess, setFilterAccess] = useState("all");
-  const [filterDur, setFilterDur] = useState("all");
-
-  const [sortCol, setSortCol] = useState<SortCol>("title");
-  const [sortDir, setSortDir] = useState<SortDir>("asc");
 
   useEffect(() => {
     getAllCourses()
@@ -103,369 +49,126 @@ export default function CoursesPage() {
       });
   }, []);
 
-  // Unique learning paths from fetched data
   const uniquePaths = useMemo(() => {
     const seen = new Set<string>();
     courses.forEach((c) => { if (c.learningPath) seen.add(c.learningPath); });
     return Array.from(seen).sort();
   }, [courses]);
 
-  // Unique level tags from fetched data
-  const uniqueTags = useMemo(() => {
-    const seen = new Set<string>();
-    courses.forEach((c) => { if (c.tag) seen.add(c.tag); });
-    return Array.from(seen).sort();
-  }, [courses]);
-
-  // Filtered + sorted courses
   const displayed = useMemo(() => {
-    let list = courses.filter((c) => {
-      // Search
+    return courses.filter((c) => {
       if (search) {
         const q = search.toLowerCase();
-        const inTitle = c.title?.toLowerCase().includes(q);
-        const inTopics = c.topics?.some((t) => t.toLowerCase().includes(q));
-        const inPath = c.learningPath?.toLowerCase().includes(q);
-        if (!inTitle && !inTopics && !inPath) return false;
+        if (!c.title?.toLowerCase().includes(q) && !c.description?.toLowerCase().includes(q)) return false;
       }
-      // Learning path
       if (filterPath !== "all" && c.learningPath !== filterPath) return false;
-      // Level — exact match on stored tag string
-      if (filterLevel !== "all" && c.tag !== filterLevel) return false;
-      // Access
-      if (filterAccess !== "all") {
-        const map: Record<string, string> = { "Free": "free", "Learner+": "learner", "Pro": "pro" };
-        if (c.accessLevel !== (map[filterAccess] ?? filterAccess)) return false;
-      }
-      // Duration
-      if (filterDur !== "all") {
-        const hrs = parseDurationHrs(c.duration);
-        const bucket = durBucket(hrs);
-        if (filterDur === "lt2" && bucket !== "lt2") return false;
-        if (filterDur === "2to4" && bucket !== "2to4") return false;
-        if (filterDur === "gt4" && bucket !== "gt4") return false;
-      }
       return true;
     });
+  }, [courses, search, filterPath]);
 
-    // Sort
-    list = [...list].sort((a, b) => {
-      let va: string | number = "";
-      let vb: string | number = "";
-      if (sortCol === "lessonsCount") {
-        va = a.lessonsCount ?? 0;
-        vb = b.lessonsCount ?? 0;
-      } else if (sortCol === "duration") {
-        va = parseDurationHrs(a.duration);
-        vb = parseDurationHrs(b.duration);
-      } else {
-        va = (a[sortCol] ?? "").toString().toLowerCase();
-        vb = (b[sortCol] ?? "").toString().toLowerCase();
-      }
-      if (va < vb) return sortDir === "asc" ? -1 : 1;
-      if (va > vb) return sortDir === "asc" ? 1 : -1;
-      return 0;
-    });
-
-    return list;
-  }, [courses, search, filterPath, filterLevel, filterAccess, filterDur, sortCol, sortDir]);
-
-  function handleSort(col: SortCol) {
-    if (sortCol === col) {
-      setSortDir((d) => (d === "asc" ? "desc" : "asc"));
-    } else {
-      setSortCol(col);
-      setSortDir("asc");
-    }
-  }
-
-  function clearFilters() {
-    setSearch("");
-    setFilterPath("all");
-    setFilterLevel("all");
-    setFilterAccess("all");
-    setFilterDur("all");
-  }
-
-  const hasActiveFilters = search || filterPath !== "all" || filterLevel !== "all" || filterAccess !== "all" || filterDur !== "all";
-
-  const SortArrow = ({ col }: { col: SortCol }) =>
-    sortCol === col ? (
-      <span className="ml-1">{sortDir === "asc" ? "↑" : "↓"}</span>
-    ) : null;
-
-  const thClass = (col: SortCol) =>
-    `px-3 py-2 text-left font-mono text-[10px] tracking-wider uppercase cursor-pointer select-none transition-colors ${
-      sortCol === col ? "text-[#D4860A]" : "text-[rgba(255,255,255,0.55)]"
-    }`;
-
-  const dropdownClass =
-    "font-mono text-[11px] border border-[rgba(124,58,237,0.20)] rounded-[6px] px-[10px] bg-white h-[34px] outline-none focus:border-[rgba(124,58,237,0.35)] transition-colors text-[#1C0F3F]";
-
-  if (loading) {
-    return (
-      <div className="bg-[#FFFFFF] min-h-screen flex items-center justify-center">
-        <span className="font-mono text-[13px] text-[#8B7BAB]">Loading courses...</span>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="bg-[#FFFFFF] min-h-screen flex items-center justify-center">
-        <span className="font-mono text-[13px] text-[#DC2626]">Failed to load courses.</span>
-      </div>
-    );
-  }
+  if (loading) return (
+    <div className="bg-[#F8FAFC] min-h-screen flex items-center justify-center">
+      <div className="premium-glow-dot animate-pulse" />
+    </div>
+  );
 
   return (
-    <div className="bg-[#FFFFFF] min-h-screen">
-
+    <div className="bg-[#F8FAFC] min-h-screen pb-20">
+      
       {/* ── HEADER ── */}
-      <div className="max-w-6xl mx-auto px-8 pt-10 pb-6">
-        <h1 className="text-[32px] font-bold text-[#1C0F3F] leading-tight mb-1">
-          All Courses
-        </h1>
-        <p className="text-[14px] text-[#8B7BAB]">
-          Subscribe to access. Free previews available — no card required.
-        </p>
+      <div className="premium-dark pt-32 pb-20 border-b border-[rgba(255,255,255,0.05)]">
+        <div className="max-w-6xl mx-auto px-8">
+          <div className="inline-flex items-center gap-2 bg-[rgba(139,92,246,0.1)] border border-[rgba(139,92,246,0.2)] rounded-full px-4 py-1.5 mb-6">
+            <div className="premium-glow-dot" />
+            <span className="font-mono text-[10px] text-[#A78BFA] tracking-[0.2em] uppercase">Curriculum</span>
+          </div>
+          <h1 className="text-5xl font-bold text-white tracking-tight leading-tight">
+            Master the Markets
+          </h1>
+          <p className="text-[#94A3B8] text-lg mt-4 max-w-2xl">
+            Structured playbooks for retail investors. No videos, just high-signal reading 
+            and actionable exercises.
+          </p>
+        </div>
       </div>
 
       {/* ── CONTROLS ── */}
-      <div className="max-w-6xl mx-auto px-8 mb-3 flex gap-3 items-center flex-wrap">
-        {/* Search */}
-        <div className="relative flex-1 min-w-[180px]">
-          <svg
-            className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[#8B7BAB]"
-            width="13" height="13" viewBox="0 0 16 16" fill="none"
+      <div className="max-w-6xl mx-auto px-8 -mt-8 relative z-10">
+        <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-xl flex flex-wrap gap-4 items-center">
+          <div className="relative flex-1 min-w-[240px]">
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search by topic or title..."
+              className="w-full h-12 pl-12 pr-4 rounded-xl bg-slate-50 border-none text-sm focus:ring-2 focus:ring-violet-500/20 transition-all"
+            />
+            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+          </div>
+          
+          <select 
+            value={filterPath} 
+            onChange={(e) => setFilterPath(e.target.value)}
+            className="h-12 px-6 rounded-xl bg-slate-50 border-none text-sm font-semibold text-[#1C0F3F] focus:ring-2 focus:ring-violet-500/20"
           >
-            <circle cx="6.5" cy="6.5" r="5.5" stroke="currentColor" strokeWidth="1.5" />
-            <path d="M11 11l3.5 3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-          </svg>
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search courses, topics..."
-            className="w-full h-[34px] pl-[34px] pr-3 py-2 border border-[rgba(124,58,237,0.20)] rounded-[6px] text-[13px] text-[#1C0F3F] placeholder:text-[#8B7BAB] bg-white outline-none focus:border-[rgba(124,58,237,0.35)] transition-colors"
-          />
+            <option value="all">All Learning Paths</option>
+            {uniquePaths.map(p => <option key={p} value={p}>{p.toUpperCase()}</option>)}
+          </select>
         </div>
+      </div>
 
-        {/* Learning path */}
-        <select value={filterPath} onChange={(e) => setFilterPath(e.target.value)} className={dropdownClass}>
-          <option value="all">All paths</option>
-          {uniquePaths.map((p) => (
-            <option key={p} value={p}>{formatPath(p)}</option>
+      {/* ── GRID ── */}
+      <div className="max-w-6xl mx-auto px-8 mt-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {displayed.map((course) => (
+            <Link key={course._id} href={`/courses/${course.slug}`}>
+              <div className="bg-white border border-slate-200 rounded-2xl p-8 h-full flex flex-col hover:shadow-2xl hover:border-violet-200 hover:-translate-y-1 transition-all group">
+                <div className="flex justify-between items-start mb-8">
+                  <div className="p-3 bg-violet-50 rounded-2xl group-hover:bg-violet-600 group-hover:text-white transition-colors text-violet-600">
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                  </div>
+                  {course.badge && (
+                    <span className="bg-[#D4860A10] text-[#D4860A] text-[10px] font-bold px-3 py-1 rounded-full tracking-widest uppercase">
+                      {course.badge}
+                    </span>
+                  )}
+                </div>
+
+                <div className="flex-1">
+                  <div className="font-mono text-[10px] text-slate-400 tracking-[0.2em] uppercase mb-2">
+                    {course.tag || "Core Curriculum"}
+                  </div>
+                  <h3 className="text-2xl font-bold text-[#1C0F3F] leading-tight mb-4 group-hover:text-violet-600 transition-colors">
+                    {course.title}
+                  </h3>
+                  <p className="text-slate-500 text-sm leading-relaxed line-clamp-3">
+                    {course.description || course.subtitle}
+                  </p>
+                </div>
+
+                <div className="mt-10 pt-8 border-t border-slate-100 flex items-center justify-between">
+                  <div className="flex flex-col">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Access</span>
+                    <span className={`text-xs font-bold ${course.accessLevel === 'pro' ? 'text-[#D4860A]' : 'text-emerald-600'}`}>
+                      {course.accessLevel?.toUpperCase() || 'LEARNER+'}
+                    </span>
+                  </div>
+                  <div className="flex flex-col text-right">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Lessons</span>
+                    <span className="text-xs font-bold text-[#1C0F3F]">{course.lessonsCount || '—'} Modules</span>
+                  </div>
+                </div>
+              </div>
+            </Link>
           ))}
-        </select>
-
-        {/* Level */}
-        <select value={filterLevel} onChange={(e) => setFilterLevel(e.target.value)} className={dropdownClass}>
-          <option value="all">All levels</option>
-          {uniqueTags.map((t) => (
-            <option key={t} value={t}>{t}</option>
-          ))}
-        </select>
-
-        {/* Access */}
-        <select value={filterAccess} onChange={(e) => setFilterAccess(e.target.value)} className={dropdownClass}>
-          <option value="all">All access</option>
-          <option value="Free">Free</option>
-          <option value="Learner+">Learner+</option>
-          <option value="Pro">Pro</option>
-        </select>
-
-        {/* Duration */}
-        <select value={filterDur} onChange={(e) => setFilterDur(e.target.value)} className={dropdownClass}>
-          <option value="all">Any duration</option>
-          <option value="lt2">&lt; 2 hrs</option>
-          <option value="2to4">2–4 hrs</option>
-          <option value="gt4">4+ hrs</option>
-        </select>
-      </div>
-
-      {/* ── ACTIVE FILTERS + COUNT ── */}
-      <div className="max-w-6xl mx-auto px-8 mb-3 flex items-center justify-between gap-3 flex-wrap">
-        <div className="flex gap-2 flex-wrap">
-          {search && (
-            <span className="inline-flex items-center gap-1 bg-[#1C0F3F] text-white font-mono text-[10px] rounded-full px-2.5 py-1">
-              &ldquo;{search}&rdquo;
-              <button onClick={() => setSearch("")} className="ml-0.5 opacity-60 hover:opacity-100">×</button>
-            </span>
-          )}
-          {filterPath !== "all" && (
-            <span className="inline-flex items-center gap-1 bg-[#1C0F3F] text-white font-mono text-[10px] rounded-full px-2.5 py-1">
-              {formatPath(filterPath)}
-              <button onClick={() => setFilterPath("all")} className="ml-0.5 opacity-60 hover:opacity-100">×</button>
-            </span>
-          )}
-          {filterLevel !== "all" && (
-            <span className="inline-flex items-center gap-1 bg-[#1C0F3F] text-white font-mono text-[10px] rounded-full px-2.5 py-1">
-              {filterLevel}
-              <button onClick={() => setFilterLevel("all")} className="ml-0.5 opacity-60 hover:opacity-100">×</button>
-            </span>
-          )}
-          {filterAccess !== "all" && (
-            <span className="inline-flex items-center gap-1 bg-[#1C0F3F] text-white font-mono text-[10px] rounded-full px-2.5 py-1">
-              {filterAccess}
-              <button onClick={() => setFilterAccess("all")} className="ml-0.5 opacity-60 hover:opacity-100">×</button>
-            </span>
-          )}
-          {filterDur !== "all" && (
-            <span className="inline-flex items-center gap-1 bg-[#1C0F3F] text-white font-mono text-[10px] rounded-full px-2.5 py-1">
-              {filterDur === "lt2" ? "< 2 hrs" : filterDur === "2to4" ? "2–4 hrs" : "4+ hrs"}
-              <button onClick={() => setFilterDur("all")} className="ml-0.5 opacity-60 hover:opacity-100">×</button>
-            </span>
-          )}
-        </div>
-        <span className="font-mono text-[11px] text-[#8B7BAB] flex-shrink-0">
-          {displayed.length} {displayed.length === 1 ? "course" : "courses"}
-        </span>
-      </div>
-
-      {/* ── TABLE ── */}
-      <div className="max-w-6xl mx-auto px-8 pb-20">
-        <div className="border border-[rgba(124,58,237,0.15)] rounded-lg overflow-hidden">
-          <table className="w-full border-collapse">
-            <thead>
-              <tr className="bg-[#1C0F3F]">
-                <th className={thClass("title")} style={{ width: "30%" }} onClick={() => handleSort("title")}>
-                  Course <SortArrow col="title" />
-                </th>
-                <th className={thClass("learningPath")} style={{ width: "16%" }} onClick={() => handleSort("learningPath")}>
-                  Learning Path <SortArrow col="learningPath" />
-                </th>
-                <th className={thClass("tag")} style={{ width: "10%" }} onClick={() => handleSort("tag")}>
-                  Level <SortArrow col="tag" />
-                </th>
-                <th className={thClass("accessLevel")} style={{ width: "9%" }} onClick={() => handleSort("accessLevel")}>
-                  Access <SortArrow col="accessLevel" />
-                </th>
-                <th className={`${thClass("lessonsCount")} text-right`} style={{ width: "8%" }} onClick={() => handleSort("lessonsCount")}>
-                  Lessons <SortArrow col="lessonsCount" />
-                </th>
-                <th className={`${thClass("duration")} text-right`} style={{ width: "8%" }} onClick={() => handleSort("duration")}>
-                  Duration <SortArrow col="duration" />
-                </th>
-                <th className={thClass("badge")} style={{ width: "8%" }} onClick={() => handleSort("badge")}>
-                  Badge <SortArrow col="badge" />
-                </th>
-                <th className="px-3 py-2 text-right font-mono text-[10px] tracking-wider uppercase text-[rgba(255,255,255,0.55)]" style={{ width: "11%" }}>
-                  Action
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {displayed.length === 0 ? (
-                <tr>
-                  <td colSpan={8} className="text-center py-12 text-[13px] text-[#8B7BAB]">
-                    No courses match your filters.{" "}
-                    <button onClick={clearFilters} className="text-[#D4860A] hover:text-[#F0A020] font-medium transition-colors">
-                      Clear filters
-                    </button>
-                  </td>
-                </tr>
-              ) : (
-                displayed.map((course, i) => (
-                  <tr
-                    key={course._id}
-                    onClick={() => router.push(`/courses/${course.slug}`)}
-                    className={`border-b border-[rgba(124,58,237,0.08)] cursor-pointer transition-colors hover:bg-[#F0EDE6] ${
-                      i % 2 === 0 ? "bg-white" : "bg-[#FFFFFF]"
-                    }`}
-                  >
-                    {/* Course name */}
-                    <td className="px-3 py-[7px] border-r border-[rgba(124,58,237,0.06)]">
-                      <div className="font-medium text-[13px] text-[#1C0F3F] leading-snug">
-                        {course.title}
-                      </div>
-                      {course.topics && course.topics.length > 0 && (
-                        <div className="flex flex-wrap gap-1 mt-1">
-                          {course.topics.slice(0, 3).map((t) => (
-                            <span key={t} className="font-mono text-[9px] text-[#8B7BAB] bg-[#F5F3FF] rounded px-1.5 py-0.5">
-                              {t}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-                    </td>
-
-                    {/* Learning path */}
-                    <td className="px-3 py-[7px] border-r border-[rgba(124,58,237,0.06)]">
-                      <span className="font-mono text-[10px] text-[#8B7BAB]">
-                        {formatPath(course.learningPath)}
-                      </span>
-                    </td>
-
-                    {/* Level */}
-                    <td className="px-3 py-[7px] border-r border-[rgba(124,58,237,0.06)]">
-                      {course.tag ? (
-                        <span className={`font-mono text-[10px] px-2 py-0.5 rounded whitespace-nowrap ${getLevelStyle(course.tag)}`}>
-                          {course.tag}
-                        </span>
-                      ) : (
-                        <span className="text-[#8B7BAB]">—</span>
-                      )}
-                    </td>
-
-                    {/* Access */}
-                    <td className="px-3 py-[7px] border-r border-[rgba(124,58,237,0.06)]">
-                      <span className={`font-mono text-[9px] font-medium rounded px-2 py-0.5 ${accessColor(course.accessLevel)}`}>
-                        {accessLabel(course.accessLevel)}
-                      </span>
-                    </td>
-
-                    {/* Lessons */}
-                    <td className="px-3 py-[7px] border-r border-[rgba(124,58,237,0.06)] text-right">
-                      <span className="font-mono text-[11px] text-[#8B7BAB]">
-                        {course.lessonsCount ?? "—"}
-                      </span>
-                    </td>
-
-                    {/* Duration */}
-                    <td className="px-3 py-[7px] border-r border-[rgba(124,58,237,0.06)] text-right">
-                      <span className="font-mono text-[11px] text-[#8B7BAB]">
-                        {course.duration ?? "—"}
-                      </span>
-                    </td>
-
-                    {/* Badge — exclude FREE/free (already shown in Access column) */}
-                    <td className="px-3 py-[7px] border-r border-[rgba(124,58,237,0.06)]">
-                      {course.badge && course.badge.toLowerCase() !== "free" ? (
-                        <span className={`font-mono text-[9px] font-medium rounded px-2 py-0.5 ${badgeColor(course.badge)}`}>
-                          {course.badge}
-                        </span>
-                      ) : null}
-                    </td>
-
-                    {/* Action */}
-                    <td className="px-3 py-[7px] text-right">
-                      <Link
-                        href={`/courses/${course.slug}`}
-                        onClick={(e) => e.stopPropagation()}
-                        className="font-mono text-[11px] text-[#D4860A] hover:text-[#F0A020] transition-colors whitespace-nowrap"
-                      >
-                        {course.accessLevel === "free" ? "Start free →" : "Preview →"}
-                      </Link>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
         </div>
       </div>
-
-      {/* ── FOOTER NUDGE ── */}
-      <div className="max-w-6xl mx-auto px-8 py-6 border-t border-[rgba(124,58,237,0.12)]">
-        <p className="text-[13px] text-[#8B7BAB]">
-          Looking for something specific?{" "}
-          <Link href="/pricing" className="text-[#D4860A] hover:text-[#F0A020] transition-colors font-medium">
-            Browse by learning path →
-          </Link>
-        </p>
-      </div>
-
     </div>
   );
 }
