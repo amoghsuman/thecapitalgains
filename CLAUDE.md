@@ -1,4 +1,4 @@
-﻿@AGENTS.md
+@AGENTS.md
 # The Capital Gains — Project Briefing
 
 ## What This Is
@@ -7,20 +7,23 @@ Text-first, read-and-apply courses. No videos.
 thecapitalgains.com
 
 ## Tech Stack
-- Next.js 14 (App Router, TypeScript strict)
-- Supabase (auth + database + storage)
-- Razorpay (one-time payments + subscriptions)
-- Tailwind CSS
-- MDX (course content)
-- Vercel (hosting)
+- Next.js 14.2.24 (App Router, TypeScript strict)
+- Tailwind CSS v3.4.x
+- Supabase (auth + database) — no storage bucket used
+- Sanity v3 CMS — project ID: xmblxfh8, dataset: production
+- Razorpay (payments — integration pending)
+- Vercel hosting, GitHub auto-deploy
 
 ## Key Business Rules
 - Educational content only — not SEBI investment advice
-- SEBI RA registration in progress
-- Two subscription stacks: Learn + Research (Stack 3 Community removed — no live sessions, WhatsApp, or 1:1 access)
-- Learn tiers: Free / Learner ₹999/mo / Pro ₹2499/mo
-- Research tiers: Newsletter ₹499/mo / Essential ₹4999/mo / Premium ₹12499/mo
-- Anonymous brand — founder identity not on platform
+- SEBI RA registration in progress — placeholder [SEBI_RA_REG_NO] must be filled before public launch
+- Anonymous brand — founder identity not surfaced on platform
+- Two subscription stacks:
+  - Stack 1 Learn: Learner ₹999/mo, Pro ₹2499/mo
+  - Stack 2 Research: Newsletter ₹499/mo, Essential ₹4999/mo, Premium ₹12499/mo
+
+## Middleware
+- middleware lives in proxy.ts (function named `proxy`, not `middleware`) — Next.js 16 convention used here
 
 ## Supabase Tables
 - users (Supabase auth)
@@ -31,9 +34,14 @@ thecapitalgains.com
 - progress (user_id, lesson_id, completed_at)
 
 ## Payment Logic
-- One-time → enrollments table
 - Subscription → Razorpay webhook → subscriptions table
 - Access: free lesson OR active subscription OR enrolled
+
+## Content Scripts
+- upload-courses.mjs — uploads course structure to Sanity
+- inject-lesson-content.mjs — patches lesson content into existing Sanity documents
+- generate-lesson-content.mjs — generates lesson JSON for injection
+- Lesson title matching in inject script is case and character sensitive
 
 ## Current Status
 - [x] Homepage
@@ -47,6 +55,7 @@ thecapitalgains.com
 - [x] Supabase setup
 - [ ] Razorpay integration
 - [ ] Course reader wired to Supabase
+- [ ] C5 and C6 lesson content injection pending
 - [ ] Domain connected
 
 ## Course Schema — Key Fields
@@ -55,25 +64,18 @@ thecapitalgains.com
 - Learning Paths: stock-market-basics, value-investing, momentum-investing, technical-trading, options-derivatives, mutual-funds-etfs, investment-banking, equity-research, private-equity-vc, cfa-prep, frm-prep, financial-modelling, quant-finance, algo-trading, python-finance, corporate-finance, ma-valuation
 
 ## Colour Palette
-- Dark (primary): #1C0F3F
-- Dark light: #2D1B69
-- Purple: #7C3AED
-- Purple light: #8B5CF6
-- Amber: #D4860A
-- Amber hover: #F0A020
-- Background: #FFFFFF
-- Surface: #F5F3FF
-- Surface 2: #EDE9FF
-- Text: #1C0F3F
-- Text muted: #4B3F6B
-- Text hint: #8B7BAB
-- Green: #1A7A4A
-- Border (rgba): rgba(124,58,237,0.15)
+- Primary: #1E1245
+- Light: #2D1B69
+- Amber CTA: #D4860A
+- Background: #FAFAF7
+- (See premium-theme.css for full design token set)
 
 ## Font System
-- All text: Outfit (--font-outfit) — weights 400/500/600/700/800 — single font family
-- Mono: DM Mono (--font-mono) — prices, tags, labels, badges, eyebrow text only
+- All text: Playfair Display — weights 400/500/600/700 — used for body and headings
+- Mono: DM Mono — prices, tags, labels, badges, eyebrow text only
 
 ## Open Items
-- SEBI RA registration number pending
-- Developer hiring not finalised
+- SEBI RA registration number pending — [SEBI_RA_REG_NO] placeholder in About, Privacy, Footer
+- C5 and C6 lesson content injection pending
+- Razorpay integration pending
+- amoghsuman.com personal site not yet built

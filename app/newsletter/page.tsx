@@ -18,29 +18,6 @@ const whatYouGet = [
   },
 ]
 
-const recentIssues = [
-  {
-    num: "Issue #31",
-    date: "24 Mar 2026",
-    title: "Why BANKNIFTY sold off despite positive global cues",
-    preview:
-      "Domestic institutional selling, FII repositioning ahead of expiry, and why the headline didn't tell the full story.",
-  },
-  {
-    num: "Issue #30",
-    date: "17 Mar 2026",
-    title: "The Iron Condor setup that worked 3 weeks in a row",
-    preview:
-      "A look at the market conditions that make Iron Condors sing — and the one signal that tells you when to stop running them.",
-  },
-  {
-    num: "Issue #29",
-    date: "10 Mar 2026",
-    title: "Reading OI data before Budget day",
-    preview:
-      "How to use open interest build-up, PCR and max pain to position yourself rationally before a high-volatility event.",
-  },
-]
 
 export default function NewsletterPage() {
   return (
@@ -93,35 +70,10 @@ export default function NewsletterPage() {
         <h2 className="text-[28px] font-bold text-[#1C0F3F] mb-6">
           Recent issues
         </h2>
-        <div className="flex flex-col gap-4">
-          {recentIssues.map((issue) => (
-            <div
-              key={issue.num}
-              className="bg-white border border-[rgba(124,58,237,0.15)] rounded-xl px-6 py-5 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4"
-            >
-              <div className="flex-1">
-                <div className="flex items-center gap-3 mb-2">
-                  <span className="font-mono text-[11px] text-[#D4860A] tracking-wider">
-                    {issue.num}
-                  </span>
-                  <span className="font-mono text-[11px] text-[#8B7BAB]">
-                    {issue.date}
-                  </span>
-                </div>
-                <div className="text-[16px] text-[#1C0F3F] mb-1 leading-snug">
-                  {issue.title}
-                </div>
-                <p className="text-[13px] text-[#4B3F6B] leading-relaxed">
-                  {issue.preview}
-                </p>
-              </div>
-              <div className="flex-shrink-0 sm:pt-1">
-                <span className="font-mono text-[12px] text-[#D4860A] hover:text-[#F0A020] cursor-pointer transition-colors whitespace-nowrap">
-                  Read →
-                </span>
-              </div>
-            </div>
-          ))}
+        <div className="bg-white border border-[rgba(124,58,237,0.15)] rounded-xl px-6 py-5">
+          <p className="text-[15px] text-[#4B3F6B] leading-relaxed">
+            Issues are published every Sunday. Subscribe below to receive the next one directly in your inbox.
+          </p>
         </div>
       </section>
 

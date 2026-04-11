@@ -27,6 +27,10 @@ const sections = [
     title: "Contact",
     body: "For privacy-related queries, contact us at hello@thecapitalgains.com",
   },
+  {
+    title: "Regulatory Information",
+    body: "This platform is operated by a SEBI-registered Research Analyst. Registration No: [SEBI_RA_REG_NO]. Research services are subject to SEBI (Research Analyst) Regulations, 2014.",
+  },
 ];
 
 export default function PrivacyPage() {

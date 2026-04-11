@@ -13,7 +13,7 @@ const sections = [
   },
   {
     title: "Payments and Refunds",
-    body: "Course purchases are one-time payments with lifetime access. Subscriptions are billed monthly or annually. We offer a 30-day refund on all purchases — no questions asked. Refund requests must be submitted within 30 days of purchase.",
+    body: "All plans are subscription-based, billed monthly or annually. We offer a 14-day refund on subscription payments. Refund requests must be submitted within 14 days of the billing date. Refunds are processed to the original payment method within 5–7 business days.",
   },
   {
     title: "Intellectual Property",

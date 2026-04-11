@@ -53,8 +53,8 @@ export default async function HomePage() {
               {[
                 { num: courseCount.toString(), label: "PREMIUM COURSES" },
                 { num: "₹499", label: "RESEARCH STARTS AT" },
-                { num: "77%", label: "REPORTED CAGR" },
-                { num: "5000+", label: "ACTIVE STUDENTS" },
+                { num: "EARLY ACCESS", label: "NOW OPEN" },
+                { num: "SEBI RA", label: "REGISTERED" },
               ].map((s) => (
                 <div key={s.label} className="space-y-2">
                   <div className="text-3xl font-bold text-white tracking-tight">{s.num}</div>

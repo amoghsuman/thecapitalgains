@@ -17,18 +17,25 @@ const dmMono = DM_Mono({
   weight: ["400", "500"],
 });
 
+const description =
+  "Playbook-style courses for Indian retail investors and traders. Research, courses, and model portfolios — all in one place.";
+
 export const metadata: Metadata = {
   title: "The Capital Gains — Learn to Invest Like a Pro",
-  description:
-    "Text-first, exercise-driven courses for Indian retail investors and traders. Read, apply, repeat.",
+  description,
   keywords: ["investing", "trading", "options", "equity", "Indian stock market", "courses"],
   openGraph: {
     title: "The Capital Gains",
-    description: "Learn to invest like a pro. Not gamble like a beginner.",
+    description,
     url: "https://thecapitalgains.com",
     siteName: "The Capital Gains",
     locale: "en_IN",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "The Capital Gains",
+    description,
   },
 };
 
