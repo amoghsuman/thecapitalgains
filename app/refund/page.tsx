@@ -1,4 +1,4 @@
-﻿const sections = [
+const sections = [
   {
     title: "Our Commitment",
     body: "We stand behind the quality of our content. If you are not satisfied with your purchase for any reason, we will refund you in full within 30 days — no questions asked.",
@@ -23,23 +23,23 @@
 
 export default function RefundPage() {
   return (
-    <div className="bg-[#FAFAF7] min-h-screen">
+    <div className="bg-[#FFFFFF] min-h-screen">
       <div className="max-w-3xl mx-auto px-8 pt-16 pb-20">
-        <div className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase mb-3">
+        <div className="font-mono text-[11px] text-[#8B7BAB] tracking-widest uppercase mb-3">
           Legal
         </div>
-        <h1 className="font-serif text-4xl font-bold text-[#111111] mb-3">
+        <h1 className="text-4xl font-bold text-[#1C0F3F] mb-3">
           Refund Policy
         </h1>
-        <div className="font-mono text-[12px] text-[#7A7A8A] mb-10">
+        <div className="font-mono text-[12px] text-[#8B7BAB] mb-10">
           Last updated: April 2025
         </div>
         {sections.map((s) => (
           <div key={s.title}>
-            <h2 className="font-serif text-[20px] font-bold text-[#111111] mb-3 mt-8">
+            <h2 className="text-[20px] font-bold text-[#1C0F3F] mb-3 mt-8">
               {s.title}
             </h2>
-            <p className="text-[15px] text-[#3D3D3D] leading-relaxed">{s.body}</p>
+            <p className="text-[15px] text-[#4B3F6B] leading-relaxed">{s.body}</p>
           </div>
         ))}
       </div>

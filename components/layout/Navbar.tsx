@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { useState } from "react";
 import Link from "next/link";
 
@@ -6,12 +6,12 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="bg-[#FAFAF7] border-b border-[rgba(17,17,17,0.1)] sticky top-0 z-50">
+    <nav className="bg-[#FFFFFF] border-b border-[rgba(124,58,237,0.15)] sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-8 h-[60px] flex items-center gap-0">
         {/* Logo */}
         <Link
           href="/"
-          className="font-serif font-bold text-[17px] text-[#111111] tracking-wide mr-12 flex-shrink-0"
+          className="font-bold text-[17px] text-[#1C0F3F] tracking-wide mr-12 flex-shrink-0"
         >
           The Capital Gains
         </Link>
@@ -27,7 +27,7 @@ export default function Navbar() {
             <Link
               key={item.label}
               href={item.href}
-              className="px-4 py-2 text-[14px] text-[#3D3D3D] hover:text-[#111111] hover:bg-[#F4F1EB] rounded-md transition-all"
+              className="px-4 py-2 text-[14px] text-[#4B3F6B] hover:text-[#1C0F3F] hover:bg-[#F5F3FF] rounded-md transition-all"
             >
               {item.label}
             </Link>
@@ -46,7 +46,7 @@ export default function Navbar() {
 
         {/* Mobile hamburger */}
         <button
-          className="md:hidden ml-auto text-[#111111]"
+          className="md:hidden ml-auto text-[#1C0F3F]"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -63,7 +63,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden border-t border-[rgba(17,17,17,0.1)] px-8 py-4 flex flex-col gap-2 bg-[#FAFAF7]">
+        <div className="md:hidden border-t border-[rgba(124,58,237,0.15)] px-8 py-4 flex flex-col gap-2 bg-[#FFFFFF]">
           {[
             { label: "Courses", href: "/courses" },
             { label: "Portfolios", href: "/portfolios" },
@@ -73,13 +73,13 @@ export default function Navbar() {
             <Link
               key={item.label}
               href={item.href}
-              className="py-2 text-[14px] text-[#3D3D3D] hover:text-[#111111]"
+              className="py-2 text-[14px] text-[#4B3F6B] hover:text-[#1C0F3F]"
               onClick={() => setMenuOpen(false)}
             >
               {item.label}
             </Link>
           ))}
-          <div className="flex gap-2 pt-2 border-t border-[rgba(17,17,17,0.08)]">
+          <div className="flex gap-2 pt-2 border-t border-[rgba(124,58,237,0.15)]">
             <Link href="/auth/login" className="flex-1 text-center btn-outline">
               Sign in
             </Link>

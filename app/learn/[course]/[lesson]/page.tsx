@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 export const dynamic = "force-dynamic";
 
@@ -32,8 +32,8 @@ function ExerciseBlock({ title, steps }: { title: string; steps: string[] }) {
   const allDone = checked.size === steps.length;
 
   return (
-    <div className={`rounded-xl p-6 mt-10 border-2 ${allDone ? "border-[#1A7A4A] bg-[#E8F5EE]" : "border-[#111111] bg-white"}`}>
-      <div className={`font-mono text-[11px] tracking-widest uppercase mb-4 ${allDone ? "text-[#1A7A4A]" : "text-[#111111]"}`}>
+    <div className={`rounded-xl p-6 mt-10 border-2 ${allDone ? "border-[#1A7A4A] bg-[#E8F5EE]" : "border-[#1C0F3F] bg-white"}`}>
+      <div className={`font-mono text-[11px] tracking-widest uppercase mb-4 ${allDone ? "text-[#1A7A4A]" : "text-[#1C0F3F]"}`}>
         Exercise · {title}
       </div>
       <div className="flex flex-col gap-3">
@@ -44,7 +44,7 @@ function ExerciseBlock({ title, steps }: { title: string; steps: string[] }) {
               className={`mt-0.5 w-5 h-5 flex-shrink-0 rounded border-2 flex items-center justify-center transition-all ${
                 checked.has(i)
                   ? "border-[#1A7A4A] bg-[#1A7A4A]"
-                  : "border-[rgba(17,17,17,0.25)] group-hover:border-[#D4860A]"
+                  : "border-[rgba(124,58,237,0.25)] group-hover:border-[#D4860A]"
               }`}
             >
               {checked.has(i) && (
@@ -54,7 +54,7 @@ function ExerciseBlock({ title, steps }: { title: string; steps: string[] }) {
             <span
               onClick={() => toggle(i)}
               className={`text-[14px] leading-relaxed select-none ${
-                checked.has(i) ? "text-[#7A7A8A] line-through" : "text-[#3D3D3D]"
+                checked.has(i) ? "text-[#8B7BAB] line-through" : "text-[#4B3F6B]"
               }`}
             >
               {step}
@@ -76,31 +76,31 @@ function ExerciseBlock({ title, steps }: { title: string; steps: string[] }) {
 const portableTextComponents: PortableTextComponents = {
   block: {
     normal: ({ children }) => (
-      <p className="text-[17px] text-[#111111] leading-[1.85] mb-5">{children}</p>
+      <p className="text-[17px] text-[#1C0F3F] leading-[1.85] mb-5">{children}</p>
     ),
     h2: ({ children }) => (
-      <h2 className="font-serif text-[22px] font-bold text-[#111111] mt-8 mb-4 leading-snug">{children}</h2>
+      <h2 className="text-[22px] font-bold text-[#1C0F3F] mt-8 mb-4 leading-snug">{children}</h2>
     ),
     h3: ({ children }) => (
-      <h3 className="font-serif text-[18px] font-bold text-[#111111] mt-6 mb-3">{children}</h3>
+      <h3 className="text-[18px] font-bold text-[#1C0F3F] mt-6 mb-3">{children}</h3>
     ),
     blockquote: ({ children }) => (
-      <p className="text-[17px] text-[#111111] leading-[1.85] italic border-l-[3px] border-[#D4860A] pl-5 py-1">
+      <p className="text-[17px] text-[#1C0F3F] leading-[1.85] italic border-l-[3px] border-[#D4860A] pl-5 py-1">
         {children}
       </p>
     ),
   },
   list: {
     bullet: ({ children }) => (
-      <ul className="flex flex-col gap-2 pl-4 list-disc text-[16px] text-[#111111]">{children}</ul>
+      <ul className="flex flex-col gap-2 pl-4 list-disc text-[16px] text-[#1C0F3F]">{children}</ul>
     ),
     number: ({ children }) => (
-      <ol className="flex flex-col gap-2 pl-4 list-decimal text-[16px] text-[#111111]">{children}</ol>
+      <ol className="flex flex-col gap-2 pl-4 list-decimal text-[16px] text-[#1C0F3F]">{children}</ol>
     ),
   },
   listItem: {
-    bullet: ({ children }) => <li className="text-[16px] text-[#111111] leading-relaxed">{children}</li>,
-    number: ({ children }) => <li className="text-[16px] text-[#111111] leading-relaxed">{children}</li>,
+    bullet: ({ children }) => <li className="text-[16px] text-[#1C0F3F] leading-relaxed">{children}</li>,
+    number: ({ children }) => <li className="text-[16px] text-[#1C0F3F] leading-relaxed">{children}</li>,
   },
   types: {
     callout: ({ value }: { value: { type?: string; text?: string } }) => {
@@ -129,19 +129,19 @@ const portableTextComponents: PortableTextComponents = {
       }
       return (
         <div className="my-6 overflow-x-auto">
-          <div className="bg-[#F4F1EB] rounded-xl px-6 py-5 text-center" dangerouslySetInnerHTML={{ __html: html }} />
+          <div className="bg-[#F5F3FF] rounded-xl px-6 py-5 text-center" dangerouslySetInnerHTML={{ __html: html }} />
           {value.caption && (
-            <p className="font-mono text-[11px] text-[#7A7A8A] text-center mt-2 tracking-wide">{value.caption}</p>
+            <p className="font-mono text-[11px] text-[#8B7BAB] text-center mt-2 tracking-wide">{value.caption}</p>
           )}
         </div>
       );
     },
     keyFact: ({ value }: { value: { label?: string; value?: string; context?: string } }) => (
-      <div className="my-5 border border-[rgba(17,17,17,0.12)] rounded-xl px-6 py-4 flex flex-col gap-1">
-        <div className="font-mono text-[10px] text-[#7A7A8A] tracking-widest uppercase">{value.label}</div>
-        <div className="font-serif text-[22px] font-bold text-[#111111] leading-tight">{value.value}</div>
+      <div className="my-5 border border-[rgba(124,58,237,0.15)] rounded-xl px-6 py-4 flex flex-col gap-1">
+        <div className="font-mono text-[10px] text-[#8B7BAB] tracking-widest uppercase">{value.label}</div>
+        <div className="text-[22px] font-bold text-[#1C0F3F] leading-tight">{value.value}</div>
         {value.context && (
-          <div className="text-[13px] text-[#3D3D3D]">{value.context}</div>
+          <div className="text-[13px] text-[#4B3F6B]">{value.context}</div>
         )}
       </div>
     ),
@@ -153,13 +153,13 @@ const portableTextComponents: PortableTextComponents = {
 function LockedLesson() {
   return (
     <div className="flex flex-col items-center justify-center py-24 px-8 text-center">
-      <div className="w-16 h-16 bg-[#F4F1EB] rounded-full flex items-center justify-center text-[28px] mb-5">
+      <div className="w-16 h-16 bg-[#F5F3FF] rounded-full flex items-center justify-center text-[28px] mb-5">
         🔒
       </div>
-      <h2 className="font-serif text-[22px] font-bold text-[#111111] mb-2">
+      <h2 className="text-[22px] font-bold text-[#1C0F3F] mb-2">
         Subscribe to access this lesson
       </h2>
-      <p className="text-[15px] text-[#3D3D3D] mb-8 max-w-sm">
+      <p className="text-[15px] text-[#4B3F6B] mb-8 max-w-sm">
         This lesson is part of the full course. Subscribe for access to all courses.
       </p>
       <Link
@@ -170,7 +170,7 @@ function LockedLesson() {
       </Link>
       <Link
         href="/auth/login"
-        className="border border-[rgba(17,17,17,0.2)] hover:border-[#111111] text-[#3D3D3D] hover:text-[#111111] rounded-lg px-8 py-3.5 text-[15px] font-medium transition-colors"
+        className="border border-[rgba(124,58,237,0.25)] hover:border-[#1C0F3F] text-[#4B3F6B] hover:text-[#1C0F3F] rounded-lg px-8 py-3.5 text-[15px] font-medium transition-colors"
       >
         Sign in if subscribed →
       </Link>
@@ -223,7 +223,7 @@ export default function ReaderPage() {
 
   if (!lessonSlug) {
     return (
-      <div className="flex-1 flex items-center justify-center text-[#7A7A8A] font-mono text-[13px]">
+      <div className="flex-1 flex items-center justify-center text-[#8B7BAB] font-mono text-[13px]">
         Loading...
       </div>
     );
@@ -231,7 +231,7 @@ export default function ReaderPage() {
 
   if (error) {
     return (
-      <div className="flex items-center justify-center h-64 text-[#3D3D3D]">
+      <div className="flex items-center justify-center h-64 text-[#4B3F6B]">
         Course not found.{" "}
         <Link href="/courses" className="text-[#D4860A] ml-1">
           Browse courses →
@@ -242,7 +242,7 @@ export default function ReaderPage() {
 
   if (!course) {
     return (
-      <div className="flex-1 flex items-center justify-center text-[#7A7A8A] font-mono text-[13px]">
+      <div className="flex-1 flex items-center justify-center text-[#8B7BAB] font-mono text-[13px]">
         Loading...
       </div>
     );
@@ -263,38 +263,38 @@ export default function ReaderPage() {
   }
 
   return (
-    <div className="flex overflow-hidden bg-[#FAFAF7]" style={{ height: "calc(100vh - 96px)" }}>
+    <div className="flex overflow-hidden bg-[#FFFFFF]" style={{ height: "calc(100vh - 96px)" }}>
 
       {/* ── SIDEBAR ── */}
       <aside
         className={`${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } absolute lg:relative lg:translate-x-0 z-30 flex-shrink-0 flex flex-col bg-white border-r border-[rgba(17,17,17,0.1)] overflow-y-auto transition-transform duration-200`}
+        } absolute lg:relative lg:translate-x-0 z-30 flex-shrink-0 flex flex-col bg-white border-r border-[rgba(124,58,237,0.15)] overflow-y-auto transition-transform duration-200`}
         style={{ width: 280, height: "100%" }}
       >
         {/* Back + course info */}
-        <div className="px-4 py-4 border-b border-[rgba(17,17,17,0.07)]">
+        <div className="px-4 py-4 border-b border-[rgba(124,58,237,0.10)]">
           <Link
             href="/courses"
-            className="inline-flex items-center gap-1.5 font-mono text-[11px] text-[#7A7A8A] hover:text-[#D4860A] transition-colors mb-3"
+            className="inline-flex items-center gap-1.5 font-mono text-[11px] text-[#8B7BAB] hover:text-[#D4860A] transition-colors mb-3"
           >
             ← All courses
           </Link>
-          <div className="font-serif text-[14px] text-[#111111] leading-snug mb-1">
+          <div className="text-[14px] text-[#1C0F3F] leading-snug mb-1">
             {course.title}
           </div>
-          <div className="font-mono text-[11px] text-[#7A7A8A]">
+          <div className="font-mono text-[11px] text-[#8B7BAB]">
             {allLessons.length} lessons
           </div>
         </div>
 
         {/* Progress bar */}
-        <div className="px-4 py-3 border-b border-[rgba(17,17,17,0.07)]">
+        <div className="px-4 py-3 border-b border-[rgba(124,58,237,0.10)]">
           <div className="flex justify-between items-center mb-1.5">
-            <span className="font-mono text-[10px] text-[#7A7A8A] tracking-widest uppercase">Progress</span>
-            <span className="font-mono text-[11px] text-[#111111]">{progressPct}%</span>
+            <span className="font-mono text-[10px] text-[#8B7BAB] tracking-widest uppercase">Progress</span>
+            <span className="font-mono text-[11px] text-[#1C0F3F]">{progressPct}%</span>
           </div>
-          <div className="h-[3px] bg-[#EDE9E0] rounded-full overflow-hidden">
+          <div className="h-[3px] bg-[#EDE9FF] rounded-full overflow-hidden">
             <div
               className="h-full bg-[#D4860A] rounded-full transition-all duration-500"
               style={{ width: `${progressPct}%` }}
@@ -306,7 +306,7 @@ export default function ReaderPage() {
         <div className="flex-1 py-2">
           {course.chapters.map((chapter) => (
             <div key={chapter.title} className="mb-1">
-              <div className="px-4 py-2 font-mono text-[9px] text-[#7A7A8A] tracking-widest uppercase">
+              <div className="px-4 py-2 font-mono text-[9px] text-[#8B7BAB] tracking-widest uppercase">
                 {chapter.title}
               </div>
               {chapter.lessons.map((l) => {
@@ -320,8 +320,8 @@ export default function ReaderPage() {
                     onClick={() => setActiveLesson(l.slug)}
                     className={`w-full text-left flex items-start gap-3 px-4 py-2.5 border-l-[3px] transition-all ${
                       isActive
-                        ? "border-[#D4860A] bg-[#F4F1EB]"
-                        : "border-transparent hover:bg-[#F4F1EB]/60"
+                        ? "border-[#D4860A] bg-[#F5F3FF]"
+                        : "border-transparent hover:bg-[#F5F3FF]/60"
                     }`}
                   >
                     <div
@@ -331,8 +331,8 @@ export default function ReaderPage() {
                           : isActive
                           ? "bg-[#D4860A] text-white"
                           : isAccessible
-                          ? "border-2 border-[rgba(17,17,17,0.2)] text-[#7A7A8A]"
-                          : "bg-[#EDE9E0] text-[#7A7A8A]"
+                          ? "border-2 border-[rgba(124,58,237,0.25)] text-[#8B7BAB]"
+                          : "bg-[#EDE9FF] text-[#8B7BAB]"
                       }`}
                     >
                       {isDone ? "✓" : isActive ? "▶" : isAccessible ? "" : "🔒"}
@@ -340,12 +340,12 @@ export default function ReaderPage() {
                     <div className="flex-1 min-w-0">
                       <div
                         className={`text-[13px] leading-snug ${
-                          isActive ? "text-[#111111] font-medium" : isDone ? "text-[#7A7A8A]" : "text-[#3D3D3D]"
+                          isActive ? "text-[#1C0F3F] font-medium" : isDone ? "text-[#8B7BAB]" : "text-[#4B3F6B]"
                         }`}
                       >
                         {l.title}
                       </div>
-                      <div className="font-mono text-[10px] text-[#7A7A8A] mt-0.5">{l.duration}</div>
+                      <div className="font-mono text-[10px] text-[#8B7BAB] mt-0.5">{l.duration}</div>
                     </div>
                   </button>
                 );
@@ -355,9 +355,9 @@ export default function ReaderPage() {
         </div>
 
         {/* Subscribe card */}
-        <div className="p-4 border-t border-[rgba(17,17,17,0.08)] bg-[#F4F1EB]">
-          <div className="font-mono text-[10px] text-[#7A7A8A] tracking-widest uppercase mb-2">Full Access</div>
-          <div className="font-mono text-[13px] text-[#3D3D3D] mb-3">
+        <div className="p-4 border-t border-[rgba(124,58,237,0.12)] bg-[#F5F3FF]">
+          <div className="font-mono text-[10px] text-[#8B7BAB] tracking-widest uppercase mb-2">Full Access</div>
+          <div className="font-mono text-[13px] text-[#4B3F6B] mb-3">
             Subscribe once. Access all courses.
           </div>
           <Link
@@ -381,11 +381,11 @@ export default function ReaderPage() {
       <div className="flex-1 flex flex-col min-w-0 h-full">
 
         {/* Top bar */}
-        <div className="flex-shrink-0 flex items-center justify-between px-5 py-3 bg-white border-b border-[rgba(17,17,17,0.1)]">
+        <div className="flex-shrink-0 flex items-center justify-between px-5 py-3 bg-white border-b border-[rgba(124,58,237,0.15)]">
           <div className="flex items-center gap-4">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="text-[#3D3D3D] hover:text-[#111111] transition-colors"
+              className="text-[#4B3F6B] hover:text-[#1C0F3F] transition-colors"
               aria-label="Toggle sidebar"
             >
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -393,16 +393,16 @@ export default function ReaderPage() {
               </svg>
             </button>
             <div className="flex items-center gap-2">
-              <div className="h-1.5 w-20 bg-[#EDE9E0] rounded-full overflow-hidden">
+              <div className="h-1.5 w-20 bg-[#EDE9FF] rounded-full overflow-hidden">
                 <div
                   className="h-full bg-[#D4860A] rounded-full transition-all"
                   style={{ width: `${progressPct}%` }}
                 />
               </div>
-              <span className="font-mono text-[11px] text-[#7A7A8A]">{progressPct}% complete</span>
+              <span className="font-mono text-[11px] text-[#8B7BAB]">{progressPct}% complete</span>
             </div>
           </div>
-          <span className="font-mono text-[12px] text-[#111111] hidden sm:block">The Capital Gains</span>
+          <span className="font-mono text-[12px] text-[#1C0F3F] hidden sm:block">The Capital Gains</span>
         </div>
 
         {/* Scrollable content area */}
@@ -410,22 +410,22 @@ export default function ReaderPage() {
           {isLocked ? (
             <LockedLesson />
           ) : loading ? (
-            <div className="flex items-center justify-center py-24 font-mono text-[13px] text-[#7A7A8A]">
+            <div className="flex items-center justify-center py-24 font-mono text-[13px] text-[#8B7BAB]">
               Loading lesson...
             </div>
           ) : lesson ? (
             <div className="max-w-[720px] mx-auto px-8 py-12">
               {/* Disclaimer */}
-              <div className="font-mono text-[11px] text-[#7A7A8A] mb-6">
+              <div className="font-mono text-[11px] text-[#8B7BAB] mb-6">
                 Educational content only · Not investment advice
               </div>
 
               {/* Lesson header */}
-              <h1 className="font-serif text-[30px] font-bold text-[#111111] leading-[1.1] mb-3">
+              <h1 className="text-[30px] font-bold text-[#1C0F3F] leading-[1.1] mb-3">
                 {lesson.title}
               </h1>
-              <div className="flex items-center gap-3 mb-8 pb-6 border-b border-[rgba(17,17,17,0.08)]">
-                <span className="font-mono text-[12px] text-[#7A7A8A]">{lesson.duration} read</span>
+              <div className="flex items-center gap-3 mb-8 pb-6 border-b border-[rgba(124,58,237,0.12)]">
+                <span className="font-mono text-[12px] text-[#8B7BAB]">{lesson.duration} read</span>
                 {lesson.isFree && (
                   <span className="font-mono text-[10px] text-[#1A7A4A] bg-[#E8F5EE] rounded px-2 py-0.5">
                     Free preview
@@ -439,11 +439,11 @@ export default function ReaderPage() {
               </div>
 
               {/* Nav footer */}
-              <div className="flex items-center justify-between mt-12 pt-6 border-t border-[rgba(17,17,17,0.08)]">
+              <div className="flex items-center justify-between mt-12 pt-6 border-t border-[rgba(124,58,237,0.12)]">
                 {prevLesson ? (
                   <button
                     onClick={() => setActiveLesson(prevLesson.slug)}
-                    className="font-mono text-[13px] text-[#3D3D3D] hover:text-[#111111] transition-colors"
+                    className="font-mono text-[13px] text-[#4B3F6B] hover:text-[#1C0F3F] transition-colors"
                   >
                     ← {prevLesson.title}
                   </button>
@@ -469,8 +469,8 @@ export default function ReaderPage() {
             </div>
           ) : (
             <div className="max-w-[720px] mx-auto px-8 py-12">
-              <div className="font-mono text-[11px] text-[#7A7A8A] mb-6">Educational content only · Not investment advice</div>
-              <div className="font-mono text-[12px] text-[#7A7A8A]">Content coming soon for this lesson.</div>
+              <div className="font-mono text-[11px] text-[#8B7BAB] mb-6">Educational content only · Not investment advice</div>
+              <div className="font-mono text-[12px] text-[#8B7BAB]">Content coming soon for this lesson.</div>
             </div>
           )}
         </div>

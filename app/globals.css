@@ -1,27 +1,27 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
 @import "katex/dist/katex.min.css";
 
 :root {
-  --font-playfair: 'Playfair Display', Georgia, serif;
-  --font-jakarta: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-outfit: 'Outfit', system-ui, sans-serif;
   --font-mono: 'DM Mono', monospace;
-  --font-serif: var(--font-playfair);
-  --font-sans: var(--font-jakarta);
-  --navy: #111111;
-  --navy-light: #111111;
+  --font-sans: var(--font-outfit);
+  --dark: #1C0F3F;
+  --dark-light: #2D1B69;
+  --purple: #7C3AED;
+  --purple-light: #8B5CF6;
   --amber: #D4860A;
   --amber-light: #F0A020;
   --amber-pale: #FDF3E3;
-  --bg: #FAFAF7;
-  --surface: #F4F1EB;
-  --surface2: #EDE9E0;
-  --text: #111111;
-  --text-muted: #3D3D3D;
-  --text-hint: #7A7A8A;
+  --bg: #FFFFFF;
+  --surface: #F5F3FF;
+  --surface2: #EDE9FF;
+  --text: #1C0F3F;
+  --text-muted: #4B3F6B;
+  --text-hint: #8B7BAB;
   --green: #1A7A4A;
   --green-pale: #E8F5EE;
-  --border: rgba(17,17,17,0.1);
-  --border-strong: rgba(17,17,17,0.2);
+  --border: rgba(124,58,237,0.15);
+  --border-strong: rgba(124,58,237,0.25);
 }
 
 *, *::before, *::after {
@@ -33,20 +33,20 @@ html {
 }
 
 body {
-  font-family: var(--font-jakarta), system-ui, sans-serif;
-  background: #FAFAF7;
-  color: #111111;
+  font-family: var(--font-outfit), system-ui, sans-serif;
+  background: #FFFFFF;
+  color: #1C0F3F;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-playfair), Georgia, serif;
-  color: #111111;
+  font-family: var(--font-outfit), system-ui, sans-serif;
+  color: #1C0F3F;
 }
 
 p, li, span, div, a, button, input, textarea, label {
-  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-family: var(--font-outfit), system-ui, sans-serif;
 }
 
 code, pre, .mono {
@@ -63,11 +63,8 @@ button, [role="button"], input[type="submit"], input[type="button"] {
   cursor: pointer;
 }
 
-/* Force Tailwind to include critical utility classes */
-.bg-black-force { background-color: #111111; color: white; }
-
 .btn-primary {
-  background-color: #111111;
+  background-color: #7C3AED;
   color: white;
   border-radius: 8px;
   padding: 8px 20px;
@@ -78,20 +75,21 @@ button, [role="button"], input[type="submit"], input[type="button"] {
 }
 
 .btn-primary:hover {
-  opacity: 0.8;
+  background-color: #8B5CF6;
 }
 
 .btn-outline {
-  border: 1px solid rgba(17,17,17,0.2);
+  border: 1px solid rgba(124,58,237,0.25);
   border-radius: 8px;
   padding: 8px 20px;
   font-size: 13px;
-  color: #111111;
+  color: #1C0F3F;
   cursor: pointer;
   transition: all 0.15s;
   background: transparent;
 }
 
 .btn-outline:hover {
-  border-color: #111111;
+  border-color: #7C3AED;
+  color: #7C3AED;
 }

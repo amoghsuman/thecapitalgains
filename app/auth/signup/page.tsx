@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from 'react'
 import Link from 'next/link'
@@ -54,25 +54,25 @@ export default function SignupPage() {
 
   if (success) {
     return (
-      <div className="bg-[#FAFAF7] min-h-screen flex items-center justify-center px-8">
+      <div className="bg-[#FFFFFF] min-h-screen flex items-center justify-center px-8">
         <div className="max-w-sm w-full">
           <div className="text-center mb-8">
-            <div className="font-serif font-bold text-[18px] text-[#111111]">
+            <div className="font-bold text-[18px] text-[#1C0F3F]">
               The Capital Gains
             </div>
           </div>
-          <div className="bg-white border border-[rgba(17,17,17,0.1)] rounded-2xl p-8 shadow-[0_4px_32px_rgba(17,17,17,0.06)] text-center">
+          <div className="bg-white border border-[rgba(124,58,237,0.15)] rounded-2xl p-8 shadow-[0_4px_32px_rgba(124,58,237,0.08)] text-center">
             <div className="w-12 h-12 bg-[#E8F5EE] rounded-full flex items-center justify-center mx-auto mb-5">
               <span className="text-[#1A7A4A] text-[20px]">✓</span>
             </div>
-            <h2 className="font-serif text-[22px] font-bold text-[#111111] mb-2">
+            <h2 className="text-[22px] font-bold text-[#1C0F3F] mb-2">
               Check your email
             </h2>
-            <p className="text-[14px] text-[#3D3D3D] leading-relaxed">
-              We&apos;ve sent a confirmation link to <span className="font-medium text-[#111111]">{email}</span>. Click it to activate your account.
+            <p className="text-[14px] text-[#4B3F6B] leading-relaxed">
+              We&apos;ve sent a confirmation link to <span className="font-medium text-[#1C0F3F]">{email}</span>. Click it to activate your account.
             </p>
           </div>
-          <p className="text-center text-[13px] text-[#3D3D3D] mt-5">
+          <p className="text-center text-[13px] text-[#4B3F6B] mt-5">
             Already confirmed?{' '}
             <Link href="/auth/login" className="text-[#D4860A] hover:text-[#F0A020] font-medium transition-colors">
               Sign in
@@ -84,27 +84,27 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="bg-[#FAFAF7] min-h-screen flex items-center justify-center px-8">
+    <div className="bg-[#FFFFFF] min-h-screen flex items-center justify-center px-8">
       <div className="max-w-sm w-full">
 
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="font-serif font-bold text-[18px] text-[#111111]">
+          <div className="font-bold text-[18px] text-[#1C0F3F]">
             The Capital Gains
           </div>
         </div>
 
-        <div className="bg-white border border-[rgba(17,17,17,0.1)] rounded-2xl p-8 shadow-[0_4px_32px_rgba(17,17,17,0.06)]">
-          <h1 className="font-serif text-[28px] font-bold text-[#111111] mb-1">
+        <div className="bg-white border border-[rgba(124,58,237,0.15)] rounded-2xl p-8 shadow-[0_4px_32px_rgba(124,58,237,0.08)]">
+          <h1 className="text-[28px] font-bold text-[#1C0F3F] mb-1">
             Create your account
           </h1>
-          <p className="text-[14px] text-[#3D3D3D] mb-6">
+          <p className="text-[14px] text-[#4B3F6B] mb-6">
             Start learning for free. No credit card required.
           </p>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <div>
-              <label className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase block mb-1.5">
+              <label className="font-mono text-[11px] text-[#8B7BAB] tracking-widest uppercase block mb-1.5">
                 Email
               </label>
               <input
@@ -113,12 +113,12 @@ export default function SignupPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.com"
                 required
-                className="w-full bg-[#FAFAF7] border border-[rgba(17,17,17,0.15)] rounded-lg px-4 py-3 text-[14px] text-[#111111] placeholder:text-[#7A7A8A] outline-none focus:border-[#111111] transition-colors"
+                className="w-full bg-[#FFFFFF] border border-[rgba(124,58,237,0.20)] rounded-lg px-4 py-3 text-[14px] text-[#1C0F3F] placeholder:text-[#8B7BAB] outline-none focus:border-[#1C0F3F] transition-colors"
               />
             </div>
 
             <div>
-              <label className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase block mb-1.5">
+              <label className="font-mono text-[11px] text-[#8B7BAB] tracking-widest uppercase block mb-1.5">
                 Password
               </label>
               <input
@@ -127,12 +127,12 @@ export default function SignupPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Min. 8 characters"
                 required
-                className="w-full bg-[#FAFAF7] border border-[rgba(17,17,17,0.15)] rounded-lg px-4 py-3 text-[14px] text-[#111111] placeholder:text-[#7A7A8A] outline-none focus:border-[#111111] transition-colors"
+                className="w-full bg-[#FFFFFF] border border-[rgba(124,58,237,0.20)] rounded-lg px-4 py-3 text-[14px] text-[#1C0F3F] placeholder:text-[#8B7BAB] outline-none focus:border-[#1C0F3F] transition-colors"
               />
             </div>
 
             <div>
-              <label className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase block mb-1.5">
+              <label className="font-mono text-[11px] text-[#8B7BAB] tracking-widest uppercase block mb-1.5">
                 Confirm Password
               </label>
               <input
@@ -141,7 +141,7 @@ export default function SignupPage() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="••••••••"
                 required
-                className="w-full bg-[#FAFAF7] border border-[rgba(17,17,17,0.15)] rounded-lg px-4 py-3 text-[14px] text-[#111111] placeholder:text-[#7A7A8A] outline-none focus:border-[#111111] transition-colors"
+                className="w-full bg-[#FFFFFF] border border-[rgba(124,58,237,0.20)] rounded-lg px-4 py-3 text-[14px] text-[#1C0F3F] placeholder:text-[#8B7BAB] outline-none focus:border-[#1C0F3F] transition-colors"
               />
             </div>
 
@@ -161,15 +161,15 @@ export default function SignupPage() {
           </form>
           {/* Divider */}
           <div className="flex items-center gap-3 my-5">
-            <div className="flex-1 h-px bg-[rgba(17,17,17,0.1)]" />
-            <span className="font-mono text-[11px] text-[#7A7A8A]">or</span>
-            <div className="flex-1 h-px bg-[rgba(17,17,17,0.1)]" />
+            <div className="flex-1 h-px bg-[rgba(124,58,237,0.15)]" />
+            <span className="font-mono text-[11px] text-[#8B7BAB]">or</span>
+            <div className="flex-1 h-px bg-[rgba(124,58,237,0.15)]" />
           </div>
 
           {/* Google */}
           <button
             onClick={handleGoogleSignIn}
-            className="w-full flex items-center justify-center gap-3 bg-white border border-[rgba(17,17,17,0.15)] hover:border-[rgba(17,17,17,0.3)] rounded-lg py-3 text-[14px] text-[#111111] font-medium transition-colors"
+            className="w-full flex items-center justify-center gap-3 bg-white border border-[rgba(124,58,237,0.20)] hover:border-[rgba(124,58,237,0.35)] rounded-lg py-3 text-[14px] text-[#1C0F3F] font-medium transition-colors"
           >
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
               <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>
@@ -181,7 +181,7 @@ export default function SignupPage() {
           </button>
         </div>
 
-        <p className="text-center text-[13px] text-[#3D3D3D] mt-5">
+        <p className="text-center text-[13px] text-[#4B3F6B] mt-5">
           Already have an account?{' '}
           <Link href="/auth/login" className="text-[#D4860A] hover:text-[#F0A020] font-medium transition-colors">
             Sign in

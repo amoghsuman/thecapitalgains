@@ -1,4 +1,4 @@
-﻿import NewsletterForm from '@/components/NewsletterForm'
+import NewsletterForm from '@/components/NewsletterForm'
 
 const whatYouGet = [
   {
@@ -44,43 +44,43 @@ const recentIssues = [
 
 export default function NewsletterPage() {
   return (
-    <div className="bg-[#FAFAF7] min-h-screen overflow-x-hidden">
+    <div className="bg-[#FFFFFF] min-h-screen overflow-x-hidden">
 
       {/* ── HERO ── */}
       <section className="max-w-3xl mx-auto px-8 pt-16 pb-10 text-center">
-        <div className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase mb-3">
+        <div className="font-mono text-[11px] text-[#8B7BAB] tracking-widest uppercase mb-3">
           Newsletter
         </div>
-        <h1 className="font-serif text-5xl font-bold text-[#111111] leading-[1.1] mb-4">
+        <h1 className="text-5xl font-bold text-[#1C0F3F] leading-[1.1] mb-4">
           One market insight,<br />every week.
         </h1>
-        <p className="text-[16px] text-[#3D3D3D] leading-relaxed mb-8 max-w-xl mx-auto">
+        <p className="text-[16px] text-[#4B3F6B] leading-relaxed mb-8 max-w-xl mx-auto">
           A concise, no-noise breakdown of what&apos;s moving Indian markets — and why it matters for your trades and investments. Free, always.
         </p>
         <NewsletterForm />
-        <p className="font-mono text-[12px] text-[#7A7A8A] mt-4">
+        <p className="font-mono text-[12px] text-[#8B7BAB] mt-4">
           No spam. Unsubscribe anytime. Join 500+ readers.
         </p>
       </section>
 
       {/* ── WHAT YOU GET ── */}
       <section className="max-w-4xl mx-auto px-8 mt-16">
-        <h2 className="font-serif text-[28px] font-bold text-[#111111] text-center mb-10">
+        <h2 className="text-[28px] font-bold text-[#1C0F3F] text-center mb-10">
           What lands in your inbox
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {whatYouGet.map((item) => (
             <div
               key={item.title}
-              className="bg-white border border-[rgba(17,17,17,0.1)] rounded-2xl p-6"
+              className="bg-white border border-[rgba(124,58,237,0.15)] rounded-2xl p-6"
             >
-              <div className="w-10 h-10 bg-[#F4F1EB] rounded-xl flex items-center justify-center text-[20px] mb-4">
+              <div className="w-10 h-10 bg-[#F5F3FF] rounded-xl flex items-center justify-center text-[20px] mb-4">
                 {item.icon}
               </div>
-              <div className="font-serif text-[17px] text-[#111111] mb-2 leading-snug">
+              <div className="text-[17px] text-[#1C0F3F] mb-2 leading-snug">
                 {item.title}
               </div>
-              <p className="text-[13px] text-[#3D3D3D] leading-relaxed">
+              <p className="text-[13px] text-[#4B3F6B] leading-relaxed">
                 {item.desc}
               </p>
             </div>
@@ -90,28 +90,28 @@ export default function NewsletterPage() {
 
       {/* ── RECENT ISSUES ── */}
       <section className="max-w-4xl mx-auto px-8 mt-16">
-        <h2 className="font-serif text-[28px] font-bold text-[#111111] mb-6">
+        <h2 className="text-[28px] font-bold text-[#1C0F3F] mb-6">
           Recent issues
         </h2>
         <div className="flex flex-col gap-4">
           {recentIssues.map((issue) => (
             <div
               key={issue.num}
-              className="bg-white border border-[rgba(17,17,17,0.1)] rounded-xl px-6 py-5 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4"
+              className="bg-white border border-[rgba(124,58,237,0.15)] rounded-xl px-6 py-5 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4"
             >
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
                   <span className="font-mono text-[11px] text-[#D4860A] tracking-wider">
                     {issue.num}
                   </span>
-                  <span className="font-mono text-[11px] text-[#7A7A8A]">
+                  <span className="font-mono text-[11px] text-[#8B7BAB]">
                     {issue.date}
                   </span>
                 </div>
-                <div className="font-serif text-[16px] text-[#111111] mb-1 leading-snug">
+                <div className="text-[16px] text-[#1C0F3F] mb-1 leading-snug">
                   {issue.title}
                 </div>
-                <p className="text-[13px] text-[#3D3D3D] leading-relaxed">
+                <p className="text-[13px] text-[#4B3F6B] leading-relaxed">
                   {issue.preview}
                 </p>
               </div>
@@ -127,8 +127,8 @@ export default function NewsletterPage() {
 
       {/* ── BOTTOM CTA ── */}
       <section className="max-w-3xl mx-auto px-8 mt-16 pb-20">
-        <div className="bg-[#111111] rounded-2xl px-10 py-12 text-center">
-          <h2 className="font-serif text-[30px] text-white mb-3">
+        <div className="bg-[#1C0F3F] rounded-2xl px-10 py-12 text-center">
+          <h2 className="text-[30px] text-white mb-3">
             Start reading this week
           </h2>
           <p className="text-[rgba(255,255,255,0.55)] text-[15px] mb-8 max-w-sm mx-auto">

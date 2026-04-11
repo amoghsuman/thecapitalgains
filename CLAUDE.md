@@ -55,22 +55,24 @@ thecapitalgains.com
 - Learning Paths: stock-market-basics, value-investing, momentum-investing, technical-trading, options-derivatives, mutual-funds-etfs, investment-banking, equity-research, private-equity-vc, cfa-prep, frm-prep, financial-modelling, quant-finance, algo-trading, python-finance, corporate-finance, ma-valuation
 
 ## Colour Palette
-- Navy (primary): #111111
-- Navy light: #2A2A2A
-- Navy deep: #333333
+- Dark (primary): #1C0F3F
+- Dark light: #2D1B69
+- Purple: #7C3AED
+- Purple light: #8B5CF6
 - Amber: #D4860A
 - Amber hover: #F0A020
-- Background: #FAFAF7
-- Text: #111111
-- Text muted: #3D3D3D
-- Text hint: #7A7A8A
+- Background: #FFFFFF
+- Surface: #F5F3FF
+- Surface 2: #EDE9FF
+- Text: #1C0F3F
+- Text muted: #4B3F6B
+- Text hint: #8B7BAB
 - Green: #1A7A4A
-- Border (rgba): rgba(17,17,17,0.1)
+- Border (rgba): rgba(124,58,237,0.15)
 
 ## Font System
-- Headings: Playfair Display (font-serif) — weights 400/500/600/700
-- Body: Plus Jakarta Sans (--font-jakarta) — weights 400/500/600 — replaced DM Sans
-- Mono: DM Mono (font-mono) — prices, tags, labels, badges, eyebrow text only
+- All text: Outfit (--font-outfit) — weights 400/500/600/700/800 — single font family
+- Mono: DM Mono (--font-mono) — prices, tags, labels, badges, eyebrow text only
 
 ## Open Items
 - SEBI RA registration number pending

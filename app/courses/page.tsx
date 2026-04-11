@@ -53,7 +53,7 @@ function getLevelStyle(tag: string | null): string {
 function accessColor(level: string | null): string {
   if (level === "free") return "bg-[#E8F5EE] text-[#1A7A4A]";
   if (level === "pro") return "bg-[#FDF3E3] text-[#D4860A]";
-  return "bg-[#F4F1EB] text-[#7A7A8A]";
+  return "bg-[#F5F3FF] text-[#8B7BAB]";
 }
 
 function accessLabel(level: string | null): string {
@@ -65,7 +65,7 @@ function accessLabel(level: string | null): string {
 function badgeColor(badge: string | null): string {
   if (badge === "BESTSELLER") return "bg-[rgba(212,134,10,0.15)] text-[#D4860A]";
   if (badge === "NEW") return "bg-[rgba(26,122,74,0.15)] text-[#1A7A4A]";
-  return "bg-[#F4F1EB] text-[#7A7A8A]";
+  return "bg-[#F5F3FF] text-[#8B7BAB]";
 }
 
 function formatPath(path: string | null): string {
@@ -200,33 +200,33 @@ export default function CoursesPage() {
     }`;
 
   const dropdownClass =
-    "font-mono text-[11px] border border-[rgba(17,17,17,0.15)] rounded-[6px] px-[10px] bg-white h-[34px] outline-none focus:border-[rgba(17,17,17,0.35)] transition-colors text-[#111111]";
+    "font-mono text-[11px] border border-[rgba(124,58,237,0.20)] rounded-[6px] px-[10px] bg-white h-[34px] outline-none focus:border-[rgba(124,58,237,0.35)] transition-colors text-[#1C0F3F]";
 
   if (loading) {
     return (
-      <div className="bg-[#FAFAF7] min-h-screen flex items-center justify-center">
-        <span className="font-mono text-[13px] text-[#7A7A8A]">Loading courses...</span>
+      <div className="bg-[#FFFFFF] min-h-screen flex items-center justify-center">
+        <span className="font-mono text-[13px] text-[#8B7BAB]">Loading courses...</span>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="bg-[#FAFAF7] min-h-screen flex items-center justify-center">
+      <div className="bg-[#FFFFFF] min-h-screen flex items-center justify-center">
         <span className="font-mono text-[13px] text-[#DC2626]">Failed to load courses.</span>
       </div>
     );
   }
 
   return (
-    <div className="bg-[#FAFAF7] min-h-screen">
+    <div className="bg-[#FFFFFF] min-h-screen">
 
       {/* ── HEADER ── */}
       <div className="max-w-6xl mx-auto px-8 pt-10 pb-6">
-        <h1 className="font-serif text-[32px] font-bold text-[#111111] leading-tight mb-1">
+        <h1 className="text-[32px] font-bold text-[#1C0F3F] leading-tight mb-1">
           All Courses
         </h1>
-        <p className="text-[14px] text-[#7A7A8A]">
+        <p className="text-[14px] text-[#8B7BAB]">
           Subscribe to access. Free previews available — no card required.
         </p>
       </div>
@@ -236,7 +236,7 @@ export default function CoursesPage() {
         {/* Search */}
         <div className="relative flex-1 min-w-[180px]">
           <svg
-            className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[#9A9A9A]"
+            className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[#8B7BAB]"
             width="13" height="13" viewBox="0 0 16 16" fill="none"
           >
             <circle cx="6.5" cy="6.5" r="5.5" stroke="currentColor" strokeWidth="1.5" />
@@ -247,7 +247,7 @@ export default function CoursesPage() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search courses, topics..."
-            className="w-full h-[34px] pl-[34px] pr-3 py-2 border border-[rgba(17,17,17,0.15)] rounded-[6px] text-[13px] text-[#111111] placeholder:text-[#9A9A9A] bg-white outline-none focus:border-[rgba(17,17,17,0.35)] transition-colors"
+            className="w-full h-[34px] pl-[34px] pr-3 py-2 border border-[rgba(124,58,237,0.20)] rounded-[6px] text-[13px] text-[#1C0F3F] placeholder:text-[#8B7BAB] bg-white outline-none focus:border-[rgba(124,58,237,0.35)] transition-colors"
           />
         </div>
 
@@ -288,47 +288,47 @@ export default function CoursesPage() {
       <div className="max-w-6xl mx-auto px-8 mb-3 flex items-center justify-between gap-3 flex-wrap">
         <div className="flex gap-2 flex-wrap">
           {search && (
-            <span className="inline-flex items-center gap-1 bg-[#111111] text-white font-mono text-[10px] rounded-full px-2.5 py-1">
+            <span className="inline-flex items-center gap-1 bg-[#1C0F3F] text-white font-mono text-[10px] rounded-full px-2.5 py-1">
               &ldquo;{search}&rdquo;
               <button onClick={() => setSearch("")} className="ml-0.5 opacity-60 hover:opacity-100">×</button>
             </span>
           )}
           {filterPath !== "all" && (
-            <span className="inline-flex items-center gap-1 bg-[#111111] text-white font-mono text-[10px] rounded-full px-2.5 py-1">
+            <span className="inline-flex items-center gap-1 bg-[#1C0F3F] text-white font-mono text-[10px] rounded-full px-2.5 py-1">
               {formatPath(filterPath)}
               <button onClick={() => setFilterPath("all")} className="ml-0.5 opacity-60 hover:opacity-100">×</button>
             </span>
           )}
           {filterLevel !== "all" && (
-            <span className="inline-flex items-center gap-1 bg-[#111111] text-white font-mono text-[10px] rounded-full px-2.5 py-1">
+            <span className="inline-flex items-center gap-1 bg-[#1C0F3F] text-white font-mono text-[10px] rounded-full px-2.5 py-1">
               {filterLevel}
               <button onClick={() => setFilterLevel("all")} className="ml-0.5 opacity-60 hover:opacity-100">×</button>
             </span>
           )}
           {filterAccess !== "all" && (
-            <span className="inline-flex items-center gap-1 bg-[#111111] text-white font-mono text-[10px] rounded-full px-2.5 py-1">
+            <span className="inline-flex items-center gap-1 bg-[#1C0F3F] text-white font-mono text-[10px] rounded-full px-2.5 py-1">
               {filterAccess}
               <button onClick={() => setFilterAccess("all")} className="ml-0.5 opacity-60 hover:opacity-100">×</button>
             </span>
           )}
           {filterDur !== "all" && (
-            <span className="inline-flex items-center gap-1 bg-[#111111] text-white font-mono text-[10px] rounded-full px-2.5 py-1">
+            <span className="inline-flex items-center gap-1 bg-[#1C0F3F] text-white font-mono text-[10px] rounded-full px-2.5 py-1">
               {filterDur === "lt2" ? "< 2 hrs" : filterDur === "2to4" ? "2–4 hrs" : "4+ hrs"}
               <button onClick={() => setFilterDur("all")} className="ml-0.5 opacity-60 hover:opacity-100">×</button>
             </span>
           )}
         </div>
-        <span className="font-mono text-[11px] text-[#9A9A9A] flex-shrink-0">
+        <span className="font-mono text-[11px] text-[#8B7BAB] flex-shrink-0">
           {displayed.length} {displayed.length === 1 ? "course" : "courses"}
         </span>
       </div>
 
       {/* ── TABLE ── */}
       <div className="max-w-6xl mx-auto px-8 pb-20">
-        <div className="border border-[rgba(17,17,17,0.12)] rounded-lg overflow-hidden">
+        <div className="border border-[rgba(124,58,237,0.15)] rounded-lg overflow-hidden">
           <table className="w-full border-collapse">
             <thead>
-              <tr className="bg-[#111111]">
+              <tr className="bg-[#1C0F3F]">
                 <th className={thClass("title")} style={{ width: "30%" }} onClick={() => handleSort("title")}>
                   Course <SortArrow col="title" />
                 </th>
@@ -358,7 +358,7 @@ export default function CoursesPage() {
             <tbody>
               {displayed.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className="text-center py-12 text-[13px] text-[#7A7A8A]">
+                  <td colSpan={8} className="text-center py-12 text-[13px] text-[#8B7BAB]">
                     No courses match your filters.{" "}
                     <button onClick={clearFilters} className="text-[#D4860A] hover:text-[#F0A020] font-medium transition-colors">
                       Clear filters
@@ -370,19 +370,19 @@ export default function CoursesPage() {
                   <tr
                     key={course._id}
                     onClick={() => router.push(`/courses/${course.slug}`)}
-                    className={`border-b border-[rgba(17,17,17,0.05)] cursor-pointer transition-colors hover:bg-[#F0EDE6] ${
-                      i % 2 === 0 ? "bg-white" : "bg-[#FAFAF7]"
+                    className={`border-b border-[rgba(124,58,237,0.08)] cursor-pointer transition-colors hover:bg-[#F0EDE6] ${
+                      i % 2 === 0 ? "bg-white" : "bg-[#FFFFFF]"
                     }`}
                   >
                     {/* Course name */}
-                    <td className="px-3 py-[7px] border-r border-[rgba(17,17,17,0.04)]">
-                      <div className="font-medium text-[13px] text-[#111111] leading-snug">
+                    <td className="px-3 py-[7px] border-r border-[rgba(124,58,237,0.06)]">
+                      <div className="font-medium text-[13px] text-[#1C0F3F] leading-snug">
                         {course.title}
                       </div>
                       {course.topics && course.topics.length > 0 && (
                         <div className="flex flex-wrap gap-1 mt-1">
                           {course.topics.slice(0, 3).map((t) => (
-                            <span key={t} className="font-mono text-[9px] text-[#9A9A9A] bg-[#F4F1EB] rounded px-1.5 py-0.5">
+                            <span key={t} className="font-mono text-[9px] text-[#8B7BAB] bg-[#F5F3FF] rounded px-1.5 py-0.5">
                               {t}
                             </span>
                           ))}
@@ -391,46 +391,46 @@ export default function CoursesPage() {
                     </td>
 
                     {/* Learning path */}
-                    <td className="px-3 py-[7px] border-r border-[rgba(17,17,17,0.04)]">
-                      <span className="font-mono text-[10px] text-[#7A7A8A]">
+                    <td className="px-3 py-[7px] border-r border-[rgba(124,58,237,0.06)]">
+                      <span className="font-mono text-[10px] text-[#8B7BAB]">
                         {formatPath(course.learningPath)}
                       </span>
                     </td>
 
                     {/* Level */}
-                    <td className="px-3 py-[7px] border-r border-[rgba(17,17,17,0.04)]">
+                    <td className="px-3 py-[7px] border-r border-[rgba(124,58,237,0.06)]">
                       {course.tag ? (
                         <span className={`font-mono text-[10px] px-2 py-0.5 rounded whitespace-nowrap ${getLevelStyle(course.tag)}`}>
                           {course.tag}
                         </span>
                       ) : (
-                        <span className="text-[#9A9A9A]">—</span>
+                        <span className="text-[#8B7BAB]">—</span>
                       )}
                     </td>
 
                     {/* Access */}
-                    <td className="px-3 py-[7px] border-r border-[rgba(17,17,17,0.04)]">
+                    <td className="px-3 py-[7px] border-r border-[rgba(124,58,237,0.06)]">
                       <span className={`font-mono text-[9px] font-medium rounded px-2 py-0.5 ${accessColor(course.accessLevel)}`}>
                         {accessLabel(course.accessLevel)}
                       </span>
                     </td>
 
                     {/* Lessons */}
-                    <td className="px-3 py-[7px] border-r border-[rgba(17,17,17,0.04)] text-right">
-                      <span className="font-mono text-[11px] text-[#7A7A8A]">
+                    <td className="px-3 py-[7px] border-r border-[rgba(124,58,237,0.06)] text-right">
+                      <span className="font-mono text-[11px] text-[#8B7BAB]">
                         {course.lessonsCount ?? "—"}
                       </span>
                     </td>
 
                     {/* Duration */}
-                    <td className="px-3 py-[7px] border-r border-[rgba(17,17,17,0.04)] text-right">
-                      <span className="font-mono text-[11px] text-[#7A7A8A]">
+                    <td className="px-3 py-[7px] border-r border-[rgba(124,58,237,0.06)] text-right">
+                      <span className="font-mono text-[11px] text-[#8B7BAB]">
                         {course.duration ?? "—"}
                       </span>
                     </td>
 
                     {/* Badge — exclude FREE/free (already shown in Access column) */}
-                    <td className="px-3 py-[7px] border-r border-[rgba(17,17,17,0.04)]">
+                    <td className="px-3 py-[7px] border-r border-[rgba(124,58,237,0.06)]">
                       {course.badge && course.badge.toLowerCase() !== "free" ? (
                         <span className={`font-mono text-[9px] font-medium rounded px-2 py-0.5 ${badgeColor(course.badge)}`}>
                           {course.badge}
@@ -457,8 +457,8 @@ export default function CoursesPage() {
       </div>
 
       {/* ── FOOTER NUDGE ── */}
-      <div className="max-w-6xl mx-auto px-8 py-6 border-t border-[rgba(17,17,17,0.08)]">
-        <p className="text-[13px] text-[#7A7A8A]">
+      <div className="max-w-6xl mx-auto px-8 py-6 border-t border-[rgba(124,58,237,0.12)]">
+        <p className="text-[13px] text-[#8B7BAB]">
           Looking for something specific?{" "}
           <Link href="/pricing" className="text-[#D4860A] hover:text-[#F0A020] transition-colors font-medium">
             Browse by learning path →

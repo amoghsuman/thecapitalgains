@@ -151,13 +151,13 @@ function TierCard({
         onClick={onClick}
         className={`w-full text-left rounded-xl px-4 py-3 border transition-all ${
           selected
-            ? "border-[rgba(17,17,17,0.2)] bg-[#EDE9E0]"
-            : "border-[rgba(17,17,17,0.07)] bg-[#FAFAF7] hover:border-[rgba(17,17,17,0.15)]"
+            ? "border-[rgba(124,58,237,0.25)] bg-[#EDE9FF]"
+            : "border-[rgba(124,58,237,0.10)] bg-[#FFFFFF] hover:border-[rgba(124,58,237,0.20)]"
         }`}
       >
         <div className="flex justify-between items-center">
-          <span className="text-[12px] text-[#7A7A8A]">{tier.name}</span>
-          {selected && <span className="text-[#7A7A8A] text-[11px]">✓</span>}
+          <span className="text-[12px] text-[#8B7BAB]">{tier.name}</span>
+          {selected && <span className="text-[#8B7BAB] text-[11px]">✓</span>}
         </div>
       </button>
     );
@@ -169,7 +169,7 @@ function TierCard({
       className={`w-full text-left rounded-xl px-4 py-4 border-2 transition-all relative ${
         selected
           ? "border-[#D4860A] bg-white shadow-[0_2px_16px_rgba(212,134,10,0.1)]"
-          : "border-[rgba(17,17,17,0.1)] bg-white hover:border-[rgba(17,17,17,0.25)]"
+          : "border-[rgba(124,58,237,0.15)] bg-white hover:border-[rgba(124,58,237,0.25)]"
       }`}
     >
       {/* Selected checkmark */}
@@ -188,20 +188,20 @@ function TierCard({
         </div>
       )}
 
-      <div className="font-mono text-[10px] text-[#7A7A8A] tracking-widest mb-1.5 pr-10">
+      <div className="font-mono text-[10px] text-[#8B7BAB] tracking-widest mb-1.5 pr-10">
         {tier.name}
       </div>
-      <div className="font-mono text-[20px] font-medium text-[#111111] leading-none mb-3">
+      <div className="font-mono text-[20px] font-medium text-[#1C0F3F] leading-none mb-3">
         {price === 0 ? "₹0" : fmt(price)}
         {price > 0 && (
-          <span className="text-[11px] font-normal text-[#7A7A8A] ml-1">/month</span>
+          <span className="text-[11px] font-normal text-[#8B7BAB] ml-1">/month</span>
         )}
       </div>
       <div className="flex flex-col gap-1.5">
         {tier.features.map((f) => (
           <div key={f} className="flex gap-2 items-start">
             <span className="text-[#1A7A4A] text-[11px] flex-shrink-0 mt-0.5">✓</span>
-            <span className="text-[12px] text-[#3D3D3D] leading-snug">{f}</span>
+            <span className="text-[12px] text-[#4B3F6B] leading-snug">{f}</span>
           </div>
         ))}
       </div>
@@ -239,12 +239,12 @@ function StackColumn({
         <div className="font-mono text-[10px] text-[rgba(255,255,255,0.4)] tracking-widest mb-2">
           {stackNum}
         </div>
-        <div className="font-serif text-[22px] text-white mb-1">{title}</div>
+        <div className="text-[22px] text-white mb-1">{title}</div>
         <div className="text-[12px] text-[rgba(255,255,255,0.55)]">{subtitle}</div>
       </div>
 
       {/* Tier cards */}
-      <div className="flex flex-col gap-2 bg-[#F4F1EB] px-4 py-4 rounded-b-2xl border-x border-b border-[rgba(17,17,17,0.1)]">
+      <div className="flex flex-col gap-2 bg-[#F5F3FF] px-4 py-4 rounded-b-2xl border-x border-b border-[rgba(124,58,237,0.15)]">
         {tiers.map((tier) => {
           const price = resolvePrice(tier, annual);
           const handleClick = () => {
@@ -300,28 +300,28 @@ export default function PricingPage() {
     summaryItems.push({ label: `Research — ${researchTier.name}`, price: researchPrice });
 
   return (
-    <div className="bg-[#FAFAF7] min-h-screen overflow-x-hidden">
+    <div className="bg-[#FFFFFF] min-h-screen overflow-x-hidden">
 
       {/* ── HERO ── */}
       <section className="max-w-6xl mx-auto px-8 pt-16 pb-8">
-        <div className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase mb-2">
+        <div className="font-mono text-[11px] text-[#8B7BAB] tracking-widest uppercase mb-2">
           Pricing
         </div>
-        <h1 className="font-serif text-5xl font-bold text-[#111111] leading-[1.1] mb-3">
+        <h1 className="text-5xl font-bold text-[#1C0F3F] leading-[1.1] mb-3">
           Build your subscription
         </h1>
-        <p className="text-[16px] text-[#3D3D3D] mb-8 max-w-xl">
+        <p className="text-[16px] text-[#4B3F6B] mb-8 max-w-xl">
           Choose what you need. Pay one monthly total. Cancel anytime.
         </p>
 
         {/* Billing toggle */}
-        <div className="inline-flex items-center bg-[#F4F1EB] rounded-lg p-1 gap-1">
+        <div className="inline-flex items-center bg-[#F5F3FF] rounded-lg p-1 gap-1">
           <button
             onClick={() => setAnnual(false)}
             className={`px-5 py-2 rounded-md text-[13px] font-medium transition-all ${
               !annual
-                ? "bg-white text-[#111111] shadow-sm"
-                : "text-[#3D3D3D] hover:text-[#111111]"
+                ? "bg-white text-[#1C0F3F] shadow-sm"
+                : "text-[#4B3F6B] hover:text-[#1C0F3F]"
             }`}
           >
             Monthly
@@ -330,8 +330,8 @@ export default function PricingPage() {
             onClick={() => setAnnual(true)}
             className={`px-5 py-2 rounded-md text-[13px] font-medium transition-all ${
               annual
-                ? "bg-white text-[#111111] shadow-sm"
-                : "text-[#3D3D3D] hover:text-[#111111]"
+                ? "bg-white text-[#1C0F3F] shadow-sm"
+                : "text-[#4B3F6B] hover:text-[#1C0F3F]"
             }`}
           >
             Annual — save 20%
@@ -348,7 +348,7 @@ export default function PricingPage() {
             stackNum="STACK 01"
             title="Learn"
             subtitle="Self-paced courses & playbooks"
-            headerBg="bg-[#111111]"
+            headerBg="bg-[#1C0F3F]"
             tiers={learnTiers}
             selected={selectedLearn}
             onSelect={(id) => setSelectedLearn(id as LearnTier)}
@@ -360,19 +360,19 @@ export default function PricingPage() {
             stackNum="STACK 02"
             title="Research"
             subtitle="Market analysis & model portfolios"
-            headerBg="bg-[#111111]"
+            headerBg="bg-[#1C0F3F]"
             tiers={researchTiers}
             selected={selectedResearch}
             onSelect={(id) => setSelectedResearch(id as ResearchTier)}
             annual={annual}
             footer={
               <div className="flex flex-col gap-2 mt-1">
-                <p className="font-mono text-[10px] text-[#7A7A8A] leading-relaxed">
+                <p className="font-mono text-[10px] text-[#8B7BAB] leading-relaxed">
                   For institutional / non-individual pricing, write to{" "}
-                  <span className="text-[#3D3D3D]">hello@thecapitalgains.com</span>
+                  <span className="text-[#4B3F6B]">hello@thecapitalgains.com</span>
                 </p>
-                <div className="bg-white border border-[rgba(17,17,17,0.1)] rounded-lg px-3 py-2.5">
-                  <p className="font-mono text-[9px] text-[#7A7A8A] leading-relaxed">
+                <div className="bg-white border border-[rgba(124,58,237,0.15)] rounded-lg px-3 py-2.5">
+                  <p className="font-mono text-[9px] text-[#8B7BAB] leading-relaxed">
                     ⚖ Research services provided under SEBI Research Analyst regulations.
                     Individual client fees capped at ₹1,50,000 per annum.
                   </p>
@@ -385,24 +385,24 @@ export default function PricingPage() {
 
       {/* ── BUNDLE SUMMARY ── */}
       <section className="max-w-6xl mx-auto px-8 mt-10 mb-20">
-        <div className="bg-white border border-[rgba(17,17,17,0.1)] rounded-2xl p-8 shadow-[0_4px_32px_rgba(17,17,17,0.06)]">
+        <div className="bg-white border border-[rgba(124,58,237,0.15)] rounded-2xl p-8 shadow-[0_4px_32px_rgba(124,58,237,0.08)]">
           <div className="flex flex-col lg:flex-row gap-8 items-start lg:items-center justify-between">
 
             {/* Left — itemised selections */}
             <div className="flex-1 min-w-0">
-              <div className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase mb-4">
+              <div className="font-mono text-[11px] text-[#8B7BAB] tracking-widest uppercase mb-4">
                 Your bundle
               </div>
               {summaryItems.length === 0 ? (
-                <p className="text-[14px] text-[#7A7A8A]">
+                <p className="text-[14px] text-[#8B7BAB]">
                   No tiers selected yet. Choose from the stacks above.
                 </p>
               ) : (
                 <div className="flex flex-col gap-2.5">
                   {summaryItems.map((item) => (
                     <div key={item.label} className="flex justify-between items-center gap-8">
-                      <span className="text-[14px] text-[#3D3D3D]">{item.label}</span>
-                      <span className="font-mono text-[14px] text-[#111111] whitespace-nowrap">
+                      <span className="text-[14px] text-[#4B3F6B]">{item.label}</span>
+                      <span className="font-mono text-[14px] text-[#1C0F3F] whitespace-nowrap">
                         {item.price === 0 ? "Free" : `${fmt(item.price)}/mo`}
                       </span>
                     </div>
@@ -412,17 +412,17 @@ export default function PricingPage() {
             </div>
 
             {/* Vertical divider — desktop only */}
-            <div className="hidden lg:block w-px self-stretch bg-[rgba(17,17,17,0.08)]" />
+            <div className="hidden lg:block w-px self-stretch bg-[rgba(124,58,237,0.12)]" />
 
             {/* Right — total + CTA */}
             <div className="flex flex-col items-start lg:items-end gap-3 flex-shrink-0">
               <div className="lg:text-right">
-                <div className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase mb-1">
+                <div className="font-mono text-[11px] text-[#8B7BAB] tracking-widest uppercase mb-1">
                   Monthly total
                 </div>
-                <div className="font-mono text-[40px] font-medium text-[#111111] leading-none">
+                <div className="font-mono text-[40px] font-medium text-[#1C0F3F] leading-none">
                   {fmt(total)}
-                  <span className="text-[14px] font-normal text-[#7A7A8A] ml-1.5">/mo</span>
+                  <span className="text-[14px] font-normal text-[#8B7BAB] ml-1.5">/mo</span>
                 </div>
                 {annual && total > 0 && (
                   <div className="font-mono text-[11px] text-[#1A7A4A] mt-1.5">
@@ -441,13 +441,13 @@ export default function PricingPage() {
               ) : (
                 <button
                   disabled
-                  className="bg-[#F4F1EB] text-[#7A7A8A] rounded-lg px-8 py-3.5 text-[15px] font-medium cursor-default whitespace-nowrap"
+                  className="bg-[#F5F3FF] text-[#8B7BAB] rounded-lg px-8 py-3.5 text-[15px] font-medium cursor-default whitespace-nowrap"
                 >
                   Select at least one tier
                 </button>
               )}
 
-              <div className="font-mono text-[10px] text-[#7A7A8A]">Prices exclude GST</div>
+              <div className="font-mono text-[10px] text-[#8B7BAB]">Prices exclude GST</div>
             </div>
           </div>
         </div>
@@ -455,24 +455,24 @@ export default function PricingPage() {
 
       {/* ── FAQ ── */}
       <section className="max-w-3xl mx-auto px-8 mt-4 pb-20">
-        <h2 className="font-serif text-[28px] font-bold text-[#111111] mb-8">
+        <h2 className="text-[28px] font-bold text-[#1C0F3F] mb-8">
           Common questions
         </h2>
         <div className="flex flex-col gap-3">
           {faqs.map((faq, i) => (
             <div
               key={i}
-              className="bg-white border border-[rgba(17,17,17,0.1)] rounded-xl overflow-hidden"
+              className="bg-white border border-[rgba(124,58,237,0.15)] rounded-xl overflow-hidden"
             >
               <button
                 onClick={() => setOpenFaq(openFaq === i ? null : i)}
                 className="w-full flex justify-between items-center px-6 py-4 text-left"
               >
-                <span className="text-[15px] font-medium text-[#111111]">
+                <span className="text-[15px] font-medium text-[#1C0F3F]">
                   {faq.q}
                 </span>
                 <span
-                  className={`font-mono text-[18px] text-[#7A7A8A] ml-4 flex-shrink-0 transition-transform duration-200 ${
+                  className={`font-mono text-[18px] text-[#8B7BAB] ml-4 flex-shrink-0 transition-transform duration-200 ${
                     openFaq === i ? "rotate-45" : ""
                   }`}
                 >
@@ -480,7 +480,7 @@ export default function PricingPage() {
                 </span>
               </button>
               {openFaq === i && (
-                <div className="px-6 pb-5 text-[14px] text-[#3D3D3D] leading-relaxed border-t border-[rgba(17,17,17,0.07)]">
+                <div className="px-6 pb-5 text-[14px] text-[#4B3F6B] leading-relaxed border-t border-[rgba(124,58,237,0.10)]">
                   <div className="pt-4">{faq.a}</div>
                 </div>
               )}

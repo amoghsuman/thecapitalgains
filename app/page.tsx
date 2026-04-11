@@ -1,4 +1,4 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 import NewsletterForm from "@/components/NewsletterForm";
 import { getAllCourses } from "@/lib/sanity/queries";
 
@@ -7,7 +7,7 @@ export default async function HomePage() {
   const courseCount = courses?.length || 0;
 
   return (
-    <div className="bg-[#FAFAF7]">
+    <div className="bg-[#FFFFFF]">
 
       {/* ── HERO ── */}
       <section className="max-w-6xl mx-auto px-8 pt-20 pb-16 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -20,12 +20,12 @@ export default async function HomePage() {
             </span>
           </div>
 
-          <h1 className="font-serif text-5xl font-bold leading-[1.12] text-[#111111] mb-5">
+          <h1 className="text-5xl font-bold leading-[1.12] text-[#1C0F3F] mb-5">
             Learn to invest like a pro.{" "}
             <span className="text-[#D4860A]">Not gamble like a beginner.</span>
           </h1>
 
-          <p className="text-[17px] text-[#3D3D3D] leading-relaxed mb-9 max-w-lg">
+          <p className="text-[17px] text-[#4B3F6B] leading-relaxed mb-9 max-w-lg">
             Playbook-style courses for Indian retail investors and traders.
             Read, apply, repeat. No fluff, no video lectures, no jargon.
           </p>
@@ -39,7 +39,7 @@ export default async function HomePage() {
             </Link>
             <Link
               href="/pricing"
-              className="border border-[rgba(17,17,17,0.2)] hover:border-[#111111] text-[#111111] rounded-lg px-6 py-3.5 text-[15px] transition-all"
+              className="border border-[rgba(124,58,237,0.25)] hover:border-[#1C0F3F] text-[#1C0F3F] rounded-lg px-6 py-3.5 text-[15px] transition-all"
             >
               View plans
             </Link>
@@ -54,26 +54,26 @@ export default async function HomePage() {
               { num: "₹499", label: "Research from" },
             ].map((s) => (
               <div key={s.label} className="flex flex-col">
-                <span className="font-mono text-[22px] font-medium text-[#111111]">
+                <span className="font-mono text-[22px] font-medium text-[#1C0F3F]">
                   {s.num}
                 </span>
-                <span className="text-[12px] text-[#7A7A8A] mt-0.5">{s.label}</span>
+                <span className="text-[12px] text-[#8B7BAB] mt-0.5">{s.label}</span>
               </div>
             ))}
           </div>
         </div>
 
         {/* Right — course preview card */}
-        <div className="bg-white border border-[rgba(17,17,17,0.1)] rounded-2xl p-7 shadow-[0_4px_32px_rgba(17,17,17,0.08)]">
+        <div className="bg-white border border-[rgba(124,58,237,0.15)] rounded-2xl p-7 shadow-[0_4px_32px_rgba(124,58,237,0.12)]">
           <div className="flex justify-between items-start mb-5">
             <div>
-              <div className="font-mono text-[10px] text-[#7A7A8A] tracking-widest mb-2">
+              <div className="font-mono text-[10px] text-[#8B7BAB] tracking-widest mb-2">
                 BEGINNER → INTERMEDIATE
               </div>
-              <h3 className="font-serif text-[18px] text-[#111111] leading-snug">
+              <h3 className="text-[18px] text-[#1C0F3F] leading-snug">
                 Options Trading from Zero
               </h3>
-              <div className="text-[12px] text-[#7A7A8A] mt-1">
+              <div className="text-[12px] text-[#8B7BAB] mt-1">
                 12 lessons · ~4 hrs reading
               </div>
             </div>
@@ -84,11 +84,11 @@ export default async function HomePage() {
 
           {/* Progress */}
           <div className="mb-4">
-            <div className="flex justify-between text-[12px] text-[#3D3D3D] mb-1.5">
+            <div className="flex justify-between text-[12px] text-[#4B3F6B] mb-1.5">
               <span>Your progress</span>
               <span>2 / 12</span>
             </div>
-            <div className="h-1 bg-[#EDE9E0] rounded-full overflow-hidden">
+            <div className="h-1 bg-[#EDE9FF] rounded-full overflow-hidden">
               <div className="h-full w-[16%] bg-[#D4860A] rounded-full" />
             </div>
           </div>
@@ -117,13 +117,13 @@ export default async function HomePage() {
                       ? "bg-[#1A7A4A] text-white"
                       : lesson.status === "active"
                       ? "bg-[#D4860A] text-white"
-                      : "bg-[#EDE9E0] text-[#7A7A8A]"
+                      : "bg-[#EDE9FF] text-[#8B7BAB]"
                   }`}
                 >
                   {lesson.status === "done" ? "✓" : lesson.status === "active" ? "▶" : "🔒"}
                 </div>
-                <span className="flex-1 text-[13px] text-[#111111]">{lesson.title}</span>
-                <span className="font-mono text-[11px] text-[#7A7A8A]">{lesson.time}</span>
+                <span className="flex-1 text-[13px] text-[#1C0F3F]">{lesson.title}</span>
+                <span className="font-mono text-[11px] text-[#8B7BAB]">{lesson.time}</span>
               </div>
             ))}
           </div>
@@ -131,7 +131,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── TRUST BAR ── */}
-      <div className="bg-[#F4F1EB] border-y border-[rgba(17,17,17,0.1)]">
+      <div className="bg-[#F5F3FF] border-y border-[rgba(124,58,237,0.15)]">
         <div className="max-w-6xl mx-auto px-8 py-7 flex justify-center gap-14 flex-wrap">
           {[
             { icon: "📖", title: "Structured learning", sub: "Chapter-by-chapter, not a playlist" },
@@ -140,12 +140,12 @@ export default async function HomePage() {
             { icon: "◷", title: "Learn at your pace", sub: "Read anywhere, resume anytime" },
           ].map((item) => (
             <div key={item.title} className="flex items-center gap-3">
-              <div className="w-9 h-9 bg-[#111111] rounded-lg flex items-center justify-center text-white text-[14px]">
+              <div className="w-9 h-9 bg-[#1C0F3F] rounded-lg flex items-center justify-center text-white text-[14px]">
                 {item.icon}
               </div>
               <div>
-                <div className="text-[13px] font-medium text-[#111111]">{item.title}</div>
-                <div className="text-[11px] text-[#7A7A8A]">{item.sub}</div>
+                <div className="text-[13px] font-medium text-[#1C0F3F]">{item.title}</div>
+                <div className="text-[11px] text-[#8B7BAB]">{item.sub}</div>
               </div>
             </div>
           ))}
@@ -154,15 +154,15 @@ export default async function HomePage() {
 
       {/* ── PROBLEM SECTION ── */}
       <section className="max-w-6xl mx-auto px-8 py-20">
-        <div className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase mb-3">
+        <div className="font-mono text-[11px] text-[#8B7BAB] tracking-widest uppercase mb-3">
           The Problem
         </div>
         <div className="flex justify-between items-end flex-wrap gap-6 mb-12">
           <div>
-            <h2 className="font-serif text-[34px] font-bold text-[#111111] leading-snug">
+            <h2 className="text-[34px] font-bold text-[#1C0F3F] leading-snug">
               Why 90% of retail traders<br />blow up in 12 months
             </h2>
-            <p className="text-[16px] text-[#3D3D3D] leading-relaxed mt-3 max-w-lg">
+            <p className="text-[16px] text-[#4B3F6B] leading-relaxed mt-3 max-w-lg">
               It&apos;s not bad luck. It&apos;s a predictable set of structural
               mistakes — and every single one is fixable with the right process.
             </p>
@@ -179,23 +179,23 @@ export default async function HomePage() {
           ].map((card) => (
             <div
               key={card.num}
-              className="bg-white border border-[rgba(17,17,17,0.1)] rounded-xl p-6"
+              className="bg-white border border-[rgba(124,58,237,0.15)] rounded-xl p-6"
             >
-              <div className="font-mono text-[32px] font-medium text-[#EDE9E0] mb-3">
+              <div className="font-mono text-[32px] font-medium text-[#EDE9FF] mb-3">
                 {card.num}
               </div>
-              <div className="text-[15px] font-medium text-[#111111] mb-2">{card.title}</div>
-              <div className="text-[13px] text-[#3D3D3D] leading-relaxed">{card.body}</div>
+              <div className="text-[15px] font-medium text-[#1C0F3F] mb-2">{card.title}</div>
+              <div className="text-[13px] text-[#4B3F6B] leading-relaxed">{card.body}</div>
             </div>
           ))}
 
           {/* CTA card */}
-          <div className="bg-[#111111] rounded-xl p-6 flex flex-col justify-between">
+          <div className="bg-[#1C0F3F] rounded-xl p-6 flex flex-col justify-between">
             <div>
               <div className="font-mono text-[12px] text-[rgba(255,255,255,0.4)] mb-4">
                 THE FIX
               </div>
-              <p className="font-serif text-[17px] text-white leading-snug mb-6">
+              <p className="text-[17px] text-white leading-snug mb-6">
                 A structured process beats intuition every single time.
               </p>
             </div>
@@ -210,12 +210,12 @@ export default async function HomePage() {
       </section>
 
       {/* ── HOW IT WORKS ── */}
-      <div className="bg-[#111111]">
+      <div className="bg-[#1C0F3F]">
         <div className="max-w-6xl mx-auto px-8 py-20">
           <div className="font-mono text-[11px] text-[rgba(255,255,255,0.4)] tracking-widest uppercase mb-3">
             How It Works
           </div>
-          <h2 className="font-serif text-[34px] text-white mb-14">Read. Apply. Track.</h2>
+          <h2 className="text-[34px] text-white mb-14">Read. Apply. Track.</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             {[
               { step: "STEP 01", title: "Read the playbook", body: "Every lesson is structured like a trading desk brief — concept, example, key insight. No videos, no 2-hour rambles. Pure signal." },
@@ -229,7 +229,7 @@ export default async function HomePage() {
                 <div className="font-mono text-[12px] text-[#D4860A] tracking-wider mb-4">
                   {s.step}
                 </div>
-                <div className="font-serif text-[20px] text-white mb-3">{s.title}</div>
+                <div className="text-[20px] text-white mb-3">{s.title}</div>
                 <div className="text-[13px] text-[rgba(255,255,255,0.55)] leading-relaxed">
                   {s.body}
                 </div>
@@ -242,21 +242,21 @@ export default async function HomePage() {
       {/* ── COURSES ── */}
       <section className="max-w-6xl mx-auto px-8 py-20">
         <div className="flex justify-between items-end mb-3">
-          <div className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase">
+          <div className="font-mono text-[11px] text-[#8B7BAB] tracking-widest uppercase">
             Courses
           </div>
           <Link href="/courses" className="font-mono text-[12px] text-[#D4860A]">
             View all →
           </Link>
         </div>
-        <h2 className="font-serif text-[34px] font-bold text-[#111111] mb-12">
+        <h2 className="text-[34px] font-bold text-[#1C0F3F] mb-12">
           Pick your playbook
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {[
             {
-              bg: "bg-[#111111]",
+              bg: "bg-[#1C0F3F]",
               badge: "BESTSELLER",
               badgeColor: "bg-[rgba(212,134,10,0.2)] text-[#D4860A]",
               tag: "BEGINNER → INTERMEDIATE",
@@ -268,7 +268,7 @@ export default async function HomePage() {
               cta: "Start free lesson →",
             },
             {
-              bg: "bg-[#111111]",
+              bg: "bg-[#1C0F3F]",
               badge: "NEW",
               badgeColor: "bg-[rgba(26,122,74,0.2)] text-[#1A7A4A]",
               tag: "BEGINNER",
@@ -276,11 +276,11 @@ export default async function HomePage() {
               desc: "Systematic stock picking and portfolio construction for long-term wealth building.",
               topics: ["Stock screening", "Valuation", "SIP strategy"],
               lessons: "10 lessons · ~3.5 hrs · 6 exercises",
-              accessBadge: { label: "LEARN STACK", style: "bg-[rgba(17,17,17,0.1)] text-[#111111]" },
+              accessBadge: { label: "LEARN STACK", style: "bg-[rgba(124,58,237,0.15)] text-[#1C0F3F]" },
               cta: "Preview →",
             },
             {
-              bg: "bg-[#111111]",
+              bg: "bg-[#1C0F3F]",
               badge: null,
               badgeColor: "",
               tag: "INTERMEDIATE",
@@ -288,13 +288,13 @@ export default async function HomePage() {
               desc: "Chart patterns, indicators, and entry/exit setups that actually work in Indian markets.",
               topics: ["Price action", "S&R levels", "Entry setups"],
               lessons: "14 lessons · ~5 hrs · 10 exercises",
-              accessBadge: { label: "LEARN STACK", style: "bg-[rgba(17,17,17,0.1)] text-[#111111]" },
+              accessBadge: { label: "LEARN STACK", style: "bg-[rgba(124,58,237,0.15)] text-[#1C0F3F]" },
               cta: "Preview →",
             },
           ].map((course) => (
             <div
               key={course.title}
-              className="bg-white border border-[rgba(17,17,17,0.1)] rounded-2xl overflow-hidden hover:shadow-[0_8px_40px_rgba(17,17,17,0.1)] hover:-translate-y-0.5 transition-all cursor-pointer"
+              className="bg-white border border-[rgba(124,58,237,0.15)] rounded-2xl overflow-hidden hover:shadow-[0_8px_40px_rgba(124,58,237,0.15)] hover:-translate-y-0.5 transition-all cursor-pointer"
             >
               <div className={`${course.bg} p-6`}>
                 {course.badge && (
@@ -305,21 +305,21 @@ export default async function HomePage() {
                 <div className="font-mono text-[10px] text-[rgba(255,255,255,0.4)] tracking-widest mb-2">
                   {course.tag}
                 </div>
-                <div className="font-serif text-[17px] text-white leading-snug">
+                <div className="text-[17px] text-white leading-snug">
                   {course.title}
                 </div>
               </div>
               <div className="p-6">
-                <p className="text-[13px] text-[#3D3D3D] leading-relaxed mb-4">{course.desc}</p>
+                <p className="text-[13px] text-[#4B3F6B] leading-relaxed mb-4">{course.desc}</p>
                 <div className="flex flex-wrap gap-1.5 mb-4">
                   {course.topics.map((t) => (
-                    <span key={t} className="font-mono text-[10px] text-[#7A7A8A] bg-[#F4F1EB] rounded px-2 py-1">
+                    <span key={t} className="font-mono text-[10px] text-[#8B7BAB] bg-[#F5F3FF] rounded px-2 py-1">
                       {t}
                     </span>
                   ))}
                 </div>
-                <div className="text-[12px] text-[#7A7A8A] mb-4">{course.lessons}</div>
-                <div className="flex justify-between items-center pt-4 border-t border-[rgba(17,17,17,0.08)]">
+                <div className="text-[12px] text-[#8B7BAB] mb-4">{course.lessons}</div>
+                <div className="flex justify-between items-center pt-4 border-t border-[rgba(124,58,237,0.12)]">
                   <span className={`font-mono text-[10px] font-medium rounded px-2 py-1 ${course.accessBadge.style}`}>
                     {course.accessBadge.label}
                   </span>
@@ -333,10 +333,10 @@ export default async function HomePage() {
         {/* Subscription nudge */}
         <div className="mt-5 bg-[#FDF3E3] border border-[rgba(212,134,10,0.2)] rounded-xl px-7 py-5 flex justify-between items-center flex-wrap gap-4">
           <div>
-            <div className="font-serif text-[18px] font-semibold text-[#111111] mb-1">
+            <div className="text-[18px] font-semibold text-[#1C0F3F] mb-1">
               One subscription. Three stacks. Everything you need.
             </div>
-            <div className="text-[14px] text-[#3D3D3D]">
+            <div className="text-[14px] text-[#4B3F6B]">
               Build your bundle — Learn, Research, Community. Pay one monthly total.
             </div>
           </div>
@@ -350,15 +350,15 @@ export default async function HomePage() {
       </section>
 
       {/* ── MODEL PORTFOLIOS ── */}
-      <div className="bg-[#EFEFEF] border-t border-b border-[rgba(17,17,17,0.12)]">
+      <div className="bg-[#F5F3FF] border-t border-b border-[rgba(124,58,237,0.15)]">
         <div className="max-w-6xl mx-auto px-8 py-20">
-          <div className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase mb-3">
+          <div className="font-mono text-[11px] text-[#8B7BAB] tracking-widest uppercase mb-3">
             Model Portfolios
           </div>
-          <h2 className="font-serif text-[34px] font-bold text-[#111111] mb-3">
+          <h2 className="text-[34px] font-bold text-[#1C0F3F] mb-3">
             See how a portfolio is built
           </h2>
-          <p className="text-[16px] text-[#3D3D3D] leading-relaxed mb-12 max-w-xl">
+          <p className="text-[16px] text-[#4B3F6B] leading-relaxed mb-12 max-w-xl">
             Three illustrative portfolios maintained for educational purposes — showing how allocation, selection, and rebalancing decisions are made.
           </p>
 
@@ -368,10 +368,10 @@ export default async function HomePage() {
               { num: "02", name: "Dividend & Income", desc: "High-yield, low-volatility equities. Illustrates how to screen and weight for consistent dividend income.", horizon: "3 yrs+", stocks: "8", risk: "Low", riskColor: "text-[#1A7A4A]", rebalance: "Half-yearly" },
               { num: "03", name: "Active Trader Watchlist", desc: "High-liquidity stocks with strong F&O interest. Illustrates how an active trader scans for setups.", horizon: "Short-term", stocks: "12", risk: "High", riskColor: "text-[#D4860A]", rebalance: "Weekly" },
             ].map((p) => (
-              <div key={p.num} className="bg-white border border-[rgba(17,17,17,0.1)] rounded-xl p-6">
-                <div className="font-mono text-[10px] text-[#7A7A8A] tracking-widest mb-2">PORTFOLIO {p.num}</div>
-                <div className="font-serif text-[16px] text-[#111111] mb-2">{p.name}</div>
-                <div className="text-[12px] text-[#3D3D3D] leading-relaxed mb-5">{p.desc}</div>
+              <div key={p.num} className="bg-white border border-[rgba(124,58,237,0.15)] rounded-xl p-6">
+                <div className="font-mono text-[10px] text-[#8B7BAB] tracking-widest mb-2">PORTFOLIO {p.num}</div>
+                <div className="text-[16px] text-[#1C0F3F] mb-2">{p.name}</div>
+                <div className="text-[12px] text-[#4B3F6B] leading-relaxed mb-5">{p.desc}</div>
                 <div className="grid grid-cols-2 gap-2.5">
                   {[
                     { label: "HORIZON", val: p.horizon, color: "" },
@@ -379,9 +379,9 @@ export default async function HomePage() {
                     { label: "RISK", val: p.risk, color: p.riskColor },
                     { label: "REBALANCE", val: p.rebalance, color: "" },
                   ].map((stat) => (
-                    <div key={stat.label} className="bg-[#F4F1EB] rounded-lg p-3">
-                      <div className="font-mono text-[10px] text-[#7A7A8A] mb-1">{stat.label}</div>
-                      <div className={`font-mono text-[14px] font-medium text-[#111111] ${stat.color}`}>{stat.val}</div>
+                    <div key={stat.label} className="bg-[#F5F3FF] rounded-lg p-3">
+                      <div className="font-mono text-[10px] text-[#8B7BAB] mb-1">{stat.label}</div>
+                      <div className={`font-mono text-[14px] font-medium text-[#1C0F3F] ${stat.color}`}>{stat.val}</div>
                     </div>
                   ))}
                 </div>
@@ -389,7 +389,7 @@ export default async function HomePage() {
             ))}
           </div>
 
-          <div className="mt-8 bg-white border border-[rgba(17,17,17,0.08)] rounded-lg px-5 py-4 font-mono text-[10px] text-[#7A7A8A] leading-relaxed">
+          <div className="mt-8 bg-white border border-[rgba(124,58,237,0.12)] rounded-lg px-5 py-4 font-mono text-[10px] text-[#8B7BAB] leading-relaxed">
             ⚠ These model portfolios are maintained purely for educational purposes to illustrate portfolio construction principles. They do not constitute investment advice or SEBI-registered research. Past illustrative performance does not guarantee future results. Do not invest based on this content without consulting a registered financial advisor.
           </div>
         </div>
@@ -397,11 +397,11 @@ export default async function HomePage() {
 
       {/* ── PRICING SUMMARY ── */}
       <section className="max-w-6xl mx-auto px-8 py-20">
-        <div className="font-mono text-[11px] text-[#7A7A8A] tracking-widest uppercase mb-3">
+        <div className="font-mono text-[11px] text-[#8B7BAB] tracking-widest uppercase mb-3">
           Pricing
         </div>
         <div className="flex justify-between items-end flex-wrap gap-4 mb-12">
-          <h2 className="font-serif text-[34px] font-bold text-[#111111]">
+          <h2 className="text-[34px] font-bold text-[#1C0F3F]">
             Two stacks. One bundle.
           </h2>
           <Link href="/pricing" className="font-mono text-[12px] text-[#D4860A]">
@@ -414,7 +414,7 @@ export default async function HomePage() {
             {
               stackNum: "STACK 01",
               title: "Learn",
-              headerBg: "bg-[#111111]",
+              headerBg: "bg-[#1C0F3F]",
               from: "From ₹999/month",
               fromSub: "or free preview",
               features: ["All courses & lessons", "PDF playbooks", "Early access to new courses"],
@@ -423,7 +423,7 @@ export default async function HomePage() {
             {
               stackNum: "STACK 02",
               title: "Research",
-              headerBg: "bg-[#111111]",
+              headerBg: "bg-[#1C0F3F]",
               from: "From ₹499/month",
               fromSub: "newsletter to full research",
               features: ["Weekly market newsletter", "3 model portfolios", "F&O strategy notes"],
@@ -432,22 +432,22 @@ export default async function HomePage() {
           ].map((stack) => (
             <div
               key={stack.stackNum}
-              className="bg-white border border-[rgba(17,17,17,0.1)] rounded-2xl overflow-hidden hover:shadow-[0_8px_40px_rgba(17,17,17,0.08)] hover:-translate-y-0.5 transition-all"
+              className="bg-white border border-[rgba(124,58,237,0.15)] rounded-2xl overflow-hidden hover:shadow-[0_8px_40px_rgba(124,58,237,0.12)] hover:-translate-y-0.5 transition-all"
             >
               <div className={`${stack.headerBg} px-6 py-5`}>
                 <div className="font-mono text-[10px] text-[rgba(255,255,255,0.4)] tracking-widest mb-2">
                   {stack.stackNum}
                 </div>
-                <div className="font-serif text-[20px] text-white">{stack.title}</div>
+                <div className="text-[20px] text-white">{stack.title}</div>
               </div>
               <div className="p-6">
-                <div className="font-mono text-[22px] font-bold text-[#111111] leading-none mb-1">
+                <div className="font-mono text-[22px] font-bold text-[#1C0F3F] leading-none mb-1">
                   {stack.from}
                 </div>
-                <div className="text-[12px] text-[#7A7A8A] mb-5">{stack.fromSub}</div>
+                <div className="text-[12px] text-[#8B7BAB] mb-5">{stack.fromSub}</div>
                 <div className="flex flex-col gap-2 mb-6">
                   {stack.features.map((f) => (
-                    <div key={f} className="flex gap-2 items-start text-[13px] text-[#3D3D3D]">
+                    <div key={f} className="flex gap-2 items-start text-[13px] text-[#4B3F6B]">
                       <span className="text-[#1A7A4A] flex-shrink-0">✓</span>
                       {f}
                     </div>
@@ -466,7 +466,7 @@ export default async function HomePage() {
 
         {/* CTA strip */}
         <div className="mt-5 bg-[#FDF3E3] border border-[rgba(212,134,10,0.2)] rounded-xl px-7 py-5 flex justify-between items-center flex-wrap gap-4">
-          <div className="font-serif text-[18px] text-[#111111]">
+          <div className="text-[18px] text-[#1C0F3F]">
             Two stacks. Learn and Research. Subscribe to what you need.
           </div>
           <Link
@@ -480,8 +480,8 @@ export default async function HomePage() {
 
       {/* ── NEWSLETTER ── */}
       <section className="max-w-6xl mx-auto px-8 pb-20">
-        <div className="bg-[#111111] rounded-2xl px-12 py-14 text-center">
-          <h2 className="font-serif text-[30px] text-white mb-3">
+        <div className="bg-[#1C0F3F] rounded-2xl px-12 py-14 text-center">
+          <h2 className="text-[30px] text-white mb-3">
             One market insight, every week.
           </h2>
           <p className="text-[rgba(255,255,255,0.55)] text-[15px] mb-8 max-w-md mx-auto">
@@ -495,52 +495,52 @@ export default async function HomePage() {
       </section>
 
       {/* ── FOOTER ── */}
-      <footer className="bg-[#F4F1EB] border-t border-[rgba(17,17,17,0.1)]">
+      <footer className="bg-[#F5F3FF] border-t border-[rgba(124,58,237,0.15)]">
         <div className="max-w-6xl mx-auto px-8 pt-12 pb-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-10">
             <div>
-              <div className="font-serif font-bold text-[16px] text-[#111111] mb-3">
+              <div className="font-bold text-[16px] text-[#1C0F3F] mb-3">
                 The Capital Gains
               </div>
-              <div className="text-[13px] text-[#7A7A8A] leading-relaxed">
+              <div className="text-[13px] text-[#8B7BAB] leading-relaxed">
                 Text-first, exercise-driven courses for Indian retail investors and traders. Built for people who want to understand markets — not just follow tips.
               </div>
             </div>
             <div>
-              <div className="font-mono text-[10px] text-[#7A7A8A] tracking-widest uppercase mb-4">LEARN</div>
+              <div className="font-mono text-[10px] text-[#8B7BAB] tracking-widest uppercase mb-4">LEARN</div>
               <div className="flex flex-col gap-2">
-                <Link href="/courses" className="text-[13px] text-[#3D3D3D] hover:text-[#111111] transition-colors">All Courses</Link>
-                <Link href="/portfolios" className="text-[13px] text-[#3D3D3D] hover:text-[#111111] transition-colors">Model Portfolios</Link>
-                <span className="text-[13px] text-[#3D3D3D]">Free Resources</span>
-                <Link href="/newsletter" className="text-[13px] text-[#3D3D3D] hover:text-[#111111] transition-colors">Newsletter</Link>
-                <Link href="/about" className="text-[13px] text-[#3D3D3D] hover:text-[#111111] transition-colors">About</Link>
+                <Link href="/courses" className="text-[13px] text-[#4B3F6B] hover:text-[#1C0F3F] transition-colors">All Courses</Link>
+                <Link href="/portfolios" className="text-[13px] text-[#4B3F6B] hover:text-[#1C0F3F] transition-colors">Model Portfolios</Link>
+                <span className="text-[13px] text-[#4B3F6B]">Free Resources</span>
+                <Link href="/newsletter" className="text-[13px] text-[#4B3F6B] hover:text-[#1C0F3F] transition-colors">Newsletter</Link>
+                <Link href="/about" className="text-[13px] text-[#4B3F6B] hover:text-[#1C0F3F] transition-colors">About</Link>
               </div>
             </div>
             <div>
-              <div className="font-mono text-[10px] text-[#7A7A8A] tracking-widest uppercase mb-4">PLATFORM</div>
+              <div className="font-mono text-[10px] text-[#8B7BAB] tracking-widest uppercase mb-4">PLATFORM</div>
               <div className="flex flex-col gap-2">
-                <Link href="/pricing" className="text-[13px] text-[#3D3D3D] hover:text-[#111111] transition-colors">Pricing</Link>
-                <Link href="/auth/login" className="text-[13px] text-[#3D3D3D] hover:text-[#111111] transition-colors">Sign In</Link>
-                <Link href="/auth/signup" className="text-[13px] text-[#3D3D3D] hover:text-[#111111] transition-colors">Create Account</Link>
-                <Link href="/terms" className="text-[13px] text-[#3D3D3D] hover:text-[#111111] transition-colors">Terms of Service</Link>
-                <Link href="/privacy" className="text-[13px] text-[#3D3D3D] hover:text-[#111111] transition-colors">Privacy Policy</Link>
-                <Link href="/refund" className="text-[13px] text-[#3D3D3D] hover:text-[#111111] transition-colors">Refund Policy</Link>
+                <Link href="/pricing" className="text-[13px] text-[#4B3F6B] hover:text-[#1C0F3F] transition-colors">Pricing</Link>
+                <Link href="/auth/login" className="text-[13px] text-[#4B3F6B] hover:text-[#1C0F3F] transition-colors">Sign In</Link>
+                <Link href="/auth/signup" className="text-[13px] text-[#4B3F6B] hover:text-[#1C0F3F] transition-colors">Create Account</Link>
+                <Link href="/terms" className="text-[13px] text-[#4B3F6B] hover:text-[#1C0F3F] transition-colors">Terms of Service</Link>
+                <Link href="/privacy" className="text-[13px] text-[#4B3F6B] hover:text-[#1C0F3F] transition-colors">Privacy Policy</Link>
+                <Link href="/refund" className="text-[13px] text-[#4B3F6B] hover:text-[#1C0F3F] transition-colors">Refund Policy</Link>
               </div>
             </div>
             <div>
-              <div className="font-mono text-[10px] text-[#7A7A8A] tracking-widest uppercase mb-4">FOLLOW</div>
+              <div className="font-mono text-[10px] text-[#8B7BAB] tracking-widest uppercase mb-4">FOLLOW</div>
               <div className="flex flex-col gap-2">
-                <span className="text-[13px] text-[#3D3D3D]">Instagram</span>
-                <span className="text-[13px] text-[#3D3D3D]">Substack</span>
-                <span className="text-[13px] text-[#3D3D3D]">Telegram</span>
+                <span className="text-[13px] text-[#4B3F6B]">Instagram</span>
+                <span className="text-[13px] text-[#4B3F6B]">Substack</span>
+                <span className="text-[13px] text-[#4B3F6B]">Telegram</span>
               </div>
             </div>
           </div>
-          <div className="border-t border-[rgba(17,17,17,0.1)] pt-6 flex flex-col md:flex-row justify-between gap-4">
-            <div className="font-mono text-[11px] text-[#7A7A8A]">
+          <div className="border-t border-[rgba(124,58,237,0.15)] pt-6 flex flex-col md:flex-row justify-between gap-4">
+            <div className="font-mono text-[11px] text-[#8B7BAB]">
               © 2025 The Capital Gains · thecapitalgains.com
             </div>
-            <div className="font-mono text-[10px] text-[#7A7A8A] max-w-lg leading-relaxed">
+            <div className="font-mono text-[10px] text-[#8B7BAB] max-w-lg leading-relaxed">
               All content is for educational purposes only and does not constitute investment advice, trading recommendations, or SEBI-registered research. Trading in equity and derivatives involves substantial risk of loss.
             </div>
           </div>
