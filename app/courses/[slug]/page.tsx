@@ -1,174 +1,163 @@
-"use client";
-
-import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { getAllCourses } from "@/lib/sanity/queries";
+import { getCourseBySlug } from "@/lib/sanity/queries";
 import "@/app/premium-theme.css";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+export const revalidate = 0
 
-type Course = {
-  _id: string;
-  title: string;
-  slug: string;
-  tag: string | null;
-  price: number | null;
-  accessLevel: string | null;
-  badge: string | null;
-  subtitle: string | null;
-  lessonsCount: number | null;
-  duration: string | null;
-  description: string | null;
-  topics: string[] | null;
-  learningPath: string | null;
-  orderRank: number | null;
-};
+export default async function CourseDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const course = await getCourseBySlug(slug);
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
+  if (!course) {
+    return (
+      <div className="bg-[#F8FAFC] min-h-screen flex items-center justify-center text-center">
+        <div>
+          <h1 className="text-4xl font-bold text-[#1C0F3F] mb-4">Course not found</h1>
+          <Link href="/courses" className="premium-button-primary inline-block">Browse all courses</Link>
+        </div>
+      </div>
+    );
+  }
 
-export default function CoursesPage() {
-  const router = useRouter();
-
-  const [courses, setCourses] = useState<Course[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-
-  const [search, setSearch] = useState("");
-  const [filterPath, setFilterPath] = useState("all");
-
-  useEffect(() => {
-    getAllCourses()
-      .then((data) => {
-        setCourses(data as Course[]);
-        setLoading(false);
-      })
-      .catch(() => {
-        setError(true);
-        setLoading(false);
-      });
-  }, []);
-
-  const uniquePaths = useMemo(() => {
-    const seen = new Set<string>();
-    courses.forEach((c) => { if (c.learningPath) seen.add(c.learningPath); });
-    return Array.from(seen).sort();
-  }, [courses]);
-
-  const displayed = useMemo(() => {
-    return courses.filter((c) => {
-      if (search) {
-        const q = search.toLowerCase();
-        if (!c.title?.toLowerCase().includes(q) && !c.description?.toLowerCase().includes(q)) return false;
-      }
-      if (filterPath !== "all" && c.learningPath !== filterPath) return false;
-      return true;
-    });
-  }, [courses, search, filterPath]);
-
-  if (loading) return (
-    <div className="bg-[#F8FAFC] min-h-screen flex items-center justify-center">
-      <div className="premium-glow-dot animate-pulse" />
-    </div>
-  );
+  const totalLessons = course.lessonsCount || course.chapters?.reduce((sum: number, ch: any) => sum + (ch.lessons?.length ?? 0), 0) || 0;
 
   return (
-    <div className="bg-[#F8FAFC] min-h-screen pb-20">
+    <div className="bg-[#F8FAFC] min-h-screen font-sans pb-20">
       
-      {/* ── HEADER ── */}
-      <div className="premium-dark pt-32 pb-20 border-b border-[rgba(255,255,255,0.05)]">
+      {/* ── HEADER (Premium Dark) ── */}
+      <header className="premium-dark pt-32 pb-24 border-b border-[rgba(255,255,255,0.05)]">
         <div className="max-w-6xl mx-auto px-8">
-          <div className="inline-flex items-center gap-2 bg-[rgba(139,92,246,0.1)] border border-[rgba(139,92,246,0.2)] rounded-full px-4 py-1.5 mb-6">
-            <div className="premium-glow-dot" />
-            <span className="font-mono text-[10px] text-[#A78BFA] tracking-[0.2em] uppercase">Curriculum</span>
-          </div>
-          <h1 className="text-5xl font-bold text-white tracking-tight leading-tight">
-            Master the Markets
-          </h1>
-          <p className="text-[#94A3B8] text-lg mt-4 max-w-2xl">
-            Structured playbooks for retail investors. No videos, just high-signal reading 
-            and actionable exercises.
-          </p>
-        </div>
-      </div>
-
-      {/* ── CONTROLS ── */}
-      <div className="max-w-6xl mx-auto px-8 -mt-8 relative z-10">
-        <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-xl flex flex-wrap gap-4 items-center">
-          <div className="relative flex-1 min-w-[240px]">
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search by topic or title..."
-              className="w-full h-12 pl-12 pr-4 rounded-xl bg-slate-50 border-none text-sm focus:ring-2 focus:ring-violet-500/20 transition-all"
-            />
-            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
-              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-            </div>
+          <div className="flex items-center gap-3 mb-8">
+            <Link href="/courses" className="text-[#A78BFA] text-xs font-bold tracking-[0.2em] uppercase hover:text-white transition-colors">
+              ← Back to Curriculum
+            </Link>
           </div>
           
-          <select 
-            value={filterPath} 
-            onChange={(e) => setFilterPath(e.target.value)}
-            className="h-12 px-6 rounded-xl bg-slate-50 border-none text-sm font-semibold text-[#1C0F3F] focus:ring-2 focus:ring-violet-500/20"
-          >
-            <option value="all">All Learning Paths</option>
-            {uniquePaths.map(p => <option key={p} value={p}>{p.toUpperCase()}</option>)}
-          </select>
-        </div>
-      </div>
+          <div className="flex flex-wrap items-center gap-3 mb-6">
+            <span className="bg-violet-500/20 text-violet-300 border border-violet-500/30 text-[10px] font-bold px-3 py-1 rounded-full tracking-widest uppercase">
+              {course.tag || "CORE"}
+            </span>
+            {course.badge && (
+              <span className="bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[10px] font-bold px-3 py-1 rounded-full tracking-widest uppercase">
+                {course.badge}
+              </span>
+            )}
+          </div>
 
-      {/* ── GRID ── */}
-      <div className="max-w-6xl mx-auto px-8 mt-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {displayed.map((course) => (
-            <Link key={course._id} href={`/courses/${course.slug}`}>
-              <div className="bg-white border border-slate-200 rounded-2xl p-8 h-full flex flex-col hover:shadow-2xl hover:border-violet-200 hover:-translate-y-1 transition-all group">
-                <div className="flex justify-between items-start mb-8">
-                  <div className="p-3 bg-violet-50 rounded-2xl group-hover:bg-violet-600 group-hover:text-white transition-colors text-violet-600">
-                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                    </svg>
-                  </div>
-                  {course.badge && (
-                    <span className="bg-[#D4860A10] text-[#D4860A] text-[10px] font-bold px-3 py-1 rounded-full tracking-widest uppercase">
-                      {course.badge}
-                    </span>
-                  )}
-                </div>
+          <h1 className="text-5xl font-bold text-white tracking-tight leading-tight max-w-3xl mb-6">
+            {course.title}
+          </h1>
+          <p className="text-[#94A3B8] text-xl leading-relaxed max-w-2xl">
+            {course.description || course.subtitle}
+          </p>
 
-                <div className="flex-1">
-                  <div className="font-mono text-[10px] text-slate-400 tracking-[0.2em] uppercase mb-2">
-                    {course.tag || "Core Curriculum"}
-                  </div>
-                  <h3 className="text-2xl font-bold text-[#1C0F3F] leading-tight mb-4 group-hover:text-violet-600 transition-colors">
-                    {course.title}
-                  </h3>
-                  <p className="text-slate-500 text-sm leading-relaxed line-clamp-3">
-                    {course.description || course.subtitle}
-                  </p>
-                </div>
-
-                <div className="mt-10 pt-8 border-t border-slate-100 flex items-center justify-between">
-                  <div className="flex flex-col">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Access</span>
-                    <span className={`text-xs font-bold ${course.accessLevel === 'pro' ? 'text-[#D4860A]' : 'text-emerald-600'}`}>
-                      {course.accessLevel?.toUpperCase() || 'LEARNER+'}
-                    </span>
-                  </div>
-                  <div className="flex flex-col text-right">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Lessons</span>
-                    <span className="text-xs font-bold text-[#1C0F3F]">{course.lessonsCount || '—'} Modules</span>
-                  </div>
-                </div>
+          <div className="flex gap-12 mt-12 pt-12 border-t border-[rgba(255,255,255,0.05)]">
+            {[
+              { label: "MODULES", val: totalLessons },
+              { label: "DURATION", val: course.duration || "4 Hours" },
+              { label: "FORMAT", val: "Text-First" },
+            ].map(s => (
+              <div key={s.label}>
+                <div className="text-[10px] font-bold text-[#64748B] tracking-[0.2em] mb-2">{s.label}</div>
+                <div className="text-lg font-bold text-white">{s.val}</div>
               </div>
-            </Link>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      </header>
+
+      {/* ── CONTENT ── */}
+      <main className="max-w-6xl mx-auto px-8 mt-16 grid grid-cols-1 lg:grid-cols-3 gap-16">
+        
+        {/* Left: Curriculum & Learnings */}
+        <div className="lg:col-span-2 space-y-16">
+          
+          {/* What you'll learn */}
+          {course.whatYouLearn?.length > 0 && (
+            <section>
+              <h2 className="text-2xl font-bold text-[#1C0F3F] mb-8 tracking-tight">What you&apos;ll master</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {course.whatYouLearn.map((point: string) => (
+                  <div key={point} className="flex gap-4 p-4 bg-white border border-slate-200 rounded-2xl shadow-sm">
+                    <div className="w-5 h-5 rounded-full bg-emerald-50 text-emerald-600 flex-shrink-0 flex items-center justify-center">
+                      <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path d="M5 13l4 4L19 7" /></svg>
+                    </div>
+                    <span className="text-[14px] text-[#4B3F6B] leading-snug font-medium">{point}</span>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Curriculum */}
+          <section>
+            <h2 className="text-2xl font-bold text-[#1C0F3F] mb-8 tracking-tight">Curriculum Breakdown</h2>
+            <div className="space-y-4">
+              {course.chapters?.map((chapter: any) => (
+                <div key={chapter.title} className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:border-violet-200 transition-colors">
+                  <div className="px-6 py-4 bg-slate-50/50 border-b border-slate-100 flex items-center justify-between">
+                    <h3 className="font-bold text-[#1C0F3F] text-sm tracking-tight">{chapter.title}</h3>
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{chapter.lessons?.length || 0} Lessons</span>
+                  </div>
+                  <div className="divide-y divide-slate-50">
+                    {chapter.lessons?.map((lesson: any) => (
+                      <div key={lesson.title} className="px-6 py-4 flex items-center justify-between group hover:bg-violet-50/30 transition-colors">
+                        <div className="flex items-center gap-4">
+                          <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm ${lesson.isFree ? 'bg-emerald-50 text-emerald-600' : 'bg-slate-100 text-slate-400'}`}>
+                            {lesson.isFree ? "▶" : "🔒"}
+                          </div>
+                          <span className={`text-[14px] font-semibold ${lesson.isFree ? 'text-[#1C0F3F]' : 'text-slate-400'}`}>{lesson.title}</span>
+                        </div>
+                        {lesson.isFree && <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded tracking-widest uppercase">Preview</span>}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
+
+        {/* Right: Sticky Action Card */}
+        <div className="lg:col-span-1">
+          <div className="sticky top-32 bg-white border border-slate-200 rounded-3xl p-8 shadow-2xl">
+            <div className="mb-8">
+              <div className="text-[10px] font-bold text-slate-400 tracking-[0.2em] mb-2 uppercase">Access Level</div>
+              <div className={`text-xl font-bold tracking-tight ${course.accessLevel === 'pro' ? 'text-[#D4860A]' : 'text-emerald-600'}`}>
+                {course.accessLevel?.toUpperCase() || 'LEARNER+'}
+              </div>
+            </div>
+
+            <div className="space-y-4 mb-8">
+              {course.accessLevel === "free" ? (
+                <Link href="#" className="premium-button-primary w-full text-center block font-bold">Start Learning Now</Link>
+              ) : (
+                <Link href="/pricing" className="premium-button-primary w-full text-center block font-bold">Unlock This Course</Link>
+              )}
+              <Link href="/auth/login" className="premium-button-outline w-full text-center block font-bold text-slate-600">Sign in to resume</Link>
+            </div>
+
+            <div className="space-y-4 pt-8 border-t border-slate-100">
+              <div className="text-[10px] font-bold text-slate-400 tracking-[0.2em] uppercase">Everything included</div>
+              {[
+                "Full Text Playbooks",
+                "Actionable Exercises",
+                "Mobile Reading Mode",
+                "Lifetime Updates",
+              ].map(item => (
+                <div key={item} className="flex gap-3 text-sm text-[#4B3F6B] font-medium">
+                  <svg className="w-5 h-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path d="M5 13l4 4L19 7" /></svg>
+                  {item}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
   );
 }
