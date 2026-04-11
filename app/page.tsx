@@ -102,7 +102,7 @@ export default async function HomePage() {
                   <div className="w-8 h-8 rounded-full bg-violet-500/20 flex items-center justify-center">
                     <div className="w-1.5 h-1.5 rounded-full bg-violet-400 shadow-[0_0_8px_rgba(167,139,250,0.8)]" />
                   </div>
-                  <span>Join 5,000+ students already learning.</span>
+                  <span>Join our early access cohort.</span>
                 </div>
               </div>
             </div>
