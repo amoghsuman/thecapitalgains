@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getCourseBySlug } from "@/lib/sanity/queries";
+import "@/app/premium-theme.css";
 
 export const revalidate = 0
 
@@ -13,253 +14,150 @@ export default async function CourseDetailPage({
 
   if (!course) {
     return (
-      <div className="bg-[#FFFFFF] min-h-screen">
-        <div className="max-w-6xl mx-auto px-8 pt-20 text-center">
-          <div className="font-mono text-[11px] text-[#8B7BAB] tracking-widest uppercase mb-4">
-            404
-          </div>
-          <h1 className="text-4xl font-bold text-[#1C0F3F] mb-4">
-            Course not found
-          </h1>
-          <p className="text-[16px] text-[#4B3F6B] mb-8">
-            We couldn&apos;t find a course at this URL.
-          </p>
-          <Link
-            href="/courses"
-            className="bg-[#D4860A] hover:bg-[#F0A020] text-white rounded-lg px-6 py-3 text-[14px] font-medium transition-colors"
-          >
-            Browse all courses →
-          </Link>
+      <div className="bg-[#F8FAFC] min-h-screen flex items-center justify-center text-center">
+        <div>
+          <h1 className="text-4xl font-bold text-[#1C0F3F] mb-4">Course not found</h1>
+          <Link href="/courses" className="premium-button-primary inline-block">Browse all courses</Link>
         </div>
       </div>
     );
   }
 
-  const totalLessons =
-    course.lessonsCount ||
-    course.chapters?.reduce(
-      (sum: number, ch: any) => sum + (ch.lessons?.length ?? 0),
-      0
-    ) ||
-    0;
+  const totalLessons = course.lessonsCount || course.chapters?.reduce((sum: number, ch: any) => sum + (ch.lessons?.length ?? 0), 0) || 0;
 
   return (
-    <div className="bg-[#FFFFFF] min-h-screen overflow-x-hidden">
-
-      {/* ── BREADCRUMB ── */}
-      <div className="max-w-6xl mx-auto px-8 pt-8">
-        <div className="flex items-center gap-2 font-mono text-[12px] text-[#8B7BAB]">
-          <Link href="/courses" className="hover:text-[#1C0F3F] transition-colors">
-            Courses
-          </Link>
-          <span>→</span>
-          <span className="text-[#1C0F3F]">{course.title}</span>
-        </div>
-      </div>
-
-      {/* ── MAIN CONTENT ── */}
-      <div className="max-w-6xl mx-auto px-8 mt-6 pb-20 grid grid-cols-1 lg:grid-cols-3 gap-12">
-
-        {/* ── LEFT COLUMN ── */}
-        <div className="lg:col-span-2">
-
-          {/* Badge + tag */}
-          <div className="flex items-center gap-2 mb-3">
+    <div className="bg-[#F8FAFC] min-h-screen font-sans pb-20">
+      
+      {/* ── HEADER (Premium Dark) ── */}
+      <header className="premium-dark pt-32 pb-24 border-b border-[rgba(255,255,255,0.05)]">
+        <div className="max-w-6xl mx-auto px-8">
+          <div className="flex items-center gap-3 mb-8">
+            <Link href="/courses" className="text-[#A78BFA] text-xs font-bold tracking-[0.2em] uppercase hover:text-white transition-colors">
+              ← Back to Curriculum
+            </Link>
+          </div>
+          
+          <div className="flex flex-wrap items-center gap-3 mb-6">
+            <span className="bg-violet-500/20 text-violet-300 border border-violet-500/30 text-[10px] font-bold px-3 py-1 rounded-full tracking-widest uppercase">
+              {course.tag || "CORE"}
+            </span>
             {course.badge && (
-              <span className="font-mono text-[9px] font-medium bg-[rgba(212,134,10,0.15)] text-[#D4860A] rounded px-2 py-1 tracking-wider">
+              <span className="bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[10px] font-bold px-3 py-1 rounded-full tracking-widest uppercase">
                 {course.badge}
               </span>
             )}
-            <span className="font-mono text-[11px] text-[#8B7BAB] tracking-widest uppercase">
-              {course.tag}
-            </span>
           </div>
 
-          {/* Title */}
-          <h1 className="text-4xl font-bold text-[#1C0F3F] leading-[1.1] mb-4">
+          <h1 className="text-5xl font-bold text-white tracking-tight leading-tight max-w-3xl mb-6">
             {course.title}
           </h1>
-
-          {/* Description */}
-          <p className="text-[16px] text-[#4B3F6B] leading-relaxed mb-6">
+          <p className="text-[#94A3B8] text-xl leading-relaxed max-w-2xl">
             {course.description || course.subtitle}
           </p>
 
-          {/* Stats row */}
-          <div className="flex flex-wrap gap-5 mb-8 pb-8 border-b border-[rgba(124,58,237,0.15)]">
+          <div className="flex gap-12 mt-12 pt-12 border-t border-[rgba(255,255,255,0.05)]">
             {[
-              { label: "Lessons", val: `${totalLessons}` },
-              { label: "Duration", val: course.duration },
-              { label: "Level", val: course.tag },
-            ].map((s) => (
-              s.val ? (
-                <div key={s.label} className="flex flex-col">
-                  <span className="font-mono text-[11px] text-[#8B7BAB] tracking-widest uppercase mb-1">
-                    {s.label}
-                  </span>
-                  <span className="font-mono text-[15px] font-medium text-[#1C0F3F]">
-                    {s.val}
-                  </span>
-                </div>
-              ) : null
+              { label: "MODULES", val: totalLessons },
+              { label: "DURATION", val: course.duration || "4 Hours" },
+              { label: "FORMAT", val: "Text-First" },
+            ].map(s => (
+              <div key={s.label}>
+                <div className="text-[10px] font-bold text-[#64748B] tracking-[0.2em] mb-2">{s.label}</div>
+                <div className="text-lg font-bold text-white">{s.val}</div>
+              </div>
             ))}
           </div>
+        </div>
+      </header>
 
+      {/* ── CONTENT ── */}
+      <main className="max-w-6xl mx-auto px-8 mt-16 grid grid-cols-1 lg:grid-cols-3 gap-16">
+        
+        {/* Left: Curriculum & Learnings */}
+        <div className="lg:col-span-2 space-y-16">
+          
           {/* What you'll learn */}
           {course.whatYouLearn?.length > 0 && (
-            <div className="mb-10">
-              <h2 className="text-[22px] font-bold text-[#1C0F3F] mb-5">
-                What you&apos;ll learn
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <section>
+              <h2 className="text-2xl font-bold text-[#1C0F3F] mb-8 tracking-tight">What you&apos;ll master</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {course.whatYouLearn.map((point: string) => (
-                  <div key={point} className="flex gap-3 items-start">
-                    <span className="text-[#1A7A4A] mt-0.5 flex-shrink-0">✓</span>
-                    <span className="text-[14px] text-[#4B3F6B] leading-snug">{point}</span>
+                  <div key={point} className="flex gap-4 p-4 bg-white border border-slate-200 rounded-2xl shadow-sm">
+                    <div className="w-5 h-5 rounded-full bg-emerald-50 text-emerald-600 flex-shrink-0 flex items-center justify-center">
+                      <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path d="M5 13l4 4L19 7" /></svg>
+                    </div>
+                    <span className="text-[14px] text-[#4B3F6B] leading-snug font-medium">{point}</span>
                   </div>
                 ))}
               </div>
-            </div>
+            </section>
           )}
 
           {/* Curriculum */}
-          {course.chapters?.length > 0 && (
-            <div>
-              <h2 className="text-[22px] font-bold text-[#1C0F3F] mb-5">
-                Curriculum
-              </h2>
-              <div className="flex flex-col gap-4">
-                {course.chapters.map((chapter: any) => (
-                  <div
-                    key={chapter.title}
-                    className="border border-[rgba(124,58,237,0.15)] rounded-xl overflow-hidden"
-                  >
-                    <div className="bg-[#F5F3FF] px-5 py-3">
-                      <span className="font-mono text-[12px] font-medium text-[#1C0F3F]">
-                        {chapter.title}
-                      </span>
-                    </div>
-                    <div className="flex flex-col">
-                      {chapter.lessons?.map((lesson: any, i: number) => (
-                        <div
-                          key={lesson.slug || lesson.title}
-                          className={`flex items-center justify-between px-5 py-3 ${
-                            i !== chapter.lessons.length - 1
-                              ? "border-b border-[rgba(124,58,237,0.08)]"
-                              : ""
-                          }`}
-                        >
-                          <div className="flex items-center gap-3">
-                            <span className="text-[14px] text-[#8B7BAB] flex-shrink-0">
-                              {lesson.isFree ? "▶" : "🔒"}
-                            </span>
-                            {lesson.isFree && lesson.slug ? (
-                              <Link
-                                href={`/learn/${slug}/${lesson.slug}`}
-                                className="text-[14px] text-[#1C0F3F] hover:text-[#D4860A] transition-colors"
-                              >
-                                {lesson.title}
-                              </Link>
-                            ) : (
-                              <span className="text-[14px] text-[#8B7BAB]">
-                                {lesson.title}
-                              </span>
-                            )}
-                          </div>
-                          <div className="flex items-center gap-3 flex-shrink-0 ml-3">
-                            {lesson.duration && (
-                              <span className="font-mono text-[11px] text-[#8B7BAB]">
-                                {lesson.duration}
-                              </span>
-                            )}
-                            {lesson.isFree && (
-                              <span className="font-mono text-[10px] text-[#1A7A4A] bg-[#E8F5EE] rounded px-2 py-0.5">
-                                Free preview
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
+          <section>
+            <h2 className="text-2xl font-bold text-[#1C0F3F] mb-8 tracking-tight">Curriculum Breakdown</h2>
+            <div className="space-y-4">
+              {course.chapters?.map((chapter: any) => (
+                <div key={chapter.title} className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:border-violet-200 transition-colors">
+                  <div className="px-6 py-4 bg-slate-50/50 border-b border-slate-100 flex items-center justify-between">
+                    <h3 className="font-bold text-[#1C0F3F] text-sm tracking-tight">{chapter.title}</h3>
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{chapter.lessons?.length || 0} Lessons</span>
                   </div>
-                ))}
-              </div>
+                  <div className="divide-y divide-slate-50">
+                    {chapter.lessons?.map((lesson: any) => (
+                      <div key={lesson.title} className="px-6 py-4 flex items-center justify-between group hover:bg-violet-50/30 transition-colors">
+                        <div className="flex items-center gap-4">
+                          <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm ${lesson.isFree ? 'bg-emerald-50 text-emerald-600' : 'bg-slate-100 text-slate-400'}`}>
+                            {lesson.isFree ? "▶" : "🔒"}
+                          </div>
+                          <span className={`text-[14px] font-semibold ${lesson.isFree ? 'text-[#1C0F3F]' : 'text-slate-400'}`}>{lesson.title}</span>
+                        </div>
+                        {lesson.isFree && <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded tracking-widest uppercase">Preview</span>}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
-          )}
+          </section>
         </div>
 
-        {/* ── RIGHT COLUMN — STICKY ACCESS CARD ── */}
+        {/* Right: Sticky Action Card */}
         <div className="lg:col-span-1">
-          <div className="sticky top-24 bg-white border border-[rgba(124,58,237,0.15)] rounded-2xl p-6 shadow-[0_4px_32px_rgba(124,58,237,0.12)]">
-
-            {/* Access level badge */}
-            <div className="mb-4">
-              {course.accessLevel === "free" && (
-                <span className="font-mono text-[11px] font-medium bg-[#E8F5EE] text-[#1A7A4A] rounded px-3 py-1.5">FREE — Open access</span>
-              )}
-              {course.accessLevel === "pro" && (
-                <span className="font-mono text-[11px] font-medium bg-[rgba(212,134,10,0.15)] text-[#D4860A] rounded px-3 py-1.5">PRO — Trader Pro required</span>
-              )}
-              {(!course.accessLevel || course.accessLevel === "learner") && (
-                <span className="font-mono text-[11px] font-medium bg-[rgba(124,58,237,0.12)] text-[#1C0F3F] rounded px-3 py-1.5">LEARNER+ — Subscription required</span>
-              )}
-            </div>
-
-            {/* Primary CTA */}
-            {course.accessLevel === "free" ? (
-              <Link
-                href={`/learn/${slug}/${course.chapters?.[0]?.lessons?.[0]?.slug ?? ""}`}
-                className="block w-full text-center bg-[#1A7A4A] hover:bg-[#15623C] text-white rounded-lg py-3.5 text-[15px] font-medium transition-colors mb-4"
-              >
-                Start Learning →
-              </Link>
-            ) : (
-              <Link
-                href="/pricing"
-                className="block w-full text-center bg-[#D4860A] hover:bg-[#F0A020] text-white rounded-lg py-3.5 text-[15px] font-medium transition-colors mb-4"
-              >
-                Subscribe to Access
-              </Link>
-            )}
-
-            {/* Sign in nudge */}
-            <div className="text-center mb-5">
-              <Link
-                href="/auth/login"
-                className="font-mono text-[12px] text-[#8B7BAB] hover:text-[#D4860A] transition-colors"
-              >
-                Already subscribed? Sign in →
-              </Link>
-            </div>
-
-            {/* Included */}
-            <div className="border-t border-[rgba(124,58,237,0.12)] pt-4 mb-5">
-              <div className="font-mono text-[11px] text-[#8B7BAB] tracking-widest uppercase mb-3">
-                What&apos;s included
-              </div>
-              <div className="flex flex-col gap-2">
-                {[
-                  "All lessons and exercises",
-                  "Mobile friendly",
-                  "Progress tracking",
-                  "New courses as added",
-                ].map((item) => (
-                  <div key={item} className="flex gap-2 text-[13px] text-[#4B3F6B]">
-                    <span className="text-[#1A7A4A] flex-shrink-0">✓</span>
-                    {item}
-                  </div>
-                ))}
+          <div className="sticky top-32 bg-white border border-slate-200 rounded-3xl p-8 shadow-2xl">
+            <div className="mb-8">
+              <div className="text-[10px] font-bold text-slate-400 tracking-[0.2em] mb-2 uppercase">Access Level</div>
+              <div className={`text-xl font-bold tracking-tight ${course.accessLevel === 'pro' ? 'text-[#D4860A]' : 'text-emerald-600'}`}>
+                {course.accessLevel?.toUpperCase() || 'LEARNER+'}
               </div>
             </div>
 
-            {/* Cancel note */}
-            <p className="text-[12px] text-[#8B7BAB] text-center leading-snug">
-              Cancel subscription anytime. No lock-in.
-            </p>
+            <div className="space-y-4 mb-8">
+              {course.accessLevel === "free" ? (
+                <Link href="#" className="premium-button-primary w-full text-center block font-bold">Start Learning Now</Link>
+              ) : (
+                <Link href="/pricing" className="premium-button-primary w-full text-center block font-bold">Unlock This Course</Link>
+              )}
+              <Link href="/auth/login" className="premium-button-outline w-full text-center block font-bold text-slate-600">Sign in to resume</Link>
+            </div>
+
+            <div className="space-y-4 pt-8 border-t border-slate-100">
+              <div className="text-[10px] font-bold text-slate-400 tracking-[0.2em] uppercase">Everything included</div>
+              {[
+                "Full Text Playbooks",
+                "Actionable Exercises",
+                "Mobile Reading Mode",
+                "Lifetime Updates",
+              ].map(item => (
+                <div key={item} className="flex gap-3 text-sm text-[#4B3F6B] font-medium">
+                  <svg className="w-5 h-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path d="M5 13l4 4L19 7" /></svg>
+                  {item}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-
-      </div>
+      </main>
     </div>
   );
 }
