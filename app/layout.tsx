@@ -3,6 +3,7 @@ import { Outfit, DM_Mono } from "next/font/google";
 import "./globals.css";
 import DisclaimerBar from "@/components/layout/DisclaimerBar";
 import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -47,6 +48,7 @@ export default function RootLayout({
         <main className="flex-1 w-full">
           {children}
         </main>
+        <Footer />
       </body>
     </html>
   );
