@@ -36,6 +36,7 @@ export default function CoursesPage() {
 
   const [search, setSearch] = useState("");
   const [filterPath, setFilterPath] = useState("all");
+  const [filterLevel, setFilterLevel] = useState("all");
 
   useEffect(() => {
     getAllCourses()
@@ -62,9 +63,10 @@ export default function CoursesPage() {
         if (!c.title?.toLowerCase().includes(q) && !c.description?.toLowerCase().includes(q)) return false;
       }
       if (filterPath !== "all" && c.learningPath !== filterPath) return false;
+      if (filterLevel !== "all" && c.tag?.toLowerCase() !== filterLevel.toLowerCase()) return false;
       return true;
     });
-  }, [courses, search, filterPath]);
+  }, [courses, search, filterPath, filterLevel]);
 
   if (loading) return (
     <div className="bg-[#F8FAFC] min-h-screen flex items-center justify-center">
@@ -73,39 +75,39 @@ export default function CoursesPage() {
   );
 
   return (
-    <div className="bg-[#F8FAFC] min-h-screen pb-20">
+    <div className="bg-[#F8FAFC] min-h-screen pb-20 font-sans">
       
       {/* ── HEADER ── */}
       <div className="premium-dark pt-32 pb-20 border-b border-[rgba(255,255,255,0.05)]">
-        <div className="max-w-6xl mx-auto px-8">
+        <div className="max-w-7xl mx-auto px-8">
           <div className="inline-flex items-center gap-2 bg-[rgba(139,92,246,0.1)] border border-[rgba(139,92,246,0.2)] rounded-full px-4 py-1.5 mb-6">
             <div className="premium-glow-dot" />
-            <span className="font-mono text-[10px] text-[#A78BFA] tracking-[0.2em] uppercase">Curriculum</span>
+            <span className="font-mono text-[10px] text-[#A78BFA] tracking-[0.2em] uppercase">Curriculum Explorer</span>
           </div>
-          <h1 className="text-5xl font-bold text-white tracking-tight leading-tight">
-            Master the Markets
+          <h1 className="text-4xl font-bold text-white tracking-tight leading-tight">
+            Our Learning Paths
           </h1>
-          <p className="text-[#94A3B8] text-lg mt-4 max-w-2xl">
-            Structured playbooks for retail investors. No videos, just high-signal reading 
-            and actionable exercises.
+          <p className="text-[#94A3B8] text-[16px] mt-2 max-w-2xl leading-relaxed">
+            High-density, text-first curriculum designed for quick scanning and decision making. 
+            No fluff. Filter by strategy to start your edge.
           </p>
         </div>
       </div>
 
       {/* ── CONTROLS ── */}
-      <div className="max-w-6xl mx-auto px-8 -mt-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-8 -mt-8 relative z-10">
         <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-xl flex flex-wrap gap-4 items-center">
-          <div className="relative flex-1 min-w-[240px]">
+          <div className="relative flex-1 min-w-[280px]">
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search by topic or title..."
-              className="w-full h-12 pl-12 pr-4 rounded-xl bg-slate-50 border-none text-sm focus:ring-2 focus:ring-violet-500/20 transition-all"
+              placeholder="Search by strategy, instrument or title..."
+              className="w-full h-12 pl-12 pr-4 rounded-xl bg-slate-50 border-none text-[13px] font-medium focus:ring-2 focus:ring-violet-500/20 transition-all"
             />
             <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
               <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
             </div>
           </div>
@@ -113,62 +115,98 @@ export default function CoursesPage() {
           <select 
             value={filterPath} 
             onChange={(e) => setFilterPath(e.target.value)}
-            className="h-12 px-6 rounded-xl bg-slate-50 border-none text-sm font-semibold text-[#1C0F3F] focus:ring-2 focus:ring-violet-500/20"
+            className="h-12 px-6 rounded-xl bg-slate-50 border-none text-[13px] font-bold text-[#1C0F3F] focus:ring-2 focus:ring-violet-500/20"
           >
             <option value="all">All Learning Paths</option>
             {uniquePaths.map(p => <option key={p} value={p}>{p.toUpperCase()}</option>)}
           </select>
+
+          <select 
+            value={filterLevel} 
+            onChange={(e) => setFilterLevel(e.target.value)}
+            className="h-12 px-6 rounded-xl bg-slate-50 border-none text-[13px] font-bold text-[#1C0F3F] focus:ring-2 focus:ring-violet-500/20"
+          >
+            <option value="all">Any Level</option>
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advanced">Advanced</option>
+          </select>
         </div>
       </div>
 
-      {/* ── GRID ── */}
-      <div className="max-w-6xl mx-auto px-8 mt-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {displayed.map((course) => (
-            <Link key={course._id} href={`/courses/${course.slug}`}>
-              <div className="bg-white border border-slate-200 rounded-2xl p-8 h-full flex flex-col hover:shadow-2xl hover:border-violet-200 hover:-translate-y-1 transition-all group">
-                <div className="flex justify-between items-start mb-8">
-                  <div className="p-3 bg-violet-50 rounded-2xl group-hover:bg-violet-600 group-hover:text-white transition-colors text-violet-600">
-                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                    </svg>
-                  </div>
-                  {course.badge && (
-                    <span className="bg-[#D4860A10] text-[#D4860A] text-[10px] font-bold px-3 py-1 rounded-full tracking-widest uppercase">
-                      {course.badge}
-                    </span>
-                  )}
-                </div>
-
-                <div className="flex-1">
-                  <div className="font-mono text-[10px] text-slate-400 tracking-[0.2em] uppercase mb-2">
-                    {course.tag || "Core Curriculum"}
-                  </div>
-                  <h3 className="text-2xl font-bold text-[#1C0F3F] leading-tight mb-4 group-hover:text-violet-600 transition-colors">
-                    {course.title}
-                  </h3>
-                  <p className="text-slate-500 text-sm leading-relaxed line-clamp-3">
-                    {course.description || course.subtitle}
-                  </p>
-                </div>
-
-                <div className="mt-10 pt-8 border-t border-slate-100 flex items-center justify-between">
-                  <div className="flex flex-col">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Access</span>
-                    <span className={`text-xs font-bold ${course.accessLevel === 'pro' ? 'text-[#D4860A]' : 'text-emerald-600'}`}>
-                      {course.accessLevel?.toUpperCase() || 'LEARNER+'}
-                    </span>
-                  </div>
-                  <div className="flex flex-col text-right">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Lessons</span>
-                    <span className="text-xs font-bold text-[#1C0F3F]">{course.lessonsCount || '—'} Modules</span>
-                  </div>
-                </div>
-              </div>
-            </Link>
-          ))}
+      {/* ── DATA TABLE ── */}
+      <div className="max-w-7xl mx-auto px-8 mt-12 overflow-hidden">
+        <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-x-auto">
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className="bg-slate-50 border-b border-slate-200">
+                <th className="px-6 py-4 text-left font-mono text-[10px] text-slate-400 tracking-widest uppercase font-bold">Strategy & Title</th>
+                <th className="px-6 py-4 text-left font-mono text-[10px] text-slate-400 tracking-widest uppercase font-bold">Level</th>
+                <th className="px-6 py-4 text-left font-mono text-[10px] text-slate-400 tracking-widest uppercase font-bold">Access</th>
+                <th className="px-6 py-4 text-left font-mono text-[10px] text-slate-400 tracking-widest uppercase font-bold">Duration</th>
+                <th className="px-6 py-4 text-right font-mono text-[10px] text-slate-400 tracking-widest uppercase font-bold">Action</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {displayed.length > 0 ? (
+                displayed.map((course) => (
+                  <tr 
+                    key={course._id} 
+                    className="hover:bg-slate-50/50 transition-colors cursor-pointer group"
+                    onClick={() => router.push(`/courses/${course.slug}`)}
+                  >
+                    <td className="px-6 py-5">
+                      <div>
+                        <div className="text-[14px] font-bold text-[#1C0F3F] mb-1 group-hover:text-violet-600 transition-colors">
+                          {course.title}
+                        </div>
+                        <div className="text-[12px] text-slate-400 line-clamp-1 max-w-lg">
+                          {course.subtitle || course.description}
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-5">
+                      <span className={`text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full border ${
+                        course.tag?.includes('Beginner') ? 'bg-emerald-50 text-emerald-600 border-emerald-100' :
+                        course.tag?.includes('Advanced') ? 'bg-rose-50 text-rose-600 border-rose-100' :
+                        'bg-violet-50 text-violet-600 border-violet-100'
+                      }`}>
+                        {course.tag || 'Core'}
+                      </span>
+                    </td>
+                    <td className="px-6 py-5">
+                      <span className={`text-[10px] font-bold tracking-widest uppercase ${
+                        course.accessLevel === 'free' ? 'text-emerald-500' : 'text-amber-500'
+                      }`}>
+                        {course.accessLevel || 'Learner+'}
+                      </span>
+                    </td>
+                    <td className="px-6 py-5 text-slate-400 text-[12px] font-mono">
+                      {course.duration || '—'}
+                    </td>
+                    <td className="px-6 py-5 text-right">
+                      <Link 
+                        href={`/courses/${course.slug}`}
+                        className="text-[11px] font-black uppercase tracking-widest text-[#D4860A] hover:text-[#F0A020] transition-colors"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        Start →
+                      </Link>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={5} className="px-6 py-20 text-center text-slate-400 text-sm italic">
+                    No results found for your search criteria.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
+
     </div>
   );
 }
