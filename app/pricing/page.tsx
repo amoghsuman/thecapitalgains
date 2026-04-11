@@ -2,91 +2,125 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import "@/app/premium-theme.css";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-type LearnTier = "none" | "free" | "learner" | "pro";
-type ResearchTier = "none" | "newsletter" | "essential" | "premium";
+type ServiceKey =
+  | "free"
+  | "learner"
+  | "pro"
+  | "newsletter"
+  | "essential"
+  | "premium"
+  | "doubt"
+  | "portfolio";
 
-type Tier = {
-  id: string;
+type BillingCycle = "monthly" | "annual";
+
+type Service = {
+  key: ServiceKey;
   name: string;
-  monthlyPrice: number;
-  annualPrice: number;
-  features: string[];
-  muted?: boolean;
-  badge?: string;
-  color?: string;
+  description: string;
+  price: number;
+  billingType: "free" | "subscription" | "one-time";
+  billingLabel: string;
 };
 
-// ─── Pricing Data ─────────────────────────────────────────────────────────────
+type TableRow =
+  | { kind: "divider"; label: string }
+  | { kind: "service"; service: Service };
 
-const learnTiers: Tier[] = [
+// ─── Data ─────────────────────────────────────────────────────────────────────
+
+const SERVICES: Service[] = [
   {
-    id: "free",
-    name: "FREE",
-    monthlyPrice: 0,
-    annualPrice: 0,
-    features: ["1 free lesson per course", "Newsletter preview"],
-    color: "emerald"
+    key: "free",
+    name: "Free Access",
+    description: "1 free lesson per course + newsletter preview",
+    price: 0,
+    billingType: "free",
+    billingLabel: "",
   },
   {
-    id: "learner",
-    name: "LEARNER",
-    monthlyPrice: 999,
-    annualPrice: 799,
-    features: ["All courses & lessons", "Progress tracking", "PDF playbooks"],
-    color: "violet"
+    key: "learner",
+    name: "Learner",
+    description: "All courses and lessons, progress tracking, PDF playbooks",
+    price: 999,
+    billingType: "subscription",
+    billingLabel: "/mo",
   },
   {
-    id: "pro",
-    name: "PRO",
-    monthlyPrice: 2499,
-    annualPrice: 1999,
-    features: [
-      "Everything in Learner",
-      "Early access to new courses",
-      "Session recordings",
-      "Workbooks",
-    ],
-    badge: "MOST POPULAR",
-    color: "amber"
+    key: "pro",
+    name: "Pro",
+    description: "Everything in Learner + early access to new courses, workbooks",
+    price: 2499,
+    billingType: "subscription",
+    billingLabel: "/mo",
+  },
+  {
+    key: "newsletter",
+    name: "Newsletter",
+    description: "Weekly market deep-dive, one trade setup per week",
+    price: 499,
+    billingType: "subscription",
+    billingLabel: "/mo",
+  },
+  {
+    key: "essential",
+    name: "Essential Research",
+    description: "3 model portfolios + rebalancing alerts, newsletter included",
+    price: 4999,
+    billingType: "subscription",
+    billingLabel: "/mo",
+  },
+  {
+    key: "premium",
+    name: "Premium Research",
+    description: "Everything in Essential + F&O notes, stock idea notes, monthly digest",
+    price: 12499,
+    billingType: "subscription",
+    billingLabel: "/mo",
+  },
+  {
+    key: "doubt",
+    name: "Doubt Session",
+    description: "45-minute 1:1 session to work through a specific trade, concept, or analysis",
+    price: 2999,
+    billingType: "one-time",
+    billingLabel: "/session",
+  },
+  {
+    key: "portfolio",
+    name: "Portfolio Review",
+    description: "Detailed written review of your current portfolio with actionable commentary",
+    price: 4999,
+    billingType: "one-time",
+    billingLabel: "/review",
   },
 ];
 
-const researchTiers: Tier[] = [
-  {
-    id: "newsletter",
-    name: "NEWSLETTER",
-    monthlyPrice: 499,
-    annualPrice: 399,
-    features: ["Weekly deep-dive", "One setup per week", "One concept per week"],
-    color: "slate"
-  },
-  {
-    id: "essential",
-    name: "ESSENTIAL",
-    monthlyPrice: 4999,
-    annualPrice: 3999,
-    features: ["Newsletter included", "3 model portfolios", "Rebalancing alerts"],
-    color: "violet"
-  },
-  {
-    id: "premium",
-    name: "PREMIUM",
-    monthlyPrice: 12499,
-    annualPrice: 9999,
-    features: [
-      "Everything in Essential",
-      "F&O notes",
-      "Stock idea notes",
-      "Monthly digest",
-    ],
-    badge: "MAX",
-    color: "amber"
-  },
+const SERVICE_MAP = Object.fromEntries(
+  SERVICES.map((s) => [s.key, s])
+) as Record<ServiceKey, Service>;
+
+const TABLE_ROWS: TableRow[] = [
+  { kind: "service", service: SERVICE_MAP["free"] },
+  { kind: "divider", label: "COURSES & LEARNING" },
+  { kind: "service", service: SERVICE_MAP["learner"] },
+  { kind: "service", service: SERVICE_MAP["pro"] },
+  { kind: "divider", label: "RESEARCH & ADVISORY" },
+  { kind: "service", service: SERVICE_MAP["newsletter"] },
+  { kind: "service", service: SERVICE_MAP["essential"] },
+  { kind: "service", service: SERVICE_MAP["premium"] },
+  { kind: "divider", label: "1:1 SESSIONS" },
+  { kind: "service", service: SERVICE_MAP["doubt"] },
+  { kind: "service", service: SERVICE_MAP["portfolio"] },
 ];
+
+// ─── Mutual exclusivity groups ────────────────────────────────────────────────
+
+const LEARN_GROUP: ServiceKey[] = ["learner", "pro"];
+const RESEARCH_GROUP: ServiceKey[] = ["newsletter", "essential", "premium"];
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -94,120 +128,174 @@ function fmt(n: number): string {
   return "₹" + n.toLocaleString("en-IN");
 }
 
-function resolvePrice(tier: Tier, annual: boolean): number {
-  if (tier.monthlyPrice === 0) return 0;
-  return annual ? tier.annualPrice : tier.monthlyPrice;
+function effectivePrice(service: Service, billing: BillingCycle): number {
+  if (service.billingType !== "subscription") return service.price;
+  return billing === "annual" ? Math.round(service.price * 0.8) : service.price;
 }
 
-// ─── Tier Card ────────────────────────────────────────────────────────────────
+// ─── Checkbox ─────────────────────────────────────────────────────────────────
 
-function TierCard({
-  tier,
-  price,
-  selected,
-  onClick,
-}: {
-  tier: Tier;
-  price: number;
-  selected: boolean;
-  onClick: () => void;
-}) {
+function Checkbox({ checked, free }: { checked: boolean; free?: boolean }) {
+  if (free) {
+    return (
+      <span className="font-mono text-[10px] text-[#D4860A] tracking-widest font-bold uppercase">
+        Included
+      </span>
+    );
+  }
   return (
-    <button
-      onClick={onClick}
-      className={`w-full text-left rounded-xl p-6 border transition-all relative group flex flex-col h-full shadow-sm ${
-        selected
-          ? "border-[#1E1245] bg-white shadow-md ring-2 ring-[rgba(30,18,69,0.08)]"
-          : "border-[rgba(30,18,69,0.12)] bg-white hover:border-[rgba(30,18,69,0.25)] hover:shadow-md"
+    <div
+      className={`w-5 h-5 rounded-[4px] border-2 flex items-center justify-center flex-shrink-0 transition-all ${
+        checked ? "bg-[#D4860A] border-[#D4860A]" : "border-[#C4B8E0] bg-white"
       }`}
     >
-      <div className="flex justify-between items-start mb-6">
-        <div className={`p-2 rounded-lg ${selected ? 'bg-[#1E1245] text-white' : 'bg-[#F5F3FF] text-[#8B7BAB] group-hover:bg-[#EDE9FF]'} transition-colors`}>
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-          </svg>
-        </div>
-        {tier.badge && (
-          <span className="bg-[#D4860A] text-white text-[9px] font-bold px-2 py-1 rounded tracking-widest uppercase">
-            {tier.badge}
-          </span>
-        )}
-      </div>
+      {checked && (
+        <svg width="11" height="11" fill="none" viewBox="0 0 12 12">
+          <path
+            d="M2 6l3 3 5-5"
+            stroke="white"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      )}
+    </div>
+  );
+}
 
-      <div className="font-mono text-[10px] text-slate-400 tracking-[0.2em] mb-1.5 uppercase font-bold">
-        {tier.name}
-      </div>
-      <div className="text-2xl font-bold text-[#1E1245] leading-none mb-6 font-mono">
-        {price === 0 ? "Free" : fmt(price)}
-        {price > 0 && (
-          <span className="text-xs font-normal text-[#8B7BAB] ml-1">/ mo</span>
+// ─── Total display ────────────────────────────────────────────────────────────
+
+function TotalDisplay({
+  subTotal,
+  oneTimeTotal,
+  billing,
+}: {
+  subTotal: number;
+  oneTimeTotal: number;
+  billing: BillingCycle;
+}) {
+  if (subTotal === 0 && oneTimeTotal === 0) {
+    return <div className="font-mono text-2xl font-bold text-white">Free</div>;
+  }
+
+  if (subTotal > 0 && oneTimeTotal > 0) {
+    return (
+      <div>
+        <div className="font-mono text-lg font-bold text-white leading-tight">
+          {fmt(subTotal)}
+          <span className="text-sm font-normal text-white/50">/mo</span>
+          <span className="text-sm font-normal text-white/40"> + </span>
+          {fmt(oneTimeTotal)}
+          <span className="text-sm font-normal text-white/50"> one-time</span>
+        </div>
+        {billing === "annual" && (
+          <div className="font-mono text-[10px] text-white/40 text-right mt-0.5">
+            billed annually
+          </div>
         )}
       </div>
-      
-      <div className="flex flex-col gap-3 flex-1">
-        {tier.features.map((f) => (
-          <div key={f} className="flex gap-3 items-start">
-            <div className="w-4 h-4 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0 mt-0.5">
-              <svg width="10" height="10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path d="M5 13l4 4L19 7" /></svg>
-            </div>
-            <span className="text-[13px] text-[#4B3F6B] leading-snug font-medium">{f}</span>
+    );
+  }
+
+  if (subTotal > 0) {
+    return (
+      <div>
+        <div className="font-mono text-2xl font-bold text-white leading-tight">
+          {fmt(subTotal)}
+          <span className="text-base font-normal text-white/50">/mo</span>
+        </div>
+        {billing === "annual" && (
+          <div className="font-mono text-[10px] text-white/40 text-right mt-0.5">
+            billed annually
           </div>
-        ))}
+        )}
       </div>
-    </button>
+    );
+  }
+
+  return (
+    <div className="font-mono text-2xl font-bold text-white leading-tight">
+      {fmt(oneTimeTotal)}
+      <span className="text-base font-normal text-white/50"> one-time</span>
+    </div>
   );
 }
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function PricingPage() {
-  const [annual, setAnnual] = useState(false);
-  const [selectedLearn, setSelectedLearn] = useState<LearnTier>("learner");
-  const [selectedResearch, setSelectedResearch] = useState<ResearchTier>("none");
+  const [selected, setSelected] = useState<Set<ServiceKey>>(new Set(["free"]));
+  const [billing, setBilling] = useState<BillingCycle>("monthly");
 
-  const learnTier = learnTiers.find((t) => t.id === selectedLearn);
-  const researchTier = researchTiers.find((t) => t.id === selectedResearch);
+  function toggle(key: ServiceKey) {
+    if (key === "free") return;
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (next.has(key)) {
+        next.delete(key);
+      } else {
+        if (LEARN_GROUP.includes(key)) LEARN_GROUP.forEach((k) => next.delete(k));
+        if (RESEARCH_GROUP.includes(key)) RESEARCH_GROUP.forEach((k) => next.delete(k));
+        next.add(key);
+      }
+      return next;
+    });
+  }
 
-  const learnPrice = learnTier ? resolvePrice(learnTier, annual) : 0;
-  const researchPrice = researchTier ? resolvePrice(researchTier, annual) : 0;
-  const total = learnPrice + researchPrice;
+  // Totals
+  const selectedSubs = SERVICES.filter(
+    (s) => selected.has(s.key) && s.billingType === "subscription"
+  );
+  const selectedOneTime = SERVICES.filter(
+    (s) => selected.has(s.key) && s.billingType === "one-time"
+  );
+  const subTotal = selectedSubs.reduce((sum, s) => sum + effectivePrice(s, billing), 0);
+  const oneTimeTotal = selectedOneTime.reduce((sum, s) => sum + s.price, 0);
+
+  // Pills (exclude free)
+  const selectedPills = SERVICES.filter(
+    (s) => selected.has(s.key) && s.billingType !== "free"
+  );
 
   return (
-    <div className="bg-[#FAFAF7] min-h-screen pb-32 font-sans">
+    <div className="bg-[#FAFAF7] min-h-screen pb-32">
 
-      {/* ── HEADER ── */}
+      {/* ── HERO ── */}
       <header className="bg-[#1E1245] py-20 text-center relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[100%] rounded-full bg-[rgba(139,92,246,0.1)] blur-[120px]" />
-          <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[100%] rounded-full bg-[rgba(99,102,241,0.08)] blur-[100px]" />
+          <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[100%] rounded-full bg-[rgba(139,92,246,0.08)] blur-[120px]" />
+          <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[100%] rounded-full bg-[rgba(99,102,241,0.06)] blur-[100px]" />
         </div>
-
-        <div className="max-w-4xl mx-auto px-8 relative z-10">
-          <div className="inline-flex items-center gap-3 bg-white/10 border border-white/15 rounded-full px-5 py-2 mb-8">
-            <span className="font-mono text-[11px] text-[#A78BFA] tracking-[0.3em] font-bold uppercase">Pricing</span>
+        <div className="max-w-3xl mx-auto px-8 relative z-10">
+          <div className="font-mono text-[11px] text-[#A78BFA] tracking-[0.3em] font-bold uppercase mb-4">
+            Pricing
           </div>
-          <h1 className="text-6xl font-bold text-white tracking-tight leading-tight mb-6">
-            Build your stack. <span className="text-[#D4860A]">Own your edge.</span>
+          <h1 className="text-5xl font-bold text-white leading-tight mb-4">
+            Choose what you need.
           </h1>
-          <p className="text-white/60 text-xl leading-relaxed max-w-2xl mx-auto mb-10">
-            Combine education and high-performance research.
-            No complex contracts. Just pure signal.
+          <p className="text-white/60 text-lg leading-relaxed max-w-xl mx-auto mb-10">
+            Pick any combination of services. Pay only for what you use.
           </p>
 
           {/* Billing toggle */}
           <div className="inline-flex items-center bg-white/10 border border-white/15 rounded-2xl p-1.5">
             <button
-              onClick={() => setAnnual(false)}
-              className={`px-8 py-3 rounded-xl text-sm font-bold tracking-tight transition-all ${
-                !annual ? "bg-white text-[#1E1245] shadow-xl" : "text-white/50 hover:text-white"
+              onClick={() => setBilling("monthly")}
+              className={`px-7 py-2.5 rounded-xl text-sm font-bold tracking-tight transition-all ${
+                billing === "monthly"
+                  ? "bg-white text-[#1E1245] shadow-lg"
+                  : "text-white/50 hover:text-white"
               }`}
             >
               Monthly
             </button>
             <button
-              onClick={() => setAnnual(true)}
-              className={`px-8 py-3 rounded-xl text-sm font-bold tracking-tight transition-all ${
-                annual ? "bg-white text-[#1E1245] shadow-xl" : "text-white/50 hover:text-white"
+              onClick={() => setBilling("annual")}
+              className={`px-7 py-2.5 rounded-xl text-sm font-bold tracking-tight transition-all ${
+                billing === "annual"
+                  ? "bg-white text-[#1E1245] shadow-lg"
+                  : "text-white/50 hover:text-white"
               }`}
             >
               Annual — Save 20%
@@ -216,110 +304,176 @@ export default function PricingPage() {
         </div>
       </header>
 
-      {/* ── BUILDER SECTION ── */}
-      <main className="max-w-6xl mx-auto px-8 pt-16 space-y-24">
-        
-        {/* Stack 01: Learn */}
-        <section>
-          <div className="flex items-center gap-4 mb-8">
-            <div className="w-10 h-10 rounded-xl bg-[#1E1245] text-white flex items-center justify-center font-bold">01</div>
-            <div>
-              <h2 className="text-2xl font-bold text-[#1E1245] tracking-tight">The Learning Stack</h2>
-              <p className="text-[#4B3F6B] text-sm font-medium">Step-by-step playbooks for market mastery.</p>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {learnTiers.map((tier) => (
-              <TierCard
-                key={tier.id}
-                tier={tier}
-                price={resolvePrice(tier, annual)}
-                selected={selectedLearn === tier.id}
-                onClick={() => setSelectedLearn(selectedLearn === tier.id ? "none" : tier.id as LearnTier)}
-              />
-            ))}
-          </div>
-        </section>
+      {/* ── PRICING TABLE ── */}
+      <div className="max-w-4xl mx-auto px-4 md:px-8 pt-12">
+        <div className="bg-white rounded-2xl shadow-sm overflow-hidden border border-[rgba(30,18,69,0.08)]">
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className="border-b border-[rgba(30,18,69,0.08)]">
+                <th className="text-left py-3 pl-5 pr-4 text-[11px] font-bold text-[#8B7BAB] tracking-[0.15em] uppercase w-[38%]">
+                  Service
+                </th>
+                <th className="hidden md:table-cell text-left py-3 px-4 text-[11px] font-bold text-[#8B7BAB] tracking-[0.15em] uppercase">
+                  Description
+                </th>
+                <th className="text-right py-3 px-4 text-[11px] font-bold text-[#8B7BAB] tracking-[0.15em] uppercase">
+                  Price
+                </th>
+                <th className="text-center py-3 pr-5 pl-2 text-[11px] font-bold text-[#8B7BAB] tracking-[0.15em] uppercase w-16">
+                  Select
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {TABLE_ROWS.map((row, i) => {
+                if (row.kind === "divider") {
+                  return (
+                    <tr key={`divider-${i}`} className="bg-[#F7F5FF]">
+                      <td
+                        colSpan={4}
+                        className="py-2 px-5 text-xs font-bold text-[#8B7BAB] tracking-widest uppercase"
+                      >
+                        {row.label}
+                      </td>
+                    </tr>
+                  );
+                }
 
-        {/* Stack 02: Research */}
-        <section>
-          <div className="flex items-center gap-4 mb-8">
-            <div className="w-10 h-10 rounded-xl bg-[#D4860A] text-white flex items-center justify-center font-bold">02</div>
-            <div>
-              <h2 className="text-2xl font-bold text-[#1E1245] tracking-tight">The Research Stack</h2>
-              <p className="text-[#4B3F6B] text-sm font-medium">Model portfolios and sectoral deep-dives.</p>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {researchTiers.map((tier) => (
-              <TierCard
-                key={tier.id}
-                tier={tier}
-                price={resolvePrice(tier, annual)}
-                selected={selectedResearch === tier.id}
-                onClick={() => setSelectedResearch(selectedResearch === tier.id ? "none" : tier.id as ResearchTier)}
-              />
-            ))}
-          </div>
-          <div className="mt-8 p-6 rounded-2xl border border-[rgba(30,18,69,0.12)] flex items-center justify-between gap-8">
-            <p className="text-xs font-medium text-[#4B3F6B] leading-relaxed max-w-xl">
-              ⚖ Research services are provided under SEBI Research Analyst regulations.
-              Individual fees are capped at ₹1.5L per annum. For institutional pricing,
-              please write to <span className="text-[#D4860A] font-bold">hello@thecapitalgains.com</span>
-            </p>
-            <div className="hidden sm:block px-4 py-2 bg-white rounded-lg border border-[rgba(30,18,69,0.12)] text-[10px] font-bold text-[#8B7BAB] tracking-widest uppercase">SEBI RA</div>
-          </div>
-        </section>
+                const { service } = row;
+                const isSelected = selected.has(service.key);
+                const isFree = service.billingType === "free";
+                const isOneTime = service.billingType === "one-time";
+                const displayPrice = effectivePrice(service, billing);
+                const showAnnualBadge =
+                  billing === "annual" && service.billingType === "subscription";
+                const showOneTimeMuted = billing === "annual" && isOneTime;
 
-        {/* BUNDLE SUMMARY */}
-        <section className="sticky bottom-0 z-50">
-          <div className="bg-[#1E1245] rounded-3xl p-10 shadow-2xl shadow-[#1E1245]/40 border border-white/10 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-violet-600/10 blur-[80px] rounded-full -mr-32 -mt-32" />
-            
-            <div className="flex flex-col lg:flex-row gap-12 items-center justify-between relative z-10">
-              <div className="flex-1">
-                <div className="font-mono text-[10px] text-violet-400 tracking-[0.3em] font-bold uppercase mb-6">Your Performance Bundle</div>
-                <div className="flex flex-wrap gap-4">
-                  {selectedLearn !== "none" && (
-                    <div className="px-5 py-3 bg-white/5 border border-white/10 rounded-2xl">
-                      <div className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">Learn</div>
-                      <div className="text-white font-bold">{learnTier?.name}</div>
-                    </div>
-                  )}
-                  {selectedResearch !== "none" && (
-                    <div className="px-5 py-3 bg-white/5 border border-white/10 rounded-2xl">
-                      <div className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-1">Research</div>
-                      <div className="text-white font-bold">{researchTier?.name}</div>
-                    </div>
-                  )}
-                  {selectedLearn === "none" && selectedResearch === "none" && (
-                    <div className="text-[#94A3B8] font-medium italic">No tiers selected. Choose from the stacks above.</div>
-                  )}
+                return (
+                  <tr
+                    key={service.key}
+                    onClick={() => toggle(service.key)}
+                    className={`border-b border-[rgba(30,18,69,0.06)] last:border-0 transition-colors select-none ${
+                      isFree ? "cursor-default" : "cursor-pointer"
+                    } ${isSelected ? "bg-[#F3F0FF]" : "bg-white hover:bg-[#FAFAF7]"}`}
+                  >
+                    {/* Name — carries the left border indicator */}
+                    <td
+                      className={`py-4 pr-4 pl-5 border-l-[3px] transition-colors ${
+                        isSelected ? "border-l-[#1E1245]" : "border-l-transparent"
+                      }`}
+                    >
+                      <div className="font-semibold text-[14px] text-[#1E1245] leading-snug">
+                        {service.name}
+                      </div>
+                      {/* Description visible inline on mobile only */}
+                      <div className="md:hidden text-[12px] text-[#8B7BAB] mt-0.5 leading-snug font-normal">
+                        {service.description}
+                      </div>
+                    </td>
+
+                    {/* Description — desktop only */}
+                    <td className="hidden md:table-cell py-4 px-4 text-[13px] text-[#6B7280] leading-snug">
+                      {service.description}
+                    </td>
+
+                    {/* Price */}
+                    <td className="py-4 px-4 text-right whitespace-nowrap align-top">
+                      <div className="flex flex-col items-end gap-1">
+                        <div className="flex items-baseline gap-1.5">
+                          <span className="font-mono text-[15px] font-bold text-[#1E1245]">
+                            {service.price === 0 ? "Free" : fmt(displayPrice)}
+                          </span>
+                          {service.billingLabel && (
+                            <span className="font-mono text-[11px] text-[#8B7BAB]">
+                              {service.billingLabel}
+                            </span>
+                          )}
+                        </div>
+                        {showAnnualBadge && (
+                          <span className="inline-flex items-center bg-[#E8F5EE] text-[#1A7A4A] text-[9px] font-bold px-1.5 py-0.5 rounded tracking-wide uppercase">
+                            Save 20%
+                          </span>
+                        )}
+                        {showOneTimeMuted && (
+                          <span className="text-[10px] text-[#8B7BAB] leading-none text-right">
+                            One-time · not affected
+                          </span>
+                        )}
+                      </div>
+                    </td>
+
+                    {/* Checkbox */}
+                    <td className="py-4 pr-5 pl-2 text-center align-middle">
+                      <div className="flex items-center justify-center">
+                        <Checkbox checked={isSelected} free={isFree} />
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+
+        {/* SEBI disclaimer */}
+        <p className="text-sm text-[#6B7280] text-center max-w-2xl mx-auto mt-8 mb-8 leading-relaxed">
+          ⚖ Research and advisory services are provided under SEBI (Research Analyst) Regulations,
+          2014. Registration No: [SEBI_RA_REG_NO]. Individual subscription fees are subject to
+          SEBI-prescribed caps (₹1.5L per annum). For institutional or bulk pricing, write to{" "}
+          <a
+            href="mailto:hello@thecapitalgains.com"
+            className="text-[#D4860A] hover:text-[#B8720A] transition-colors"
+          >
+            hello@thecapitalgains.com
+          </a>
+        </p>
+      </div>
+
+      {/* ── STICKY TOTAL BAR ── */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-[#1E1245] border-t border-white/10 px-6 py-4 shadow-2xl">
+        <div className="max-w-4xl mx-auto">
+          <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-8">
+
+            {/* Pills — full width on mobile, flex-1 on desktop */}
+            <div className="flex flex-wrap gap-2 flex-1 min-w-0">
+              {selectedPills.length === 0 ? (
+                <span className="text-white/40 text-sm italic">No services selected</span>
+              ) : (
+                selectedPills.map((s) => (
+                  <span
+                    key={s.key}
+                    className="bg-[#D4860A] text-white text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap"
+                  >
+                    {s.name}
+                  </span>
+                ))
+              )}
+            </div>
+
+            {/* Price + button — flex-row on both mobile and desktop */}
+            <div className="flex items-center justify-between md:justify-end gap-6 md:gap-8 flex-shrink-0">
+              <div className="text-right">
+                <div className="font-mono text-[10px] text-white/40 tracking-widest uppercase mb-0.5">
+                  Total
                 </div>
+                <TotalDisplay
+                  subTotal={subTotal}
+                  oneTimeTotal={oneTimeTotal}
+                  billing={billing}
+                />
               </div>
-
-              <div className="flex flex-col sm:flex-row items-center gap-10">
-                <div className="text-center sm:text-right">
-                  <div className="font-mono text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-2">Total Monthly</div>
-                  <div className="text-5xl font-bold text-white tracking-tight">
-                    {fmt(total)}
-                    <span className="text-lg font-normal text-slate-400 ml-2">/mo</span>
-                  </div>
-                  {annual && total > 0 && <div className="text-xs font-bold text-emerald-400 mt-2">Annual Billing Applied · Save 20%</div>}
-                </div>
-
-                <Link 
-                  href="/auth/signup" 
-                  className={`premium-button-primary !py-5 !px-10 text-base font-bold tracking-tight shadow-xl shadow-violet-600/30 transition-all ${total === 0 ? 'opacity-50 pointer-events-none' : ''}`}
-                >
-                  Confirm Subscription →
-                </Link>
-              </div>
+              <Link
+                href="/auth/signup"
+                className="bg-[#D4860A] hover:bg-[#B8720A] text-white font-bold rounded-xl px-6 py-3 text-sm tracking-tight transition-colors whitespace-nowrap"
+              >
+                Confirm Selection →
+              </Link>
             </div>
-          </div>
-        </section>
 
-      </main>
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 }
