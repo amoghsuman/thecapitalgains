@@ -9,44 +9,43 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
 
-  // Handle scroll effect for glassmorphism
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY > 10);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Check if we are on a page that should have a dark navbar by default (like Home)
   const isHomePage = pathname === "/";
+  const useDarkNav = (isHomePage && !scrolled) || scrolled;
   
   return (
     <nav 
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+      className={`fixed top-0 w-full z-50 transition-all duration-500 ${
         scrolled 
-          ? "premium-glass-nav py-3" 
+          ? "bg-[rgba(15,7,32,0.8)] backdrop-blur-xl border-b border-[rgba(255,255,255,0.05)] py-3" 
           : isHomePage 
-            ? "bg-transparent py-5" 
+            ? "bg-transparent py-6" 
             : "bg-white border-b border-slate-200 py-4"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-8 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between">
         {/* Logo */}
         <Link
           href="/"
-          className="flex items-center gap-2 group flex-shrink-0"
+          className="flex items-center gap-2.5 group flex-shrink-0"
         >
-          <div className="premium-glow-dot group-hover:scale-125 transition-transform" />
-          <span className={`font-bold text-lg tracking-tight transition-colors ${
-            (isHomePage && !scrolled) || (scrolled) ? "text-white" : "text-[#1C0F3F]"
+          <div className="w-2 h-2 rounded-full bg-violet-500 shadow-[0_0_10px_rgba(139,92,246,0.8)] group-hover:scale-125 transition-transform" />
+          <span className={`font-black text-sm tracking-[0.15em] transition-colors uppercase ${
+            useDarkNav ? "text-white" : "text-[#1C0F3F]"
           }`}>
             THE CAPITAL GAINS
           </span>
         </Link>
 
-        {/* Desktop nav links */}
-        <div className="hidden md:flex items-center gap-1 bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.05)] rounded-full px-1 py-1 backdrop-blur-md">
+        {/* Desktop nav links - Fixed Pill Style */}
+        <div className="hidden lg:flex items-center p-1 bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.08)] rounded-full backdrop-blur-xl">
           {[
             { label: "Courses", href: "/courses" },
             { label: "Portfolios", href: "/portfolios" },
@@ -58,12 +57,12 @@ export default function Navbar() {
               <Link
                 key={item.label}
                 href={item.href}
-                className={`px-5 py-2 text-[13px] font-semibold tracking-wide rounded-full transition-all ${
+                className={`px-6 py-2 text-[12px] font-bold tracking-wider rounded-full transition-all ${
                   isActive
-                    ? "bg-white text-[#1C0F3F] shadow-sm"
-                    : (isHomePage && !scrolled) || scrolled
-                      ? "text-[#94A3B8] hover:text-white"
-                      : "text-[#4B3F6B] hover:text-[#1C0F3F] hover:bg-slate-50"
+                    ? "bg-white text-[#1C0F3F] shadow-lg"
+                    : useDarkNav
+                      ? "text-slate-400 hover:text-white"
+                      : "text-slate-500 hover:text-[#1C0F3F]"
                 }`}
               >
                 {item.label}
@@ -73,32 +72,32 @@ export default function Navbar() {
         </div>
 
         {/* CTAs */}
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden md:flex items-center gap-6">
           <Link 
             href="/auth/login" 
-            className={`text-[13px] font-bold tracking-wide transition-colors ${
-              (isHomePage && !scrolled) || scrolled ? "text-[#94A3B8] hover:text-white" : "text-[#4B3F6B] hover:text-[#1C0F3F]"
+            className={`text-[12px] font-bold tracking-widest uppercase transition-colors ${
+              useDarkNav ? "text-slate-400 hover:text-white" : "text-slate-500 hover:text-[#1C0F3F]"
             }`}
           >
             Sign In
           </Link>
-          <Link href="/auth/signup" className="premium-button-primary !py-2 !px-5 text-[13px] font-bold tracking-tight">
-            Get Started Free
+          <Link href="/auth/signup" className="premium-button-primary !py-2.5 !px-6 text-[12px] font-extrabold tracking-widest uppercase">
+            Join Now
           </Link>
         </div>
 
         {/* Mobile hamburger */}
         <button
-          className={`md:hidden transition-colors ${
-            (isHomePage && !scrolled) || scrolled ? "text-white" : "text-[#1C0F3F]"
+          className={`lg:hidden transition-colors ${
+            useDarkNav ? "text-white" : "text-[#1C0F3F]"
           }`}
           onClick={() => setMenuOpen(!menuOpen)}
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
             {menuOpen ? (
-              <path d="M6 18L18 6M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              <path d="M6 18L18 6M6 6l12 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
             ) : (
-              <path d="M4 8h16M4 16h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              <path d="M4 8h16M4 16h16" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
             )}
           </svg>
         </button>
@@ -106,10 +105,10 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className={`md:hidden absolute top-full left-0 w-full border-t p-8 flex flex-col gap-4 shadow-2xl animate-in slide-in-from-top duration-300 ${
-          (isHomePage && !scrolled) || scrolled 
-            ? "premium-glass-nav border-[rgba(255,255,255,0.1)]" 
-            : "bg-white border-slate-200 text-[#1C0F3F]"
+        <div className={`lg:hidden absolute top-full left-0 w-full border-t p-10 flex flex-col gap-6 shadow-2xl animate-in fade-in slide-in-from-top-4 duration-300 ${
+          useDarkNav 
+            ? "bg-[#0F0720] border-[rgba(255,255,255,0.05)]" 
+            : "bg-white border-slate-100"
         }`}>
           {[
             { label: "Courses", href: "/courses" },
@@ -120,21 +119,17 @@ export default function Navbar() {
             <Link
               key={item.label}
               href={item.href}
-              className={`text-lg font-bold tracking-tight ${
-                (isHomePage && !scrolled) || scrolled ? "text-white hover:text-[#A78BFA]" : "text-[#1C0F3F] hover:text-violet-600"
+              className={`text-xl font-black tracking-tight ${
+                useDarkNav ? "text-white" : "text-[#1C0F3F]"
               }`}
               onClick={() => setMenuOpen(false)}
             >
               {item.label}
             </Link>
           ))}
-          <div className="flex flex-col gap-3 pt-6 border-t border-[rgba(255,255,255,0.1)]">
-            <Link href="/auth/signup" className="w-full text-center premium-button-primary font-bold">
-              Get Started Free
-            </Link>
-            <Link href="/auth/login" className="w-full text-center py-3 border border-[rgba(255,255,255,0.1)] rounded-xl text-sm font-bold text-[#94A3B8]">
-              Sign in
-            </Link>
+          <div className="grid grid-cols-2 gap-4 pt-6 border-t border-[rgba(255,255,255,0.05)]">
+            <Link href="/auth/login" className="premium-button-outline text-center !py-3">Sign In</Link>
+            <Link href="/auth/signup" className="premium-button-primary text-center !py-3">Join Now</Link>
           </div>
         </div>
       )}
