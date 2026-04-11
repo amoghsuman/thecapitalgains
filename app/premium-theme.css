@@ -1,0 +1,90 @@
+:root {
+  /* Premium Dark Theme - Midnight & Violet Palette */
+  --premium-bg: #0F0720;
+  --premium-surface: #1A1138;
+  --premium-surface-hover: #24194A;
+  --premium-border: rgba(255, 255, 255, 0.08);
+  --premium-border-hover: rgba(255, 255, 255, 0.15);
+  
+  --premium-primary: #8B5CF6; /* Violet-500 */
+  --premium-primary-glow: rgba(139, 92, 246, 0.2);
+  --premium-accent: #6366F1; /* Indigo-500 */
+  
+  --premium-text-primary: #FFFFFF;
+  --premium-text-secondary: #94A3B8; /* Slate-400 */
+  --premium-text-muted: #64748B; /* Slate-500 */
+  
+  --premium-gold: #D4860A;
+  --premium-gold-light: #F0A020;
+  
+  --premium-glass: rgba(26, 17, 56, 0.7);
+  --premium-glass-blur: 12px;
+}
+
+.premium-dark {
+  background-color: var(--premium-bg);
+  color: var(--premium-text-primary);
+}
+
+.premium-card {
+  background: var(--premium-surface);
+  border: 1px solid var(--premium-border);
+  border-radius: 1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.premium-card:hover {
+  border-color: var(--premium-border-hover);
+  background: var(--premium-surface-hover);
+  box-shadow: 0 0 20px var(--premium-primary-glow);
+  transform: translateY(-2px);
+}
+
+.premium-gradient-text {
+  background: linear-gradient(135deg, #FFFFFF 0%, #94A3B8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.premium-button-primary {
+  background: linear-gradient(135deg, var(--premium-primary) 0%, var(--premium-accent) 100%);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+.premium-button-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(139, 92, 246, 0.4);
+}
+
+.premium-button-outline {
+  border: 1px solid var(--premium-border);
+  color: var(--premium-text-primary);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
+  transition: all 0.2s;
+}
+
+.premium-button-outline:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--premium-text-secondary);
+}
+
+.premium-glass-nav {
+  background: var(--premium-glass);
+  backdrop-filter: blur(var(--premium-glass-blur));
+  border-bottom: 1px solid var(--premium-border);
+}
+
+.premium-glow-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--premium-primary);
+  box-shadow: 0 0 8px var(--premium-primary);
+}
