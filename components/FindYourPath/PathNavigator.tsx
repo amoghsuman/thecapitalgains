@@ -28,147 +28,32 @@ const HARVEY: Record<string, { depth: HBValue; priority: HBValue }> = {
 
 // ─── HarveyBall ───────────────────────────────────────────────────────────────
 
-function HarveyBall({ value, size = 14 }: { value: HBValue; size?: number }) {
-  const R = size / 2 - 0.8;
-  const cx = size / 2;
-  const cy = size / 2;
+function HarveyBall({ value, id, size = 16 }: { value: HBValue; id: string; size?: number }) {
+  const clipId = `hb-clip-${id}`;
 
+  let clipRect: React.ReactNode;
   if (value === "low") {
-    return (
-      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} aria-hidden="true">
-        <circle cx={cx} cy={cy} r={R} stroke="#1E1245" strokeWidth="1.2" fill="none" />
-      </svg>
-    );
+    clipRect = <rect x={0} y={0} width={0} height={0} />;
+  } else if (value === "medium-low") {
+    clipRect = <rect x={8} y={0} width={8} height={8} />;
+  } else if (value === "medium-high") {
+    clipRect = <rect x={8} y={0} width={8} height={16} />;
+  } else {
+    clipRect = <rect x={0} y={0} width={16} height={16} />;
   }
-  if (value === "high") {
-    return (
-      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} aria-hidden="true">
-        <circle cx={cx} cy={cy} r={R} stroke="#1E1245" strokeWidth="1.2" fill="#1E1245" />
-      </svg>
-    );
-  }
-
-  // 25% or 50% pie fill, clockwise from 12-o'clock
-  const pct = value === "medium-low" ? 0.25 : 0.5;
-  const angle = pct * 2 * Math.PI;
-  const endX = cx + R * Math.sin(angle);
-  const endY = cy - R * Math.cos(angle);
-  const largeArc = pct > 0.5 ? 1 : 0;
-  const slice = `M ${cx} ${cy} L ${cx} ${cy - R} A ${R} ${R} 0 ${largeArc} 1 ${endX} ${endY} Z`;
 
   return (
-    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} aria-hidden="true">
-      <circle cx={cx} cy={cy} r={R} stroke="#1E1245" strokeWidth="1.2" fill="none" />
-      <path d={slice} fill="#1E1245" />
+    <svg width={size} height={size} viewBox="0 0 16 16" aria-hidden="true">
+      <defs>
+        <clipPath id={clipId}>{clipRect}</clipPath>
+      </defs>
+      <circle cx={8} cy={8} r={7} stroke="#7C3AED" strokeWidth="1.2" fill="none" />
+      <circle cx={8} cy={8} r={7} fill="#7C3AED" clipPath={`url(#${clipId})`} />
     </svg>
   );
 }
 
-// ─── Persona icons ────────────────────────────────────────────────────────────
-
-function PersonaIcon({ personaKey }: { personaKey: string }) {
-  const p: React.SVGProps<SVGSVGElement> = {
-    width: 18, height: 18, viewBox: "0 0 18 18", fill: "none",
-    "aria-hidden": "true" as unknown as boolean,
-  };
-  switch (personaKey) {
-    case "fresh_grad":
-      return (
-        <svg {...p}>
-          <polygon points="9,2 1,6.5 9,11 17,6.5" fill="currentColor" opacity="0.85" />
-          <path d="M5 9.5v3c0 .9 1.8 1.5 4 1.5s4-.6 4-1.5V9.5" fill="currentColor" opacity="0.55" />
-          <line x1="17" y1="6.5" x2="17" y2="11.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-        </svg>
-      );
-    case "active_trader":
-      return (
-        <svg {...p}>
-          <polyline points="2,14 6,9 10,11 16,4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          <polyline points="13,4 16,4 16,7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      );
-    case "salaried_pro":
-      return (
-        <svg {...p}>
-          <rect x="2" y="7" width="14" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.3" />
-          <path d="M6 7V5.5A1.5 1.5 0 017.5 4h3A1.5 1.5 0 0112 5.5V7" stroke="currentColor" strokeWidth="1.3" />
-          <line x1="2" y1="11" x2="16" y2="11" stroke="currentColor" strokeWidth="1.3" />
-        </svg>
-      );
-    case "finance_student":
-      return (
-        <svg {...p}>
-          <path d="M2 4h6c.55 0 1 .45 1 1v10c0-.55-.45-1-1-1H2V4z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
-          <path d="M16 4h-6c-.55 0-1 .45-1 1v10c0-.55.45-1 1-1h6V4z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
-        </svg>
-      );
-    case "business_owner":
-      return (
-        <svg {...p}>
-          <rect x="2" y="5" width="14" height="11" rx="1" stroke="currentColor" strokeWidth="1.3" />
-          <line x1="2" y1="9" x2="16" y2="9" stroke="currentColor" strokeWidth="1.3" />
-          <rect x="5" y="11.5" width="3" height="4.5" stroke="currentColor" strokeWidth="1" />
-          <rect x="10" y="11.5" width="3" height="4.5" stroke="currentColor" strokeWidth="1" />
-          <path d="M6 5V3.5C6 2.7 7 2 9 2s3 .7 3 1.5V5" stroke="currentColor" strokeWidth="1.2" />
-        </svg>
-      );
-    case "hni":
-      return (
-        <svg {...p}>
-          <path d="M9 2L3.5 7H14.5L9 2z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" fill="currentColor" opacity="0.2" />
-          <path d="M3.5 7L6 16h6l2.5-9H3.5z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" fill="currentColor" opacity="0.1" />
-          <line x1="3.5" y1="7" x2="14.5" y2="7" stroke="currentColor" strokeWidth="1" />
-        </svg>
-      );
-    case "retiree":
-      return (
-        <svg {...p}>
-          <path d="M3 9C3 5.7 5.7 3 9 3s6 2.7 6 6H3z" stroke="currentColor" strokeWidth="1.3" />
-          <line x1="9" y1="9" x2="9" y2="14" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-          <path d="M9 14c0 1.2-1.5 1.5-1.5 1.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
-        </svg>
-      );
-    default:
-      return (
-        <svg {...p}>
-          <circle cx={9} cy={9} r={6} stroke="currentColor" strokeWidth="1.3" />
-        </svg>
-      );
-  }
-}
-
-// ─── Plan bar ─────────────────────────────────────────────────────────────────
-
-function PlanBar({ goal }: { goal: Goal }) {
-  return (
-    <div className="bg-[#1E1245] px-4 py-3 flex flex-row items-center gap-2 flex-wrap flex-shrink-0">
-      <span className="text-[10px] uppercase tracking-[0.1em] text-white/40 mr-2 flex-shrink-0">
-        SUGGESTED PLAN
-      </span>
-      {goal.suggestedLearn && (
-        <span className="text-white text-[11px] px-3 py-1 rounded-full bg-[rgba(255,255,255,0.12)]">
-          {goal.suggestedLearn}
-        </span>
-      )}
-      <span className="text-white text-[11px] px-3 py-1 rounded-full bg-[#D4860A]">
-        {goal.suggestedResearch}
-      </span>
-      {goal.suggestedSession && (
-        <span className="text-[#FAC775] text-[11px] px-3 py-1 rounded-full bg-[rgba(212,134,10,0.2)]">
-          {goal.suggestedSession}
-        </span>
-      )}
-      <Link
-        href="/pricing"
-        className="text-[11px] text-white/50 hover:text-white transition-colors ml-auto"
-      >
-        See pricing →
-      </Link>
-    </div>
-  );
-}
-
-// ─── Harvey Ball legend data ───────────────────────────────────────────────────
+// ─── Harvey Ball legend ────────────────────────────────────────────────────────
 
 const HB_LEGEND: { value: HBValue; label: string }[] = [
   { value: "low",         label: "Low"         },
@@ -177,20 +62,83 @@ const HB_LEGEND: { value: HBValue; label: string }[] = [
   { value: "high",        label: "High"        },
 ];
 
+// ─── Persona icons ────────────────────────────────────────────────────────────
+
+function PersonaIcon({ personaKey, selected }: { personaKey: string; selected: boolean }) {
+  const color = selected ? "#FFFFFF" : "#6D28D9";
+  const props = {
+    width: 18, height: 18, viewBox: "0 0 24 24", fill: "none" as const,
+    stroke: color, strokeWidth: 1.8, strokeLinecap: "round" as const, strokeLinejoin: "round" as const,
+    "aria-hidden": true as unknown as boolean,
+  };
+
+  switch (personaKey) {
+    case "fresh_grad":
+      return (
+        <svg {...props}>
+          <path d="M12 14l9-5-9-5-9 5 9 5z" />
+          <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+        </svg>
+      );
+    case "active_trader":
+      return (
+        <svg {...props}>
+          <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+        </svg>
+      );
+    case "salaried_pro":
+      return (
+        <svg {...props}>
+          <path d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z" />
+          <path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2" />
+        </svg>
+      );
+    case "finance_student":
+      return (
+        <svg {...props}>
+          <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+        </svg>
+      );
+    case "business_owner":
+      return (
+        <svg {...props}>
+          <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-2 10v-5a1 1 0 00-1-1h-2a1 1 0 00-1 1v5m4 0H9" />
+        </svg>
+      );
+    case "hni":
+      return (
+        <svg {...props}>
+          <path d="M12 3l9 6.75L12 21 3 9.75 12 3z" />
+        </svg>
+      );
+    case "retiree":
+      return (
+        <svg {...props}>
+          <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        </svg>
+      );
+    default:
+      return (
+        <svg {...props}>
+          <circle cx={12} cy={12} r={9} />
+        </svg>
+      );
+  }
+}
+
 // ─── PathNavigator ────────────────────────────────────────────────────────────
 
 export function PathNavigator() {
   const [activePersonaKey, setActivePersonaKey] = useState<string | null>(null);
-  const [activeGoalIndex, setActiveGoalIndex] = useState<number | null>(null);
-  const [connector, setConnector] = useState<ConnectorState>(null);
+  const [activeGoalIndex, setActiveGoalIndex]   = useState<number | null>(null);
+  const [connector, setConnector]               = useState<ConnectorState>(null);
 
-  const containerRef  = useRef<HTMLDivElement>(null);
-  const personaRefs   = useRef<Record<string, HTMLDivElement | null>>({});
-  const goalRefs      = useRef<(HTMLDivElement | null)[]>([]);
-  const firstCardRef  = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const personaRefs  = useRef<Record<string, HTMLDivElement | null>>({});
+  const goalRefs     = useRef<(HTMLDivElement | null)[]>([]);
+  const firstCardRef = useRef<HTMLDivElement | null>(null);
 
-  const activePersona =
-    personas.find((p) => p.key === activePersonaKey) ?? null;
+  const activePersona = personas.find((p) => p.key === activePersonaKey) ?? null;
   const activeGoal =
     activePersona && activeGoalIndex !== null
       ? (activePersona.goals[activeGoalIndex] ?? null)
@@ -212,22 +160,22 @@ export function PathNavigator() {
       return;
     }
 
-    const cRect  = containerRef.current.getBoundingClientRect();
-    const pEl    = personaRefs.current[activePersonaKey];
-    const gEl    = goalRefs.current[activeGoalIndex];
+    const cRect = containerRef.current.getBoundingClientRect();
+    const pEl   = personaRefs.current[activePersonaKey];
+    const gEl   = goalRefs.current[activeGoalIndex];
 
     if (!pEl || !gEl) { setConnector(null); return; }
 
-    const pRect  = pEl.getBoundingClientRect();
-    const gRect  = gEl.getBoundingClientRect();
+    const pRect = pEl.getBoundingClientRect();
+    const gRect = gEl.getBoundingClientRect();
 
     const A = {
-      x: pRect.right  - cRect.left,
-      y: pRect.top    + pRect.height / 2 - cRect.top,
+      x: pRect.right - cRect.left,
+      y: pRect.top + pRect.height / 2 - cRect.top,
     };
     const B = {
-      x: gRect.left   - cRect.left,
-      y: gRect.top    + gRect.height / 2 - cRect.top,
+      x: gRect.left - cRect.left,
+      y: gRect.top + gRect.height / 2 - cRect.top,
     };
 
     let C: { x: number; y: number } | null = null;
@@ -235,22 +183,19 @@ export function PathNavigator() {
       const fc = firstCardRef.current.getBoundingClientRect();
       C = {
         x: fc.left - cRect.left,
-        y: fc.top  + fc.height / 2 - cRect.top,
+        y: fc.top + fc.height / 2 - cRect.top,
       };
     }
 
-    // Single continuous cubic bezier A → B → C
-    const AB =
-      `C ${A.x + 60} ${A.y}, ${B.x - 60} ${B.y}, ${B.x} ${B.y}`;
-    const BC = C
-      ? ` C ${B.x + 60} ${B.y}, ${C.x - 60} ${C.y}, ${C.x} ${C.y}`
-      : "";
+    const d = C
+      ? `M ${A.x} ${A.y} C ${A.x + 80} ${A.y} ${B.x - 80} ${B.y} ${B.x} ${B.y} C ${B.x + 80} ${B.y} ${C.x - 80} ${C.y} ${C.x} ${C.y}`
+      : `M ${A.x} ${A.y} C ${A.x + 80} ${A.y} ${B.x - 80} ${B.y} ${B.x} ${B.y}`;
 
-    setConnector({ d: `M ${A.x} ${A.y} ${AB}${BC}`, A, B, C });
+    setConnector({ d, A, B, C });
   }, [activePersonaKey, activeGoalIndex]);
 
   useEffect(() => {
-    const t = setTimeout(updateConnector, 40);
+    const t = setTimeout(updateConnector, 50);
     return () => clearTimeout(t);
   }, [updateConnector]);
 
@@ -262,80 +207,90 @@ export function PathNavigator() {
   // ── Render ──────────────────────────────────────────────────────────────────
 
   return (
-    <section className="bg-[#FAFAF7] py-20 px-4">
+    <section style={{ backgroundColor: "#FAFAF7", padding: "80px 16px" }}>
 
       {/* Section heading */}
-      <div className="max-w-5xl mx-auto mb-8">
-        <p className="text-[11px] uppercase tracking-[0.12em] font-medium text-[#8B7BAB] mb-2">
+      <div style={{ maxWidth: "80rem", margin: "0 auto 20px" }}>
+        <p style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 600, color: "#7C3AED", marginBottom: 8 }}>
           FIND YOUR PATH
         </p>
-        <h2 className="text-[28px] font-semibold text-[#1E1245] mb-1.5">
+        <h2 style={{ fontSize: 28, fontWeight: 700, color: "#1E1B4B", marginBottom: 6 }}>
           Where do you start?
         </h2>
-        <p className="text-sm text-[#6B7280]">
+        <p style={{ fontSize: 14, color: "#6B7280" }}>
           Select who you are, then your goal. We&apos;ll map your learning path.
         </p>
       </div>
 
       {/* Harvey Ball legend */}
-      <div className="max-w-5xl mx-auto mb-4 flex items-center gap-4 flex-wrap">
-        <span className="text-[11px] font-medium text-[#1E1245] mr-2">HARVEY BALLS —</span>
+      <div style={{ maxWidth: "80rem", margin: "0 auto 16px", display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap" as const }}>
+        <span style={{ fontSize: 13, fontWeight: 700, color: "#7C3AED", marginRight: 4 }}>
+          Harvey Balls —
+        </span>
         {HB_LEGEND.map(({ value, label }) => (
-          <span key={value} className="flex items-center gap-1.5">
-            <HarveyBall value={value} size={12} />
-            <span className="text-[10px] uppercase tracking-wider text-[#8B7BAB]">{label}</span>
+          <span key={value} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+            <HarveyBall value={value} id={`legend-${value}`} size={14} />
+            <span style={{ fontSize: 13, color: "#374151" }}>{label}</span>
           </span>
         ))}
       </div>
 
-      {/* Horizontal scroll on very narrow screens */}
-      <div className="max-w-5xl mx-auto overflow-x-auto">
+      {/* Grid container */}
+      <div style={{ maxWidth: "80rem", margin: "0 auto", overflowX: "auto" }}>
         <div
           ref={containerRef}
-          className="relative overflow-hidden rounded-2xl bg-white border border-[rgba(124,58,237,0.15)] grid grid-cols-1 md:grid-cols-[200px_240px_1fr] md:min-h-[480px]"
+          style={{
+            position: "relative",
+            display: "grid",
+            gridTemplateColumns: "200px 220px 1fr",
+            border: "1.5px solid #DDD6FE",
+            borderRadius: 12,
+            overflow: "hidden",
+            background: "#FFFFFF",
+            minWidth: 640,
+          }}
+          className="!grid-cols-1 md:!grid-cols-[200px_220px_1fr]"
         >
-          {/* ── SVG connector (desktop only) ── */}
+
+          {/* SVG connector — desktop only */}
           {connector && (
-            <>
-              <style>{`
-                @keyframes tcg-path-draw {
-                  from { stroke-dashoffset: 900; opacity: 0; }
-                  to   { stroke-dashoffset: 0;   opacity: 0.75; }
-                }
-                .tcg-path { stroke-dasharray: 900; animation: tcg-path-draw 0.4s ease forwards; }
-              `}</style>
-              <svg
-                aria-hidden="true"
-                className="hidden md:block"
-                style={{
-                  position: "absolute", top: 0, left: 0,
-                  width: "100%", height: "100%",
-                  pointerEvents: "none", zIndex: 10, overflow: "visible",
-                }}
-              >
-                <path
-                  key={connector.d}
-                  d={connector.d}
-                  stroke="#D4860A"
-                  strokeWidth="1.5"
-                  fill="none"
-                  className="tcg-path"
-                />
-                <circle cx={connector.A.x} cy={connector.A.y} r={4} fill="#D4860A" />
-                <circle cx={connector.B.x} cy={connector.B.y} r={4} fill="#D4860A" />
-                {connector.C && (
-                  <circle cx={connector.C.x} cy={connector.C.y} r={4} fill="#D4860A" />
-                )}
-              </svg>
-            </>
+            <svg
+              aria-hidden="true"
+              style={{
+                position: "absolute", top: 0, left: 0,
+                width: "100%", height: "100%",
+                pointerEvents: "none", zIndex: 20, overflow: "visible",
+                display: "none",
+              }}
+              className="!hidden md:!block"
+            >
+              <path
+                key={connector.d}
+                d={connector.d}
+                stroke="#0D9488"
+                strokeWidth="1.5"
+                fill="none"
+              />
+              <circle cx={connector.A.x} cy={connector.A.y} r={4} fill="#0D9488" />
+              <circle cx={connector.B.x} cy={connector.B.y} r={4} fill="#0D9488" />
+              {connector.C && (
+                <circle cx={connector.C.x} cy={connector.C.y} r={4} fill="#0D9488" />
+              )}
+            </svg>
           )}
 
           {/* ─────────────── Column 1: Who are you? ─────────────── */}
-          <div className="flex flex-col bg-[#FAFAF7] border-b md:border-b-0 md:border-r border-[rgba(124,58,237,0.12)]">
-            <div className="py-3.5 px-4 border-b border-[rgba(124,58,237,0.10)] text-[10px] uppercase tracking-[0.1em] font-semibold text-[#7C3AED] flex-shrink-0">
+          <div style={{ background: "#FFFFFF", borderRight: "1px solid #EDE9FE", display: "flex", flexDirection: "column" }}>
+            <div style={{
+              padding: "16px 16px 12px",
+              fontSize: 11, fontWeight: 700, letterSpacing: "0.1em",
+              textTransform: "uppercase" as const, color: "#7C3AED",
+              borderBottom: "1px solid #EDE9FE",
+              flexShrink: 0,
+            }}>
               WHO ARE YOU
             </div>
-            <div className="py-2">
+            <div style={{ padding: 12, display: "flex", flexDirection: "column" as const, gap: 8 }}>
               {personas.map((persona) => {
                 const isActive = activePersonaKey === persona.key;
                 return (
@@ -343,16 +298,22 @@ export function PathNavigator() {
                     key={persona.key}
                     ref={(el) => { personaRefs.current[persona.key] = el; }}
                     onClick={() => selectPersona(persona.key)}
-                    className={`flex items-center gap-2.5 mx-2 my-1 px-3.5 py-2.5 rounded-lg text-[13px] cursor-pointer transition-all duration-150 ${
-                      isActive
-                        ? "bg-[#1E1245] text-white font-medium"
-                        : "text-[#3C3489] hover:bg-[rgba(124,58,237,0.08)]"
-                    }`}
+                    style={{
+                      display: "flex", alignItems: "center", gap: 10,
+                      padding: "10px 14px",
+                      borderRadius: 10,
+                      background: isActive ? "#7C3AED" : "#EDE9FE",
+                      fontSize: 13,
+                      fontWeight: isActive ? 600 : 500,
+                      color: isActive ? "#FFFFFF" : "#1E1B4B",
+                      cursor: "pointer",
+                      transition: "all 150ms",
+                    }}
                   >
-                    <span className="flex-shrink-0 opacity-80">
-                      <PersonaIcon personaKey={persona.key} />
+                    <span style={{ flexShrink: 0 }}>
+                      <PersonaIcon personaKey={persona.key} selected={isActive} />
                     </span>
-                    <span className="leading-snug">{persona.label}</span>
+                    <span style={{ lineHeight: "1.3" }}>{persona.label}</span>
                   </div>
                 );
               })}
@@ -360,148 +321,256 @@ export function PathNavigator() {
           </div>
 
           {/* ─────────────── Column 2: Your goal ─────────────── */}
-          <div
-            className={`flex flex-col bg-white border-b md:border-b-0 md:border-r border-[rgba(124,58,237,0.12)] ${
-              !activePersona ? "hidden md:flex" : "flex"
-            }`}
-          >
-            <div className="py-3.5 px-4 border-b border-[rgba(30,18,69,0.08)] text-[10px] uppercase tracking-[0.1em] font-semibold text-[#D4860A] flex-shrink-0">
+          <div style={{ background: "#FFFFFF", borderRight: "1px solid #EDE9FE", display: "flex", flexDirection: "column" }}>
+            <div style={{
+              padding: "16px 16px 12px",
+              fontSize: 11, fontWeight: 700, letterSpacing: "0.1em",
+              textTransform: "uppercase" as const, color: "#0D9488",
+              borderBottom: "1px solid #EDE9FE",
+              flexShrink: 0,
+            }}>
               YOUR GOAL
             </div>
+
             {!activePersona ? (
-              <div className="flex-1 flex items-center justify-center py-12 px-4 text-[13px] text-[#C4B8E0] text-center">
+              <div style={{ padding: "40px 16px", textAlign: "center" as const, fontSize: 13, color: "#9CA3AF" }}>
                 ← Select who you are
               </div>
             ) : (
-              <div className="py-2">
+              <div style={{ padding: 12, display: "flex", flexDirection: "column" as const, gap: 8 }}>
                 {activePersona.goals.map((goal, i) => {
                   const isActive = activeGoalIndex === i;
                   return (
-                    <div
+                    <GoalItem
                       key={i}
-                      ref={(el) => { goalRefs.current[i] = el; }}
+                      label={goal.label}
+                      isActive={isActive}
                       onClick={() => selectGoal(i)}
-                      className={`flex items-start gap-2 mx-2 my-1 px-3.5 py-2.5 rounded-lg text-[13px] cursor-pointer border transition-all duration-150 ${
-                        isActive
-                          ? "bg-[#D4860A] text-white border-[#D4860A] font-medium"
-                          : "text-[#1E1245] border-[rgba(30,18,69,0.10)] hover:border-[rgba(30,18,69,0.25)]"
-                      }`}
-                    >
-                      <span
-                        className={`flex-shrink-0 mt-0.5 text-[14px] leading-none ${
-                          isActive ? "text-white" : "text-[#C4B8E0]"
-                        }`}
-                      >
-                        ›
-                      </span>
-                      <span className="leading-snug">{goal.label}</span>
-                    </div>
+                      refCallback={(el) => { goalRefs.current[i] = el; }}
+                    />
                   );
                 })}
               </div>
             )}
           </div>
 
-          {/* ─────────────── Column 3: Learning path ─────────────── */}
-          <div
-            className={`flex flex-col bg-[#FAFAF7] ${
-              !activeGoal ? "hidden md:flex" : "flex"
-            }`}
-          >
-            <div className="py-3.5 px-4 border-b border-[rgba(30,18,69,0.08)] text-[10px] uppercase tracking-[0.1em] font-semibold text-[#1E1245] flex-shrink-0">
+          {/* ─────────────── Column 3: Your learning path ─────────────── */}
+          <div style={{ background: "#FFFFFF", display: "flex", flexDirection: "column" }}>
+            <div style={{
+              padding: "16px 16px 12px",
+              fontSize: 11, fontWeight: 700, letterSpacing: "0.1em",
+              textTransform: "uppercase" as const, color: "#1E1B4B",
+              borderBottom: "1px solid #EDE9FE",
+              flexShrink: 0,
+            }}>
               YOUR LEARNING PATH
             </div>
 
             {!activeGoal ? (
-              <div className="flex-1 flex items-center justify-center py-12 px-4 text-[13px] text-[#C4B8E0] text-center">
+              <div style={{ padding: "40px 16px", textAlign: "center" as const, fontSize: 13, color: "#9CA3AF" }}>
                 ← Select your goal to see your path
               </div>
             ) : activeGoal.courses.length === 0 ? (
               /* HNI / no-courses case */
-              <>
-                <div className="flex-1 p-4">
-                  <div
-                    className="bg-[#F3F0FF] rounded-lg px-5 py-4 text-[13px] text-[#1E1245] leading-relaxed"
-                    style={{ borderLeft: "3px solid #1E1245" }}
-                  >
-                    At your level, courses are secondary. Your path starts with research.
-                  </div>
+              <div style={{ padding: 16, flex: 1 }}>
+                <div style={{
+                  borderLeft: "3px solid #0D9488",
+                  background: "#F0FDFA",
+                  borderRadius: 8,
+                  padding: 16,
+                  fontSize: 13,
+                  color: "#0D9488",
+                }}>
+                  At your level, courses are secondary. Your path starts with research.
                 </div>
-                <PlanBar goal={activeGoal} />
-              </>
+                <SuggestedPlan goal={activeGoal} />
+              </div>
             ) : (
-              /* Course cards */
-              <>
-                <div className="flex-1 flex flex-col gap-3 px-4 py-4">
+              <div style={{ padding: 16, flex: 1, display: "flex", flexDirection: "column" as const }}>
+                {/* Sub-category label */}
+                <span style={{
+                  fontSize: 11,
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase" as const,
+                  color: "#0D9488",
+                  fontWeight: 600,
+                  paddingBottom: 8,
+                  borderBottom: "1px solid #0D9488",
+                  marginBottom: 16,
+                  display: "block",
+                }}>
+                  {activeGoal.label}
+                </span>
+
+                {/* Cards grid */}
+                <div style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fill, minmax(190px, 1fr))",
+                  gap: 12,
+                  flex: 1,
+                }}>
                   {activeGoal.courses.map((course, index) => {
                     const metrics = HARVEY[course.slug];
                     return (
                       <div
                         key={course.slug}
-                        id={index === 0 ? "first-course-card" : undefined}
                         ref={index === 0 ? (el) => { firstCardRef.current = el; } : undefined}
                       >
-                        <Link
-                          href={`/courses/${course.slug}`}
-                          className="block bg-white border border-[rgba(30,18,69,0.12)] rounded-[10px] p-[14px] hover:border-[rgba(30,18,69,0.3)] hover:shadow-[0_2px_8px_rgba(30,18,69,0.08)] transition-all duration-150"
-                        >
-                          {/* Top row: badge + title + START HERE */}
-                          <div className="flex items-start gap-2">
-                            <div className="w-5 h-5 rounded-full bg-[#1E1245] text-white text-[11px] font-medium flex items-center justify-center flex-shrink-0 mt-0.5">
-                              {index + 1}
-                            </div>
-                            <span className="text-[13px] font-semibold text-[#1E1245] leading-snug flex-1">
-                              {course.title}
-                            </span>
-                            {index === 0 && (
-                              <span className="ml-auto text-[10px] uppercase tracking-wide bg-[#D4860A] text-white px-2 py-0.5 rounded-full flex-shrink-0">
-                                START HERE
-                              </span>
-                            )}
-                          </div>
-
-                          {/* Reason */}
-                          <p className="text-[12px] text-[#6B7280] leading-relaxed mt-2 pl-7">
-                            {course.reason}
-                          </p>
-
-                          {/* Harvey Ball metrics */}
-                          {metrics && (
-                            <div className="flex items-center gap-4 mt-2 pl-7">
-                              <span className="flex items-center gap-1.5">
-                                <HarveyBall value={metrics.depth} size={13} />
-                                <span className="text-[10px] uppercase tracking-wider text-[#8B7BAB]">
-                                  Depth
-                                </span>
-                              </span>
-                              <span className="flex items-center gap-1.5">
-                                <HarveyBall value={metrics.priority} size={13} />
-                                <span className="text-[10px] uppercase tracking-wider text-[#8B7BAB]">
-                                  Priority
-                                </span>
-                              </span>
-                            </div>
-                          )}
-
-                          {/* Start → */}
-                          <div className="text-right mt-3">
-                            <span className="text-[11px] text-[#D4860A] font-medium">
-                              Start →
-                            </span>
-                          </div>
-                        </Link>
+                        <CourseCard
+                          course={course}
+                          index={index}
+                          metrics={metrics}
+                        />
                       </div>
                     );
                   })}
                 </div>
 
-                <PlanBar goal={activeGoal} />
-              </>
+                <SuggestedPlan goal={activeGoal} />
+              </div>
             )}
           </div>
 
         </div>
       </div>
     </section>
+  );
+}
+
+// ─── Goal item ────────────────────────────────────────────────────────────────
+
+function GoalItem({
+  label, isActive, onClick, refCallback,
+}: {
+  label: string;
+  isActive: boolean;
+  onClick: () => void;
+  refCallback: (el: HTMLDivElement | null) => void;
+}) {
+  const [hovered, setHovered] = useState(false);
+
+  const bg     = isActive ? "#0D9488" : hovered ? "#F0FDFA" : "#FFFFFF";
+  const border = isActive ? "#0D9488" : hovered ? "#99F6E4" : "#E5E7EB";
+  const color  = isActive ? "#FFFFFF" : "#374151";
+  const iconC  = isActive ? "#FFFFFF" : "#9CA3AF";
+
+  return (
+    <div
+      ref={refCallback}
+      onClick={onClick}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        display: "flex", alignItems: "center", gap: 10,
+        padding: "10px 14px",
+        borderRadius: 8,
+        background: bg,
+        border: `1px solid ${border}`,
+        fontSize: 13, fontWeight: isActive ? 600 : 500,
+        color,
+        cursor: "pointer",
+        transition: "all 150ms",
+      }}
+    >
+      {/* Chevron right */}
+      <svg width={16} height={16} viewBox="0 0 24 24" fill="none"
+        stroke={iconC} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"
+        style={{ flexShrink: 0 }} aria-hidden="true"
+      >
+        <path d="M9 5l7 7-7 7" />
+      </svg>
+      <span style={{ lineHeight: "1.3" }}>{label}</span>
+    </div>
+  );
+}
+
+// ─── Course card ──────────────────────────────────────────────────────────────
+
+function CourseCard({
+  course, index, metrics,
+}: {
+  course: { title: string; slug: string; reason: string };
+  index: number;
+  metrics?: { depth: HBValue; priority: HBValue };
+}) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <Link
+      href={`/courses/${course.slug}`}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        display: "flex", flexDirection: "column",
+        background: "#FFFFFF",
+        border: `1px solid ${hovered ? "#D1D5DB" : "#E5E7EB"}`,
+        borderRadius: 8,
+        padding: 16,
+        textDecoration: "none",
+        transition: "border-color 150ms",
+        height: "100%",
+      }}
+    >
+      {/* Index badge + title row */}
+      <div style={{ display: "flex", alignItems: "flex-start", gap: 8, marginBottom: 8 }}>
+        <span style={{
+          width: 20, height: 20, borderRadius: "50%",
+          background: index === 0 ? "#0D9488" : "#EDE9FE",
+          color: index === 0 ? "#FFFFFF" : "#7C3AED",
+          fontSize: 11, fontWeight: 600,
+          display: "flex", alignItems: "center", justifyContent: "center",
+          flexShrink: 0, marginTop: 1,
+        }}>
+          {index + 1}
+        </span>
+        <span style={{ fontSize: 14, fontWeight: 600, color: "#111827", lineHeight: 1.4, flex: 1 }}>
+          {course.title}
+        </span>
+      </div>
+
+      {/* Description */}
+      <p style={{ fontSize: 13, color: "#6B7280", lineHeight: 1.5, flex: 1, marginBottom: 12 }}>
+        {course.reason}
+      </p>
+
+      {/* Harvey Ball metrics */}
+      {metrics && (
+        <div style={{ display: "flex", gap: 12, alignItems: "center", marginTop: "auto" }}>
+          {/* Depth */}
+          <span style={{ display: "flex", gap: 4, alignItems: "center" }}>
+            <span style={{
+              background: "#EDE9FE", color: "#7C3AED",
+              fontSize: 10, fontWeight: 600, padding: "2px 6px", borderRadius: 4,
+            }}>
+              DEPTH
+            </span>
+            <HarveyBall value={metrics.depth} id={`${course.slug}-depth`} size={16} />
+          </span>
+          {/* Priority */}
+          <span style={{ display: "flex", gap: 4, alignItems: "center" }}>
+            <span style={{
+              background: "#CCFBF1", color: "#0D9488",
+              fontSize: 10, fontWeight: 600, padding: "2px 6px", borderRadius: 4,
+            }}>
+              PRIORITY
+            </span>
+            <HarveyBall value={metrics.priority} id={`${course.slug}-priority`} size={16} />
+          </span>
+        </div>
+      )}
+    </Link>
+  );
+}
+
+// ─── Suggested plan bar ───────────────────────────────────────────────────────
+
+function SuggestedPlan({ goal }: { goal: Goal }) {
+  return (
+    <p style={{ marginTop: 12, fontSize: 12, color: "#6B7280" }}>
+      Suggested plan based on your selection —{" "}
+      <Link href="/pricing" style={{ color: "#0D9488", textDecoration: "none" }}>
+        see pricing →
+      </Link>
+    </p>
   );
 }
