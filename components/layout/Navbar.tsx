@@ -1,21 +1,42 @@
 ﻿"use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import "@/app/premium-theme.css";
+import { createClient } from "@/lib/supabase/client";
+import type { User } from "@supabase/supabase-js";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
   const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    const supabase = createClient();
+    // Hydrate initial session
+    supabase.auth.getSession().then(({ data }) => {
+      setUser(data.session?.user ?? null);
+    });
+    // Keep in sync on login / logout
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+    return () => subscription.unsubscribe();
+  }, []);
+
+  async function handleSignOut() {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    router.push("/");
+  }
 
   const isHomePage = pathname === "/";
   const useDarkNav = (isHomePage && !scrolled) || scrolled;
@@ -73,17 +94,40 @@ export default function Navbar() {
 
         {/* CTAs */}
         <div className="hidden md:flex items-center gap-6">
-          <Link 
-            href="/auth/login" 
-            className={`text-[12px] font-bold tracking-widest uppercase transition-colors ${
-              useDarkNav ? "text-slate-400 hover:text-white" : "text-slate-500 hover:text-[#1C0F3F]"
-            }`}
-          >
-            Sign In
-          </Link>
-          <Link href="/auth/signup" className="premium-button-primary !py-2.5 !px-6 text-[12px] font-extrabold tracking-widest uppercase">
-            Join Now
-          </Link>
+          {user ? (
+            <>
+              <Link
+                href="/dashboard"
+                className={`text-[12px] font-bold tracking-widest uppercase transition-colors ${
+                  useDarkNav ? "text-slate-400 hover:text-white" : "text-slate-500 hover:text-[#1C0F3F]"
+                }`}
+              >
+                My Account
+              </Link>
+              <button
+                onClick={handleSignOut}
+                className={`text-[12px] font-bold tracking-widest uppercase transition-colors ${
+                  useDarkNav ? "text-slate-400 hover:text-white" : "text-slate-500 hover:text-[#1C0F3F]"
+                }`}
+              >
+                Sign Out
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/auth/login"
+                className={`text-[12px] font-bold tracking-widest uppercase transition-colors ${
+                  useDarkNav ? "text-slate-400 hover:text-white" : "text-slate-500 hover:text-[#1C0F3F]"
+                }`}
+              >
+                Sign In
+              </Link>
+              <Link href="/auth/signup" className="premium-button-primary !py-2.5 !px-6 text-[12px] font-extrabold tracking-widest uppercase">
+                Join Now
+              </Link>
+            </>
+          )}
         </div>
 
         {/* Mobile hamburger */}
@@ -128,8 +172,17 @@ export default function Navbar() {
             </Link>
           ))}
           <div className="grid grid-cols-2 gap-4 pt-6 border-t border-[rgba(255,255,255,0.05)]">
-            <Link href="/auth/login" className="premium-button-outline text-center !py-3">Sign In</Link>
-            <Link href="/auth/signup" className="premium-button-primary text-center !py-3">Join Now</Link>
+            {user ? (
+              <>
+                <Link href="/dashboard" className="premium-button-outline text-center !py-3" onClick={() => setMenuOpen(false)}>My Account</Link>
+                <button onClick={handleSignOut} className="premium-button-primary text-center !py-3">Sign Out</button>
+              </>
+            ) : (
+              <>
+                <Link href="/auth/login" className="premium-button-outline text-center !py-3">Sign In</Link>
+                <Link href="/auth/signup" className="premium-button-primary text-center !py-3">Join Now</Link>
+              </>
+            )}
           </div>
         </div>
       )}

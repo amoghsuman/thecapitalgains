@@ -26,7 +26,7 @@ export default function LoginPage() {
       return
     }
 
-    router.push('/courses')
+    router.push('/dashboard')
   }
 
   async function handleGoogleSignIn() {
