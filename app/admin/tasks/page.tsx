@@ -1,26 +1,38 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 
+type Task = {
+  id: string
+  task_id: string
+  group_id: string
+  group_name: string
+  feature: string
+  description: string | null
+  status: string
+  backend_table: string | null
+  frontend_file: string | null
+  notes: string | null
+  priority: number
+  updated_at: string
+}
+
 export default async function AdminTasksPage() {
   const supabase = await createClient()
 
-  const { data: tasks } = await supabase
-    .from('platform_tasks')
-    .select('*')
-    .order('priority')
+  const tasks: Task[] = (await supabase.from('platform_tasks').select('*').order('priority')).data ?? []
 
-  const total = tasks?.length ?? 0
-  const implemented = tasks?.filter(t => t.status === 'implemented').length ?? 0
-  const partial = tasks?.filter(t => t.status === 'partial').length ?? 0
-  const missing = tasks?.filter(t => t.status === 'missing').length ?? 0
-  const inProgress = tasks?.filter(t => t.status === 'in_progress').length ?? 0
+  const total = tasks.length
+  const implemented = tasks.filter(t => t.status === 'implemented').length
+  const partial = tasks.filter(t => t.status === 'partial').length
+  const missing = tasks.filter(t => t.status === 'missing').length
+  const inProgress = tasks.filter(t => t.status === 'in_progress').length
   const pctDone = total > 0 ? Math.round((implemented / total) * 100) : 0
 
-  const groups = tasks?.reduce((acc, task) => {
+  const groups = tasks.reduce((acc: Record<string, Task[]>, task: Task) => {
     if (!acc[task.group_name]) acc[task.group_name] = []
     acc[task.group_name].push(task)
     return acc
-  }, {} as Record<string, typeof tasks>) ?? {}
+  }, {})
 
   const statusBadge = (status: string) => {
     const styles: Record<string, { bg: string; color: string; label: string }> = {
