@@ -1,0 +1,684 @@
+'use client'
+
+import { useEffect, useState } from 'react'
+import { createClient } from '@/lib/supabase/client'
+
+// ── Types ────────────────────────────────────────────────────────────────────
+
+type BookStatus = 'not_started' | 'in_progress' | 'draft_complete' | 'published'
+type LessonStatus = 'not_started' | 'outline_done' | 'draft_done' | 'edited' | 'final'
+
+interface Lesson {
+  id: string
+  lesson_number: number
+  title: string
+  description: string
+  key_concepts: string[]
+  indian_examples: string[]
+  status: LessonStatus
+  word_count: number
+  chapter_id: string
+  book_id: string
+}
+
+interface Chapter {
+  id: string
+  chapter_number: number
+  title: string
+  description: string
+  status: string
+  target_word_count: number
+  current_word_count: number
+  book_id: string
+  lessons?: Lesson[]
+}
+
+interface Book {
+  id: string
+  slug: string
+  title: string
+  subtitle: string
+  target_audience: string
+  priority_rank: number
+  status: BookStatus
+  target_word_count: number
+  current_word_count: number
+  target_publish_date: string
+  lead_magnet_tier: string
+  chapters?: Chapter[]
+}
+
+interface ProgressRow {
+  id: string
+  slug: string
+  title: string
+  priority_rank: number
+  status: BookStatus
+  target_word_count: number
+  written_words: number
+  total_lessons: number
+  done_lessons: number
+  completion_pct: number
+}
+
+// ── Add Book Modal ────────────────────────────────────────────────────────────
+
+interface NewChapter {
+  chapter_number: number
+  title: string
+  description: string
+  lessons: { lesson_number: number; title: string; description: string }[]
+}
+
+interface NewBook {
+  slug: string
+  title: string
+  subtitle: string
+  target_audience: string
+  priority_rank: number
+  target_word_count: number
+  target_publish_date: string
+  lead_magnet_tier: string
+  chapters: NewChapter[]
+}
+
+const emptyBook = (): NewBook => ({
+  slug: '',
+  title: '',
+  subtitle: '',
+  target_audience: '',
+  priority_rank: 13,
+  target_word_count: 60000,
+  target_publish_date: '',
+  lead_magnet_tier: 'Pro',
+  chapters: [
+    {
+      chapter_number: 1,
+      title: '',
+      description: '',
+      lessons: [{ lesson_number: 1, title: '', description: '' }],
+    },
+  ],
+})
+
+function AddBookModal({ onClose, onSaved }: { onClose: () => void; onSaved: () => void }) {
+  const [book, setBook] = useState<NewBook>(emptyBook())
+  const [saving, setSaving] = useState(false)
+  const [error, setError] = useState('')
+  const supabase = createClient()
+
+  const updateBook = (field: keyof NewBook, value: unknown) =>
+    setBook(prev => ({ ...prev, [field]: value }))
+
+  const updateChapter = (ci: number, field: keyof NewChapter, value: unknown) =>
+    setBook(prev => {
+      const chapters = [...prev.chapters]
+      chapters[ci] = { ...chapters[ci], [field]: value }
+      return { ...prev, chapters }
+    })
+
+  const updateLesson = (ci: number, li: number, field: string, value: string) =>
+    setBook(prev => {
+      const chapters = [...prev.chapters]
+      const lessons = [...chapters[ci].lessons]
+      lessons[li] = { ...lessons[li], [field]: value }
+      chapters[ci] = { ...chapters[ci], lessons }
+      return { ...prev, chapters }
+    })
+
+  const addChapter = () =>
+    setBook(prev => ({
+      ...prev,
+      chapters: [
+        ...prev.chapters,
+        {
+          chapter_number: prev.chapters.length + 1,
+          title: '',
+          description: '',
+          lessons: [{ lesson_number: 1, title: '', description: '' }],
+        },
+      ],
+    }))
+
+  const addLesson = (ci: number) =>
+    setBook(prev => {
+      const chapters = [...prev.chapters]
+      chapters[ci] = {
+        ...chapters[ci],
+        lessons: [
+          ...chapters[ci].lessons,
+          {
+            lesson_number: chapters[ci].lessons.length + 1,
+            title: '',
+            description: '',
+          },
+        ],
+      }
+      return { ...prev, chapters }
+    })
+
+  const autoSlug = (title: string) =>
+    title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
+
+  const handleSave = async () => {
+    if (!book.title || !book.slug) {
+      setError('Title and slug are required.')
+      return
+    }
+    setSaving(true)
+    setError('')
+
+    // 1. Insert book
+    const { data: bookRow, error: bookErr } = await supabase
+      .from('books')
+      .insert({
+        slug: book.slug,
+        title: book.title,
+        subtitle: book.subtitle,
+        target_audience: book.target_audience,
+        priority_rank: book.priority_rank,
+        status: 'not_started',
+        target_word_count: book.target_word_count,
+        target_publish_date: book.target_publish_date,
+        lead_magnet_tier: book.lead_magnet_tier,
+      })
+      .select()
+      .single()
+
+    if (bookErr || !bookRow) {
+      setError(bookErr?.message || 'Failed to insert book.')
+      setSaving(false)
+      return
+    }
+
+    // 2. Insert chapters + lessons
+    for (const ch of book.chapters) {
+      const { data: chRow, error: chErr } = await supabase
+        .from('book_chapters')
+        .insert({
+          book_id: bookRow.id,
+          chapter_number: ch.chapter_number,
+          title: ch.title,
+          description: ch.description,
+          status: 'not_started',
+          target_word_count: ch.lessons.length * 1800,
+          current_word_count: 0,
+        })
+        .select()
+        .single()
+
+      if (chErr || !chRow) {
+        setError(chErr?.message || 'Failed to insert chapter.')
+        setSaving(false)
+        return
+      }
+
+      const lessonRows = ch.lessons
+        .filter(l => l.title.trim())
+        .map(l => ({
+          chapter_id: chRow.id,
+          book_id: bookRow.id,
+          lesson_number: l.lesson_number,
+          title: l.title,
+          description: l.description,
+          key_concepts: [],
+          indian_examples: [],
+          status: 'not_started' as LessonStatus,
+          word_count: 0,
+        }))
+
+      if (lessonRows.length > 0) {
+        const { error: lErr } = await supabase.from('book_lessons').insert(lessonRows)
+        if (lErr) {
+          setError(lErr.message)
+          setSaving(false)
+          return
+        }
+      }
+    }
+
+    setSaving(false)
+    onSaved()
+    onClose()
+  }
+
+  return (
+    <div
+      style={{
+        position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)',
+        zIndex: 1000, overflowY: 'auto', padding: '40px 16px',
+      }}
+      onClick={e => e.target === e.currentTarget && onClose()}
+    >
+      <div style={{
+        background: 'white', borderRadius: 12, maxWidth: 720,
+        margin: '0 auto', padding: '28px 32px',
+      }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+          <h2 style={{ fontSize: 18, fontWeight: 600, color: '#1C0F3F' }}>Add new book</h2>
+          <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: 20, cursor: 'pointer', color: '#666' }}>×</button>
+        </div>
+
+        {error && (
+          <div style={{ background: '#FEF2F2', border: '1px solid #FECACA', borderRadius: 8, padding: '10px 14px', color: '#B91C1C', fontSize: 13, marginBottom: 16 }}>
+            {error}
+          </div>
+        )}
+
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, marginBottom: 14 }}>
+          <div style={{ gridColumn: '1 / -1' }}>
+            <label style={labelStyle}>Title *</label>
+            <input
+              style={inputStyle}
+              value={book.title}
+              onChange={e => {
+                updateBook('title', e.target.value)
+                if (!book.slug) updateBook('slug', autoSlug(e.target.value))
+              }}
+              placeholder="The New Indian Investor"
+            />
+          </div>
+          <div>
+            <label style={labelStyle}>Slug *</label>
+            <input style={inputStyle} value={book.slug} onChange={e => updateBook('slug', autoSlug(e.target.value))} placeholder="new-indian-investor" />
+          </div>
+          <div>
+            <label style={labelStyle}>Priority rank</label>
+            <input style={inputStyle} type="number" min={1} value={book.priority_rank} onChange={e => updateBook('priority_rank', parseInt(e.target.value))} />
+          </div>
+          <div style={{ gridColumn: '1 / -1' }}>
+            <label style={labelStyle}>Subtitle</label>
+            <input style={inputStyle} value={book.subtitle} onChange={e => updateBook('subtitle', e.target.value)} placeholder="A guide for..." />
+          </div>
+          <div style={{ gridColumn: '1 / -1' }}>
+            <label style={labelStyle}>Target audience</label>
+            <input style={inputStyle} value={book.target_audience} onChange={e => updateBook('target_audience', e.target.value)} placeholder="Retail investors, salaried professionals..." />
+          </div>
+          <div>
+            <label style={labelStyle}>Target word count</label>
+            <input style={inputStyle} type="number" value={book.target_word_count} onChange={e => updateBook('target_word_count', parseInt(e.target.value))} />
+          </div>
+          <div>
+            <label style={labelStyle}>Target publish date</label>
+            <input style={inputStyle} value={book.target_publish_date} onChange={e => updateBook('target_publish_date', e.target.value)} placeholder="2027-Q2" />
+          </div>
+          <div>
+            <label style={labelStyle}>Lead magnet tier</label>
+            <select style={inputStyle} value={book.lead_magnet_tier} onChange={e => updateBook('lead_magnet_tier', e.target.value)}>
+              <option>Starter</option>
+              <option>Pro</option>
+              <option>Elite</option>
+            </select>
+          </div>
+        </div>
+
+        <div style={{ borderTop: '1px solid #F0EBFF', paddingTop: 20, marginBottom: 16 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 }}>
+            <h3 style={{ fontSize: 14, fontWeight: 600, color: '#1C0F3F' }}>Chapters & lessons</h3>
+            <button onClick={addChapter} style={secondaryBtnStyle}>+ Add chapter</button>
+          </div>
+
+          {book.chapters.map((ch, ci) => (
+            <div key={ci} style={{ background: '#FAFAFA', borderRadius: 8, padding: '14px 16px', marginBottom: 12, border: '1px solid #F0EBFF' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '40px 1fr', gap: 10, marginBottom: 10 }}>
+                <div style={{ background: '#1C0F3F', color: 'white', borderRadius: '50%', width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 600 }}>
+                  {ch.chapter_number}
+                </div>
+                <input
+                  style={inputStyle}
+                  value={ch.title}
+                  onChange={e => updateChapter(ci, 'title', e.target.value)}
+                  placeholder="Chapter title"
+                />
+              </div>
+              <input
+                style={{ ...inputStyle, marginBottom: 10 }}
+                value={ch.description}
+                onChange={e => updateChapter(ci, 'description', e.target.value)}
+                placeholder="Chapter description (optional)"
+              />
+
+              {ch.lessons.map((l, li) => (
+                <div key={li} style={{ display: 'flex', gap: 8, marginBottom: 8, paddingLeft: 42 }}>
+                  <span style={{ fontSize: 11, color: '#7C3AED', minWidth: 18, paddingTop: 9 }}>{l.lesson_number}.</span>
+                  <input
+                    style={{ ...inputStyle, flex: 1 }}
+                    value={l.title}
+                    onChange={e => updateLesson(ci, li, 'title', e.target.value)}
+                    placeholder="Lesson title"
+                  />
+                </div>
+              ))}
+
+              <div style={{ paddingLeft: 42 }}>
+                <button onClick={() => addLesson(ci)} style={{ ...secondaryBtnStyle, fontSize: 11 }}>+ Add lesson</button>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 10 }}>
+          <button onClick={onClose} style={secondaryBtnStyle}>Cancel</button>
+          <button
+            onClick={handleSave}
+            disabled={saving}
+            style={{
+              background: saving ? '#A78BFA' : '#7C3AED',
+              color: 'white', border: 'none', borderRadius: 8,
+              padding: '9px 20px', fontSize: 13, fontWeight: 600,
+              cursor: saving ? 'not-allowed' : 'pointer',
+            }}
+          >
+            {saving ? 'Saving...' : 'Save book to Supabase'}
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const labelStyle: React.CSSProperties = {
+  display: 'block', fontSize: 11, fontWeight: 500,
+  color: '#6B7280', marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.05em',
+}
+const inputStyle: React.CSSProperties = {
+  width: '100%', border: '1px solid #E5E7EB', borderRadius: 8,
+  padding: '8px 12px', fontSize: 13, color: '#111827',
+  outline: 'none', background: 'white',
+}
+const secondaryBtnStyle: React.CSSProperties = {
+  background: 'white', border: '1px solid #E5E7EB', borderRadius: 8,
+  padding: '7px 14px', fontSize: 12, cursor: 'pointer', color: '#374151',
+}
+
+// ── Status helpers ────────────────────────────────────────────────────────────
+
+const STATUS_LABELS: Record<BookStatus, string> = {
+  not_started: 'Not started',
+  in_progress: 'In progress',
+  draft_complete: 'Draft done',
+  published: 'Published',
+}
+const STATUS_COLORS: Record<BookStatus, { bg: string; text: string }> = {
+  not_started: { bg: '#F3F4F6', text: '#6B7280' },
+  in_progress: { bg: '#FEF3C7', text: '#92400E' },
+  draft_complete: { bg: '#EEF2FF', text: '#4338CA' },
+  published: { bg: '#F0FDF4', text: '#166534' },
+}
+
+// ── Main Page ─────────────────────────────────────────────────────────────────
+
+export default function BooksAdminPage() {
+  const supabase = createClient()
+  const [progress, setProgress] = useState<ProgressRow[]>([])
+  const [books, setBooks] = useState<Book[]>([])
+  const [expandedId, setExpandedId] = useState<string | null>(null)
+  const [expandedChapters, setExpandedChapters] = useState<Chapter[]>([])
+  const [loadingChapters, setLoadingChapters] = useState(false)
+  const [showAddModal, setShowAddModal] = useState(false)
+  const [activeTab, setActiveTab] = useState<'tracker' | 'priority'>('tracker')
+  const [filter, setFilter] = useState<string>('all')
+  const [loading, setLoading] = useState(true)
+
+  const load = async () => {
+    setLoading(true)
+    const { data } = await supabase
+      .from('book_progress')
+      .select('*')
+      .order('priority_rank')
+    setProgress(data || [])
+
+    const { data: booksData } = await supabase
+      .from('books')
+      .select('*')
+      .order('priority_rank')
+    setBooks(booksData || [])
+    setLoading(false)
+  }
+
+  useEffect(() => { load() }, [])
+
+  const expandBook = async (bookId: string) => {
+    if (expandedId === bookId) { setExpandedId(null); return }
+    setExpandedId(bookId)
+    setLoadingChapters(true)
+    const { data: chapters } = await supabase
+      .from('book_chapters')
+      .select('*, lessons:book_lessons(*)')
+      .eq('book_id', bookId)
+      .order('chapter_number')
+    setExpandedChapters((chapters as Chapter[]) || [])
+    setLoadingChapters(false)
+  }
+
+  const updateLessonStatus = async (lessonId: string, next: LessonStatus, bookId: string) => {
+    await supabase.from('book_lessons').update({ status: next }).eq('id', lessonId)
+    await supabase.from('book_progress_log').insert({
+      book_id: bookId,
+      lesson_id: lessonId,
+      status_change_to: next,
+      log_date: new Date().toISOString().split('T')[0],
+    })
+    // Refresh chapters
+    const { data: chapters } = await supabase
+      .from('book_chapters')
+      .select('*, lessons:book_lessons(*)')
+      .eq('book_id', bookId)
+      .order('chapter_number')
+    setExpandedChapters((chapters as Chapter[]) || [])
+    load()
+  }
+
+  const LESSON_STATUS_CYCLE: LessonStatus[] = [
+    'not_started', 'outline_done', 'draft_done', 'edited', 'final',
+  ]
+  const nextLessonStatus = (current: LessonStatus): LessonStatus => {
+    const idx = LESSON_STATUS_CYCLE.indexOf(current)
+    return LESSON_STATUS_CYCLE[(idx + 1) % LESSON_STATUS_CYCLE.length]
+  }
+
+  const lessonStatusStyle = (s: LessonStatus): React.CSSProperties => ({
+    fontSize: 10, padding: '2px 7px', borderRadius: 8, fontWeight: 500, cursor: 'pointer',
+    ...(s === 'final'
+      ? { background: '#7C3AED', color: 'white' }
+      : s === 'draft_done' || s === 'outline_done'
+      ? { background: '#FEF3C7', color: '#92400E', border: '1px solid #FCD34D' }
+      : { background: 'white', color: '#9CA3AF', border: '1px solid #E5E7EB' }),
+  })
+
+  const filtered = filter === 'all' ? progress : progress.filter(b => b.status === filter)
+
+  const totalLessons = progress.reduce((a, b) => a + b.total_lessons, 0)
+  const doneLessons = progress.reduce((a, b) => a + b.done_lessons, 0)
+  const totalWords = books.reduce((a, b) => a + (b.target_word_count || 0), 0)
+
+  return (
+    <div style={{ maxWidth: 900, margin: '0 auto', padding: '32px 24px', fontFamily: 'Outfit, sans-serif' }}>
+
+      {/* Header */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 28 }}>
+        <div>
+          <h1 style={{ fontSize: 22, fontWeight: 600, color: '#1C0F3F', marginBottom: 4 }}>Book publishing pipeline</h1>
+          <p style={{ fontSize: 13, color: '#6B7280' }}>Track writing progress across all Capital Gains books</p>
+        </div>
+        <button
+          onClick={() => setShowAddModal(true)}
+          style={{ background: '#1C0F3F', color: 'white', border: 'none', borderRadius: 8, padding: '10px 18px', fontSize: 13, fontWeight: 600, cursor: 'pointer' }}
+        >
+          + Add book
+        </button>
+      </div>
+
+      {/* Metrics */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12, marginBottom: 24 }}>
+        {[
+          { label: 'Total books', value: progress.length, sub: 'In pipeline' },
+          { label: 'Total lessons', value: totalLessons, sub: 'Individual sections' },
+          { label: 'Lessons done', value: `${totalLessons ? Math.round(doneLessons / totalLessons * 100) : 0}%`, sub: `${doneLessons} of ${totalLessons}` },
+          { label: 'Target words', value: `${(totalWords / 100000).toFixed(1)}L`, sub: 'Across all books' },
+        ].map(m => (
+          <div key={m.label} style={{ background: '#F9F7FF', borderRadius: 10, padding: '14px 16px' }}>
+            <div style={{ fontSize: 11, color: '#7C3AED', fontWeight: 500, marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{m.label}</div>
+            <div style={{ fontSize: 24, fontWeight: 600, color: '#1C0F3F' }}>{m.value}</div>
+            <div style={{ fontSize: 11, color: '#9CA3AF', marginTop: 2 }}>{m.sub}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Tabs */}
+      <div style={{ display: 'flex', gap: 6, marginBottom: 18 }}>
+        {(['tracker', 'priority'] as const).map(t => (
+          <button
+            key={t}
+            onClick={() => setActiveTab(t)}
+            style={{
+              padding: '6px 14px', borderRadius: 8, fontSize: 13, cursor: 'pointer',
+              border: '1px solid',
+              borderColor: activeTab === t ? '#7C3AED' : '#E5E7EB',
+              background: activeTab === t ? '#F5F3FF' : 'white',
+              color: activeTab === t ? '#7C3AED' : '#6B7280',
+              fontWeight: activeTab === t ? 600 : 400,
+            }}
+          >
+            {t === 'tracker' ? 'Book tracker' : 'Priority matrix'}
+          </button>
+        ))}
+      </div>
+
+      {/* ── Tracker tab ── */}
+      {activeTab === 'tracker' && (
+        <>
+          <div style={{ display: 'flex', gap: 6, marginBottom: 14, flexWrap: 'wrap' }}>
+            {['all', 'not_started', 'in_progress', 'draft_complete', 'published'].map(f => (
+              <button
+                key={f}
+                onClick={() => setFilter(f)}
+                style={{
+                  fontSize: 11, padding: '4px 10px', borderRadius: 8, cursor: 'pointer',
+                  border: '1px solid', fontWeight: filter === f ? 600 : 400,
+                  borderColor: filter === f ? '#1C0F3F' : '#E5E7EB',
+                  background: filter === f ? '#1C0F3F' : 'white',
+                  color: filter === f ? 'white' : '#6B7280',
+                }}
+              >
+                {f === 'all' ? 'All' : STATUS_LABELS[f as BookStatus]}
+              </button>
+            ))}
+          </div>
+
+          {loading ? (
+            <p style={{ color: '#9CA3AF', fontSize: 13 }}>Loading...</p>
+          ) : (
+            filtered.map(row => {
+              const isExpanded = expandedId === row.id
+              const pct = row.completion_pct || 0
+              const sc = STATUS_COLORS[row.status]
+              return (
+                <div
+                  key={row.id}
+                  style={{ background: 'white', border: `1px solid ${isExpanded ? '#C4B5FD' : '#E5E7EB'}`, borderRadius: 10, marginBottom: 8, overflow: 'hidden' }}
+                >
+                  <div
+                    style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '14px 16px', cursor: 'pointer' }}
+                    onClick={() => expandBook(row.id)}
+                  >
+                    <div style={{ width: 28, height: 28, borderRadius: '50%', background: '#1C0F3F', color: 'white', fontSize: 11, fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      {row.priority_rank}
+                    </div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontSize: 14, fontWeight: 600, color: '#1C0F3F', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{row.title}</div>
+                      <div style={{ fontSize: 11, color: '#9CA3AF', marginTop: 2 }}>{row.total_lessons} lessons · {(row.target_word_count / 1000).toFixed(0)}k words</div>
+                    </div>
+                    <div style={{ width: 140, flexShrink: 0 }}>
+                      <div style={{ height: 5, background: '#F3F4F6', borderRadius: 3, overflow: 'hidden' }}>
+                        <div style={{ height: '100%', background: '#7C3AED', borderRadius: 3, width: `${pct}%` }} />
+                      </div>
+                      <div style={{ fontSize: 10, color: '#9CA3AF', marginTop: 3, textAlign: 'right' }}>{row.done_lessons}/{row.total_lessons} done</div>
+                    </div>
+                    <span style={{ fontSize: 11, padding: '3px 8px', borderRadius: 10, fontWeight: 500, background: sc.bg, color: sc.text, flexShrink: 0 }}>
+                      {STATUS_LABELS[row.status]}
+                    </span>
+                    <span style={{ color: '#9CA3AF', fontSize: 12, flexShrink: 0 }}>{isExpanded ? '▲' : '▶'}</span>
+                  </div>
+
+                  {isExpanded && (
+                    <div style={{ borderTop: '1px solid #F3F4F6', padding: '14px 16px' }}>
+                      {loadingChapters ? (
+                        <p style={{ fontSize: 12, color: '#9CA3AF' }}>Loading chapters...</p>
+                      ) : (
+                        expandedChapters.map(ch => (
+                          <div key={ch.id} style={{ marginBottom: 14 }}>
+                            <div style={{ fontSize: 12, fontWeight: 600, color: '#374151', marginBottom: 6 }}>
+                              Ch {ch.chapter_number}: {ch.title}
+                              <span style={{ fontSize: 10, color: '#9CA3AF', fontWeight: 400, marginLeft: 8 }}>
+                                ({(ch.lessons || []).filter(l => l.status === 'final').length}/{(ch.lessons || []).length})
+                              </span>
+                            </div>
+                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
+                              {(ch.lessons || []).map(l => (
+                                <span
+                                  key={l.id}
+                                  style={lessonStatusStyle(l.status)}
+                                  title={`${l.title} — click to advance status`}
+                                  onClick={() => updateLessonStatus(l.id, nextLessonStatus(l.status), row.id)}
+                                >
+                                  {l.title.length > 28 ? l.title.slice(0, 26) + '…' : l.title}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  )}
+                </div>
+              )
+            })
+          )}
+        </>
+      )}
+
+      {/* ── Priority matrix tab ── */}
+      {activeTab === 'priority' && (
+        <div style={{ background: 'white', border: '1px solid #E5E7EB', borderRadius: 10, overflow: 'hidden' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
+            <thead>
+              <tr style={{ background: '#F9FAFB' }}>
+                {['#', 'Book', 'Target words', 'Publish', 'Tier', 'Status'].map(h => (
+                  <th key={h} style={{ padding: '10px 14px', textAlign: 'left', color: '#6B7280', fontWeight: 500, borderBottom: '1px solid #F3F4F6' }}>{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {progress.map((row, i) => {
+                const sc = STATUS_COLORS[row.status]
+                const book = books.find(b => b.id === row.id)
+                return (
+                  <tr key={row.id} style={{ borderBottom: i < progress.length - 1 ? '1px solid #F9FAFB' : 'none' }}>
+                    <td style={{ padding: '10px 14px', fontWeight: 600, color: '#7C3AED' }}>{row.priority_rank}</td>
+                    <td style={{ padding: '10px 14px', fontWeight: 500, color: '#1C0F3F' }}>{row.title}</td>
+                    <td style={{ padding: '10px 14px', color: '#6B7280' }}>{((row.target_word_count || 0) / 1000).toFixed(0)}k</td>
+                    <td style={{ padding: '10px 14px', color: '#6B7280' }}>{book?.target_publish_date || '—'}</td>
+                    <td style={{ padding: '10px 14px', color: '#6B7280' }}>{book?.lead_magnet_tier || '—'}</td>
+                    <td style={{ padding: '10px 14px' }}>
+                      <span style={{ fontSize: 11, padding: '3px 8px', borderRadius: 8, background: sc.bg, color: sc.text, fontWeight: 500 }}>
+                        {STATUS_LABELS[row.status]}
+                      </span>
+                    </td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {showAddModal && (
+        <AddBookModal
+          onClose={() => setShowAddModal(false)}
+          onSaved={() => load()}
+        />
+      )}
+    </div>
+  )
+}
