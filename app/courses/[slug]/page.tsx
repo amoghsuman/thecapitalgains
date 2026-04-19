@@ -37,6 +37,7 @@ export default async function CourseDetailPage({
 
   let userTier = "free";
   let hasStartedCourse = false;
+  let completedCount = 0;
   const firstLessonSlug = course.chapters?.[0]?.lessons?.[0]?.slug;
   let resumeLessonSlug = firstLessonSlug;
 
@@ -63,7 +64,8 @@ export default async function CourseDetailPage({
       .eq("user_id", user.id)
       .eq("course_slug", slug);
 
-    hasStartedCourse = !!(progressData && progressData.length > 0);
+    completedCount = progressData?.length ?? 0;
+    hasStartedCourse = completedCount > 0;
 
     const { data: enrollmentData } = await supabase
       .from("course_enrollments")
@@ -87,6 +89,7 @@ export default async function CourseDetailPage({
       0
     ) ||
     0;
+  const progressPct = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0;
 
   return (
     <div className="bg-[#F8FAFC] min-h-screen font-sans pb-20">
@@ -253,6 +256,21 @@ export default async function CourseDetailPage({
                 </Link>
               )}
             </div>
+
+            {user && hasStartedCourse && (
+              <div style={{ marginBottom: '2rem', paddingBottom: '2rem', borderBottom: '1px solid #f1f5f9' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
+                  <span style={{ fontSize: '11px', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Your progress</span>
+                  <span style={{ fontSize: '12px', fontWeight: 600, color: '#1C0F3F' }}>{progressPct}%</span>
+                </div>
+                <div style={{ height: '6px', background: '#f1f5f9', borderRadius: '3px', overflow: 'hidden' }}>
+                  <div style={{ height: '100%', background: '#D4860A', borderRadius: '3px', width: `${progressPct}%`, transition: 'width 0.3s' }} />
+                </div>
+                <div style={{ fontSize: '11px', color: '#94a3b8', marginTop: '4px' }}>
+                  {completedCount} of {totalLessons} lessons complete
+                </div>
+              </div>
+            )}
 
             <div className="space-y-4 pt-8 border-t border-slate-100">
               <div className="text-[10px] font-bold text-slate-400 tracking-[0.2em] uppercase">Everything included</div>
