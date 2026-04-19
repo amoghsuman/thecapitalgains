@@ -36,6 +36,10 @@ export default async function CourseDetailPage({
   const { data: { user } } = await supabase.auth.getUser();
 
   let userTier = "free";
+  let hasStartedCourse = false;
+  const firstLessonSlug = course.chapters?.[0]?.lessons?.[0]?.slug;
+  let resumeLessonSlug = firstLessonSlug;
+
   if (user) {
     const { data: sub } = await supabase
       .from("subscriptions")
@@ -52,13 +56,28 @@ export default async function CourseDetailPage({
         userTier = sub.tier ?? "free";
       }
     }
+
+    const { data: progressData } = await supabase
+      .from("lesson_progress")
+      .select("lesson_slug")
+      .eq("user_id", user.id)
+      .eq("course_slug", slug);
+
+    hasStartedCourse = !!(progressData && progressData.length > 0);
+
+    const { data: enrollmentData } = await supabase
+      .from("course_enrollments")
+      .select("last_lesson_slug")
+      .eq("user_id", user.id)
+      .eq("course_slug", slug)
+      .single();
+
+    resumeLessonSlug = enrollmentData?.last_lesson_slug || firstLessonSlug;
   }
 
   const courseAccessLevel = course.accessLevel ?? "free";
   const hasAccess =
     (TIER_RANK[userTier] ?? 0) >= (TIER_RANK[courseAccessLevel] ?? 0);
-
-  const firstLessonSlug = course.chapters?.[0]?.lessons?.[0]?.slug;
 
   // ── Derived stats ──────────────────────────────────────────────────────────
   const totalLessons =
@@ -162,16 +181,26 @@ export default async function CourseDetailPage({
                               {lessonAccessible ? "▶" : "🔒"}
                             </div>
                             {lessonAccessible && lesson.slug ? (
-                              <Link
-                                href={`/learn/${slug}/${lesson.slug}`}
-                                className="text-[14px] font-semibold text-[#1C0F3F] hover:text-[#7C3AED] transition-colors"
-                              >
-                                {lesson.title}
-                              </Link>
+                              <div className="flex items-center">
+                                <Link
+                                  href={`/learn/${slug}/${lesson.slug}`}
+                                  className="text-[14px] font-semibold text-[#1C0F3F] hover:text-[#7C3AED] transition-colors"
+                                >
+                                  {lesson.title}
+                                </Link>
+                                {lesson.duration && (
+                                  <span className="text-[11px] text-slate-400 font-mono ml-2">{lesson.duration}</span>
+                                )}
+                              </div>
                             ) : (
-                              <span className="text-[14px] font-semibold text-slate-400">
-                                {lesson.title}
-                              </span>
+                              <div className="flex items-center">
+                                <span className="text-[14px] font-semibold text-slate-400">
+                                  {lesson.title}
+                                </span>
+                                {lesson.duration && (
+                                  <span className="text-[11px] text-slate-400 font-mono ml-2">{lesson.duration}</span>
+                                )}
+                              </div>
                             )}
                           </div>
                           {lesson.isFree && (
@@ -200,19 +229,12 @@ export default async function CourseDetailPage({
             </div>
 
             <div className="space-y-4 mb-8">
-              {hasAccess && firstLessonSlug ? (
+              {(hasAccess || courseAccessLevel === "free") && firstLessonSlug ? (
                 <Link
-                  href={`/learn/${slug}/${firstLessonSlug}`}
+                  href={`/learn/${slug}/${hasStartedCourse ? resumeLessonSlug : firstLessonSlug}`}
                   className="premium-button-primary w-full text-center block font-bold"
                 >
-                  Continue Learning →
-                </Link>
-              ) : courseAccessLevel === "free" && firstLessonSlug ? (
-                <Link
-                  href={`/learn/${slug}/${firstLessonSlug}`}
-                  className="premium-button-primary w-full text-center block font-bold"
-                >
-                  Start Learning Now →
+                  {hasStartedCourse ? "Continue Learning →" : "Start Learning Now →"}
                 </Link>
               ) : (
                 <Link
