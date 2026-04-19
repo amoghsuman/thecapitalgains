@@ -8,6 +8,7 @@ import Link from "next/link";
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import katex from "katex";
 import { getFullCourseForReader, getLessonBySlug } from "@/lib/sanity/queries";
+import { createClient } from "@/lib/supabase/client";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -150,7 +151,7 @@ const portableTextComponents: PortableTextComponents = {
 
 // ─── Locked Lesson State ──────────────────────────────────────────────────────
 
-function LockedLesson() {
+function LockedLesson({ isLoggedIn }: { isLoggedIn: boolean }) {
   return (
     <div className="flex flex-col items-center justify-center py-24 px-8 text-center">
       <div className="w-16 h-16 bg-[#F5F3FF] rounded-full flex items-center justify-center text-[28px] mb-5">
@@ -168,12 +169,14 @@ function LockedLesson() {
       >
         View Subscription Plans →
       </Link>
-      <Link
-        href="/auth/login"
-        className="border border-[rgba(124,58,237,0.25)] hover:border-[#1C0F3F] text-[#4B3F6B] hover:text-[#1C0F3F] rounded-lg px-8 py-3.5 text-[15px] font-medium transition-colors"
-      >
-        Sign in if subscribed →
-      </Link>
+      {!isLoggedIn && (
+        <Link
+          href="/auth/login"
+          className="border border-[rgba(124,58,237,0.25)] hover:border-[#1C0F3F] text-[#4B3F6B] hover:text-[#1C0F3F] rounded-lg px-8 py-3.5 text-[15px] font-medium transition-colors"
+        >
+          Sign in if subscribed →
+        </Link>
+      )}
     </div>
   );
 }
@@ -194,9 +197,56 @@ export default function ReaderPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userTier, setUserTier] = useState<string>("free");
+  const [authLoading, setAuthLoading] = useState(true);
+  const [userId, setUserId] = useState<string | null>(null);
+  const supabase = createClient();
+
   useEffect(() => {
     if (lessonSlug) setActiveLesson(lessonSlug);
   }, [lessonSlug]);
+
+  // Auth + subscription + existing progress
+  useEffect(() => {
+    const TIER_RANK: Record<string, number> = { free: 0, starter: 1, pro: 2, elite: 3 };
+    supabase.auth.getUser().then(async ({ data }) => {
+      const user = data?.user;
+      if (user) {
+        setIsLoggedIn(true);
+        setUserId(user.id);
+
+        // Load subscription tier
+        const { data: sub } = await supabase
+          .from("subscriptions")
+          .select("tier, status, current_period_end")
+          .eq("user_id", user.id)
+          .eq("status", "active")
+          .single();
+        if (sub) {
+          const notExpired =
+            !sub.current_period_end || new Date(sub.current_period_end) > new Date();
+          if (notExpired && sub.tier && (TIER_RANK[sub.tier] ?? 0) >= 1) {
+            setUserTier(sub.tier);
+          }
+        }
+
+        // Load existing progress for this course
+        if (courseSlug) {
+          const { data: progress } = await supabase
+            .from("lesson_progress")
+            .select("lesson_slug")
+            .eq("user_id", user.id)
+            .eq("course_slug", courseSlug);
+          if (progress) {
+            setCompletedLessons(new Set(progress.map((p: { lesson_slug: string }) => p.lesson_slug)));
+          }
+        }
+      }
+      setAuthLoading(false);
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Fetch course structure
   useEffect(() => {
@@ -255,10 +305,25 @@ export default function ReaderPage() {
   const progressPct = allLessons.length > 0 ? Math.round((completedLessons.size / allLessons.length) * 100) : 0;
 
   const currentMeta = allLessons.find((l) => l.slug === activeLesson) || allLessons.find((l) => l.slug === lessonSlug);
-  const isLocked = currentMeta ? !currentMeta.isFree : true;
+  const TIER_RANK: Record<string, number> = { free: 0, starter: 1, pro: 2, elite: 3 };
+  const isLocked = authLoading
+    ? false
+    : currentMeta
+      ? !currentMeta.isFree && (TIER_RANK[userTier] ?? 0) < 1
+      : true;
 
-  function markCompleteAndNext() {
-    setCompletedLessons((prev) => new Set([...prev, activeLesson]));
+  async function saveProgress(lessonSlugToSave: string) {
+    setCompletedLessons((prev) => new Set([...prev, lessonSlugToSave]));
+    if (userId) {
+      await supabase.from("lesson_progress").upsert(
+        { user_id: userId, course_slug: courseSlug, lesson_slug: lessonSlugToSave },
+        { onConflict: "user_id,course_slug,lesson_slug" }
+      );
+    }
+  }
+
+  async function markCompleteAndNext() {
+    await saveProgress(activeLesson);
     if (nextLesson) setActiveLesson(nextLesson.slug);
   }
 
@@ -312,7 +377,7 @@ export default function ReaderPage() {
               {chapter.lessons.map((l) => {
                 const isActive = l.slug === activeLesson;
                 const isDone = completedLessons.has(l.slug);
-                const isAccessible = l.isFree;
+                const isAccessible = l.isFree || userTier === "starter" || userTier === "pro" || userTier === "elite";
 
                 return (
                   <button
@@ -408,7 +473,7 @@ export default function ReaderPage() {
         {/* Scrollable content area */}
         <div className="flex-1 overflow-y-auto">
           {isLocked ? (
-            <LockedLesson />
+            <LockedLesson isLoggedIn={isLoggedIn} />
           ) : loading ? (
             <div className="flex items-center justify-center py-24 font-mono text-[13px] text-[#8B7BAB]">
               Loading lesson...
@@ -459,7 +524,7 @@ export default function ReaderPage() {
                   </button>
                 ) : (
                   <button
-                    onClick={() => setCompletedLessons((prev) => new Set([...prev, activeLesson]))}
+                    onClick={() => saveProgress(activeLesson)}
                     className="bg-[#1A7A4A] hover:bg-[#15623C] text-white rounded-lg px-6 py-2.5 font-mono text-[13px] font-medium transition-colors"
                   >
                     Mark complete ✓

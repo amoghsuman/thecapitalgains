@@ -1,8 +1,16 @@
 import Link from "next/link";
 import { getCourseBySlug } from "@/lib/sanity/queries";
+import { createClient } from "@/lib/supabase/server";
 import "@/app/premium-theme.css";
 
-export const revalidate = 0
+export const revalidate = 0;
+
+const TIER_RANK: Record<string, number> = {
+  free: 0,
+  starter: 1,
+  pro: 2,
+  elite: 3,
+};
 
 export default async function CourseDetailPage({
   params,
@@ -23,11 +31,47 @@ export default async function CourseDetailPage({
     );
   }
 
-  const totalLessons = course.lessonsCount || course.chapters?.reduce((sum: number, ch: any) => sum + (ch.lessons?.length ?? 0), 0) || 0;
+  // ── Auth + subscription ────────────────────────────────────────────────────
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  let userTier = "free";
+  if (user) {
+    const { data: sub } = await supabase
+      .from("subscriptions")
+      .select("tier, status, current_period_end")
+      .eq("user_id", user.id)
+      .eq("status", "active")
+      .single();
+
+    if (sub) {
+      const notExpired =
+        !sub.current_period_end ||
+        new Date(sub.current_period_end) > new Date();
+      if (notExpired) {
+        userTier = sub.tier ?? "free";
+      }
+    }
+  }
+
+  const courseAccessLevel = course.accessLevel ?? "free";
+  const hasAccess =
+    (TIER_RANK[userTier] ?? 0) >= (TIER_RANK[courseAccessLevel] ?? 0);
+
+  const firstLessonSlug = course.chapters?.[0]?.lessons?.[0]?.slug;
+
+  // ── Derived stats ──────────────────────────────────────────────────────────
+  const totalLessons =
+    course.lessonsCount ||
+    course.chapters?.reduce(
+      (sum: number, ch: any) => sum + (ch.lessons?.length ?? 0),
+      0
+    ) ||
+    0;
 
   return (
     <div className="bg-[#F8FAFC] min-h-screen font-sans pb-20">
-      
+
       {/* ── HEADER (Premium Dark) ── */}
       <header className="premium-dark pt-32 pb-24 border-b border-[rgba(255,255,255,0.05)]">
         <div className="max-w-6xl mx-auto px-8">
@@ -36,7 +80,7 @@ export default async function CourseDetailPage({
               ← Back to Curriculum
             </Link>
           </div>
-          
+
           <div className="flex flex-wrap items-center gap-3 mb-6">
             <span className="bg-violet-500/20 text-violet-300 border border-violet-500/30 text-[10px] font-bold px-3 py-1 rounded-full tracking-widest uppercase">
               {course.tag || "CORE"}
@@ -60,7 +104,7 @@ export default async function CourseDetailPage({
               { label: "MODULES", val: totalLessons },
               { label: "DURATION", val: course.duration || "4 Hours" },
               { label: "FORMAT", val: "Text-First" },
-            ].map(s => (
+            ].map((s) => (
               <div key={s.label}>
                 <div className="text-[10px] font-bold text-[#64748B] tracking-[0.2em] mb-2">{s.label}</div>
                 <div className="text-lg font-bold text-white">{s.val}</div>
@@ -72,10 +116,10 @@ export default async function CourseDetailPage({
 
       {/* ── CONTENT ── */}
       <main className="max-w-6xl mx-auto px-8 mt-16 grid grid-cols-1 lg:grid-cols-3 gap-16">
-        
+
         {/* Left: Curriculum & Learnings */}
         <div className="lg:col-span-2 space-y-16">
-          
+
           {/* What you'll learn */}
           {course.whatYouLearn?.length > 0 && (
             <section>
@@ -101,20 +145,43 @@ export default async function CourseDetailPage({
                 <div key={chapter.title} className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:border-violet-200 transition-colors">
                   <div className="px-6 py-4 bg-slate-50/50 border-b border-slate-100 flex items-center justify-between">
                     <h3 className="font-bold text-[#1C0F3F] text-sm tracking-tight">{chapter.title}</h3>
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{chapter.lessons?.length || 0} Lessons</span>
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                      {chapter.lessons?.length || 0} Lessons
+                    </span>
                   </div>
                   <div className="divide-y divide-slate-50">
-                    {chapter.lessons?.map((lesson: any) => (
-                      <div key={lesson.title} className="px-6 py-4 flex items-center justify-between group hover:bg-violet-50/30 transition-colors">
-                        <div className="flex items-center gap-4">
-                          <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm ${lesson.isFree ? 'bg-emerald-50 text-emerald-600' : 'bg-slate-100 text-slate-400'}`}>
-                            {lesson.isFree ? "▶" : "🔒"}
+                    {chapter.lessons?.map((lesson: any) => {
+                      const lessonAccessible = lesson.isFree || hasAccess;
+                      return (
+                        <div
+                          key={lesson.title}
+                          className="px-6 py-4 flex items-center justify-between group hover:bg-violet-50/30 transition-colors"
+                        >
+                          <div className="flex items-center gap-4">
+                            <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm ${lessonAccessible ? "bg-emerald-50 text-emerald-600" : "bg-slate-100 text-slate-400"}`}>
+                              {lessonAccessible ? "▶" : "🔒"}
+                            </div>
+                            {lessonAccessible && lesson.slug ? (
+                              <Link
+                                href={`/learn/${slug}/${lesson.slug}`}
+                                className="text-[14px] font-semibold text-[#1C0F3F] hover:text-[#7C3AED] transition-colors"
+                              >
+                                {lesson.title}
+                              </Link>
+                            ) : (
+                              <span className="text-[14px] font-semibold text-slate-400">
+                                {lesson.title}
+                              </span>
+                            )}
                           </div>
-                          <span className={`text-[14px] font-semibold ${lesson.isFree ? 'text-[#1C0F3F]' : 'text-slate-400'}`}>{lesson.title}</span>
+                          {lesson.isFree && (
+                            <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded tracking-widest uppercase">
+                              Preview
+                            </span>
+                          )}
                         </div>
-                        {lesson.isFree && <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded tracking-widest uppercase">Preview</span>}
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               ))}
@@ -127,18 +194,42 @@ export default async function CourseDetailPage({
           <div className="sticky top-32 bg-white border border-slate-200 rounded-3xl p-8 shadow-2xl">
             <div className="mb-8">
               <div className="text-[10px] font-bold text-slate-400 tracking-[0.2em] mb-2 uppercase">Access Level</div>
-              <div className={`text-xl font-bold tracking-tight ${course.accessLevel === 'pro' ? 'text-[#D4860A]' : 'text-emerald-600'}`}>
-                {course.accessLevel?.toUpperCase() || 'LEARNER+'}
+              <div className={`text-xl font-bold tracking-tight ${courseAccessLevel === "free" ? "text-emerald-600" : "text-[#D4860A]"}`}>
+                {courseAccessLevel.toUpperCase()}
               </div>
             </div>
 
             <div className="space-y-4 mb-8">
-              {course.accessLevel === "free" ? (
-                <Link href="#" className="premium-button-primary w-full text-center block font-bold">Start Learning Now</Link>
+              {hasAccess && firstLessonSlug ? (
+                <Link
+                  href={`/learn/${slug}/${firstLessonSlug}`}
+                  className="premium-button-primary w-full text-center block font-bold"
+                >
+                  Continue Learning →
+                </Link>
+              ) : courseAccessLevel === "free" && firstLessonSlug ? (
+                <Link
+                  href={`/learn/${slug}/${firstLessonSlug}`}
+                  className="premium-button-primary w-full text-center block font-bold"
+                >
+                  Start Learning Now →
+                </Link>
               ) : (
-                <Link href="/pricing" className="premium-button-primary w-full text-center block font-bold">Unlock This Course</Link>
+                <Link
+                  href="/pricing"
+                  className="premium-button-primary w-full text-center block font-bold"
+                >
+                  Unlock This Course →
+                </Link>
               )}
-              <Link href="/auth/login" className="premium-button-outline w-full text-center block font-bold text-slate-600">Sign in to resume</Link>
+              {!user && (
+                <Link
+                  href="/auth/login"
+                  className="premium-button-outline w-full text-center block font-bold text-slate-600"
+                >
+                  Sign in to resume
+                </Link>
+              )}
             </div>
 
             <div className="space-y-4 pt-8 border-t border-slate-100">
@@ -148,7 +239,7 @@ export default async function CourseDetailPage({
                 "Actionable Exercises",
                 "Mobile Reading Mode",
                 "Lifetime Updates",
-              ].map(item => (
+              ].map((item) => (
                 <div key={item} className="flex gap-3 text-sm text-[#4B3F6B] font-medium">
                   <svg className="w-5 h-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path d="M5 13l4 4L19 7" /></svg>
                   {item}
