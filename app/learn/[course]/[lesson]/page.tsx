@@ -304,17 +304,18 @@ export default function ReaderPage() {
   const isLocked = authLoading ? false : !currentMeta?.isFree && userTier === "free";
 
   async function markCompleteAndNext() {
+    console.log("markCompleteAndNext fired, userId:", userId, "lesson:", activeLesson);
     setCompletedLessons((prev) => new Set([...prev, activeLesson]));
     if (userId) {
       const now = new Date().toISOString();
       await supabase.from("lesson_progress").upsert(
         { user_id: userId, course_slug: courseSlug, lesson_slug: activeLesson, last_accessed_at: now },
         { onConflict: "user_id,course_slug,lesson_slug" }
-      );
+      ).then(({ error }) => { if (error) console.error("lesson_progress upsert error:", error); });
       await supabase.from("course_enrollments").upsert(
         { user_id: userId, course_slug: courseSlug, last_lesson_slug: activeLesson, last_accessed_at: now },
         { onConflict: "user_id,course_slug" }
-      );
+      ).then(({ error }) => { if (error) console.error("course_enrollments upsert error:", error); });
     }
     if (nextLesson) setActiveLesson(nextLesson.slug);
   }
