@@ -150,7 +150,21 @@ export default function CoursesPage() {
       {/* ── CONTROLS ── */}
       <div className="max-w-7xl mx-auto px-8 -mt-8 relative z-10">
 
-        {/* Resume banner */}
+        {/* Sign-in nudge — only when logged out */}
+        {!user && (
+          <div style={{ background: '#f5f3ff', border: '1px solid rgba(124,58,237,0.15)', borderRadius: '12px', padding: '12px 20px', marginBottom: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px' }}>
+            <span style={{ fontSize: '13px', color: '#4B3F6B' }}>
+              Sign in to track your progress and resume where you left off.
+            </span>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <a href="/auth/login" style={{ fontSize: '13px', fontWeight: 600, color: '#7C3AED', textDecoration: 'none' }}>Sign in</a>
+              <span style={{ color: '#94a3b8' }}>·</span>
+              <a href="/auth/signup" style={{ fontSize: '13px', fontWeight: 600, color: '#D4860A', textDecoration: 'none' }}>Join free</a>
+            </div>
+          </div>
+        )}
+
+        {/* Resume banner — only when logged in with progress */}
         {user && coursesInProgress.length > 0 && (
           <div style={{ background: '#fdf3e3', border: '1px solid rgba(212,134,10,0.2)', borderRadius: '12px', padding: '14px 20px', marginBottom: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px' }}>
             <div>
@@ -257,6 +271,9 @@ export default function CoursesPage() {
                           course.accessLevel === 'free' ? 'text-emerald-500' : 'text-amber-500'
                         }`}>
                           {course.accessLevel || 'Learner+'}
+                          {user && course.accessLevel !== 'free' && (
+                            <span style={{ color: '#10b981', marginLeft: '4px' }}>✓</span>
+                          )}
                         </span>
                       </td>
                       <td className="px-6 py-5 text-slate-400 text-[12px] font-mono">
@@ -275,7 +292,7 @@ export default function CoursesPage() {
                         )}
                       </td>
                       <td className="px-6 py-5 text-right" onClick={(e) => e.stopPropagation()}>
-                        {hasStarted ? (
+                        {user && hasStarted ? (
                           <a href={resumeHref} style={{ fontSize: '13px', fontWeight: 700, color: isCompleted ? '#10b981' : '#D4860A', letterSpacing: '0.05em' }}>
                             {isCompleted ? 'REVIEW →' : 'RESUME →'}
                           </a>
