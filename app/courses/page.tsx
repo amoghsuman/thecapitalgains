@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { getAllCourses } from "@/lib/sanity/queries";
+import { createClient } from "@/lib/supabase/client";
 import "@/app/premium-theme.css";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -38,6 +39,13 @@ export default function CoursesPage() {
   const [filterPath, setFilterPath] = useState("all");
   const [filterLevel, setFilterLevel] = useState("all");
 
+  // ── Progress state ──────────────────────────────────────────────────────────
+  const [user, setUser] = useState<{ id: string } | null>(null);
+  const [progressMap, setProgressMap] = useState<Record<string, number>>({});
+  const [enrollmentMap, setEnrollmentMap] = useState<Record<string, string>>({});
+  const [totalCompletedLessons, setTotalCompletedLessons] = useState(0);
+  const [coursesInProgress, setCoursesInProgress] = useState<string[]>([]);
+
   useEffect(() => {
     getAllCourses()
       .then((data) => {
@@ -48,6 +56,44 @@ export default function CoursesPage() {
         setError(true);
         setLoading(false);
       });
+  }, []);
+
+  useEffect(() => {
+    const supabase = createClient();
+    async function loadProgress() {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      setUser(user);
+
+      const { data: progressRows } = await supabase
+        .from("lesson_progress")
+        .select("course_slug, lesson_slug")
+        .eq("user_id", user.id);
+
+      if (progressRows) {
+        setTotalCompletedLessons(progressRows.length);
+        const pm: Record<string, number> = {};
+        progressRows.forEach((row) => {
+          pm[row.course_slug] = (pm[row.course_slug] || 0) + 1;
+        });
+        setProgressMap(pm);
+        setCoursesInProgress(Object.keys(pm));
+      }
+
+      const { data: enrollmentRows } = await supabase
+        .from("course_enrollments")
+        .select("course_slug, last_lesson_slug")
+        .eq("user_id", user.id);
+
+      if (enrollmentRows) {
+        const em: Record<string, string> = {};
+        enrollmentRows.forEach((row) => {
+          if (row.last_lesson_slug) em[row.course_slug] = row.last_lesson_slug;
+        });
+        setEnrollmentMap(em);
+      }
+    }
+    loadProgress();
   }, []);
 
   const uniquePaths = useMemo(() => {
@@ -74,9 +120,16 @@ export default function CoursesPage() {
     </div>
   );
 
+  // Resume banner derived values
+  const lastCourseSlug = Object.keys(enrollmentMap)[0];
+  const lastLesson = lastCourseSlug ? enrollmentMap[lastCourseSlug] : undefined;
+  const resumeUrl = lastLesson
+    ? `/learn/${lastCourseSlug}/${lastLesson}`
+    : lastCourseSlug ? `/courses/${lastCourseSlug}` : "/courses";
+
   return (
     <div className="bg-[#F8FAFC] min-h-screen pb-20 font-sans">
-      
+
       {/* ── HEADER ── */}
       <div className="premium-dark pt-32 pb-20 border-b border-[rgba(255,255,255,0.05)]">
         <div className="max-w-7xl mx-auto px-8">
@@ -88,7 +141,7 @@ export default function CoursesPage() {
             Our Learning Paths
           </h1>
           <p className="text-[#94A3B8] text-[16px] mt-2 max-w-2xl leading-relaxed">
-            High-density, text-first curriculum designed for quick scanning and decision making. 
+            High-density, text-first curriculum designed for quick scanning and decision making.
             No fluff. Filter by strategy to start your edge.
           </p>
         </div>
@@ -96,6 +149,22 @@ export default function CoursesPage() {
 
       {/* ── CONTROLS ── */}
       <div className="max-w-7xl mx-auto px-8 -mt-8 relative z-10">
+
+        {/* Resume banner */}
+        {user && coursesInProgress.length > 0 && (
+          <div style={{ background: '#fdf3e3', border: '1px solid rgba(212,134,10,0.2)', borderRadius: '12px', padding: '14px 20px', marginBottom: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px' }}>
+            <div>
+              <div style={{ fontSize: '11px', fontWeight: 700, color: '#D4860A', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '2px' }}>Pick up where you left off</div>
+              <div style={{ fontSize: '13px', color: '#1C0F3F', fontWeight: 500 }}>
+                {coursesInProgress.length} course{coursesInProgress.length > 1 ? 's' : ''} in progress · {totalCompletedLessons} lessons completed
+              </div>
+            </div>
+            <a href={resumeUrl} style={{ background: '#D4860A', color: 'white', borderRadius: '8px', padding: '8px 16px', fontSize: '13px', fontWeight: 600, textDecoration: 'none', whiteSpace: 'nowrap' }}>
+              Resume learning →
+            </a>
+          </div>
+        )}
+
         <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-xl flex flex-wrap gap-4 items-center">
           <div className="relative flex-1 min-w-[280px]">
             <input
@@ -111,9 +180,9 @@ export default function CoursesPage() {
               </svg>
             </div>
           </div>
-          
-          <select 
-            value={filterPath} 
+
+          <select
+            value={filterPath}
             onChange={(e) => setFilterPath(e.target.value)}
             className="h-12 px-6 rounded-xl bg-slate-50 border-none text-[13px] font-bold text-[#1C0F3F] focus:ring-2 focus:ring-violet-500/20"
           >
@@ -121,8 +190,8 @@ export default function CoursesPage() {
             {uniquePaths.map(p => <option key={p} value={p}>{p.toUpperCase()}</option>)}
           </select>
 
-          <select 
-            value={filterLevel} 
+          <select
+            value={filterLevel}
             onChange={(e) => setFilterLevel(e.target.value)}
             className="h-12 px-6 rounded-xl bg-slate-50 border-none text-[13px] font-bold text-[#1C0F3F] focus:ring-2 focus:ring-violet-500/20"
           >
@@ -149,52 +218,76 @@ export default function CoursesPage() {
             </thead>
             <tbody className="divide-y divide-slate-100">
               {displayed.length > 0 ? (
-                displayed.map((course) => (
-                  <tr 
-                    key={course._id} 
-                    className="hover:bg-slate-50/50 transition-colors cursor-pointer group"
-                    onClick={() => router.push(`/courses/${course.slug}`)}
-                  >
-                    <td className="px-6 py-5">
-                      <div>
-                        <div className="text-[14px] font-bold text-[#1C0F3F] mb-1 group-hover:text-violet-600 transition-colors">
-                          {course.title}
+                displayed.map((course) => {
+                  const completedInCourse = progressMap[course.slug] || 0;
+                  const courseTotalLessons = course.lessonsCount || 0;
+                  const pct = courseTotalLessons > 0 ? Math.round((completedInCourse / courseTotalLessons) * 100) : 0;
+                  const hasStarted = completedInCourse > 0;
+                  const isCompleted = pct === 100;
+                  const lastLesson = enrollmentMap[course.slug];
+                  const resumeHref = lastLesson ? `/learn/${course.slug}/${lastLesson}` : `/courses/${course.slug}`;
+
+                  return (
+                    <tr
+                      key={course._id}
+                      className="hover:bg-slate-50/50 transition-colors cursor-pointer group"
+                      onClick={() => router.push(`/courses/${course.slug}`)}
+                    >
+                      <td className="px-6 py-5">
+                        <div>
+                          <div className="text-[14px] font-bold text-[#1C0F3F] mb-1 group-hover:text-violet-600 transition-colors">
+                            {course.title}
+                          </div>
+                          <div className="text-[12px] text-slate-400 line-clamp-1 max-w-lg">
+                            {course.subtitle || course.description}
+                          </div>
                         </div>
-                        <div className="text-[12px] text-slate-400 line-clamp-1 max-w-lg">
-                          {course.subtitle || course.description}
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-5">
-                      <span className={`text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full border ${
-                        course.tag?.includes('Beginner') ? 'bg-emerald-50 text-emerald-600 border-emerald-100' :
-                        course.tag?.includes('Advanced') ? 'bg-rose-50 text-rose-600 border-rose-100' :
-                        'bg-violet-50 text-violet-600 border-violet-100'
-                      }`}>
-                        {course.tag || 'Core'}
-                      </span>
-                    </td>
-                    <td className="px-6 py-5">
-                      <span className={`text-[10px] font-bold tracking-widest uppercase ${
-                        course.accessLevel === 'free' ? 'text-emerald-500' : 'text-amber-500'
-                      }`}>
-                        {course.accessLevel || 'Learner+'}
-                      </span>
-                    </td>
-                    <td className="px-6 py-5 text-slate-400 text-[12px] font-mono">
-                      {course.duration || '—'}
-                    </td>
-                    <td className="px-6 py-5 text-right">
-                      <Link 
-                        href={`/courses/${course.slug}`}
-                        className="text-[11px] font-black uppercase tracking-widest text-[#D4860A] hover:text-[#F0A020] transition-colors"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        Start →
-                      </Link>
-                    </td>
-                  </tr>
-                ))
+                      </td>
+                      <td className="px-6 py-5">
+                        <span className={`text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full border ${
+                          course.tag?.includes('Beginner') ? 'bg-emerald-50 text-emerald-600 border-emerald-100' :
+                          course.tag?.includes('Advanced') ? 'bg-rose-50 text-rose-600 border-rose-100' :
+                          'bg-violet-50 text-violet-600 border-violet-100'
+                        }`}>
+                          {course.tag || 'Core'}
+                        </span>
+                      </td>
+                      <td className="px-6 py-5">
+                        <span className={`text-[10px] font-bold tracking-widest uppercase ${
+                          course.accessLevel === 'free' ? 'text-emerald-500' : 'text-amber-500'
+                        }`}>
+                          {course.accessLevel || 'Learner+'}
+                        </span>
+                      </td>
+                      <td className="px-6 py-5 text-slate-400 text-[12px] font-mono">
+                        {course.duration || '—'}
+                        {user && hasStarted && (
+                          <div style={{ marginTop: '4px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                              <div style={{ flex: 1, height: '3px', background: '#f1f5f9', borderRadius: '2px', overflow: 'hidden', minWidth: '60px' }}>
+                                <div style={{ height: '100%', background: isCompleted ? '#10b981' : '#D4860A', borderRadius: '2px', width: `${pct}%` }} />
+                              </div>
+                              <span style={{ fontSize: '10px', color: '#94a3b8', fontWeight: 600, whiteSpace: 'nowrap' }}>
+                                {isCompleted ? '✓ Done' : `${pct}%`}
+                              </span>
+                            </div>
+                          </div>
+                        )}
+                      </td>
+                      <td className="px-6 py-5 text-right" onClick={(e) => e.stopPropagation()}>
+                        {hasStarted ? (
+                          <a href={resumeHref} style={{ fontSize: '13px', fontWeight: 700, color: isCompleted ? '#10b981' : '#D4860A', letterSpacing: '0.05em' }}>
+                            {isCompleted ? 'REVIEW →' : 'RESUME →'}
+                          </a>
+                        ) : (
+                          <a href={`/courses/${course.slug}`} style={{ fontSize: '13px', fontWeight: 700, color: '#D4860A', letterSpacing: '0.05em' }}>
+                            START →
+                          </a>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })
               ) : (
                 <tr>
                   <td colSpan={5} className="px-6 py-20 text-center text-slate-400 text-sm italic">
