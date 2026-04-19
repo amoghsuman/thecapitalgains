@@ -327,7 +327,7 @@ export default function ReaderPage() {
         { user_id: userId, course_slug: courseSlug, lesson_slug: activeLesson, last_accessed_at: now },
         { onConflict: "user_id,course_slug,lesson_slug" }
       );
-      const allLessonsCount = course.chapters.flatMap((ch) => ch.lessons).length;
+      const allLessonsCount = (course?.chapters?.flatMap((ch) => ch.lessons) ?? []).length;
       const newCompleted = completedLessons.size + 1;
       await supabase.from("course_enrollments").upsert(
         {
