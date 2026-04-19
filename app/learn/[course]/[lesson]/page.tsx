@@ -209,44 +209,40 @@ export default function ReaderPage() {
 
   // Auth + subscription + existing progress
   useEffect(() => {
-    const TIER_RANK: Record<string, number> = { free: 0, starter: 1, pro: 2, elite: 3 };
-    supabase.auth.getUser().then(async ({ data }) => {
-      const user = data?.user;
-      if (user) {
-        setIsLoggedIn(true);
-        setUserId(user.id);
-
-        // Load subscription tier
-        const { data: sub } = await supabase
-          .from("subscriptions")
-          .select("tier, status, current_period_end")
-          .eq("user_id", user.id)
-          .eq("status", "active")
-          .single();
-        if (sub) {
-          const notExpired =
-            !sub.current_period_end || new Date(sub.current_period_end) > new Date();
-          if (notExpired && sub.tier && (TIER_RANK[sub.tier] ?? 0) >= 1) {
-            setUserTier(sub.tier);
-          }
-        }
-
-        // Load existing progress for this course
-        if (courseSlug) {
-          const { data: progress } = await supabase
-            .from("lesson_progress")
-            .select("lesson_slug")
-            .eq("user_id", user.id)
-            .eq("course_slug", courseSlug);
-          if (progress) {
-            setCompletedLessons(new Set(progress.map((p: { lesson_slug: string }) => p.lesson_slug)));
-          }
-        }
+    async function loadAuthAndProgress() {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        setAuthLoading(false);
+        return;
       }
+      setIsLoggedIn(true);
+      setUserId(user.id);
+
+      const { data: sub } = await supabase
+        .from("subscriptions")
+        .select("tier, status, current_period_end")
+        .eq("user_id", user.id)
+        .eq("status", "active")
+        .single();
+      if (sub) {
+        const isValid = !sub.current_period_end || new Date(sub.current_period_end) > new Date();
+        if (isValid) setUserTier(sub.tier);
+      }
+
+      const { data: progress } = await supabase
+        .from("lesson_progress")
+        .select("lesson_slug")
+        .eq("user_id", user.id)
+        .eq("course_slug", courseSlug);
+      if (progress) {
+        setCompletedLessons(new Set(progress.map((p: { lesson_slug: string }) => p.lesson_slug)));
+      }
+
       setAuthLoading(false);
-    });
+    }
+    loadAuthAndProgress();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [courseSlug]);
 
   // Fetch course structure
   useEffect(() => {
@@ -305,26 +301,45 @@ export default function ReaderPage() {
   const progressPct = allLessons.length > 0 ? Math.round((completedLessons.size / allLessons.length) * 100) : 0;
 
   const currentMeta = allLessons.find((l) => l.slug === activeLesson) || allLessons.find((l) => l.slug === lessonSlug);
-  const TIER_RANK: Record<string, number> = { free: 0, starter: 1, pro: 2, elite: 3 };
-  const isLocked = authLoading
-    ? false
-    : currentMeta
-      ? !currentMeta.isFree && (TIER_RANK[userTier] ?? 0) < 1
-      : true;
-
-  async function saveProgress(lessonSlugToSave: string) {
-    setCompletedLessons((prev) => new Set([...prev, lessonSlugToSave]));
-    if (userId) {
-      await supabase.from("lesson_progress").upsert(
-        { user_id: userId, course_slug: courseSlug, lesson_slug: lessonSlugToSave },
-        { onConflict: "user_id,course_slug,lesson_slug" }
-      );
-    }
-  }
+  const isLocked = authLoading ? false : !currentMeta?.isFree && userTier === "free";
 
   async function markCompleteAndNext() {
-    await saveProgress(activeLesson);
+    setCompletedLessons((prev) => new Set([...prev, activeLesson]));
+    if (userId) {
+      const now = new Date().toISOString();
+      await supabase.from("lesson_progress").upsert(
+        { user_id: userId, course_slug: courseSlug, lesson_slug: activeLesson, last_accessed_at: now },
+        { onConflict: "user_id,course_slug,lesson_slug" }
+      );
+      await supabase.from("course_enrollments").upsert(
+        { user_id: userId, course_slug: courseSlug, last_lesson_slug: activeLesson, last_accessed_at: now },
+        { onConflict: "user_id,course_slug" }
+      );
+    }
     if (nextLesson) setActiveLesson(nextLesson.slug);
+  }
+
+  async function markFinalComplete() {
+    setCompletedLessons((prev) => new Set([...prev, activeLesson]));
+    if (userId) {
+      const now = new Date().toISOString();
+      await supabase.from("lesson_progress").upsert(
+        { user_id: userId, course_slug: courseSlug, lesson_slug: activeLesson, last_accessed_at: now },
+        { onConflict: "user_id,course_slug,lesson_slug" }
+      );
+      const allLessonsCount = course.chapters.flatMap((ch) => ch.lessons).length;
+      const newCompleted = completedLessons.size + 1;
+      await supabase.from("course_enrollments").upsert(
+        {
+          user_id: userId,
+          course_slug: courseSlug,
+          last_lesson_slug: activeLesson,
+          last_accessed_at: now,
+          completed_at: newCompleted >= allLessonsCount ? now : null,
+        },
+        { onConflict: "user_id,course_slug" }
+      );
+    }
   }
 
   return (
@@ -524,7 +539,7 @@ export default function ReaderPage() {
                   </button>
                 ) : (
                   <button
-                    onClick={() => saveProgress(activeLesson)}
+                    onClick={markFinalComplete}
                     className="bg-[#1A7A4A] hover:bg-[#15623C] text-white rounded-lg px-6 py-2.5 font-mono text-[13px] font-medium transition-colors"
                   >
                     Mark complete ✓
