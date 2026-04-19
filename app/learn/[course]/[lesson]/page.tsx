@@ -201,7 +201,6 @@ export default function ReaderPage() {
   const [userTier, setUserTier] = useState<string>("free");
   const [authLoading, setAuthLoading] = useState(true);
   const [userId, setUserId] = useState<string | null>(null);
-  const supabase = createClient();
 
   useEffect(() => {
     if (lessonSlug) setActiveLesson(lessonSlug);
@@ -210,7 +209,9 @@ export default function ReaderPage() {
   // Auth + subscription + existing progress
   useEffect(() => {
     async function loadAuthAndProgress() {
+      const supabase = createClient();
       const { data: { user } } = await supabase.auth.getUser();
+      console.log("Auth user loaded:", user?.id, "userId state will be:", user?.id ?? null);
       if (!user) {
         setAuthLoading(false);
         return;
@@ -304,7 +305,8 @@ export default function ReaderPage() {
   const isLocked = authLoading ? false : !currentMeta?.isFree && userTier === "free";
 
   async function markCompleteAndNext() {
-    console.log("markCompleteAndNext fired, userId:", userId, "lesson:", activeLesson);
+    console.log("markComplete called - userId state:", userId, "activeLesson:", activeLesson);
+    const supabase = createClient();
     setCompletedLessons((prev) => new Set([...prev, activeLesson]));
     if (userId) {
       const now = new Date().toISOString();
@@ -321,6 +323,7 @@ export default function ReaderPage() {
   }
 
   async function markFinalComplete() {
+    const supabase = createClient();
     setCompletedLessons((prev) => new Set([...prev, activeLesson]));
     if (userId) {
       const now = new Date().toISOString();
