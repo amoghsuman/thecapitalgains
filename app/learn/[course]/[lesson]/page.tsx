@@ -307,7 +307,9 @@ export default function ReaderPage() {
   async function markCompleteAndNext() {
     console.log("markComplete called - userId state:", userId, "activeLesson:", activeLesson);
     setCompletedLessons((prev) => new Set([...prev, activeLesson]));
+    console.log("about to check userId:", userId);
     if (userId) {
+      console.log("inside userId block, about to upsert");
       const supabase = createClient();
 
       const { error: lpError } = await supabase
