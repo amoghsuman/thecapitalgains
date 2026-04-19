@@ -2,7 +2,7 @@
 
 export const dynamic = "force-dynamic";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
@@ -201,6 +201,7 @@ export default function ReaderPage() {
   const [userTier, setUserTier] = useState<string>("free");
   const [authLoading, setAuthLoading] = useState(true);
   const [userId, setUserId] = useState<string | null>(null);
+  const supabaseRef = useRef(createClient());
 
   useEffect(() => {
     if (lessonSlug) setActiveLesson(lessonSlug);
@@ -310,40 +311,45 @@ export default function ReaderPage() {
     console.log("about to check userId:", userId);
     if (userId) {
       console.log("inside userId block, about to upsert");
-      const supabase = createClient();
+      const supabase = supabaseRef.current;
+      try {
+        const { error: lpError } = await supabase
+          .from("lesson_progress")
+          .upsert(
+            {
+              user_id: userId,
+              course_slug: courseSlug,
+              lesson_slug: activeLesson,
+              last_accessed_at: new Date().toISOString(),
+            },
+            { onConflict: "user_id,course_slug,lesson_slug" }
+          );
+        console.log("lesson_progress result:", JSON.stringify(lpError));
+        if (lpError) {
+          console.error("lesson_progress upsert FAILED:", JSON.stringify(lpError));
+        } else {
+          console.log("lesson_progress upsert SUCCESS");
+        }
 
-      const { error: lpError } = await supabase
-        .from("lesson_progress")
-        .upsert(
-          {
-            user_id: userId,
-            course_slug: courseSlug,
-            lesson_slug: activeLesson,
-            last_accessed_at: new Date().toISOString(),
-          },
-          { onConflict: "user_id,course_slug,lesson_slug" }
-        );
-      if (lpError) {
-        console.error("lesson_progress upsert FAILED:", JSON.stringify(lpError));
-      } else {
-        console.log("lesson_progress upsert SUCCESS");
-      }
-
-      const { error: ceError } = await supabase
-        .from("course_enrollments")
-        .upsert(
-          {
-            user_id: userId,
-            course_slug: courseSlug,
-            last_lesson_slug: activeLesson,
-            last_accessed_at: new Date().toISOString(),
-          },
-          { onConflict: "user_id,course_slug" }
-        );
-      if (ceError) {
-        console.error("course_enrollments upsert FAILED:", JSON.stringify(ceError));
-      } else {
-        console.log("course_enrollments upsert SUCCESS");
+        const { error: ceError } = await supabase
+          .from("course_enrollments")
+          .upsert(
+            {
+              user_id: userId,
+              course_slug: courseSlug,
+              last_lesson_slug: activeLesson,
+              last_accessed_at: new Date().toISOString(),
+            },
+            { onConflict: "user_id,course_slug" }
+          );
+        console.log("course_enrollments result:", JSON.stringify(ceError));
+        if (ceError) {
+          console.error("course_enrollments upsert FAILED:", JSON.stringify(ceError));
+        } else {
+          console.log("course_enrollments upsert SUCCESS");
+        }
+      } catch (err) {
+        console.error("upsert threw exception:", err);
       }
     }
     if (nextLesson) setActiveLesson(nextLesson.slug);
@@ -352,45 +358,50 @@ export default function ReaderPage() {
   async function markFinalComplete() {
     setCompletedLessons((prev) => new Set([...prev, activeLesson]));
     if (userId) {
-      const supabase = createClient();
+      const supabase = supabaseRef.current;
       const now = new Date().toISOString();
+      try {
+        const { error: lpError } = await supabase
+          .from("lesson_progress")
+          .upsert(
+            {
+              user_id: userId,
+              course_slug: courseSlug,
+              lesson_slug: activeLesson,
+              last_accessed_at: now,
+            },
+            { onConflict: "user_id,course_slug,lesson_slug" }
+          );
+        console.log("lesson_progress result:", JSON.stringify(lpError));
+        if (lpError) {
+          console.error("lesson_progress upsert FAILED:", JSON.stringify(lpError));
+        } else {
+          console.log("lesson_progress upsert SUCCESS");
+        }
 
-      const { error: lpError } = await supabase
-        .from("lesson_progress")
-        .upsert(
-          {
-            user_id: userId,
-            course_slug: courseSlug,
-            lesson_slug: activeLesson,
-            last_accessed_at: now,
-          },
-          { onConflict: "user_id,course_slug,lesson_slug" }
-        );
-      if (lpError) {
-        console.error("lesson_progress upsert FAILED:", JSON.stringify(lpError));
-      } else {
-        console.log("lesson_progress upsert SUCCESS");
-      }
+        const allLessonsCount = (course?.chapters?.flatMap((ch) => ch.lessons) ?? []).length;
+        const newCompleted = completedLessons.size + 1;
 
-      const allLessonsCount = (course?.chapters?.flatMap((ch) => ch.lessons) ?? []).length;
-      const newCompleted = completedLessons.size + 1;
-
-      const { error: ceError } = await supabase
-        .from("course_enrollments")
-        .upsert(
-          {
-            user_id: userId,
-            course_slug: courseSlug,
-            last_lesson_slug: activeLesson,
-            last_accessed_at: now,
-            completed_at: newCompleted >= allLessonsCount ? now : null,
-          },
-          { onConflict: "user_id,course_slug" }
-        );
-      if (ceError) {
-        console.error("course_enrollments upsert FAILED:", JSON.stringify(ceError));
-      } else {
-        console.log("course_enrollments upsert SUCCESS");
+        const { error: ceError } = await supabase
+          .from("course_enrollments")
+          .upsert(
+            {
+              user_id: userId,
+              course_slug: courseSlug,
+              last_lesson_slug: activeLesson,
+              last_accessed_at: now,
+              completed_at: newCompleted >= allLessonsCount ? now : null,
+            },
+            { onConflict: "user_id,course_slug" }
+          );
+        console.log("course_enrollments result:", JSON.stringify(ceError));
+        if (ceError) {
+          console.error("course_enrollments upsert FAILED:", JSON.stringify(ceError));
+        } else {
+          console.log("course_enrollments upsert SUCCESS");
+        }
+      } catch (err) {
+        console.error("upsert threw exception:", err);
       }
     }
   }
