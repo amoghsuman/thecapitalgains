@@ -255,6 +255,16 @@ export default function CoursesPage() {
                           <div className="text-[12px] text-slate-400 line-clamp-1 max-w-lg">
                             {course.subtitle || course.description}
                           </div>
+                          {user && hasStarted && (
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '4px' }}>
+                              <div style={{ width: '80px', height: '3px', background: '#f1f5f9', borderRadius: '2px', overflow: 'hidden' }}>
+                                <div style={{ height: '100%', background: isCompleted ? '#10b981' : '#D4860A', borderRadius: '2px', width: `${pct}%` }} />
+                              </div>
+                              <span style={{ fontSize: '10px', color: '#94a3b8', fontWeight: 600 }}>
+                                {isCompleted ? '✓ Complete' : `${pct}% done`}
+                              </span>
+                            </div>
+                          )}
                         </div>
                       </td>
                       <td className="px-6 py-5">
@@ -271,25 +281,10 @@ export default function CoursesPage() {
                           course.accessLevel === 'free' ? 'text-emerald-500' : 'text-amber-500'
                         }`}>
                           {course.accessLevel || 'Learner+'}
-                          {user && course.accessLevel !== 'free' && (
-                            <span style={{ color: '#10b981', marginLeft: '4px' }}>✓</span>
-                          )}
                         </span>
                       </td>
                       <td className="px-6 py-5 text-slate-400 text-[12px] font-mono">
-                        {course.duration || '—'}
-                        {user && hasStarted && (
-                          <div style={{ marginTop: '4px' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                              <div style={{ flex: 1, height: '3px', background: '#f1f5f9', borderRadius: '2px', overflow: 'hidden', minWidth: '60px' }}>
-                                <div style={{ height: '100%', background: isCompleted ? '#10b981' : '#D4860A', borderRadius: '2px', width: `${pct}%` }} />
-                              </div>
-                              <span style={{ fontSize: '10px', color: '#94a3b8', fontWeight: 600, whiteSpace: 'nowrap' }}>
-                                {isCompleted ? '✓ Done' : `${pct}%`}
-                              </span>
-                            </div>
-                          </div>
-                        )}
+                        {course.duration || '~5 Hours'}
                       </td>
                       <td className="px-6 py-5 text-right" onClick={(e) => e.stopPropagation()}>
                         {user && hasStarted ? (
