@@ -1,8 +1,6 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 
-const ADMIN_EMAILS = ['your@email.com'] // replace with your actual email
-
 export default async function AdminLayout({
   children,
 }: {
@@ -15,7 +13,13 @@ export default async function AdminLayout({
     redirect('/auth/login')
   }
 
-  if (!ADMIN_EMAILS.includes(user.email ?? '')) {
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('is_admin')
+    .eq('id', user.id)
+    .single()
+
+  if (!profile?.is_admin) {
     redirect('/')
   }
 
