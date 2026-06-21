@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-
+import SubscribeButton from "@/components/pricing/SubscribeButton";
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 type ServiceKey =
@@ -462,12 +462,11 @@ export default function PricingPage() {
                   billing={billing}
                 />
               </div>
-              <Link
-                href="/auth/signup"
-                className="bg-[#D4860A] hover:bg-[#B8720A] text-white font-bold rounded-xl px-6 py-3 text-sm tracking-tight transition-colors whitespace-nowrap"
-              >
-                Confirm Selection →
-              </Link>
+              <SubscribeButton
+                selectedPlans={selectedPills.map(s => ({ key: s.key, name: s.name }))}
+                billing={billing}
+                totalAmount={subTotal + oneTimeTotal}
+              />
             </div>
 
           </div>
