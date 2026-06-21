@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import crypto from "crypto";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@supabase/supabase-js";
 
 export async function POST(req: NextRequest) {
   const body = await req.text();
@@ -44,7 +44,10 @@ export async function POST(req: NextRequest) {
     ? "newsletter"
     : "free";
 
-  const supabase = await createClient();
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
 
   switch (event.event) {
     case "subscription.activated":
