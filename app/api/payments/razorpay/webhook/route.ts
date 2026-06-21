@@ -13,15 +13,22 @@ export async function POST(req: NextRequest) {
     .digest("hex");
 
   if (expected !== signature) {
+    console.error("Webhook signature mismatch");
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
 
   const event = JSON.parse(body);
+  console.log("Webhook event received:", event.event);
+
   const sub = event?.payload?.subscription?.entity;
+  const payment = event?.payload?.payment?.entity;
   const userId = sub?.notes?.user_id;
   const planKey: string = sub?.notes?.plan_key ?? "";
 
+  console.log("userId:", userId, "planKey:", planKey, "sub:", sub?.id);
+
   if (!userId) {
+    console.error("No user_id in webhook notes");
     return NextResponse.json({ received: true });
   }
 
@@ -41,29 +48,49 @@ export async function POST(req: NextRequest) {
 
   switch (event.event) {
     case "subscription.activated":
-    case "subscription.charged":
-      await supabase.from("subscriptions").upsert({
+    case "subscription.charged": {
+      const periodStart = sub.current_start
+        ? new Date(sub.current_start * 1000).toISOString()
+        : new Date().toISOString();
+      const periodEnd = sub.current_end
+        ? new Date(sub.current_end * 1000).toISOString()
+        : null;
+
+      const { error } = await supabase.from("subscriptions").upsert({
         user_id: userId,
         tier: tier,
+        billing_cycle: planKey.endsWith("annual") ? "annual" : "monthly",
+        amount_paise: sub.plan_id ? null : null,
         status: "active",
         razorpay_subscription_id: sub.id,
-        valid_until: new Date(sub.charge_at * 1000).toISOString(),
+        razorpay_plan_id: sub.plan_id ?? null,
+        razorpay_payment_id: payment?.id ?? null,
+        current_period_start: periodStart,
+        current_period_end: periodEnd,
         updated_at: new Date().toISOString(),
       }, { onConflict: "user_id" });
-      break;
 
-    case "subscription.cancelled":
-      await supabase.from("subscriptions")
+      if (error) console.error("Supabase upsert error:", error);
+      else console.log("Subscription activated/charged for user:", userId);
+      break;
+    }
+
+    case "subscription.cancelled": {
+      const { error } = await supabase.from("subscriptions")
         .update({ status: "cancelled", updated_at: new Date().toISOString() })
         .eq("user_id", userId);
+      if (error) console.error("Supabase cancel error:", error);
       break;
+    }
 
     case "subscription.completed":
-    case "payment.failed":
-      await supabase.from("subscriptions")
+    case "payment.failed": {
+      const { error } = await supabase.from("subscriptions")
         .update({ status: "expired", updated_at: new Date().toISOString() })
         .eq("user_id", userId);
+      if (error) console.error("Supabase expire error:", error);
       break;
+    }
   }
 
   return NextResponse.json({ received: true });
