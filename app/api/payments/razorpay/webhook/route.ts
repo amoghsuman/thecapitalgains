@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
     case "subscription.charged":
       await supabase.from("subscriptions").upsert({
         user_id: userId,
-        plan: tier,
+        tier: tier,
         status: "active",
         razorpay_subscription_id: sub.id,
         valid_until: new Date(sub.charge_at * 1000).toISOString(),
