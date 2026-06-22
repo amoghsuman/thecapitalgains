@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation"
 import Link from "next/link"
 import { createClient } from "@/lib/supabase/server"
+import { getAllCourses } from "@/lib/sanity/queries"
 
 const TIER_LABELS: Record<string, string> = {
   free:       "Free",
@@ -52,6 +53,12 @@ export default async function DashboardPage() {
   const progressByCourse: Record<string, number> = {}
   for (const row of progressRows ?? []) {
     progressByCourse[row.course_slug] = (progressByCourse[row.course_slug] ?? 0) + 1
+  }
+
+  const allCourses = await getAllCourses()
+  const courseTitleMap: Record<string, string> = {}
+  for (const c of allCourses ?? []) {
+    courseTitleMap[c.slug] = c.title
   }
 
   const tier = sub?.tier ?? "free"
@@ -188,10 +195,10 @@ export default async function DashboardPage() {
               Continue Learning
             </p>
             <p style={{ fontSize: 20, fontWeight: 700, color: "#FFFFFF", marginBottom: 6 }}>
-              {formatSlug(lastEnrollment.course_slug)}
+              {courseTitleMap[lastEnrollment.course_slug] ?? formatSlug(lastEnrollment.course_slug)}
             </p>
             <p style={{ fontSize: 13, color: "rgba(255,255,255,0.5)", marginBottom: 22 }}>
-              {progressByCourse[lastEnrollment.course_slug] ?? 0} lessons completed
+              {(() => { const n = progressByCourse[lastEnrollment.course_slug] ?? 0; return `${n} ${n === 1 ? "lesson" : "lessons"} completed` })()}
             </p>
             <Link
               href={resumeHref}
@@ -242,10 +249,10 @@ export default async function DashboardPage() {
                   >
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <p style={{ fontSize: 14, fontWeight: 600, color: "#1C0F3F", marginBottom: 4 }}>
-                        {formatSlug(enr.course_slug)}
+                        {courseTitleMap[enr.course_slug] ?? formatSlug(enr.course_slug)}
                       </p>
                       <p style={{ fontSize: 11, color: "#8B7BAB", fontFamily: "monospace", margin: 0, marginBottom: isCompleted ? 8 : 0 }}>
-                        {completed} lessons completed · Last accessed {lastAccessed}
+                        {completed} {completed === 1 ? "lesson" : "lessons"} completed · Last accessed {lastAccessed}
                       </p>
                       {isCompleted && (
                         <span style={{
