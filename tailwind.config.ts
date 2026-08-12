@@ -7,7 +7,15 @@ const config: Config = {
     "./lib/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        // Everything is Inter. The `mono` utility is intentionally mapped to
+        // Inter too so `font-mono` classes across the app render Inter, not a
+        // system monospace fallback.
+        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        mono: ["var(--font-inter)", "system-ui", "sans-serif"],
+      },
+    },
   },
   plugins: [],
 };

@@ -58,7 +58,7 @@ export default async function AdminTasksPage() {
   }
 
   return (
-    <div style={{ maxWidth: 1100, margin: '0 auto', padding: '32px 24px', fontFamily: 'Outfit, sans-serif' }}>
+    <div style={{ maxWidth: 1100, margin: '0 auto', padding: '32px 24px', fontFamily: 'var(--font-inter)' }}>
 
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 32 }}>
@@ -156,7 +156,7 @@ export default async function AdminTasksPage() {
                         padding: '10px 14px',
                         borderBottom: idx < groupTasks.length - 1 ? '1px solid #F9FAFB' : 'none',
                         verticalAlign: 'top',
-                        fontFamily: 'monospace',
+                        fontFamily: 'var(--font-inter)',
                         fontSize: 11,
                         color: '#9CA3AF',
                         whiteSpace: 'nowrap',
@@ -194,7 +194,7 @@ export default async function AdminTasksPage() {
                         padding: '10px 14px',
                         borderBottom: idx < groupTasks.length - 1 ? '1px solid #F9FAFB' : 'none',
                         verticalAlign: 'top',
-                        fontFamily: 'monospace',
+                        fontFamily: 'var(--font-inter)',
                         fontSize: 11,
                         color: '#9CA3AF',
                       }}>

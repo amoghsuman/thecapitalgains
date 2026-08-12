@@ -259,15 +259,15 @@ export default function PricingPage() {
   );
 
   return (
-    <div className="bg-[#FAFAF7] min-h-screen pb-32">
+    <div className="min-h-screen pb-32">
 
       {/* ── HERO ── */}
-      <header className="bg-[#1E1245] py-20 text-center relative overflow-hidden">
+      <header className="pt-32 pb-20 text-center relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[100%] rounded-full bg-[rgba(139,92,246,0.08)] blur-[120px]" />
           <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[100%] rounded-full bg-[rgba(99,102,241,0.06)] blur-[100px]" />
         </div>
-        <div className="max-w-3xl mx-auto px-8 relative z-10">
+        <div className="site-container relative z-10">
           <div className="font-mono text-[11px] text-[#A78BFA] tracking-[0.3em] font-bold uppercase mb-4">
             Pricing
           </div>
@@ -305,8 +305,8 @@ export default function PricingPage() {
       </header>
 
       {/* ── PRICING TABLE ── */}
-      <div className="max-w-4xl mx-auto px-4 md:px-8 pt-12">
-        <div className="bg-white rounded-2xl shadow-sm overflow-hidden border border-[rgba(30,18,69,0.08)]">
+      <div className="site-container pt-12">
+        <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-sm overflow-x-auto border border-[rgba(30,18,69,0.08)]">
           <table className="w-full border-collapse">
             <thead>
               <tr className="border-b border-[rgba(30,18,69,0.08)]">
@@ -416,7 +416,7 @@ export default function PricingPage() {
         </div>
 
         {/* SEBI disclaimer */}
-        <p className="text-sm text-[#6B7280] text-center max-w-2xl mx-auto mt-8 mb-8 leading-relaxed">
+        <p className="text-sm text-[#C7BEE6] text-center max-w-2xl mx-auto mt-8 mb-8 leading-relaxed">
           ⚖ Research and advisory services are provided under SEBI (Research Analyst) Regulations,
           2014. Registration No: [SEBI_RA_REG_NO]. Individual subscription fees are subject to
           SEBI-prescribed caps (₹1.5L per annum). For institutional or bulk pricing, write to{" "}
@@ -431,7 +431,7 @@ export default function PricingPage() {
 
       {/* ── STICKY TOTAL BAR ── */}
       <div className="fixed bottom-0 left-0 right-0 z-50 bg-[#1E1245] border-t border-white/10 px-6 py-4 shadow-2xl">
-        <div className="max-w-4xl mx-auto">
+        <div className="site-container">
           <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-8">
 
             {/* Pills — full width on mobile, flex-1 on desktop */}

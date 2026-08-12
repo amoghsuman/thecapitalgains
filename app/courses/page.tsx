@@ -115,7 +115,7 @@ export default function CoursesPage() {
   }, [courses, search, filterPath, filterLevel]);
 
   if (loading) return (
-    <div className="bg-[#F8FAFC] min-h-screen flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center">
       <div className="premium-glow-dot animate-pulse" />
     </div>
   );
@@ -128,11 +128,11 @@ export default function CoursesPage() {
     : lastCourseSlug ? `/courses/${lastCourseSlug}` : "/courses";
 
   return (
-    <div className="bg-[#F8FAFC] min-h-screen pb-20 font-sans">
+    <div className="min-h-screen pb-20 font-sans">
 
       {/* ── HEADER ── */}
-      <div className="premium-dark pt-32 pb-20 border-b border-[rgba(255,255,255,0.05)]">
-        <div className="max-w-7xl mx-auto px-8">
+      <div className="pt-32 pb-20">
+        <div className="site-container">
           <div className="inline-flex items-center gap-2 bg-[rgba(139,92,246,0.1)] border border-[rgba(139,92,246,0.2)] rounded-full px-4 py-1.5 mb-6">
             <div className="premium-glow-dot" />
             <span className="font-mono text-[10px] text-[#A78BFA] tracking-[0.2em] uppercase">Curriculum Explorer</span>
@@ -148,7 +148,7 @@ export default function CoursesPage() {
       </div>
 
       {/* ── CONTROLS ── */}
-      <div className="max-w-7xl mx-auto px-8 -mt-8 relative z-10">
+      <div className="site-container -mt-8 relative z-10">
 
         {/* Sign-in nudge — only when logged out */}
         {!user && (
@@ -218,7 +218,7 @@ export default function CoursesPage() {
       </div>
 
       {/* ── DATA TABLE ── */}
-      <div className="max-w-7xl mx-auto px-8 mt-12 overflow-hidden">
+      <div className="site-container mt-12 overflow-hidden">
         <div className="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-x-auto">
           <table className="w-full border-collapse">
             <thead>

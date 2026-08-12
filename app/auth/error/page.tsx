@@ -2,9 +2,9 @@ import Link from 'next/link'
 
 export default function AuthErrorPage() {
   return (
-    <div className="bg-[#FFFFFF] min-h-screen flex items-center justify-center px-8">
+    <div className="min-h-screen flex items-center justify-center px-8 py-28">
       <div className="max-w-sm w-full text-center">
-        <div className="font-bold text-[18px] text-[#1C0F3F] mb-8">
+        <div className="font-bold text-[18px] text-white mb-8">
           The Capital Gains
         </div>
         <div className="bg-white border border-[rgba(124,58,237,0.15)] rounded-2xl p-8 shadow-[0_4px_32px_rgba(124,58,237,0.08)]">

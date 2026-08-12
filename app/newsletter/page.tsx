@@ -21,28 +21,28 @@ const whatYouGet = [
 
 export default function NewsletterPage() {
   return (
-    <div className="bg-[#FFFFFF] min-h-screen overflow-x-hidden">
+    <div className="min-h-screen overflow-x-hidden">
 
       {/* ── HERO ── */}
-      <section className="max-w-3xl mx-auto px-8 pt-16 pb-10 text-center">
-        <div className="font-mono text-[11px] text-[#8B7BAB] tracking-widest uppercase mb-3">
+      <section className="site-container pt-32 pb-10 text-center">
+        <div className="font-mono text-[11px] text-[#C4B5FD] tracking-widest uppercase mb-3">
           Newsletter
         </div>
-        <h1 className="text-5xl font-bold text-[#1C0F3F] leading-[1.1] mb-4">
+        <h1 className="text-5xl font-bold text-white leading-[1.1] mb-4">
           One market insight,<br />every week.
         </h1>
-        <p className="text-[16px] text-[#4B3F6B] leading-relaxed mb-8 max-w-xl mx-auto">
+        <p className="text-[16px] text-[#C7BEE6] leading-relaxed mb-8 max-w-xl mx-auto">
           A concise, no-noise breakdown of what&apos;s moving Indian markets — and why it matters for your trades and investments. Free, always.
         </p>
         <NewsletterForm />
-        <p className="font-mono text-[12px] text-[#8B7BAB] mt-4">
+        <p className="font-mono text-[12px] text-[#C4B5FD] mt-4">
           No spam. Unsubscribe anytime. Join 500+ readers.
         </p>
       </section>
 
       {/* ── WHAT YOU GET ── */}
-      <section className="max-w-4xl mx-auto px-8 mt-16">
-        <h2 className="text-[28px] font-bold text-[#1C0F3F] text-center mb-10">
+      <section className="site-container mt-16">
+        <h2 className="text-[28px] font-bold text-white text-center mb-10">
           What lands in your inbox
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -66,8 +66,8 @@ export default function NewsletterPage() {
       </section>
 
       {/* ── RECENT ISSUES ── */}
-      <section className="max-w-4xl mx-auto px-8 mt-16">
-        <h2 className="text-[28px] font-bold text-[#1C0F3F] mb-6">
+      <section className="site-container mt-16">
+        <h2 className="text-[28px] font-bold text-white mb-6">
           Recent issues
         </h2>
         <div className="bg-white border border-[rgba(124,58,237,0.15)] rounded-xl px-6 py-5">
@@ -78,7 +78,7 @@ export default function NewsletterPage() {
       </section>
 
       {/* ── BOTTOM CTA ── */}
-      <section className="max-w-3xl mx-auto px-8 mt-16 pb-20">
+      <section className="site-container mt-16 pb-20">
         <div className="bg-[#1C0F3F] rounded-2xl px-10 py-12 text-center">
           <h2 className="text-[30px] text-white mb-3">
             Start reading this week

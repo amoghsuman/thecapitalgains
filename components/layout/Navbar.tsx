@@ -38,20 +38,17 @@ export default function Navbar() {
     router.push("/");
   }
 
-  const isHomePage = pathname === "/";
-  const useDarkNav = (isHomePage && !scrolled) || scrolled;
-  
+  const useDarkNav = true;
+
   return (
-    <nav 
+    <nav
       className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-        scrolled 
-          ? "bg-[rgba(15,7,32,0.8)] backdrop-blur-xl border-b border-[rgba(255,255,255,0.05)] py-3" 
-          : isHomePage 
-            ? "bg-transparent py-6" 
-            : "bg-white border-b border-slate-200 py-4"
+        scrolled
+          ? "bg-[rgba(22,3,58,0.55)] backdrop-blur-xl py-3"
+          : "bg-transparent py-6"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-10 flex items-center justify-between">
+      <div className="site-container flex items-center justify-between">
         {/* Logo */}
         <Link
           href="/"

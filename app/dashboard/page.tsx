@@ -103,15 +103,15 @@ export default async function DashboardPage() {
   }
 
   return (
-    <div style={{ background: "#FFFFFF", minHeight: "100vh", paddingTop: 112, paddingBottom: 80, fontFamily: "Outfit, sans-serif" }}>
-      <div style={{ maxWidth: 880, margin: "0 auto", padding: "0 24px" }}>
+    <div style={{ background: "transparent", minHeight: "100vh", paddingTop: 112, paddingBottom: 80, fontFamily: "var(--font-inter)" }}>
+      <div className="site-container--narrow">
 
         {/* Header */}
         <div style={{ marginBottom: 40 }}>
-          <p style={{ fontSize: 11, fontWeight: 700, color: "#8B7BAB", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 8 }}>
+          <p style={{ fontSize: 11, fontWeight: 700, color: "#C4B5FD", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 8 }}>
             Dashboard
           </p>
-          <h1 style={{ fontSize: 34, fontWeight: 700, color: "#1C0F3F", lineHeight: 1.2, margin: 0 }}>
+          <h1 style={{ fontSize: 34, fontWeight: 700, color: "#FFFFFF", lineHeight: 1.2, margin: 0 }}>
             Welcome back{firstName ? `, ${firstName}` : ""}.
           </h1>
         </div>
@@ -129,7 +129,7 @@ export default async function DashboardPage() {
                 color: badge.color,
                 padding: "4px 12px",
                 borderRadius: 999,
-                fontFamily: "monospace",
+                fontFamily: "var(--font-inter)",
               }}>
                 {tierLabel}
               </span>
@@ -141,7 +141,7 @@ export default async function DashboardPage() {
                   color: "#1A7A4A",
                   padding: "3px 8px",
                   borderRadius: 999,
-                  fontFamily: "monospace",
+                  fontFamily: "var(--font-inter)",
                 }}>
                   Active
                 </span>
@@ -251,7 +251,7 @@ export default async function DashboardPage() {
                       <p style={{ fontSize: 14, fontWeight: 600, color: "#1C0F3F", marginBottom: 4 }}>
                         {courseTitleMap[enr.course_slug] ?? formatSlug(enr.course_slug)}
                       </p>
-                      <p style={{ fontSize: 11, color: "#8B7BAB", fontFamily: "monospace", margin: 0, marginBottom: isCompleted ? 8 : 0 }}>
+                      <p style={{ fontSize: 11, color: "#8B7BAB", fontFamily: "var(--font-inter)", margin: 0, marginBottom: isCompleted ? 8 : 0 }}>
                         {completed} {completed === 1 ? "lesson" : "lessons"} completed · Last accessed {lastAccessed}
                       </p>
                       {isCompleted && (
@@ -263,7 +263,7 @@ export default async function DashboardPage() {
                           color: "#1A7A4A",
                           padding: "2px 8px",
                           borderRadius: 999,
-                          fontFamily: "monospace",
+                          fontFamily: "var(--font-inter)",
                         }}>
                           Completed
                         </span>

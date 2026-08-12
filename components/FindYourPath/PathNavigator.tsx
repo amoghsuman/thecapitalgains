@@ -8,11 +8,11 @@ import { personas, type Goal } from "@/lib/findYourPath/pathData";
 
 type HBValue = "low" | "medium-low" | "medium-high" | "high";
 
+type Pt = { x: number; y: number };
+
 type ConnectorState = {
   d: string;
-  A: { x: number; y: number };
-  B: { x: number; y: number };
-  C: { x: number; y: number } | null;
+  nodes: Pt[];
 } | null;
 
 // ─── Harvey Ball metrics ───────────────────────────────────────────────────────
@@ -169,29 +169,30 @@ export function PathNavigator() {
     const pRect = pEl.getBoundingClientRect();
     const gRect = gEl.getBoundingClientRect();
 
-    const A = {
-      x: pRect.right - cRect.left,
-      y: pRect.top + pRect.height / 2 - cRect.top,
-    };
-    const B = {
-      x: gRect.left - cRect.left,
-      y: gRect.top + gRect.height / 2 - cRect.top,
-    };
+    const gMidY = gRect.top + gRect.height / 2 - cRect.top;
 
-    let C: { x: number; y: number } | null = null;
+    // Persona exit (right edge) → goal entry (left edge)
+    const A: Pt = { x: pRect.right - cRect.left, y: pRect.top + pRect.height / 2 - cRect.top };
+    const Bin: Pt = { x: gRect.left - cRect.left, y: gMidY };
+    // Goal exit (right edge) and goal centre (dot anchor)
+    const Bout: Pt = { x: gRect.right - cRect.left, y: gMidY };
+    const Gc: Pt = { x: gRect.left + gRect.width / 2 - cRect.left, y: gMidY };
+
+    // Leg 1 — persona → goal: horizontal, step to goal's row, horizontal in.
+    const m1 = (A.x + Bin.x) / 2;
+    let d = `M ${A.x} ${A.y} H ${m1} V ${Bin.y} H ${Bin.x}`;
+    const nodes: Pt[] = [A, Gc];
+
+    // Leg 2 — goal → first course card: horizontal out, step down, horizontal in.
     if (firstCardRef.current) {
       const fc = firstCardRef.current.getBoundingClientRect();
-      C = {
-        x: fc.left - cRect.left,
-        y: fc.top + fc.height / 2 - cRect.top,
-      };
+      const C: Pt = { x: fc.left - cRect.left, y: fc.top + fc.height / 2 - cRect.top };
+      const m2 = (Bout.x + C.x) / 2;
+      d += ` M ${Bout.x} ${Bout.y} H ${m2} V ${C.y} H ${C.x}`;
+      nodes.push(C);
     }
 
-    const d = C
-      ? `M ${A.x} ${A.y} C ${A.x + 80} ${A.y} ${B.x - 80} ${B.y} ${B.x} ${B.y} C ${B.x + 80} ${B.y} ${C.x - 80} ${C.y} ${C.x} ${C.y}`
-      : `M ${A.x} ${A.y} C ${A.x + 80} ${A.y} ${B.x - 80} ${B.y} ${B.x} ${B.y}`;
-
-    setConnector({ d, A, B, C });
+    setConnector({ d, nodes });
   }, [activePersonaKey, activeGoalIndex]);
 
   useEffect(() => {
@@ -207,36 +208,48 @@ export function PathNavigator() {
   // ── Render ──────────────────────────────────────────────────────────────────
 
   return (
-    <section style={{ backgroundColor: "#FAFAF7", padding: "80px 16px" }}>
+    <section style={{ padding: "80px clamp(1.25rem, 4vw, 4rem)" }}>
+
+      <style>{`
+        @keyframes tcgConnectorDraw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+        .tcg-connector-draw {
+          stroke-dasharray: 1;
+          stroke-dashoffset: 1;
+          animation: tcgConnectorDraw 0.9s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .tcg-connector-draw { animation: none; stroke-dashoffset: 0; }
+        }
+      `}</style>
 
       {/* Section heading */}
-      <div style={{ maxWidth: "80rem", margin: "0 auto 20px" }}>
-        <p style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 600, color: "#7C3AED", marginBottom: 8 }}>
+      <div style={{ maxWidth: 1760, margin: "0 auto 20px" }}>
+        <p style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 600, color: "#C4B5FD", marginBottom: 8 }}>
           FIND YOUR PATH
         </p>
-        <h2 style={{ fontSize: 28, fontWeight: 700, color: "#1E1B4B", marginBottom: 6 }}>
+        <h2 style={{ fontSize: 28, fontWeight: 700, color: "#FFFFFF", marginBottom: 6 }}>
           Where do you start?
         </h2>
-        <p style={{ fontSize: 14, color: "#6B7280" }}>
+        <p style={{ fontSize: 14, color: "#C7BEE6" }}>
           Select who you are, then your goal. We&apos;ll map your learning path.
         </p>
       </div>
 
       {/* Harvey Ball legend */}
-      <div style={{ maxWidth: "80rem", margin: "0 auto 16px", display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap" as const }}>
-        <span style={{ fontSize: 13, fontWeight: 700, color: "#7C3AED", marginRight: 4 }}>
+      <div style={{ maxWidth: 1760, margin: "0 auto 16px", display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap" as const }}>
+        <span style={{ fontSize: 13, fontWeight: 700, color: "#DDD6FE", marginRight: 4 }}>
           Harvey Balls —
         </span>
         {HB_LEGEND.map(({ value, label }) => (
           <span key={value} style={{ display: "flex", alignItems: "center", gap: 6 }}>
             <HarveyBall value={value} id={`legend-${value}`} size={14} />
-            <span style={{ fontSize: 13, color: "#374151" }}>{label}</span>
+            <span style={{ fontSize: 13, color: "#DDD6FE" }}>{label}</span>
           </span>
         ))}
       </div>
 
       {/* Grid container */}
-      <div style={{ maxWidth: "80rem", margin: "0 auto", overflowX: "auto" }}>
+      <div style={{ maxWidth: 1760, margin: "0 auto", overflowX: "auto" }}>
         <div
           ref={containerRef}
           style={{
@@ -264,18 +277,37 @@ export function PathNavigator() {
               }}
               className="!hidden md:!block"
             >
+              <defs>
+                <linearGradient id="tcgPathGrad" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0" stopColor="#7C3AED" />
+                  <stop offset="0.5" stopColor="#0D9488" />
+                  <stop offset="1" stopColor="#1E1B4B" />
+                </linearGradient>
+              </defs>
               <path
                 key={connector.d}
+                className="tcg-connector-draw"
                 d={connector.d}
-                stroke="#0D9488"
-                strokeWidth="1.5"
+                pathLength={1}
+                stroke="url(#tcgPathGrad)"
+                strokeWidth="2.5"
+                strokeLinecap="butt"
+                strokeLinejoin="miter"
                 fill="none"
               />
-              <circle cx={connector.A.x} cy={connector.A.y} r={4} fill="#0D9488" />
-              <circle cx={connector.B.x} cy={connector.B.y} r={4} fill="#0D9488" />
-              {connector.C && (
-                <circle cx={connector.C.x} cy={connector.C.y} r={4} fill="#0D9488" />
-              )}
+              {connector.nodes.map((n, i) => (
+                <rect
+                  key={`${n.x}-${n.y}-${i}`}
+                  x={n.x - 3.5}
+                  y={n.y - 3.5}
+                  width={7}
+                  height={7}
+                  rx={1}
+                  fill="#FFFFFF"
+                  stroke={i === 0 ? "#7C3AED" : i === connector.nodes.length - 1 ? "#1E1B4B" : "#0D9488"}
+                  strokeWidth="2"
+                />
+              ))}
             </svg>
           )}
 

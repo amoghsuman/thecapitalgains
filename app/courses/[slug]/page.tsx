@@ -22,9 +22,9 @@ export default async function CourseDetailPage({
 
   if (!course) {
     return (
-      <div className="bg-[#F8FAFC] min-h-screen flex items-center justify-center text-center">
+      <div className="min-h-screen flex items-center justify-center text-center">
         <div>
-          <h1 className="text-4xl font-bold text-[#1C0F3F] mb-4">Course not found</h1>
+          <h1 className="text-4xl font-bold text-white mb-4">Course not found</h1>
           <Link href="/courses" className="premium-button-primary inline-block">Browse all courses</Link>
         </div>
       </div>
@@ -92,11 +92,11 @@ export default async function CourseDetailPage({
   const progressPct = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0;
 
   return (
-    <div className="bg-[#F8FAFC] min-h-screen font-sans pb-20">
+    <div className="min-h-screen font-sans pb-20">
 
       {/* ── HEADER (Premium Dark) ── */}
-      <header className="premium-dark pt-32 pb-24 border-b border-[rgba(255,255,255,0.05)]">
-        <div className="max-w-6xl mx-auto px-8">
+      <header className="pt-32 pb-24">
+        <div className="site-container">
           <div className="flex items-center gap-3 mb-8">
             <Link href="/courses" className="text-[#A78BFA] text-xs font-bold tracking-[0.2em] uppercase hover:text-white transition-colors">
               ← Back to Curriculum
@@ -137,7 +137,7 @@ export default async function CourseDetailPage({
       </header>
 
       {/* ── CONTENT ── */}
-      <main className="max-w-6xl mx-auto px-8 mt-16 grid grid-cols-1 lg:grid-cols-3 gap-16">
+      <main className="site-container mt-16 grid grid-cols-1 lg:grid-cols-3 gap-16">
 
         {/* Left: Curriculum & Learnings */}
         <div className="lg:col-span-2 space-y-16">
@@ -145,7 +145,7 @@ export default async function CourseDetailPage({
           {/* What you'll learn */}
           {course.whatYouLearn?.length > 0 && (
             <section>
-              <h2 className="text-2xl font-bold text-[#1C0F3F] mb-8 tracking-tight">What you&apos;ll master</h2>
+              <h2 className="text-2xl font-bold text-white mb-8 tracking-tight">What you&apos;ll master</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {course.whatYouLearn.map((point: string) => (
                   <div key={point} className="flex gap-4 p-4 bg-white border border-slate-200 rounded-2xl shadow-sm">
