@@ -48,7 +48,7 @@ const portfolios = [
   {
     tag: "PORTFOLIO 03",
     name: "Active Trader Watchlist",
-    desc: "High-liquidity stocks with strong F&O interest. Illustrates how an active trader scans for setups — not a buy recommendation.",
+    desc: "High-liquidity stocks with strong F&O interest. Illustrates how an active trader scans for setups, not a buy recommendation.",
     stats: [
       { label: "HORIZON", val: "Short-term", color: "" },
       { label: "STOCKS", val: "12", color: "" },
@@ -71,11 +71,11 @@ const portfolios = [
 const howItWorks = [
   {
     title: "Selection criteria",
-    body: "Each stock is chosen to illustrate a specific concept — liquidity, dividend yield, F&O availability, or sector balance. No personal financial situation is considered.",
+    body: "Each stock is chosen to illustrate a specific concept: liquidity, dividend yield, F&O availability, or sector balance. No personal financial situation is considered.",
   },
   {
     title: "Rebalancing logic",
-    body: "Rebalancing decisions are documented with reasoning — showing how drift is corrected, when to trim, and how weights are restored to target allocation.",
+    body: "Rebalancing decisions are documented with reasoning, showing how drift is corrected, when to trim, and how weights are restored to target allocation.",
   },
   {
     title: "What we track",
@@ -96,7 +96,7 @@ export default function PortfoliosPage() {
           See how a portfolio is built
         </h1>
         <p className="text-[16px] text-[#C7BEE6] max-w-2xl mb-6">
-          Three illustrative portfolios maintained for educational purposes — showing how allocation, selection, and rebalancing decisions are made in practice.
+          Three illustrative portfolios maintained for educational purposes, showing how allocation, selection, and rebalancing decisions are made in practice.
         </p>
         <div className="inline-flex items-center gap-2 bg-[#FDF3E3] border border-[rgba(212,134,10,0.25)] rounded-lg px-4 py-2.5">
           <span className="text-[#D4860A] text-[13px]">⚠</span>

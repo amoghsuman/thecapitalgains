@@ -65,7 +65,7 @@ function ExerciseBlock({ title, steps }: { title: string; steps: string[] }) {
       </div>
       {allDone && (
         <div className="mt-4 font-mono text-[12px] text-[#1A7A4A] font-medium">
-          ✓ Exercise complete — move on to the next lesson
+          ✓ Exercise complete, move on to the next lesson
         </div>
       )}
     </div>

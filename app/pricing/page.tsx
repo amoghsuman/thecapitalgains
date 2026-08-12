@@ -298,7 +298,7 @@ export default function PricingPage() {
                   : "text-white/50 hover:text-white"
               }`}
             >
-              Annual — Save 20%
+              Annual, Save 20%
             </button>
           </div>
         </div>

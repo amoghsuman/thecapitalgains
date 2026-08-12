@@ -1,7 +1,7 @@
 const sections = [
   {
     title: "Our Commitment",
-    body: "We stand behind the quality of our content. If you are not satisfied with your purchase for any reason, we will refund you in full within 30 days — no questions asked.",
+    body: "We stand behind the quality of our content. If you are not satisfied with your purchase for any reason, we will refund you in full within 30 days, no questions asked.",
   },
   {
     title: "Course Purchases",

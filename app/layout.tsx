@@ -12,10 +12,10 @@ const inter = Inter({
 });
 
 const description =
-  "Playbook-style courses for Indian retail investors and traders. Research, courses, and model portfolios — all in one place.";
+  "Playbook-style courses for Indian retail investors and traders. Research, courses, and model portfolios, all in one place.";
 
 export const metadata: Metadata = {
-  title: "The Capital Gains — Learn to Invest Like a Pro",
+  title: "The Capital Gains: Learn to Invest Like a Pro",
   description,
   keywords: ["investing", "trading", "options", "equity", "Indian stock market", "courses"],
   openGraph: {

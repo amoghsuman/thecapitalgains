@@ -46,7 +46,7 @@ export const personas: Persona[] = [
       {
         label: 'Start investing my salary wisely',
         courses: [
-          { title: 'Stock Market from Zero', slug: 'stock-market-from-zero', reason: 'Mechanics before everything else — eliminates the most costly beginner mistakes' },
+          { title: 'Stock Market from Zero', slug: 'stock-market-from-zero', reason: 'Mechanics before everything else, eliminates the most costly beginner mistakes' },
           { title: 'Mutual Funds & ETFs', slug: 'mutual-funds-etfs-complete-guide', reason: 'The right vehicle for your income stage and risk profile' },
           { title: 'How to Read Financial Statements', slug: 'how-to-read-financial-statements', reason: 'Evaluate what you are buying before you buy it' },
         ],
@@ -58,7 +58,7 @@ export const personas: Persona[] = [
         label: 'Avoid common first-timer mistakes',
         courses: [
           { title: 'Stock Market from Zero', slug: 'stock-market-from-zero', reason: 'Covers all the mechanics most beginners get wrong' },
-          { title: 'Mutual Funds & ETFs', slug: 'mutual-funds-etfs-complete-guide', reason: 'SIP discipline and fund selection — the two things that matter most early on' },
+          { title: 'Mutual Funds & ETFs', slug: 'mutual-funds-etfs-complete-guide', reason: 'SIP discipline and fund selection, the two things that matter most early on' },
         ],
         suggestedLearn: 'Learner ₹999/mo',
         suggestedResearch: 'Newsletter ₹499/mo',
@@ -74,7 +74,7 @@ export const personas: Persona[] = [
         label: 'Stop losing on trades I should be winning',
         courses: [
           { title: 'Options Trading from Zero', slug: 'options-trading-from-zero', reason: 'Greeks, pricing, and setups most self-taught traders never learn correctly' },
-          { title: 'Futures & Derivatives Explained', slug: 'futures-derivatives-explained', reason: 'Position sizing and hedging — what separates consistent traders' },
+          { title: 'Futures & Derivatives Explained', slug: 'futures-derivatives-explained', reason: 'Position sizing and hedging, what separates consistent traders' },
           { title: 'Technical Analysis', slug: 'technical-analysis-charts-patterns-indicators', reason: 'Structure your chart reading with a repeatable framework' },
         ],
         suggestedLearn: 'Pro ₹2,499/mo',
@@ -84,7 +84,7 @@ export const personas: Persona[] = [
       {
         label: 'Get serious about options trading',
         courses: [
-          { title: 'Options Trading from Zero', slug: 'options-trading-from-zero', reason: 'Full playbook — Greeks, IV, strategies, and when each works' },
+          { title: 'Options Trading from Zero', slug: 'options-trading-from-zero', reason: 'Full playbook, Greeks, IV, strategies, and when each works' },
           { title: 'Futures & Derivatives Explained', slug: 'futures-derivatives-explained', reason: 'Understand the underlying mechanics your options are priced against' },
           { title: 'How to Read Financial Statements', slug: 'how-to-read-financial-statements', reason: 'Avoid trading into earnings traps and corporate events blindly' },
         ],
@@ -103,7 +103,7 @@ export const personas: Persona[] = [
         courses: [
           { title: 'Mutual Funds & ETFs', slug: 'mutual-funds-etfs-complete-guide', reason: 'The right equity exposure for a busy professional' },
           { title: 'How to Read Financial Statements', slug: 'how-to-read-financial-statements', reason: 'Evaluate whether what you own is actually good' },
-          { title: 'Stock Market from Zero', slug: 'stock-market-from-zero', reason: 'Fill in the mechanics gaps — know what you are invested in' },
+          { title: 'Stock Market from Zero', slug: 'stock-market-from-zero', reason: 'Fill in the mechanics gaps, know what you are invested in' },
         ],
         suggestedLearn: 'Learner ₹999/mo',
         suggestedResearch: 'Essential ₹4,999/mo',
@@ -112,7 +112,7 @@ export const personas: Persona[] = [
       {
         label: 'Build a long-term equity portfolio',
         courses: [
-          { title: 'How to Read Financial Statements', slug: 'how-to-read-financial-statements', reason: 'Stock selection starts here — everything else is secondary' },
+          { title: 'How to Read Financial Statements', slug: 'how-to-read-financial-statements', reason: 'Stock selection starts here, everything else is secondary' },
           { title: 'Stock Market from Zero', slug: 'stock-market-from-zero', reason: 'Market mechanics and how to execute correctly' },
           { title: 'Mutual Funds & ETFs', slug: 'mutual-funds-etfs-complete-guide', reason: 'For the portion you want managed passively' },
         ],
@@ -131,7 +131,7 @@ export const personas: Persona[] = [
         courses: [
           { title: 'How to Read Financial Statements', slug: 'how-to-read-financial-statements', reason: 'The single most tested skill in equity research and IB interviews' },
           { title: 'Futures & Derivatives Explained', slug: 'futures-derivatives-explained', reason: 'Derivatives knowledge separates candidates at every level' },
-          { title: 'Options Trading from Zero', slug: 'options-trading-from-zero', reason: 'Practical working knowledge — not just formula memorisation' },
+          { title: 'Options Trading from Zero', slug: 'options-trading-from-zero', reason: 'Practical working knowledge, not just formula memorisation' },
         ],
         suggestedLearn: 'Learner ₹999/mo',
         suggestedResearch: 'Newsletter ₹499/mo',
@@ -140,9 +140,9 @@ export const personas: Persona[] = [
       {
         label: 'Understand real markets beyond textbooks',
         courses: [
-          { title: 'Stock Market from Zero', slug: 'stock-market-from-zero', reason: 'How Indian markets actually work — NSE, BSE, settlement, participants' },
+          { title: 'Stock Market from Zero', slug: 'stock-market-from-zero', reason: 'How Indian markets actually work: NSE, BSE, settlement, participants' },
           { title: 'How to Read Financial Statements', slug: 'how-to-read-financial-statements', reason: 'Applied analysis, not academic ratios' },
-          { title: 'Technical Analysis', slug: 'technical-analysis-charts-patterns-indicators', reason: 'Market intuition and price structure — what no textbook covers' },
+          { title: 'Technical Analysis', slug: 'technical-analysis-charts-patterns-indicators', reason: 'Market intuition and price structure, what no textbook covers' },
         ],
         suggestedLearn: 'Learner ₹999/mo',
         suggestedResearch: 'Newsletter ₹499/mo',
@@ -157,8 +157,8 @@ export const personas: Persona[] = [
       {
         label: 'Deploy business profits into markets',
         courses: [
-          { title: 'Stock Market from Zero', slug: 'stock-market-from-zero', reason: 'Business instincts transfer — but market mechanics must come first' },
-          { title: 'How to Read Financial Statements', slug: 'how-to-read-financial-statements', reason: 'You already think like an analyst — now apply it to listed companies' },
+          { title: 'Stock Market from Zero', slug: 'stock-market-from-zero', reason: 'Business instincts transfer, but market mechanics must come first' },
+          { title: 'How to Read Financial Statements', slug: 'how-to-read-financial-statements', reason: 'You already think like an analyst, now apply it to listed companies' },
           { title: 'Mutual Funds & ETFs', slug: 'mutual-funds-etfs-complete-guide', reason: 'For the portion you cannot actively manage' },
         ],
         suggestedLearn: 'Learner ₹999/mo',
@@ -168,7 +168,7 @@ export const personas: Persona[] = [
       {
         label: 'Understand equity like I understand my business',
         courses: [
-          { title: 'How to Read Financial Statements', slug: 'how-to-read-financial-statements', reason: 'Your strongest entry point — you already think in P&L and cash flow' },
+          { title: 'How to Read Financial Statements', slug: 'how-to-read-financial-statements', reason: 'Your strongest entry point, you already think in P&L and cash flow' },
           { title: 'Stock Market from Zero', slug: 'stock-market-from-zero', reason: 'Market mechanics and participant behaviour' },
           { title: 'Options Trading from Zero', slug: 'options-trading-from-zero', reason: 'Hedging your equity book when needed' },
         ],
@@ -203,9 +203,9 @@ export const personas: Persona[] = [
     label: 'Near or at retirement',
     goals: [
       {
-        label: 'Protect my capital — no speculation',
+        label: 'Protect my capital, no speculation',
         courses: [
-          { title: 'Mutual Funds & ETFs', slug: 'mutual-funds-etfs-complete-guide', reason: 'Conservative equity exposure — balanced funds, dividend stocks, what to avoid' },
+          { title: 'Mutual Funds & ETFs', slug: 'mutual-funds-etfs-complete-guide', reason: 'Conservative equity exposure: balanced funds, dividend stocks, what to avoid' },
           { title: 'Stock Market from Zero', slug: 'stock-market-from-zero', reason: 'Fill in the mechanics most near-retirees have always wondered about' },
         ],
         suggestedLearn: 'Learner ₹999/mo',

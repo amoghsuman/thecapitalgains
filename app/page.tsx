@@ -27,7 +27,7 @@ export default async function HomePage() {
               </span>
             </div>
 
-            <h1 className="text-6xl font-bold leading-[1.1] tracking-tight text-white">
+            <h1 className="text-4xl md:text-[54px] font-bold leading-[1.1] tracking-tight text-white">
               Learn to invest like a pro.{" "}
               <span className="block mt-2 text-[#D4860A] drop-shadow-[0_0_15px_rgba(212,134,10,0.2)]">
                 Not gamble like a beginner.

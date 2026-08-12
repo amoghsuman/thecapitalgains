@@ -13,7 +13,7 @@ const sections = [
   },
   {
     title: "Payments and Refunds",
-    body: "All plans are subscription-based, billed monthly or annually. We offer a 14-day refund on subscription payments. Refund requests must be submitted within 14 days of the billing date. Refunds are processed to the original payment method within 5–7 business days.",
+    body: "All plans are subscription-based, billed monthly or annually. We offer a 14-day refund on subscription payments. Refund requests must be submitted within 14 days of the billing date. Refunds are processed to the original payment method within 5-7 business days.",
   },
   {
     title: "Intellectual Property",

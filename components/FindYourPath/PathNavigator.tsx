@@ -238,7 +238,7 @@ export function PathNavigator() {
       {/* Harvey Ball legend */}
       <div style={{ maxWidth: 1760, margin: "0 auto 16px", display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap" as const }}>
         <span style={{ fontSize: 13, fontWeight: 700, color: "#DDD6FE", marginRight: 4 }}>
-          Harvey Balls —
+          Harvey Balls
         </span>
         {HB_LEGEND.map(({ value, label }) => (
           <span key={value} style={{ display: "flex", alignItems: "center", gap: 6 }}>
@@ -599,7 +599,7 @@ function CourseCard({
 function SuggestedPlan({ goal }: { goal: Goal }) {
   return (
     <p style={{ marginTop: 12, fontSize: 12, color: "#6B7280" }}>
-      Suggested plan based on your selection —{" "}
+      Suggested plan based on your selection,{" "}
       <Link href="/pricing" style={{ color: "#0D9488", textDecoration: "none" }}>
         see pricing →
       </Link>
