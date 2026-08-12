@@ -412,7 +412,7 @@ export default function BooksAdminPage() {
   const totalTargetWords = books.reduce((a, b) => a + (b.target_word_count || 0), 0)
 
   return (
-    <div style={{ maxWidth: 920, margin: '0 auto', padding: '32px 24px', fontFamily: 'Outfit, sans-serif' }}>
+    <div style={{ maxWidth: 920, margin: '0 auto', padding: '32px 24px', fontFamily: 'var(--font-inter)' }}>
 
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 28 }}>

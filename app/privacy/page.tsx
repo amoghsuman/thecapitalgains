@@ -35,23 +35,23 @@ const sections = [
 
 export default function PrivacyPage() {
   return (
-    <div className="bg-[#FFFFFF] min-h-screen">
-      <div className="max-w-3xl mx-auto px-8 pt-16 pb-20">
-        <div className="font-mono text-[11px] text-[#8B7BAB] tracking-widest uppercase mb-3">
+    <div className="min-h-screen">
+      <div className="site-container pt-32 pb-20">
+        <div className="font-mono text-[11px] text-[#C4B5FD] tracking-widest uppercase mb-3">
           Legal
         </div>
-        <h1 className="text-4xl font-bold text-[#1C0F3F] mb-3">
+        <h1 className="text-4xl font-bold text-white mb-3">
           Privacy Policy
         </h1>
-        <div className="font-mono text-[12px] text-[#8B7BAB] mb-10">
+        <div className="font-mono text-[12px] text-[#C4B5FD] mb-10">
           Last updated: April 2025
         </div>
         {sections.map((s) => (
           <div key={s.title}>
-            <h2 className="text-[20px] font-bold text-[#1C0F3F] mb-3 mt-8">
+            <h2 className="text-[20px] font-bold text-white mb-3 mt-8">
               {s.title}
             </h2>
-            <p className="text-[15px] text-[#4B3F6B] leading-relaxed">{s.body}</p>
+            <p className="text-[15px] text-[#C7BEE6] leading-relaxed max-w-3xl">{s.body}</p>
           </div>
         ))}
       </div>

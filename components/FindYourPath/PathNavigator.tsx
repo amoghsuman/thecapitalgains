@@ -207,36 +207,36 @@ export function PathNavigator() {
   // ── Render ──────────────────────────────────────────────────────────────────
 
   return (
-    <section style={{ backgroundColor: "#FAFAF7", padding: "80px 16px" }}>
+    <section style={{ padding: "80px clamp(1.25rem, 4vw, 4rem)" }}>
 
       {/* Section heading */}
-      <div style={{ maxWidth: "80rem", margin: "0 auto 20px" }}>
-        <p style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 600, color: "#7C3AED", marginBottom: 8 }}>
+      <div style={{ maxWidth: 1760, margin: "0 auto 20px" }}>
+        <p style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 600, color: "#C4B5FD", marginBottom: 8 }}>
           FIND YOUR PATH
         </p>
-        <h2 style={{ fontSize: 28, fontWeight: 700, color: "#1E1B4B", marginBottom: 6 }}>
+        <h2 style={{ fontSize: 28, fontWeight: 700, color: "#FFFFFF", marginBottom: 6 }}>
           Where do you start?
         </h2>
-        <p style={{ fontSize: 14, color: "#6B7280" }}>
+        <p style={{ fontSize: 14, color: "#C7BEE6" }}>
           Select who you are, then your goal. We&apos;ll map your learning path.
         </p>
       </div>
 
       {/* Harvey Ball legend */}
-      <div style={{ maxWidth: "80rem", margin: "0 auto 16px", display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap" as const }}>
-        <span style={{ fontSize: 13, fontWeight: 700, color: "#7C3AED", marginRight: 4 }}>
+      <div style={{ maxWidth: 1760, margin: "0 auto 16px", display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap" as const }}>
+        <span style={{ fontSize: 13, fontWeight: 700, color: "#DDD6FE", marginRight: 4 }}>
           Harvey Balls —
         </span>
         {HB_LEGEND.map(({ value, label }) => (
           <span key={value} style={{ display: "flex", alignItems: "center", gap: 6 }}>
             <HarveyBall value={value} id={`legend-${value}`} size={14} />
-            <span style={{ fontSize: 13, color: "#374151" }}>{label}</span>
+            <span style={{ fontSize: 13, color: "#DDD6FE" }}>{label}</span>
           </span>
         ))}
       </div>
 
       {/* Grid container */}
-      <div style={{ maxWidth: "80rem", margin: "0 auto", overflowX: "auto" }}>
+      <div style={{ maxWidth: 1760, margin: "0 auto", overflowX: "auto" }}>
         <div
           ref={containerRef}
           style={{

@@ -9,16 +9,16 @@ export default async function HomePage() {
   const courseCount = courses?.length || 0;
 
   return (
-    <div className="bg-[#F8FAFC] min-h-screen font-sans">
+    <div className="min-h-screen font-sans">
       {/* ── HERO ── */}
-      <section className="relative overflow-hidden pt-32 pb-24 premium-dark border-b border-[rgba(255,255,255,0.05)]">
+      <section className="relative overflow-hidden pt-32 pb-24">
         {/* Background Gradients */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 pointer-events-none">
           <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[60%] rounded-full bg-[rgba(139,92,246,0.08)] blur-[120px]" />
           <div className="absolute bottom-[10%] right-[-10%] w-[35%] h-[50%] rounded-full bg-[rgba(99,102,241,0.06)] blur-[100px]" />
         </div>
 
-        <div className="max-w-6xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+        <div className="site-container grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
           <div className="space-y-8">
             <div className="inline-flex items-center gap-3 bg-[rgba(139,92,246,0.1)] border border-[rgba(139,92,246,0.2)] rounded-full px-5 py-2">
               <div className="premium-glow-dot" />
@@ -114,10 +114,10 @@ export default async function HomePage() {
       <PathNavigator />
 
       {/* ── NEWSLETTER ── */}
-      <section className="bg-violet-50/50 py-24 border-y border-violet-100">
-        <div className="max-w-4xl mx-auto px-8 text-center">
-          <h2 className="text-3xl font-bold text-[#1C0F3F] mb-4">Join The Capital Gains Newsletter</h2>
-          <p className="text-[#4B3F6B] mb-10 max-w-xl mx-auto font-medium">
+      <section className="py-24">
+        <div className="site-container text-center">
+          <h2 className="text-3xl font-bold text-white mb-4">Join The Capital Gains Newsletter</h2>
+          <p className="text-[#C7BEE6] mb-10 max-w-xl mx-auto font-medium">
             Weekly insights on market trends, trading psychology, and new course announcements. 
             Directly to your inbox.
           </p>

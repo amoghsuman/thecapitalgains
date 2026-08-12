@@ -38,12 +38,12 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="bg-[#FFFFFF] min-h-screen flex items-center justify-center px-8">
+    <div className="min-h-screen flex items-center justify-center px-8 py-28">
       <div className="max-w-sm w-full">
 
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="font-bold text-[18px] text-[#1C0F3F]">
+          <div className="font-bold text-[18px] text-white">
             The Capital Gains
           </div>
         </div>
@@ -122,7 +122,7 @@ export default function LoginPage() {
           </button>
         </div>
 
-        <p className="text-center text-[13px] text-[#4B3F6B] mt-5">
+        <p className="text-center text-[13px] text-[#C7BEE6] mt-5">
           Don&apos;t have an account?{' '}
           <Link href="/auth/signup" className="text-[#D4860A] hover:text-[#F0A020] font-medium transition-colors">
             Sign up

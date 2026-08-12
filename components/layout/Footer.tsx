@@ -2,8 +2,8 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#0F0720] border-t border-[rgba(255,255,255,0.05)] pt-20 pb-10">
-      <div className="max-w-7xl mx-auto px-8">
+    <footer className="bg-[#1A1138] border-t border-[rgba(255,255,255,0.05)] pt-20 pb-10">
+      <div className="site-container">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           <div className="col-span-1 md:col-span-2 space-y-6">
             <Link href="/" className="flex items-center gap-2.5 group">
@@ -41,7 +41,7 @@ export default function Footer() {
         {/* Regulatory Footer */}
         <div className="pt-10 border-t border-[rgba(255,255,255,0.05)] text-center">
           <div className="bg-[rgba(139,92,246,0.05)] border border-[rgba(139,92,246,0.1)] rounded-2xl p-6 mb-8 max-w-4xl mx-auto">
-            <p className="text-[#94A3B8] font-mono text-[11px] leading-relaxed uppercase tracking-wider">
+            <p className="text-[#94A3B8] text-[11px] leading-relaxed uppercase tracking-wider">
               Educational content only · Not investment advice · Trading involves risk of loss
               <br />
               <span className="block mt-2 opacity-60">

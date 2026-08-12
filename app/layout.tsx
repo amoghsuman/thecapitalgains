@@ -1,20 +1,14 @@
 import type { Metadata } from "next";
-import { Outfit, DM_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import DisclaimerBar from "@/components/layout/DisclaimerBar";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
-const outfit = Outfit({
-  variable: "--font-outfit",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
-});
-
-const dmMono = DM_Mono({
-  variable: "--font-mono",
-  subsets: ["latin"],
-  weight: ["400", "500"],
 });
 
 const description =
@@ -47,12 +41,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${outfit.variable} ${dmMono.variable} h-full antialiased`}
+      className={`${inter.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-white text-[#1C0F3F]">
+      <body className="min-h-full flex flex-col bg-[#0d0125] text-[#1C0F3F]">
         <DisclaimerBar />
         <Navbar />
-        <main className="flex-1 w-full">
+        <main className="flex-1 w-full premium-hero-gradient">
           {children}
         </main>
         <Footer />

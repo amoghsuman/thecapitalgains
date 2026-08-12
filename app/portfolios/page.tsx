@@ -85,17 +85,17 @@ const howItWorks = [
 
 export default function PortfoliosPage() {
   return (
-    <div className="bg-[#FFFFFF] min-h-screen overflow-x-hidden">
+    <div className="min-h-screen overflow-x-hidden">
 
       {/* ── HERO ── */}
-      <section className="max-w-6xl mx-auto px-8 pt-16 pb-10">
-        <div className="font-mono text-[11px] text-[#8B7BAB] tracking-widest uppercase mb-2">
+      <section className="site-container pt-32 pb-10">
+        <div className="font-mono text-[11px] text-[#C4B5FD] tracking-widest uppercase mb-2">
           Model Portfolios
         </div>
-        <h1 className="text-5xl font-bold text-[#1C0F3F] leading-[1.1] mb-3">
+        <h1 className="text-5xl font-bold text-white leading-[1.1] mb-3">
           See how a portfolio is built
         </h1>
-        <p className="text-[16px] text-[#4B3F6B] max-w-2xl mb-6">
+        <p className="text-[16px] text-[#C7BEE6] max-w-2xl mb-6">
           Three illustrative portfolios maintained for educational purposes — showing how allocation, selection, and rebalancing decisions are made in practice.
         </p>
         <div className="inline-flex items-center gap-2 bg-[#FDF3E3] border border-[rgba(212,134,10,0.25)] rounded-lg px-4 py-2.5">
@@ -107,7 +107,7 @@ export default function PortfoliosPage() {
       </section>
 
       {/* ── PORTFOLIO CARDS ── */}
-      <section className="max-w-6xl mx-auto px-8 mt-2">
+      <section className="site-container mt-2">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {portfolios.map((p) => (
             <div
@@ -197,7 +197,7 @@ export default function PortfoliosPage() {
       </section>
 
       {/* ── HOW WE MAINTAIN THESE ── */}
-      <section className="max-w-6xl mx-auto px-8 mt-16">
+      <section className="site-container mt-16">
         <div className="bg-[#1C0F3F] rounded-2xl px-10 py-10">
           <div className="font-mono text-[11px] text-[rgba(255,255,255,0.4)] tracking-widest uppercase mb-3">
             Methodology
@@ -222,7 +222,7 @@ export default function PortfoliosPage() {
       </section>
 
       {/* ── SUBSCRIPTION CTA ── */}
-      <section className="max-w-6xl mx-auto px-8 mt-12">
+      <section className="site-container mt-12">
         <div className="bg-[#FDF3E3] border border-[rgba(212,134,10,0.2)] rounded-2xl px-10 py-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <div>
             <div className="font-mono text-[11px] text-[#D4860A] tracking-widest uppercase mb-2">
@@ -245,7 +245,7 @@ export default function PortfoliosPage() {
       </section>
 
       {/* ── LEGAL DISCLAIMER ── */}
-      <section className="max-w-6xl mx-auto px-8 pb-10 mt-8">
+      <section className="site-container pb-10 mt-8">
         <div className="bg-white border border-[rgba(124,58,237,0.12)] rounded-lg px-6 py-5 font-mono text-[10px] text-[#8B7BAB] leading-relaxed">
           These model portfolios are maintained purely for educational purposes to illustrate portfolio construction principles. Stock names mentioned are for illustrative purposes only and do not constitute buy, sell, or hold recommendations. They do not constitute investment advice or SEBI-registered research. Past illustrative performance does not guarantee future results. Do not invest based on this content without consulting a SEBI-registered financial advisor or research analyst.
         </div>
