@@ -29,7 +29,7 @@ export default async function HomePage() {
 
             <h1 className="text-4xl md:text-[54px] font-bold leading-[1.1] tracking-tight text-white">
               Learn to invest like a pro.{" "}
-              <span className="block mt-2 font-extrabold bg-gradient-to-r from-[#FFD24A] via-[#F7A814] to-[#FF6A2C] bg-clip-text text-transparent drop-shadow-[0_0_28px_rgba(247,168,20,0.55)]">
+              <span className="block mt-2 font-extrabold bg-gradient-to-r from-[#FFD24A] via-[#F7A814] to-[#FF6A2C] bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(247,168,20,0.22)]">
                 Not gamble like a beginner.
               </span>
             </h1>

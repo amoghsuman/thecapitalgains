@@ -41,7 +41,7 @@ export default function Footer() {
         {/* Regulatory Footer */}
         <div className="pt-10 border-t border-[rgba(255,255,255,0.05)] text-center">
           <div className="bg-[rgba(139,92,246,0.05)] border border-[rgba(139,92,246,0.1)] rounded-2xl p-6 mb-8 max-w-4xl mx-auto">
-            <p className="text-[#94A3B8] text-[11px] leading-relaxed uppercase tracking-wider">
+            <p className="text-[#94A3B8] text-[13px] leading-relaxed">
               Educational content only · Not investment advice · Trading involves risk of loss
               <br />
               <span className="block mt-2 opacity-60">
