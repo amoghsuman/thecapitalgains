@@ -53,7 +53,7 @@ export default async function HomePage() {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-12 gap-y-8 pt-10 border-t border-[rgba(255,255,255,0.08)]">
               {[
                 { num: courseCount.toString(), label: "PREMIUM COURSES" },
-                { num: "₹499", label: "RESEARCH STARTS AT" },
+                { num: "₹1", label: "RESEARCH STARTS AT" },
                 { num: "EARLY ACCESS", label: "NOW OPEN" },
                 { num: "SEBI RA", label: "REGISTERED" },
               ].map((s) => (
