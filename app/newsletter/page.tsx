@@ -32,7 +32,7 @@ export default function NewsletterPage() {
           One market insight,<br />every week.
         </h1>
         <p className="text-[16px] text-[#C7BEE6] leading-relaxed mb-8 max-w-xl mx-auto">
-          A concise, no-noise breakdown of what&apos;s moving Indian markets, and why it matters for your trades and investments. Free, always.
+          A concise, no-noise breakdown of what&apos;s moving Indian markets. And why it matters for your trades and investments. Free, always.
         </p>
         <NewsletterForm />
         <p className="font-mono text-[12px] text-[#C4B5FD] mt-4">
