@@ -60,6 +60,7 @@ export async function getFullCourseForReader(courseSlug: string) {
     *[_type == "course" && slug.current == $courseSlug][0] {
       title,
       "slug": slug.current,
+      accessLevel,
       chapters[] {
         title,
         lessons[] {
@@ -78,6 +79,7 @@ export async function getLessonBySlug(courseSlug: string, lessonSlug: string) {
     *[_type == "course" && slug.current == $courseSlug][0] {
       title,
       "slug": slug.current,
+      accessLevel,
       chapters[] {
         title,
         lessons[] {

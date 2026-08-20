@@ -9,12 +9,13 @@ import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import katex from "katex";
 import { getFullCourseForReader, getLessonBySlug } from "@/lib/sanity/queries";
 import { createClient } from "@/lib/supabase/client";
+import { canAccessLesson, lessonLockReason } from "@/lib/access";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 type LessonMeta = { slug: string; title: string; duration: string; isFree: boolean };
 type Chapter = { title: string; lessons: LessonMeta[] };
-type CourseData = { title: string; price: number; slug: string; chapters: Chapter[] };
+type CourseData = { title: string; price: number; slug: string; accessLevel?: string; chapters: Chapter[] };
 type LessonData = { title: string; slug: string; duration: string; isFree: boolean; body: any[] };
 
 // ─── Exercise Block (own checkbox state) ─────────────────────────────────────
@@ -151,17 +152,26 @@ const portableTextComponents: PortableTextComponents = {
 
 // ─── Locked Lesson State ──────────────────────────────────────────────────────
 
-function LockedLesson({ isLoggedIn }: { isLoggedIn: boolean }) {
+function LockedLesson({
+  isLoggedIn,
+  reason,
+}: {
+  isLoggedIn: boolean;
+  reason: "needs-subscription" | "needs-pro";
+}) {
+  const isPro = reason === "needs-pro";
   return (
     <div className="flex flex-col items-center justify-center py-24 px-8 text-center">
       <div className="w-16 h-16 bg-[#F5F3FF] rounded-full flex items-center justify-center text-[28px] mb-5">
         🔒
       </div>
       <h2 className="text-[22px] font-bold text-[#1C0F3F] mb-2">
-        Subscribe to access this lesson
+        {isPro ? "Upgrade to Pro to access this course" : "Subscribe to access this lesson"}
       </h2>
       <p className="text-[15px] text-[#4B3F6B] mb-8 max-w-sm">
-        This lesson is part of the full course. Subscribe for access to all courses.
+        {isPro
+          ? "This is a Pro course. Upgrade from Learner to Pro to unlock it, along with early access to new courses and workbooks."
+          : "This lesson is part of the full course. Subscribe for access to all courses."}
       </p>
       <Link
         href="/pricing"
@@ -302,7 +312,10 @@ export default function ReaderPage() {
   const progressPct = allLessons.length > 0 ? Math.round((completedLessons.size / allLessons.length) * 100) : 0;
 
   const currentMeta = allLessons.find((l) => l.slug === activeLesson) || allLessons.find((l) => l.slug === lessonSlug);
-  const isLocked = authLoading ? false : !currentMeta?.isFree && userTier === "free";
+  const lockReason = authLoading
+    ? null
+    : lessonLockReason(userTier, course.accessLevel, currentMeta?.isFree);
+  const isLocked = lockReason !== null;
 
   async function markCompleteAndNext() {
     setCompletedLessons((prev) => new Set([...prev, activeLesson]));
@@ -417,7 +430,7 @@ export default function ReaderPage() {
               {chapter.lessons.map((l) => {
                 const isActive = l.slug === activeLesson;
                 const isDone = completedLessons.has(l.slug);
-                const isAccessible = l.isFree || userTier === "starter" || userTier === "pro" || userTier === "elite";
+                const isAccessible = canAccessLesson(userTier, course.accessLevel, l.isFree);
 
                 return (
                   <button
@@ -513,7 +526,7 @@ export default function ReaderPage() {
         {/* Scrollable content area */}
         <div className="flex-1 overflow-y-auto">
           {isLocked ? (
-            <LockedLesson isLoggedIn={isLoggedIn} />
+            <LockedLesson isLoggedIn={isLoggedIn} reason={lockReason ?? "needs-subscription"} />
           ) : loading ? (
             <div className="flex items-center justify-center py-24 font-mono text-[13px] text-[#8B7BAB]">
               Loading lesson...
