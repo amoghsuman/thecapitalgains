@@ -1,19 +1,16 @@
 import Razorpay from "razorpay";
+import { PLANS } from "./plans";
 
 export const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID!,
   key_secret: process.env.RAZORPAY_KEY_SECRET!,
 });
 
-export const PLAN_IDS: Record<string, string> = {
-  learner_monthly: process.env.RAZORPAY_PLAN_LEARNER_MONTHLY!,
-  learner_annual: process.env.RAZORPAY_PLAN_LEARNER_ANNUAL!,
-  pro_monthly: process.env.RAZORPAY_PLAN_PRO_MONTHLY!,
-  pro_annual: process.env.RAZORPAY_PLAN_PRO_ANNUAL!,
-  newsletter_monthly: process.env.RAZORPAY_PLAN_NEWSLETTER_MONTHLY!,
-  newsletter_annual: process.env.RAZORPAY_PLAN_NEWSLETTER_ANNUAL!,
-  essential_monthly: process.env.RAZORPAY_PLAN_ESSENTIAL_MONTHLY!,
-  essential_annual: process.env.RAZORPAY_PLAN_ESSENTIAL_ANNUAL!,
-  premium_monthly: process.env.RAZORPAY_PLAN_PREMIUM_MONTHLY!,
-  premium_annual: process.env.RAZORPAY_PLAN_PREMIUM_ANNUAL!,
-};
+// Derived from the single plan config in lib/plans.ts so the plan-key → env-var
+// mapping can never drift from the pricing UI. Keys look like "learner_monthly".
+export const PLAN_IDS: Record<string, string> = Object.fromEntries(
+  PLANS.filter((p) => p.razorpayPlanEnv).flatMap((p) => [
+    [`${p.key}_monthly`, process.env[p.razorpayPlanEnv!.monthly] ?? ""],
+    [`${p.key}_annual`, process.env[p.razorpayPlanEnv!.annual] ?? ""],
+  ])
+);

@@ -9,18 +9,39 @@ declare global {
   }
 }
 
+type SelectedPlan = {
+  key: string;
+  name: string;
+  billingType: "free" | "subscription" | "one-time";
+};
+
 interface Props {
-  selectedPlans: { key: string; name: string }[];
+  selectedPlans: SelectedPlan[];
   billing: "monthly" | "annual";
   totalAmount: number;
 }
+
+const ENQUIRY_EMAIL = "hello@thecapitalgains.com";
 
 export default function SubscribeButton({ selectedPlans, billing, totalAmount }: Props) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
+  // Checkout handles exactly one payable item at a time.
+  const plan = selectedPlans[0] ?? null;
+  const isOneTime = plan?.billingType === "one-time";
+
   async function handleSubscribe() {
-    if (selectedPlans.length === 0) return;
+    if (!plan) return;
+
+    // One-time services (Doubt Session, Portfolio Review) are scheduled, not
+    // sold through the subscription checkout — route to an enquiry.
+    if (isOneTime) {
+      const subject = encodeURIComponent(`Booking request: ${plan.name}`);
+      window.location.href = `mailto:${ENQUIRY_EMAIL}?subject=${subject}`;
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -34,8 +55,7 @@ export default function SubscribeButton({ selectedPlans, billing, totalAmount }:
         document.body.appendChild(script);
       });
 
-      // Use first subscription plan (handle multiple plans later)
-      const planKey = `${selectedPlans[0].key}_${billing}`;
+      const planKey = `${plan.key}_${billing}`;
 
       const res = await fetch("/api/payments/razorpay/create-subscription", {
         method: "POST",
@@ -55,7 +75,7 @@ export default function SubscribeButton({ selectedPlans, billing, totalAmount }:
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
         subscription_id: subscriptionId,
         name: "The Capital Gains",
-        description: selectedPlans.map(p => p.name).join(" + "),
+        description: plan.name,
         theme: { color: "#1E1245" },
         handler: function () {
           router.push("/dashboard?payment=success");
@@ -74,10 +94,10 @@ export default function SubscribeButton({ selectedPlans, billing, totalAmount }:
   return (
     <button
       onClick={handleSubscribe}
-      disabled={loading || selectedPlans.length === 0}
+      disabled={loading || !plan}
       className="bg-[#D4860A] hover:bg-[#B8720A] disabled:opacity-50 text-white font-bold rounded-xl px-6 py-3 text-sm tracking-tight transition-colors whitespace-nowrap"
     >
-      {loading ? "Processing..." : "Confirm Selection →"}
+      {loading ? "Processing..." : isOneTime ? "Enquire →" : "Confirm Selection →"}
     </button>
   );
 }
