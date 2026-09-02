@@ -30,11 +30,16 @@
    near-black indigo base, with soft atmospheric glow and dark edges. */
 .premium-hero-gradient {
   color: var(--premium-text-primary);
-  background-color: #1a0320;
+  background-color: #0d0125;
   background-image:
-    /* bright magenta core glow that falls off through purple to a dark
-       purple edge — matches the reference radial background */
-    radial-gradient(circle at 50% 45%, #7a1f8c 0%, #5f1676 30%, #430f57 60%, #280a3a 82%, #1a0320 100%);
+    /* soft atmospheric radial glows for depth / lighting */
+    radial-gradient(60% 55% at 26% 22%, rgba(109, 40, 217, 0.55), transparent 60%),
+    radial-gradient(55% 55% at 80% 68%, rgba(76, 29, 149, 0.50), transparent 58%),
+    radial-gradient(60% 60% at 58% 88%, rgba(91, 33, 182, 0.42), transparent 60%),
+    /* dark indigo vignette at the edges */
+    radial-gradient(120% 120% at 50% 45%, transparent 42%, rgba(8, 0, 26, 0.78) 100%),
+    /* base colour journey — deep purple */
+    linear-gradient(125deg, #16033a 0%, #26085e 30%, #3a1183 60%, #4c1d95 100%);
   background-repeat: no-repeat;
   background-size: cover;
   /* lock to the viewport so stacked sections read as one continuous field */
