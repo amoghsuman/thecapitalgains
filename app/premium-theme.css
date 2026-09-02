@@ -1,23 +1,27 @@
 :root {
-  /* Premium Dark Theme - Midnight & Violet Palette */
-  --premium-bg: #0F0720;
-  --premium-surface: #1A1138;
-  --premium-surface-hover: #24194A;
-  --premium-border: rgba(255, 255, 255, 0.08);
-  --premium-border-hover: rgba(255, 255, 255, 0.15);
-  
-  --premium-primary: #8B5CF6; /* Violet-500 */
-  --premium-primary-glow: rgba(139, 92, 246, 0.2);
-  --premium-accent: #6366F1; /* Indigo-500 */
-  
-  --premium-text-primary: #FFFFFF;
-  --premium-text-secondary: #94A3B8; /* Slate-400 */
-  --premium-text-muted: #64748B; /* Slate-500 */
-  
-  --premium-gold: #D4860A;
-  --premium-gold-light: #F0A020;
-  
-  --premium-glass: rgba(26, 17, 56, 0.7);
+  /* "Ivory Ledger" palette applied to the premium/hero surface system.
+     Mirrors the tokens in globals.css — kept as a separate namespace
+     because these rules (.premium-card, .premium-button-primary, etc.)
+     are the shared "elevated surface" vocabulary used across the hero,
+     nav, and course cards. */
+  --premium-bg: #F7F4EC;
+  --premium-surface: #FFFFFF;
+  --premium-surface-hover: #EDEFEE;
+  --premium-border: #DFD9C8;
+  --premium-border-hover: #6E6A5F;
+
+  --premium-primary: #1B3A2B; /* Forest Green */
+  --premium-primary-glow: rgba(27, 58, 43, 0.2);
+  --premium-accent: #A9822F; /* Gold */
+
+  --premium-text-primary: #1A1A18;
+  --premium-text-secondary: #6E6A5F;
+  --premium-text-muted: #6E6A5F;
+
+  --premium-gold: #A9822F;
+  --premium-gold-light: #BFA163;
+
+  --premium-glass: rgba(255, 255, 255, 0.75);
   --premium-glass-blur: 12px;
 }
 
@@ -26,19 +30,11 @@
   color: var(--premium-text-primary);
 }
 
-/* Premium deep-purple hero gradient: rich royal purple / violet tones over a
-   near-black indigo base, with soft atmospheric glow and dark edges. */
+/* Ivory hero surface: flat, editorial background — no gradient or glow,
+   in keeping with the "Ivory Ledger" paper-like aesthetic. */
 .premium-hero-gradient {
   color: var(--premium-text-primary);
-  background-color: #1a0320;
-  background-image:
-    /* bright magenta core glow that falls off through purple to a dark
-       purple edge — matches the reference radial background */
-    radial-gradient(circle at 50% 45%, #7a1f8c 0%, #5f1676 30%, #430f57 60%, #280a3a 82%, #1a0320 100%);
-  background-repeat: no-repeat;
-  background-size: cover;
-  /* lock to the viewport so stacked sections read as one continuous field */
-  background-attachment: fixed;
+  background-color: var(--premium-bg);
 }
 
 .premium-card {
@@ -56,7 +52,7 @@
 }
 
 .premium-gradient-text {
-  background: linear-gradient(135deg, #FFFFFF 0%, #94A3B8 100%);
+  background: linear-gradient(135deg, #1A1A18 0%, #6E6A5F 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -68,13 +64,13 @@
   border-radius: 0.75rem;
   font-weight: 500;
   transition: all 0.2s;
-  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+  box-shadow: 0 4px 12px rgba(27, 58, 43, 0.3);
 }
 
 .premium-button-primary:hover {
   opacity: 0.9;
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(139, 92, 246, 0.4);
+  box-shadow: 0 6px 16px rgba(27, 58, 43, 0.4);
 }
 
 .premium-button-outline {
@@ -86,7 +82,7 @@
 }
 
 .premium-button-outline:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(26, 26, 24, 0.04);
   border-color: var(--premium-text-secondary);
 }
 

@@ -24,7 +24,7 @@ function effectivePrice(service: ResolvedService, billing: BillingCycle): number
 function Checkbox({ checked, free }: { checked: boolean; free?: boolean }) {
   if (free) {
     return (
-      <span className="font-mono text-[10px] text-[#D4860A] tracking-widest font-bold uppercase">
+      <span className="font-mono text-[10px] text-gold-text tracking-widest font-bold uppercase">
         Included
       </span>
     );
@@ -32,7 +32,7 @@ function Checkbox({ checked, free }: { checked: boolean; free?: boolean }) {
   return (
     <div
       className={`w-5 h-5 rounded-[4px] border-2 flex items-center justify-center flex-shrink-0 transition-all ${
-        checked ? "bg-[#D4860A] border-[#D4860A]" : "border-[#C4B8E0] bg-white"
+        checked ? "bg-forest border-forest" : "border-hairline bg-panel"
       }`}
     >
       {checked && (
@@ -144,29 +144,25 @@ export default function PricingTable({ services }: { services: ResolvedService[]
 
       {/* ── HERO ── */}
       <header className="pt-32 pb-20 text-center relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[100%] rounded-full bg-[rgba(139,92,246,0.08)] blur-[120px]" />
-          <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[100%] rounded-full bg-[rgba(99,102,241,0.06)] blur-[100px]" />
-        </div>
         <div className="site-container relative z-10">
-          <div className="font-mono text-[11px] text-[#A78BFA] tracking-[0.3em] font-bold uppercase mb-4">
+          <div className="font-mono text-[11px] text-gold-text tracking-[0.3em] font-bold uppercase mb-4">
             Pricing
           </div>
-          <h1 className="text-5xl font-bold text-white leading-tight mb-4">
+          <h1 className="text-5xl font-bold text-ink leading-tight mb-4">
             Choose what you need.
           </h1>
-          <p className="text-white/60 text-lg leading-relaxed max-w-xl mx-auto mb-10">
+          <p className="text-ink-dim text-lg leading-relaxed max-w-xl mx-auto mb-10">
             Choose the plan that fits. Pay only for what you use.
           </p>
 
           {/* Billing toggle */}
-          <div className="inline-flex items-center bg-white/10 border border-white/15 rounded-2xl p-1.5">
+          <div className="inline-flex items-center bg-[rgba(26,26,24,0.04)] border border-hairline rounded-2xl p-1.5">
             <button
               onClick={() => setBilling("monthly")}
               className={`px-7 py-2.5 rounded-xl text-sm font-bold tracking-tight transition-all ${
                 billing === "monthly"
-                  ? "bg-white text-[#1E1245] shadow-lg"
-                  : "text-white/50 hover:text-white"
+                  ? "bg-panel text-ink shadow-lg"
+                  : "text-ink-dim hover:text-ink"
               }`}
             >
               Monthly
@@ -175,8 +171,8 @@ export default function PricingTable({ services }: { services: ResolvedService[]
               onClick={() => setBilling("annual")}
               className={`px-7 py-2.5 rounded-xl text-sm font-bold tracking-tight transition-all ${
                 billing === "annual"
-                  ? "bg-white text-[#1E1245] shadow-lg"
-                  : "text-white/50 hover:text-white"
+                  ? "bg-panel text-ink shadow-lg"
+                  : "text-ink-dim hover:text-ink"
               }`}
             >
               Annual, Save 20%
@@ -187,20 +183,20 @@ export default function PricingTable({ services }: { services: ResolvedService[]
 
       {/* ── PRICING TABLE ── */}
       <div className="site-container pt-12">
-        <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-sm overflow-x-auto border border-[rgba(30,18,69,0.08)]">
+        <div className="max-w-3xl mx-auto bg-panel rounded-2xl shadow-sm overflow-x-auto border border-hairline">
           <table className="w-full border-collapse">
             <thead>
-              <tr className="border-b border-[rgba(30,18,69,0.08)]">
-                <th className="text-left py-3 pl-5 pr-4 text-[11px] font-bold text-[#8B7BAB] tracking-[0.15em] uppercase w-[38%]">
+              <tr className="border-b border-hairline">
+                <th className="text-left py-3 pl-5 pr-4 text-[11px] font-bold text-ink-dim tracking-[0.15em] uppercase w-[38%]">
                   Service
                 </th>
-                <th className="hidden md:table-cell text-left py-3 px-4 text-[11px] font-bold text-[#8B7BAB] tracking-[0.15em] uppercase">
+                <th className="hidden md:table-cell text-left py-3 px-4 text-[11px] font-bold text-ink-dim tracking-[0.15em] uppercase">
                   Description
                 </th>
-                <th className="text-right py-3 px-4 text-[11px] font-bold text-[#8B7BAB] tracking-[0.15em] uppercase">
+                <th className="text-right py-3 px-4 text-[11px] font-bold text-ink-dim tracking-[0.15em] uppercase">
                   Price
                 </th>
-                <th className="text-center py-3 pr-5 pl-2 text-[11px] font-bold text-[#8B7BAB] tracking-[0.15em] uppercase w-16">
+                <th className="text-center py-3 pr-5 pl-2 text-[11px] font-bold text-ink-dim tracking-[0.15em] uppercase w-16">
                   Select
                 </th>
               </tr>
@@ -209,10 +205,10 @@ export default function PricingTable({ services }: { services: ResolvedService[]
               {TABLE_LAYOUT.map((row, i) => {
                 if (row.kind === "divider") {
                   return (
-                    <tr key={`divider-${i}`} className="bg-[#F7F5FF]">
+                    <tr key={`divider-${i}`} className="bg-forest-surface">
                       <td
                         colSpan={4}
-                        className="py-2 px-5 text-xs font-bold text-[#8B7BAB] tracking-widest uppercase"
+                        className="py-2 px-5 text-xs font-bold text-ink-dim tracking-widest uppercase"
                       >
                         {row.label}
                       </td>
@@ -234,27 +230,27 @@ export default function PricingTable({ services }: { services: ResolvedService[]
                   <tr
                     key={service.key}
                     onClick={() => toggle(service.key)}
-                    className={`border-b border-[rgba(30,18,69,0.06)] last:border-0 transition-colors select-none ${
+                    className={`border-b border-hairline last:border-0 transition-colors select-none ${
                       isFree ? "cursor-default" : "cursor-pointer"
-                    } ${isSelected ? "bg-[#F3F0FF]" : "bg-white hover:bg-[#FAFAF7]"}`}
+                    } ${isSelected ? "bg-forest-surface" : "bg-panel hover:bg-ivory"}`}
                   >
                     {/* Name — carries the left border indicator */}
                     <td
                       className={`py-4 pr-4 pl-5 border-l-[3px] transition-colors ${
-                        isSelected ? "border-l-[#1E1245]" : "border-l-transparent"
+                        isSelected ? "border-l-forest" : "border-l-transparent"
                       }`}
                     >
-                      <div className="font-semibold text-[14px] text-[#1E1245] leading-snug">
+                      <div className="font-semibold text-[14px] text-ink leading-snug">
                         {service.name}
                       </div>
                       {/* Description visible inline on mobile only */}
-                      <div className="md:hidden text-[12px] text-[#8B7BAB] mt-0.5 leading-snug font-normal">
+                      <div className="md:hidden text-[12px] text-ink-dim mt-0.5 leading-snug font-normal">
                         {service.description}
                       </div>
                     </td>
 
                     {/* Description — desktop only */}
-                    <td className="hidden md:table-cell py-4 px-4 text-[13px] text-[#6B7280] leading-snug">
+                    <td className="hidden md:table-cell py-4 px-4 text-[13px] text-ink-dim leading-snug">
                       {service.description}
                     </td>
 
@@ -262,22 +258,22 @@ export default function PricingTable({ services }: { services: ResolvedService[]
                     <td className="py-4 px-4 text-right whitespace-nowrap align-top">
                       <div className="flex flex-col items-end gap-1">
                         <div className="flex items-baseline gap-1.5">
-                          <span className="font-mono text-[15px] font-bold text-[#1E1245]">
+                          <span className="font-mono text-[15px] font-bold text-ink">
                             {service.priceMonthly === 0 ? "Free" : fmt(displayPrice)}
                           </span>
                           {service.billingLabel && (
-                            <span className="font-mono text-[11px] text-[#8B7BAB]">
+                            <span className="font-mono text-[11px] text-ink-dim">
                               {service.billingLabel}
                             </span>
                           )}
                         </div>
                         {showAnnualBadge && (
-                          <span className="inline-flex items-center bg-[#E8F5EE] text-[#1A7A4A] text-[9px] font-bold px-1.5 py-0.5 rounded tracking-wide uppercase">
+                          <span className="inline-flex items-center bg-forest-surface text-forest text-[9px] font-bold px-1.5 py-0.5 rounded tracking-wide uppercase">
                             Save 20%
                           </span>
                         )}
                         {showOneTimeMuted && (
-                          <span className="text-[10px] text-[#8B7BAB] leading-none text-right">
+                          <span className="text-[10px] text-ink-dim leading-none text-right">
                             One-time · not affected
                           </span>
                         )}
@@ -298,13 +294,13 @@ export default function PricingTable({ services }: { services: ResolvedService[]
         </div>
 
         {/* SEBI disclaimer */}
-        <p className="text-sm text-[#C7BEE6] text-center max-w-2xl mx-auto mt-8 mb-8 leading-relaxed">
+        <p className="text-sm text-ink-dim text-center max-w-2xl mx-auto mt-8 mb-8 leading-relaxed">
           ⚖ Research and advisory services are provided under SEBI (Research Analyst) Regulations,
           2014. Registration No: [SEBI_RA_REG_NO]. Individual subscription fees are subject to
           SEBI-prescribed caps (₹1.5L per annum). For institutional or bulk pricing, write to{" "}
           <a
             href="mailto:hello@thecapitalgains.com"
-            className="text-[#D4860A] hover:text-[#B8720A] transition-colors"
+            className="text-gold hover:text-gold-dark transition-colors"
           >
             hello@thecapitalgains.com
           </a>
@@ -312,7 +308,7 @@ export default function PricingTable({ services }: { services: ResolvedService[]
       </div>
 
       {/* ── STICKY TOTAL BAR ── */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 bg-[#1E1245] border-t border-white/10 px-6 py-4 shadow-2xl">
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-forest border-t border-white/10 px-6 py-4 shadow-2xl">
         <div className="site-container">
           <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-8">
 
@@ -324,7 +320,7 @@ export default function PricingTable({ services }: { services: ResolvedService[]
                 selectedPills.map((s) => (
                   <span
                     key={s.key}
-                    className="bg-[#D4860A] text-white text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap"
+                    className="bg-gold text-white text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap"
                   >
                     {s.name}
                   </span>

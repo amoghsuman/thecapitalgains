@@ -36,12 +36,12 @@ export default async function AdminTasksPage() {
 
   const statusBadge = (status: string) => {
     const styles: Record<string, { bg: string; color: string; label: string }> = {
-      implemented: { bg: '#F0FDF4', color: '#166534', label: 'Implemented' },
+      implemented: { bg: '#EDEFEE', color: '#1B3A2B', label: 'Implemented' },
       partial:     { bg: '#FEF3C7', color: '#92400E', label: 'Partial' },
       missing:     { bg: '#FEF2F2', color: '#991B1B', label: 'Missing' },
-      in_progress: { bg: '#EEF2FF', color: '#3730A3', label: 'In Progress' },
+      in_progress: { bg: '#F6F3EA', color: '#6E5620', label: 'In Progress' },
     }
-    const s = styles[status] ?? { bg: '#F3F4F6', color: '#6B7280', label: status }
+    const s = styles[status] ?? { bg: '#F7F4EC', color: '#6E6A5F', label: status }
     return (
       <span style={{
         background: s.bg,
@@ -63,14 +63,14 @@ export default async function AdminTasksPage() {
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 32 }}>
         <div>
-          <h1 style={{ fontSize: 24, fontWeight: 700, color: '#1C0F3F', margin: 0, marginBottom: 6 }}>
+          <h1 style={{ fontSize: 24, fontWeight: 700, color: '#1A1A18', margin: 0, marginBottom: 6 }}>
             Platform task tracker
           </h1>
-          <p style={{ fontSize: 14, color: '#6B7280', margin: 0 }}>
+          <p style={{ fontSize: 14, color: '#6E6A5F', margin: 0 }}>
             Feature implementation status across The Capital Gains
           </p>
         </div>
-        <Link href="/admin/books" style={{ fontSize: 13, color: '#7C3AED', fontWeight: 600, textDecoration: 'none' }}>
+        <Link href="/admin/books" style={{ fontSize: 13, color: '#1B3A2B', fontWeight: 600, textDecoration: 'none' }}>
           ← Books pipeline
         </Link>
       </div>
@@ -78,18 +78,18 @@ export default async function AdminTasksPage() {
       {/* Metric cards */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 20 }}>
         {[
-          { label: 'Total features', value: total, color: '#1C0F3F' },
-          { label: 'Implemented', value: `${implemented} (${pctDone}%)`, color: '#166534' },
+          { label: 'Total features', value: total, color: '#1A1A18' },
+          { label: 'Implemented', value: `${implemented} (${pctDone}%)`, color: '#1B3A2B' },
           { label: 'Partial', value: partial, color: '#92400E' },
           { label: 'Missing / In Progress', value: missing + inProgress, color: '#991B1B' },
         ].map((card) => (
           <div key={card.label} style={{
-            background: '#fff',
-            border: '1px solid #F3F4F6',
+            background: '#FFFFFF',
+            border: '1px solid #DFD9C8',
             borderRadius: 10,
             padding: '18px 20px',
           }}>
-            <div style={{ fontSize: 11, color: '#6B7280', fontWeight: 500, marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+            <div style={{ fontSize: 11, color: '#6E6A5F', fontWeight: 500, marginBottom: 6, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
               {card.label}
             </div>
             <div style={{ fontSize: 26, fontWeight: 700, color: card.color }}>
@@ -101,10 +101,10 @@ export default async function AdminTasksPage() {
 
       {/* Progress bar */}
       <div style={{ marginBottom: 40 }}>
-        <div style={{ height: 8, background: '#F3F4F6', borderRadius: 4, overflow: 'hidden' }}>
-          <div style={{ height: '100%', background: '#7C3AED', borderRadius: 4, width: `${pctDone}%`, transition: 'width 0.3s' }} />
+        <div style={{ height: 8, background: '#DFD9C8', borderRadius: 4, overflow: 'hidden' }}>
+          <div style={{ height: '100%', background: '#1B3A2B', borderRadius: 4, width: `${pctDone}%`, transition: 'width 0.3s' }} />
         </div>
-        <p style={{ fontSize: 12, color: '#6B7280', marginTop: 8 }}>
+        <p style={{ fontSize: 12, color: '#6E6A5F', marginTop: 8 }}>
           {implemented} of {total} features fully implemented
         </p>
       </div>
@@ -115,14 +115,14 @@ export default async function AdminTasksPage() {
         return (
           <div key={groupName} style={{ marginBottom: 36 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
-              <h2 style={{ fontSize: 15, fontWeight: 700, color: '#1C0F3F', margin: 0 }}>
+              <h2 style={{ fontSize: 15, fontWeight: 700, color: '#1A1A18', margin: 0 }}>
                 {groupName}
               </h2>
               <span style={{
                 fontSize: 11,
                 fontWeight: 600,
-                color: '#7C3AED',
-                background: '#EEF2FF',
+                color: '#1B3A2B',
+                background: '#EDEFEE',
                 padding: '2px 8px',
                 borderRadius: 10,
               }}>
@@ -130,7 +130,7 @@ export default async function AdminTasksPage() {
               </span>
             </div>
 
-            <div style={{ background: '#fff', border: '1px solid #F3F4F6', borderRadius: 10, overflow: 'hidden' }}>
+            <div style={{ background: '#FFFFFF', border: '1px solid #DFD9C8', borderRadius: 10, overflow: 'hidden' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
                   <tr>
@@ -139,10 +139,10 @@ export default async function AdminTasksPage() {
                         padding: '10px 14px',
                         textAlign: 'left',
                         fontSize: 11,
-                        color: '#6B7280',
+                        color: '#6E6A5F',
                         fontWeight: 500,
-                        borderBottom: '1px solid #F3F4F6',
-                        background: '#F9FAFB',
+                        borderBottom: '1px solid #DFD9C8',
+                        background: '#F7F4EC',
                       }}>
                         {col}
                       </th>
@@ -154,58 +154,58 @@ export default async function AdminTasksPage() {
                     <tr key={task.task_id}>
                       <td style={{
                         padding: '10px 14px',
-                        borderBottom: idx < groupTasks.length - 1 ? '1px solid #F9FAFB' : 'none',
+                        borderBottom: idx < groupTasks.length - 1 ? '1px solid #DFD9C8' : 'none',
                         verticalAlign: 'top',
                         fontFamily: 'var(--font-inter)',
                         fontSize: 11,
-                        color: '#9CA3AF',
+                        color: '#6E6A5F',
                         whiteSpace: 'nowrap',
                       }}>
                         {task.task_id}
                       </td>
                       <td style={{
                         padding: '10px 14px',
-                        borderBottom: idx < groupTasks.length - 1 ? '1px solid #F9FAFB' : 'none',
+                        borderBottom: idx < groupTasks.length - 1 ? '1px solid #DFD9C8' : 'none',
                         verticalAlign: 'top',
                         fontSize: 13,
                         fontWeight: 500,
-                        color: '#1C0F3F',
+                        color: '#1A1A18',
                       }}>
                         {task.feature}
                       </td>
                       <td style={{
                         padding: '10px 14px',
-                        borderBottom: idx < groupTasks.length - 1 ? '1px solid #F9FAFB' : 'none',
+                        borderBottom: idx < groupTasks.length - 1 ? '1px solid #DFD9C8' : 'none',
                         verticalAlign: 'top',
                         fontSize: 12,
-                        color: '#6B7280',
+                        color: '#6E6A5F',
                         maxWidth: 220,
                       }}>
                         {task.description ? task.description.slice(0, 60) + (task.description.length > 60 ? '…' : '') : '—'}
                       </td>
                       <td style={{
                         padding: '10px 14px',
-                        borderBottom: idx < groupTasks.length - 1 ? '1px solid #F9FAFB' : 'none',
+                        borderBottom: idx < groupTasks.length - 1 ? '1px solid #DFD9C8' : 'none',
                         verticalAlign: 'top',
                       }}>
                         {statusBadge(task.status)}
                       </td>
                       <td style={{
                         padding: '10px 14px',
-                        borderBottom: idx < groupTasks.length - 1 ? '1px solid #F9FAFB' : 'none',
+                        borderBottom: idx < groupTasks.length - 1 ? '1px solid #DFD9C8' : 'none',
                         verticalAlign: 'top',
                         fontFamily: 'var(--font-inter)',
                         fontSize: 11,
-                        color: '#9CA3AF',
+                        color: '#6E6A5F',
                       }}>
                         {task.backend_table ?? '—'}
                       </td>
                       <td style={{
                         padding: '10px 14px',
-                        borderBottom: idx < groupTasks.length - 1 ? '1px solid #F9FAFB' : 'none',
+                        borderBottom: idx < groupTasks.length - 1 ? '1px solid #DFD9C8' : 'none',
                         verticalAlign: 'top',
                         fontSize: 12,
-                        color: '#6B7280',
+                        color: '#6E6A5F',
                         maxWidth: 180,
                       }}>
                         {task.notes ? task.notes.slice(0, 50) + (task.notes.length > 50 ? '…' : '') : '—'}
@@ -220,7 +220,7 @@ export default async function AdminTasksPage() {
       })}
 
       {/* Footer */}
-      <p style={{ fontSize: 12, color: '#9CA3AF', marginTop: 16 }}>
+      <p style={{ fontSize: 12, color: '#6E6A5F', marginTop: 16 }}>
         Task statuses are managed in Supabase · Update via SQL Editor or build the edit UI
       </p>
     </div>

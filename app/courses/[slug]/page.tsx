@@ -24,7 +24,7 @@ export default async function CourseDetailPage({
     return (
       <div className="min-h-screen flex items-center justify-center text-center">
         <div>
-          <h1 className="text-4xl font-bold text-white mb-4">Course not found</h1>
+          <h1 className="text-4xl font-bold text-ink mb-4">Course not found</h1>
           <Link href="/courses" className="premium-button-primary inline-block">Browse all courses</Link>
         </div>
       </div>
@@ -98,38 +98,38 @@ export default async function CourseDetailPage({
       <header className="pt-32 pb-24">
         <div className="site-container">
           <div className="flex items-center gap-3 mb-8">
-            <Link href="/courses" className="text-[#A78BFA] text-xs font-bold tracking-[0.2em] uppercase hover:text-white transition-colors">
+            <Link href="/courses" className="text-gold-text text-xs font-bold tracking-[0.2em] uppercase hover:text-ink transition-colors">
               ← Back to Curriculum
             </Link>
           </div>
 
           <div className="flex flex-wrap items-center gap-3 mb-6">
-            <span className="bg-violet-500/20 text-violet-300 border border-violet-500/30 text-[10px] font-bold px-3 py-1 rounded-full tracking-widest uppercase">
+            <span className="bg-forest-surface text-forest border border-hairline text-[10px] font-bold px-3 py-1 rounded-full tracking-widest uppercase">
               {course.tag || "CORE"}
             </span>
             {course.badge && (
-              <span className="bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[10px] font-bold px-3 py-1 rounded-full tracking-widest uppercase">
+              <span className="bg-forest text-white text-[10px] font-bold px-3 py-1 rounded-full tracking-widest uppercase">
                 {course.badge}
               </span>
             )}
           </div>
 
-          <h1 className="text-5xl font-bold text-white tracking-tight leading-tight max-w-3xl mb-6">
+          <h1 className="text-5xl font-bold text-ink tracking-tight leading-tight max-w-3xl mb-6">
             {course.title}
           </h1>
-          <p className="text-[#94A3B8] text-xl leading-relaxed max-w-2xl">
+          <p className="text-ink-dim text-xl leading-relaxed max-w-2xl">
             {course.description || course.subtitle}
           </p>
 
-          <div className="flex gap-12 mt-12 pt-12 border-t border-[rgba(255,255,255,0.05)]">
+          <div className="flex gap-12 mt-12 pt-12 border-t border-hairline">
             {[
               { label: "MODULES", val: totalLessons },
               { label: "DURATION", val: course.duration || "4 Hours" },
               { label: "FORMAT", val: "Text-First" },
             ].map((s) => (
               <div key={s.label}>
-                <div className="text-[10px] font-bold text-[#64748B] tracking-[0.2em] mb-2">{s.label}</div>
-                <div className="text-lg font-bold text-white">{s.val}</div>
+                <div className="text-[10px] font-bold text-ink-dim tracking-[0.2em] mb-2">{s.label}</div>
+                <div className="text-lg font-bold text-ink">{s.val}</div>
               </div>
             ))}
           </div>
@@ -145,14 +145,14 @@ export default async function CourseDetailPage({
           {/* What you'll learn */}
           {course.whatYouLearn?.length > 0 && (
             <section>
-              <h2 className="text-2xl font-bold text-white mb-8 tracking-tight">What you&apos;ll master</h2>
+              <h2 className="text-2xl font-bold text-ink mb-8 tracking-tight">What you&apos;ll master</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {course.whatYouLearn.map((point: string) => (
-                  <div key={point} className="flex gap-4 p-4 bg-white border border-slate-200 rounded-2xl shadow-sm">
+                  <div key={point} className="flex gap-4 p-4 bg-panel border border-hairline rounded-2xl shadow-sm">
                     <div className="w-5 h-5 rounded-full bg-emerald-50 text-emerald-600 flex-shrink-0 flex items-center justify-center">
                       <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path d="M5 13l4 4L19 7" /></svg>
                     </div>
-                    <span className="text-[14px] text-[#4B3F6B] leading-snug font-medium">{point}</span>
+                    <span className="text-[14px] text-ink-dim leading-snug font-medium">{point}</span>
                   </div>
                 ))}
               </div>
@@ -161,53 +161,53 @@ export default async function CourseDetailPage({
 
           {/* Curriculum */}
           <section>
-            <h2 className="text-2xl font-bold text-[#1C0F3F] mb-8 tracking-tight">Curriculum Breakdown</h2>
+            <h2 className="text-2xl font-bold text-ink mb-8 tracking-tight">Curriculum Breakdown</h2>
             <div className="space-y-4">
               {course.chapters?.map((chapter: any) => (
-                <div key={chapter.title} className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:border-violet-200 transition-colors">
-                  <div className="px-6 py-4 bg-slate-50/50 border-b border-slate-100 flex items-center justify-between">
-                    <h3 className="font-bold text-[#1C0F3F] text-sm tracking-tight">{chapter.title}</h3>
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                <div key={chapter.title} className="bg-panel border border-hairline rounded-2xl overflow-hidden shadow-sm hover:border-forest/30 transition-colors">
+                  <div className="px-6 py-4 bg-ivory/50 border-b border-hairline flex items-center justify-between">
+                    <h3 className="font-bold text-ink text-sm tracking-tight">{chapter.title}</h3>
+                    <span className="text-[10px] font-bold text-ink-dim uppercase tracking-widest">
                       {chapter.lessons?.length || 0} Lessons
                     </span>
                   </div>
-                  <div className="divide-y divide-slate-50">
+                  <div className="divide-y divide-hairline">
                     {chapter.lessons?.map((lesson: any) => {
                       const lessonAccessible = lesson.isFree || hasAccess;
                       return (
                         <div
                           key={lesson.title}
-                          className="px-6 py-4 flex items-center justify-between group hover:bg-violet-50/30 transition-colors"
+                          className="px-6 py-4 flex items-center justify-between group hover:bg-ivory/50 transition-colors"
                         >
                           <div className="flex items-center gap-4">
-                            <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm ${lessonAccessible ? "bg-emerald-50 text-emerald-600" : "bg-slate-100 text-slate-400"}`}>
+                            <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm ${lessonAccessible ? "bg-emerald-50 text-emerald-600" : "bg-hairline text-ink-dim"}`}>
                               {lessonAccessible ? "▶" : "🔒"}
                             </div>
                             {lessonAccessible && lesson.slug ? (
                               <div className="flex items-center">
                                 <Link
                                   href={`/learn/${slug}/${lesson.slug}`}
-                                  className="text-[14px] font-semibold text-[#1C0F3F] hover:text-[#7C3AED] transition-colors"
+                                  className="text-[14px] font-semibold text-ink hover:text-forest transition-colors"
                                 >
                                   {lesson.title}
                                 </Link>
                                 {lesson.duration && (
-                                  <span className="text-[11px] text-slate-400 font-mono ml-2">{lesson.duration}</span>
+                                  <span className="text-[11px] text-ink-dim font-mono ml-2">{lesson.duration}</span>
                                 )}
                               </div>
                             ) : (
                               <div className="flex items-center">
-                                <span className="text-[14px] font-semibold text-slate-400">
+                                <span className="text-[14px] font-semibold text-ink-dim">
                                   {lesson.title}
                                 </span>
                                 {lesson.duration && (
-                                  <span className="text-[11px] text-slate-400 font-mono ml-2">{lesson.duration}</span>
+                                  <span className="text-[11px] text-ink-dim font-mono ml-2">{lesson.duration}</span>
                                 )}
                               </div>
                             )}
                           </div>
                           {lesson.isFree && (
-                            <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded tracking-widest uppercase">
+                            <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-1 rounded tracking-widest uppercase">
                               Preview
                             </span>
                           )}
@@ -223,10 +223,10 @@ export default async function CourseDetailPage({
 
         {/* Right: Sticky Action Card */}
         <div className="lg:col-span-1">
-          <div className="sticky top-32 bg-white border border-slate-200 rounded-3xl p-8 shadow-2xl">
+          <div className="sticky top-32 bg-panel border border-hairline rounded-3xl p-8 shadow-2xl">
             <div className="mb-8">
-              <div className="text-[10px] font-bold text-slate-400 tracking-[0.2em] mb-2 uppercase">Access Level</div>
-              <div className={`text-xl font-bold tracking-tight ${courseAccessLevel === "free" ? "text-emerald-600" : "text-[#D4860A]"}`}>
+              <div className="text-[10px] font-bold text-ink-dim tracking-[0.2em] mb-2 uppercase">Access Level</div>
+              <div className={`text-xl font-bold tracking-tight ${courseAccessLevel === "free" ? "text-emerald-600" : "text-gold"}`}>
                 {courseAccessLevel.toUpperCase()}
               </div>
             </div>
@@ -250,7 +250,7 @@ export default async function CourseDetailPage({
               {!user && (
                 <Link
                   href="/auth/login"
-                  className="premium-button-outline w-full text-center block font-bold text-slate-600"
+                  className="premium-button-outline w-full text-center block font-bold text-ink-dim"
                 >
                   Sign in to resume
                 </Link>
@@ -258,30 +258,30 @@ export default async function CourseDetailPage({
             </div>
 
             {user && hasStartedCourse && (
-              <div style={{ marginBottom: '2rem', paddingBottom: '2rem', borderBottom: '1px solid #f1f5f9' }}>
+              <div style={{ marginBottom: '2rem', paddingBottom: '2rem', borderBottom: '1px solid #DFD9C8' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
-                  <span style={{ fontSize: '11px', fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Your progress</span>
-                  <span style={{ fontSize: '12px', fontWeight: 600, color: '#1C0F3F' }}>{progressPct}%</span>
+                  <span style={{ fontSize: '11px', fontWeight: 700, color: '#6E6A5F', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Your progress</span>
+                  <span style={{ fontSize: '12px', fontWeight: 600, color: '#1A1A18' }}>{progressPct}%</span>
                 </div>
-                <div style={{ height: '6px', background: '#f1f5f9', borderRadius: '3px', overflow: 'hidden' }}>
-                  <div style={{ height: '100%', background: '#D4860A', borderRadius: '3px', width: `${progressPct}%`, transition: 'width 0.3s' }} />
+                <div style={{ height: '6px', background: '#DFD9C8', borderRadius: '3px', overflow: 'hidden' }}>
+                  <div style={{ height: '100%', background: '#A9822F', borderRadius: '3px', width: `${progressPct}%`, transition: 'width 0.3s' }} />
                 </div>
-                <div style={{ fontSize: '11px', color: '#94a3b8', marginTop: '4px' }}>
+                <div style={{ fontSize: '11px', color: '#6E6A5F', marginTop: '4px' }}>
                   {completedCount} of {totalLessons} lessons complete
                 </div>
               </div>
             )}
 
-            <div className="space-y-4 pt-8 border-t border-slate-100">
-              <div className="text-[10px] font-bold text-slate-400 tracking-[0.2em] uppercase">Everything included</div>
+            <div className="space-y-4 pt-8 border-t border-hairline">
+              <div className="text-[10px] font-bold text-ink-dim tracking-[0.2em] uppercase">Everything included</div>
               {[
                 "Full Text Playbooks",
                 "Actionable Exercises",
                 "Mobile Reading Mode",
                 "Lifetime Updates",
               ].map((item) => (
-                <div key={item} className="flex gap-3 text-sm text-[#4B3F6B] font-medium">
-                  <svg className="w-5 h-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path d="M5 13l4 4L19 7" /></svg>
+                <div key={item} className="flex gap-3 text-sm text-ink-dim font-medium">
+                  <svg className="w-5 h-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path d="M5 13l4 4L19 7" /></svg>
                   {item}
                 </div>
               ))}

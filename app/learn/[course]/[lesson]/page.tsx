@@ -34,8 +34,8 @@ function ExerciseBlock({ title, steps }: { title: string; steps: string[] }) {
   const allDone = checked.size === steps.length;
 
   return (
-    <div className={`rounded-xl p-6 mt-10 border-2 ${allDone ? "border-[#1A7A4A] bg-[#E8F5EE]" : "border-[#1C0F3F] bg-white"}`}>
-      <div className={`font-mono text-[11px] tracking-widest uppercase mb-4 ${allDone ? "text-[#1A7A4A]" : "text-[#1C0F3F]"}`}>
+    <div className={`rounded-xl p-6 mt-10 border-2 ${allDone ? "border-forest bg-forest-surface" : "border-ink bg-panel"}`}>
+      <div className={`font-mono text-[11px] tracking-widest uppercase mb-4 ${allDone ? "text-forest" : "text-ink"}`}>
         Exercise · {title}
       </div>
       <div className="flex flex-col gap-3">
@@ -45,8 +45,8 @@ function ExerciseBlock({ title, steps }: { title: string; steps: string[] }) {
               onClick={() => toggle(i)}
               className={`mt-0.5 w-5 h-5 flex-shrink-0 rounded border-2 flex items-center justify-center transition-all ${
                 checked.has(i)
-                  ? "border-[#1A7A4A] bg-[#1A7A4A]"
-                  : "border-[rgba(124,58,237,0.25)] group-hover:border-[#D4860A]"
+                  ? "border-forest bg-forest"
+                  : "border-hairline group-hover:border-gold"
               }`}
             >
               {checked.has(i) && (
@@ -56,7 +56,7 @@ function ExerciseBlock({ title, steps }: { title: string; steps: string[] }) {
             <span
               onClick={() => toggle(i)}
               className={`text-[14px] leading-relaxed select-none ${
-                checked.has(i) ? "text-[#8B7BAB] line-through" : "text-[#4B3F6B]"
+                checked.has(i) ? "text-ink-dim/60 line-through" : "text-ink-dim"
               }`}
             >
               {step}
@@ -65,7 +65,7 @@ function ExerciseBlock({ title, steps }: { title: string; steps: string[] }) {
         ))}
       </div>
       {allDone && (
-        <div className="mt-4 font-mono text-[12px] text-[#1A7A4A] font-medium">
+        <div className="mt-4 font-mono text-[12px] text-forest font-medium">
           ✓ Exercise complete, move on to the next lesson
         </div>
       )}
@@ -78,31 +78,31 @@ function ExerciseBlock({ title, steps }: { title: string; steps: string[] }) {
 const portableTextComponents: PortableTextComponents = {
   block: {
     normal: ({ children }) => (
-      <p className="text-[17px] text-[#1C0F3F] leading-[1.85] mb-5">{children}</p>
+      <p className="text-[17px] text-ink leading-[1.85] mb-5">{children}</p>
     ),
     h2: ({ children }) => (
-      <h2 className="text-[22px] font-bold text-[#1C0F3F] mt-8 mb-4 leading-snug">{children}</h2>
+      <h2 className="text-[22px] font-bold text-ink mt-8 mb-4 leading-snug">{children}</h2>
     ),
     h3: ({ children }) => (
-      <h3 className="text-[18px] font-bold text-[#1C0F3F] mt-6 mb-3">{children}</h3>
+      <h3 className="text-[18px] font-bold text-ink mt-6 mb-3">{children}</h3>
     ),
     blockquote: ({ children }) => (
-      <p className="text-[17px] text-[#1C0F3F] leading-[1.85] italic border-l-[3px] border-[#D4860A] pl-5 py-1">
+      <p className="text-[17px] text-ink leading-[1.85] italic border-l-[3px] border-gold pl-5 py-1">
         {children}
       </p>
     ),
   },
   list: {
     bullet: ({ children }) => (
-      <ul className="flex flex-col gap-2 pl-4 list-disc text-[16px] text-[#1C0F3F]">{children}</ul>
+      <ul className="flex flex-col gap-2 pl-4 list-disc text-[16px] text-ink">{children}</ul>
     ),
     number: ({ children }) => (
-      <ol className="flex flex-col gap-2 pl-4 list-decimal text-[16px] text-[#1C0F3F]">{children}</ol>
+      <ol className="flex flex-col gap-2 pl-4 list-decimal text-[16px] text-ink">{children}</ol>
     ),
   },
   listItem: {
-    bullet: ({ children }) => <li className="text-[16px] text-[#1C0F3F] leading-relaxed">{children}</li>,
-    number: ({ children }) => <li className="text-[16px] text-[#1C0F3F] leading-relaxed">{children}</li>,
+    bullet: ({ children }) => <li className="text-[16px] text-ink leading-relaxed">{children}</li>,
+    number: ({ children }) => <li className="text-[16px] text-ink leading-relaxed">{children}</li>,
   },
   types: {
     callout: ({ value }: { value: { type?: string; text?: string } }) => {
@@ -113,9 +113,9 @@ const portableTextComponents: PortableTextComponents = {
           <p className="text-[14px] text-[#7A2010] leading-relaxed">{value.text}</p>
         </div>
       ) : (
-        <div className="bg-[#FDF3E3] border border-[rgba(212,134,10,0.25)] rounded-xl px-5 py-4">
-          <div className="font-mono text-[10px] text-[#D4860A] tracking-widest uppercase mb-2">Key Insight</div>
-          <p className="text-[14px] text-[#6A4A00] leading-relaxed font-medium">{value.text}</p>
+        <div className="bg-gold-surface border border-gold rounded-xl px-5 py-4">
+          <div className="font-mono text-[10px] text-gold-text tracking-widest uppercase mb-2">Key Insight</div>
+          <p className="text-[14px] text-gold-text leading-relaxed font-medium">{value.text}</p>
         </div>
       );
     },
@@ -131,19 +131,19 @@ const portableTextComponents: PortableTextComponents = {
       }
       return (
         <div className="my-6 overflow-x-auto">
-          <div className="bg-[#F5F3FF] rounded-xl px-6 py-5 text-center" dangerouslySetInnerHTML={{ __html: html }} />
+          <div className="bg-forest-surface rounded-xl px-6 py-5 text-center" dangerouslySetInnerHTML={{ __html: html }} />
           {value.caption && (
-            <p className="font-mono text-[11px] text-[#8B7BAB] text-center mt-2 tracking-wide">{value.caption}</p>
+            <p className="font-mono text-[11px] text-ink-dim text-center mt-2 tracking-wide">{value.caption}</p>
           )}
         </div>
       );
     },
     keyFact: ({ value }: { value: { label?: string; value?: string; context?: string } }) => (
-      <div className="my-5 border border-[rgba(124,58,237,0.15)] rounded-xl px-6 py-4 flex flex-col gap-1">
-        <div className="font-mono text-[10px] text-[#8B7BAB] tracking-widest uppercase">{value.label}</div>
-        <div className="text-[22px] font-bold text-[#1C0F3F] leading-tight">{value.value}</div>
+      <div className="my-5 border border-hairline rounded-xl px-6 py-4 flex flex-col gap-1">
+        <div className="font-mono text-[10px] text-ink-dim tracking-widest uppercase">{value.label}</div>
+        <div className="text-[22px] font-bold text-ink leading-tight">{value.value}</div>
         {value.context && (
-          <div className="text-[13px] text-[#4B3F6B]">{value.context}</div>
+          <div className="text-[13px] text-ink-dim">{value.context}</div>
         )}
       </div>
     ),
@@ -162,27 +162,27 @@ function LockedLesson({
   const isPro = reason === "needs-pro";
   return (
     <div className="flex flex-col items-center justify-center py-24 px-8 text-center">
-      <div className="w-16 h-16 bg-[#F5F3FF] rounded-full flex items-center justify-center text-[28px] mb-5">
+      <div className="w-16 h-16 bg-forest-surface rounded-full flex items-center justify-center text-[28px] mb-5">
         🔒
       </div>
-      <h2 className="text-[22px] font-bold text-[#1C0F3F] mb-2">
+      <h2 className="text-[22px] font-bold text-ink mb-2">
         {isPro ? "Upgrade to Pro to access this course" : "Subscribe to access this lesson"}
       </h2>
-      <p className="text-[15px] text-[#4B3F6B] mb-8 max-w-sm">
+      <p className="text-[15px] text-ink-dim mb-8 max-w-sm">
         {isPro
           ? "This is a Pro course. Upgrade from Learner to Pro to unlock it, along with early access to new courses and workbooks."
           : "This lesson is part of the full course. Subscribe for access to all courses."}
       </p>
       <Link
         href="/pricing"
-        className="bg-[#D4860A] hover:bg-[#F0A020] text-white rounded-lg px-8 py-3.5 text-[15px] font-medium transition-colors mb-3"
+        className="bg-forest hover:bg-forest-dark text-white rounded-lg px-8 py-3.5 text-[15px] font-medium transition-colors mb-3"
       >
         View Subscription Plans →
       </Link>
       {!isLoggedIn && (
         <Link
           href="/auth/login"
-          className="border border-[rgba(124,58,237,0.25)] hover:border-[#1C0F3F] text-[#4B3F6B] hover:text-[#1C0F3F] rounded-lg px-8 py-3.5 text-[15px] font-medium transition-colors"
+          className="border border-hairline hover:border-ink text-ink-dim hover:text-ink rounded-lg px-8 py-3.5 text-[15px] font-medium transition-colors"
         >
           Sign in if subscribed →
         </Link>
@@ -280,7 +280,7 @@ export default function ReaderPage() {
 
   if (!lessonSlug) {
     return (
-      <div className="flex-1 flex items-center justify-center text-[#8B7BAB] font-mono text-[13px]">
+      <div className="flex-1 flex items-center justify-center text-ink-dim font-mono text-[13px]">
         Loading...
       </div>
     );
@@ -288,9 +288,9 @@ export default function ReaderPage() {
 
   if (error) {
     return (
-      <div className="flex items-center justify-center h-64 text-[#4B3F6B]">
+      <div className="flex items-center justify-center h-64 text-ink-dim">
         Course not found.{" "}
-        <Link href="/courses" className="text-[#D4860A] ml-1">
+        <Link href="/courses" className="text-gold-text ml-1">
           Browse courses →
         </Link>
       </div>
@@ -299,7 +299,7 @@ export default function ReaderPage() {
 
   if (!course) {
     return (
-      <div className="flex-1 flex items-center justify-center text-[#8B7BAB] font-mono text-[13px]">
+      <div className="flex-1 flex items-center justify-center text-ink-dim font-mono text-[13px]">
         Loading...
       </div>
     );
@@ -381,40 +381,40 @@ export default function ReaderPage() {
   }
 
   return (
-    <div className="flex overflow-hidden bg-[#FFFFFF]" style={{ height: "calc(100vh - 96px)" }}>
+    <div className="flex overflow-hidden bg-panel" style={{ height: "calc(100vh - 96px)" }}>
 
       {/* ── SIDEBAR ── */}
       <aside
         className={`${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } absolute lg:relative lg:translate-x-0 z-30 flex-shrink-0 flex flex-col bg-white border-r border-[rgba(124,58,237,0.15)] overflow-y-auto transition-transform duration-200`}
+        } absolute lg:relative lg:translate-x-0 z-30 flex-shrink-0 flex flex-col bg-panel border-r border-hairline overflow-y-auto transition-transform duration-200`}
         style={{ width: 280, height: "100%" }}
       >
         {/* Back + course info */}
-        <div className="px-4 py-4 border-b border-[rgba(124,58,237,0.10)]">
+        <div className="px-4 py-4 border-b border-hairline">
           <Link
             href="/courses"
-            className="inline-flex items-center gap-1.5 font-mono text-[11px] text-[#8B7BAB] hover:text-[#D4860A] transition-colors mb-3"
+            className="inline-flex items-center gap-1.5 font-mono text-[11px] text-ink-dim hover:text-gold-text transition-colors mb-3"
           >
             ← All courses
           </Link>
-          <div className="text-[14px] text-[#1C0F3F] leading-snug mb-1">
+          <div className="text-[14px] text-ink leading-snug mb-1">
             {course.title}
           </div>
-          <div className="font-mono text-[11px] text-[#8B7BAB]">
+          <div className="font-mono text-[11px] text-ink-dim">
             {allLessons.length} lessons
           </div>
         </div>
 
         {/* Progress bar */}
-        <div className="px-4 py-3 border-b border-[rgba(124,58,237,0.10)]">
+        <div className="px-4 py-3 border-b border-hairline">
           <div className="flex justify-between items-center mb-1.5">
-            <span className="font-mono text-[10px] text-[#8B7BAB] tracking-widest uppercase">Progress</span>
-            <span className="font-mono text-[11px] text-[#1C0F3F]">{progressPct}%</span>
+            <span className="font-mono text-[10px] text-ink-dim tracking-widest uppercase">Progress</span>
+            <span className="font-mono text-[11px] text-ink">{progressPct}%</span>
           </div>
-          <div className="h-[3px] bg-[#EDE9FF] rounded-full overflow-hidden">
+          <div className="h-[3px] bg-hairline rounded-full overflow-hidden">
             <div
-              className="h-full bg-[#D4860A] rounded-full transition-all duration-500"
+              className="h-full bg-gold rounded-full transition-all duration-500"
               style={{ width: `${progressPct}%` }}
             />
           </div>
@@ -424,7 +424,7 @@ export default function ReaderPage() {
         <div className="flex-1 py-2">
           {course.chapters.map((chapter) => (
             <div key={chapter.title} className="mb-1">
-              <div className="px-4 py-2 font-mono text-[9px] text-[#8B7BAB] tracking-widest uppercase">
+              <div className="px-4 py-2 font-mono text-[9px] text-ink-dim tracking-widest uppercase">
                 {chapter.title}
               </div>
               {chapter.lessons.map((l) => {
@@ -438,19 +438,19 @@ export default function ReaderPage() {
                     onClick={() => setActiveLesson(l.slug)}
                     className={`w-full text-left flex items-start gap-3 px-4 py-2.5 border-l-[3px] transition-all ${
                       isActive
-                        ? "border-[#D4860A] bg-[#F5F3FF]"
-                        : "border-transparent hover:bg-[#F5F3FF]/60"
+                        ? "border-gold bg-forest-surface"
+                        : "border-transparent hover:bg-forest-surface/60"
                     }`}
                   >
                     <div
                       className={`mt-0.5 w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center text-[10px] ${
                         isDone
-                          ? "bg-[#1A7A4A] text-white"
+                          ? "bg-forest text-white"
                           : isActive
-                          ? "bg-[#D4860A] text-white"
+                          ? "bg-gold text-white"
                           : isAccessible
-                          ? "border-2 border-[rgba(124,58,237,0.25)] text-[#8B7BAB]"
-                          : "bg-[#EDE9FF] text-[#8B7BAB]"
+                          ? "border-2 border-hairline text-ink-dim"
+                          : "bg-hairline text-ink-dim"
                       }`}
                     >
                       {isDone ? "✓" : isActive ? "▶" : isAccessible ? "" : "🔒"}
@@ -458,12 +458,12 @@ export default function ReaderPage() {
                     <div className="flex-1 min-w-0">
                       <div
                         className={`text-[13px] leading-snug ${
-                          isActive ? "text-[#1C0F3F] font-medium" : isDone ? "text-[#8B7BAB]" : "text-[#4B3F6B]"
+                          isActive ? "text-ink font-medium" : isDone ? "text-ink-dim" : "text-ink-dim"
                         }`}
                       >
                         {l.title}
                       </div>
-                      <div className="font-mono text-[10px] text-[#8B7BAB] mt-0.5">{l.duration}</div>
+                      <div className="font-mono text-[10px] text-ink-dim mt-0.5">{l.duration}</div>
                     </div>
                   </button>
                 );
@@ -473,14 +473,14 @@ export default function ReaderPage() {
         </div>
 
         {/* Subscribe card */}
-        <div className="p-4 border-t border-[rgba(124,58,237,0.12)] bg-[#F5F3FF]">
-          <div className="font-mono text-[10px] text-[#8B7BAB] tracking-widest uppercase mb-2">Full Access</div>
-          <div className="font-mono text-[13px] text-[#4B3F6B] mb-3">
+        <div className="p-4 border-t border-hairline bg-forest-surface">
+          <div className="font-mono text-[10px] text-ink-dim tracking-widest uppercase mb-2">Full Access</div>
+          <div className="font-mono text-[13px] text-ink-dim mb-3">
             Subscribe once. Access all courses.
           </div>
           <Link
             href="/pricing"
-            className="block w-full text-center bg-[#D4860A] hover:bg-[#F0A020] text-white rounded-lg py-2.5 text-[13px] font-medium transition-colors"
+            className="block w-full text-center bg-forest hover:bg-forest-dark text-white rounded-lg py-2.5 text-[13px] font-medium transition-colors"
           >
             View plans →
           </Link>
@@ -499,11 +499,11 @@ export default function ReaderPage() {
       <div className="flex-1 flex flex-col min-w-0 h-full">
 
         {/* Top bar */}
-        <div className="flex-shrink-0 flex items-center justify-between px-5 py-3 bg-white border-b border-[rgba(124,58,237,0.15)]">
+        <div className="flex-shrink-0 flex items-center justify-between px-5 py-3 bg-panel border-b border-hairline">
           <div className="flex items-center gap-4">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="text-[#4B3F6B] hover:text-[#1C0F3F] transition-colors"
+              className="text-ink-dim hover:text-ink transition-colors"
               aria-label="Toggle sidebar"
             >
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -511,16 +511,16 @@ export default function ReaderPage() {
               </svg>
             </button>
             <div className="flex items-center gap-2">
-              <div className="h-1.5 w-20 bg-[#EDE9FF] rounded-full overflow-hidden">
+              <div className="h-1.5 w-20 bg-hairline rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-[#D4860A] rounded-full transition-all"
+                  className="h-full bg-gold rounded-full transition-all"
                   style={{ width: `${progressPct}%` }}
                 />
               </div>
-              <span className="font-mono text-[11px] text-[#8B7BAB]">{progressPct}% complete</span>
+              <span className="font-mono text-[11px] text-ink-dim">{progressPct}% complete</span>
             </div>
           </div>
-          <span className="font-mono text-[12px] text-[#1C0F3F] hidden sm:block">The Capital Gains</span>
+          <span className="font-mono text-[12px] text-ink hidden sm:block">The Capital Gains</span>
         </div>
 
         {/* Scrollable content area */}
@@ -528,24 +528,24 @@ export default function ReaderPage() {
           {isLocked ? (
             <LockedLesson isLoggedIn={isLoggedIn} reason={lockReason ?? "needs-subscription"} />
           ) : loading ? (
-            <div className="flex items-center justify-center py-24 font-mono text-[13px] text-[#8B7BAB]">
+            <div className="flex items-center justify-center py-24 font-mono text-[13px] text-ink-dim">
               Loading lesson...
             </div>
           ) : lesson ? (
             <div className="max-w-[720px] mx-auto px-8 py-12">
               {/* Disclaimer */}
-              <div className="font-mono text-[11px] text-[#8B7BAB] mb-6">
+              <div className="font-mono text-[11px] text-ink-dim mb-6">
                 Educational content only · Not investment advice
               </div>
 
               {/* Lesson header */}
-              <h1 className="text-[30px] font-bold text-[#1C0F3F] leading-[1.1] mb-3">
+              <h1 className="text-[30px] font-bold text-ink leading-[1.1] mb-3">
                 {lesson.title}
               </h1>
-              <div className="flex items-center gap-3 mb-8 pb-6 border-b border-[rgba(124,58,237,0.12)]">
-                <span className="font-mono text-[12px] text-[#8B7BAB]">{lesson.duration} read</span>
+              <div className="flex items-center gap-3 mb-8 pb-6 border-b border-hairline">
+                <span className="font-mono text-[12px] text-ink-dim">{lesson.duration} read</span>
                 {lesson.isFree && (
-                  <span className="font-mono text-[10px] text-[#1A7A4A] bg-[#E8F5EE] rounded px-2 py-0.5">
+                  <span className="font-mono text-[10px] text-forest bg-forest-surface rounded px-2 py-0.5">
                     Free preview
                   </span>
                 )}
@@ -557,11 +557,11 @@ export default function ReaderPage() {
               </div>
 
               {/* Nav footer */}
-              <div className="flex items-center justify-between mt-12 pt-6 border-t border-[rgba(124,58,237,0.12)]">
+              <div className="flex items-center justify-between mt-12 pt-6 border-t border-hairline">
                 {prevLesson ? (
                   <button
                     onClick={() => setActiveLesson(prevLesson.slug)}
-                    className="font-mono text-[13px] text-[#4B3F6B] hover:text-[#1C0F3F] transition-colors"
+                    className="font-mono text-[13px] text-ink-dim hover:text-ink transition-colors"
                   >
                     ← {prevLesson.title}
                   </button>
@@ -571,14 +571,14 @@ export default function ReaderPage() {
                 {nextLesson ? (
                   <button
                     onClick={markCompleteAndNext}
-                    className="bg-[#D4860A] hover:bg-[#F0A020] text-white rounded-lg px-6 py-2.5 font-mono text-[13px] font-medium transition-colors"
+                    className="bg-forest hover:bg-forest-dark text-white rounded-lg px-6 py-2.5 font-mono text-[13px] font-medium transition-colors"
                   >
                     Next: {nextLesson.title} →
                   </button>
                 ) : (
                   <button
                     onClick={markFinalComplete}
-                    className="bg-[#1A7A4A] hover:bg-[#15623C] text-white rounded-lg px-6 py-2.5 font-mono text-[13px] font-medium transition-colors"
+                    className="bg-forest hover:bg-forest-dark text-white rounded-lg px-6 py-2.5 font-mono text-[13px] font-medium transition-colors"
                   >
                     Mark complete ✓
                   </button>
@@ -587,8 +587,8 @@ export default function ReaderPage() {
             </div>
           ) : (
             <div className="max-w-[720px] mx-auto px-8 py-12">
-              <div className="font-mono text-[11px] text-[#8B7BAB] mb-6">Educational content only · Not investment advice</div>
-              <div className="font-mono text-[12px] text-[#8B7BAB]">Content coming soon for this lesson.</div>
+              <div className="font-mono text-[11px] text-ink-dim mb-6">Educational content only · Not investment advice</div>
+              <div className="font-mono text-[12px] text-ink-dim">Content coming soon for this lesson.</div>
             </div>
           )}
         </div>

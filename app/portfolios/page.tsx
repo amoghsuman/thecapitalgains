@@ -10,12 +10,12 @@ const portfolios = [
     stats: [
       { label: "HORIZON", val: "5 yrs+", color: "" },
       { label: "STOCKS", val: "10", color: "" },
-      { label: "RISK", val: "Moderate", color: "text-[#1A7A4A]" },
+      { label: "RISK", val: "Moderate", color: "text-forest" },
       { label: "REBALANCE", val: "Quarterly", color: "" },
     ],
     bars: [
-      { label: "Large Cap", pct: 80, color: "bg-[#1C0F3F]" },
-      { label: "Mid Cap", pct: 20, color: "bg-[#D4860A]" },
+      { label: "Large Cap", pct: 80, color: "bg-forest" },
+      { label: "Mid Cap", pct: 20, color: "bg-gold" },
     ],
     holdings: [
       { name: "RELIANCE", sector: "Energy", weight: "18%" },
@@ -31,12 +31,12 @@ const portfolios = [
     stats: [
       { label: "HORIZON", val: "3 yrs+", color: "" },
       { label: "STOCKS", val: "8", color: "" },
-      { label: "RISK", val: "Low", color: "text-[#1A7A4A]" },
+      { label: "RISK", val: "Low", color: "text-forest" },
       { label: "REBALANCE", val: "Half-yearly", color: "" },
     ],
     bars: [
-      { label: "Dividend Stocks", pct: 70, color: "bg-[#1C0F3F]" },
-      { label: "REITs/Bonds", pct: 30, color: "bg-[#D4860A]" },
+      { label: "Dividend Stocks", pct: 70, color: "bg-forest" },
+      { label: "REITs/Bonds", pct: 30, color: "bg-gold" },
     ],
     holdings: [
       { name: "ITC", sector: "FMCG", weight: "20%" },
@@ -52,12 +52,12 @@ const portfolios = [
     stats: [
       { label: "HORIZON", val: "Short-term", color: "" },
       { label: "STOCKS", val: "12", color: "" },
-      { label: "RISK", val: "High", color: "text-[#D4860A]" },
+      { label: "RISK", val: "High", color: "text-gold-text" },
       { label: "REBALANCE", val: "Weekly", color: "" },
     ],
     bars: [
-      { label: "Large Cap F&O", pct: 60, color: "bg-[#1C0F3F]" },
-      { label: "Mid Cap F&O", pct: 40, color: "bg-[#D4860A]" },
+      { label: "Large Cap F&O", pct: 60, color: "bg-forest" },
+      { label: "Mid Cap F&O", pct: 40, color: "bg-gold" },
     ],
     holdings: [
       { name: "NIFTY50", sector: "Index", weight: "25%" },
@@ -89,18 +89,18 @@ export default function PortfoliosPage() {
 
       {/* ── HERO ── */}
       <section className="site-container pt-32 pb-10">
-        <div className="font-mono text-[11px] text-[#C4B5FD] tracking-widest uppercase mb-2">
+        <div className="font-mono text-[11px] text-gold-text tracking-widest uppercase mb-2">
           Model Portfolios
         </div>
-        <h1 className="text-5xl font-bold text-white leading-[1.1] mb-3">
+        <h1 className="text-5xl font-bold text-ink leading-[1.1] mb-3">
           See how a portfolio is built
         </h1>
-        <p className="text-[16px] text-[#C7BEE6] max-w-2xl mb-6">
+        <p className="text-[16px] text-ink-dim max-w-2xl mb-6">
           Three illustrative portfolios maintained for educational purposes, showing how allocation, selection, and rebalancing decisions are made in practice.
         </p>
-        <div className="inline-flex items-center gap-2 bg-[#FDF3E3] border border-[rgba(212,134,10,0.25)] rounded-lg px-4 py-2.5">
-          <span className="text-[#D4860A] text-[13px]">⚠</span>
-          <span className="font-mono text-[11px] text-[#D4860A] tracking-wide">
+        <div className="inline-flex items-center gap-2 bg-gold-surface border border-gold rounded-lg px-4 py-2.5">
+          <span className="text-gold-text text-[13px]">⚠</span>
+          <span className="font-mono text-[11px] text-gold-text tracking-wide">
             Educational illustrations only · Not investment advice · Do not invest based on this content
           </span>
         </div>
@@ -112,27 +112,27 @@ export default function PortfoliosPage() {
           {portfolios.map((p) => (
             <div
               key={p.tag}
-              className="bg-white border border-[rgba(124,58,237,0.15)] rounded-2xl p-6"
+              className="bg-panel border border-hairline rounded-2xl p-6"
             >
               {/* Tag + name */}
-              <div className="font-mono text-[10px] text-[#8B7BAB] tracking-widest mb-1">
+              <div className="font-mono text-[10px] text-ink-dim tracking-widest mb-1">
                 {p.tag}
               </div>
-              <div className="text-[18px] text-[#1C0F3F] mb-3 leading-snug">
+              <div className="text-[18px] text-ink mb-3 leading-snug">
                 {p.name}
               </div>
-              <p className="text-[13px] text-[#4B3F6B] leading-relaxed mb-5">
+              <p className="text-[13px] text-ink-dim leading-relaxed mb-5">
                 {p.desc}
               </p>
 
               {/* Stats grid */}
               <div className="grid grid-cols-2 gap-2 mb-5">
                 {p.stats.map((s) => (
-                  <div key={s.label} className="bg-[#F5F3FF] rounded-lg p-3">
-                    <div className="font-mono text-[9px] text-[#8B7BAB] tracking-widest mb-1">
+                  <div key={s.label} className="bg-forest-surface rounded-lg p-3">
+                    <div className="font-mono text-[9px] text-ink-dim tracking-widest mb-1">
                       {s.label}
                     </div>
-                    <div className={`font-mono text-[13px] font-medium text-[#1C0F3F] ${s.color}`}>
+                    <div className={`font-mono text-[13px] font-medium text-ink ${s.color}`}>
                       {s.val}
                     </div>
                   </div>
@@ -141,17 +141,17 @@ export default function PortfoliosPage() {
 
               {/* Allocation bars */}
               <div className="mb-5">
-                <div className="font-mono text-[10px] text-[#8B7BAB] tracking-widest mb-3">
+                <div className="font-mono text-[10px] text-ink-dim tracking-widest mb-3">
                   ALLOCATION
                 </div>
                 <div className="flex flex-col gap-2">
                   {p.bars.map((bar) => (
                     <div key={bar.label}>
                       <div className="flex justify-between mb-1">
-                        <span className="text-[12px] text-[#4B3F6B]">{bar.label}</span>
-                        <span className="font-mono text-[11px] text-[#8B7BAB]">{bar.pct}%</span>
+                        <span className="text-[12px] text-ink-dim">{bar.label}</span>
+                        <span className="font-mono text-[11px] text-ink-dim">{bar.pct}%</span>
                       </div>
-                      <div className="h-1.5 bg-[#EDE9FF] rounded-full overflow-hidden">
+                      <div className="h-1.5 bg-hairline rounded-full overflow-hidden">
                         <div
                           className={`h-full rounded-full ${bar.color}`}
                           style={{ width: `${bar.pct}%` }}
@@ -164,7 +164,7 @@ export default function PortfoliosPage() {
 
               {/* Sample holdings */}
               <div>
-                <div className="font-mono text-[10px] text-[#8B7BAB] tracking-widest mb-3">
+                <div className="font-mono text-[10px] text-ink-dim tracking-widest mb-3">
                   SAMPLE HOLDINGS
                 </div>
                 <div className="flex flex-col gap-0">
@@ -172,22 +172,22 @@ export default function PortfoliosPage() {
                     <div
                       key={h.name}
                       className={`flex justify-between items-center px-3 py-2 ${
-                        i % 2 === 0 ? "bg-[#F5F3FF]" : "bg-white"
+                        i % 2 === 0 ? "bg-forest-surface" : "bg-panel"
                       } ${i === 0 ? "rounded-t-lg" : ""} ${
                         i === p.holdings.length - 1 ? "rounded-b-lg" : ""
                       }`}
                     >
                       <div>
-                        <div className="font-mono text-[12px] font-medium text-[#1C0F3F]">
+                        <div className="font-mono text-[12px] font-medium text-ink">
                           {h.name}
                         </div>
-                        <div className="text-[11px] text-[#8B7BAB]">{h.sector}</div>
+                        <div className="text-[11px] text-ink-dim">{h.sector}</div>
                       </div>
-                      <div className="font-mono text-[12px] text-[#4B3F6B]">{h.weight}</div>
+                      <div className="font-mono text-[12px] text-ink-dim">{h.weight}</div>
                     </div>
                   ))}
                 </div>
-                <div className="font-mono text-[9px] text-[#8B7BAB] mt-2">
+                <div className="font-mono text-[9px] text-ink-dim mt-2">
                   * Illustrative only. Not a recommendation.
                 </div>
               </div>
@@ -198,7 +198,7 @@ export default function PortfoliosPage() {
 
       {/* ── HOW WE MAINTAIN THESE ── */}
       <section className="site-container mt-16">
-        <div className="bg-[#1C0F3F] rounded-2xl px-10 py-10">
+        <div className="bg-forest rounded-2xl px-10 py-10">
           <div className="font-mono text-[11px] text-[rgba(255,255,255,0.4)] tracking-widest uppercase mb-3">
             Methodology
           </div>
@@ -223,21 +223,21 @@ export default function PortfoliosPage() {
 
       {/* ── SUBSCRIPTION CTA ── */}
       <section className="site-container mt-12">
-        <div className="bg-[#FDF3E3] border border-[rgba(212,134,10,0.2)] rounded-2xl px-10 py-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+        <div className="bg-gold-surface border border-gold rounded-2xl px-10 py-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <div>
-            <div className="font-mono text-[11px] text-[#D4860A] tracking-widest uppercase mb-2">
+            <div className="font-mono text-[11px] text-gold-text tracking-widest uppercase mb-2">
               Subscriber Access
             </div>
-            <h3 className="text-[24px] font-bold text-[#1C0F3F] mb-2">
+            <h3 className="text-[24px] font-bold text-ink mb-2">
               Subscribe to follow along
             </h3>
-            <p className="text-[15px] text-[#4B3F6B] max-w-md">
+            <p className="text-[15px] text-ink-dim max-w-md">
               Track how these portfolios evolve month by month. Trader Pro and above.
             </p>
           </div>
           <Link
             href="/pricing"
-            className="bg-[#D4860A] hover:bg-[#F0A020] text-white rounded-lg px-8 py-3 text-[14px] font-medium transition-colors whitespace-nowrap flex-shrink-0"
+            className="bg-forest hover:bg-forest-dark text-white rounded-lg px-8 py-3 text-[14px] font-medium transition-colors whitespace-nowrap flex-shrink-0"
           >
             Go Pro →
           </Link>
@@ -246,7 +246,7 @@ export default function PortfoliosPage() {
 
       {/* ── LEGAL DISCLAIMER ── */}
       <section className="site-container pb-10 mt-8">
-        <div className="bg-white border border-[rgba(124,58,237,0.12)] rounded-lg px-6 py-5 font-mono text-[10px] text-[#8B7BAB] leading-relaxed">
+        <div className="bg-panel border border-hairline rounded-lg px-6 py-5 font-mono text-[10px] text-ink-dim leading-relaxed">
           These model portfolios are maintained purely for educational purposes to illustrate portfolio construction principles. Stock names mentioned are for illustrative purposes only and do not constitute buy, sell, or hold recommendations. They do not constitute investment advice or SEBI-registered research. Past illustrative performance does not guarantee future results. Do not invest based on this content without consulting a SEBI-registered financial advisor or research analyst.
         </div>
       </section>

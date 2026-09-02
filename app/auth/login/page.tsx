@@ -43,22 +43,22 @@ export default function LoginPage() {
 
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="font-bold text-[18px] text-white">
+          <div className="font-bold text-[18px] text-ink">
             The Capital Gains
           </div>
         </div>
 
-        <div className="bg-white border border-[rgba(124,58,237,0.15)] rounded-2xl p-8 shadow-[0_4px_32px_rgba(124,58,237,0.08)]">
-          <h1 className="text-[28px] font-bold text-[#1C0F3F] mb-1">
+        <div className="bg-panel border border-hairline rounded-2xl p-8 shadow-[0_4px_32px_rgba(27,58,43,0.08)]">
+          <h1 className="text-[28px] font-bold text-ink mb-1">
             Welcome back
           </h1>
-          <p className="text-[14px] text-[#4B3F6B] mb-6">
+          <p className="text-[14px] text-ink-dim mb-6">
             Sign in to access your courses and progress
           </p>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <div>
-              <label className="font-mono text-[11px] text-[#8B7BAB] tracking-widest uppercase block mb-1.5">
+              <label className="font-mono text-[11px] text-ink-dim tracking-widest uppercase block mb-1.5">
                 Email
               </label>
               <input
@@ -67,12 +67,12 @@ export default function LoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your@email.com"
                 required
-                className="w-full bg-[#FFFFFF] border border-[rgba(124,58,237,0.20)] rounded-lg px-4 py-3 text-[14px] text-[#1C0F3F] placeholder:text-[#8B7BAB] outline-none focus:border-[#1C0F3F] transition-colors"
+                className="w-full bg-panel border border-hairline rounded-lg px-4 py-3 text-[14px] text-ink placeholder:text-ink-dim outline-none focus:border-forest transition-colors"
               />
             </div>
 
             <div>
-              <label className="font-mono text-[11px] text-[#8B7BAB] tracking-widest uppercase block mb-1.5">
+              <label className="font-mono text-[11px] text-ink-dim tracking-widest uppercase block mb-1.5">
                 Password
               </label>
               <input
@@ -81,12 +81,12 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
                 required
-                className="w-full bg-[#FFFFFF] border border-[rgba(124,58,237,0.20)] rounded-lg px-4 py-3 text-[14px] text-[#1C0F3F] placeholder:text-[#8B7BAB] outline-none focus:border-[#1C0F3F] transition-colors"
+                className="w-full bg-panel border border-hairline rounded-lg px-4 py-3 text-[14px] text-ink placeholder:text-ink-dim outline-none focus:border-forest transition-colors"
               />
             </div>
 
             {error && (
-              <div className="bg-[#FDF3E3] border border-[rgba(212,134,10,0.2)] rounded-lg px-4 py-3 text-[13px] text-[#D4860A]">
+              <div className="bg-amber-50 border border-amber-200 rounded-lg px-4 py-3 text-[13px] text-amber-800">
                 {error}
               </div>
             )}
@@ -94,7 +94,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-[#D4860A] hover:bg-[#F0A020] disabled:bg-[#D4860A]/60 text-white rounded-lg py-3 text-[14px] font-medium transition-colors mt-1"
+              className="w-full bg-forest hover:bg-forest-dark disabled:bg-forest/60 text-white rounded-lg py-3 text-[14px] font-medium transition-colors mt-1"
             >
               {loading ? 'Signing in…' : 'Sign in'}
             </button>
@@ -102,15 +102,15 @@ export default function LoginPage() {
 
           {/* Divider */}
           <div className="flex items-center gap-3 my-5">
-            <div className="flex-1 h-px bg-[rgba(124,58,237,0.15)]" />
-            <span className="font-mono text-[11px] text-[#8B7BAB]">or</span>
-            <div className="flex-1 h-px bg-[rgba(124,58,237,0.15)]" />
+            <div className="flex-1 h-px bg-hairline" />
+            <span className="font-mono text-[11px] text-ink-dim">or</span>
+            <div className="flex-1 h-px bg-hairline" />
           </div>
 
           {/* Google */}
           <button
             onClick={handleGoogleSignIn}
-            className="w-full flex items-center justify-center gap-3 bg-white border border-[rgba(124,58,237,0.20)] hover:border-[rgba(124,58,237,0.35)] rounded-lg py-3 text-[14px] text-[#1C0F3F] font-medium transition-colors"
+            className="w-full flex items-center justify-center gap-3 bg-panel border border-hairline hover:border-ink-dim rounded-lg py-3 text-[14px] text-ink font-medium transition-colors"
           >
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
               <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>
@@ -122,9 +122,9 @@ export default function LoginPage() {
           </button>
         </div>
 
-        <p className="text-center text-[13px] text-[#C7BEE6] mt-5">
+        <p className="text-center text-[13px] text-ink-dim mt-5">
           Don&apos;t have an account?{' '}
-          <Link href="/auth/signup" className="text-[#D4860A] hover:text-[#F0A020] font-medium transition-colors">
+          <Link href="/auth/signup" className="text-gold hover:text-gold-dark font-medium transition-colors">
             Sign up
           </Link>
         </p>
