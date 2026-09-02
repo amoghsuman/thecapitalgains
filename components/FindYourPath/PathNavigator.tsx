@@ -47,8 +47,8 @@ function HarveyBall({ value, id, size = 16 }: { value: HBValue; id: string; size
       <defs>
         <clipPath id={clipId}>{clipRect}</clipPath>
       </defs>
-      <circle cx={8} cy={8} r={7} stroke="#7C3AED" strokeWidth="1.2" fill="none" />
-      <circle cx={8} cy={8} r={7} fill="#7C3AED" clipPath={`url(#${clipId})`} />
+      <circle cx={8} cy={8} r={7} stroke="#1B3A2B" strokeWidth="1.2" fill="none" />
+      <circle cx={8} cy={8} r={7} fill="#1B3A2B" clipPath={`url(#${clipId})`} />
     </svg>
   );
 }
@@ -65,7 +65,7 @@ const HB_LEGEND: { value: HBValue; label: string }[] = [
 // ─── Persona icons ────────────────────────────────────────────────────────────
 
 function PersonaIcon({ personaKey, selected }: { personaKey: string; selected: boolean }) {
-  const color = selected ? "#FFFFFF" : "#6D28D9";
+  const color = selected ? "#FFFFFF" : "#1B3A2B";
   const props = {
     width: 18, height: 18, viewBox: "0 0 24 24", fill: "none" as const,
     stroke: color, strokeWidth: 1.8, strokeLinecap: "round" as const, strokeLinejoin: "round" as const,
@@ -224,26 +224,26 @@ export function PathNavigator() {
 
       {/* Section heading */}
       <div style={{ maxWidth: 1760, margin: "0 auto 20px" }}>
-        <p style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 600, color: "#C4B5FD", marginBottom: 8 }}>
+        <p style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 600, color: "var(--gold)", marginBottom: 8 }}>
           FIND YOUR PATH
         </p>
-        <h2 style={{ fontSize: 28, fontWeight: 700, color: "#FFFFFF", marginBottom: 6 }}>
+        <h2 style={{ fontSize: 28, fontWeight: 700, color: "var(--ink)", marginBottom: 6 }}>
           Where do you start?
         </h2>
-        <p style={{ fontSize: 14, color: "#C7BEE6" }}>
+        <p style={{ fontSize: 14, color: "var(--ink-dim)" }}>
           Select who you are, then your goal. We&apos;ll map your learning path.
         </p>
       </div>
 
       {/* Harvey Ball legend */}
       <div style={{ maxWidth: 1760, margin: "0 auto 16px", display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap" as const }}>
-        <span style={{ fontSize: 13, fontWeight: 700, color: "#DDD6FE", marginRight: 4 }}>
+        <span style={{ fontSize: 13, fontWeight: 700, color: "var(--ink-dim)", marginRight: 4 }}>
           Harvey Balls
         </span>
         {HB_LEGEND.map(({ value, label }) => (
           <span key={value} style={{ display: "flex", alignItems: "center", gap: 6 }}>
             <HarveyBall value={value} id={`legend-${value}`} size={14} />
-            <span style={{ fontSize: 13, color: "#DDD6FE" }}>{label}</span>
+            <span style={{ fontSize: 13, color: "var(--ink-dim)" }}>{label}</span>
           </span>
         ))}
       </div>
@@ -256,10 +256,10 @@ export function PathNavigator() {
             position: "relative",
             display: "grid",
             gridTemplateColumns: "200px 220px 1fr",
-            border: "1.5px solid #DDD6FE",
+            border: "1.5px solid var(--hairline)",
             borderRadius: 12,
             overflow: "hidden",
-            background: "#FFFFFF",
+            background: "var(--panel)",
             minWidth: 640,
           }}
           className="!grid-cols-1 md:!grid-cols-[200px_220px_1fr]"
@@ -279,9 +279,9 @@ export function PathNavigator() {
             >
               <defs>
                 <linearGradient id="tcgPathGrad" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0" stopColor="#7C3AED" />
-                  <stop offset="0.5" stopColor="#0D9488" />
-                  <stop offset="1" stopColor="#1E1B4B" />
+                  <stop offset="0" stopColor="#1B3A2B" />
+                  <stop offset="0.5" stopColor="#A9822F" />
+                  <stop offset="1" stopColor="#98A6A0" />
                 </linearGradient>
               </defs>
               <path
@@ -304,7 +304,7 @@ export function PathNavigator() {
                   height={7}
                   rx={1}
                   fill="#FFFFFF"
-                  stroke={i === 0 ? "#7C3AED" : i === connector.nodes.length - 1 ? "#1E1B4B" : "#0D9488"}
+                  stroke={i === 0 ? "#1B3A2B" : i === connector.nodes.length - 1 ? "#98A6A0" : "#A9822F"}
                   strokeWidth="2"
                 />
               ))}
@@ -312,12 +312,12 @@ export function PathNavigator() {
           )}
 
           {/* ─────────────── Column 1: Who are you? ─────────────── */}
-          <div style={{ background: "#FFFFFF", borderRight: "1px solid #EDE9FE", display: "flex", flexDirection: "column" }}>
+          <div style={{ background: "var(--panel)", borderRight: "1px solid var(--hairline)", display: "flex", flexDirection: "column" }}>
             <div style={{
               padding: "16px 16px 12px",
               fontSize: 11, fontWeight: 700, letterSpacing: "0.1em",
-              textTransform: "uppercase" as const, color: "#7C3AED",
-              borderBottom: "1px solid #EDE9FE",
+              textTransform: "uppercase" as const, color: "var(--forest)",
+              borderBottom: "1px solid var(--hairline)",
               flexShrink: 0,
             }}>
               WHO ARE YOU
@@ -334,10 +334,10 @@ export function PathNavigator() {
                       display: "flex", alignItems: "center", gap: 10,
                       padding: "10px 14px",
                       borderRadius: 10,
-                      background: isActive ? "#7C3AED" : "#EDE9FE",
+                      background: isActive ? "var(--forest)" : "var(--forest-surface)",
                       fontSize: 13,
                       fontWeight: isActive ? 600 : 500,
-                      color: isActive ? "#FFFFFF" : "#1E1B4B",
+                      color: isActive ? "#FFFFFF" : "var(--ink)",
                       cursor: "pointer",
                       transition: "all 150ms",
                     }}
@@ -353,19 +353,19 @@ export function PathNavigator() {
           </div>
 
           {/* ─────────────── Column 2: Your goal ─────────────── */}
-          <div style={{ background: "#FFFFFF", borderRight: "1px solid #EDE9FE", display: "flex", flexDirection: "column" }}>
+          <div style={{ background: "var(--panel)", borderRight: "1px solid var(--hairline)", display: "flex", flexDirection: "column" }}>
             <div style={{
               padding: "16px 16px 12px",
               fontSize: 11, fontWeight: 700, letterSpacing: "0.1em",
-              textTransform: "uppercase" as const, color: "#0D9488",
-              borderBottom: "1px solid #EDE9FE",
+              textTransform: "uppercase" as const, color: "var(--gold)",
+              borderBottom: "1px solid var(--hairline)",
               flexShrink: 0,
             }}>
               YOUR GOAL
             </div>
 
             {!activePersona ? (
-              <div style={{ padding: "40px 16px", textAlign: "center" as const, fontSize: 13, color: "#9CA3AF" }}>
+              <div style={{ padding: "40px 16px", textAlign: "center" as const, fontSize: 13, color: "var(--ink-dim)" }}>
                 ← Select who you are
               </div>
             ) : (
@@ -387,31 +387,31 @@ export function PathNavigator() {
           </div>
 
           {/* ─────────────── Column 3: Your learning path ─────────────── */}
-          <div style={{ background: "#FFFFFF", display: "flex", flexDirection: "column" }}>
+          <div style={{ background: "var(--panel)", display: "flex", flexDirection: "column" }}>
             <div style={{
               padding: "16px 16px 12px",
               fontSize: 11, fontWeight: 700, letterSpacing: "0.1em",
-              textTransform: "uppercase" as const, color: "#1E1B4B",
-              borderBottom: "1px solid #EDE9FE",
+              textTransform: "uppercase" as const, color: "#98A6A0",
+              borderBottom: "1px solid var(--hairline)",
               flexShrink: 0,
             }}>
               YOUR LEARNING PATH
             </div>
 
             {!activeGoal ? (
-              <div style={{ padding: "40px 16px", textAlign: "center" as const, fontSize: 13, color: "#9CA3AF" }}>
+              <div style={{ padding: "40px 16px", textAlign: "center" as const, fontSize: 13, color: "var(--ink-dim)" }}>
                 ← Select your goal to see your path
               </div>
             ) : activeGoal.courses.length === 0 ? (
               /* HNI / no-courses case */
               <div style={{ padding: 16, flex: 1 }}>
                 <div style={{
-                  borderLeft: "3px solid #0D9488",
-                  background: "#F0FDFA",
+                  borderLeft: "3px solid var(--gold)",
+                  background: "var(--gold-surface)",
                   borderRadius: 8,
                   padding: 16,
                   fontSize: 13,
-                  color: "#0D9488",
+                  color: "var(--gold-text)",
                 }}>
                   At your level, courses are secondary. Your path starts with research.
                 </div>
@@ -424,10 +424,10 @@ export function PathNavigator() {
                   fontSize: 11,
                   letterSpacing: "0.12em",
                   textTransform: "uppercase" as const,
-                  color: "#0D9488",
+                  color: "var(--gold)",
                   fontWeight: 600,
                   paddingBottom: 8,
-                  borderBottom: "1px solid #0D9488",
+                  borderBottom: "1px solid var(--gold)",
                   marginBottom: 16,
                   display: "block",
                 }}>
@@ -481,10 +481,10 @@ function GoalItem({
 }) {
   const [hovered, setHovered] = useState(false);
 
-  const bg     = isActive ? "#0D9488" : hovered ? "#F0FDFA" : "#FFFFFF";
-  const border = isActive ? "#0D9488" : hovered ? "#99F6E4" : "#E5E7EB";
-  const color  = isActive ? "#FFFFFF" : "#374151";
-  const iconC  = isActive ? "#FFFFFF" : "#9CA3AF";
+  const bg     = isActive ? "#A9822F" : hovered ? "#F6F3EA" : "#FFFFFF";
+  const border = isActive ? "#A9822F" : hovered ? "#A9822F" : "#DFD9C8";
+  const color  = isActive ? "#FFFFFF" : "#1A1A18";
+  const iconC  = isActive ? "#FFFFFF" : "#6E6A5F";
 
   return (
     <div
@@ -535,7 +535,7 @@ function CourseCard({
       style={{
         display: "flex", flexDirection: "column",
         background: "#FFFFFF",
-        border: `1px solid ${hovered ? "#D1D5DB" : "#E5E7EB"}`,
+        border: `1px solid ${hovered ? "#6E6A5F" : "#DFD9C8"}`,
         borderRadius: 8,
         padding: 16,
         textDecoration: "none",
@@ -547,21 +547,21 @@ function CourseCard({
       <div style={{ display: "flex", alignItems: "flex-start", gap: 8, marginBottom: 8 }}>
         <span style={{
           width: 20, height: 20, borderRadius: "50%",
-          background: index === 0 ? "#0D9488" : "#EDE9FE",
-          color: index === 0 ? "#FFFFFF" : "#7C3AED",
+          background: index === 0 ? "#A9822F" : "#EDEFEE",
+          color: index === 0 ? "#FFFFFF" : "#1B3A2B",
           fontSize: 11, fontWeight: 600,
           display: "flex", alignItems: "center", justifyContent: "center",
           flexShrink: 0, marginTop: 1,
         }}>
           {index + 1}
         </span>
-        <span style={{ fontSize: 14, fontWeight: 600, color: "#111827", lineHeight: 1.4, flex: 1 }}>
+        <span style={{ fontSize: 14, fontWeight: 600, color: "#1A1A18", lineHeight: 1.4, flex: 1 }}>
           {course.title}
         </span>
       </div>
 
       {/* Description */}
-      <p style={{ fontSize: 13, color: "#6B7280", lineHeight: 1.5, flex: 1, marginBottom: 12 }}>
+      <p style={{ fontSize: 13, color: "#6E6A5F", lineHeight: 1.5, flex: 1, marginBottom: 12 }}>
         {course.reason}
       </p>
 
@@ -571,7 +571,7 @@ function CourseCard({
           {/* Depth */}
           <span style={{ display: "flex", gap: 4, alignItems: "center" }}>
             <span style={{
-              background: "#EDE9FE", color: "#7C3AED",
+              background: "#EDEFEE", color: "#1B3A2B",
               fontSize: 10, fontWeight: 600, padding: "2px 6px", borderRadius: 4,
             }}>
               DEPTH
@@ -581,7 +581,7 @@ function CourseCard({
           {/* Priority */}
           <span style={{ display: "flex", gap: 4, alignItems: "center" }}>
             <span style={{
-              background: "#CCFBF1", color: "#0D9488",
+              background: "#F6F3EA", color: "#A9822F",
               fontSize: 10, fontWeight: 600, padding: "2px 6px", borderRadius: 4,
             }}>
               PRIORITY
@@ -598,9 +598,9 @@ function CourseCard({
 
 function SuggestedPlan({ goal }: { goal: Goal }) {
   return (
-    <p style={{ marginTop: 12, fontSize: 12, color: "#6B7280" }}>
+    <p style={{ marginTop: 12, fontSize: 12, color: "#6E6A5F" }}>
       Suggested plan based on your selection,{" "}
-      <Link href="/pricing" style={{ color: "#0D9488", textDecoration: "none" }}>
+      <Link href="/pricing" style={{ color: "#A9822F", textDecoration: "none" }}>
         see pricing →
       </Link>
     </p>

@@ -44,7 +44,7 @@ export default function Navbar() {
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-[rgba(22,3,58,0.55)] backdrop-blur-xl py-3"
+          ? "bg-[rgba(247,244,236,0.85)] backdrop-blur-xl py-3"
           : "bg-transparent py-6"
       }`}
     >
@@ -54,16 +54,16 @@ export default function Navbar() {
           href="/"
           className="flex items-center gap-2.5 group flex-shrink-0"
         >
-          <div className="w-2 h-2 rounded-full bg-violet-500 shadow-[0_0_10px_rgba(139,92,246,0.8)] group-hover:scale-125 transition-transform" />
+          <div className="w-2 h-2 rounded-full bg-forest shadow-[0_0_10px_rgba(27,58,43,0.8)] group-hover:scale-125 transition-transform" />
           <span className={`font-black text-sm tracking-[0.15em] transition-colors uppercase ${
-            useDarkNav ? "text-white" : "text-[#1C0F3F]"
+            useDarkNav ? "text-ink" : "text-ink"
           }`}>
             THE CAPITAL GAINS
           </span>
         </Link>
 
         {/* Desktop nav links - Fixed Pill Style */}
-        <div className="hidden lg:flex items-center p-1 bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.08)] rounded-full backdrop-blur-xl">
+        <div className="hidden lg:flex items-center p-1 bg-[rgba(26,26,24,0.04)] border border-hairline rounded-full backdrop-blur-xl">
           {[
             { label: "Courses", href: "/courses" },
             { label: "Portfolios", href: "/portfolios" },
@@ -77,10 +77,10 @@ export default function Navbar() {
                 href={item.href}
                 className={`px-6 py-2 text-[12px] font-bold tracking-wider rounded-full transition-all ${
                   isActive
-                    ? "bg-white text-[#1C0F3F] shadow-lg"
+                    ? "bg-panel text-ink shadow-lg"
                     : useDarkNav
-                      ? "text-slate-400 hover:text-white"
-                      : "text-slate-500 hover:text-[#1C0F3F]"
+                      ? "text-ink-dim hover:text-ink"
+                      : "text-ink-dim hover:text-ink"
                 }`}
               >
                 {item.label}
@@ -96,7 +96,7 @@ export default function Navbar() {
               <Link
                 href="/dashboard"
                 className={`text-[12px] font-bold tracking-widest uppercase transition-colors ${
-                  useDarkNav ? "text-slate-400 hover:text-white" : "text-slate-500 hover:text-[#1C0F3F]"
+                  useDarkNav ? "text-ink-dim hover:text-ink" : "text-ink-dim hover:text-ink"
                 }`}
               >
                 My Account
@@ -104,7 +104,7 @@ export default function Navbar() {
               <button
                 onClick={handleSignOut}
                 className={`text-[12px] font-bold tracking-widest uppercase transition-colors ${
-                  useDarkNav ? "text-slate-400 hover:text-white" : "text-slate-500 hover:text-[#1C0F3F]"
+                  useDarkNav ? "text-ink-dim hover:text-ink" : "text-ink-dim hover:text-ink"
                 }`}
               >
                 Sign Out
@@ -115,7 +115,7 @@ export default function Navbar() {
               <Link
                 href="/auth/login"
                 className={`text-[12px] font-bold tracking-widest uppercase transition-colors ${
-                  useDarkNav ? "text-slate-400 hover:text-white" : "text-slate-500 hover:text-[#1C0F3F]"
+                  useDarkNav ? "text-ink-dim hover:text-ink" : "text-ink-dim hover:text-ink"
                 }`}
               >
                 Sign In
@@ -129,9 +129,7 @@ export default function Navbar() {
 
         {/* Mobile hamburger */}
         <button
-          className={`lg:hidden transition-colors ${
-            useDarkNav ? "text-white" : "text-[#1C0F3F]"
-          }`}
+          className="lg:hidden transition-colors text-ink"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -146,11 +144,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className={`lg:hidden absolute top-full left-0 w-full border-t p-10 flex flex-col gap-6 shadow-2xl animate-in fade-in slide-in-from-top-4 duration-300 ${
-          useDarkNav 
-            ? "bg-[#0F0720] border-[rgba(255,255,255,0.05)]" 
-            : "bg-white border-slate-100"
-        }`}>
+        <div className="lg:hidden absolute top-full left-0 w-full border-t p-10 flex flex-col gap-6 shadow-2xl animate-in fade-in slide-in-from-top-4 duration-300 bg-panel border-hairline">
           {[
             { label: "Courses", href: "/courses" },
             { label: "Portfolios", href: "/portfolios" },
@@ -160,15 +154,13 @@ export default function Navbar() {
             <Link
               key={item.label}
               href={item.href}
-              className={`text-xl font-black tracking-tight ${
-                useDarkNav ? "text-white" : "text-[#1C0F3F]"
-              }`}
+              className="text-xl font-black tracking-tight text-ink"
               onClick={() => setMenuOpen(false)}
             >
               {item.label}
             </Link>
           ))}
-          <div className="grid grid-cols-2 gap-4 pt-6 border-t border-[rgba(255,255,255,0.05)]">
+          <div className="grid grid-cols-2 gap-4 pt-6 border-t border-hairline">
             {user ? (
               <>
                 <Link href="/dashboard" className="premium-button-outline text-center !py-3" onClick={() => setMenuOpen(false)}>My Account</Link>

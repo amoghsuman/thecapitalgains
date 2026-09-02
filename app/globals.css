@@ -9,23 +9,22 @@
      it here with a literal name — that shadows the loaded webfont and forces a
      system-font fallback. */
   --font-sans: var(--font-inter);
-  --dark: #1C0F3F;
-  --dark-light: #2D1B69;
-  --purple: #7C3AED;
-  --purple-light: #8B5CF6;
-  --amber: #D4860A;
-  --amber-light: #F0A020;
-  --amber-pale: #FDF3E3;
-  --bg: #FFFFFF;
-  --surface: #F5F3FF;
-  --surface2: #EDE9FF;
-  --text: #1C0F3F;
-  --text-muted: #4B3F6B;
-  --text-hint: #8B7BAB;
-  --green: #1A7A4A;
-  --green-pale: #E8F5EE;
-  --border: rgba(124,58,237,0.15);
-  --border-strong: rgba(124,58,237,0.25);
+  /* "Ivory Ledger" palette — see tailwind.config.ts for the canonical token
+     definitions. These CSS custom properties mirror the same values for
+     plain-CSS rules (below) that can't use Tailwind utility classes. */
+  --ivory: #F7F4EC;
+  --panel: #FFFFFF;
+  --forest: #1B3A2B;
+  --forest-dark: #173224;
+  --forest-tint: #98A6A0;
+  --forest-surface: #EDEFEE;
+  --gold: #A9822F;
+  --gold-dark: #8A6825;
+  --gold-text: #6E5620;
+  --gold-surface: #F6F3EA;
+  --ink: #1A1A18;
+  --ink-dim: #6E6A5F;
+  --hairline: #DFD9C8;
 }
 
 *, *::before, *::after {
@@ -64,20 +63,20 @@ html, body {
 
 html {
   scroll-behavior: smooth;
-  background: #0d0125;
+  background: var(--ivory);
 }
 
 body {
   font-family: var(--font-inter), system-ui, sans-serif;
-  background: #0d0125;
-  color: #1C0F3F;
+  background: var(--ivory);
+  color: var(--ink);
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-inter), system-ui, sans-serif;
-  color: #1C0F3F;
+  color: var(--ink);
 }
 
 p, li, span, div, a, button, input, textarea, label {
@@ -99,7 +98,7 @@ button, [role="button"], input[type="submit"], input[type="button"] {
 }
 
 .btn-primary {
-  background-color: #7C3AED;
+  background-color: var(--forest);
   color: white;
   border-radius: 8px;
   padding: 8px 20px;
@@ -110,21 +109,21 @@ button, [role="button"], input[type="submit"], input[type="button"] {
 }
 
 .btn-primary:hover {
-  background-color: #8B5CF6;
+  background-color: var(--forest-dark);
 }
 
 .btn-outline {
-  border: 1px solid rgba(124,58,237,0.25);
+  border: 1px solid var(--hairline);
   border-radius: 8px;
   padding: 8px 20px;
   font-size: 13px;
-  color: #1C0F3F;
+  color: var(--ink);
   cursor: pointer;
   transition: all 0.15s;
   background: transparent;
 }
 
 .btn-outline:hover {
-  border-color: #7C3AED;
-  color: #7C3AED;
+  border-color: var(--forest);
+  color: var(--forest);
 }

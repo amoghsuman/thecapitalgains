@@ -14,13 +14,13 @@ const TIER_LABELS: Record<string, string> = {
 }
 
 const TIER_BADGE: Record<string, { bg: string; color: string }> = {
-  free:       { bg: "#F5F3FF", color: "#8B7BAB" },
-  learner:    { bg: "#E8F5EE", color: "#1A7A4A" },
-  pro:        { bg: "#FDF3E3", color: "#D4860A" },
-  newsletter: { bg: "#E8F5EE", color: "#1A7A4A" },
-  essential:  { bg: "#FDF3E3", color: "#D4860A" },
-  premium:    { bg: "#F5F3FF", color: "#7C3AED" },
-  elite:      { bg: "#EDE9FF", color: "#1C0F3F" },
+  free:       { bg: "#EDEFEE", color: "#6E6A5F" },
+  learner:    { bg: "#EDEFEE", color: "#1B3A2B" },
+  pro:        { bg: "#F6F3EA", color: "#6E5620" },
+  newsletter: { bg: "#EDEFEE", color: "#1B3A2B" },
+  essential:  { bg: "#F6F3EA", color: "#6E5620" },
+  premium:    { bg: "#EDEFEE", color: "#1B3A2B" },
+  elite:      { bg: "#EDEFEE", color: "#1A1A18" },
 }
 
 function formatSlug(slug: string) {
@@ -87,8 +87,8 @@ export default async function DashboardPage() {
     : null
 
   const card: React.CSSProperties = {
-    background: "#FFFFFF",
-    border: "1px solid rgba(124,58,237,0.12)",
+    background: "var(--panel)",
+    border: "1px solid var(--hairline)",
     borderRadius: 16,
     padding: "24px",
   }
@@ -96,7 +96,7 @@ export default async function DashboardPage() {
   const label: React.CSSProperties = {
     fontSize: 10,
     fontWeight: 700,
-    color: "#8B7BAB",
+    color: "var(--ink-dim)",
     letterSpacing: "0.16em",
     textTransform: "uppercase",
     marginBottom: 14,
@@ -108,10 +108,10 @@ export default async function DashboardPage() {
 
         {/* Header */}
         <div style={{ marginBottom: 40 }}>
-          <p style={{ fontSize: 11, fontWeight: 700, color: "#C4B5FD", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 8 }}>
+          <p style={{ fontSize: 11, fontWeight: 700, color: "var(--gold)", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: 8 }}>
             Dashboard
           </p>
-          <h1 style={{ fontSize: 34, fontWeight: 700, color: "#FFFFFF", lineHeight: 1.2, margin: 0 }}>
+          <h1 style={{ fontSize: 34, fontWeight: 700, color: "var(--ink)", lineHeight: 1.2, margin: 0 }}>
             Welcome back{firstName ? `, ${firstName}` : ""}.
           </h1>
         </div>
@@ -137,8 +137,8 @@ export default async function DashboardPage() {
                 <span style={{
                   fontSize: 11,
                   fontWeight: 600,
-                  background: "#E8F5EE",
-                  color: "#1A7A4A",
+                  background: "var(--forest-surface)",
+                  color: "var(--forest)",
                   padding: "3px 8px",
                   borderRadius: 999,
                   fontFamily: "var(--font-inter)",
@@ -148,21 +148,21 @@ export default async function DashboardPage() {
               )}
             </div>
             {renewalDate && (
-              <p style={{ fontSize: 13, color: "#4B3F6B", margin: 0 }}>
+              <p style={{ fontSize: 13, color: "var(--ink-dim)", margin: 0 }}>
                 Renews on{" "}
-                <strong style={{ color: "#1C0F3F" }}>{renewalDate}</strong>
+                <strong style={{ color: "var(--ink)" }}>{renewalDate}</strong>
               </p>
             )}
             {!sub && (
               <>
-                <p style={{ fontSize: 13, color: "#4B3F6B", marginBottom: 16 }}>
+                <p style={{ fontSize: 13, color: "var(--ink-dim)", marginBottom: 16 }}>
                   You are on the free plan. Upgrade to unlock all courses and research.
                 </p>
                 <Link
                   href="/pricing"
                   style={{
                     display: "inline-block",
-                    background: "#D4860A",
+                    background: "var(--forest)",
                     color: "#FFFFFF",
                     fontSize: 13,
                     fontWeight: 600,
@@ -179,10 +179,10 @@ export default async function DashboardPage() {
 
           <div style={card}>
             <p style={label}>Account</p>
-            <p style={{ fontSize: 15, fontWeight: 600, color: "#1C0F3F", marginBottom: 6 }}>
+            <p style={{ fontSize: 15, fontWeight: 600, color: "var(--ink)", marginBottom: 6 }}>
               {user.email}
             </p>
-            <p style={{ fontSize: 13, color: "#8B7BAB", margin: 0 }}>
+            <p style={{ fontSize: 13, color: "var(--ink-dim)", margin: 0 }}>
               Member since {memberSince}
             </p>
           </div>
@@ -190,7 +190,7 @@ export default async function DashboardPage() {
 
         {/* Continue Learning */}
         {lastEnrollment && resumeHref && (
-          <div style={{ background: "#1C0F3F", borderRadius: 16, padding: "28px", marginBottom: 20 }}>
+          <div style={{ background: "var(--forest)", borderRadius: 16, padding: "28px", marginBottom: 20 }}>
             <p style={{ fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.4)", letterSpacing: "0.16em", textTransform: "uppercase", marginBottom: 8 }}>
               Continue Learning
             </p>
@@ -204,7 +204,7 @@ export default async function DashboardPage() {
               href={resumeHref}
               style={{
                 display: "inline-block",
-                background: "#D4860A",
+                background: "var(--gold)",
                 color: "#FFFFFF",
                 fontSize: 13,
                 fontWeight: 600,
@@ -244,14 +244,14 @@ export default async function DashboardPage() {
                       justifyContent: "space-between",
                       gap: 16,
                       padding: "16px 0",
-                      borderTop: idx === 0 ? "none" : "1px solid rgba(124,58,237,0.08)",
+                      borderTop: idx === 0 ? "none" : "1px solid var(--hairline)",
                     }}
                   >
                     <div style={{ flex: 1, minWidth: 0 }}>
-                      <p style={{ fontSize: 14, fontWeight: 600, color: "#1C0F3F", marginBottom: 4 }}>
+                      <p style={{ fontSize: 14, fontWeight: 600, color: "var(--ink)", marginBottom: 4 }}>
                         {courseTitleMap[enr.course_slug] ?? formatSlug(enr.course_slug)}
                       </p>
-                      <p style={{ fontSize: 11, color: "#8B7BAB", fontFamily: "var(--font-inter)", margin: 0, marginBottom: isCompleted ? 8 : 0 }}>
+                      <p style={{ fontSize: 11, color: "var(--ink-dim)", fontFamily: "var(--font-inter)", margin: 0, marginBottom: isCompleted ? 8 : 0 }}>
                         {completed} {completed === 1 ? "lesson" : "lessons"} completed · Last accessed {lastAccessed}
                       </p>
                       {isCompleted && (
@@ -259,8 +259,8 @@ export default async function DashboardPage() {
                           display: "inline-block",
                           fontSize: 10,
                           fontWeight: 600,
-                          background: "#E8F5EE",
-                          color: "#1A7A4A",
+                          background: "var(--forest-surface)",
+                          color: "var(--forest)",
                           padding: "2px 8px",
                           borderRadius: 999,
                           fontFamily: "var(--font-inter)",
@@ -275,7 +275,7 @@ export default async function DashboardPage() {
                         flexShrink: 0,
                         fontSize: 13,
                         fontWeight: 600,
-                        color: "#7C3AED",
+                        color: "var(--forest)",
                         textDecoration: "none",
                       }}
                     >
@@ -288,17 +288,17 @@ export default async function DashboardPage() {
           </div>
         ) : (
           <div style={{ ...card, padding: "48px 24px", marginBottom: 20, textAlign: "center" }}>
-            <p style={{ fontSize: 15, fontWeight: 600, color: "#1C0F3F", marginBottom: 8 }}>
+            <p style={{ fontSize: 15, fontWeight: 600, color: "var(--ink)", marginBottom: 8 }}>
               No courses started yet
             </p>
-            <p style={{ fontSize: 13, color: "#8B7BAB", marginBottom: 24 }}>
+            <p style={{ fontSize: 13, color: "var(--ink-dim)", marginBottom: 24 }}>
               Pick a course and start building your edge today.
             </p>
             <Link
               href="/courses"
               style={{
                 display: "inline-block",
-                background: "#1C0F3F",
+                background: "var(--forest)",
                 color: "#FFFFFF",
                 fontSize: 13,
                 fontWeight: 600,
@@ -325,13 +325,13 @@ export default async function DashboardPage() {
               href={link.href}
               style={{
                 display: "block",
-                background: "#FFFFFF",
-                border: "1px solid rgba(124,58,237,0.12)",
+                background: "var(--panel)",
+                border: "1px solid var(--hairline)",
                 borderRadius: 12,
                 padding: "12px 16px",
                 fontSize: 13,
                 fontWeight: 600,
-                color: "#4B3F6B",
+                color: "var(--ink-dim)",
                 textDecoration: "none",
                 textAlign: "center",
               }}

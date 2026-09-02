@@ -25,39 +25,39 @@ export default function NewsletterPage() {
 
       {/* ── HERO ── */}
       <section className="site-container pt-32 pb-10 text-center">
-        <div className="font-mono text-[11px] text-[#C4B5FD] tracking-widest uppercase mb-3">
+        <div className="font-mono text-[11px] text-gold-text tracking-widest uppercase mb-3">
           Newsletter
         </div>
-        <h1 className="text-5xl font-bold text-white leading-[1.1] mb-4">
+        <h1 className="text-5xl font-bold text-ink leading-[1.1] mb-4">
           One market insight,<br />every week.
         </h1>
-        <p className="text-[16px] text-[#C7BEE6] leading-relaxed mb-8 max-w-xl mx-auto">
+        <p className="text-[16px] text-ink-dim leading-relaxed mb-8 max-w-xl mx-auto">
           A concise, no-noise breakdown of what&apos;s moving Indian markets. And why it matters for your trades and investments. Free, always.
         </p>
         <NewsletterForm />
-        <p className="font-mono text-[12px] text-[#C4B5FD] mt-4">
+        <p className="font-mono text-[12px] text-ink-dim mt-4">
           No spam. Unsubscribe anytime. Join 500+ readers.
         </p>
       </section>
 
       {/* ── WHAT YOU GET ── */}
       <section className="site-container mt-16">
-        <h2 className="text-[28px] font-bold text-white text-center mb-10">
+        <h2 className="text-[28px] font-bold text-ink text-center mb-10">
           What lands in your inbox
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {whatYouGet.map((item) => (
             <div
               key={item.title}
-              className="bg-white border border-[rgba(124,58,237,0.15)] rounded-2xl p-6"
+              className="bg-panel border border-hairline rounded-2xl p-6"
             >
-              <div className="w-10 h-10 bg-[#F5F3FF] rounded-xl flex items-center justify-center text-[20px] mb-4">
+              <div className="w-10 h-10 bg-forest-surface rounded-xl flex items-center justify-center text-[20px] mb-4">
                 {item.icon}
               </div>
-              <div className="text-[17px] text-[#1C0F3F] mb-2 leading-snug">
+              <div className="text-[17px] text-ink mb-2 leading-snug">
                 {item.title}
               </div>
-              <p className="text-[13px] text-[#4B3F6B] leading-relaxed">
+              <p className="text-[13px] text-ink-dim leading-relaxed">
                 {item.desc}
               </p>
             </div>
@@ -67,11 +67,11 @@ export default function NewsletterPage() {
 
       {/* ── RECENT ISSUES ── */}
       <section className="site-container mt-16">
-        <h2 className="text-[28px] font-bold text-white mb-6">
+        <h2 className="text-[28px] font-bold text-ink mb-6">
           Recent issues
         </h2>
-        <div className="bg-white border border-[rgba(124,58,237,0.15)] rounded-xl px-6 py-5">
-          <p className="text-[15px] text-[#4B3F6B] leading-relaxed">
+        <div className="bg-panel border border-hairline rounded-xl px-6 py-5">
+          <p className="text-[15px] text-ink-dim leading-relaxed">
             Issues are published every Sunday. Subscribe below to receive the next one directly in your inbox.
           </p>
         </div>
@@ -79,7 +79,7 @@ export default function NewsletterPage() {
 
       {/* ── BOTTOM CTA ── */}
       <section className="site-container mt-16 pb-20">
-        <div className="bg-[#1C0F3F] rounded-2xl px-10 py-12 text-center">
+        <div className="bg-forest rounded-2xl px-10 py-12 text-center">
           <h2 className="text-[30px] text-white mb-3">
             Start reading this week
           </h2>

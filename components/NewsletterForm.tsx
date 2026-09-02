@@ -32,7 +32,7 @@ export default function NewsletterForm({ dark = false }: { dark?: boolean }) {
 
   if (success) {
     return (
-      <p className={`text-[14px] font-medium text-center ${dark ? 'text-[#6EE7A0]' : 'text-[#1A7A4A]'}`}>
+      <p className={`text-[14px] font-medium text-center ${dark ? 'text-[#6EE7A0]' : 'text-forest'}`}>
         You&apos;re subscribed! Check your inbox.
       </p>
     )
@@ -50,13 +50,13 @@ export default function NewsletterForm({ dark = false }: { dark?: boolean }) {
           className={`flex-1 rounded-lg px-4 py-3 text-[14px] outline-none transition-colors ${
             dark
               ? 'bg-[rgba(255,255,255,0.1)] border border-[rgba(255,255,255,0.15)] text-white placeholder:text-[rgba(255,255,255,0.35)] focus:border-[rgba(255,255,255,0.4)]'
-              : 'bg-white border border-[rgba(124,58,237,0.20)] text-[#1C0F3F] placeholder:text-[#8B7BAB] focus:border-[rgba(124,58,237,0.35)]'
+              : 'bg-panel border border-hairline text-ink placeholder:text-ink-dim focus:border-forest'
           }`}
         />
         <button
           type="submit"
           disabled={loading}
-          className="bg-[#D4860A] hover:bg-[#F0A020] disabled:bg-[#D4860A]/60 text-white rounded-lg px-6 py-3 text-[14px] font-medium transition-colors whitespace-nowrap"
+          className="bg-forest hover:bg-forest-dark disabled:bg-forest/60 text-white rounded-lg px-6 py-3 text-[14px] font-medium transition-colors whitespace-nowrap"
         >
           {loading ? 'Subscribing…' : 'Subscribe free'}
         </button>

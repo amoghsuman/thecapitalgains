@@ -76,7 +76,7 @@ export default function SubscribeButton({ selectedPlans, billing, totalAmount }:
         subscription_id: subscriptionId,
         name: "The Capital Gains",
         description: plan.name,
-        theme: { color: "#1E1245" },
+        theme: { color: "#1B3A2B" },
         handler: function () {
           router.push("/dashboard?payment=success");
         },
@@ -95,7 +95,7 @@ export default function SubscribeButton({ selectedPlans, billing, totalAmount }:
     <button
       onClick={handleSubscribe}
       disabled={loading || !plan}
-      className="bg-[#D4860A] hover:bg-[#B8720A] disabled:opacity-50 text-white font-bold rounded-xl px-6 py-3 text-sm tracking-tight transition-colors whitespace-nowrap"
+      className="bg-forest hover:bg-forest-dark disabled:opacity-50 text-white font-bold rounded-xl px-6 py-3 text-sm tracking-tight transition-colors whitespace-nowrap"
     >
       {loading ? "Processing..." : isOneTime ? "Enquire →" : "Confirm Selection →"}
     </button>

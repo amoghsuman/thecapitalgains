@@ -37,21 +37,21 @@ export default function TermsPage() {
   return (
     <div className="min-h-screen">
       <div className="site-container pt-32 pb-20">
-        <div className="font-mono text-[11px] text-[#C4B5FD] tracking-widest uppercase mb-3">
+        <div className="font-mono text-[11px] text-gold-text tracking-widest uppercase mb-3">
           Legal
         </div>
-        <h1 className="text-4xl font-bold text-white mb-3">
+        <h1 className="text-4xl font-bold text-ink mb-3">
           Terms of Service
         </h1>
-        <div className="font-mono text-[12px] text-[#C4B5FD] mb-10">
+        <div className="font-mono text-[12px] text-gold-text mb-10">
           Last updated: April 2025
         </div>
         {sections.map((s) => (
           <div key={s.title}>
-            <h2 className="text-[20px] font-bold text-white mb-3 mt-8">
+            <h2 className="text-[20px] font-bold text-ink mb-3 mt-8">
               {s.title}
             </h2>
-            <p className="text-[15px] text-[#C7BEE6] leading-relaxed max-w-3xl">{s.body}</p>
+            <p className="text-[15px] text-ink-dim leading-relaxed max-w-3xl">{s.body}</p>
           </div>
         ))}
       </div>
