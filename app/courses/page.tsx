@@ -223,11 +223,12 @@ export default function CoursesPage() {
           <table className="w-full border-collapse">
             <thead>
               <tr className="bg-ivory border-b border-hairline">
-                <th className="px-6 py-4 text-left font-mono text-[10px] text-ink-dim tracking-widest uppercase font-bold">Strategy & Title</th>
-                <th className="px-6 py-4 text-left font-mono text-[10px] text-ink-dim tracking-widest uppercase font-bold">Level</th>
-                <th className="px-6 py-4 text-left font-mono text-[10px] text-ink-dim tracking-widest uppercase font-bold">Access</th>
-                <th className="px-6 py-4 text-left font-mono text-[10px] text-ink-dim tracking-widest uppercase font-bold">Duration</th>
-                <th className="px-6 py-4 text-right font-mono text-[10px] text-ink-dim tracking-widest uppercase font-bold">Action</th>
+                <th className="px-6 py-4 text-left font-mono text-[10px] text-ink tracking-widest uppercase font-bold">Strategy & Title</th>
+                <th className="hidden md:table-cell px-6 py-4 text-left font-mono text-[10px] text-ink tracking-widest uppercase font-bold">Description</th>
+                <th className="px-6 py-4 text-left font-mono text-[10px] text-ink tracking-widest uppercase font-bold">Level</th>
+                <th className="px-6 py-4 text-left font-mono text-[10px] text-ink tracking-widest uppercase font-bold">Access</th>
+                <th className="px-6 py-4 text-left font-mono text-[10px] text-ink tracking-widest uppercase font-bold">Duration</th>
+                <th className="px-6 py-4 text-right font-mono text-[10px] text-ink tracking-widest uppercase font-bold">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-hairline">
@@ -252,9 +253,11 @@ export default function CoursesPage() {
                           <div className="text-[14px] font-bold text-ink mb-1 group-hover:text-forest transition-colors">
                             {course.title}
                           </div>
-                          <div className="text-[12px] text-ink-dim line-clamp-1 max-w-lg">
-                            {course.subtitle || course.description}
-                          </div>
+                          {course.subtitle && (
+                            <div className="text-[12px] text-ink-dim line-clamp-1 max-w-lg">
+                              {course.subtitle}
+                            </div>
+                          )}
                           {user && hasStarted && (
                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '4px' }}>
                               <div style={{ width: '80px', height: '3px', background: '#DFD9C8', borderRadius: '2px', overflow: 'hidden' }}>
@@ -266,6 +269,15 @@ export default function CoursesPage() {
                             </div>
                           )}
                         </div>
+                      </td>
+                      <td className="hidden md:table-cell px-6 py-5">
+                        {course.description ? (
+                          <span className="block text-[12px] text-ink-dim truncate max-w-xs" title={course.description}>
+                            {course.description}
+                          </span>
+                        ) : (
+                          <span className="text-[12px] text-ink-dim/40">—</span>
+                        )}
                       </td>
                       <td className="px-6 py-5">
                         <span className={`text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full border ${
@@ -302,7 +314,7 @@ export default function CoursesPage() {
                 })
               ) : (
                 <tr>
-                  <td colSpan={5} className="px-6 py-20 text-center text-ink-dim text-sm italic">
+                  <td colSpan={6} className="px-6 py-20 text-center text-ink-dim text-sm italic">
                     No results found for your search criteria.
                   </td>
                 </tr>
