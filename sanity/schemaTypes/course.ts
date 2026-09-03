@@ -28,7 +28,7 @@ export const courseSchema = defineType({
       name: 'learningPath',
       title: 'Learning Path',
       type: 'string',
-      description: 'e.g. Value Investing, Momentum Investing, CFA Preparation',
+      description: 'e.g. Value Investing, Momentum Investing, CFA Preparation. Note: "Exam Preparation" is an umbrella path for CA, CS, CMT, CFP, NISM, CAIA, US CPA, US CMA, ACCA, CIMA, GMAT, and CAT content — CFA and FRM courses should keep using their own dedicated cfa-prep / frm-prep paths, not this one.',
       options: {
         list: [
           { title: 'Stock Market Basics', value: 'stock-market-basics' },
@@ -48,6 +48,13 @@ export const courseSchema = defineType({
           { title: 'Python for Finance', value: 'python-finance' },
           { title: 'Corporate Finance', value: 'corporate-finance' },
           { title: 'M&A & Valuation', value: 'ma-valuation' },
+          { title: 'Career Fundamentals', value: 'career-fundamentals' },
+          { title: 'Exam Preparation', value: 'exam-prep' },
+          { title: 'Macro & Markets', value: 'macro-and-markets' },
+          { title: 'Alternative Investing', value: 'alternative-investing' },
+          { title: 'Tax & Wealth Planning', value: 'tax-wealth-planning' },
+          { title: 'Forensic Accounting & Compliance', value: 'forensic-compliance' },
+          { title: 'Fintech Careers', value: 'fintech-careers' },
         ],
       },
       initialValue: 'stock-market-basics',
