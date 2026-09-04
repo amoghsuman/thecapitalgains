@@ -610,12 +610,15 @@ export default function ReaderPage() {
           it — the page's natural height follows the taller of the two columns,
           and Footer (rendered by the root layout below this whole component)
           always ends up cleanly below everything, full width, unaffected by
-          sidebar length. */}
+          sidebar length. Pinned to the very top (top-0): the site Navbar hides
+          itself on this route (see components/layout/Navbar.tsx) so the
+          condensed bar in the main column below is the only persistent header —
+          there's nothing above this to clear. */}
       <aside
         className={`${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } fixed left-0 top-24 lg:sticky lg:top-24 lg:transform-none z-30 flex-shrink-0 flex flex-col bg-panel border-r border-hairline overflow-y-auto transition-transform duration-200`}
-        style={{ width: 280, height: "calc(100vh - 96px)" }}
+        } fixed left-0 top-0 lg:sticky lg:top-0 lg:transform-none z-30 flex-shrink-0 flex flex-col bg-panel border-r border-hairline overflow-y-auto transition-transform duration-200`}
+        style={{ width: 280, height: "100vh" }}
       >
         {/* Back + course info */}
         <div className="px-4 py-4 border-b border-hairline">
@@ -717,7 +720,7 @@ export default function ReaderPage() {
       {/* Sidebar overlay for mobile */}
       {sidebarOpen && (
         <div
-          className="lg:hidden fixed inset-x-0 top-24 bottom-0 z-20 bg-black/30"
+          className="lg:hidden fixed inset-0 z-20 bg-black/30"
           onClick={() => setSidebarOpen(false)}
         />
       )}
@@ -725,11 +728,12 @@ export default function ReaderPage() {
       {/* ── MAIN PANEL ── */}
       <div className="flex-1 flex flex-col min-w-0">
 
-        {/* Sticky top bar — stays visible while scrolling through lesson content,
-            giving constant access to progress, a way back to the course list,
-            and (condensed) account access, without keeping the full site navbar
-            sticky on every other page. */}
-        <div className="sticky top-24 z-10 flex items-center justify-between gap-3 px-5 py-3 bg-panel border-b border-hairline">
+        {/* Sticky top bar — the SINGLE persistent header on this route (the site
+            Navbar hides itself here, see components/layout/Navbar.tsx, to avoid
+            two stacked sticky headers). Stays visible while scrolling through
+            lesson content, giving constant access to progress, a way back to
+            the course list, and (condensed) account access. */}
+        <div className="sticky top-0 z-10 flex items-center justify-between gap-3 px-5 py-3 bg-panel border-b border-hairline">
           <div className="flex items-center gap-4 min-w-0">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}

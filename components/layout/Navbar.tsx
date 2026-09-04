@@ -40,6 +40,15 @@ export default function Navbar() {
 
   const useDarkNav = true;
 
+  // The lesson reader (app/learn/[course]/[lesson]/page.tsx) renders its own
+  // sticky, condensed header (back-to-courses link, reading progress bar,
+  // account/sign-out) tailored for reading. Rendering this full navbar there
+  // too produced two stacked, redundant sticky headers. Hide this one on that
+  // route so there's exactly one persistent header while reading a lesson.
+  if (pathname?.startsWith("/learn/")) {
+    return null;
+  }
+
   return (
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-500 ${
