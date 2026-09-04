@@ -216,7 +216,25 @@ export const courseSchema = defineType({
                           title: 'Rows',
                           type: 'array',
                           description: 'Each row is a list of cell values, in the same order as Headers.',
-                          of: [defineArrayMember({ type: 'array', of: [defineArrayMember({ type: 'string' })] })],
+                          of: [defineArrayMember({
+                            type: 'object',
+                            name: 'tableRow',
+                            title: 'Row',
+                            fields: [
+                              defineField({
+                                name: 'cells',
+                                title: 'Cells',
+                                type: 'array',
+                                of: [defineArrayMember({ type: 'string' })],
+                              }),
+                            ],
+                            preview: {
+                              select: { cells: 'cells' },
+                              prepare: ({ cells }) => ({
+                                title: Array.isArray(cells) ? cells.join(' · ') : 'Row',
+                              }),
+                            },
+                          })],
                         }),
                       ],
                       preview: {

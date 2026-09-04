@@ -73,7 +73,7 @@ thecapitalgains.com
   - `quiz` — `{ question, options: string[], correctIndex, explanation }` — multiple choice; selecting an option reveals correct/incorrect plus the explanation
 - `mathBlock` — `{ latex, caption }` — rendered via KaTeX
 - `keyFact` — `{ label, value, context }` — single stat callout
-- `table` — `{ caption?, headers: string[], rows: string[][] }` — rendered as a real HTML table (each row is a plain array of cell strings, same order as `headers`)
+- `table` — `{ caption?, headers: string[], rows: [{ cells: string[] }] }` — rendered as a real HTML table. `rows` is an array of row objects (each with a flat `cells` array), **not** a plain array of arrays — Sanity's schema system doesn't support multidimensional arrays (`array` nested directly inside another `array`), so tabular data always needs this one level of object-wrapping around each row.
 - `statGrid` — `{ stats: [{ label, value, context? }] }`, 2–4 stats — the infographic substitute, rendered as a responsive grid of stat cards
 
 All rendering lives in `app/learn/[course]/[lesson]/page.tsx`'s `portableTextComponents`. `inject-lesson-content.mjs` works with all of these unmodified — it patches the `body` array generically without validating block shape. **Gotcha:** `lib/sanity/queries.ts`'s `getLessonBySlug` query uses an explicit field-level GROQ projection per `_type` (not a blanket `...`), so adding a new block type or a new field to an existing type requires adding it there too, or it'll be silently stripped on fetch even though it's stored correctly in Sanity.

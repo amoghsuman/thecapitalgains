@@ -180,7 +180,7 @@ function QuizExercise({
 
 // ─── Table Block ──────────────────────────────────────────────────────────────
 
-function TableBlock({ value }: { value: { caption?: string; headers?: string[]; rows?: string[][] } }) {
+function TableBlock({ value }: { value: { caption?: string; headers?: string[]; rows?: { cells?: string[] }[] } }) {
   const headers = value.headers ?? [];
   const rows = value.rows ?? [];
 
@@ -205,7 +205,7 @@ function TableBlock({ value }: { value: { caption?: string; headers?: string[]; 
         <tbody>
           {rows.map((row, ri) => (
             <tr key={ri}>
-              {row.map((cell, ci) => (
+              {(row.cells ?? []).map((cell, ci) => (
                 <td key={ci} className="text-ink border border-hairline px-4 py-2.5 align-top">
                   {cell}
                 </td>
@@ -309,7 +309,7 @@ const portableTextComponents: PortableTextComponents = {
       }
       return <ExerciseBlock title={value.title ?? ""} steps={value.steps ?? []} />;
     },
-    table: ({ value }: { value: { caption?: string; headers?: string[]; rows?: string[][] } }) => (
+    table: ({ value }: { value: { caption?: string; headers?: string[]; rows?: { cells?: string[] }[] } }) => (
       <TableBlock value={value} />
     ),
     statGrid: ({ value }: { value: { stats?: { label?: string; value?: string; context?: string }[] } }) => (
