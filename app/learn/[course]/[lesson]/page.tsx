@@ -3,7 +3,7 @@
 export const dynamic = "force-dynamic";
 
 import { useState, useEffect, useRef } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import katex from "katex";
@@ -388,6 +388,7 @@ function LockedLesson({
 
 export default function ReaderPage() {
   const params = useParams();
+  const router = useRouter();
   const courseSlug = typeof params.course === "string" ? params.course : "";
   const lessonSlug = typeof params.lesson === "string" ? params.lesson : "";
 
@@ -409,6 +410,26 @@ export default function ReaderPage() {
   useEffect(() => {
     if (lessonSlug) setActiveLesson(lessonSlug);
   }, [lessonSlug]);
+
+  // globals.css sets `overflow-x: hidden` on html/body site-wide (a guard against
+  // accidental horizontal overflow). Per the CSS overflow spec, that forces
+  // overflow-y to compute as "auto" on both, turning them into scroll containers
+  // in their own right — which breaks native `position: sticky` for anything
+  // sticky-positioned relative to the page (the sticky sidebar and top bar below
+  // silently stop sticking, with no console error). Temporarily clearing it only
+  // while this page is mounted restores normal document scrolling so sticky
+  // works, without touching the global rule other pages rely on.
+  useEffect(() => {
+    const html = document.documentElement;
+    const prevHtmlOverflowX = html.style.overflowX;
+    const prevBodyOverflowX = document.body.style.overflowX;
+    html.style.overflowX = "visible";
+    document.body.style.overflowX = "visible";
+    return () => {
+      html.style.overflowX = prevHtmlOverflowX;
+      document.body.style.overflowX = prevBodyOverflowX;
+    };
+  }, []);
 
   // Auth + subscription + existing progress
   useEffect(() => {
@@ -510,6 +531,11 @@ export default function ReaderPage() {
     : lessonLockReason(userTier, course.accessLevel, currentMeta?.isFree);
   const isLocked = lockReason !== null;
 
+  async function handleSignOut() {
+    await supabaseRef.current.auth.signOut();
+    router.push("/");
+  }
+
   async function markCompleteAndNext() {
     setCompletedLessons((prev) => new Set([...prev, activeLesson]));
     if (userId) {
@@ -574,14 +600,22 @@ export default function ReaderPage() {
   }
 
   return (
-    <div className="flex overflow-hidden bg-panel" style={{ height: "calc(100vh - 96px)" }}>
+    <div className="flex items-start bg-panel">
 
-      {/* ── SIDEBAR ── */}
+      {/* ── SIDEBAR ──
+          Sticky (not a forced-height, clipped pane) so it pins in place while the
+          user scrolls the main column, and only scrolls internally if its own
+          chapter/lesson list is taller than the viewport. This keeps the sidebar
+          fully contained without ever forcing the page's overall height to match
+          it — the page's natural height follows the taller of the two columns,
+          and Footer (rendered by the root layout below this whole component)
+          always ends up cleanly below everything, full width, unaffected by
+          sidebar length. */}
       <aside
         className={`${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } absolute lg:relative lg:translate-x-0 z-30 flex-shrink-0 flex flex-col bg-panel border-r border-hairline overflow-y-auto transition-transform duration-200`}
-        style={{ width: 280, height: "100%" }}
+        } fixed left-0 top-24 lg:sticky lg:top-24 lg:transform-none z-30 flex-shrink-0 flex flex-col bg-panel border-r border-hairline overflow-y-auto transition-transform duration-200`}
+        style={{ width: 280, height: "calc(100vh - 96px)" }}
       >
         {/* Back + course info */}
         <div className="px-4 py-4 border-b border-hairline">
@@ -683,41 +717,71 @@ export default function ReaderPage() {
       {/* Sidebar overlay for mobile */}
       {sidebarOpen && (
         <div
-          className="lg:hidden fixed inset-0 z-20 bg-black/30"
+          className="lg:hidden fixed inset-x-0 top-24 bottom-0 z-20 bg-black/30"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
       {/* ── MAIN PANEL ── */}
-      <div className="flex-1 flex flex-col min-w-0 h-full">
+      <div className="flex-1 flex flex-col min-w-0">
 
-        {/* Top bar */}
-        <div className="flex-shrink-0 flex items-center justify-between px-5 py-3 bg-panel border-b border-hairline">
-          <div className="flex items-center gap-4">
+        {/* Sticky top bar — stays visible while scrolling through lesson content,
+            giving constant access to progress, a way back to the course list,
+            and (condensed) account access, without keeping the full site navbar
+            sticky on every other page. */}
+        <div className="sticky top-24 z-10 flex items-center justify-between gap-3 px-5 py-3 bg-panel border-b border-hairline">
+          <div className="flex items-center gap-4 min-w-0">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="text-ink-dim hover:text-ink transition-colors"
+              className="text-ink-dim hover:text-ink transition-colors flex-shrink-0"
               aria-label="Toggle sidebar"
             >
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <path d="M2 5h16M2 10h16M2 15h16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
               </svg>
             </button>
-            <div className="flex items-center gap-2">
-              <div className="h-1.5 w-20 bg-hairline rounded-full overflow-hidden">
+            <Link
+              href="/courses"
+              className="flex-shrink-0 font-mono text-[11px] text-ink-dim hover:text-gold-text transition-colors"
+            >
+              ← Courses
+            </Link>
+            <div className="hidden sm:flex items-center gap-2 min-w-0">
+              <div className="h-1.5 w-20 bg-hairline rounded-full overflow-hidden flex-shrink-0">
                 <div
                   className="h-full bg-gold rounded-full transition-all"
                   style={{ width: `${progressPct}%` }}
                 />
               </div>
-              <span className="font-mono text-[11px] text-ink-dim">{progressPct}% complete</span>
+              <span className="font-mono text-[11px] text-ink-dim whitespace-nowrap">{progressPct}% complete</span>
             </div>
           </div>
-          <span className="font-mono text-[12px] text-ink hidden sm:block">The Capital Gains</span>
+          {!authLoading && (
+            isLoggedIn ? (
+              <div className="flex items-center gap-3 font-mono text-[11px] text-ink-dim flex-shrink-0">
+                <Link href="/dashboard" className="hover:text-ink transition-colors hidden sm:inline">
+                  Account
+                </Link>
+                <button onClick={handleSignOut} className="hover:text-ink transition-colors">
+                  Sign Out
+                </button>
+              </div>
+            ) : (
+              <Link
+                href="/auth/login"
+                className="flex-shrink-0 font-mono text-[11px] text-ink-dim hover:text-ink transition-colors"
+              >
+                Sign In
+              </Link>
+            )
+          )}
         </div>
 
-        {/* Scrollable content area */}
-        <div className="flex-1 overflow-y-auto">
+        {/* Content area — flows naturally with the page; the outer wrapper has
+            no forced height, so the page's overall height is simply whichever
+            column (sidebar or content) is taller, and the site Footer renders
+            cleanly below it. */}
+        <div>
           {isLocked ? (
             <LockedLesson isLoggedIn={isLoggedIn} reason={lockReason ?? "needs-subscription"} />
           ) : loading ? (
