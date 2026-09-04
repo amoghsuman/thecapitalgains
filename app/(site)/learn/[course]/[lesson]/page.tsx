@@ -15,6 +15,16 @@ import PayoffDiagramBlock from "@/components/lesson/PayoffDiagramBlock";
 import CalculatorBlock from "@/components/lesson/CalculatorBlock";
 import GlossaryTerm from "@/components/lesson/GlossaryTerm";
 import CollapsibleBlock from "@/components/lesson/CollapsibleBlock";
+import CandlestickChartBlock from "@/components/lesson/CandlestickChartBlock";
+import DonutChartBlock from "@/components/lesson/DonutChartBlock";
+import CodeBlock from "@/components/lesson/CodeBlock";
+import TimelineBlock from "@/components/lesson/TimelineBlock";
+import AnnotatedImageBlock from "@/components/lesson/AnnotatedImageBlock";
+import ComparisonBlock from "@/components/lesson/ComparisonBlock";
+import FlashcardSetBlock from "@/components/lesson/FlashcardSetBlock";
+import ToolLinkBlock from "@/components/lesson/ToolLinkBlock";
+import BigIdeaBlock from "@/components/lesson/BigIdeaBlock";
+import KeyTakeawaysBlock from "@/components/lesson/KeyTakeawaysBlock";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -183,6 +193,121 @@ function QuizExercise({
   );
 }
 
+// ─── Fill in the Blank Exercise ───────────────────────────────────────────────
+
+function FillInTheBlankExercise({
+  title,
+  textWithBlank,
+  correctAnswers,
+  explanation,
+}: {
+  title: string;
+  textWithBlank: string;
+  correctAnswers: string[];
+  explanation?: string;
+}) {
+  const [value, setValue] = useState("");
+  const [checked, setChecked] = useState(false);
+
+  const normalize = (s: string) => s.trim().toLowerCase();
+  const isCorrect = correctAnswers.some((a) => normalize(a) === normalize(value));
+  const [before, after] = textWithBlank.split("___");
+
+  return (
+    <div className="rounded-xl p-6 mt-10 border-2 border-hairline bg-panel">
+      <div className="font-mono text-[11px] tracking-widest uppercase mb-4 text-ink">Fill in the Blank · {title}</div>
+      <p className="text-[15px] text-ink leading-relaxed mb-4">
+        {before}
+        <input
+          type="text"
+          value={value}
+          disabled={checked}
+          onChange={(e) => setValue(e.target.value)}
+          className={`inline-block w-32 mx-1 px-2 py-1 rounded border-2 text-[15px] text-center outline-none ${
+            checked ? (isCorrect ? "border-forest bg-forest-surface" : "border-[#DC2626] bg-[#FEF2F2]") : "border-hairline focus:border-gold"
+          }`}
+        />
+        {after}
+      </p>
+      {!checked ? (
+        <button
+          onClick={() => setChecked(true)}
+          disabled={!value.trim()}
+          className="bg-forest hover:bg-forest-dark disabled:opacity-40 disabled:cursor-not-allowed text-white rounded-lg px-5 py-2.5 text-[13px] font-medium transition-colors"
+        >
+          Check Answer
+        </button>
+      ) : (
+        <div className="pt-2 border-t border-hairline mt-2">
+          <div className={`font-mono text-[10px] tracking-widest uppercase mb-2 ${isCorrect ? "text-forest" : "text-[#DC2626]"}`}>
+            {isCorrect ? "Correct" : "Not quite"}
+          </div>
+          {explanation && <p className="text-[14px] text-ink-dim leading-relaxed">{explanation}</p>}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── Numeric Input Exercise ────────────────────────────────────────────────────
+
+function NumericInputExercise({
+  title,
+  prompt,
+  correctValue,
+  tolerance,
+  unit,
+  explanation,
+}: {
+  title: string;
+  prompt: string;
+  correctValue: number;
+  tolerance: number;
+  unit?: string;
+  explanation?: string;
+}) {
+  const [value, setValue] = useState("");
+  const [checked, setChecked] = useState(false);
+
+  const numericValue = Number(value);
+  const isCorrect = Number.isFinite(numericValue) && Math.abs(numericValue - correctValue) <= tolerance;
+
+  return (
+    <div className="rounded-xl p-6 mt-10 border-2 border-hairline bg-panel">
+      <div className="font-mono text-[11px] tracking-widest uppercase mb-4 text-ink">Quick Check · {title}</div>
+      <p className="text-[15px] text-ink leading-relaxed mb-4 font-medium">{prompt}</p>
+      <div className="flex items-center gap-2 mb-4">
+        {unit && <span className="font-mono text-[14px] text-ink-dim">{unit}</span>}
+        <input
+          type="number"
+          value={value}
+          disabled={checked}
+          onChange={(e) => setValue(e.target.value)}
+          className={`w-40 px-3 py-2 rounded-lg border-2 text-[15px] outline-none ${
+            checked ? (isCorrect ? "border-forest bg-forest-surface" : "border-[#DC2626] bg-[#FEF2F2]") : "border-hairline focus:border-gold"
+          }`}
+        />
+      </div>
+      {!checked ? (
+        <button
+          onClick={() => setChecked(true)}
+          disabled={value.trim() === ""}
+          className="bg-forest hover:bg-forest-dark disabled:opacity-40 disabled:cursor-not-allowed text-white rounded-lg px-5 py-2.5 text-[13px] font-medium transition-colors"
+        >
+          Check Answer
+        </button>
+      ) : (
+        <div className="pt-2 border-t border-hairline mt-2">
+          <div className={`font-mono text-[10px] tracking-widest uppercase mb-2 ${isCorrect ? "text-forest" : "text-[#DC2626]"}`}>
+            {isCorrect ? "Correct" : `Not quite — correct answer: ${unit ?? ""}${correctValue}`}
+          </div>
+          {explanation && <p className="text-[14px] text-ink-dim leading-relaxed">{explanation}</p>}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ─── Table Block ──────────────────────────────────────────────────────────────
 
 function TableBlock({ value }: { value: { caption?: string; headers?: string[]; rows?: { cells?: string[] }[] } }) {
@@ -276,13 +401,25 @@ const portableTextComponents: PortableTextComponents = {
   },
   types: {
     callout: ({ value }: { value: { type?: string; text?: string } }) => {
-      const isWarning = value.type === "warning";
-      return isWarning ? (
-        <div className="bg-[#FEF2F2] border border-[rgba(220,38,38,0.2)] rounded-xl px-5 py-4">
-          <div className="font-mono text-[10px] text-[#DC2626] tracking-widest uppercase mb-2">⚠ Watch Out</div>
-          <p className="text-[14px] text-[#7A2010] leading-relaxed">{value.text}</p>
-        </div>
-      ) : (
+      if (value.type === "warning") {
+        return (
+          <div className="bg-[#FEF2F2] border border-[rgba(220,38,38,0.2)] rounded-xl px-5 py-4">
+            <div className="font-mono text-[10px] text-[#DC2626] tracking-widest uppercase mb-2">⚠ Watch Out</div>
+            <p className="text-[14px] text-[#7A2010] leading-relaxed">{value.text}</p>
+          </div>
+        );
+      }
+      if (value.type === "disclaimer") {
+        // Deliberately neutral — not alarming (warning) or celebratory
+        // (insight). Meant to read unmistakably as a compliance/scope note.
+        return (
+          <div className="bg-[#F4F3EF] border border-hairline rounded-xl px-5 py-4">
+            <div className="font-mono text-[10px] text-ink-dim tracking-widest uppercase mb-2">ⓘ Disclaimer</div>
+            <p className="text-[14px] text-ink-dim leading-relaxed">{value.text}</p>
+          </div>
+        );
+      }
+      return (
         <div className="bg-gold-surface border border-gold rounded-xl px-5 py-4">
           <div className="font-mono text-[10px] text-gold-text tracking-widest uppercase mb-2">Key Insight</div>
           <p className="text-[14px] text-gold-text leading-relaxed font-medium">{value.text}</p>
@@ -308,6 +445,28 @@ const portableTextComponents: PortableTextComponents = {
             question={value.question ?? ""}
             options={value.options ?? []}
             correctIndex={value.correctIndex ?? 0}
+            explanation={value.explanation}
+          />
+        );
+      }
+      if (variant === "fillInTheBlank") {
+        return (
+          <FillInTheBlankExercise
+            title={value.title ?? ""}
+            textWithBlank={value.textWithBlank ?? ""}
+            correctAnswers={value.correctAnswers ?? []}
+            explanation={value.explanation}
+          />
+        );
+      }
+      if (variant === "numericInput") {
+        return (
+          <NumericInputExercise
+            title={value.title ?? ""}
+            prompt={value.prompt ?? ""}
+            correctValue={value.correctValue ?? 0}
+            tolerance={value.tolerance ?? 0}
+            unit={value.unit}
             explanation={value.explanation}
           />
         );
@@ -351,6 +510,16 @@ const portableTextComponents: PortableTextComponents = {
     collapsible: ({ value }: { value: { title?: string; content?: unknown[] } }) => (
       <CollapsibleBlock title={value.title} content={value.content} components={portableTextComponents} />
     ),
+    candlestickChart: ({ value }: { value: any }) => <CandlestickChartBlock value={value} />,
+    donutChart: ({ value }: { value: any }) => <DonutChartBlock value={value} />,
+    codeBlock: ({ value }: { value: any }) => <CodeBlock value={value} />,
+    timeline: ({ value }: { value: any }) => <TimelineBlock value={value} />,
+    annotatedImage: ({ value }: { value: any }) => <AnnotatedImageBlock value={value} />,
+    comparison: ({ value }: { value: any }) => <ComparisonBlock value={value} />,
+    flashcardSet: ({ value }: { value: any }) => <FlashcardSetBlock value={value} />,
+    toolLink: ({ value }: { value: any }) => <ToolLinkBlock value={value} />,
+    bigIdea: ({ value }: { value: any }) => <BigIdeaBlock value={value} />,
+    keyTakeaways: ({ value }: { value: any }) => <KeyTakeawaysBlock value={value} />,
   },
   marks: {
     link: ({ value, children }: { value?: { href?: string }; children?: React.ReactNode }) => (

@@ -152,6 +152,29 @@ function validateInput(input) {
     }
   }
 
+  if (input.lastReviewed !== undefined) {
+    if (typeof input.lastReviewed !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(input.lastReviewed) || Number.isNaN(Date.parse(input.lastReviewed))) {
+      errors.push(`"lastReviewed" must be a valid date string in "YYYY-MM-DD" format if provided. Got: ${JSON.stringify(input.lastReviewed)}`)
+    }
+  }
+
+  if (input.authorByline !== undefined) {
+    if (typeof input.authorByline !== 'object' || input.authorByline === null || Array.isArray(input.authorByline)) {
+      errors.push('"authorByline" must be an object ({ name, credential }) if provided.')
+    } else {
+      if (input.authorByline.name !== undefined && typeof input.authorByline.name !== 'string') {
+        errors.push('"authorByline.name" must be a string if provided.')
+      }
+      if (input.authorByline.credential !== undefined && typeof input.authorByline.credential !== 'string') {
+        errors.push('"authorByline.credential" must be a string if provided.')
+      }
+    }
+  }
+
+  if (input.prerequisiteCourseSlug !== undefined && typeof input.prerequisiteCourseSlug !== 'string') {
+    errors.push('"prerequisiteCourseSlug" must be a string (the slug of an existing course) if provided.')
+  }
+
   if (input.chapters !== undefined && !Array.isArray(input.chapters)) {
     errors.push('"chapters" must be an array if provided.')
   }
@@ -258,6 +281,21 @@ async function main() {
 
   console.log(`No existing course found — proceeding to create.\n`)
 
+  let prerequisiteCourseRef
+  if (input.prerequisiteCourseSlug) {
+    const prereq = await sanity.fetch(
+      `*[_type == "course" && slug.current == $slug][0]{ _id, title }`,
+      { slug: input.prerequisiteCourseSlug }
+    )
+    if (!prereq) {
+      console.error(`\nERROR: "prerequisiteCourseSlug" is "${input.prerequisiteCourseSlug}", but no course with that slug exists in Sanity.`)
+      console.error(`The prerequisite course must already exist — create it first, then reference it here.`)
+      process.exit(1)
+    }
+    console.log(`Prerequisite course resolved: "${prereq.title}" (${prereq._id})`)
+    prerequisiteCourseRef = { _type: 'reference', _ref: prereq._id }
+  }
+
   // Build the full document set in memory first: the course document itself,
   // plus one standalone `lesson` document per lesson (chapters hold reference
   // items pointing at them). Everything below is written as a SINGLE Sanity
@@ -295,6 +333,9 @@ async function main() {
     description: input.description,
     topics: input.topics,
     whatYouLearn: input.whatYouLearn,
+    prerequisiteCourse: prerequisiteCourseRef,
+    lastReviewed: input.lastReviewed,
+    authorByline: input.authorByline,
     chapters,
   }
 

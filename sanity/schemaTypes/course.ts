@@ -79,6 +79,29 @@ export const courseSchema = defineType({
     defineField({ name: 'topics', title: 'Topic Tags', type: 'array', of: [defineArrayMember({ type: 'string' })] }),
     defineField({ name: 'whatYouLearn', title: 'What You Will Learn', type: 'array', of: [defineArrayMember({ type: 'string' })] }),
     defineField({
+      name: 'prerequisiteCourse',
+      title: 'Prerequisite Course',
+      type: 'reference',
+      to: [{ type: 'course' }],
+      description: 'Optional. Another course a learner should ideally complete first.',
+    }),
+    defineField({
+      name: 'lastReviewed',
+      title: 'Last Reviewed',
+      type: 'date',
+      description: 'When tax/regulatory/rate-sensitive content in this course was last verified as current. Not shown to learners by default — an editorial/compliance tracking field.',
+    }),
+    defineField({
+      name: 'authorByline',
+      title: 'Author Byline',
+      type: 'object',
+      description: 'Optional. Leave empty for the default anonymous-brand presentation.',
+      fields: [
+        defineField({ name: 'name', title: 'Name', type: 'string' }),
+        defineField({ name: 'credential', title: 'Credential', type: 'string', description: 'e.g. "SEBI Registered Research Analyst"' }),
+      ],
+    }),
+    defineField({
       name: 'chapters',
       title: 'Chapters',
       type: 'array',

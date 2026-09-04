@@ -8,18 +8,21 @@ export default function EmiCalculator() {
   const [loanAmount, setLoanAmount] = useState(2500000);
   const [interestRate, setInterestRate] = useState(9);
   const [years, setYears] = useState(20);
+  const [showSchedule, setShowSchedule] = useState(false);
 
-  const { emi, totalPayment, totalInterest, yearlyBreakdown } = useMemo(() => {
+  const { emi, totalPayment, totalInterest, yearlyBreakdown, monthlySchedule } = useMemo(() => {
     const r = interestRate / 100 / 12;
     const n = Math.max(1, Math.round(years * 12));
     // Standard reducing-balance EMI formula.
     const monthlyEmi = r === 0 ? loanAmount / n : (loanAmount * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
 
-    // Amortize month by month, aggregated into a year-by-year principal vs
-    // interest split — a full month-by-month table would be huge and isn't
-    // useful for a "simple breakdown."
+    // Amortize month by month once, aggregated into a year-by-year
+    // principal vs interest split for the chart, and kept in full for the
+    // expandable schedule below — computed from these same inputs, not
+    // separately authored content.
     let balance = loanAmount;
     const yearly: { year: string; principal: number; interest: number }[] = [];
+    const monthly: { month: number; principal: number; interest: number; balance: number }[] = [];
     const wholeYears = Math.max(1, Math.round(years));
     for (let y = 0; y < wholeYears && balance > 0.01; y++) {
       let yearPrincipal = 0;
@@ -30,12 +33,18 @@ export default function EmiCalculator() {
         balance -= principalForMonth;
         yearPrincipal += principalForMonth;
         yearInterest += interestForMonth;
+        monthly.push({
+          month: y * 12 + m + 1,
+          principal: Math.round(principalForMonth),
+          interest: Math.round(interestForMonth),
+          balance: Math.round(Math.max(balance, 0)),
+        });
       }
       yearly.push({ year: `Yr ${y + 1}`, principal: Math.round(yearPrincipal), interest: Math.round(yearInterest) });
     }
 
     const total = monthlyEmi * n;
-    return { emi: monthlyEmi, totalPayment: total, totalInterest: total - loanAmount, yearlyBreakdown: yearly };
+    return { emi: monthlyEmi, totalPayment: total, totalInterest: total - loanAmount, yearlyBreakdown: yearly, monthlySchedule: monthly };
   }, [loanAmount, interestRate, years]);
 
   return (
@@ -69,6 +78,49 @@ export default function EmiCalculator() {
           <Bar dataKey="interest" stackId="a" fill="#A9822F" name="Interest" />
         </BarChart>
       </ResponsiveContainer>
+
+      <div className="mt-6 pt-6 border-t border-hairline">
+        <button
+          onClick={() => setShowSchedule((s) => !s)}
+          className="w-full flex items-center justify-between text-left"
+          aria-expanded={showSchedule}
+        >
+          <span className="font-mono text-[11px] text-ink tracking-widest uppercase">View Full Amortization Schedule</span>
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 16 16"
+            fill="none"
+            className={`flex-shrink-0 text-ink-dim transition-transform duration-200 ${showSchedule ? "rotate-180" : ""}`}
+          >
+            <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+        {showSchedule && (
+          <div className="mt-4 max-h-80 overflow-y-auto border border-hairline rounded-lg">
+            <table className="w-full text-[13px]">
+              <thead className="sticky top-0 bg-ivory">
+                <tr>
+                  <th className="text-left font-mono text-[10px] text-ink-dim uppercase tracking-wide px-3 py-2 border-b border-hairline">Month</th>
+                  <th className="text-right font-mono text-[10px] text-ink-dim uppercase tracking-wide px-3 py-2 border-b border-hairline">Principal</th>
+                  <th className="text-right font-mono text-[10px] text-ink-dim uppercase tracking-wide px-3 py-2 border-b border-hairline">Interest</th>
+                  <th className="text-right font-mono text-[10px] text-ink-dim uppercase tracking-wide px-3 py-2 border-b border-hairline">Balance</th>
+                </tr>
+              </thead>
+              <tbody>
+                {monthlySchedule.map((row) => (
+                  <tr key={row.month} className="border-b border-hairline last:border-b-0">
+                    <td className="px-3 py-1.5 text-ink-dim">{row.month}</td>
+                    <td className="px-3 py-1.5 text-right text-ink">{formatINR(row.principal)}</td>
+                    <td className="px-3 py-1.5 text-right text-ink">{formatINR(row.interest)}</td>
+                    <td className="px-3 py-1.5 text-right text-ink-dim">{formatINR(row.balance)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
