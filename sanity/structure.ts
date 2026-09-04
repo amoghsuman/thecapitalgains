@@ -4,4 +4,14 @@ import type {StructureResolver} from 'sanity/structure'
 export const structure: StructureResolver = (S) =>
   S.list()
     .title('Content')
-    .items(S.documentTypeListItems())
+    .items([
+      S.documentTypeListItem('course').title('Courses'),
+      S.listItem()
+        .title('All Lessons')
+        .schemaType('lesson')
+        .child(
+          S.documentTypeList('lesson')
+            .title('All Lessons')
+            .defaultOrdering([{ field: 'title', direction: 'asc' }])
+        ),
+    ])

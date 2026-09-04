@@ -20,7 +20,7 @@
 
 import { createClient } from '@sanity/client'
 import { readFileSync } from 'fs'
-import { randomUUID } from 'crypto'
+import { randomUUID, createHash } from 'crypto'
 
 // ─── Env + Args ───────────────────────────────────────────────────────────────
 
@@ -93,6 +93,21 @@ function slugify(text) {
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-')
     .replace(/^-|-$/g, '')
+}
+
+// Sanity document IDs have a hard length ceiling (128 chars). Long course +
+// lesson slugs combined can exceed that, so the id is truncated with a short
+// content hash suffix always appended — deterministic (same course+lesson
+// slug always produces the same id) while guaranteeing a valid, unique id
+// regardless of title length. Kept in sync with migrate-lessons-to-documents.mjs.
+const MAX_ID_LENGTH = 96
+
+function lessonDocId(courseSlug, lessonSlug) {
+  const hash = createHash('sha1').update(`${courseSlug}::${lessonSlug}`).digest('hex').slice(0, 10)
+  const base = `lesson-${courseSlug}-${lessonSlug}`
+  const budget = MAX_ID_LENGTH - hash.length - 1
+  const truncatedBase = base.length <= budget ? base : base.slice(0, budget)
+  return `${truncatedBase}-${hash}`
 }
 
 function resolveLearningPath(input) {
@@ -168,22 +183,40 @@ function validateInput(input) {
 
 // ─── Document building ────────────────────────────────────────────────────────
 
-function buildLesson(lesson) {
-  return {
-    _key: randomUUID(),
+// Builds the standalone lesson document to be created, plus the reference
+// item that goes into the chapter's `lessons` array in its place.
+function buildLesson(courseSlug, lesson) {
+  const lessonSlug = slugify(lesson.title)
+  const lessonId = lessonDocId(courseSlug, lessonSlug)
+
+  const lessonDoc = {
+    _id: lessonId,
+    _type: 'lesson',
     title: lesson.title,
-    slug: { _type: 'slug', current: slugify(lesson.title) },
+    slug: { _type: 'slug', current: lessonSlug },
     duration: lesson.durationMinutes !== undefined ? `${lesson.durationMinutes} min read` : '',
     isFree: lesson.isFree ?? false,
     body: [], // filled in later by inject-lesson-content.mjs
   }
+
+  const lessonRef = {
+    _key: randomUUID(),
+    _type: 'reference',
+    _ref: lessonId,
+  }
+
+  return { lessonDoc, lessonRef }
 }
 
-function buildChapter(chapter) {
+function buildChapter(courseSlug, chapter) {
+  const built = (chapter.lessons ?? []).map(lesson => buildLesson(courseSlug, lesson))
   return {
-    _key: randomUUID(),
-    title: chapter.title,
-    lessons: (chapter.lessons ?? []).map(buildLesson),
+    chapter: {
+      _key: randomUUID(),
+      title: chapter.title,
+      lessons: built.map(b => b.lessonRef),
+    },
+    lessonDocs: built.map(b => b.lessonDoc),
   }
 }
 
@@ -225,15 +258,28 @@ async function main() {
 
   console.log(`No existing course found — proceeding to create.\n`)
 
-  // Build the full document in memory first. The actual write below is a
-  // single sanity.create() call for one complete document — Sanity either
-  // creates the whole thing or the call throws and nothing is written.
-  // There is no multi-step write sequence here, so no partial-document
-  // state is possible: it's all-or-nothing by construction.
-  const chapters = (input.chapters ?? []).map(buildChapter)
-  const lessonsCount = chapters.reduce((sum, ch) => sum + ch.lessons.length, 0)
+  // Build the full document set in memory first: the course document itself,
+  // plus one standalone `lesson` document per lesson (chapters hold reference
+  // items pointing at them). Everything below is written as a SINGLE Sanity
+  // transaction — either the whole course + all its lesson stubs are created,
+  // or the commit throws and nothing is written. No partial-document or
+  // partial-course state is possible by construction.
+  const builtChapters = (input.chapters ?? []).map(chapter => buildChapter(input.slug, chapter))
+  const chapters = builtChapters.map(bc => bc.chapter)
+  const lessonDocs = builtChapters.flatMap(bc => bc.lessonDocs)
+  const lessonsCount = lessonDocs.length
+
+  if (lessonDocs.length > 0) {
+    const collisions = await sanity.fetch(`*[_id in $ids]{_id}`, { ids: lessonDocs.map(d => d._id) })
+    if (collisions.length > 0) {
+      console.error(`\nERROR: ${collisions.length} target lesson document _id(s) already exist in Sanity — aborting, nothing written.`)
+      for (const c of collisions) console.error(`  - ${c._id}`)
+      process.exit(1)
+    }
+  }
 
   const doc = {
+    _id: randomUUID(),
     _type: 'course',
     title: input.title,
     slug: { _type: 'slug', current: input.slug },
@@ -257,22 +303,24 @@ async function main() {
     if (doc[key] === undefined) delete doc[key]
   }
 
-  let created
   try {
-    created = await sanity.create(doc)
+    const tx = sanity.transaction()
+    for (const lessonDoc of lessonDocs) tx.create(lessonDoc)
+    tx.create(doc)
+    await tx.commit()
   } catch (err) {
     console.error(`\nERROR: Failed to create course in Sanity.`)
     console.error(err.message)
-    console.error(`\nNothing was written — sanity.create() either fully succeeds or fully fails for a single document.`)
+    console.error(`\nNothing was written — the whole course + lesson stubs are one transaction; it either fully commits or fully fails.`)
     process.exit(1)
   }
 
   console.log(`──────────────────────────────────────────`)
   console.log(`Course created successfully.`)
   console.log(`──────────────────────────────────────────`)
-  console.log(`Title:          ${created.title}`)
-  console.log(`Slug:           ${created.slug.current}`)
-  console.log(`_id:            ${created._id}`)
+  console.log(`Title:          ${doc.title}`)
+  console.log(`Slug:           ${doc.slug.current}`)
+  console.log(`_id:            ${doc._id}`)
   console.log(`Learning path:  ${resolvedLearningPath}`)
   console.log(`Access level:   ${doc.accessLevel}`)
   console.log(`Chapters:       ${chapters.length}`)

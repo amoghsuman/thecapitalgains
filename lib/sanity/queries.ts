@@ -43,7 +43,7 @@ export async function getCourseBySlug(slug: string) {
       whatYouLearn,
       chapters[] {
         title,
-        lessons[] {
+        lessons[]-> {
           title,
           "slug": slug.current,
           duration,
@@ -63,7 +63,7 @@ export async function getFullCourseForReader(courseSlug: string) {
       accessLevel,
       chapters[] {
         title,
-        lessons[] {
+        lessons[]-> {
           title,
           "slug": slug.current,
           duration,
@@ -74,87 +74,86 @@ export async function getFullCourseForReader(courseSlug: string) {
   `, { courseSlug })
 }
 
+const LESSON_BODY_PROJECTION = `
+  ...,
+  _type == "callout" => {
+    _type,
+    _key,
+    type,
+    text
+  },
+  _type == "exercise" => {
+    _type,
+    _key,
+    variant,
+    title,
+    steps,
+    scenario,
+    prompt,
+    modelAnswer,
+    question,
+    options,
+    correctIndex,
+    explanation
+  },
+  _type == "mathBlock" => {
+    _type,
+    _key,
+    latex,
+    caption
+  },
+  _type == "keyFact" => {
+    _type,
+    _key,
+    label,
+    "value": value,
+    context
+  },
+  _type == "table" => {
+    _type,
+    _key,
+    caption,
+    headers,
+    rows
+  },
+  _type == "statGrid" => {
+    _type,
+    _key,
+    stats
+  }
+`
+
 export async function getLessonBySlug(courseSlug: string, lessonSlug: string) {
   const course = await client.fetch(`
     *[_type == "course" && slug.current == $courseSlug][0] {
       title,
       "slug": slug.current,
       accessLevel,
-      chapters[] {
-        title,
-        lessons[] {
-          title,
-          "slug": slug.current,
-          duration,
-          isFree,
-          body[] {
-            ...,
-            _type == "callout" => {
-              _type,
-              _key,
-              type,
-              text
-            },
-            _type == "exercise" => {
-              _type,
-              _key,
-              variant,
-              title,
-              steps,
-              scenario,
-              prompt,
-              modelAnswer,
-              question,
-              options,
-              correctIndex,
-              explanation
-            },
-            _type == "mathBlock" => {
-              _type,
-              _key,
-              latex,
-              caption
-            },
-            _type == "keyFact" => {
-              _type,
-              _key,
-              label,
-              "value": value,
-              context
-            },
-            _type == "table" => {
-              _type,
-              _key,
-              caption,
-              headers,
-              rows
-            },
-            _type == "statGrid" => {
-              _type,
-              _key,
-              stats
-            }
-          }
-        }
+      "lessonRef": (chapters[].lessons[]->{ _id, "slug": slug.current })[slug == $lessonSlug][0]
+    }
+  `, { courseSlug, lessonSlug })
+
+  if (!course || !course.lessonRef) return null
+
+  const lesson = await client.fetch(`
+    *[_id == $lessonId][0] {
+      title,
+      "slug": slug.current,
+      duration,
+      isFree,
+      body[] {
+        ${LESSON_BODY_PROJECTION}
       }
     }
-  `, { courseSlug })
+  `, { lessonId: course.lessonRef._id })
 
-  if (!course) return null
+  if (!lesson) return null
 
-  for (const chapter of course.chapters || []) {
-    for (const lesson of chapter.lessons || []) {
-      if (lesson.slug === lessonSlug) {
-        return {
-          title: course.title,
-          slug: course.slug,
-          lesson,
-        }
-      }
-    }
+  return {
+    title: course.title,
+    slug: course.slug,
+    lesson,
   }
-
-  return null
 }
 
 export async function getLessonContent(courseSlug: string, lessonSlug: string) {
@@ -163,13 +162,13 @@ export async function getLessonContent(courseSlug: string, lessonSlug: string) {
       title,
       price,
       accessLevel,
-      "lesson": chapters[].lessons[slug.current == $lessonSlug][0] {
+      "lesson": (chapters[].lessons[]->{
         title,
         "slug": slug.current,
         duration,
         isFree,
         body
-      }
+      })[slug == $lessonSlug][0]
     }
   `, { courseSlug, lessonSlug })
 }

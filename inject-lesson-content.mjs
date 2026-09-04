@@ -79,22 +79,35 @@ async function main() {
     process.exit(1)
   }
 
-  // Build a flat map of lesson title → body from the input JSON
+  // Build flat maps of lesson slug/title → body from the input JSON. Slug is
+  // the preferred match key (see below); title is kept only as a fallback
+  // for older input files that don't carry a "slug" per lesson.
+  const bodyBySlug = new Map()
   const bodyByTitle = new Map()
+  let inputLessonsWithBody = 0
   for (const chapter of inputChapters) {
     for (const lesson of chapter.lessons ?? []) {
-      if (lesson.title && Array.isArray(lesson.body)) {
-        bodyByTitle.set(lesson.title.trim(), lesson.body)
-      }
+      if (!Array.isArray(lesson.body)) continue
+      inputLessonsWithBody++
+      if (lesson.slug) bodyBySlug.set(String(lesson.slug).trim(), lesson.body)
+      if (lesson.title) bodyByTitle.set(lesson.title.trim(), lesson.body)
     }
   }
 
   console.log(`\nFetching course "${courseSlug}" from Sanity...`)
 
-  const course = await sanity.fetch(
-    `*[_type == "course" && slug.current == $slug][0]`,
-    { slug: courseSlug }
-  )
+  // Lessons are now standalone documents referenced from chapters. Dereference
+  // them here to get each lesson's _id, slug and title for matching.
+  const course = await sanity.fetch(`
+    *[_type == "course" && slug.current == $slug][0] {
+      _id,
+      title,
+      chapters[] {
+        title,
+        lessons[]-> { _id, title, "slug": slug.current }
+      }
+    }
+  `, { slug: courseSlug })
 
   if (!course) {
     console.error(`ERROR: Course "${courseSlug}" not found in Sanity.`)
@@ -104,43 +117,45 @@ async function main() {
   console.log(`Found: "${course.title}"`)
 
   const sanityChapters = course.chapters ?? []
-  const totalSanityLessons = sanityChapters.reduce(
-    (sum, ch) => sum + (ch.lessons?.length ?? 0), 0
-  )
-  console.log(`Sanity chapters: ${sanityChapters.length}  |  Sanity lessons: ${totalSanityLessons}`)
-  console.log(`JSON lessons with body content: ${bodyByTitle.size}\n`)
+  const sanityLessons = sanityChapters.flatMap(ch => ch.lessons ?? [])
+  console.log(`Sanity chapters: ${sanityChapters.length}  |  Sanity lessons: ${sanityLessons.length}`)
+  console.log(`JSON lessons with body content: ${inputLessonsWithBody}\n`)
 
-  let matchedCount = 0
+  // Match each dereferenced lesson to input body content — slug first
+  // (reliable: slugs are unique per course and never renamed), falling back
+  // to title only when the input JSON has no slug for that lesson.
+  const patches = [] // { lessonId, body, label }
   let unmatchedCount = 0
 
-  // Deep clone the Sanity chapters before mutating
-  const updatedChapters = JSON.parse(JSON.stringify(sanityChapters))
+  for (const lesson of sanityLessons) {
+    const bySlug = lesson.slug ? bodyBySlug.get(lesson.slug) : undefined
+    const byTitle = bodyByTitle.get(lesson.title?.trim() ?? '')
+    const inputBody = bySlug ?? byTitle
+    const matchedVia = bySlug !== undefined ? 'slug' : byTitle !== undefined ? 'title (fallback)' : null
 
-  for (const chapter of updatedChapters) {
-    for (const lesson of chapter.lessons ?? []) {
-      const title = lesson.title?.trim() ?? ''
-      const inputBody = bodyByTitle.get(title)
-
-      if (inputBody !== undefined) {
-        // Regenerate all _key values before injecting
-        lesson.body = regenerateKeys(inputBody)
-        console.log(`Matched lesson: ${title}`)
-        matchedCount++
-      } else {
-        console.warn(`Warning: Could not match lesson: ${title}`)
-        unmatchedCount++
-      }
+    if (inputBody !== undefined) {
+      patches.push({ lessonId: lesson._id, body: regenerateKeys(inputBody), label: lesson.title })
+      console.log(`Matched lesson: ${lesson.title}  (via ${matchedVia})`)
+    } else {
+      console.warn(`Warning: Could not match lesson: ${lesson.title}`)
+      unmatchedCount++
     }
   }
 
-  console.log(`\nPatching Sanity...`)
+  if (patches.length === 0) {
+    console.log(`\nNo lessons matched — nothing to patch.\n`)
+    return
+  }
 
-  await sanity
-    .patch(course._id)
-    .set({ chapters: updatedChapters })
-    .commit()
+  console.log(`\nPatching ${patches.length} lesson document(s) in Sanity...`)
 
-  console.log(`Done. ${matchedCount} lessons updated.`)
+  const tx = sanity.transaction()
+  for (const p of patches) {
+    tx.patch(p.lessonId, patch => patch.set({ body: p.body }))
+  }
+  await tx.commit()
+
+  console.log(`Done. ${patches.length} lessons updated.`)
   if (unmatchedCount > 0) {
     console.log(`${unmatchedCount} lessons had no matching content in the JSON and were left unchanged.`)
   }
