@@ -40,11 +40,48 @@ const sanity = createClient({
 
 // Recursively replace every _key in an object/array with a fresh UUID.
 // This ensures no duplicate _key errors in Sanity Portable Text.
+//
+// Block-type objects get special handling: a span's `marks` array can hold
+// values that are NOT decorator names (like "strong") but references to a
+// markDef's `_key` (e.g. a `link` or `glossaryTerm` annotation — see
+// glossaryTerm in sanity/schemaTypes/lesson.ts). A naive blind regeneration
+// would change `markDefs[]._key` without updating the `marks: ["oldKey"]`
+// values that point to it, silently breaking the reference: the span would
+// still render, but with no annotation attached (portabletext/react logs
+// "Unknown mark type" and falls through). So for blocks, markDefs keys are
+// regenerated first with an old→new mapping, then that mapping is applied
+// to every child span's `marks` array as it's regenerated.
 function regenerateKeys(value) {
   if (Array.isArray(value)) {
     return value.map(item => regenerateKeys(item))
   }
   if (value !== null && typeof value === 'object') {
+    if (value._type === 'block' && Array.isArray(value.markDefs) && value.markDefs.length > 0) {
+      const keyMap = new Map()
+      const newMarkDefs = value.markDefs.map(def => {
+        const newKey = randomUUID()
+        if (def._key) keyMap.set(def._key, newKey)
+        const out = { _key: newKey }
+        for (const [k, v] of Object.entries(def)) {
+          if (k !== '_key') out[k] = regenerateKeys(v)
+        }
+        return out
+      })
+      const newChildren = (value.children ?? []).map(child => {
+        const newChild = regenerateKeys(child)
+        if (Array.isArray(newChild.marks)) {
+          newChild.marks = newChild.marks.map(m => (keyMap.has(m) ? keyMap.get(m) : m))
+        }
+        return newChild
+      })
+      const out = {}
+      for (const [k, v] of Object.entries(value)) {
+        if (k === 'markDefs') { out[k] = newMarkDefs; continue }
+        if (k === 'children') { out[k] = newChildren; continue }
+        out[k] = k === '_key' ? randomUUID() : regenerateKeys(v)
+      }
+      return out
+    }
     const out = {}
     for (const [k, v] of Object.entries(value)) {
       out[k] = k === '_key' ? randomUUID() : regenerateKeys(v)

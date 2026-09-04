@@ -10,6 +10,11 @@ import katex from "katex";
 import { getFullCourseForReader, getLessonBySlug } from "@/lib/sanity/queries";
 import { createClient } from "@/lib/supabase/client";
 import { canAccessLesson, lessonLockReason } from "@/lib/access";
+import ChartBlock from "@/components/lesson/ChartBlock";
+import PayoffDiagramBlock from "@/components/lesson/PayoffDiagramBlock";
+import CalculatorBlock from "@/components/lesson/CalculatorBlock";
+import GlossaryTerm from "@/components/lesson/GlossaryTerm";
+import CollapsibleBlock from "@/components/lesson/CollapsibleBlock";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -339,6 +344,27 @@ const portableTextComponents: PortableTextComponents = {
           <div className="text-[13px] text-ink-dim">{value.context}</div>
         )}
       </div>
+    ),
+    chart: ({ value }: { value: any }) => <ChartBlock value={value} />,
+    payoffDiagram: ({ value }: { value: any }) => <PayoffDiagramBlock value={value} />,
+    calculator: ({ value }: { value: any }) => <CalculatorBlock value={value} />,
+    collapsible: ({ value }: { value: { title?: string; content?: unknown[] } }) => (
+      <CollapsibleBlock title={value.title} content={value.content} components={portableTextComponents} />
+    ),
+  },
+  marks: {
+    link: ({ value, children }: { value?: { href?: string }; children?: React.ReactNode }) => (
+      <a
+        href={value?.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="underline decoration-gold hover:text-gold-text transition-colors"
+      >
+        {children}
+      </a>
+    ),
+    glossaryTerm: ({ value, children }: { value?: { definition?: string }; children?: React.ReactNode }) => (
+      <GlossaryTerm definition={value?.definition}>{children}</GlossaryTerm>
     ),
   },
 };

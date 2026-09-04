@@ -11,6 +11,7 @@ thecapitalgains.com
 - Tailwind CSS v3.4.x
 - Supabase (auth + database) — no storage bucket used
 - Sanity v3 CMS — project ID: xmblxfh8, dataset: production
+- Recharts — all lesson charts (`chart`, `payoffDiagram`) and calculator visualizations
 - Razorpay (payments — integration pending)
 - Vercel hosting, GitHub auto-deploy
 
@@ -21,6 +22,11 @@ thecapitalgains.com
 - Two subscription stacks:
   - Stack 1 Learn: Learner ₹999/mo, Pro ₹2499/mo
   - Stack 2 Research: Newsletter ₹499/mo, Essential ₹4999/mo, Premium ₹12499/mo
+
+## App Router Structure
+- Main site routes live under `app/(site)/` (a route group — doesn't appear in URLs), with `app/(site)/layout.tsx` as their root layout (Navbar/Footer/DisclaimerBar/globals.css).
+- `app/studio/` (Sanity Studio) is a sibling of that group with its own separate, deliberately minimal `app/studio/layout.tsx` — no Navbar/Footer/theme CSS. Two independent root layouts sharing nothing, so Studio never inherits the site's chrome.
+- `app/api/` route handlers aren't page routes, so they're unaffected by either layout tree.
 
 ## Middleware
 - middleware lives in proxy.ts (function named `proxy`, not `middleware`) — Next.js 16 convention used here
@@ -76,7 +82,7 @@ Standalone lesson `_id`s created by the pipeline scripts follow `lesson-<courseS
 
 ## Lesson Body Block Types
 A `lesson` document's `body` field is Sanity Portable Text (array of typed blocks). Supported `_type`s:
-- Standard `block` — paragraphs, `h2`/`h3` headings, blockquotes, bullet/numbered lists
+- Standard `block` — paragraphs, `h2`/`h3` headings, blockquotes, bullet/numbered lists. Two custom annotations (markDefs) are available on spans: `link` (`{ href }`) and `glossaryTerm` (`{ definition }` — see below).
 - `callout` — `{ type: 'insight' | 'warning', text }` — highlighted box
 - `exercise` — `{ variant: 'checklist' | 'scenario' | 'quiz', title, ... }`. A missing `variant` is treated as `checklist` for backward compatibility with content written before variants existed.
   - `checklist` — `{ steps: string[] }` — interactive checkbox list, unchanged since introduction
@@ -86,8 +92,18 @@ A `lesson` document's `body` field is Sanity Portable Text (array of typed block
 - `keyFact` — `{ label, value, context }` — single stat callout
 - `table` — `{ caption?, headers: string[], rows: [{ cells: string[] }] }` — rendered as a real HTML table. `rows` is an array of row objects (each with a flat `cells` array), **not** a plain array of arrays — Sanity's schema system doesn't support multidimensional arrays (`array` nested directly inside another `array`), so tabular data always needs this one level of object-wrapping around each row.
 - `statGrid` — `{ stats: [{ label, value, context? }] }`, 2–4 stats — the infographic substitute, rendered as a responsive grid of stat cards
+- `chart` — `{ chartType: 'line'|'bar'|'area', title?, xAxisLabel?, yAxisLabel?, data: [{label, value}], series?: [{label, values: number[]}] }` — recharts, Ivory Ledger palette. `data[].label` always supplies the x-axis categories. Single-series: also fill in `data[].value`. Multi-series: add `series[]` instead — each series' `values` array must be the same length/order as `data` (`data[].value` is ignored when `series` is present).
+- `payoffDiagram` — `{ instrumentType: 'call'|'put'|'futures', position: 'long'|'short', strikePrice, premium?, spotPriceRange: {min,max}, caption? }` — options/futures payoff curve computed from standard formulas (not stored), rendered with a zero line, a breakeven reference line, and shaded profit (green)/loss (red) regions. `premium` is ignored for futures; `strikePrice` doubles as the futures entry/contracted price. Standard red/green convention is used here deliberately, overriding the brand forest/gold palette, since profit/loss needs to read unambiguously.
+- `calculator` — `{ calculatorType: 'sip'|'capitalGainsTax'|'emi' }` — embeds one of three self-contained interactive calculators. No other data needed; all inputs default and all formulas live in the component (`components/lesson/SipCalculator.tsx`, `CapitalGainsTaxCalculator.tsx`, `EmiCalculator.tsx`). The tax calculator's rate constants (equity STCG/LTCG, debt slab-rate treatment, real estate) are centralized at the top of `CapitalGainsTaxCalculator.tsx` with a comment flagging them for periodic review — Indian capital gains rules change almost every Union Budget.
+- `collapsible` — `{ title, content: [...] }` — renders as an accordion, collapsed by default. `content` accepts any block type above **except another `collapsible`** (one level of nesting only, by design — see `blockContentTypes` in `sanity/schemaTypes/lesson.ts`, shared between `body` and `collapsible.content` so the two never drift out of sync).
 
-All rendering lives in `app/learn/[course]/[lesson]/page.tsx`'s `portableTextComponents`. `inject-lesson-content.mjs` works with all of these unmodified — it patches a lesson document's `body` array generically without validating block shape. **Gotcha:** `lib/sanity/queries.ts`'s `getLessonBySlug` query uses an explicit field-level GROQ projection per `_type` (not a blanket `...`), so adding a new block type or a new field to an existing type requires adding it there too, or it'll be silently stripped on fetch even though it's stored correctly in Sanity.
+**Glossary terms**: mark a span with the `glossaryTerm` annotation (`markDefs: [{ _type: 'glossaryTerm', _key, definition }]`, `span.marks: [thatKey]`) to get a dotted-underline term that shows its definition in a tooltip on hover (desktop) or tap (mobile). Rendered by `components/lesson/GlossaryTerm.tsx` via `portableTextComponents.marks.glossaryTerm`.
+
+All interactive block types (`chart`, `payoffDiagram`, `calculator` and its three variants, `collapsible`, `GlossaryTerm`) are their own client components under `components/lesson/`, kept separate from the reader page itself for isolation — the reader page (`app/(site)/learn/[course]/[lesson]/page.tsx`) has been a full client component since early in the project (client-side auth, progress tracking, sidebar state) and converting it to a server component is a separate, larger undertaking not folded into adding these block types.
+
+All rendering is wired into `app/(site)/learn/[course]/[lesson]/page.tsx`'s `portableTextComponents` (`types` for block-level types, `marks` for `link`/`glossaryTerm`). `inject-lesson-content.mjs` works with all of these unmodified — it patches a lesson document's `body` array generically without validating block shape. **Gotcha it needed a real fix for**: its `regenerateKeys()` helper used to blindly replace every `_key` in the tree, including `markDefs[]._key` — since a span's `marks` array references a markDef by that `_key` **value** (not by `_type`), regenerating it without updating the reference silently orphaned every `link`/`glossaryTerm` annotation injected through the pipeline (the span rendered, just with no annotation attached — `@portabletext/react` logs `Unknown mark type "<oldKey>"` to the console, easy to miss). Fixed: block-type objects now regenerate `markDefs` keys first, build an old→new map, and apply that map to every child span's `marks` array as it's regenerated. If a future edit reintroduces a similar per-field blind regeneration, this is the failure mode to watch for.
+
+`lib/sanity/queries.ts`'s `getLessonBySlug` query fetches `body` with a blanket GROQ spread (`body[] { ... }`), not a per-`_type` field enumeration — empirically confirmed to return every field of every array item regardless of `_type`, at any nesting depth, including whatever's inside `collapsible.content[]`. (This used to be an explicit per-type projection that needed a matching entry added for every new block type or its fields would be silently stripped on fetch; simplified once the block type surface grew large enough that hand-maintaining two parallel lists — the schema and the query — stopped being worth it. If a future edit reintroduces per-type projections here, don't forget new block types need entries in both places again.)
 
 ## Colour Palette
 - Primary: #1E1245

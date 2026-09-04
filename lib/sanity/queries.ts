@@ -74,54 +74,18 @@ export async function getFullCourseForReader(courseSlug: string) {
   `, { courseSlug })
 }
 
-const LESSON_BODY_PROJECTION = `
-  ...,
-  _type == "callout" => {
-    _type,
-    _key,
-    type,
-    text
-  },
-  _type == "exercise" => {
-    _type,
-    _key,
-    variant,
-    title,
-    steps,
-    scenario,
-    prompt,
-    modelAnswer,
-    question,
-    options,
-    correctIndex,
-    explanation
-  },
-  _type == "mathBlock" => {
-    _type,
-    _key,
-    latex,
-    caption
-  },
-  _type == "keyFact" => {
-    _type,
-    _key,
-    label,
-    "value": value,
-    context
-  },
-  _type == "table" => {
-    _type,
-    _key,
-    caption,
-    headers,
-    rows
-  },
-  _type == "statGrid" => {
-    _type,
-    _key,
-    stats
-  }
-`
+// Deliberately a blanket spread, not a per-`_type` field enumeration. This
+// project used to hand-maintain an explicit projection per block `_type`
+// here (see git history), which meant every new lesson block type needed a
+// matching entry added in two places (the schema AND this query) or its
+// fields would be silently stripped on fetch. Empirically confirmed (see
+// CLAUDE.md) that `...` already returns every field of every array item
+// regardless of `_type`, at any nesting depth — including collapsible's
+// nested `content[]` array, whatever block types it contains. With the
+// block type surface now large enough that scaling to 1000+ courses means
+// scaling to many more block types over time, the blanket spread is the
+// simpler, correctness-by-construction choice going forward.
+const LESSON_BODY_PROJECTION = `...`
 
 export async function getLessonBySlug(courseSlug: string, lessonSlug: string) {
   const course = await client.fetch(`
