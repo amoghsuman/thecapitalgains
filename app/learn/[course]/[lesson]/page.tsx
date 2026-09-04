@@ -73,6 +73,171 @@ function ExerciseBlock({ title, steps }: { title: string; steps: string[] }) {
   );
 }
 
+// ─── Scenario Exercise (revealable model answer) ─────────────────────────────
+
+function ScenarioExercise({
+  title,
+  scenario,
+  prompt,
+  modelAnswer,
+}: {
+  title: string;
+  scenario: string;
+  prompt?: string;
+  modelAnswer: string;
+}) {
+  const [revealed, setRevealed] = useState(false);
+
+  return (
+    <div className="rounded-xl p-6 mt-10 border-2 border-hairline bg-panel">
+      <div className="font-mono text-[11px] tracking-widest uppercase mb-4 text-ink">
+        Scenario · {title}
+      </div>
+      <p className="text-[15px] text-ink leading-relaxed mb-4">{scenario}</p>
+      {prompt && (
+        <p className="text-[15px] text-ink-dim italic leading-relaxed mb-5">{prompt}</p>
+      )}
+      {!revealed ? (
+        <button
+          onClick={() => setRevealed(true)}
+          className="bg-forest hover:bg-forest-dark text-white rounded-lg px-5 py-2.5 text-[13px] font-medium transition-colors"
+        >
+          Show model answer
+        </button>
+      ) : (
+        <div className="mt-2 border-t border-hairline pt-4">
+          <div className="font-mono text-[10px] text-forest tracking-widest uppercase mb-2">
+            Model Answer
+          </div>
+          <p className="text-[14px] text-ink-dim leading-relaxed">{modelAnswer}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── Quiz Exercise (multiple choice) ──────────────────────────────────────────
+
+function QuizExercise({
+  title,
+  question,
+  options,
+  correctIndex,
+  explanation,
+}: {
+  title: string;
+  question: string;
+  options: string[];
+  correctIndex: number;
+  explanation?: string;
+}) {
+  const [selected, setSelected] = useState<number | null>(null);
+  const answered = selected !== null;
+  const isCorrect = selected === correctIndex;
+
+  return (
+    <div className="rounded-xl p-6 mt-10 border-2 border-hairline bg-panel">
+      <div className="font-mono text-[11px] tracking-widest uppercase mb-4 text-ink">
+        Quick Check · {title}
+      </div>
+      <p className="text-[15px] text-ink leading-relaxed mb-4 font-medium">{question}</p>
+      <div className="flex flex-col gap-2.5">
+        {options.map((opt, i) => {
+          const isSelected = selected === i;
+          const isThisCorrect = i === correctIndex;
+          let stateClasses = "border-hairline hover:border-gold";
+          if (answered && isSelected && isThisCorrect) stateClasses = "border-forest bg-forest-surface";
+          else if (answered && isSelected && !isThisCorrect) stateClasses = "border-[#DC2626] bg-[#FEF2F2]";
+          else if (answered && isThisCorrect) stateClasses = "border-forest";
+
+          return (
+            <button
+              key={i}
+              onClick={() => !answered && setSelected(i)}
+              disabled={answered}
+              className={`text-left px-4 py-3 rounded-lg border-2 text-[14px] text-ink transition-colors ${stateClasses} ${
+                answered ? "cursor-default" : "cursor-pointer"
+              }`}
+            >
+              {opt}
+              {answered && isSelected && (isThisCorrect ? " ✓" : " ✗")}
+              {answered && !isSelected && isThisCorrect && " ✓"}
+            </button>
+          );
+        })}
+      </div>
+      {answered && explanation && (
+        <div className="mt-4 pt-4 border-t border-hairline">
+          <div className={`font-mono text-[10px] tracking-widest uppercase mb-2 ${isCorrect ? "text-forest" : "text-[#DC2626]"}`}>
+            {isCorrect ? "Correct" : "Not quite"}
+          </div>
+          <p className="text-[14px] text-ink-dim leading-relaxed">{explanation}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── Table Block ──────────────────────────────────────────────────────────────
+
+function TableBlock({ value }: { value: { caption?: string; headers?: string[]; rows?: string[][] } }) {
+  const headers = value.headers ?? [];
+  const rows = value.rows ?? [];
+
+  return (
+    <div className="my-6 overflow-x-auto">
+      {value.caption && (
+        <p className="font-mono text-[11px] text-ink-dim uppercase tracking-wide mb-2">{value.caption}</p>
+      )}
+      <table className="w-full border-collapse text-[14px]">
+        <thead>
+          <tr>
+            {headers.map((h, i) => (
+              <th
+                key={i}
+                className="text-left font-semibold text-ink bg-ivory border border-hairline px-4 py-2.5 whitespace-nowrap"
+              >
+                {h}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row, ri) => (
+            <tr key={ri}>
+              {row.map((cell, ci) => (
+                <td key={ci} className="text-ink border border-hairline px-4 py-2.5 align-top">
+                  {cell}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+// ─── Stat Grid Block ──────────────────────────────────────────────────────────
+
+function StatGridBlock({ value }: { value: { stats?: { label?: string; value?: string; context?: string }[] } }) {
+  const stats = value.stats ?? [];
+  const colsClass =
+    stats.length >= 4 ? "sm:grid-cols-2 lg:grid-cols-4" : stats.length === 3 ? "sm:grid-cols-3" : "sm:grid-cols-2";
+
+  return (
+    <div className={`my-6 grid grid-cols-1 ${colsClass} gap-4`}>
+      {stats.map((s, i) => (
+        <div key={i} className="border border-hairline rounded-xl px-5 py-4 flex flex-col gap-1">
+          <div className="font-mono text-[10px] text-ink-dim tracking-widest uppercase">{s.label}</div>
+          <div className="text-[20px] font-bold text-forest leading-tight">{s.value}</div>
+          {s.context && <div className="text-[12px] text-ink-dim">{s.context}</div>}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 // ─── Portable Text Components ─────────────────────────────────────────────────
 
 const portableTextComponents: PortableTextComponents = {
@@ -119,8 +284,36 @@ const portableTextComponents: PortableTextComponents = {
         </div>
       );
     },
-    exercise: ({ value }: { value: { title?: string; steps?: string[] } }) => (
-      <ExerciseBlock title={value.title ?? ""} steps={value.steps ?? []} />
+    exercise: ({ value }: { value: any }) => {
+      const variant = value.variant ?? "checklist"; // missing variant = pre-existing checklist content
+      if (variant === "scenario") {
+        return (
+          <ScenarioExercise
+            title={value.title ?? ""}
+            scenario={value.scenario ?? ""}
+            prompt={value.prompt}
+            modelAnswer={value.modelAnswer ?? ""}
+          />
+        );
+      }
+      if (variant === "quiz") {
+        return (
+          <QuizExercise
+            title={value.title ?? ""}
+            question={value.question ?? ""}
+            options={value.options ?? []}
+            correctIndex={value.correctIndex ?? 0}
+            explanation={value.explanation}
+          />
+        );
+      }
+      return <ExerciseBlock title={value.title ?? ""} steps={value.steps ?? []} />;
+    },
+    table: ({ value }: { value: { caption?: string; headers?: string[]; rows?: string[][] } }) => (
+      <TableBlock value={value} />
+    ),
+    statGrid: ({ value }: { value: { stats?: { label?: string; value?: string; context?: string }[] } }) => (
+      <StatGridBlock value={value} />
     ),
     mathBlock: ({ value }: { value: { latex?: string; caption?: string } }) => {
       let html = "";

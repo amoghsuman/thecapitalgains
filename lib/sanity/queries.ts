@@ -98,8 +98,16 @@ export async function getLessonBySlug(courseSlug: string, lessonSlug: string) {
             _type == "exercise" => {
               _type,
               _key,
+              variant,
               title,
-              steps
+              steps,
+              scenario,
+              prompt,
+              modelAnswer,
+              question,
+              options,
+              correctIndex,
+              explanation
             },
             _type == "mathBlock" => {
               _type,
@@ -113,6 +121,18 @@ export async function getLessonBySlug(courseSlug: string, lessonSlug: string) {
               label,
               "value": value,
               context
+            },
+            _type == "table" => {
+              _type,
+              _key,
+              caption,
+              headers,
+              rows
+            },
+            _type == "statGrid" => {
+              _type,
+              _key,
+              stats
             }
           }
         }
