@@ -1,15 +1,37 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
 
 type Annotation = { x?: number; y?: number; label?: string };
 
+type SanityImageValue = {
+  asset?: { _ref?: string };
+};
+
 export type AnnotatedImageValue = {
-  image?: unknown;
+  image?: SanityImageValue;
   caption?: string;
   annotations?: Annotation[];
 };
+
+const FALLBACK_ASPECT_RATIO = 16 / 9;
+
+// Sanity image asset ids encode the source dimensions directly
+// (image-<hash>-<width>x<height>-<format>), so the real aspect ratio can be
+// read straight off the reference with no extra GROQ dereference or network
+// request. Using the real ratio for the container means `object-fit:
+// contain` never has to letterbox — the container's box IS the image's box,
+// so the percentage-based annotation positions land exactly where they're
+// meant to regardless of what aspect ratio a given upload happens to be.
+function getAspectRatio(ref?: string): number {
+  const match = ref?.match(/-(\d+)x(\d+)-/);
+  if (!match) return FALLBACK_ASPECT_RATIO;
+  const width = parseInt(match[1], 10);
+  const height = parseInt(match[2], 10);
+  return width > 0 && height > 0 ? width / height : FALLBACK_ASPECT_RATIO;
+}
 
 function AnnotationMarker({ annotation }: { annotation: Annotation }) {
   const [open, setOpen] = useState(false);
@@ -40,12 +62,21 @@ function AnnotationMarker({ annotation }: { annotation: Annotation }) {
 export default function AnnotatedImageBlock({ value }: { value: AnnotatedImageValue }) {
   if (!value.image) return null;
   const src = urlFor(value.image).width(1200).url();
+  const aspectRatio = getAspectRatio(value.image.asset?._ref);
 
   return (
     <div className="my-6">
-      <div className="relative inline-block w-full border border-hairline rounded-xl overflow-hidden bg-panel">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={src} alt={value.caption ?? ""} className="w-full h-auto block" />
+      <div
+        className="relative w-full border border-hairline rounded-xl overflow-hidden bg-panel"
+        style={{ aspectRatio }}
+      >
+        <Image
+          src={src}
+          alt={value.caption ?? ""}
+          fill
+          sizes="(min-width: 768px) 720px, 100vw"
+          style={{ objectFit: "contain" }}
+        />
         {(value.annotations ?? []).map((a, i) => (
           <AnnotationMarker key={i} annotation={a} />
         ))}
