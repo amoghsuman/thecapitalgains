@@ -1,4 +1,5 @@
 import { defineType, defineField, defineArrayMember } from 'sanity'
+import { LEARNING_PATHS } from '../lib/learningPaths'
 
 export const courseSchema = defineType({
   name: 'course',
@@ -30,32 +31,7 @@ export const courseSchema = defineType({
       type: 'string',
       description: 'e.g. Value Investing, Momentum Investing, CFA Preparation. Note: "Exam Preparation" is an umbrella path for CA, CS, CMT, CFP, NISM, CAIA, US CPA, US CMA, ACCA, CIMA, GMAT, and CAT content — CFA and FRM courses should keep using their own dedicated cfa-prep / frm-prep paths, not this one.',
       options: {
-        list: [
-          { title: 'Stock Market Basics', value: 'stock-market-basics' },
-          { title: 'Value Investing', value: 'value-investing' },
-          { title: 'Momentum Investing', value: 'momentum-investing' },
-          { title: 'Technical Trading', value: 'technical-trading' },
-          { title: 'Options & Derivatives', value: 'options-derivatives' },
-          { title: 'Mutual Funds & ETFs', value: 'mutual-funds-etfs' },
-          { title: 'Investment Banking', value: 'investment-banking' },
-          { title: 'Equity Research', value: 'equity-research' },
-          { title: 'Private Equity & Venture Capital', value: 'private-equity-vc' },
-          { title: 'CFA Preparation', value: 'cfa-prep' },
-          { title: 'FRM Preparation', value: 'frm-prep' },
-          { title: 'Financial Modelling', value: 'financial-modelling' },
-          { title: 'Quantitative Finance', value: 'quant-finance' },
-          { title: 'Algorithmic Trading', value: 'algo-trading' },
-          { title: 'Python for Finance', value: 'python-finance' },
-          { title: 'Corporate Finance', value: 'corporate-finance' },
-          { title: 'M&A & Valuation', value: 'ma-valuation' },
-          { title: 'Career Fundamentals', value: 'career-fundamentals' },
-          { title: 'Exam Preparation', value: 'exam-prep' },
-          { title: 'Macro & Markets', value: 'macro-and-markets' },
-          { title: 'Alternative Investing', value: 'alternative-investing' },
-          { title: 'Tax & Wealth Planning', value: 'tax-wealth-planning' },
-          { title: 'Forensic Accounting & Compliance', value: 'forensic-compliance' },
-          { title: 'Fintech Careers', value: 'fintech-careers' },
-        ],
+        list: LEARNING_PATHS.map(p => ({ title: p.title, value: p.value })),
       },
       initialValue: 'stock-market-basics',
     }),
