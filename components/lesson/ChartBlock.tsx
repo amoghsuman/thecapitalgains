@@ -50,14 +50,14 @@ export default function ChartBlock({ value }: { value: ChartBlockValue }) {
   const tooltipStyle = { background: "#FFFFFF", border: `1px solid ${GRID_COLOR}`, borderRadius: 8, fontSize: 12 };
 
   return (
-    <div className="my-6">
+    <div className="mt-8">
       {(value.title || value.yAxisLabel) && (
         <div className="flex items-baseline justify-between mb-3 gap-3">
           {value.title && <p className="font-mono text-[11px] text-ink-dim uppercase tracking-wide">{value.title}</p>}
           {value.yAxisLabel && <p className="font-mono text-[10px] text-ink-dim/70">{value.yAxisLabel}</p>}
         </div>
       )}
-      <div className="border border-hairline rounded-xl bg-panel px-4 py-5">
+      <div className="border border-hairline border-t-4 border-t-forest rounded-xl bg-panel px-4 py-5">
         <ResponsiveContainer width="100%" height={320}>
           {chartType === "bar" ? (
             <BarChart data={chartData} margin={CHART_MARGIN}>

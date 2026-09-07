@@ -49,9 +49,9 @@ function ExerciseBlock({ title, steps }: { title: string; steps: string[] }) {
   const allDone = checked.size === steps.length;
 
   return (
-    <div className={`rounded-xl p-6 mt-10 border-2 ${allDone ? "border-forest bg-forest-surface" : "border-ink bg-panel"}`}>
-      <div className={`font-mono text-[11px] tracking-widest uppercase mb-4 ${allDone ? "text-forest" : "text-ink"}`}>
-        Exercise · {title}
+    <div className="rounded-xl p-6 mt-8 border-l-4 border-forest bg-forest-surface">
+      <div className={`flex items-center gap-2 font-mono text-[11px] tracking-widest uppercase mb-4 ${allDone ? "text-forest" : "text-ink"}`}>
+        <span className="text-[13px] leading-none">☑</span> Exercise · {title}
       </div>
       <div className="flex flex-col gap-3">
         {steps.map((step, i) => (
@@ -104,9 +104,9 @@ function ScenarioExercise({
   const [revealed, setRevealed] = useState(false);
 
   return (
-    <div className="rounded-xl p-6 mt-10 border-2 border-hairline bg-panel">
-      <div className="font-mono text-[11px] tracking-widest uppercase mb-4 text-ink">
-        Scenario · {title}
+    <div className="rounded-xl p-6 mt-8 border-l-4 border-gold bg-gold-surface">
+      <div className="flex items-center gap-2 font-mono text-[11px] tracking-widest uppercase mb-4 text-gold-text">
+        <span className="text-[13px] leading-none">🎯</span> Scenario · {title}
       </div>
       <p className="text-[15px] text-ink leading-relaxed mb-4">{scenario}</p>
       {prompt && (
@@ -151,9 +151,9 @@ function QuizExercise({
   const isCorrect = selected === correctIndex;
 
   return (
-    <div className="rounded-xl p-6 mt-10 border-2 border-hairline bg-panel">
-      <div className="font-mono text-[11px] tracking-widest uppercase mb-4 text-ink">
-        Quick Check · {title}
+    <div className="rounded-xl p-6 mt-8 border-l-4 border-forest bg-ivory">
+      <div className="flex items-center gap-2 font-mono text-[11px] tracking-widest uppercase mb-4 text-forest">
+        <span className="text-[13px] leading-none">❓</span> Quick Check · {title}
       </div>
       <p className="text-[15px] text-ink leading-relaxed mb-4 font-medium">{question}</p>
       <div className="flex flex-col gap-2.5">
@@ -214,8 +214,10 @@ function FillInTheBlankExercise({
   const [before, after] = textWithBlank.split("___");
 
   return (
-    <div className="rounded-xl p-6 mt-10 border-2 border-hairline bg-panel">
-      <div className="font-mono text-[11px] tracking-widest uppercase mb-4 text-ink">Fill in the Blank · {title}</div>
+    <div className="rounded-xl p-6 mt-8 border-l-4 border-gold bg-ivory">
+      <div className="flex items-center gap-2 font-mono text-[11px] tracking-widest uppercase mb-4 text-gold-text">
+        <span className="text-[13px] leading-none">✏️</span> Fill in the Blank · {title}
+      </div>
       <p className="text-[15px] text-ink leading-relaxed mb-4">
         {before}
         <input
@@ -273,8 +275,10 @@ function NumericInputExercise({
   const isCorrect = Number.isFinite(numericValue) && Math.abs(numericValue - correctValue) <= tolerance;
 
   return (
-    <div className="rounded-xl p-6 mt-10 border-2 border-hairline bg-panel">
-      <div className="font-mono text-[11px] tracking-widest uppercase mb-4 text-ink">Quick Check · {title}</div>
+    <div className="rounded-xl p-6 mt-8 border-l-4 border-ink bg-ivory">
+      <div className="flex items-center gap-2 font-mono text-[11px] tracking-widest uppercase mb-4 text-ink">
+        <span className="text-[13px] leading-none">🔢</span> Quick Check · {title}
+      </div>
       <p className="text-[15px] text-ink leading-relaxed mb-4 font-medium">{prompt}</p>
       <div className="flex items-center gap-2 mb-4">
         {unit && <span className="font-mono text-[14px] text-ink-dim">{unit}</span>}
@@ -310,12 +314,25 @@ function NumericInputExercise({
 
 // ─── Table Block ──────────────────────────────────────────────────────────────
 
+// Authors can wrap a cell's text in **like this** to flag it as a key figure
+// worth calling out (a negative number, a headline stat) — no schema change,
+// it's a plain string convention checked here at render time.
+function renderCell(cell: string) {
+  const isHighlighted = cell.startsWith("**") && cell.endsWith("**") && cell.length > 4;
+  if (!isHighlighted) return cell;
+  return (
+    <span className="font-bold text-gold-text bg-gold-surface px-1.5 py-0.5 rounded">
+      {cell.slice(2, -2)}
+    </span>
+  );
+}
+
 function TableBlock({ value }: { value: { caption?: string; headers?: string[]; rows?: { cells?: string[] }[] } }) {
   const headers = value.headers ?? [];
   const rows = value.rows ?? [];
 
   return (
-    <div className="my-6 overflow-x-auto">
+    <div className="mt-8 overflow-x-auto">
       {value.caption && (
         <p className="font-mono text-[11px] text-ink-dim uppercase tracking-wide mb-2">{value.caption}</p>
       )}
@@ -325,7 +342,7 @@ function TableBlock({ value }: { value: { caption?: string; headers?: string[]; 
             {headers.map((h, i) => (
               <th
                 key={i}
-                className="text-left font-semibold text-ink bg-ivory border border-hairline px-4 py-2.5 whitespace-nowrap"
+                className="text-left font-semibold text-forest bg-forest-surface border border-hairline border-b-2 border-b-forest px-4 py-2.5 whitespace-nowrap"
               >
                 {h}
               </th>
@@ -334,10 +351,10 @@ function TableBlock({ value }: { value: { caption?: string; headers?: string[]; 
         </thead>
         <tbody>
           {rows.map((row, ri) => (
-            <tr key={ri}>
+            <tr key={ri} className={ri % 2 === 1 ? "bg-ivory/60" : ""}>
               {(row.cells ?? []).map((cell, ci) => (
                 <td key={ci} className="text-ink border border-hairline px-4 py-2.5 align-top">
-                  {cell}
+                  {renderCell(cell)}
                 </td>
               ))}
             </tr>
@@ -356,9 +373,9 @@ function StatGridBlock({ value }: { value: { stats?: { label?: string; value?: s
     stats.length >= 4 ? "sm:grid-cols-2 lg:grid-cols-4" : stats.length === 3 ? "sm:grid-cols-3" : "sm:grid-cols-2";
 
   return (
-    <div className={`my-6 grid grid-cols-1 ${colsClass} gap-4`}>
+    <div className={`mt-8 grid grid-cols-1 ${colsClass} gap-4`}>
       {stats.map((s, i) => (
-        <div key={i} className="border border-hairline rounded-xl px-5 py-4 flex flex-col gap-1">
+        <div key={i} className="border border-hairline border-t-4 border-t-forest rounded-xl bg-ivory/40 px-5 py-4 flex flex-col gap-1">
           <div className="font-mono text-[10px] text-ink-dim tracking-widest uppercase">{s.label}</div>
           <div className="text-[20px] font-bold text-forest leading-tight">{s.value}</div>
           {s.context && <div className="text-[12px] text-ink-dim">{s.context}</div>}
@@ -373,26 +390,26 @@ function StatGridBlock({ value }: { value: { stats?: { label?: string; value?: s
 const portableTextComponents: PortableTextComponents = {
   block: {
     normal: ({ children }) => (
-      <p className="text-[17px] text-ink leading-[1.85] mb-5">{children}</p>
+      <p className="text-[17px] text-ink leading-[1.85] mt-4">{children}</p>
     ),
     h2: ({ children }) => (
-      <h2 className="text-[22px] font-bold text-ink mt-8 mb-4 leading-snug">{children}</h2>
+      <h2 className="text-[22px] font-bold text-ink mt-10 mb-2 leading-snug">{children}</h2>
     ),
     h3: ({ children }) => (
-      <h3 className="text-[18px] font-bold text-ink mt-6 mb-3">{children}</h3>
+      <h3 className="text-[18px] font-bold text-ink mt-8 mb-2">{children}</h3>
     ),
     blockquote: ({ children }) => (
-      <p className="text-[17px] text-ink leading-[1.85] italic border-l-[3px] border-gold pl-5 py-1">
+      <p className="text-[17px] text-ink leading-[1.85] italic border-l-[3px] border-gold pl-5 py-1 mt-4">
         {children}
       </p>
     ),
   },
   list: {
     bullet: ({ children }) => (
-      <ul className="flex flex-col gap-2 pl-4 list-disc text-[16px] text-ink">{children}</ul>
+      <ul className="flex flex-col gap-2 pl-4 list-disc text-[16px] text-ink mt-4">{children}</ul>
     ),
     number: ({ children }) => (
-      <ol className="flex flex-col gap-2 pl-4 list-decimal text-[16px] text-ink">{children}</ol>
+      <ol className="flex flex-col gap-2 pl-4 list-decimal text-[16px] text-ink mt-4">{children}</ol>
     ),
   },
   listItem: {
@@ -402,10 +419,14 @@ const portableTextComponents: PortableTextComponents = {
   types: {
     callout: ({ value }: { value: { type?: string; text?: string } }) => {
       if (value.type === "warning") {
+        // Cautionary — Gold, distinct from insight's Forest treatment.
         return (
-          <div className="bg-[#FEF2F2] border border-[rgba(220,38,38,0.2)] rounded-xl px-5 py-4">
-            <div className="font-mono text-[10px] text-[#DC2626] tracking-widest uppercase mb-2">⚠ Watch Out</div>
-            <p className="text-[14px] text-[#7A2010] leading-relaxed">{value.text}</p>
+          <div className="mt-8 border-l-4 border-gold bg-gold-surface rounded-xl px-5 py-4">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-[13px] leading-none">⚠</span>
+              <span className="font-mono text-[10px] text-gold-text tracking-widest uppercase">Watch Out</span>
+            </div>
+            <p className="text-[14px] text-ink leading-relaxed">{value.text}</p>
           </div>
         );
       }
@@ -413,16 +434,23 @@ const portableTextComponents: PortableTextComponents = {
         // Deliberately neutral — not alarming (warning) or celebratory
         // (insight). Meant to read unmistakably as a compliance/scope note.
         return (
-          <div className="bg-[#F4F3EF] border border-hairline rounded-xl px-5 py-4">
-            <div className="font-mono text-[10px] text-ink-dim tracking-widest uppercase mb-2">ⓘ Disclaimer</div>
+          <div className="mt-8 border-l-4 border-hairline bg-[#F4F3EF] rounded-xl px-5 py-4">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-[13px] leading-none">ⓘ</span>
+              <span className="font-mono text-[10px] text-ink-dim tracking-widest uppercase">Disclaimer</span>
+            </div>
             <p className="text-[14px] text-ink-dim leading-relaxed">{value.text}</p>
           </div>
         );
       }
+      // Insight — Forest Green, positive/informative.
       return (
-        <div className="bg-gold-surface border border-gold rounded-xl px-5 py-4">
-          <div className="font-mono text-[10px] text-gold-text tracking-widest uppercase mb-2">Key Insight</div>
-          <p className="text-[14px] text-gold-text leading-relaxed font-medium">{value.text}</p>
+        <div className="mt-8 border-l-4 border-forest bg-forest-surface rounded-xl px-5 py-4">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-[13px] leading-none">💡</span>
+            <span className="font-mono text-[10px] text-forest tracking-widest uppercase">Key Insight</span>
+          </div>
+          <p className="text-[14px] text-ink leading-relaxed font-medium">{value.text}</p>
         </div>
       );
     },
@@ -487,8 +515,8 @@ const portableTextComponents: PortableTextComponents = {
         html = `<span style="color:#DC2626">${value.latex}</span>`;
       }
       return (
-        <div className="my-6 overflow-x-auto">
-          <div className="bg-forest-surface rounded-xl px-6 py-5 text-center" dangerouslySetInnerHTML={{ __html: html }} />
+        <div className="mt-8 overflow-x-auto">
+          <div className="bg-forest-surface border-l-4 border-forest rounded-xl px-6 py-5 text-center" dangerouslySetInnerHTML={{ __html: html }} />
           {value.caption && (
             <p className="font-mono text-[11px] text-ink-dim text-center mt-2 tracking-wide">{value.caption}</p>
           )}
@@ -496,9 +524,9 @@ const portableTextComponents: PortableTextComponents = {
       );
     },
     keyFact: ({ value }: { value: { label?: string; value?: string; context?: string } }) => (
-      <div className="my-5 border border-hairline rounded-xl px-6 py-4 flex flex-col gap-1">
-        <div className="font-mono text-[10px] text-ink-dim tracking-widest uppercase">{value.label}</div>
-        <div className="text-[22px] font-bold text-ink leading-tight">{value.value}</div>
+      <div className="mt-8 border-l-4 border-gold bg-gold-surface rounded-xl px-6 py-4 flex flex-col gap-1">
+        <div className="font-mono text-[10px] text-gold-text tracking-widest uppercase">{value.label}</div>
+        <div className="text-[22px] font-bold text-forest leading-tight">{value.value}</div>
         {value.context && (
           <div className="text-[13px] text-ink-dim">{value.context}</div>
         )}
@@ -587,7 +615,12 @@ export default function ReaderPage() {
   const courseSlug = typeof params.course === "string" ? params.course : "";
   const lessonSlug = typeof params.lesson === "string" ? params.lesson : "";
 
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  // Starts closed: on mobile the sidebar renders as a `fixed` z-30 drawer
+  // that sits directly on top of this same top bar's hamburger button, so
+  // defaulting it open made the toggle unclickable on first load (the drawer
+  // itself was intercepting the click). Desktop is unaffected — `lg:transform-none`
+  // below keeps the sidebar permanently visible there regardless of this state.
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [completedLessons, setCompletedLessons] = useState<Set<string>>(new Set());
   const [activeLesson, setActiveLesson] = useState(lessonSlug);
 
@@ -988,7 +1021,7 @@ export default function ReaderPage() {
               Loading lesson...
             </div>
           ) : lesson ? (
-            <div className="max-w-[720px] mx-auto px-8 py-12">
+            <div className="max-w-[720px] mx-auto px-8 pt-12 pb-24">
               {/* Disclaimer */}
               <div className="font-mono text-[11px] text-ink-dim mb-6">
                 Educational content only · Not investment advice
@@ -1007,34 +1040,36 @@ export default function ReaderPage() {
                 )}
               </div>
 
-              {/* Content */}
-              <div className="flex flex-col gap-5">
+              {/* Content — each block owns its own top margin (see the
+                  tiered spacing scale across portableTextComponents below),
+                  so this wrapper applies no gap of its own. */}
+              <div className="[&>*:first-child]:!mt-0">
                 <PortableText value={lesson.body || []} components={portableTextComponents} />
               </div>
 
-              {/* Nav footer */}
-              <div className="flex items-center justify-between mt-12 pt-6 border-t border-hairline">
-                {prevLesson ? (
+              {/* Nav footer — stacks on narrow screens, sits as a row from
+                  sm: up; both sides truncate long titles so a long prev/next
+                  lesson name can never force an awkward wrap or overlap. */}
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mt-16 pt-8 border-t border-hairline">
+                {prevLesson && (
                   <button
                     onClick={() => setActiveLesson(prevLesson.slug)}
-                    className="font-mono text-[13px] text-ink-dim hover:text-ink transition-colors"
+                    className="min-w-0 flex-1 sm:max-w-[50%] font-mono text-[13px] text-ink-dim hover:text-ink transition-colors text-left truncate"
                   >
                     ← {prevLesson.title}
                   </button>
-                ) : (
-                  <div />
                 )}
                 {nextLesson ? (
                   <button
                     onClick={markCompleteAndNext}
-                    className="bg-forest hover:bg-forest-dark text-white rounded-lg px-6 py-2.5 font-mono text-[13px] font-medium transition-colors"
+                    className={`min-w-0 ${prevLesson ? "sm:max-w-[55%]" : "sm:max-w-[85%]"} sm:ml-auto bg-forest hover:bg-forest-dark text-white rounded-lg px-6 py-2.5 font-mono text-[13px] font-medium transition-colors truncate`}
                   >
                     Next: {nextLesson.title} →
                   </button>
                 ) : (
                   <button
                     onClick={markFinalComplete}
-                    className="bg-forest hover:bg-forest-dark text-white rounded-lg px-6 py-2.5 font-mono text-[13px] font-medium transition-colors"
+                    className="sm:ml-auto bg-forest hover:bg-forest-dark text-white rounded-lg px-6 py-2.5 font-mono text-[13px] font-medium transition-colors"
                   >
                     Mark complete ✓
                   </button>

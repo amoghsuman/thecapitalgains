@@ -15,7 +15,7 @@ export default function CollapsibleBlock({
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="my-6 border border-hairline rounded-xl bg-panel overflow-hidden">
+    <div className="mt-8 border border-hairline hover:border-gold rounded-xl bg-panel overflow-hidden transition-colors">
       <button onClick={() => setOpen((o) => !o)} className="w-full flex items-center justify-between gap-3 px-5 py-4 text-left" aria-expanded={open}>
         <span className="text-[15px] font-medium text-ink">{title}</span>
         <svg

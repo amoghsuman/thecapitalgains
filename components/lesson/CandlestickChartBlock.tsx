@@ -50,9 +50,9 @@ export default function CandlestickChartBlock({ value }: { value: CandlestickCha
   const data = (value.data ?? []).filter((c) => c.date);
 
   return (
-    <div className="my-6">
+    <div className="mt-8">
       {value.title && <p className="font-mono text-[11px] text-ink-dim uppercase tracking-wide mb-3">{value.title}</p>}
-      <div className="border border-hairline rounded-xl bg-panel px-4 py-5">
+      <div className="border border-hairline border-t-4 border-t-forest rounded-xl bg-panel px-4 py-5">
         <ResponsiveContainer width="100%" height={340}>
           <ComposedChart data={data} margin={{ top: 5, right: 10, left: 0, bottom: 4 }}>
             <CartesianGrid stroke={GRID_COLOR} strokeDasharray="3 3" vertical={false} />

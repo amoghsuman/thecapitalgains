@@ -4,7 +4,7 @@ export default function KeyTakeawaysBlock({ value }: { value: KeyTakeawaysValue 
   const points = value.points ?? [];
 
   return (
-    <div className="my-8 border-2 border-forest rounded-xl bg-forest-surface px-6 py-5">
+    <div className="mt-8 border-2 border-forest rounded-xl bg-forest-surface px-6 py-5">
       <div className="font-mono text-[11px] text-forest tracking-widest uppercase mb-4">Key Takeaways</div>
       <ul className="flex flex-col gap-3">
         {points.map((point, i) => (

@@ -8,7 +8,7 @@ export default function ToolLinkBlock({ value }: { value: ToolLinkValue }) {
       href={value.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="my-6 flex items-center justify-between gap-4 border-2 border-forest rounded-xl bg-forest-surface px-5 py-4 hover:bg-forest hover:text-white group transition-colors"
+      className="mt-8 flex items-center justify-between gap-4 border-2 border-forest rounded-xl bg-forest-surface px-5 py-4 hover:bg-forest hover:text-white group transition-colors"
     >
       <div>
         <div className="text-[15px] font-bold text-forest group-hover:text-white transition-colors">{value.label}</div>

@@ -65,7 +65,7 @@ export default function AnnotatedImageBlock({ value }: { value: AnnotatedImageVa
   const aspectRatio = getAspectRatio(value.image.asset?._ref);
 
   return (
-    <div className="my-6">
+    <div className="mt-8">
       <div
         className="relative w-full border border-hairline rounded-xl overflow-hidden bg-panel"
         style={{ aspectRatio }}

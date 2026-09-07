@@ -15,9 +15,9 @@ export default function DonutChartBlock({ value }: { value: DonutChartValue }) {
   const data = (value.data ?? []).map((d) => ({ name: d.label ?? "", value: d.value ?? 0 }));
 
   return (
-    <div className="my-6">
+    <div className="mt-8">
       {value.title && <p className="font-mono text-[11px] text-ink-dim uppercase tracking-wide mb-3">{value.title}</p>}
-      <div className="border border-hairline rounded-xl bg-panel px-4 py-5">
+      <div className="border border-hairline border-t-4 border-t-gold rounded-xl bg-panel px-4 py-5">
         <ResponsiveContainer width="100%" height={320}>
           <PieChart>
             <Pie data={data} dataKey="value" nameKey="name" innerRadius={70} outerRadius={110} paddingAngle={2}>

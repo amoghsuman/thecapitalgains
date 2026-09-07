@@ -65,14 +65,14 @@ export default function PayoffDiagramBlock({ value }: { value: PayoffDiagramValu
   const instrumentLabel = instrumentType === "futures" ? "Futures" : instrumentType === "put" ? "Put" : "Call";
 
   return (
-    <div className="my-6">
+    <div className="mt-8">
       <p className="font-mono text-[11px] text-ink-dim uppercase tracking-wide mb-3">
         {position === "short" ? "Short" : "Long"} {instrumentLabel} — Payoff Diagram
       </p>
       <div className="flex items-baseline justify-between mb-2">
         <span className="font-mono text-[10px] text-ink-dim/70">Profit / Loss (₹)</span>
       </div>
-      <div className="border border-hairline rounded-xl bg-panel px-4 py-5">
+      <div className="border border-hairline border-t-4 border-t-gold rounded-xl bg-panel px-4 py-5">
         <ResponsiveContainer width="100%" height={320}>
           <ComposedChart data={data} margin={{ top: 5, right: 10, left: 0, bottom: 4 }}>
             <CartesianGrid stroke={GRID_COLOR} strokeDasharray="3 3" vertical={false} />
