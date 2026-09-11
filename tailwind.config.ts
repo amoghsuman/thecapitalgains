@@ -27,12 +27,14 @@ const config: Config = {
           dark: "#173224",   // ~15% toward black — hover/active states
           tint: "#98A6A0",   // ~55% toward white — light differentiator (e.g. PathNavigator step 3)
           surface: "#EDEFEE", // ~8% toward white — pale badge/card fill
+          badge: "#E4EAE4",  // more saturated than `surface` — `surface` reads as flat grey at small-pill sizes (~10:1 contrast with `forest` text)
         },
         gold: {
           DEFAULT: "#A9822F",
           dark: "#8A6825",   // ~20% toward black — hover states
           text: "#6E5620",   // ~25% toward black — body text on light-gold fills (AA contrast)
           surface: "#F6F3EA", // ~10% toward white — pale badge/card fill
+          badge: "#F2E9D6",  // more saturated than `surface` — `surface` reads as flat grey at small-pill sizes; pair with `gold-text`, not `gold` DEFAULT (~2.9:1, fails AA) for the ~5.8:1 contrast
         },
         ink: {
           DEFAULT: "#1A1A18",

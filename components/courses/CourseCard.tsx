@@ -52,7 +52,7 @@ export default function CourseCard({ course }: { course: CourseCardData }) {
   const statusLabel = isCompleted ? "Completed" : hasStarted ? `${Math.min(pct, 100)}% done` : "Not started";
 
   const masterItems = (whatYouLearn ?? []).slice(0, 3);
-  const topicChips = (topics ?? []).slice(0, 3);
+  const topicChips = (topics ?? []).slice(0, 2);
 
   return (
     <div
@@ -112,19 +112,18 @@ export default function CourseCard({ course }: { course: CourseCardData }) {
         </div>
       )}
 
-      {/* 6-7. Hairline + topic chips, single row — collapses entirely when empty.
-          Horizontally scrollable rather than truncated: topic strings run up to
-          ~28 chars, too long for 3-per-row without cutting mid-word, which is
-          exactly the failure mode this pass removed from the description. */}
+      {/* 6-7. Hairline + up to 2 topic chips — collapses entirely when empty.
+          Capped to 2 (not however many exist) and allowed to wrap to a second
+          line rather than scrolling or clipping: topic strings run long enough
+          (~28 chars) that a fixed-width single row was cutting them mid-word.
+          min-h reserves 2 lines' worth of space so the card stays a uniform
+          height whether a course's 2 chips wrap or not. */}
       {topicChips.length > 0 && (
-        <div
-          className="flex flex-nowrap gap-1.5 mt-4 pt-4 border-t border-hairline overflow-x-auto [&::-webkit-scrollbar]:hidden"
-          style={{ scrollbarWidth: "none" }}
-        >
+        <div className="flex flex-wrap gap-1.5 mt-4 pt-4 border-t border-hairline min-h-[56px]">
           {topicChips.map((topic) => (
             <span
               key={topic}
-              className="inline-flex items-center flex-shrink-0 border border-hairline text-ink-dim text-[11px] font-medium px-2.5 py-1 rounded-full whitespace-nowrap"
+              className="inline-flex items-center border border-hairline text-ink-dim text-[11px] font-medium px-2.5 py-1 rounded-full"
             >
               {topic}
             </span>
@@ -132,9 +131,14 @@ export default function CourseCard({ course }: { course: CourseCardData }) {
         </div>
       )}
 
-      {/* 8-9. Hairline + footer — always present, pinned to the bottom via margin-top: auto */}
-      <div className="flex items-center justify-between gap-3 pt-3 mt-auto border-t border-hairline">
-        <span className="text-[11.5px] font-medium text-ink-dim">
+      {/* 8-9. Hairline + footer — always present, pinned to the bottom via margin-top: auto.
+          flex-wrap + a min-w-0 text span: found the status text and the button
+          overlapping instead of wrapping at 320px while testing this pass's
+          fixes (pre-existing, not caused by either fix below — nothing above
+          touches this row — but it's the same "don't overflow" quality bar
+          this pass is held to, so fixed here too). */}
+      <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5 pt-3 mt-auto border-t border-hairline">
+        <span className="text-[11.5px] font-medium text-ink-dim min-w-0">
           {totalLessons > 0 ? `${totalLessons} Lesson${totalLessons === 1 ? "" : "s"}` : "Lessons TBD"}
           {" · "}
           {statusLabel}
