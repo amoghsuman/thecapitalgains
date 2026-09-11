@@ -19,6 +19,7 @@ export async function getAllCourses(learningPath?: string) {
       duration,
       description,
       topics,
+      whatYouLearn,
       learningPath,
       orderRank
     }

@@ -47,6 +47,7 @@ type Course = {
   duration: string | null;
   description: string | null;
   topics: string[] | null;
+  whatYouLearn: string[] | null;
   learningPath: string | null;
   orderRank: number | null;
 };
@@ -146,8 +147,11 @@ export default function CoursesPage() {
     slug: c.slug,
     title: c.title,
     tag: c.tag,
+    badge: c.badge,
     duration: c.duration,
     description: c.description,
+    topics: c.topics,
+    whatYouLearn: c.whatYouLearn,
     completedCount: progressMap[c.slug] || 0,
     totalLessons: c.lessonsCount || 0,
     resumeLessonSlug: enrollmentMap[c.slug],
