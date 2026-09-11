@@ -52,11 +52,11 @@ export default function CourseCard({ course }: { course: CourseCardData }) {
   const statusLabel = isCompleted ? "Completed" : hasStarted ? `${Math.min(pct, 100)}% done` : "Not started";
 
   const masterItems = (whatYouLearn ?? []).slice(0, 3);
-  const topicChips = (topics ?? []).slice(0, 2);
+  const topicChips = topics ?? [];
 
   return (
     <div
-      className="flex flex-col rounded-2xl border border-hairline bg-panel p-5 h-[540px]
+      className="flex flex-col rounded-2xl border border-hairline bg-panel p-5 h-full
         hover:border-forest/40 hover:shadow-md motion-safe:transition-all motion-safe:duration-200"
     >
       {/* 1. Badge row — level + optional flag badge, duration only on the right */}
@@ -86,19 +86,25 @@ export default function CourseCard({ course }: { course: CourseCardData }) {
 
       {/* 3. Description — CSS-clamped to 2 lines, never a manual/substring truncation */}
       {description ? (
-        <p className="text-[13.5px] text-ink-dim leading-relaxed mt-2 min-h-[44px] line-clamp-2">
+        <p className="text-[12.5px] text-ink-dim leading-relaxed mt-2 min-h-[40px] line-clamp-2">
           {description}
         </p>
       ) : (
-        <p className="text-[13.5px] text-ink-dim/50 italic leading-relaxed mt-2 min-h-[44px]">
+        <p className="text-[12.5px] text-ink-dim/50 italic leading-relaxed mt-2 min-h-[40px]">
           Description coming soon.
         </p>
       )}
 
-      {/* 4-5. Hairline + "What You Master" checklist — collapses entirely when empty */}
+      {/* 4-5. Hairline + "What You Master" checklist — collapses entirely when empty.
+          Label uses gold-text (not ink-dim) and the mono face, for a distinct
+          register from body text — see LevelBadge.tsx for why gold-text
+          (not gold DEFAULT) is the contrast-safe choice on a light background. */}
       {masterItems.length > 0 && (
         <div className="mt-4 pt-4 border-t border-hairline">
-          <div className="text-[10px] font-bold uppercase tracking-widest text-ink-dim/80 mb-2">
+          <div
+            className="text-[10px] font-medium uppercase tracking-widest text-gold-text mb-2"
+            style={{ fontFamily: "var(--font-course-mono)" }}
+          >
             What You Master
           </div>
           <ul className="space-y-1.5">
@@ -112,14 +118,13 @@ export default function CourseCard({ course }: { course: CourseCardData }) {
         </div>
       )}
 
-      {/* 6-7. Hairline + up to 2 topic chips — collapses entirely when empty.
-          Capped to 2 (not however many exist) and allowed to wrap to a second
-          line rather than scrolling or clipping: topic strings run long enough
-          (~28 chars) that a fixed-width single row was cutting them mid-word.
-          min-h reserves 2 lines' worth of space so the card stays a uniform
-          height whether a course's 2 chips wrap or not. */}
+      {/* 6-7. Hairline + topic chips — collapses entirely when empty. Renders
+          every topic (was capped at 2 with a reserved min-height; both
+          removed — that was fighting the natural content height this pass
+          asks the card to have). flex-wrap only wraps to a 2nd line when a
+          course's actual topics need it, no reserved space either way. */}
       {topicChips.length > 0 && (
-        <div className="flex flex-wrap gap-1.5 mt-4 pt-4 border-t border-hairline min-h-[56px]">
+        <div className="flex flex-wrap gap-1.5 mt-4 pt-4 border-t border-hairline">
           {topicChips.map((topic) => (
             <span
               key={topic}

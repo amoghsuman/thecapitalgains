@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
-import { Source_Serif_4, IBM_Plex_Sans } from "next/font/google";
+import { Source_Serif_4, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import { getAllCourses } from "@/lib/sanity/queries";
 import { createClient } from "@/lib/supabase/client";
 import { LEARNING_PATHS } from "@/sanity/lib/learningPaths";
@@ -23,6 +23,11 @@ const coursePlexSans = IBM_Plex_Sans({
   variable: "--font-course-sans",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+});
+const coursePlexMono = IBM_Plex_Mono({
+  variable: "--font-course-mono",
+  subsets: ["latin"],
+  weight: ["400", "500"],
 });
 
 const LEVEL_PILLS = [
@@ -119,6 +124,15 @@ export default function CoursesPage() {
     loadProgress();
   }, []);
 
+  // Levels isn't queried from Sanity like the other two counts — `tag` is a
+  // free-text field with real outliers ("Foundation", "Beginner →
+  // Intermediate"), so counting distinct raw values would show something
+  // like "6 Levels" and misrepresent the 3-level taxonomy the filter pills
+  // (and the badge contrast fix) are actually built around. LEVEL_PILLS is
+  // that taxonomy's single source of truth, so derive from it instead.
+  const courseCount = courses.length;
+  const levelCount = LEVEL_PILLS.length - 1;
+
   const uniquePaths = useMemo(() => {
     const seen = new Set<string>();
     courses.forEach((c) => { if (c.learningPath) seen.add(c.learningPath); });
@@ -197,70 +211,84 @@ export default function CoursesPage() {
 
   return (
     <div
-      className={`${courseSerif.variable} ${coursePlexSans.variable} min-h-screen pb-20`}
+      className={`${courseSerif.variable} ${coursePlexSans.variable} ${coursePlexMono.variable} min-h-screen pb-20`}
       style={{ fontFamily: "var(--font-course-sans)" }}
     >
 
-      {/* ── HEADER ── */}
-      <div className="pt-32 pb-20">
-        <div className="site-container">
-          <div className="inline-flex items-center gap-2 bg-forest-surface border border-hairline rounded-full px-4 py-1.5 mb-6">
-            <div className="premium-glow-dot" />
-            <span className="text-[10px] text-gold-text tracking-[0.2em] uppercase font-semibold">Curriculum Explorer</span>
+      {/* ── HERO BAND — heading through the resume/sign-in strip reads as one
+          composed band (panel-white against the ivory page background),
+          closed with a hairline rule ── */}
+      <div className="bg-panel border-b border-hairline">
+        <div className="pt-32 pb-10">
+          <div className="site-container">
+            <div className="inline-flex items-center gap-2 bg-forest-surface border border-hairline rounded-full px-4 py-1.5 mb-6">
+              <div className="premium-glow-dot" />
+              <span className="text-[10px] text-gold-text tracking-[0.2em] uppercase font-semibold">Curriculum Explorer</span>
+            </div>
+            <h1
+              className="text-4xl font-semibold text-ink tracking-tight leading-tight"
+              style={{ fontFamily: "var(--font-course-serif)" }}
+            >
+              Our Learning Paths
+            </h1>
+            <p className="text-ink-dim text-[16px] mt-2 max-w-2xl leading-relaxed">
+              Rigorous, high-density courses built for quick scanning and faster decisions.
+              Filter by strategy and find your edge.
+            </p>
+            <div
+              className="text-[11px] text-ink-dim tracking-[0.1em] uppercase mt-4"
+              style={{ fontFamily: "var(--font-course-mono)" }}
+            >
+              {courseCount} Courses · {uniquePaths.length} Tracks · {levelCount} Levels
+            </div>
           </div>
-          <h1
-            className="text-4xl font-semibold text-ink tracking-tight leading-tight"
-            style={{ fontFamily: "var(--font-course-serif)" }}
-          >
-            Our Learning Paths
-          </h1>
-          <p className="text-ink-dim text-[16px] mt-2 max-w-2xl leading-relaxed">
-            High-density, text-first curriculum designed for quick scanning and decision making.
-            No fluff. Filter by strategy to start your edge.
-          </p>
         </div>
+
+        {(!user || (user && coursesInProgress.length > 0)) && (
+          <div className="site-container pb-8">
+            {/* Sign-in nudge — only when logged out */}
+            {!user && (
+              <div style={{ background: '#EDEFEE', border: '1px solid #DFD9C8', borderRadius: '12px', padding: '12px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px' }}>
+                <span style={{ fontSize: '13px', color: '#6E6A5F' }}>
+                  Sign in to track your progress and resume where you left off.
+                </span>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <a href="/auth/login" style={{ fontSize: '13px', fontWeight: 600, color: '#1B3A2B', textDecoration: 'none' }}>Sign in</a>
+                  <span style={{ color: '#6E6A5F' }}>·</span>
+                  <a href="/auth/signup" style={{ fontSize: '13px', fontWeight: 600, color: '#A9822F', textDecoration: 'none' }}>Join free</a>
+                </div>
+              </div>
+            )}
+
+            {/* Resume banner — only when logged in with progress — unchanged */}
+            {user && coursesInProgress.length > 0 && (
+              <div style={{ background: '#F6F3EA', border: '1px solid rgba(169,130,47,0.25)', borderRadius: '12px', padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px' }}>
+                <div>
+                  <div style={{ fontSize: '11px', fontWeight: 700, color: '#A9822F', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '2px' }}>Pick up where you left off</div>
+                  <div style={{ fontSize: '13px', color: '#1A1A18', fontWeight: 500 }}>
+                    {coursesInProgress.length} course{coursesInProgress.length > 1 ? 's' : ''} in progress · {totalCompletedLessons} lessons completed
+                  </div>
+                </div>
+                <a
+                  href={
+                    lastAccessedOrder[0]
+                      ? (enrollmentMap[lastAccessedOrder[0]]
+                          ? `/learn/${lastAccessedOrder[0]}/${enrollmentMap[lastAccessedOrder[0]]}`
+                          : `/courses/${lastAccessedOrder[0]}`)
+                      : "/courses"
+                  }
+                  style={{ background: '#1B3A2B', color: 'white', borderRadius: '8px', padding: '8px 16px', fontSize: '13px', fontWeight: 600, textDecoration: 'none', whiteSpace: 'nowrap' }}
+                >
+                  Resume learning →
+                </a>
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {/* ── CONTROLS ── */}
-      <div className="site-container -mt-8 relative z-10">
-
-        {/* Sign-in nudge — only when logged out */}
-        {!user && (
-          <div style={{ background: '#EDEFEE', border: '1px solid #DFD9C8', borderRadius: '12px', padding: '12px 20px', marginBottom: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px' }}>
-            <span style={{ fontSize: '13px', color: '#6E6A5F' }}>
-              Sign in to track your progress and resume where you left off.
-            </span>
-            <div style={{ display: 'flex', gap: '8px' }}>
-              <a href="/auth/login" style={{ fontSize: '13px', fontWeight: 600, color: '#1B3A2B', textDecoration: 'none' }}>Sign in</a>
-              <span style={{ color: '#6E6A5F' }}>·</span>
-              <a href="/auth/signup" style={{ fontSize: '13px', fontWeight: 600, color: '#A9822F', textDecoration: 'none' }}>Join free</a>
-            </div>
-          </div>
-        )}
-
-        {/* Resume banner — only when logged in with progress — unchanged */}
-        {user && coursesInProgress.length > 0 && (
-          <div style={{ background: '#F6F3EA', border: '1px solid rgba(169,130,47,0.25)', borderRadius: '12px', padding: '14px 20px', marginBottom: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px' }}>
-            <div>
-              <div style={{ fontSize: '11px', fontWeight: 700, color: '#A9822F', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '2px' }}>Pick up where you left off</div>
-              <div style={{ fontSize: '13px', color: '#1A1A18', fontWeight: 500 }}>
-                {coursesInProgress.length} course{coursesInProgress.length > 1 ? 's' : ''} in progress · {totalCompletedLessons} lessons completed
-              </div>
-            </div>
-            <a
-              href={
-                lastAccessedOrder[0]
-                  ? (enrollmentMap[lastAccessedOrder[0]]
-                      ? `/learn/${lastAccessedOrder[0]}/${enrollmentMap[lastAccessedOrder[0]]}`
-                      : `/courses/${lastAccessedOrder[0]}`)
-                  : "/courses"
-              }
-              style={{ background: '#1B3A2B', color: 'white', borderRadius: '8px', padding: '8px 16px', fontSize: '13px', fontWeight: 600, textDecoration: 'none', whiteSpace: 'nowrap' }}
-            >
-              Resume learning →
-            </a>
-          </div>
-        )}
+      <div className="site-container mt-8 relative z-10">
 
         {/* Continue learning strip */}
         <ContinueLearningStrip items={continueLearning} />
