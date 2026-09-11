@@ -52,14 +52,14 @@ export default function CourseCard({ course }: { course: CourseCardData }) {
   const statusLabel = isCompleted ? "Completed" : hasStarted ? `${Math.min(pct, 100)}% done` : "Not started";
 
   const masterItems = (whatYouLearn ?? []).slice(0, 3);
-  const topicChips = (topics ?? []).slice(0, 2);
+  const topicChips = (topics ?? []).slice(0, 3);
 
   return (
     <div
       className="flex flex-col rounded-2xl border border-hairline bg-panel p-5 h-[540px]
         hover:border-forest/40 hover:shadow-md motion-safe:transition-all motion-safe:duration-200"
     >
-      {/* Top row — level + optional flag badge, duration + lessons right-aligned */}
+      {/* 1. Badge row — level + optional flag badge, duration only on the right */}
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-1.5 flex-wrap">
           <LevelBadge level={tag} />
@@ -69,16 +69,14 @@ export default function CourseCard({ course }: { course: CourseCardData }) {
             </span>
           )}
         </div>
-        {(duration || totalLessons > 0) && (
+        {duration && (
           <span className="text-[11px] text-ink-dim font-medium whitespace-nowrap pt-1">
             {duration}
-            {duration && totalLessons > 0 ? " · " : ""}
-            {totalLessons > 0 ? `${totalLessons} lesson${totalLessons === 1 ? "" : "s"}` : ""}
           </span>
         )}
       </div>
 
-      {/* Title — unclamped, wraps naturally */}
+      {/* 2. Title — unclamped, wraps naturally */}
       <h3
         className="text-[19px] font-semibold text-ink leading-snug mt-3 min-h-[52px]"
         style={{ fontFamily: "var(--font-course-serif)" }}
@@ -86,7 +84,7 @@ export default function CourseCard({ course }: { course: CourseCardData }) {
         {title}
       </h3>
 
-      {/* Description — CSS-clamped to 2 lines */}
+      {/* 3. Description — CSS-clamped to 2 lines, never a manual/substring truncation */}
       {description ? (
         <p className="text-[13.5px] text-ink-dim leading-relaxed mt-2 min-h-[44px] line-clamp-2">
           {description}
@@ -97,8 +95,9 @@ export default function CourseCard({ course }: { course: CourseCardData }) {
         </p>
       )}
 
+      {/* 4-5. Hairline + "What You Master" checklist — collapses entirely when empty */}
       {masterItems.length > 0 && (
-        <div className="mt-4">
+        <div className="mt-4 pt-4 border-t border-hairline">
           <div className="text-[10px] font-bold uppercase tracking-widest text-ink-dim/80 mb-2">
             What You Master
           </div>
@@ -113,12 +112,19 @@ export default function CourseCard({ course }: { course: CourseCardData }) {
         </div>
       )}
 
+      {/* 6-7. Hairline + topic chips, single row — collapses entirely when empty.
+          Horizontally scrollable rather than truncated: topic strings run up to
+          ~28 chars, too long for 3-per-row without cutting mid-word, which is
+          exactly the failure mode this pass removed from the description. */}
       {topicChips.length > 0 && (
-        <div className="flex flex-wrap gap-1.5 mt-3">
+        <div
+          className="flex flex-nowrap gap-1.5 mt-4 pt-4 border-t border-hairline overflow-x-auto [&::-webkit-scrollbar]:hidden"
+          style={{ scrollbarWidth: "none" }}
+        >
           {topicChips.map((topic) => (
             <span
               key={topic}
-              className="inline-flex items-center border border-hairline text-ink-dim text-[11px] font-medium px-2.5 py-1 rounded-full"
+              className="inline-flex items-center flex-shrink-0 border border-hairline text-ink-dim text-[11px] font-medium px-2.5 py-1 rounded-full whitespace-nowrap"
             >
               {topic}
             </span>
@@ -126,10 +132,8 @@ export default function CourseCard({ course }: { course: CourseCardData }) {
         </div>
       )}
 
-      <div className="flex-1" />
-
-      {/* Footer — pinned to bottom regardless of content above */}
-      <div className="flex items-center justify-between gap-3 pt-3 mt-3 border-t border-hairline">
+      {/* 8-9. Hairline + footer — always present, pinned to the bottom via margin-top: auto */}
+      <div className="flex items-center justify-between gap-3 pt-3 mt-auto border-t border-hairline">
         <span className="text-[11.5px] font-medium text-ink-dim">
           {totalLessons > 0 ? `${totalLessons} Lesson${totalLessons === 1 ? "" : "s"}` : "Lessons TBD"}
           {" · "}
