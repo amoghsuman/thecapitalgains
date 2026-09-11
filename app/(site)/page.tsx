@@ -1,17 +1,22 @@
 import Link from "next/link";
 import NewsletterForm from "@/components/NewsletterForm";
-import { getAllCourses, getCourseWhyPicked } from "@/lib/sanity/queries";
+import { getAllCourses, getCourseWhyPicked, getFullCourseForReader } from "@/lib/sanity/queries";
 import { PathNavigator } from "@/components/FindYourPath";
 import "@/app/premium-theme.css";
 
 const FEATURED_CARD_COURSE_SLUG = "options-trading-from-zero";
 
 export default async function HomePage() {
-  const [courses, featuredWhyPicked] = await Promise.all([
+  const [courses, featuredWhyPicked, featuredCourseForReader] = await Promise.all([
     getAllCourses(),
     getCourseWhyPicked(FEATURED_CARD_COURSE_SLUG),
+    getFullCourseForReader(FEATURED_CARD_COURSE_SLUG),
   ]);
   const courseCount = courses?.length || 0;
+  const featuredFirstLessonSlug = featuredCourseForReader?.chapters?.[0]?.lessons?.[0]?.slug ?? null;
+  const featuredCardHref = featuredFirstLessonSlug
+    ? `/learn/${FEATURED_CARD_COURSE_SLUG}/${featuredFirstLessonSlug}`
+    : `/courses/${FEATURED_CARD_COURSE_SLUG}`; // fallback if a course somehow has no first lesson yet
 
   return (
     <div className="min-h-screen font-sans">
@@ -52,23 +57,32 @@ export default async function HomePage() {
               {[
                 { num: courseCount.toString(), label: "PREMIUM COURSES" },
                 { num: "₹1", label: "RESEARCH STARTS AT" },
-                { num: "EARLY ACCESS", label: "NOW OPEN" },
+                { num: "Start Learning", label: null },
                 { num: "3", label: "MODEL PORTFOLIOS" },
               ].map((s) => (
-                <div key={s.label} className="space-y-2">
+                <div key={s.label ?? s.num} className="space-y-2">
                   <div className="text-3xl font-bold text-ink tracking-tight">{s.num}</div>
-                  <div className="text-[10px] text-ink-dim tracking-[0.2em] font-bold uppercase leading-tight">
-                    {s.label}
-                  </div>
+                  {s.label && (
+                    <div className="text-[10px] text-ink-dim tracking-[0.2em] font-bold uppercase leading-tight">
+                      {s.label}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Right — Floating Preview Card */}
+          {/* Right — Floating Preview Card. The whole card is one link (not
+              just the bottom line) to the course's first lesson; the CTA bar
+              inside it is a styled element, not a second nested anchor. */}
           <div className="relative group hidden lg:block">
             <div className="absolute -inset-1 bg-gradient-to-r from-forest to-gold rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
-            <div className="relative bg-panel border border-hairline rounded-2xl p-8 shadow-2xl backdrop-blur-xl">
+            <Link
+              href={featuredCardHref}
+              className="relative block bg-panel border border-hairline rounded-2xl p-8 shadow-2xl backdrop-blur-xl
+                hover:border-forest/50 hover:shadow-[0_16px_40px_rgba(27,58,43,0.18)] motion-safe:transition-all motion-safe:duration-200
+                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-forest focus-visible:ring-offset-2 focus-visible:ring-offset-ivory"
+            >
               <div className="flex justify-between items-start mb-8">
                 <div>
                   <div className="font-mono text-[10px] text-gold-text tracking-[0.2em] mb-3 font-semibold uppercase">
@@ -93,14 +107,12 @@ export default async function HomePage() {
                     <p className="text-[13px] text-ink-dim leading-relaxed">{featuredWhyPicked}</p>
                   </div>
                 )}
-                <div className="flex items-center gap-3 text-[13px] text-ink-dim">
-                  <div className="w-8 h-8 rounded-full bg-forest/20 flex items-center justify-center">
-                    <div className="w-1.5 h-1.5 rounded-full bg-forest shadow-[0_0_8px_rgba(27,58,43,0.8)]" />
-                  </div>
-                  <span>Join our early access cohort.</span>
+                <div className="flex items-center justify-center gap-2 text-[13px] font-bold text-white bg-forest rounded-xl py-3
+                  group-hover:bg-forest-dark motion-safe:transition-colors">
+                  Start learning →
                 </div>
               </div>
-            </div>
+            </Link>
           </div>
         </div>
       </section>
