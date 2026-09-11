@@ -1,11 +1,16 @@
 import Link from "next/link";
 import NewsletterForm from "@/components/NewsletterForm";
-import { getAllCourses } from "@/lib/sanity/queries";
+import { getAllCourses, getCourseWhyPicked } from "@/lib/sanity/queries";
 import { PathNavigator } from "@/components/FindYourPath";
 import "@/app/premium-theme.css";
 
+const FEATURED_CARD_COURSE_SLUG = "options-trading-from-zero";
+
 export default async function HomePage() {
-  const courses = await getAllCourses();
+  const [courses, featuredWhyPicked] = await Promise.all([
+    getAllCourses(),
+    getCourseWhyPicked(FEATURED_CARD_COURSE_SLUG),
+  ]);
   const courseCount = courses?.length || 0;
 
   return (
@@ -17,21 +22,20 @@ export default async function HomePage() {
             <div className="inline-flex items-center gap-3 bg-forest-surface border border-hairline rounded-full px-5 py-2">
               <div className="premium-glow-dot" />
               <span className="font-mono text-[11px] text-gold-text tracking-[0.2em] font-medium uppercase">
-                TEXT-FIRST · READ & APPLY · NO VIDEOS
+                COURSES · RESEARCH · MODEL PORTFOLIOS
               </span>
             </div>
 
             <h1 className="text-4xl md:text-[54px] font-bold leading-[1.1] tracking-tight text-ink">
               Learn to invest like a pro.{" "}
               <span className="block mt-2 text-gold drop-shadow-[0_0_15px_rgba(169,130,47,0.2)]">
-                Not gamble like a beginner.
+                And build a process you can repeat.
               </span>
             </h1>
 
             <p className="text-[18px] text-ink-dim leading-relaxed max-w-xl">
-              Playbook-style courses for Indian retail investors and traders.
-              Read, apply, repeat. No fluff, no video lectures, no jargon.
-              Built for high-precision decision making.
+              Playbook-style courses, research, and model portfolios for Indian investors and traders.
+              Read, apply, repeat, built for high-precision decision making.
             </p>
 
             <div className="flex gap-4 flex-wrap pt-4 pb-8">
@@ -49,7 +53,7 @@ export default async function HomePage() {
                 { num: courseCount.toString(), label: "PREMIUM COURSES" },
                 { num: "₹1", label: "RESEARCH STARTS AT" },
                 { num: "EARLY ACCESS", label: "NOW OPEN" },
-                { num: "SEBI RA", label: "REGISTERED" },
+                { num: "3", label: "MODEL PORTFOLIOS" },
               ].map((s) => (
                 <div key={s.label} className="space-y-2">
                   <div className="text-3xl font-bold text-ink tracking-tight">{s.num}</div>
@@ -79,20 +83,16 @@ export default async function HomePage() {
                   </div>
                 </div>
                 <span className="bg-forest text-white font-mono text-[9px] font-bold rounded px-2.5 py-1.5 tracking-widest uppercase">
-                  BESTSELLER
+                  FEATURED
                 </span>
               </div>
 
               <div className="space-y-6">
-                <div className="p-4 bg-ivory border border-hairline rounded-xl">
-                  <div className="flex justify-between text-[12px] text-ink-dim mb-2 font-mono uppercase tracking-wider">
-                    <span>Portfolio Mastery</span>
-                    <span className="text-ink">16%</span>
+                {featuredWhyPicked && (
+                  <div className="p-4 bg-ivory border border-hairline rounded-xl">
+                    <p className="text-[13px] text-ink-dim leading-relaxed">{featuredWhyPicked}</p>
                   </div>
-                  <div className="h-1.5 bg-hairline rounded-full overflow-hidden">
-                    <div className="h-full bg-gradient-to-r from-forest to-gold w-[16%]" />
-                  </div>
-                </div>
+                )}
                 <div className="flex items-center gap-3 text-[13px] text-ink-dim">
                   <div className="w-8 h-8 rounded-full bg-forest/20 flex items-center justify-center">
                     <div className="w-1.5 h-1.5 rounded-full bg-forest shadow-[0_0_8px_rgba(27,58,43,0.8)]" />

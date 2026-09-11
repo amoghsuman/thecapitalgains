@@ -52,6 +52,13 @@ export const courseSchema = defineType({
     defineField({ name: 'lessonsCount', title: 'Total Lessons', type: 'number' }),
     defineField({ name: 'duration', title: 'Duration', type: 'string', description: 'e.g. ~4 hrs' }),
     defineField({ name: 'description', title: 'Description', type: 'text', rows: 4 }),
+    defineField({
+      name: 'whyPicked',
+      title: 'Why Picked (featured card)',
+      type: 'text',
+      rows: 2,
+      description: 'One short plain sentence shown with no label when this course is featured on the homepage hero card, e.g. why it was chosen as a starting point.',
+    }),
     defineField({ name: 'topics', title: 'Topic Tags', type: 'array', of: [defineArrayMember({ type: 'string' })] }),
     defineField({ name: 'whatYouLearn', title: 'What You Will Learn', type: 'array', of: [defineArrayMember({ type: 'string' })] }),
     defineField({

@@ -25,6 +25,17 @@ export async function getAllCourses(learningPath?: string) {
   `)
 }
 
+// Minimal, single-field fetch for the homepage hero's featured-course card
+// — deliberately not reusing getCourseBySlug, which also pulls chapters
+// and their referenced lessons (unneeded weight for one short sentence).
+export async function getCourseWhyPicked(slug: string): Promise<string | null> {
+  const result = await client.fetch(
+    `*[_type == "course" && slug.current == $slug][0].whyPicked`,
+    { slug }
+  )
+  return result ?? null
+}
+
 export async function getCourseBySlug(slug: string) {
   return client.fetch(`
     *[_type == "course" && slug.current == $slug][0] {
