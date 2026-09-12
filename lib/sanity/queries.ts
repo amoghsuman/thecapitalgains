@@ -78,6 +78,7 @@ export async function getCourseBySlug(slug: string) {
       description,
       topics,
       whatYouLearn,
+      learningPath,
       chapters[] {
         title,
         lessons[]-> {
