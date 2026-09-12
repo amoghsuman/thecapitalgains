@@ -1,5 +1,30 @@
 import { client } from './client'
 
+// Powers the Find Your Path homepage feature. Shape is deliberately close to
+// the old lib/findYourPath/pathData.ts (persona -> goals -> courses) so
+// PathNavigator.tsx's rendering/interaction logic barely has to change —
+// depth/priority now come from the real course.depth field and the
+// per-relationship pathCourses[].priority instead of the old flat HARVEY
+// lookup keyed by course slug.
+export async function getFindYourPathData() {
+  return client.fetch(`
+    *[_type == "persona"] | order(order asc) {
+      "key": iconKey,
+      "label": title,
+      "goals": *[_type == "learningPath" && references(^._id)] | order(order asc) {
+        "label": investingGoal->title,
+        "courses": pathCourses[] {
+          "title": course->title,
+          "slug": course->slug.current,
+          "reason": rationale,
+          "depth": course->depth,
+          "priority": priority
+        }
+      }
+    }
+  `)
+}
+
 export async function getAllCourses(learningPath?: string) {
   const filter = learningPath
     ? `*[_type == "course" && learningPath == "${learningPath}"]`

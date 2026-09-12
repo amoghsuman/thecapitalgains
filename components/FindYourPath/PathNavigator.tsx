@@ -2,21 +2,31 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { personas, type Goal } from "@/lib/findYourPath/pathData";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
+//
+// Sourced from Sanity now (persona/investingGoal/learningPath document types)
+// via getFindYourPathData() (lib/sanity/queries.ts), passed down as a prop
+// from app/(site)/page.tsx rather than imported from the old
+// lib/findYourPath/pathData.ts static file (deprecated, see that file's own
+// header comment — kept in place as a fallback reference, not imported by
+// anything anymore). Depth/priority used to come from the flat HARVEY lookup
+// below, keyed by course slug — it's DEPRECATED and no longer read by this
+// component; depth/priority are now real per-course data: `depth` from the
+// course's own `depth` field, `priority` from the specific learningPath's
+// pathCourses[] entry, so the same course can carry a different priority on
+// a different path. Kept here, unused, as a fallback reference only — remove
+// in a future cleanup once the Sanity-backed version has been live a while.
 
 type HBValue = "low" | "medium-low" | "medium-high" | "high";
 
-type Pt = { x: number; y: number };
+export type Course = { title: string; slug: string; reason: string; depth: HBValue; priority: HBValue };
+export type Goal = { label: string; courses: Course[] };
+export type Persona = { key: string; label: string; goals: Goal[] };
 
-type ConnectorState = {
-  d: string;
-  nodes: Pt[];
-} | null;
-
-// ─── Harvey Ball metrics ───────────────────────────────────────────────────────
-
+/** @deprecated Superseded by real per-course Sanity data (course.depth +
+ * learningPath.pathCourses[].priority). Not read anywhere anymore — kept
+ * only as a fallback reference until a future cleanup task removes it. */
 const HARVEY: Record<string, { depth: HBValue; priority: HBValue }> = {
   "stock-market-from-zero":                        { depth: "low",         priority: "high"        },
   "mutual-funds-etfs-complete-guide":              { depth: "medium-low",  priority: "medium-high" },
@@ -25,6 +35,14 @@ const HARVEY: Record<string, { depth: HBValue; priority: HBValue }> = {
   "futures-derivatives-explained":                 { depth: "high",        priority: "medium-low"  },
   "technical-analysis-charts-patterns-indicators": { depth: "medium-low",  priority: "medium-low"  },
 };
+void HARVEY; // deprecated/unused — see comment above; kept intentionally, not dead-code cleanup
+
+type Pt = { x: number; y: number };
+
+type ConnectorState = {
+  d: string;
+  nodes: Pt[];
+} | null;
 
 // ─── HarveyBall ───────────────────────────────────────────────────────────────
 
@@ -128,7 +146,7 @@ function PersonaIcon({ personaKey, selected }: { personaKey: string; selected: b
 
 // ─── PathNavigator ────────────────────────────────────────────────────────────
 
-export function PathNavigator() {
+export function PathNavigator({ personas }: { personas: Persona[] }) {
   const [activePersonaKey, setActivePersonaKey] = useState<string | null>(null);
   const [activeGoalIndex, setActiveGoalIndex]   = useState<number | null>(null);
   const [connector, setConnector]               = useState<ConnectorState>(null);
@@ -442,7 +460,7 @@ export function PathNavigator() {
                   flex: 1,
                 }}>
                   {activeGoal.courses.map((course, index) => {
-                    const metrics = HARVEY[course.slug];
+                    const metrics = { depth: course.depth, priority: course.priority };
                     return (
                       <div
                         key={course.slug}

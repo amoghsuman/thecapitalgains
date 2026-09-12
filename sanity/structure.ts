@@ -42,4 +42,36 @@ export const structure: StructureResolver = (S) =>
             .filter('_type == "lesson"')
             .defaultOrdering([{ field: 'title', direction: 'asc' }])
         ),
+      S.divider(),
+      // Find Your Path content — not in the default auto-generated list
+      // (this custom structure replaces that entirely), so these three need
+      // explicit entries or they'd be uneditable in Studio despite existing
+      // in the schema.
+      S.listItem()
+        .title('Personas')
+        .schemaType('persona')
+        .child(
+          S.documentList()
+            .title('Personas')
+            .filter('_type == "persona"')
+            .defaultOrdering([{ field: 'order', direction: 'asc' }])
+        ),
+      S.listItem()
+        .title('Investing Goals')
+        .schemaType('investingGoal')
+        .child(
+          S.documentList()
+            .title('Investing Goals')
+            .filter('_type == "investingGoal"')
+            .defaultOrdering([{ field: 'title', direction: 'asc' }])
+        ),
+      S.listItem()
+        .title('Learning Paths (Find Your Path)')
+        .schemaType('learningPath')
+        .child(
+          S.documentList()
+            .title('Learning Paths (Find Your Path)')
+            .filter('_type == "learningPath"')
+            .defaultOrdering([{ field: 'order', direction: 'asc' }])
+        ),
     ])

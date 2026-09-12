@@ -1,16 +1,17 @@
 import Link from "next/link";
 import NewsletterForm from "@/components/NewsletterForm";
-import { getAllCourses, getCourseWhyPicked, getFullCourseForReader } from "@/lib/sanity/queries";
+import { getAllCourses, getCourseWhyPicked, getFullCourseForReader, getFindYourPathData } from "@/lib/sanity/queries";
 import { PathNavigator } from "@/components/FindYourPath";
 import "@/app/premium-theme.css";
 
 const FEATURED_CARD_COURSE_SLUG = "options-trading-from-zero";
 
 export default async function HomePage() {
-  const [courses, featuredWhyPicked, featuredCourseForReader] = await Promise.all([
+  const [courses, featuredWhyPicked, featuredCourseForReader, findYourPathPersonas] = await Promise.all([
     getAllCourses(),
     getCourseWhyPicked(FEATURED_CARD_COURSE_SLUG),
     getFullCourseForReader(FEATURED_CARD_COURSE_SLUG),
+    getFindYourPathData(),
   ]);
   const courseCount = courses?.length || 0;
   const featuredFirstLessonSlug = featuredCourseForReader?.chapters?.[0]?.lessons?.[0]?.slug ?? null;
@@ -114,7 +115,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <PathNavigator />
+      <PathNavigator personas={findYourPathPersonas} />
 
       {/* ── NEWSLETTER ── */}
       <section className="py-24">

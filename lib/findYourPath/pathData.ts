@@ -1,5 +1,15 @@
 // ─────────────────────────────────────────────
-// HOW TO UPDATE THIS FILE
+// @deprecated — superseded by Sanity content (persona / investingGoal /
+// learningPath document types, sanity/schemaTypes/). The live Find Your Path
+// feature (components/FindYourPath/PathNavigator.tsx, fed by
+// getFindYourPathData() in lib/sanity/queries.ts) no longer imports this
+// file. To edit personas, goals, courses, or their rationale text, use
+// Sanity Studio, not this file. Kept in place as a fallback reference until
+// a future cleanup task removes it — do not edit it expecting it to affect
+// the live site.
+// ─────────────────────────────────────────────
+//
+// HOW TO UPDATE THIS FILE (historical — no longer applies to the live site)
 //
 // To add a new persona:
 //   → Add a new object to the personas array
