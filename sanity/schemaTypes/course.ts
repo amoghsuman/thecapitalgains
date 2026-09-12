@@ -10,6 +10,22 @@ export const courseSchema = defineType({
     defineField({ name: 'slug', title: 'Slug', type: 'slug', options: { source: 'title' }, validation: Rule => Rule.required() }),
     defineField({ name: 'subtitle', title: 'Subtitle', type: 'string' }),
     defineField({ name: 'tag', title: 'Level Tag', type: 'string', description: 'e.g. Beginner → Intermediate' }),
+    defineField({
+      name: 'depth',
+      title: 'Depth',
+      type: 'string',
+      description: 'Harvey Ball complexity rating shown in Find Your Path. This is the course\'s own depth, independent of which persona/goal path recommends it.',
+      options: {
+        list: [
+          { title: 'Low', value: 'low' },
+          { title: 'Medium-Low', value: 'medium-low' },
+          { title: 'Medium-High', value: 'medium-high' },
+          { title: 'High', value: 'high' },
+        ],
+        layout: 'radio',
+      },
+      validation: Rule => Rule.required(),
+    }),
     defineField({ name: 'badge', title: 'Badge', type: 'string', description: 'e.g. BESTSELLER, NEW' }),
     defineField({ name: 'price', title: 'Price (₹)', type: 'number', description: 'Optional — for one-off workshops only' }),
     defineField({
