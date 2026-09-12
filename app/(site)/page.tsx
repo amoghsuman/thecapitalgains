@@ -52,21 +52,18 @@ export default async function HomePage() {
               </Link>
             </div>
 
-            {/* Stats Row */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-12 gap-y-8 pt-10 border-t border-hairline">
+            {/* Stats Row — 3 items, no enrollment/cohort slot to fill a 4th */}
+            <div className="grid grid-cols-3 gap-x-6 sm:gap-x-12 gap-y-8 pt-10 border-t border-hairline">
               {[
                 { num: courseCount.toString(), label: "PREMIUM COURSES" },
                 { num: "₹1", label: "RESEARCH STARTS AT" },
-                { num: "Start Learning", label: null },
                 { num: "3", label: "MODEL PORTFOLIOS" },
               ].map((s) => (
-                <div key={s.label ?? s.num} className="space-y-2">
+                <div key={s.label} className="space-y-2">
                   <div className="text-3xl font-bold text-ink tracking-tight">{s.num}</div>
-                  {s.label && (
-                    <div className="text-[10px] text-ink-dim tracking-[0.2em] font-bold uppercase leading-tight">
-                      {s.label}
-                    </div>
-                  )}
+                  <div className="text-[10px] text-ink-dim tracking-[0.2em] font-bold uppercase leading-tight">
+                    {s.label}
+                  </div>
                 </div>
               ))}
             </div>
