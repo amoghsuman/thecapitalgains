@@ -39,8 +39,6 @@ const VALID_TRACKS = [
   'alternative_investing', 'tax_wealth_planning', 'forensic_accounting_compliance', 'fintech_careers',
 ]
 
-const VALID_TIERS = ['foundation', 'intermediate', 'advanced', 'masterclass', 'exam_prep']
-const VALID_FORMATS = ['concept', 'tool_platform', 'case_study', 'skill_drill']
 const CONTENT_STATUSES: ContentStatus[] = [
   'not_started', 'chapters_planned', 'drafting', 'ready_for_injection', 'injected', 'published',
 ]
@@ -62,10 +60,6 @@ const CONTENT_STATUS_COLORS: Record<ContentStatus, { bg: string; text: string; b
   injected:            { bg: '#EDEFEE', text: '#173224', bar: '#1B3A2B' },
   published:           { bg: '#EDEFEE', text: '#1A1A18', bar: '#1A1A18' },
 }
-
-// Order used for the "Next up" priority list.
-const PRIORITY_TRACKS = ['retail', 'alternative_investing', 'tax_wealth_planning', 'quant']
-const PRIORITY_TIERS = ['foundation', 'intermediate', 'advanced', 'masterclass', 'exam_prep']
 
 const PAGE_SIZE = 50
 
@@ -139,19 +133,44 @@ export default function AdminCoursesPage() {
 
   const [savingSlug, setSavingSlug] = useState<string | null>(null)
   const [errorSlug, setErrorSlug] = useState<string | null>(null)
-  const [copiedSlug, setCopiedSlug] = useState<string | null>(null)
 
   const originalValueRef = useRef<Record<string, number | null>>({})
+
+  // Supabase/PostgREST caps any single request at 1000 rows by default
+  // (the `db-max-rows` server setting), regardless of how many rows actually
+  // match the query — a plain `.select('*')` silently truncates past that,
+  // it does NOT error, so this is easy to miss until the row count grows
+  // past 1000. With 1302+ courses, a single unpaginated request here WILL
+  // silently drop the tail of the table. Fetch in `.range()` pages and
+  // concatenate until a page comes back short of PAGE_FETCH_SIZE (the real
+  // signal there's no more data — relying on a fixed "total" count instead
+  // would need a second request and can race with concurrent writes).
+  // See CLAUDE.md's "Known regression risk" note before changing this.
+  const PAGE_FETCH_SIZE = 1000
+  const MAX_PAGES = 50 // 50,000-row safety cap against a runaway loop, not a real limit at current scale
 
   const load = async () => {
     setLoading(true)
     setError(null)
-    const { data, error } = await supabase.from('courses').select('*').order('title')
-    if (error) {
-      setError(error.message)
-    } else {
-      setCourses((data as Course[]) || [])
+    const allRows: Course[] = []
+    for (let i = 0; i < MAX_PAGES; i++) {
+      const from = i * PAGE_FETCH_SIZE
+      const to = from + PAGE_FETCH_SIZE - 1
+      const { data, error } = await supabase
+        .from('courses')
+        .select('*')
+        .order('title')
+        .order('slug') // tiebreaker for a stable sort across page boundaries — title alone isn't guaranteed unique
+        .range(from, to)
+      if (error) {
+        setError(error.message)
+        setLoading(false)
+        return
+      }
+      allRows.push(...((data as Course[]) || []))
+      if (!data || data.length < PAGE_FETCH_SIZE) break
     }
+    setCourses(allRows)
     setLoading(false)
   }
 
@@ -181,16 +200,17 @@ export default function AdminCoursesPage() {
     })
   }, [courses])
 
-  const nextUp = useMemo(() => {
-    const eligible = courses.filter(c => c.content_status === 'not_started' && PRIORITY_TRACKS.includes(c.track))
-    return [...eligible].sort((a, b) => {
-      const trackDiff = PRIORITY_TRACKS.indexOf(a.track) - PRIORITY_TRACKS.indexOf(b.track)
-      if (trackDiff !== 0) return trackDiff
-      const tierDiff = PRIORITY_TIERS.indexOf(a.tier) - PRIORITY_TIERS.indexOf(b.tier)
-      if (tierDiff !== 0) return tierDiff
-      return a.title.localeCompare(b.title)
-    }).slice(0, 10)
-  }, [courses])
+  // Filter dropdown options are derived from whatever's actually in the
+  // data, not a hardcoded enum — a new track/tier/format/status value shows
+  // up here automatically the moment a course using it exists, no code
+  // change needed. (Deliberately separate from CONTENT_STATUSES, which
+  // stays a fixed list — it still drives the per-row status editor and the
+  // legend/color maps, where every known status must always be selectable
+  // even if zero courses currently have it.)
+  const distinctTracks = useMemo(() => [...new Set(courses.map(c => c.track))].sort(), [courses])
+  const distinctTiers = useMemo(() => [...new Set(courses.map(c => c.tier))].sort(), [courses])
+  const distinctFormats = useMemo(() => [...new Set(courses.map(c => c.format))].sort(), [courses])
+  const distinctStatuses = useMemo(() => [...new Set(courses.map(c => c.content_status))].sort(), [courses])
 
   const filteredSorted = useMemo(() => {
     let list = courses
@@ -269,15 +289,6 @@ export default function AdminCoursesPage() {
     }
   }
 
-  const handleCopy = async (slug: string) => {
-    try {
-      await navigator.clipboard.writeText(slug)
-      setCopiedSlug(slug)
-      setTimeout(() => setCopiedSlug(prev => (prev === slug ? null : prev)), 1500)
-    } catch {
-      // Clipboard access denied — no-op, button simply won't confirm.
-    }
-  }
 
   // ── Render ────────────────────────────────────────────────────────────────
 
@@ -416,61 +427,6 @@ export default function AdminCoursesPage() {
             </div>
           </div>
 
-          {/* ── Next up ──────────────────────────────────────────────────── */}
-          <div style={{ marginBottom: 36 }}>
-            <h2 style={{ fontSize: 15, fontWeight: 700, color: '#1A1A18', marginBottom: 4 }}>Next up</h2>
-            <p style={{ fontSize: 12, color: '#6E6A5F', marginTop: 0, marginBottom: 14 }}>
-              Prioritized by track (retail → alternative investing → tax &amp; wealth planning → quant), then by tier
-            </p>
-            <div style={{ background: '#fff', border: '1px solid #DFD9C8', borderRadius: 10, overflow: 'hidden' }}>
-              {nextUp.length === 0 ? (
-                <div style={{ padding: '24px 20px', fontSize: 13, color: '#6E6A5F' }}>
-                  Nothing left to start in the priority tracks — all not-started work is outside retail, alternative investing, tax &amp; wealth planning, and quant.
-                </div>
-              ) : (
-                nextUp.map((c, idx) => (
-                  <div
-                    key={c.slug}
-                    style={{
-                      display: 'flex', alignItems: 'center', gap: 14, padding: '12px 20px',
-                      borderBottom: idx < nextUp.length - 1 ? '1px solid #F7F4EC' : 'none',
-                    }}
-                  >
-                    <div style={{
-                      width: 24, height: 24, borderRadius: '50%', background: '#EDEFEE', color: '#1B3A2B',
-                      fontSize: 11, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-                    }}>
-                      {idx + 1}
-                    </div>
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontSize: 13, fontWeight: 600, color: '#1A1A18', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                        {c.title}
-                      </div>
-                      <div style={{ fontSize: 11, color: '#6E6A5F', marginTop: 2, fontFamily: 'monospace' }}>{c.slug}</div>
-                    </div>
-                    <span style={{ fontSize: 11, padding: '3px 8px', borderRadius: 8, background: '#EDEFEE', color: '#1B3A2B', fontWeight: 500, flexShrink: 0 }}>
-                      {titleCase(c.track)}
-                    </span>
-                    <span style={{ fontSize: 11, padding: '3px 8px', borderRadius: 8, background: '#F7F4EC', color: '#6E6A5F', fontWeight: 500, flexShrink: 0 }}>
-                      {titleCase(c.tier)}
-                    </span>
-                    <span style={{ fontSize: 11, padding: '3px 8px', borderRadius: 8, background: '#F7F4EC', color: '#6E6A5F', fontWeight: 500, flexShrink: 0 }}>
-                      {titleCase(c.format)}
-                    </span>
-                    <button
-                      onClick={() => handleCopy(c.slug)}
-                      style={{
-                        fontSize: 12, fontWeight: 600, padding: '7px 14px', borderRadius: 8, border: 'none', cursor: 'pointer', flexShrink: 0, minWidth: 92,
-                        background: copiedSlug === c.slug ? '#173224' : '#1B3A2B', color: 'white',
-                      }}
-                    >
-                      {copiedSlug === c.slug ? 'Copied ✓' : 'Start →'}
-                    </button>
-                  </div>
-                ))
-              )}
-            </div>
-          </div>
 
           {/* ── Filters ──────────────────────────────────────────────────── */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginBottom: 16, alignItems: 'center' }}>
@@ -483,19 +439,19 @@ export default function AdminCoursesPage() {
             />
             <select value={trackFilter} onChange={e => setTrackFilter(e.target.value)} style={selectStyle}>
               <option value="all">All tracks</option>
-              {VALID_TRACKS.map(t => <option key={t} value={t}>{titleCase(t)}</option>)}
+              {distinctTracks.map(t => <option key={t} value={t}>{titleCase(t)}</option>)}
             </select>
             <select value={tierFilter} onChange={e => setTierFilter(e.target.value)} style={selectStyle}>
               <option value="all">All tiers</option>
-              {VALID_TIERS.map(t => <option key={t} value={t}>{titleCase(t)}</option>)}
+              {distinctTiers.map(t => <option key={t} value={t}>{titleCase(t)}</option>)}
             </select>
             <select value={formatFilter} onChange={e => setFormatFilter(e.target.value)} style={selectStyle}>
               <option value="all">All formats</option>
-              {VALID_FORMATS.map(f => <option key={f} value={f}>{titleCase(f)}</option>)}
+              {distinctFormats.map(f => <option key={f} value={f}>{titleCase(f)}</option>)}
             </select>
             <select value={statusFilter} onChange={e => setStatusFilter(e.target.value)} style={selectStyle}>
               <option value="all">All statuses</option>
-              {CONTENT_STATUSES.map(s => <option key={s} value={s}>{CONTENT_STATUS_LABELS[s]}</option>)}
+              {distinctStatuses.map(s => <option key={s} value={s}>{CONTENT_STATUS_LABELS[s] ?? titleCase(s)}</option>)}
             </select>
             <span style={{ fontSize: 12, color: '#6E6A5F', marginLeft: 'auto' }}>
               {filteredSorted.length.toLocaleString()} of {totalCourses.toLocaleString()} courses
@@ -554,13 +510,17 @@ export default function AdminCoursesPage() {
                         <td style={{ padding: '10px 14px', borderBottom: rowBorder, color: '#6E6A5F', whiteSpace: 'nowrap' }}>
                           {titleCase(c.format)}
                         </td>
-                        <td style={{ padding: '10px 14px', borderBottom: rowBorder }}>
+                        <td style={{ padding: '10px 14px', borderBottom: rowBorder, whiteSpace: 'nowrap' }}>
                           <select
                             value={c.content_status}
                             onChange={e => handleStatusChange(c.slug, e.target.value as ContentStatus)}
                             style={{
                               fontSize: 11, fontWeight: 600, padding: '4px 8px', borderRadius: 8, border: `1px solid ${sc.bar}`,
                               background: sc.bg, color: sc.text, cursor: 'pointer', outline: 'none',
+                              // Explicit minWidth — without it, the native <select> sizes to its
+                              // own intrinsic width, which some browsers clip below what's needed
+                              // to show the longest label ("Ready for Injection") in full.
+                              minWidth: 172, maxWidth: '100%',
                             }}
                           >
                             {CONTENT_STATUSES.map(s => (

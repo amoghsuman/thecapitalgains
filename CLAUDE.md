@@ -38,7 +38,11 @@ thecapitalgains.com
 - lesson_progress (user_id, course_slug, lesson_slug, ...) — keyed by course/lesson **slug**, not Sanity `_id`
 - subscriptions (user_id, plan, status, valid_until)
 
-Note: `courses` and `lessons` are Sanity documents, not Supabase tables — Supabase only stores per-user state (enrollment, progress, subscriptions) referencing Sanity content by slug.
+Note: the public site's `courses` and `lessons` are Sanity documents, not Supabase tables — Supabase only stores per-user state (enrollment, progress, subscriptions) referencing Sanity content by slug.
+
+**Separately**, Supabase also has its own `courses` table (1300+ rows) — an internal content-production tracker (track/tier/format/content_status/chapter progress), unrelated to and not synced with the public-facing Sanity `course` documents above. It's queried by `app/(site)/admin/courses/page.tsx`. Same table name, two unrelated systems — don't confuse the two.
+
+**Known regression risk**: any query against this Supabase `courses` table must paginate past Supabase/PostgREST's default 1000-row cap (`db-max-rows`) — a plain `.select('*')` silently returns at most 1000 rows with no error, it does not throw. `app/(site)/admin/courses/page.tsx`'s `load()` function does this correctly via a `.range()`-based fetch loop; if this dashboard's fetch logic is ever touched again, that pagination must be preserved, and the change must be tested against the real row count (currently 1302 — query `select count(*) from courses` directly, don't trust what the dashboard displays as ground truth) before considering the change complete. (A prior fix for this exact symptom was believed to exist before this pass, but a full git-history search found no commit that ever added `.range()` pagination to this file — worth keeping in mind if this surfaces again: check whether a fix actually landed, rather than assuming it once did.)
 
 ## Payment Logic
 - Subscription → Razorpay webhook → subscriptions table
