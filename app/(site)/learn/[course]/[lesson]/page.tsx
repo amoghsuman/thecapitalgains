@@ -33,6 +33,18 @@ type Chapter = { title: string; lessons: LessonMeta[] };
 type CourseData = { title: string; price: number; slug: string; accessLevel?: string; chapters: Chapter[] };
 type LessonData = { title: string; slug: string; duration: string; isFree: boolean; body: any[] };
 
+// The `duration` field is inconsistent across existing content: older
+// lessons store a bare "X min", newer ones (from create-course-structure.mjs)
+// already store the full "X min read". Appending " read" unconditionally —
+// what both the header and sidebar used to do in different ways — produces
+// "X min read read" for the latter. Normalize once here instead of assuming
+// either format, so both the header and sidebar always render the same
+// single, correct "X min read" regardless of which pipeline authored it.
+function formatDuration(duration: string | null | undefined): string {
+  if (!duration) return "";
+  return /read\s*$/i.test(duration.trim()) ? duration.trim() : `${duration.trim()} read`;
+}
+
 // ─── Exercise Block (own checkbox state) ─────────────────────────────────────
 
 function ExerciseBlock({ title, steps }: { title: string; steps: string[] }) {
@@ -331,36 +343,69 @@ function TableBlock({ value }: { value: { caption?: string; headers?: string[]; 
   const headers = value.headers ?? [];
   const rows = value.rows ?? [];
 
+  // `w-full` on the table forces it to shrink-to-fit the container instead
+  // of growing to its natural content width, which is what made a 4+ column
+  // table with long cell text clip mid-word: the browser squeezed columns
+  // down rather than the wrapper's overflow-x-auto ever getting a chance to
+  // scroll. `min-w-full` keeps narrow tables filling the width like before,
+  // while letting wide ones grow past the container so they scroll instead
+  // of clipping.
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isScrollable, setIsScrollable] = useState(false);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const check = () => setIsScrollable(el.scrollWidth > el.clientWidth + 1);
+    check();
+    const ro = new ResizeObserver(check);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
   return (
-    <div className="mt-8 overflow-x-auto">
+    <div className="mt-8">
       {value.caption && (
         <p className="font-mono text-[11px] text-ink-dim uppercase tracking-wide mb-2">{value.caption}</p>
       )}
-      <table className="w-full border-collapse text-[14px]">
-        <thead>
-          <tr>
-            {headers.map((h, i) => (
-              <th
-                key={i}
-                className="text-left font-semibold text-forest bg-forest-surface border border-hairline border-b-2 border-b-forest px-4 py-2.5 whitespace-nowrap"
-              >
-                {h}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row, ri) => (
-            <tr key={ri} className={ri % 2 === 1 ? "bg-ivory/60" : ""}>
-              {(row.cells ?? []).map((cell, ci) => (
-                <td key={ci} className="text-ink border border-hairline px-4 py-2.5 align-top">
-                  {renderCell(cell)}
-                </td>
+      <div className="relative">
+        <div ref={scrollRef} className="overflow-x-auto">
+          <table className="min-w-full border-collapse text-[14px]">
+            <thead>
+              <tr>
+                {headers.map((h, i) => (
+                  <th
+                    key={i}
+                    className="text-left font-semibold text-forest bg-forest-surface border border-hairline border-b-2 border-b-forest px-4 py-2.5 whitespace-nowrap"
+                  >
+                    {h}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((row, ri) => (
+                <tr key={ri} className={ri % 2 === 1 ? "bg-ivory/60" : ""}>
+                  {(row.cells ?? []).map((cell, ci) => (
+                    <td key={ci} className="text-ink border border-hairline px-4 py-2.5 align-top whitespace-nowrap">
+                      {renderCell(cell)}
+                    </td>
+                  ))}
+                </tr>
               ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+            </tbody>
+          </table>
+        </div>
+        {/* Visible scroll affordance — only shown when the table actually
+            overflows, rather than relying on a partially-cut-off column at
+            the edge as the only hint there's more content. */}
+        {isScrollable && (
+          <div className="pointer-events-none absolute top-0 right-0 bottom-0 w-10 bg-gradient-to-l from-ivory to-transparent" />
+        )}
+      </div>
+      {isScrollable && (
+        <p className="font-mono text-[10px] text-ink-dim mt-1.5">← Scroll to see all columns →</p>
+      )}
     </div>
   );
 }
@@ -921,7 +966,7 @@ export default function ReaderPage() {
                       >
                         {l.title}
                       </div>
-                      <div className="font-mono text-[10px] text-ink-dim mt-0.5">{l.duration}</div>
+                      {l.duration && <div className="font-mono text-[10px] text-ink-dim mt-0.5">{formatDuration(l.duration)}</div>}
                     </div>
                   </button>
                 );
@@ -1032,7 +1077,7 @@ export default function ReaderPage() {
                 {lesson.title}
               </h1>
               <div className="flex items-center gap-3 mb-8 pb-6 border-b border-hairline">
-                <span className="font-mono text-[12px] text-ink-dim">{lesson.duration} read</span>
+                {lesson.duration && <span className="font-mono text-[12px] text-ink-dim">{formatDuration(lesson.duration)}</span>}
                 {lesson.isFree && (
                   <span className="font-mono text-[10px] text-forest bg-forest-surface rounded px-2 py-0.5">
                     Free preview

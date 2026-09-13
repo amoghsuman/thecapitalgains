@@ -124,7 +124,7 @@ export default function CourseCard({ course }: { course: CourseCardData }) {
           asks the card to have). flex-wrap only wraps to a 2nd line when a
           course's actual topics need it, no reserved space either way. */}
       {topicChips.length > 0 && (
-        <div className="flex flex-wrap gap-1.5 mt-4 pt-4 border-t border-hairline">
+        <div className="flex flex-wrap gap-1.5 mt-4 pt-4 pb-4 border-t border-hairline">
           {topicChips.map((topic) => (
             <span
               key={topic}
@@ -143,11 +143,25 @@ export default function CourseCard({ course }: { course: CourseCardData }) {
           touches this row — but it's the same "don't overflow" quality bar
           this pass is held to, so fixed here too). */}
       <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5 pt-3 mt-auto border-t border-hairline">
-        <span className="text-[11.5px] font-medium text-ink-dim min-w-0">
-          {totalLessons > 0 ? `${totalLessons} Lesson${totalLessons === 1 ? "" : "s"}` : "Lessons TBD"}
-          {" · "}
-          {statusLabel}
-        </span>
+        <div className="flex-1 min-w-[120px]">
+          {/* Visual progress bar for in-progress courses, matching the
+              Continue Learning strip's treatment — the text line already
+              says "33% done"; this makes it visually scannable too, not
+              just readable. */}
+          {hasStarted && !isCompleted && (
+            <div className="h-[4px] bg-hairline rounded-full overflow-hidden mb-1.5">
+              <div
+                className="h-full bg-gold rounded-full motion-safe:transition-[width] motion-safe:duration-300"
+                style={{ width: `${Math.min(pct, 100)}%` }}
+              />
+            </div>
+          )}
+          <span className="text-[11.5px] font-medium text-ink-dim">
+            {totalLessons > 0 ? `${totalLessons} Lesson${totalLessons === 1 ? "" : "s"}` : "Lessons TBD"}
+            {" · "}
+            {statusLabel}
+          </span>
+        </div>
         <Link
           href={href}
           className="inline-flex items-center gap-1 text-[12px] font-bold tracking-wide whitespace-nowrap text-white bg-forest rounded-lg px-3.5 py-2
