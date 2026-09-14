@@ -473,12 +473,16 @@ export default function AdminCoursesPage() {
               invisible and pushing Chapters/Last Worked On out of visible
               width entirely. A row-count-filtered view "fixed" it only by
               accident, by excluding whichever course happened to have the
-              longest slug. Fixed at the root: Slug is now capped and
-              truncates with a hover tooltip for the full value, and the
-              table can grow past its container (min-width, not width) so if
-              total content width ever does exceed the viewport for any
-              reason, it scrolls via the existing wrapper instead of
-              squeezing or clipping. */}
+              longest slug. Fixed at the root: Slug now wraps (like Title
+              already does) instead of forcing one unbroken line — capped at
+              a max-width so it wraps rather than stretching the table, with
+              word-break so long hyphenated slugs break cleanly across lines
+              instead of overflowing. Nothing is ever truncated or hidden;
+              the full slug is always visible, just on more than one line
+              when it's long. The table can also grow past its container
+              (min-width, not width) so if total content width ever does
+              exceed the viewport for any other reason, it scrolls via the
+              existing wrapper instead of squeezing or clipping. */}
           <div style={{ background: '#fff', border: '1px solid #DFD9C8', borderRadius: 10, overflow: 'hidden' }}>
             <div style={{ overflowX: 'auto' }}>
               <table style={{ minWidth: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
@@ -519,10 +523,9 @@ export default function AdminCoursesPage() {
                           {c.title}
                         </td>
                         <td
-                          title={c.slug}
                           style={{
                             padding: '10px 14px', borderBottom: rowBorder, fontFamily: 'monospace', fontSize: 11, color: '#6E6A5F',
-                            whiteSpace: 'nowrap', maxWidth: 280, overflow: 'hidden', textOverflow: 'ellipsis',
+                            maxWidth: 260, whiteSpace: 'normal', wordBreak: 'break-word',
                           }}
                         >
                           {c.slug}
