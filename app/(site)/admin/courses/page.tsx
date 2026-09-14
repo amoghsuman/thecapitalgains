@@ -459,9 +459,29 @@ export default function AdminCoursesPage() {
           </div>
 
           {/* ── Table ────────────────────────────────────────────────────── */}
+          {/* Root cause of the "columns disappear on the unfiltered view" bug:
+              the Slug column had no max-width, so it sized to whatever the
+              longest slug on the current page happened to be — up to ~105
+              chars in the real data (e.g.
+              "understanding-optimization-theory-convex-optimization-and-...").
+              Combined with `width: '100%'` on <table> below (forces
+              shrink-to-fit instead of growing to natural content width, which
+              defeats the overflow-x-auto wrapper that was already here — same
+              bug pattern as the lesson reader's table block), the auto table
+              layout had to squeeze every other column to compensate, crushing
+              Content Status down to where its border/chevron became
+              invisible and pushing Chapters/Last Worked On out of visible
+              width entirely. A row-count-filtered view "fixed" it only by
+              accident, by excluding whichever course happened to have the
+              longest slug. Fixed at the root: Slug is now capped and
+              truncates with a hover tooltip for the full value, and the
+              table can grow past its container (min-width, not width) so if
+              total content width ever does exceed the viewport for any
+              reason, it scrolls via the existing wrapper instead of
+              squeezing or clipping. */}
           <div style={{ background: '#fff', border: '1px solid #DFD9C8', borderRadius: 10, overflow: 'hidden' }}>
             <div style={{ overflowX: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
+              <table style={{ minWidth: '100%', borderCollapse: 'collapse', fontSize: 12 }}>
                 <thead>
                   <tr style={{ background: '#F7F4EC' }}>
                     {([
@@ -498,7 +518,13 @@ export default function AdminCoursesPage() {
                         <td style={{ padding: '10px 14px', borderBottom: rowBorder, fontWeight: 500, color: '#1A1A18', maxWidth: 260 }}>
                           {c.title}
                         </td>
-                        <td style={{ padding: '10px 14px', borderBottom: rowBorder, fontFamily: 'monospace', fontSize: 11, color: '#6E6A5F', whiteSpace: 'nowrap' }}>
+                        <td
+                          title={c.slug}
+                          style={{
+                            padding: '10px 14px', borderBottom: rowBorder, fontFamily: 'monospace', fontSize: 11, color: '#6E6A5F',
+                            whiteSpace: 'nowrap', maxWidth: 280, overflow: 'hidden', textOverflow: 'ellipsis',
+                          }}
+                        >
                           {c.slug}
                         </td>
                         <td style={{ padding: '10px 14px', borderBottom: rowBorder, color: '#6E6A5F', whiteSpace: 'nowrap' }}>
