@@ -1,0 +1,362 @@
+{
+  "courseSlug": "understanding-alternative-data-in-quantitative-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 4: From Raw Data to Usable Signal",
+      "lessons": [
+        {
+          "title": "Data Cleaning Challenges Unique to Alternative Data",
+          "slug": "data-cleaning-challenges-unique-to-alternative-data",
+          "body": [
+            {
+              "_key": "c4l1k001",
+              "_type": "bigIdea",
+              "text": "A quarterly result arrives audited, standardized, and dated. A scraped dataset arrives as someone else's exhaust, and cleaning it is where most of the real work in this field actually happens."
+            },
+            {
+              "_key": "c4l1k002",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l1k002s1",
+                  "_type": "span",
+                  "text": "This chapter turns sourced data into something a model can actually use. Cleaning comes first, because every downstream step, feature engineering, point-in-time alignment, backtesting, inherits whatever mistakes are baked in at this stage. Alternative data breaks in ways financial statement data rarely does, and this lesson covers the four failure modes you will hit most often.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l1k003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l1k003s1",
+                  "_type": "span",
+                  "text": "Why This Is a Different Job From Cleaning Financial Statements",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l1k004",
+              "_type": "comparison",
+              "title": "What You're Used to vs What Alternative Data Actually Gives You",
+              "columns": [
+                {
+                  "_key": "c4l1k004c1",
+                  "label": "Financial Statement Data",
+                  "points": [
+                    "Arrives audited and standardized under a common accounting framework",
+                    "Company identity is unambiguous: one ISIN, one ticker, one filing",
+                    "A missing value usually means the line item genuinely does not apply",
+                    "The reporting schema changes rarely, and changes are formally announced"
+                  ]
+                },
+                {
+                  "_key": "c4l1k004c2",
+                  "label": "Alternative Data",
+                  "points": [
+                    "Arrives in whatever format the source or vendor happened to produce, unaudited",
+                    "Company identity is ambiguous: a brand name, an app, or a website may not map cleanly to a single listed entity",
+                    "A missing value could mean zero activity, a collection failure, or a vendor gap, and these look identical",
+                    "Vendors change formats and methodologies without warning, often mid-history"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c4l1k005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l1k005s1",
+                  "_type": "span",
+                  "text": "The Entity Resolution Problem: Matching Brand to Ticker",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l1k006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c4l1m001",
+                  "_type": "glossaryTerm",
+                  "definition": "The process of correctly matching a real-world name, such as a brand, app, or website, to the specific listed legal entity and security it corresponds to, which is often far less obvious than it first appears."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c4l1k006s1",
+                  "_type": "span",
+                  "text": "Web and app data arrives labelled with brand or app names, not ISINs, and ",
+                  "marks": []
+                },
+                {
+                  "_key": "c4l1k006s2",
+                  "_type": "span",
+                  "text": "entity resolution",
+                  "marks": ["c4l1m001"]
+                },
+                {
+                  "_key": "c4l1k006s3",
+                  "_type": "span",
+                  "text": " is the unglamorous work of getting that mapping right. India recently gave the whole industry a live example: Zomato Limited's shareholders approved renaming the listed company to Eternal Limited, with the ticker changing on NSE and BSE, while the consumer-facing food delivery app that generates the web and app data itself is still branded Zomato. Any pipeline still hard-coded to match the brand name 'Zomato' to a ticker called 'ZOMATO' would either silently fail to find a match after the rename, or worse, join against stale, incorrect security master data without raising any error at all.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l1k007",
+              "_type": "table",
+              "caption": "Not every popular brand maps to a single, clean, listed ticker",
+              "headers": ["Brand or App", "What It Actually Maps To", "Entity Resolution Lesson"],
+              "rows": [
+                {
+                  "_key": "c4l1k007r1",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Zomato (food delivery app)",
+                    "Eternal Limited, the renamed listed entity, trading under a new ticker on NSE and BSE",
+                    "A brand name can outlive the listed entity's name, mapping tables need an update process, not a one-time hard-code"
+                  ]
+                },
+                {
+                  "_key": "c4l1k007r2",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Myntra (fashion e-commerce app)",
+                    "A subsidiary of the privately structured Flipkart Group, not an independently listed security",
+                    "Some of the most visible consumer brands have no clean, standalone public ticker to map to at all"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c4l1k008",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "The Rename Nobody Told Your Pipeline About",
+              "scenario": "Your desk runs a web-traffic-based signal that has tracked 'zomato.com' traffic against a security identifier for years. The underlying listed company renames itself and its ticker changes, but the app and website continue operating under the same consumer-facing brand name, and your vendor's raw data feed continues labelling the row 'Zomato' exactly as before.",
+              "prompt": "What specifically could silently go wrong in your pipeline if nobody manually catches this rename, and what process would prevent it from happening again with the next renamed company?",
+              "modelAnswer": "If your security master and join logic were not updated, the pipeline could either drop the row entirely because the old ticker no longer resolves to a tradable security, silently losing the signal without any error, or worse, continue joining the web traffic data to the old, now-delisted or incorrect ticker if that identifier is still technically present somewhere in a stale reference table, corrupting the signal's target mapping without any visible failure. The fix is not a one-time patch for this rename, it is a recurring process: subscribe to exchange corporate action and name-change notices as part of the pipeline's inputs, maintain the brand-to-ticker mapping table as a living, versioned artifact with an owner and a review cadence, and add an automated check that flags any brand name in the incoming feed that no longer resolves to an active entity in your security master, rather than assuming that once mapped, a mapping stays correct forever."
+            },
+            {
+              "_key": "c4l1k009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l1k009s1",
+                  "_type": "span",
+                  "text": "Missing Data: Absence of Evidence vs Evidence of Absence",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l1k010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l1k010s1",
+                  "_type": "span",
+                  "text": "A gap in a scraped daily series looks the same whether it means genuinely zero activity, a scraper that failed to run that day, or a vendor that simply never collected that particular date. Filling every gap with zero, a common default, is only correct for the first cause and quietly corrupts your data for the other two.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l1k011",
+              "_type": "table",
+              "caption": "The same blank cell can mean three very different things",
+              "headers": ["Cause of the Gap", "Correct Treatment", "What Goes Wrong If You Fill With Zero"],
+              "rows": [
+                {
+                  "_key": "c4l1k011r1",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Genuine zero activity",
+                    "Fill with zero, this is the accurate value",
+                    "Nothing, this is the one case where zero-filling is correct"
+                  ]
+                },
+                {
+                  "_key": "c4l1k011r2",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Scraper or pipeline failure that day",
+                    "Mark as missing and either interpolate carefully or exclude the date from analysis",
+                    "Creates a fake collapse in your metric, which can look exactly like a real demand shock"
+                  ]
+                },
+                {
+                  "_key": "c4l1k011r3",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Vendor never collected that date",
+                    "Mark as missing and check the vendor's own coverage log if one exists",
+                    "Same as above, plus it can systematically bias any calendar-based seasonality analysis"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c4l1k012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l1k012s1",
+                  "_type": "span",
+                  "text": "Schema Drift and Unit Inconsistency",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l1k013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c4l1m002",
+                  "_type": "glossaryTerm",
+                  "definition": "A change in a data source's structure, field names, units, or methodology over time, often introduced without warning, that can silently break a pipeline built to expect the earlier format."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c4l1k013s1",
+                  "_type": "span",
+                  "text": "Vendors update APIs, rename fields, switch a metric from an absolute count to an indexed value, or quietly change currency or timezone conventions. This ",
+                  "marks": []
+                },
+                {
+                  "_key": "c4l1k013s2",
+                  "_type": "span",
+                  "text": "schema drift",
+                  "marks": ["c4l1m002"]
+                },
+                {
+                  "_key": "c4l1k013s3",
+                  "_type": "span",
+                  "text": " is rarely announced clearly, and a pipeline that assumes the format never changes will either crash loudly, which is the good outcome, or keep running while quietly ingesting garbage, which is the dangerous one.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l1k014",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "import pandas as pd\n\nEXPECTED_COLUMNS = {'date', 'entity_id', 'metric_value', 'unit', 'currency'}\nEXPECTED_UNIT = 'count'\nEXPECTED_CURRENCY = 'INR'\n\ndef validate_ingest(df: pd.DataFrame) -> None:\n    missing_cols = EXPECTED_COLUMNS - set(df.columns)\n    if missing_cols:\n        raise ValueError(f'Schema drift detected, missing columns: {missing_cols}')\n\n    unexpected_units = set(df['unit'].unique()) - {EXPECTED_UNIT}\n    if unexpected_units:\n        raise ValueError(f'Unexpected unit values, check for a vendor methodology change: {unexpected_units}')\n\n    unexpected_currency = set(df['currency'].unique()) - {EXPECTED_CURRENCY}\n    if unexpected_currency:\n        raise ValueError(f'Unexpected currency values, check for a vendor format change: {unexpected_currency}')\n\n    if df['metric_value'].isna().mean() > 0.05:\n        raise ValueError('More than 5% of values are missing, investigate before this reaches a signal')\n\n# Run this on every new file or API pull, before it ever reaches\n# feature engineering. A loud failure here is far cheaper than a\n# silently corrupted signal three steps downstream.",
+              "caption": "A defensive validation gate: fail loudly on schema drift rather than silently ingesting a changed format."
+            },
+            {
+              "_key": "c4l1k015",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l1k015s1",
+                  "_type": "span",
+                  "text": "Outliers: Real Event or Data Error?",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l1k016",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l1k016s1",
+                  "_type": "span",
+                  "text": "Standard statistical treatments for outliers, winsorizing or clipping extreme values, assume the extremes are usually noise. In alternative data, an extreme spike is often the entire point. A huge one-day jump in e-way bill volume around Diwali, or a surge in gold-related search interest ahead of Dhanteras from Chapter 2, is a real, economically meaningful event, and clipping it away as noise would delete the exact signal you are trying to capture.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l1k017",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Clip It or Investigate It?",
+              "question": "Your daily e-way bill volume series shows a single day with a value ten times the recent average, falling exactly on a day when several major manufacturers historically ship year-end inventory ahead of a festival period. What should you do before deciding how to treat this point?",
+              "options": [
+                "Immediately clip it to the 99th percentile, since it is a clear statistical outlier",
+                "Delete the entire month to be safe",
+                "Investigate whether this matches a known, recurring calendar pattern before deciding whether it is a genuine event or a data error",
+                "Ignore it, outliers rarely matter for alternative data"
+              ],
+              "correctIndex": 2,
+              "explanation": "The fact that it falls on a plausible, recurring calendar event is exactly the kind of context that separates a real signal from noise. Automatically clipping or deleting it risks discarding genuine, economically meaningful information, while automatically trusting it without any check risks keeping a genuine data error. The right first step is always to investigate the context before choosing a treatment."
+            },
+            {
+              "_key": "c4l1k018",
+              "_type": "collapsible",
+              "title": "Survivorship bias can be baked into the raw feed itself",
+              "content": [
+                {
+                  "_key": "c4l1k018b1",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c4l1k018b1s1",
+                      "_type": "span",
+                      "text": "Some app analytics panels only track apps once they reach a certain download rank, and silently stop reporting on an app once it falls out of that range, rather than reporting a clean zero. If you build a historical panel purely from what the vendor currently reports, apps that failed or fell out of favour can vanish from the archive entirely instead of showing a visible decline. Chapter 6 covers survivorship bias formally in backtesting, but it is worth knowing that some raw alternative data feeds already carry this bias before you have written a single line of backtest code.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c4l1k019",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Every hour spent building a validation gate that catches an entity rename, a schema change, or a suspicious gap before it reaches a model is worth more than another hour spent tuning that model. Cleaning is not the boring part before the real work starts, it is where most of the real work actually happens."
+            },
+            {
+              "_key": "c4l1k020",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "Companies named in this lesson are used to illustrate real, documented data cleaning challenges and are not recommendations to trade any security. Verify current entity names, tickers, and corporate structures directly with the exchanges before building any production mapping table."
+            },
+            {
+              "_key": "c4l1k021",
+              "_type": "keyTakeaways",
+              "points": [
+                "Alternative data cleaning differs from financial statement cleaning because it arrives unaudited, with ambiguous entity identity, ambiguous missing values, and formats that change without notice",
+                "Entity resolution, mapping a brand or app to the correct listed ticker, needs a living, versioned process, not a one-time hard-code, as India's Zomato to Eternal rename illustrates directly",
+                "Not every visible consumer brand maps to a clean, independently listed ticker, some, like Myntra, sit inside a larger private corporate structure",
+                "A missing value can mean genuine zero activity, a collection failure, or a vendor gap, and treating all three the same way by filling with zero silently corrupts the signal in two out of three cases",
+                "Schema drift, changed fields, units, or methodology, should be caught by an automated validation gate that fails loudly, rather than allowing a pipeline to silently ingest a changed format",
+                "Outliers in alternative data are often the real signal rather than noise, and should be investigated against known calendar or event context before being clipped or trusted",
+                "Some raw alternative data feeds already carry a form of survivorship bias, quietly dropping coverage of entities that fall out of favour rather than reporting their decline"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

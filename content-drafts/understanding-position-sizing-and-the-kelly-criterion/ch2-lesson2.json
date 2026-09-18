@@ -1,0 +1,263 @@
+{
+  "courseSlug": "understanding-position-sizing-and-the-kelly-criterion",
+  "chapters": [
+    {
+      "title": "Chapter 2: Deriving the Kelly Criterion",
+      "lessons": [
+        {
+          "title": "The Kelly Formula for Simple Bets: f* = Edge Divided by Odds",
+          "slug": "the-kelly-formula-for-simple-bets-f-edge-divided-by-odds",
+          "body": [
+            {
+              "_key": "c2l2-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l2-001s1", "_type": "span", "marks": [], "text": "The previous lesson derived f* = p − q, the optimal bet fraction when a win pays exactly what a loss costs. Almost nothing in real trading pays even money. Lesson 1.2 showed a Bank Nifty options seller winning small and losing bigger, and a Nifty swing trader winning big and losing small. This lesson repeats the same derivation with a general payoff ratio and arrives at the formula the rest of this course uses." }
+              ]
+            },
+            {
+              "_key": "c2l2-002",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l2-002s1", "_type": "span", "marks": [], "text": "Generalizing the Bet" }
+              ]
+            },
+            {
+              "_key": "c2l2-003",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l2-003s1", "_type": "span", "marks": [], "text": "Keep everything from Lesson 2.1 except the payoff. A win still happens with probability p and a loss with probability q = 1 − p, but a win now pays b times the amount staked, where b is the payoff ratio from Lesson 1.2. Betting a fraction f of current capital, the growth rate per trade becomes:" }
+              ]
+            },
+            {
+              "_key": "c2l2-004",
+              "_type": "mathBlock",
+              "latex": "g(f) = p\\ln(1+bf) + q\\ln(1-f)",
+              "caption": "A win multiplies capital by (1 + bf); a loss multiplies it by (1 − f)"
+            },
+            {
+              "_key": "c2l2-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l2-005s1", "_type": "span", "marks": [], "text": "Solving the Same Way" }
+              ]
+            },
+            {
+              "_key": "c2l2-006",
+              "_type": "mathBlock",
+              "latex": "g'(f) = \\dfrac{pb}{1+bf} - \\dfrac{q}{1-f} = 0"
+            },
+            {
+              "_key": "c2l2-007",
+              "_type": "mathBlock",
+              "latex": "pb(1-f) = q(1+bf) \\;\\Rightarrow\\; pb - q = bf(p+q) = bf \\;\\Rightarrow\\; f^{*} = \\dfrac{pb - q}{b}",
+              "caption": "The same (p + q) = 1 simplification used in Lesson 2.1 applies here too"
+            },
+            {
+              "_key": "c2l2-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l2-008s1", "_type": "span", "marks": [], "text": "The same concavity argument from Lesson 2.1 carries over unchanged: g(f) is a sum of two logarithms of positive linear functions of f, which is concave, so this critical point is again the global maximum, not just a candidate." }
+              ]
+            },
+            {
+              "_key": "c2l2-009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l2-009s1", "_type": "span", "marks": [], "text": "The Kelly Formula: Edge Divided by Odds" }
+              ]
+            },
+            {
+              "_key": "c2l2-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l2-010s1", "_type": "span", "marks": [], "text": "The numerator, pb − q, is exactly the expectancy E(R) defined in Lesson 1.2: the average result per rupee risked. This formula is traditionally summarized as \"edge divided by odds,\" where odds means the payoff ratio b from Lesson 1.2, not the gambling-style \"3 to 1\" phrasing this course avoids." }
+              ]
+            },
+            {
+              "_key": "c2l2-011",
+              "_type": "mathBlock",
+              "latex": "f^{*} = \\dfrac{pb-q}{b} = \\dfrac{E(R)}{b} = p - \\dfrac{q}{b}",
+              "caption": "Three equivalent ways to write the Kelly Criterion for a simple win/lose bet"
+            },
+            {
+              "_key": "c2l2-012",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Sanity check against Lesson 2.1: set b = 1 and f* = (p·1 − q)/1 = p − q, exactly the even-money formula already derived. The even-money case was never a separate rule. It is this formula with b = 1."
+            },
+            {
+              "_key": "c2l2-013",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l2-013s1", "_type": "span", "marks": [], "text": "Applying It to Chapter 1's Two Archetypes" }
+              ]
+            },
+            {
+              "_key": "c2l2-014",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l2-014s1", "_type": "span", "marks": [], "text": "Lesson 1.2 worked out p and b for both archetypes without a sizing formula to plug them into. Now there is one." }
+              ]
+            },
+            {
+              "_key": "c2l2-015",
+              "_type": "table",
+              "caption": "Kelly fraction for both archetypes from Lesson 1.2",
+              "headers": ["Archetype", "p", "b", "E(R) = pb − q", "f* = E(R) / b"],
+              "rows": [
+                { "_key": "c2l2-015r1", "_type": "tableRow", "cells": ["Bank Nifty options seller", "0.55", "1.33", "0.28R", "21.25%"] },
+                { "_key": "c2l2-015r2", "_type": "tableRow", "cells": ["Nifty swing trader", "0.40", "3.00", "0.60R", "20.00%"] }
+              ]
+            },
+            {
+              "_key": "c2l2-016",
+              "_type": "chart",
+              "chartType": "bar",
+              "title": "Optimal fraction f* across three archetypes",
+              "xAxisLabel": "Archetype",
+              "yAxisLabel": "f* (% of capital)",
+              "data": [
+                { "_key": "c2l2-016d1", "label": "Bank Nifty seller", "value": 21.25 },
+                { "_key": "c2l2-016d2", "label": "Nifty swing trader", "value": 20.00 },
+                { "_key": "c2l2-016d3", "label": "High-win-rate scalper", "value": 35.00 }
+              ]
+            },
+            {
+              "_key": "c2l2-017",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l2-017s1", "_type": "span", "marks": [], "text": "Two very different trading styles land within a percentage point of each other, around 20% of capital. The scalper on the right, introduced in the exercise below, comes out even higher. That is not a coincidence to celebrate. All three numbers are aggressive, and Chapter 3 spends its entire length explaining why almost nobody should actually bet full Kelly, however cleanly it comes out of the algebra." }
+              ]
+            },
+            {
+              "_key": "c2l2-018",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Size a high-win-rate scalper",
+              "prompt": "A scalping system wins 85% of the time, with an average win of 0.30x the average loss (b = 0.30). What is f* as a percentage? Round to the nearest whole percent.",
+              "correctValue": 35,
+              "tolerance": 1,
+              "unit": "%",
+              "explanation": "E(R) = pb − q = (0.85 × 0.30) − 0.15 = 0.255 − 0.15 = 0.105R. f* = 0.105 ÷ 0.30 = 0.35, or 35%. A very high win rate can justify a large Kelly fraction even when each individual win is small relative to the occasional loss, because losses happen rarely enough that the formula tolerates a bigger bet."
+            },
+            {
+              "_key": "c2l2-019",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l2-019s1", "_type": "span", "marks": [], "text": "How f* Moves as the Payoff Ratio Changes" }
+              ]
+            },
+            {
+              "_key": "c2l2-020",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l2-020s1", "_type": "span", "marks": [], "text": "Hold the win rate fixed at 40%, the Nifty swing trader's number, and vary only the payoff ratio, using f* = p − q/b." }
+              ]
+            },
+            {
+              "_key": "c2l2-021",
+              "_type": "table",
+              "caption": "Fixed p = 0.40, varying payoff ratio b",
+              "headers": ["b", "f* = p − q/b", "Reading"],
+              "rows": [
+                { "_key": "c2l2-021r1", "_type": "tableRow", "cells": ["1 (even money)", "0.40 − 0.60 = −20%", "Negative: no genuine edge, so no bet at all"] },
+                { "_key": "c2l2-021r2", "_type": "tableRow", "cells": ["2", "0.40 − 0.30 = 10%", "Small positive edge appears"] },
+                { "_key": "c2l2-021r3", "_type": "tableRow", "cells": ["3", "0.40 − 0.20 = 20%", "The Nifty swing trader's actual number"] },
+                { "_key": "c2l2-021r4", "_type": "tableRow", "cells": ["5", "0.40 − 0.12 = 28%", "Bigger payoff ratio, bigger Kelly fraction"] },
+                { "_key": "c2l2-021r5", "_type": "tableRow", "cells": ["10", "0.40 − 0.06 = 34%", "Approaching p = 0.40 as b grows very large"] }
+              ]
+            },
+            {
+              "_key": "c2l2-022",
+              "_type": "callout",
+              "type": "warning",
+              "text": "A negative f* is not a strategy the formula wants sized small. It is the formula saying this bet has no edge and should not be taken, at any size. Never floor a negative Kelly result at some small positive number; floor it at zero."
+            },
+            {
+              "_key": "c2l2-023",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Reading the b-sensitivity table",
+              "question": "In the table above, why does f* increase as b increases, with p held fixed at 40%?",
+              "options": [
+                "Because a larger payoff ratio always means a higher win rate",
+                "Because the q/b term shrinks as b grows, so less of the win rate gets subtracted away",
+                "Because the formula stops being valid once b exceeds 2",
+                "It doesn't actually increase; the table contains an error"
+              ],
+              "correctIndex": 1,
+              "explanation": "f* = p − q/b. As b grows, q/b shrinks toward zero, so f* rises toward p itself. A bigger payoff ratio means losses matter less relative to the size of a typical win, which the formula rewards with a larger optimal fraction, even though p never changes."
+            },
+            {
+              "_key": "c2l2-024",
+              "_type": "collapsible",
+              "title": "Verify the Bank Nifty seller's f* by brute-force search",
+              "content": [
+                {
+                  "_key": "c2l2-024a",
+                  "_type": "codeBlock",
+                  "language": "python",
+                  "caption": "Grid search over f for p = 0.55, b = 1.33",
+                  "code": "import math\n\np, b = 0.55, 8000 / 6000\nq = 1 - p\n\ndef g(f):\n    return p * math.log(1 + b * f) + q * math.log(1 - f)\n\nbest_f, best_g = 0, g(0)\nf = 0.0001\nwhile f < 0.999:\n    val = g(f)\n    if val > best_g:\n        best_f, best_g = f, val\n    f += 0.0001\n\nprint(round(best_f, 4))   # 0.2125, matching f* = (pb - q) / b"
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-025",
+              "_type": "flashcardSet",
+              "title": "The Kelly Formula: Core Terms",
+              "cards": [
+                { "_key": "c2l2-025f1", "term": "Kelly Criterion (simple bet)", "definition": "f* = (pb − q) / b, the fraction of capital that maximizes long-run growth for a bet with win probability p and payoff ratio b." },
+                { "_key": "c2l2-025f2", "term": "Edge", "definition": "pb − q, the expected result per rupee risked. Identical to the expectancy E(R) defined in Lesson 1.2." },
+                { "_key": "c2l2-025f3", "term": "Odds (in the Kelly formula)", "definition": "The payoff ratio b: this course's term for average win divided by average loss, not gambling-style \"3 to 1\" notation." },
+                { "_key": "c2l2-025f4", "term": "f* = p − q/b", "definition": "An equivalent form of the Kelly formula, useful for seeing how a bigger payoff ratio raises the optimal fraction for a fixed win rate." }
+              ]
+            },
+            {
+              "_key": "c2l2-026",
+              "_type": "keyTakeaways",
+              "points": [
+                "f* = (pb − q) / b is the Kelly Criterion for any simple win/lose bet with payoff ratio b, and reduces to f* = p − q when b = 1.",
+                "The numerator, pb − q, is exactly the expectancy E(R) from Lesson 1.2. Kelly sizing is expectancy divided by payoff ratio.",
+                "A negative f* means the bet has no edge and should be sized at zero, never floored at some small positive number.",
+                "Holding win rate fixed, a larger payoff ratio produces a larger Kelly fraction, because losses matter less relative to wins.",
+                "Full Kelly fractions computed from realistic p and b are often surprisingly large, frequently 20% or more of capital, which is precisely why Chapter 3 exists."
+              ]
+            },
+            {
+              "_key": "c2l2-027",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "f* here is the growth-maximizing fraction under an idealized model with known, fixed p and b. It is not a recommendation to size any real trade this aggressively. Chapter 3 covers why fractional Kelly, not full Kelly, is the practical standard. This lesson is for education only and is not investment or trading advice."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

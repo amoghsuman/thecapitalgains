@@ -1,0 +1,254 @@
+{
+  "courseSlug": "advanced-machine-learning-techniques-for-trading-ensembles-and-deep-learning",
+  "chapters": [
+    {
+      "title": "Chapter 3: Ensemble Methods II: Stacking and Blending",
+      "lessons": [
+        {
+          "title": "Bagging vs Boosting vs Stacking: Choosing the Right Ensemble Architecture",
+          "slug": "bagging-vs-boosting-vs-stacking-choosing-the-right-ensemble-architecture",
+          "body": [
+            {
+              "_key": "amlc3l1b01",
+              "_type": "bigIdea",
+              "text": "Bagging averages many copies of the same kind of model to cancel out noise. Boosting chains many copies of the same kind of model to squeeze out more signal. Stacking does something genuinely different: it combines different kinds of models, each with its own blind spots, using a learned rule instead of a fixed one. Knowing which problem you actually have decides which of the three you should reach for."
+            },
+            {
+              "_key": "amlc3l1b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc3l1b02s1", "_type": "span", "text": "Two Architectures You Already Know", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc3l1b03",
+              "_type": "table",
+              "caption": "Chapter 2, in two rows",
+              "headers": ["Dimension", "Bagging", "Boosting"],
+              "rows": [
+                { "_key": "amlc3l1b03r1", "_type": "tableRow", "cells": ["Training scheme", "Parallel, independent trees", "Sequential; each tree corrects the ensemble's prior errors"] },
+                { "_key": "amlc3l1b03r2", "_type": "tableRow", "cells": ["Primary goal", "Variance reduction", "Bias reduction, squeezing more signal from weak learners"] },
+                { "_key": "amlc3l1b03r3", "_type": "tableRow", "cells": ["Overfitting behavior", "Settles at a variance floor, ρσ²", "No built-in floor; needs early stopping to avoid overfitting"] },
+                { "_key": "amlc3l1b03r4", "_type": "tableRow", "cells": ["Typical base learner", "Deeper trees, some individual variance allowed", "Shallow trees, depth 3 to 4, deliberately weak on their own"] }
+              ]
+            },
+            {
+              "_key": "amlc3l1b04",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc3l1b04s1", "_type": "span", "text": "The Third Architecture: Stacking", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc3l1b05",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "amlc3l1m01",
+                  "_type": "glossaryTerm",
+                  "definition": "An ensemble method that trains several base models, often of genuinely different types, then trains a separate model, the meta-learner, to combine their predictions, learning the combination rule from data rather than fixing it in advance."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "amlc3l1b05s1",
+                  "_type": "span",
+                  "text": "Both bagging and boosting combine many copies of essentially the same kind of model. ",
+                  "marks": []
+                },
+                { "_key": "amlc3l1b05s2", "_type": "span", "text": "Stacking", "marks": ["amlc3l1m01"] },
+                {
+                  "_key": "amlc3l1b05s3",
+                  "_type": "span",
+                  "text": " trains a handful of genuinely different base models, a random forest, a gradient booster, perhaps a simple linear or logistic factor model, on the same training data, and then trains a separate meta-learner whose only input is the base models' own predictions. The meta-learner's job is not to predict returns from raw features. It is to learn how much to trust each base model, and when, from their actual out-of-sample behavior.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc3l1b06",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc3l1b06s1", "_type": "span", "text": "Why Bother With Multiple Model Types?", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc3l1b07",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc3l1b07s1",
+                  "_type": "span",
+                  "text": "A tree ensemble is very good at capturing nonlinear interactions, cheap-and-improving versus cheap-and-deteriorating, but can be clumsy at representing a smooth, roughly linear relationship that a simple logistic regression captures cleanly with one coefficient. A linear factor model is the reverse: excellent at the smooth relationship, blind to the interaction. If these two models make genuinely different kinds of mistakes on genuinely different rows, combining them can do better than either alone, for exactly the same statistical reason bagging works.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc3l1b08",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Decorrelation is the thread running through this entire course's ensemble work. Random forest decorrelates trees with random feature subsets. Boosting decorrelates rounds with row and column subsampling. Stacking decorrelates at the model level, by combining genuinely different model families instead of many variations on one. It is the same statistical lever, ρ from the bagging variance formula, pulled at three different points in the pipeline."
+            },
+            {
+              "_key": "amlc3l1b09",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc3l1b09s1", "_type": "span", "text": "The Critical Detail: Out-of-Fold Predictions for the Meta-Learner", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc3l1b10",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc3l1b10s1",
+                  "_type": "span",
+                  "text": "Here is where stacking goes wrong in practice more often than any other step: training the meta-learner on the base models' predictions for the SAME rows those base models were trained on. A gradient booster with 3,000 unconstrained rounds can memorize its training set almost perfectly, and if the meta-learner sees those in-sample predictions, it will happily learn to trust that base model far more than its genuine, out-of-sample skill deserves. This is the stacking-specific version of the look-ahead bias problem this course has flagged since its first lesson.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc3l1b11",
+              "_type": "comparison",
+              "title": "Training the Meta-Learner: Two Very Different Results",
+              "columns": [
+                {
+                  "_key": "amlc3l1b11c1",
+                  "label": "In-Sample Stacking (Wrong)",
+                  "points": [
+                    "Base models predict on the same rows they were trained on",
+                    "Meta-learner sees predictions inflated by each base model's own overfitting",
+                    "Meta-learner over-weights whichever base model memorized training data hardest",
+                    "Reported accuracy looks excellent and does not survive live trading"
+                  ]
+                },
+                {
+                  "_key": "amlc3l1b11c2",
+                  "label": "Out-of-Fold Stacking (Correct)",
+                  "points": [
+                    "Base models predict only on periods they did not train on",
+                    "Meta-learner sees each base model's genuine generalization ability",
+                    "Meta-learner learns to weight base models by real, out-of-sample complementary strength",
+                    "Reported accuracy is lower but honest, matching this course's walk-forward standard"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "amlc3l1b12",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "import numpy as np\nimport pandas as pd\nfrom sklearn.model_selection import TimeSeriesSplit\nfrom sklearn.linear_model import LogisticRegression\n\ntscv = TimeSeriesSplit(n_splits=5)\noof_preds = {name: np.full(len(X_train), np.nan) for name in base_models}\n\nfor train_idx, val_idx in tscv.split(X_train):\n    for name, model in base_models.items():\n        model.fit(X_train.iloc[train_idx], y_train.iloc[train_idx])\n        oof_preds[name][val_idx] = model.predict_proba(X_train.iloc[val_idx])[:, 1]\n\n# Rows from the very first fold's training segment never land in a\n# validation fold under TimeSeriesSplit, so they never get an OOF\n# prediction. Train the meta-learner only on rows that do.\nmeta_X = pd.DataFrame(oof_preds).dropna()\nmeta_learner = LogisticRegression()\nmeta_learner.fit(meta_X, y_train.loc[meta_X.index])",
+              "caption": "TimeSeriesSplit, not a shuffled K-Fold, generates these out-of-fold predictions, so every prediction the meta-learner trains on came from a base model that had not yet seen that row's period."
+            },
+            {
+              "_key": "amlc3l1b13",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc3l1b13s1", "_type": "span", "text": "Choosing an Architecture for a Given Problem", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc3l1b14",
+              "_type": "table",
+              "caption": "A decision framework, not a strict rule",
+              "headers": ["Architecture", "Best When", "This Course's Example"],
+              "rows": [
+                { "_key": "amlc3l1b14r1", "_type": "tableRow", "cells": ["Bagging (Chapter 2)", "Base learner has high variance, low bias, and you want stability without a hand-tuned combination rule", "Random forest on Nifty 200 features"] },
+                { "_key": "amlc3l1b14r2", "_type": "tableRow", "cells": ["Boosting (Chapter 2)", "Base learner has high bias (a shallow tree is deliberately weak) and you can supervise it closely against overfitting", "XGBoost momentum signal, Chapter 2's case study"] },
+                { "_key": "amlc3l1b14r3", "_type": "tableRow", "cells": ["Stacking (this chapter)", "You already have several reasonably good, genuinely diverse models and want a learned way to combine their complementary strengths", "Combining a tree ensemble with a linear factor model, next lesson"] }
+              ]
+            },
+            {
+              "_key": "amlc3l1b15",
+              "_type": "keyFact",
+              "label": "Stacking, Named",
+              "value": "The 'smarter combination function' from Chapter 1",
+              "context": "Chapter 1's second lesson introduced ML as a nonlinear combination layer over factors you already trust as one of three roles for ML in a pipeline. Stacking is the formal, rigorous version of exactly that idea, with a learned meta-model in place of a fixed weighted average."
+            },
+            {
+              "_key": "amlc3l1b16",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc3l1b16s1", "_type": "span", "text": "What's Next", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc3l1b17",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc3l1b17s1",
+                  "_type": "span",
+                  "text": "The next lesson builds an actual stacked ensemble, tree models feeding a linear meta-learner, end to end. The lesson after that goes deeper into exactly how much diversity between base models is enough, and how to measure it, before this chapter closes with a case study stacking a multi-factor ensemble for a Bank Nifty rotation strategy.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc3l1b18",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Spotting a Leaky Stacking Setup",
+              "question": "A team trains three base models on the full training set, then trains a meta-learner on those same three models' predictions on that same training set, and reports an impressively high meta-learner accuracy. What is the most likely explanation?",
+              "options": [
+                "Stacking always outperforms bagging and boosting by a wide margin",
+                "The meta-learner is likely over-trusting whichever base model overfit its training data the most, since it never saw genuinely out-of-sample base-model predictions",
+                "The high accuracy proves the base models are highly diverse and complementary",
+                "This is standard, correct stacking practice"
+              ],
+              "correctIndex": 1,
+              "explanation": "Training the meta-learner on base models' in-sample predictions lets it exploit however much each base model has simply memorized its own training data, exactly the family of look-ahead bias problem this course has flagged since Chapter 1's shuffled K-Fold warning. A correct stacking setup trains the meta-learner only on out-of-fold predictions, generated the way this lesson's code example does, so the meta-learner only ever sees predictions each base model made on data it did not train on."
+            },
+            {
+              "_key": "amlc3l1b19",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Before You Call It a Stacked Ensemble",
+              "steps": [
+                "Base models come from genuinely different families or feature sets, not just different random seeds of the same model",
+                "The meta-learner is trained only on out-of-fold (or walk-forward) base-model predictions, never in-sample ones",
+                "The cross-validation scheme generating those out-of-fold predictions respects time order, no shuffled K-Fold",
+                "Each base model has already been checked with SHAP or an equivalent, per Chapter 2, so you know roughly why it makes the predictions it does",
+                "You have a reason to believe the base models' errors are meaningfully uncorrelated, not just three variations on the same underlying signal"
+              ]
+            },
+            {
+              "_key": "amlc3l1b20",
+              "_type": "keyTakeaways",
+              "points": [
+                "Bagging and boosting both combine many copies of the same kind of model; stacking combines genuinely different model types using a learned meta-learner",
+                "Decorrelation is the common thread across all three: random feature subsets in bagging, row and column subsampling in boosting, and different model families entirely in stacking",
+                "The meta-learner must be trained only on out-of-fold base-model predictions; training it on in-sample predictions lets it over-trust whichever base model overfit its own training data hardest",
+                "A time-respecting splitter like TimeSeriesSplit, not a shuffled K-Fold, is required to generate those out-of-fold predictions honestly",
+                "Stacking is the rigorous, learned version of the 'ML as combination layer' role introduced in Chapter 1's second lesson",
+                "Choose bagging for a high-variance base learner, boosting for a high-bias one under close supervision, and stacking once you already have several genuinely diverse, reasonably good models to combine"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

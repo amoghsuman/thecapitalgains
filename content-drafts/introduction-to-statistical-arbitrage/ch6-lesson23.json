@@ -1,0 +1,192 @@
+{
+  "courseSlug": "introduction-to-statistical-arbitrage",
+  "chapters": [
+    {
+      "title": "Chapter 6: Risk, Costs, and Why Backtests Lie",
+      "lessons": [
+        {
+          "title": "Common Backtesting Mistakes: Look-Ahead Bias and Survivorship Bias",
+          "slug": "common-backtesting-mistakes-look-ahead-bias-and-survivorship-bias",
+          "body": [
+            {
+              "_key": "sa23-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa23-001s1", "_type": "span", "marks": [], "text": "Lesson 13 already flagged one way a backtest can quietly lie: testing so many candidate pairs that some pass by pure chance. This lesson covers two more, deeper mistakes, ones that can make a strategy's historical backtest look excellent while being fundamentally dishonest about what a real trader, operating in real time with only the information actually available on each date, could ever have captured." }
+              ]
+            },
+            {
+              "_key": "sa23-002",
+              "_type": "bigIdea",
+              "text": "Look-ahead bias sneaks future information into past decisions, making a backtest see things a real trader never could have known at the time. Survivorship bias sneaks failure out of the historical data, making a backtest never face the losers a real trader would have actually held. Both make a strategy look better than it really was."
+            },
+            {
+              "_key": "sa23-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa23-003s1", "_type": "span", "marks": [], "text": "Look-Ahead Bias #1: Fitting Parameters on the Whole Backtest Window" }
+              ]
+            },
+            {
+              "_key": "sa23-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa23-004s1", "_type": "span", "marks": [], "text": "The single most common look-ahead mistake in this entire course's toolkit: fitting the hedge ratio β once, using the full multi-year dataset, and then \"backtesting\" trades across that same window as if that β had been known from day one. It could not have been. A β estimated from two years of data did not exist until all two years of data existed." }
+              ]
+            },
+            {
+              "_key": "sa23-005",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "# WRONG: fits beta once, using the FULL history, then \"backtests\"\n# trades across that same period\nbeta_full, alpha_full = np.polyfit(icici_prices, hdfc_prices, 1)\n\nfor t in range(len(icici_prices)):\n    spread_t = hdfc_prices[t] - (alpha_full + beta_full * icici_prices[t])\n    # trading logic using spread_t...\n    # Problem: every day in this loop, including the first, uses a beta\n    # that could only actually have been computed once the whole dataset existed.\n\n\n# RIGHT: at each date t, estimate beta using ONLY data available up to t\nfor t in range(min_window, len(icici_prices)):\n    beta_t, alpha_t = np.polyfit(icici_prices[:t], hdfc_prices[:t], 1)\n    spread_t = hdfc_prices[t] - (alpha_t + beta_t * icici_prices[t])\n    # trading logic using spread_t, built only from information a real\n    # trader actually had on day t",
+              "caption": "Fitting on the full history (wrong) vs walk-forward estimation (right)"
+            },
+            {
+              "_key": "sa23-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa23-006s1", "_type": "span", "marks": [], "text": "Look-Ahead Bias #2: Selecting the Pair Using the Whole Backtest Window" }
+              ]
+            },
+            {
+              "_key": "sa23-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa23-007s1", "_type": "span", "marks": [], "text": "Lesson 13's multiple testing problem has a backtesting twin. If a thousand candidate pairs are screened for cointegration using the exact same multi-year window the backtest then measures performance on, the pairs that \"pass\" are, by construction, the ones that happened to look best in that specific window, real relationship or pure chance. Testing a strategy's performance on the very data used to pick its candidates is not really testing anything. The fix is the same discipline used everywhere else in statistics: screen and select candidates on one period, then measure performance on a separate, later period the selection process never saw." }
+              ]
+            },
+            {
+              "_key": "sa23-008",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa23-008s1", "_type": "span", "marks": [], "text": "Survivorship Bias: The Companies That Aren't There Anymore" }
+              ]
+            },
+            {
+              "_key": "sa23-009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa23-009s1", "_type": "span", "marks": [], "text": "Building a backtest universe from today's list of, say, Nifty 500 or Nifty IT constituents, and pulling historical price data for exactly those companies, silently excludes anything that was listed or an index member at some point in the past but has since been delisted, gone bankrupt, or been merged away. This is not a hypothetical risk. It has happened to a company that was once one of India's largest IT majors." }
+              ]
+            },
+            {
+              "_key": "sa23-010",
+              "_type": "timeline",
+              "title": "Satyam Computer Services: A Real Survivorship Bias Case",
+              "events": [
+                { "_key": "sa23-010e1", "date": "2008", "title": "One of India's Big Four IT Majors", "description": "Satyam Computer Services was a large, prominent NSE and BSE-listed IT services company, commonly grouped with TCS, Infosys, and Wipro as India's leading IT exporters." },
+                { "_key": "sa23-010e2", "date": "January 2009", "title": "The Fraud Is Revealed", "description": "Founder-chairman B. Ramalinga Raju admitted to falsifying the company's accounts for years, inflating profits and cash balances by thousands of crores of rupees, one of India's largest corporate accounting scandals. The stock collapsed within days." },
+                { "_key": "sa23-010e3", "date": "April 2009", "title": "Tech Mahindra Steps In", "description": "Following government intervention and the appointment of a new board, Tech Mahindra acquired a controlling stake in the company through a competitive bidding process." },
+                { "_key": "sa23-010e4", "date": "2013", "title": "Formally Merged Away", "description": "The company, renamed Mahindra Satyam, was formally merged into Tech Mahindra, ceasing to exist as an independently listed entity." }
+              ]
+            },
+            {
+              "_key": "sa23-011",
+              "_type": "callout",
+              "type": "insight",
+              "text": "A backtest built today from the current Nifty 500 or Nifty IT constituent list would never include Satyam at all, it simply isn't there anymore. Any pairs trading strategy that would have held, or been considering, a pair involving Satyam in late 2008 is invisible to a survivorship-biased backtest, along with the very real, catastrophic divergence such a pair would have experienced in January 2009, exactly the kind of unambiguous structural break Lesson 21 described."
+            },
+            {
+              "_key": "sa23-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa23-012s1", "_type": "span", "marks": [], "text": "Fixing Survivorship Bias: Point-in-Time Universes" }
+              ]
+            },
+            {
+              "_key": "sa23-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "sa23-013m1", "_type": "glossaryTerm", "definition": "A historically accurate record of which companies were actually listed or index members on each specific past date, used to avoid survivorship bias in a backtest." }
+              ],
+              "children": [
+                { "_key": "sa23-013s1", "_type": "span", "marks": [], "text": "A proper backtest needs what data vendors call a " },
+                { "_key": "sa23-013s2", "_type": "span", "marks": ["sa23-013m1"], "text": "point-in-time universe" },
+                { "_key": "sa23-013s3", "_type": "span", "marks": [], "text": ": the actual list of constituents as they stood on each historical date, including companies later removed, delisted, or merged away, not today's list projected backward across history. Free or basic historical price data usually comes without this, which is one reason serious backtesting, and serious quant research more broadly, often requires paid, purpose-built datasets that preserve exactly this kind of historical accuracy." }
+              ]
+            },
+            {
+              "_key": "sa23-014",
+              "_type": "table",
+              "caption": "Two ways a backtest can lie",
+              "headers": ["Bias", "What goes wrong", "The fix"],
+              "rows": [
+                { "_key": "sa23-014r1", "_type": "tableRow", "cells": ["Look-ahead bias", "Using information, a fitted β, a cointegration verdict, even which pairs to trade, that would not actually have been available at the historical date being simulated", "Walk-forward estimation: use only data up to date t for a decision on date t; select pairs on one period, test performance on a separate, later one"] },
+                { "_key": "sa23-014r2", "_type": "tableRow", "cells": ["Survivorship bias", "Building the backtest universe from today's list of listed or index-member companies, silently excluding those that were delisted, went bankrupt, or merged away", "Use a point-in-time universe reflecting which companies actually existed and were tradeable on each historical date"] }
+              ]
+            },
+            {
+              "_key": "sa23-015",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Spot the bias",
+              "scenario": "A researcher downloads today's Nifty 500 constituent list, pulls five years of historical price data for exactly those 500 companies, screens all possible pairs for cointegration using the full five years, and reports the average return of the top 20 cointegrated pairs traded across that same five-year window.",
+              "prompt": "Identify every bias present in this backtest, and briefly explain each one.",
+              "modelAnswer": "This backtest has both biases at once. It has survivorship bias, because using today's constituent list silently excludes any company that was in the Nifty 500 at some point during the five years but has since been removed, delisted, or merged away. It also has look-ahead bias, twice over: the cointegration screening used the full five-year window to pick the 20 pairs being reported on, the same multiple-testing problem from Lesson 13, now baked into the backtest, and there is no indication the hedge ratios themselves were estimated on a walk-forward basis rather than fit once on the whole period."
+            },
+            {
+              "_key": "sa23-016",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why doesn't today's Nifty 500 list work for a five-year backtest?",
+              "question": "Why is using today's Nifty 500 constituent list to build a five-year historical backtest a survivorship bias problem?",
+              "options": [
+                "The Nifty 500 has always had exactly the same 500 companies",
+                "It silently excludes companies that were listed or index members at some point during those five years but have since been delisted, gone bankrupt, or been removed, making historical performance look better than a real-time trader would have experienced",
+                "Historical price data for the Nifty 500 does not actually exist",
+                "It only affects strategies that trade options, not pairs trading"
+              ],
+              "correctIndex": 1,
+              "explanation": "Index membership changes over time, and companies get removed for very real reasons, including business failure, exactly as happened to Satyam Computer Services in 2009. A backtest built only from today's survivors never faces the pairs, and the risks, that a real-time trader active throughout those years actually would have."
+            },
+            {
+              "_key": "sa23-017",
+              "_type": "flashcardSet",
+              "title": "Backtesting Biases: Core Terms",
+              "cards": [
+                { "_key": "sa23-017f1", "term": "Look-ahead bias", "definition": "Using information in a backtest that would not actually have been available at the historical point in time being simulated, such as a hedge ratio estimated using future data." },
+                { "_key": "sa23-017f2", "term": "Walk-forward estimation", "definition": "Re-estimating parameters like the hedge ratio at each point in a backtest using only the data available up to that date, avoiding look-ahead bias." },
+                { "_key": "sa23-017f3", "term": "Survivorship bias", "definition": "Building a backtest's universe of stocks from a list of companies that still exist or are still index members today, silently excluding those that were delisted, went bankrupt, or merged away." },
+                { "_key": "sa23-017f4", "term": "Point-in-time universe", "definition": "A historically accurate record of which companies were actually listed or index members on each specific past date, used to avoid survivorship bias in a backtest." }
+              ]
+            },
+            {
+              "_key": "sa23-018",
+              "_type": "keyTakeaways",
+              "points": [
+                "Look-ahead bias sneaks future information into a backtest's past decisions, most commonly by fitting a hedge ratio or selecting cointegrated pairs using the same full window the backtest then reports performance on.",
+                "The fix for look-ahead bias is walk-forward estimation: use only data available up to each historical date, and select pairs on one period while measuring performance on a separate, later one.",
+                "Survivorship bias builds a backtest's universe from today's survivors, silently excluding companies that were delisted, went bankrupt, or merged away, like the real 2009 Satyam Computer Services accounting scandal that ended its life as an independently listed company.",
+                "A proper backtest needs a point-in-time universe, the actual constituent list as it stood on each historical date, not today's list projected backward.",
+                "Both biases share the same effect: they make a strategy's historical backtest look better, sometimes dramatically better, than what a real trader operating in real time would actually have experienced."
+              ]
+            },
+            {
+              "_key": "sa23-019",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice. The account of Satyam Computer Services is a real, publicly documented historical event, summarized here as factual background. All code examples, hypothetical backtest descriptions, and other figures in this lesson are illustrative. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

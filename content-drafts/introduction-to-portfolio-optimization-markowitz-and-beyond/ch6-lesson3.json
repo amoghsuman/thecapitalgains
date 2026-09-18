@@ -1,0 +1,157 @@
+{
+  "courseSlug": "introduction-to-portfolio-optimization-markowitz-and-beyond",
+  "chapters": [
+    {
+      "title": "Chapter 6: Making It Work on a Real Portfolio",
+      "lessons": [
+        {
+          "title": "Common Mistakes When Applying Markowitz to Real Indian Portfolios",
+          "slug": "common-mistakes-when-applying-markowitz-to-real-indian-portfolios",
+          "body": [
+            {
+              "_key": "poc6l3-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc6l3-001s1", "_type": "span", "marks": [], "text": "The textbook version of everything in this course is clean: exact formulas, exact answers, no friction. Every mistake in this lesson happens at the point where that clean version meets an actual brokerage account, an actual fund mandate, or an actual tax bill. Each one already has a fix, taught somewhere earlier in this course. This is the consolidated field guide." }
+              ]
+            },
+            {
+              "_key": "poc6l3-002",
+              "_type": "bigIdea",
+              "text": "Nearly every real-world Markowitz mistake is the same mistake: trusting a number that looks precise without asking how reliable it actually is, or how it will survive contact with real costs, real constraints, and real market stress."
+            },
+            {
+              "_key": "poc6l3-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc6l3-003s1", "_type": "span", "marks": [], "text": "Eight Mistakes, and Where This Course Already Fixed Each One" }
+              ]
+            },
+            {
+              "_key": "poc6l3-004",
+              "_type": "table",
+              "caption": "A field guide to where the textbook version breaks down in practice",
+              "headers": ["Mistake", "Why it happens", "Where this course fixes it"],
+              "rows": [
+                { "_key": "poc6l3-004r1", "_type": "tableRow", "cells": ["\"More stocks means more diversified\"", "Confusing stock count with correlation", "Chapter 1: correlation, not count, drives diversification"] },
+                { "_key": "poc6l3-004r2", "_type": "tableRow", "cells": ["Weighting by share count or original cost", "Forgetting weights must reflect current market value", "Chapter 1, Lesson 3"] },
+                { "_key": "poc6l3-004r3", "_type": "tableRow", "cells": ["Assuming portfolio risk is a weighted average of individual risks", "Missing the covariance cross-term entirely", "Chapter 1, Lesson 4 and Chapter 2, Lesson 2"] },
+                { "_key": "poc6l3-004r4", "_type": "tableRow", "cells": ["Trusting a short-history return estimate at face value", "Not recognizing how large the standard error actually is", "Chapter 5, Lesson 1"] },
+                { "_key": "poc6l3-004r5", "_type": "tableRow", "cells": ["Building a \"textbook optimal\" portfolio nobody can actually hold", "Ignoring no-short and position-cap constraints", "Chapter 6, Lesson 1"] },
+                { "_key": "poc6l3-004r6", "_type": "tableRow", "cells": ["Rebalancing constantly to chase precision", "Ignoring STT, brokerage, and capital gains tax", "Chapter 6, Lesson 2"] },
+                { "_key": "poc6l3-004r7", "_type": "tableRow", "cells": ["Assuming correlations stay where you measured them", "Correlations spike exactly during market stress", "Chapter 1, Lesson 1 and Chapter 2"] },
+                { "_key": "poc6l3-004r8", "_type": "tableRow", "cells": ["Treating borrowing and lending rates as identical", "Real margin rates exceed T-Bill yields", "Chapter 4, Lesson 1"] }
+              ]
+            },
+            {
+              "_key": "poc6l3-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc6l3-005s1", "_type": "span", "marks": [], "text": "Three of These, Seen in the Wild" }
+              ]
+            },
+            {
+              "_key": "poc6l3-006",
+              "_type": "callout",
+              "type": "warning",
+              "text": "The short-history trap. An investor gets excited about a small-cap that has returned 45% a year for the past two years, uses that number directly as its expected return, and lets an optimizer size a large position around it. Chapter 5, Lesson 1's math is blunt about this: with even 25% volatility, two years of data leaves a standard error north of 17 percentage points. That 45% could just as easily be an 11% stock that got lucky twice in a row. The optimizer cannot tell the difference, and neither can the investor, without a much longer history or a Black-Litterman-style anchor to equilibrium."
+            },
+            {
+              "_key": "poc6l3-007",
+              "_type": "callout",
+              "type": "warning",
+              "text": "The unimplementable pitch. A portfolio management service shows a backtested \"optimal\" allocation with 40% in one mid-cap stock, driven purely by an unconstrained mean-variance run over the backtest period. A SEBI-regulated mutual fund could never legally hold that position under the roughly 10% single-stock cap from Chapter 6, Lesson 1. A backtest that ignores the constraints an actual product must follow is not a preview of real returns. It is a demonstration of what an optimizer does with no rules attached."
+            },
+            {
+              "_key": "poc6l3-008",
+              "_type": "callout",
+              "type": "warning",
+              "text": "The correlation that vanished. A portfolio built around IT and banking stocks, correlated at a calm 0.3 to 0.4 in normal markets, gets sold as well-diversified. In March 2020, both fell together, hard, because a systemic shock overwhelms the sector-specific stories that kept their correlation low in the first place. Chapter 1 and Chapter 2 both flagged this directly: a correlation measured in calm markets is not a guarantee for what happens in a crisis, it is a description of what already happened before one."
+            },
+            {
+              "_key": "poc6l3-009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc6l3-009s1", "_type": "span", "marks": [], "text": "A Self-Audit Checklist" }
+              ]
+            },
+            {
+              "_key": "poc6l3-010",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Before You Trust an \"Optimal\" Portfolio",
+              "steps": [
+                "Are the weights based on current market value, not share count or original purchase cost?",
+                "Does the expected return input account for how much statistical noise a short history actually contains?",
+                "Would every resulting position actually be legal and implementable under your account's or fund's no-short-selling rule?",
+                "Does any single stock or sector breach a concentration cap you are actually required to follow?",
+                "Has the rebalancing plan accounted for STT, brokerage, and capital gains tax, not just the target weights on paper?",
+                "Would this allocation still make sense if every correlation between your holdings doubled during a market stress event?"
+              ]
+            },
+            {
+              "_key": "poc6l3-011",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Diagnose the mistakes",
+              "scenario": "A friend describes his process: \"I use 18 months of daily returns to estimate each stock's expected return, plug them straight into an optimizer, and trade to whatever weights come out, even if it means shorting a stock through F&O just to hit the exact number. I rebalance back to those exact weights every single week.\"",
+              "prompt": "Using this lesson's field guide, identify at least two distinct mistakes in this process, and explain what each one is likely to cost him.",
+              "modelAnswer": "First, 18 months is a short window for estimating expected return, so his inputs likely carry enormous standard error, and the optimizer's precise-looking output is largely noise dressed up as conviction, exactly Chapter 5, Lesson 1's error-maximization problem. Second, forcing a short through F&O purely to match an unconstrained optimizer's output adds real leverage and margin risk on top of an input he should not be trusting that precisely in the first place. Third, weekly rebalancing to chase exact target weights generates STT, brokerage, and short-term capital gains tax on every trade, costs that are very likely to outweigh the marginal benefit of staying a fraction of a percentage point closer to a target that was never very reliable to begin with."
+            },
+            {
+              "_key": "poc6l3-012",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Spot the mistake",
+              "question": "An investor says: \"My portfolio held up fine through a calm two-year backtest, with my IT and banking holdings staying only loosely correlated the whole time, so I'm confident they'll diversify each other in any future downturn too.\" What is the flaw in this reasoning?",
+              "options": [
+                "There is no flaw; correlations measured over two calm years are a reliable guide to any future period",
+                "IT and banking stocks are never correlated with each other under any circumstances",
+                "Correlations measured during calm periods often rise sharply during genuine market stress, exactly when diversification is needed most, so a calm-period correlation is not a guarantee for a crisis",
+                "Backtests are always a perfectly accurate simulation of future performance"
+              ],
+              "correctIndex": 2,
+              "explanation": "Chapter 1 and Chapter 2 both showed that correlations are not fixed. They tend to rise during systemic shocks, when a broad, shared risk-off move overwhelms the sector-specific factors that kept correlation low in calmer periods. A correlation estimated from calm data describes the past, not a promise about a future crisis."
+            },
+            {
+              "_key": "poc6l3-013",
+              "_type": "flashcardSet",
+              "title": "Common Mistakes: Core Reminders",
+              "cards": [
+                { "_key": "poc6l3-013f1", "term": "Error maximization risk", "definition": "Trusting a noisy, short-history expected return estimate as if it were precise, letting an optimizer concentrate a position around what may be pure statistical noise." },
+                { "_key": "poc6l3-013f2", "term": "Unimplementable backtest", "definition": "An \"optimal\" allocation derived without the real constraints (no-short, position caps) an actual account or fund must follow, making it a demonstration rather than a usable plan." },
+                { "_key": "poc6l3-013f3", "term": "Crisis correlation spike", "definition": "The tendency for correlations between assets, calm and low in normal markets, to rise sharply during systemic shocks, reducing diversification benefit exactly when it matters most." }
+              ]
+            },
+            {
+              "_key": "poc6l3-014",
+              "_type": "keyTakeaways",
+              "points": [
+                "Nearly every practical Markowitz mistake traces back to trusting a precise-looking number without asking how reliable it actually is or how it survives contact with real costs and constraints.",
+                "Weighting by share count or cost, assuming portfolio risk is a simple weighted average, and treating correlation as fixed are all mistakes this course already diagnosed and fixed in Chapters 1 and 2.",
+                "Trusting short-history return estimates and building unimplementable, unconstrained \"optimal\" portfolios are the two most common failure points once real portfolios meet real formulas.",
+                "Chasing exact target weights through frequent trading ignores STT, brokerage, and capital gains tax, costs that are frequently larger than the precision gained.",
+                "A calm-period correlation number is not a promise about crisis behaviour. Correlations tend to rise, not fall, exactly when a portfolio most needs them to stay low.",
+                "This course's final lesson turns from diagnosis to synthesis: a full recap of every idea, from diversification to CAPM to these real-world fixes, and where to go next."
+              ]
+            },
+            {
+              "_key": "poc6l3-015",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice. Named scenarios are illustrative composites, not descriptions of any real fund, product, or individual. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,573 @@
+{
+  "courseSlug": "understanding-options-as-a-hedging-tool-for-investors",
+  "chapters": [
+    {
+      "title": "Chapter 3: Hedging a Mutual Fund or Diversified Portfolio with Nifty Options",
+      "lessons": [
+        {
+          "title": "Case Study: A Salaried Investor's Portfolio Around the June 2024 Election Results",
+          "slug": "case-study-a-salaried-investors-portfolio-around-the-june-2024-election-results",
+          "body": [
+            {
+              "_key": "c3l4-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l4-001s1",
+                  "_type": "span",
+                  "text": "On Monday, 3 June 2024, the Nifty 50 jumped over 3% to a record close of about 23,264 after exit polls predicted a landslide for the ruling alliance. The next day, as counting showed a far closer result, it crashed 5.93% to 21,885, after touching 21,281 intraday. It was the worst single day for Indian equities since the COVID crash. Three trading sessions later, on 7 June, the Nifty closed at a fresh record of 23,290. Few weeks in recent Indian market history test a hedger's decisions so completely: when to buy protection, what it costs, what it actually does on the day, and whether you have the nerve to hold it. This lesson walks one portfolio through that week, four different ways.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l4-002",
+              "_type": "bigIdea",
+              "text": "The same portfolio, the same week, four different decisions. The hedge bought in calm cost less than half the hedge bought in fear. Neither hedge stopped the one-day fall. The biggest loss of all came from the investor who had no hedge and sold in panic."
+            },
+            {
+              "_key": "c3l4-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l4-003s1",
+                  "_type": "span",
+                  "text": "What Actually Happened",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l4-004",
+              "_type": "timeline",
+              "title": "The 2024 general election and the markets",
+              "events": [
+                {
+                  "_key": "c3l4-004e1",
+                  "date": "23 April 2024",
+                  "title": "Fear gauge near historic lows",
+                  "description": "India VIX closed at about 10.2, near the bottom of its historical range. Protection was about as cheap as it gets."
+                },
+                {
+                  "_key": "c3l4-004e2",
+                  "date": "9 May 2024",
+                  "title": "Election anxiety builds",
+                  "description": "After 11 straight sessions of gains, India VIX closed at about 18.2, its highest close since October 2022."
+                },
+                {
+                  "_key": "c3l4-004e3",
+                  "date": "31 May 2024",
+                  "title": "Peak nerves before exit polls",
+                  "description": "India VIX closed at about 24.6, up roughly 83% in a month. The Nifty closed near 22,531."
+                },
+                {
+                  "_key": "c3l4-004e4",
+                  "date": "3 June 2024",
+                  "title": "Exit poll euphoria",
+                  "description": "The Nifty rose over 3% to a record close near 23,264. India VIX fell more than 20% in early trade as uncertainty seemed to vanish."
+                },
+                {
+                  "_key": "c3l4-004e5",
+                  "date": "4 June 2024",
+                  "title": "Result day crash",
+                  "description": "The Nifty fell 5.93% to 21,885, after an intraday low of 21,281. India VIX jumped about 28% to close at 26.74, having traded above 30 intraday."
+                },
+                {
+                  "_key": "c3l4-004e6",
+                  "date": "5 June 2024",
+                  "title": "Rebound begins",
+                  "description": "The Nifty rose 3.36% to 22,620 as the ruling alliance confirmed it had the numbers to form a government."
+                },
+                {
+                  "_key": "c3l4-004e7",
+                  "date": "7 June 2024",
+                  "title": "New record",
+                  "description": "The Nifty closed at a record 23,290 after the RBI raised its growth forecast for 2024-25 to 7.2%."
+                },
+                {
+                  "_key": "c3l4-004e8",
+                  "date": "27 June 2024",
+                  "title": "Monthly expiry",
+                  "description": "The Nifty crossed 24,000 on June F&O expiry day, well above the put strikes used in this case study."
+                }
+              ]
+            },
+            {
+              "_key": "c3l4-005",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Nifty 50 closing levels through result week",
+              "xAxisLabel": "Date (2024)",
+              "yAxisLabel": "Nifty 50 close",
+              "data": [
+                { "_key": "c3l4-005d1", "label": "31 May", "value": 22531 },
+                { "_key": "c3l4-005d2", "label": "3 Jun", "value": 23264 },
+                { "_key": "c3l4-005d3", "label": "4 Jun", "value": 21885 },
+                { "_key": "c3l4-005d4", "label": "5 Jun", "value": 22620 },
+                { "_key": "c3l4-005d5", "label": "7 Jun", "value": 23290 }
+              ]
+            },
+            {
+              "_key": "c3l4-006",
+              "_type": "chart",
+              "chartType": "bar",
+              "title": "India VIX: the price of fear before and on result day",
+              "xAxisLabel": "Date (2024)",
+              "yAxisLabel": "India VIX close",
+              "data": [
+                { "_key": "c3l4-006d1", "label": "23 Apr", "value": 10.2 },
+                { "_key": "c3l4-006d2", "label": "9 May", "value": 18.2 },
+                { "_key": "c3l4-006d3", "label": "31 May", "value": 24.6 },
+                { "_key": "c3l4-006d4", "label": "4 Jun", "value": 26.74 }
+              ]
+            },
+            {
+              "_key": "c3l4-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l4-007s1",
+                  "_type": "span",
+                  "text": "The Portfolio and the Four Investors",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l4-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l4-008s1",
+                  "_type": "span",
+                  "text": "Karan, 45, is an engineering manager at a software company in Hyderabad. In late April 2024, with the Nifty at about 22,500, he holds ₹29,25,000 in Nifty 50 index funds and large cap funds with a combined beta very close to 1.0 against the Nifty. To keep the numbers comparable with the rest of this course, we use a lot size of 65, so his portfolio is exactly two lots: 2 × 65 × 22,500 = ₹29,25,000. (The actual Nifty lot size in 2024 was different. Only the rupee scale changes, not the lessons.)",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l4-009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l4-009s1",
+                  "_type": "span",
+                  "text": "Now imagine four versions of Karan, each making a different choice about the election:",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l4-010",
+              "_type": "table",
+              "caption": "Four ways to approach the same risk (option premiums are illustrative model estimates)",
+              "headers": ["Investor", "Decision", "When", "Nifty / India VIX at the time", "Cost"],
+              "rows": [
+                { "_key": "c3l4-010r1", "_type": "tableRow", "cells": ["A: Calm hedger", "Buys 2 lots of the June monthly 21,500 put at about ₹90", "Late April", "About 22,500 / about 10 to 11", "₹11,700 (0.40%)"] },
+                { "_key": "c3l4-010r2", "_type": "tableRow", "cells": ["B: Late hedger", "Buys 2 lots of the same 21,500 put at about ₹210", "31 May, before exit polls", "22,531 / 24.6", "₹27,300 (0.93%)"] },
+                { "_key": "c3l4-010r3", "_type": "tableRow", "cells": ["C: Steady investor", "No hedge, keeps SIPs running, does nothing", "Throughout", "Not applicable", "₹0"] },
+                { "_key": "c3l4-010r4", "_type": "tableRow", "cells": ["D: Panic seller", "No hedge, redeems everything on result day, buys back after the record close", "4 June close, then 7 June", "21,885, then 23,290", "Hidden, see below"] }
+              ]
+            },
+            {
+              "_key": "c3l4-011",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Look at A and B first. Same strike, same expiry, same number of lots. B paid about 2.3 times as much, simply because India VIX had more than doubled while the Nifty barely moved. B also bought a put with less time left, so less cover for more money. That is the lesson from Chapter 2, Lesson 4, playing out in real life."
+            },
+            {
+              "_key": "c3l4-012",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why did B pay more?",
+              "question": "The Nifty was at roughly the same level in late April and on 31 May. Why did Investor B pay about ₹210 for the same June 21,500 put that Investor A bought for about ₹90?",
+              "options": [
+                "The strike was further out of the money on 31 May",
+                "Implied volatility had risen sharply, with India VIX moving from about 10 to 24.6",
+                "B's put had more time left to expiry",
+                "NSE raised the lot size before the election"
+              ],
+              "correctIndex": 1,
+              "explanation": "With the index level, strike and expiry similar, the difference came almost entirely from implied volatility. B's put actually had less time left, which on its own would have made it cheaper. The jump in fear more than overwhelmed that."
+            },
+            {
+              "_key": "c3l4-013",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l4-013s1",
+                  "_type": "span",
+                  "text": "Result Day: What the Hedge Did and Did Not Do",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l4-014",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l4-014s1",
+                  "_type": "span",
+                  "text": "Karan's portfolio behaves like 130 units of the Nifty, so its value is simply 130 × the Nifty level. Here is how the portfolio and the June 21,500 puts looked at the key moments. Put values after purchase are model estimates using implied volatility consistent with India VIX on each day.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l4-015",
+              "_type": "table",
+              "caption": "Karan's portfolio (130 Nifty units) and the value of 2 lots of June 21,500 puts",
+              "headers": ["Moment", "Nifty", "Portfolio value", "Put value per unit", "Value of 2 lots of puts"],
+              "rows": [
+                { "_key": "c3l4-015r1", "_type": "tableRow", "cells": ["3 June close (exit poll high)", "23,264", "₹30,24,320", "About ₹30", "₹3,900"] },
+                { "_key": "c3l4-015r2", "_type": "tableRow", "cells": ["4 June intraday low", "21,281", "₹27,66,530", "About ₹790", "₹1,02,700"] },
+                { "_key": "c3l4-015r3", "_type": "tableRow", "cells": ["4 June close", "21,885", "₹28,45,050", "About ₹460", "₹59,800"] },
+                { "_key": "c3l4-015r4", "_type": "tableRow", "cells": ["7 June close (new record)", "23,290", "₹30,27,700", "About ₹8", "₹1,040"] },
+                { "_key": "c3l4-015r5", "_type": "tableRow", "cells": ["27 June expiry", "Above 24,000", "Above ₹31,20,000", "₹0", "₹0"] }
+              ]
+            },
+            {
+              "_key": "c3l4-016",
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "c3l4-016a",
+                  "label": "Portfolio fall, 3 June to 4 June close",
+                  "value": "−₹1,79,270",
+                  "context": "The Nifty's 5.93% one-day fall on 130 units"
+                },
+                {
+                  "_key": "c3l4-016b",
+                  "label": "Gain in put value over the same day",
+                  "value": "+₹55,900",
+                  "context": "From ₹3,900 to ₹59,800"
+                },
+                {
+                  "_key": "c3l4-016c",
+                  "label": "Share of the day's fall offset",
+                  "value": "About 31%",
+                  "context": "The Nifty closed above the 21,500 strike, so the floor was never reached"
+                }
+              ]
+            },
+            {
+              "_key": "c3l4-017",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l4-017s1",
+                  "_type": "span",
+                  "text": "This is the honest part of the case study. Neither A nor B was \"protected\" from result day in the way a beginner imagines. Their puts were about 4.5% below the Nifty when bought, and the Nifty closed 4 June still above that strike. The first part of any fall is the deductible. What the puts did do was gain sharply in value, partly because the Nifty fell and partly because implied volatility jumped. At the intraday low, with the Nifty below the strike, the puts were offsetting close to 40% of the fall from the previous close. And throughout, both investors knew their worst case at expiry was capped.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l4-018",
+              "_type": "table",
+              "caption": "Worst case at June expiry, measured from each investor's purchase point",
+              "headers": ["Investor", "Starting Nifty", "Deductible (to 21,500) × 130", "Premium", "Maximum loss at expiry"],
+              "rows": [
+                { "_key": "c3l4-018r1", "_type": "tableRow", "cells": ["A: Calm hedger", "22,500", "₹1,30,000", "₹11,700", "₹1,41,700 (4.8%)"] },
+                { "_key": "c3l4-018r2", "_type": "tableRow", "cells": ["B: Late hedger", "22,531", "₹1,34,030", "₹27,300", "₹1,61,330 (5.5%)"] },
+                { "_key": "c3l4-018r3", "_type": "tableRow", "cells": ["C and D: No hedge", "Not applicable", "Not applicable", "₹0", "No limit"] }
+              ]
+            },
+            {
+              "_key": "c3l4-019",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Investor A on result day",
+              "prompt": "Investor A paid ₹11,700 for 2 lots (130 units) of the 21,500 put. At the 4 June close, each put was worth about ₹460. What was A's profit on the puts alone at that moment, in rupees?",
+              "correctValue": 48100,
+              "tolerance": 0,
+              "unit": "₹",
+              "explanation": "Value: ₹460 × 130 = ₹59,800. Cost: ₹11,700. Profit on the puts: ₹48,100. For Investor B, with a cost of ₹27,300, the same puts showed a profit of only ₹32,500. Same hedge, same day, very different result, purely from when it was bought."
+            },
+            {
+              "_key": "c3l4-020",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l4-020s1",
+                  "_type": "span",
+                  "text": "The Rebound: Volatility Crush and the Panic Seller",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l4-021",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c3l4-021m1",
+                  "_type": "glossaryTerm",
+                  "definition": "A sharp fall in implied volatility once an uncertain event is over, which quickly reduces option premiums even if the market does not move much."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c3l4-021s1",
+                  "_type": "span",
+                  "text": "Within three sessions, the uncertainty that had pushed India VIX up for weeks was resolved, and the Nifty was back at a record. The puts collapsed from about ₹460 to about ₹8, hit by both the rally and a ",
+                  "marks": []
+                },
+                {
+                  "_key": "c3l4-021s2",
+                  "_type": "span",
+                  "text": "volatility crush",
+                  "marks": ["c3l4-021m1"]
+                },
+                {
+                  "_key": "c3l4-021s3",
+                  "_type": "span",
+                  "text": ". By expiry they were worthless. That is the no-claim outcome, and it is fine: Karan's portfolio was worth far more.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l4-022",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l4-022s1",
+                  "_type": "span",
+                  "text": "Investor D had a very different week. With no hedge and no plan, D redeemed the whole portfolio at the 4 June close for ₹28,45,050, then watched the market recover and bought back at the 7 June record close of 23,290. That money now bought only about 122.16 units of Nifty exposure instead of 130.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l4-023",
+              "_type": "table",
+              "caption": "All four investors, portfolio value with the Nifty at 24,000 (ignoring taxes, exit loads and transaction costs)",
+              "headers": ["Investor", "Nifty exposure held", "Portfolio at Nifty 24,000", "Hedge cost", "Net result vs Investor C"],
+              "rows": [
+                { "_key": "c3l4-023r1", "_type": "tableRow", "cells": ["A: Calm hedger", "130 units", "₹31,20,000", "₹11,700", "−₹11,700"] },
+                { "_key": "c3l4-023r2", "_type": "tableRow", "cells": ["B: Late hedger", "130 units", "₹31,20,000", "₹27,300", "−₹27,300"] },
+                { "_key": "c3l4-023r3", "_type": "tableRow", "cells": ["C: Steady investor", "130 units", "₹31,20,000", "₹0", "₹0"] },
+                { "_key": "c3l4-023r4", "_type": "tableRow", "cells": ["D: Panic seller", "About 122.16 units", "About ₹29,31,800", "₹0", "About −₹1,88,200"] }
+              ]
+            },
+            {
+              "_key": "c3l4-024",
+              "_type": "chart",
+              "chartType": "bar",
+              "title": "Cost of each decision compared with doing nothing",
+              "xAxisLabel": "Investor",
+              "yAxisLabel": "Rupees",
+              "data": [
+                { "_key": "c3l4-024d1", "label": "A: Calm hedger", "value": -11700 },
+                { "_key": "c3l4-024d2", "label": "B: Late hedger", "value": -27300 },
+                { "_key": "c3l4-024d3", "label": "C: Steady", "value": 0 },
+                { "_key": "c3l4-024d4", "label": "D: Panic seller", "value": -188200 }
+              ]
+            },
+            {
+              "_key": "c3l4-025",
+              "_type": "callout",
+              "type": "warning",
+              "text": "In hindsight, Investor C did best, and some readers will conclude that hedging was pointless. That is the wrong lesson. Nobody knew on 31 May that the market would be at a record a week after result day. Had the result triggered a sustained 15% fall instead, C would have had no limit on losses while A and B would have been capped near 5%. The real comparison is between A and D: a known cost of ₹11,700 against a self-inflicted loss of about ₹1.88 lakh. For many investors, the true value of a hedge is that it makes panic selling unnecessary."
+            },
+            {
+              "_key": "c3l4-026",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "After the event",
+              "textWithBlank": "When implied volatility collapses once an uncertain event is over, option traders call it a volatility ___.",
+              "correctAnswers": ["crush", "collapse"],
+              "explanation": "India VIX had climbed for weeks into the result. Once the outcome was known, uncertainty and implied volatility fell fast, draining value from every put regardless of strike."
+            },
+            {
+              "_key": "c3l4-027",
+              "_type": "comparison",
+              "title": "What each investor got right and wrong",
+              "columns": [
+                {
+                  "_key": "c3l4-027c1",
+                  "label": "A: Calm hedger",
+                  "points": [
+                    "Identified the event risk weeks in advance",
+                    "Bought protection when India VIX was near historic lows",
+                    "Knew the worst case, so had no reason to panic",
+                    "Accepted a 4.5% deductible, so the one-day fall still hurt"
+                  ]
+                },
+                {
+                  "_key": "c3l4-027c2",
+                  "label": "B: Late hedger",
+                  "points": [
+                    "Sized the hedge correctly and had a capped worst case",
+                    "Waited until fear peaked, paying 2.3 times as much",
+                    "Got less time on the contract for more money",
+                    "Still far better off than D"
+                  ]
+                },
+                {
+                  "_key": "c3l4-027c3",
+                  "label": "C and D: No hedge",
+                  "points": [
+                    "C accepted the risk and simply held, which worked this time",
+                    "C had no limit if the fall had continued",
+                    "D had no plan, sold at the day's close, and bought back higher",
+                    "D's behaviour cost about 16 times what A paid for protection"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c3l4-028",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Sell the put on result day?",
+              "scenario": "It is 3:25 pm on 4 June 2024. You are Investor A. The Nifty is near 21,900, down almost 6% on the day. Your two lots of June 21,500 puts, which cost ₹11,700, are now worth about ₹59,800. India VIX is near 27. A friend says: \"Book the profit now, the hedge has done its job.\" Another says: \"The market could fall another 10% tomorrow, keep your insurance.\"",
+              "prompt": "What should Investor A weigh before deciding? Is there a middle path?",
+              "modelAnswer": "1. Remember why the hedge exists. It was bought to cap losses through the election outcome and its aftermath until late June, not to earn a profit on result day. Selling now leaves the portfolio completely unprotected for the rest of June, just as uncertainty is at its highest.\n2. Selling does lock in ₹48,100, which offsets about a quarter of the day's portfolio fall, and it captures today's high implied volatility before it can collapse. In hindsight this would have been a good trade, because the puts were worth about ₹8 three days later.\n3. But hindsight is not a strategy. If the market had kept falling, the puts would have been worth far more, and the floor would have mattered.\n4. Middle paths exist. Sell one lot and keep one, taking some gain while keeping 50% protection. Or sell both and buy a cheaper, lower strike put for the remaining weeks, keeping catastrophe cover while banking most of the gain.\n5. The disciplined answer is to decide in advance. A hedging plan written in April might say: if the puts gain more than four times their cost during the event, take half off. That removes the emotional decision at 3:25 pm on a crash day.\nThe lesson: a hedge that has gained in value is a decision point, not an automatic sell signal. Chapter 6 builds this into a personal hedging plan."
+            },
+            {
+              "_key": "c3l4-029",
+              "_type": "collapsible",
+              "title": "How the option values in this case study were estimated",
+              "content": [
+                {
+                  "_key": "c3l4-029a",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c3l4-029as1",
+                      "_type": "span",
+                      "text": "The Nifty closing levels, the intraday low on 4 June, and India VIX closes on 23 April, 9 May, 31 May and 4 June are market data. The option premiums are not historical trade prices. They are estimates from a standard pricing model, using:",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c3l4-029b",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c3l4-029bs1",
+                      "_type": "span",
+                      "text": "Strike 21,500, expiry 27 June 2024, interest rate 6.5%.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c3l4-029c",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c3l4-029cs1",
+                      "_type": "span",
+                      "text": "Implied volatility set a little above India VIX on each date, since out-of-the-money puts usually trade at higher IV: about 13% in late April, 26% on 31 May, 21% on 3 June, 31% at the 4 June close, 34% at the intraday low, and 18% on 7 June.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c3l4-029d",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c3l4-029ds1",
+                      "_type": "span",
+                      "text": "Real traded prices would have differed, especially on 4 June when spreads widened. The relative story, cheap in April, expensive on 31 May, a sharp gain on result day and a collapse after, is what matters and would hold under any reasonable assumptions.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c3l4-030",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Replay the case with real data",
+              "steps": [
+                "Download India VIX daily closes for April to June 2024 from NSE and mark the days used in this lesson.",
+                "Download Nifty 50 daily closes for the same period and plot them next to India VIX.",
+                "Pick a date in May when you think you would have decided to hedge, and note where India VIX was on that day.",
+                "Estimate what your own portfolio would have lost between 3 June and 4 June using your beta-weighted exposure from Lesson 2.",
+                "Write down honestly which of the four investors you would most likely have been, and what would have changed your behaviour."
+              ]
+            },
+            {
+              "_key": "c3l4-031",
+              "_type": "toolLink",
+              "label": "NSE: India VIX Historical Data",
+              "url": "https://www.nseindia.com/reports-indices-historical-vix",
+              "description": "Daily India VIX data to replay the 2024 election period, or any other event, for yourself."
+            },
+            {
+              "_key": "c3l4-032",
+              "_type": "flashcardSet",
+              "title": "Lessons from Result Week",
+              "cards": [
+                { "_key": "c3l4-032f1", "term": "Event risk", "definition": "A known future date, like election results, that can cause a sharp market move in either direction." },
+                { "_key": "c3l4-032f2", "term": "Pre-event volatility build-up", "definition": "Implied volatility rising in the weeks before an event, making protection progressively more expensive." },
+                { "_key": "c3l4-032f3", "term": "Volatility crush", "definition": "A rapid fall in implied volatility once an event is over, draining option premiums." },
+                { "_key": "c3l4-032f4", "term": "Deductible in a gap", "definition": "An out-of-the-money put does not offset the fall until the index reaches the strike, even on a crash day." },
+                { "_key": "c3l4-032f5", "term": "Behavioural cost", "definition": "The loss caused by selling in panic and re-entering higher, often far larger than the cost of a hedge." }
+              ]
+            },
+            {
+              "_key": "c3l4-033",
+              "_type": "keyTakeaways",
+              "points": [
+                "India VIX rose from about 10.2 in April 2024 to 24.6 before exit polls, so the same June put cost about 2.3 times as much at the end of May.",
+                "On 4 June the Nifty fell 5.93%. Out-of-the-money puts offset roughly a third of that day's fall at the close, because the index stayed above the strike.",
+                "The puts gained from both the price fall and the jump in implied volatility, then collapsed after the event as volatility crushed.",
+                "The investor with no hedge who held did best in hindsight, but had no protection had the fall continued.",
+                "Panic selling on result day and buying back at the record cost about 16 times what the calm hedger paid for protection.",
+                "Decide in advance what you will do with a hedge that gains during an event, so you are not deciding in a crash."
+              ]
+            },
+            {
+              "_key": "c3l4-034",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice. Nifty and India VIX levels are drawn from market reports and are rounded. Option premiums are model estimates, not historical trade prices, and the lot size of 65 is used for consistency with the rest of the course. Karan and the four investors are illustrative. Consult a SEBI-registered investment adviser before using options."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

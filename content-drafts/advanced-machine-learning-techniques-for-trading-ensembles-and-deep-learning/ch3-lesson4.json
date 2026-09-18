@@ -1,0 +1,262 @@
+{
+  "courseSlug": "advanced-machine-learning-techniques-for-trading-ensembles-and-deep-learning",
+  "chapters": [
+    {
+      "title": "Chapter 3: Ensemble Methods II: Stacking and Blending",
+      "lessons": [
+        {
+          "title": "Case Study: Stacking a Multi-Factor Ensemble for a Bank Nifty Rotation Strategy",
+          "slug": "case-study-stacking-a-multi-factor-ensemble-for-a-bank-nifty-rotation-strategy",
+          "body": [
+            {
+              "_key": "amlc3l4b01",
+              "_type": "bigIdea",
+              "text": "This case study is where stacking either earns its added complexity or does not. The test is not whether the stack looks good in isolation, it is whether the stack beats its own single best base model, fold by fold, on the same walk-forward schedule. If it does not, the honest conclusion is that the extra moving parts were not worth building."
+            },
+            {
+              "_key": "amlc3l4b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc3l4b02s1", "_type": "span", "text": "The Setup: A Bank Nifty Rotation Problem", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc3l4b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc3l4b03s1",
+                  "_type": "span",
+                  "text": "Instead of ranking across 200 stocks in different sectors, this case study rotates within a much narrower, more homogeneous universe: Bank Nifty's dozen or so constituent banks, a mix of large private lenders like HDFC Bank, ICICI Bank, Kotak Mahindra Bank, and Axis Bank, alongside PSU banks like State Bank of India, Bank of Baroda, and Punjab National Bank. Every month, the strategy ranks these banks by predicted probability of outperforming the Bank Nifty index over the next holding period and rotates capital toward the top-ranked names, using the same triple-barrier labeling scheme from Chapter 1 throughout.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc3l4b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc3l4b04s1",
+                  "_type": "span",
+                  "text": "The feature set is adapted for banking specifically, not copied unchanged from Chapter 2. Relative strength against the Bank Nifty index replaces plain absolute momentum, since a rotation strategy cares about outperforming peers, not the market. Valuation uses a price-to-book z-score rather than price-to-earnings, since banks are conventionally valued against book value, which reflects regulatory capital and net asset backing more directly than earnings, which swing with provisioning cycles. ROE trend and 20-day volatility carry over unchanged. Base models and stacking architecture carry over unchanged too: the same random forest, XGBoost, and logistic regression trio from this chapter, retrained on this bank-specific feature set and labels.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc3l4b05",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc3l4b05s1", "_type": "span", "text": "Walk-Forward Results: Stack vs Best Single Model", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc3l4b06",
+              "_type": "table",
+              "caption": "Illustrative walk-forward precision, XGBoost alone vs the full stack, five folds matching Chapter 2's case study schedule",
+              "headers": ["Test Year", "XGBoost Alone", "Stacked Ensemble", "Improvement"],
+              "rows": [
+                { "_key": "amlc3l4b06r1", "_type": "tableRow", "cells": ["2020", "50%", "53%", "+3pp"] },
+                { "_key": "amlc3l4b06r2", "_type": "tableRow", "cells": ["2021", "57%", "58%", "+1pp"] },
+                { "_key": "amlc3l4b06r3", "_type": "tableRow", "cells": ["2022", "49%", "53%", "+4pp"] },
+                { "_key": "amlc3l4b06r4", "_type": "tableRow", "cells": ["2023", "56%", "57%", "+1pp"] },
+                { "_key": "amlc3l4b06r5", "_type": "tableRow", "cells": ["2024", "55%", "57%", "+2pp"] }
+              ]
+            },
+            {
+              "_key": "amlc3l4b07",
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "amlc3l4b07st1",
+                  "label": "Average Precision, XGBoost Alone",
+                  "value": "53.4%",
+                  "context": "Across all five walk-forward folds"
+                },
+                {
+                  "_key": "amlc3l4b07st2",
+                  "label": "Average Precision, Stacked Ensemble",
+                  "value": "55.6%",
+                  "context": "Same five folds, same evaluation standard"
+                },
+                {
+                  "_key": "amlc3l4b07st3",
+                  "label": "Fold Where the Stack Helped Most",
+                  "value": "2022, +4pp",
+                  "context": "XGBoost's weakest single year"
+                }
+              ]
+            },
+            {
+              "_key": "amlc3l4b08",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "These figures are an illustrative worked example built to show how a stack's contribution should be measured against its own best base model, not a live or historical track record for any specific fund or model."
+            },
+            {
+              "_key": "amlc3l4b09",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc3l4b09s1", "_type": "span", "text": "Where the Stack's Extra Complexity Paid Off (and Where It Barely Mattered)", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc3l4b10",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc3l4b10s1",
+                  "_type": "span",
+                  "text": "In 2021 and 2023, XGBoost alone was already performing reasonably well, and stacking added only a single percentage point, arguably not enough on its own to justify three models and a meta-learner instead of one. In 2020 and 2022, XGBoost's weakest years, the stack added three and four points respectively, roughly triple the improvement seen in the strong years. That is not a coincidence: those are exactly the periods where a single model's blind spots matter most, and where the logistic regression base model's lower error correlation, measured directly in the next section, has the most room to add something genuinely different.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc3l4b11",
+              "_type": "callout",
+              "type": "insight",
+              "text": "You do not know in advance which kind of year is coming. A stack that adds only 1pp in a good year and 4pp in a bad one is not a modest improvement, it is insurance that pays out specifically when a single model would have let you down the most, which is a reasonable trade for the added complexity even before averaging across years."
+            },
+            {
+              "_key": "amlc3l4b12",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc3l4b12s1", "_type": "span", "text": "Checking the Stack's Own Error Correlation, Live", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc3l4b13",
+              "_type": "table",
+              "caption": "Illustrative error correlation matrix for this case study's base models, computed the same way as this chapter's third lesson",
+              "headers": ["", "Random Forest", "XGBoost", "Logistic Regression"],
+              "rows": [
+                { "_key": "amlc3l4b13r1", "_type": "tableRow", "cells": ["Random Forest", "1.00", "0.71", "0.38"] },
+                { "_key": "amlc3l4b13r2", "_type": "tableRow", "cells": ["XGBoost", "0.71", "1.00", "0.34"] },
+                { "_key": "amlc3l4b13r3", "_type": "tableRow", "cells": ["Logistic Regression", "0.38", "0.34", "1.00"] }
+              ]
+            },
+            {
+              "_key": "amlc3l4b14",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc3l4b14s1",
+                  "_type": "span",
+                  "text": "This is not the same matrix as the generic illustration in the previous lesson, and it should not be, it was recomputed for this specific problem and feature set. Checking error correlation on every new stacking problem, rather than assuming the previous case study's numbers still apply, is the habit this table is meant to demonstrate as much as the numbers themselves.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc3l4b15",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc3l4b15s1", "_type": "span", "text": "A Note on Bank Nifty-Specific Practicalities", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc3l4b16",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc3l4b16s1",
+                  "_type": "span",
+                  "text": "Two practical notes worth carrying forward. First, banks are unusually sensitive to RBI policy and the credit growth cycle, and none of this lesson's features capture that directly; a rate-change or credit-growth indicator is a reasonable direction for a future refinement, not something this case study claims to have solved. Second, unlike the broader Nifty 200 universe from Chapter 1's liquidity warning, every Bank Nifty constituent is a large, F&O-liquid name, so the impact-cost and capacity concerns that apply to a small-cap-heavy universe are far less binding here, a genuine practical advantage of a narrower rotation strategy over a broad cross-sectional one.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc3l4b17",
+              "_type": "keyFact",
+              "label": "A Genuine Liquidity Advantage",
+              "value": "All constituents are large, F&O-liquid names",
+              "context": "The capacity and impact-cost constraints Chapter 1 flagged for a broad Nifty 200 universe are far less binding for a rotation strategy confined to Bank Nifty's constituents."
+            },
+            {
+              "_key": "amlc3l4b18",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc3l4b18s1", "_type": "span", "text": "What's Next", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc3l4b19",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc3l4b19s1",
+                  "_type": "span",
+                  "text": "Chapters 2 and 3 built and combined models that all treat each day's feature row independently. Chapter 4 changes that assumption entirely: recurrent networks and convolutional networks that read price history as a genuine sequence, not a bag of independent rows, starting with a plain question the previous three chapters have only implied the answer to, when does that extra structure actually earn its keep over a well-built tree ensemble.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc3l4b20",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Computing the Stack's Average Edge Over Its Best Single Model",
+              "prompt": "Using the walk-forward precision improvements from this lesson's results table (+3pp in 2020, +1pp in 2021, +4pp in 2022, +1pp in 2023, +2pp in 2024), what is the average improvement in percentage points across the five folds?",
+              "correctValue": 2.2,
+              "tolerance": 0.05,
+              "explanation": "(3 + 1 + 4 + 1 + 2) / 5 = 11 / 5 = 2.2 percentage points. Note where that average comes from: roughly double the average improvement is concentrated in the two weakest, choppiest years, 2020 and 2022, exactly where this chapter's diversity argument predicts an ensemble should help most."
+            },
+            {
+              "_key": "amlc3l4b21",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Stacking Production Checklist, Before Chapter 4",
+              "steps": [
+                "Base models chosen for genuinely different blind spots, tree-based plus linear, not just different random seeds",
+                "Out-of-fold predictions generated with a chronological splitter, never a shuffled K-Fold",
+                "Meta-learner is simple, linear or logistic, relative to the size of its own training set",
+                "Error correlation between base models checked directly for this specific problem, not assumed from a previous case study",
+                "The complete stack evaluated on a final walk-forward period untouched by both base-model training and out-of-fold generation",
+                "Stack's walk-forward performance compared explicitly against its single best base model, fold by fold, not just as an average"
+              ]
+            },
+            {
+              "_key": "amlc3l4b22",
+              "_type": "keyTakeaways",
+              "points": [
+                "Measure a stack's value against its own single best base model, fold by fold, not against a vague sense that 'more models should help'",
+                "This case study's stack added little in strong trending years but its largest gains, roughly triple the average, landed exactly in the weakest, choppiest years",
+                "That pattern is a feature, not noise: diversification pays off most precisely when a single model's blind spots are most exposed",
+                "Error correlation should be recomputed for every new stacking problem, not assumed to carry over from a previous case study's numbers",
+                "Banking-specific factor design matters: price-to-book in place of price-to-earnings, and relative strength against a peer index in place of absolute momentum",
+                "A Bank Nifty-confined universe carries far less capacity and impact-cost risk than a broad Nifty 200 universe, a genuine practical advantage of a narrower rotation strategy"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

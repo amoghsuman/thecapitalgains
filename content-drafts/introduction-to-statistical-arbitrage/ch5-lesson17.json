@@ -1,0 +1,239 @@
+{
+  "courseSlug": "introduction-to-statistical-arbitrage",
+  "chapters": [
+    {
+      "title": "Chapter 5: The Kalman Filter for Dynamic Hedge Ratios",
+      "lessons": [
+        {
+          "title": "Why Static Hedge Ratios Break Down Over Time",
+          "slug": "why-static-hedge-ratios-break-down-over-time",
+          "body": [
+            {
+              "_key": "sa17-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa17-001s1", "_type": "span", "marks": [], "text": "Every hedge ratio used so far in this course, Lesson 6's \u03b2 for HDFC Bank and ICICI Bank, Lesson 12's for ACC and Ambuja Cements, Lesson 16's for Bajaj Auto and Hero MotoCorp, was estimated once, from a fixed historical window, and then treated as a fixed number for the life of the trade. Real relationships between two companies don't actually hold still that conveniently." }
+              ]
+            },
+            {
+              "_key": "sa17-002",
+              "_type": "bigIdea",
+              "text": "A hedge ratio estimated from history describes how two stocks related to each other during that history. If the underlying relationship shifts, a change in business mix, growth, or capital structure, that same fixed number can quietly become the wrong number, well before a chart makes the problem obvious."
+            },
+            {
+              "_key": "sa17-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa17-003s1", "_type": "span", "marks": [], "text": "A Real Example: What Changes a Relationship" }
+              ]
+            },
+            {
+              "_key": "sa17-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa17-004s1", "_type": "span", "marks": [], "text": "In July 2023, HDFC Bank completed its merger with its parent, HDFC Limited, one of the largest corporate mergers in Indian financial history. Overnight, HDFC Bank's balance sheet roughly doubled, its loan mix shifted meaningfully toward long-term mortgages, and its funding cost structure changed as HDFC Limited's borrowings moved onto the combined balance sheet. None of this happened gradually. It was a discrete structural event, and there is no reason a hedge ratio estimated from HDFC Bank's price history before the merger should still describe its relationship to ICICI Bank afterward." }
+              ]
+            },
+            {
+              "_key": "sa17-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa17-005s1", "_type": "span", "marks": [], "text": "Seeing the Drift: Two Snapshots of the Same Pair" }
+              ]
+            },
+            {
+              "_key": "sa17-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa17-006s1", "_type": "span", "marks": [], "text": "Lesson 6 fitted a regression of HDFC Bank on ICICI Bank using one eight-day window and got \u03b2 \u2248 1.39. Here is the same regression, fitted on a different, more recent illustrative window." }
+              ]
+            },
+            {
+              "_key": "sa17-007",
+              "_type": "table",
+              "caption": "A more recent snapshot of the same pair (illustrative)",
+              "headers": ["Day", "ICICI Bank (\u20b9)", "HDFC Bank (\u20b9)"],
+              "rows": [
+                { "_key": "sa17-007r1", "_type": "tableRow", "cells": ["1", "1,050", "1,510"] },
+                { "_key": "sa17-007r2", "_type": "tableRow", "cells": ["2", "1,080", "1,554"] },
+                { "_key": "sa17-007r3", "_type": "tableRow", "cells": ["3", "1,060", "1,527"] },
+                { "_key": "sa17-007r4", "_type": "tableRow", "cells": ["4", "1,100", "1,585"] },
+                { "_key": "sa17-007r5", "_type": "tableRow", "cells": ["5", "1,130", "1,638"] },
+                { "_key": "sa17-007r6", "_type": "tableRow", "cells": ["6", "1,110", "1,601"] },
+                { "_key": "sa17-007r7", "_type": "tableRow", "cells": ["7", "1,150", "1,670"] },
+                { "_key": "sa17-007r8", "_type": "tableRow", "cells": ["8", "1,170", "1,696"] }
+              ]
+            },
+            {
+              "_key": "sa17-008",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "import numpy as np\n\n# Period A (Lesson 6)\nicici_a = np.array([800, 830, 860, 890, 920, 950, 980, 1000])\nhdfc_a = np.array([1323, 1360, 1408, 1443, 1490, 1526, 1575, 1599])\nbeta_a, alpha_a = np.polyfit(icici_a, hdfc_a, 1)\n\n# Period B (more recent illustrative window)\nicici_b = np.array([1050, 1080, 1060, 1100, 1130, 1110, 1150, 1170])\nhdfc_b = np.array([1510, 1554, 1527, 1585, 1638, 1601, 1670, 1696])\nbeta_b, alpha_b = np.polyfit(icici_b, hdfc_b, 1)\n\nprint(\"Beta, Period A:\", round(beta_a, 3))\nprint(\"Beta, Period B:\", round(beta_b, 3))\n# Beta, Period A: 1.391\n# Beta, Period B: 1.575",
+              "caption": "Refitting the same pair's hedge ratio on two different windows"
+            },
+            {
+              "_key": "sa17-009",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "sa17-009s1", "label": "Hedge ratio (\u03b2), Period A", "value": "\u2248 1.39", "context": "From Lesson 6's window" },
+                { "_key": "sa17-009s2", "label": "Hedge ratio (\u03b2), Period B", "value": "\u2248 1.58", "context": "From a more recent illustrative window" },
+                { "_key": "sa17-009s3", "label": "Change", "value": "+13.2%", "context": "Not a rounding artifact; a genuine shift" },
+                { "_key": "sa17-009s4", "label": "Time elapsed between windows", "value": "Illustrative, roughly a year", "context": "" }
+              ]
+            },
+            {
+              "_key": "sa17-010",
+              "_type": "callout",
+              "type": "insight",
+              "text": "A 13% shift in the hedge ratio is not noise to be shrugged off. Sizing a position on \u03b2 \u2248 1.39 when the pair's real, current sensitivity is closer to 1.58 means the position is no longer neutral to whatever moves both stocks together, exactly the property Lesson 15 built the entire sizing method to protect."
+            },
+            {
+              "_key": "sa17-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa17-011s1", "_type": "span", "marks": [], "text": "Why a Stale Hedge Ratio Actually Hurts" }
+              ]
+            },
+            {
+              "_key": "sa17-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa17-012s1", "_type": "span", "marks": [], "text": "Two concrete things go wrong. First, the position itself stops being properly hedged: sized on the old \u03b2, a common move in the shared driver no longer cancels out the way Lesson 15's math intended, leaving real, unpriced directional exposure. Second, every z-score computed afterward is built on the wrong spread, since the spread itself is defined using \u03b2. A pair that is actually behaving normally can look like it has stopped reverting, or a genuine structural break can be mistaken for ordinary noise, purely because the hedge ratio underneath the whole calculation has quietly gone stale." }
+              ]
+            },
+            {
+              "_key": "sa17-013",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa17-013s1", "_type": "span", "marks": [], "text": "The Naive Fix, and Its Own Problem" }
+              ]
+            },
+            {
+              "_key": "sa17-014",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "sa17-014m1", "_type": "glossaryTerm", "definition": "Periodically recomputing the hedge ratio on a trailing window of recent data, a naive fix for hedge ratio drift that introduces its own window-length tradeoff and sudden jumps at each rebalance." }
+              ],
+              "children": [
+                { "_key": "sa17-014s1", "_type": "span", "marks": [], "text": "The obvious answer is to re-estimate \u03b2 periodically, say once a month, on a trailing window of recent data, a " },
+                { "_key": "sa17-014s2", "_type": "span", "marks": ["sa17-014m1"], "text": "rolling re-estimation" },
+                { "_key": "sa17-014s3", "_type": "span", "marks": [], "text": ". This runs into the same tradeoff Lesson 7 already raised for the z-score's lookback window: too short a window and the re-estimated \u03b2 jumps around on noise; too long a window and it reacts too slowly to a genuine shift like the HDFC Bank merger. There is a second problem specific to this approach: each re-estimation is a sudden jump. The hedge ratio sits at one value, then abruptly resets to a different one on the rebalance date, which can itself look like a discontinuity in the spread even when nothing dramatic actually happened that day." }
+              ]
+            },
+            {
+              "_key": "sa17-015",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Monthly re-estimated hedge ratio (illustrative)",
+              "xAxisLabel": "Rebalance month",
+              "yAxisLabel": "Re-estimated \u03b2",
+              "data": [
+                { "_key": "sa17-015d1", "label": "1" },
+                { "_key": "sa17-015d2", "label": "2" },
+                { "_key": "sa17-015d3", "label": "3" },
+                { "_key": "sa17-015d4", "label": "4" },
+                { "_key": "sa17-015d5", "label": "5" },
+                { "_key": "sa17-015d6", "label": "6" }
+              ],
+              "series": [
+                { "_key": "sa17-015se1", "label": "\u03b2 at each rebalance", "values": [1.39, 1.41, 1.45, 1.52, 1.58, 1.61] }
+              ]
+            },
+            {
+              "_key": "sa17-016",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Each point on this chart is a separately estimated number, not a smooth evolution. In between rebalance dates, the hedge ratio used for sizing and z-score calculations stays completely frozen at whatever the last reset produced, then jumps. Neither the frozen periods nor the sudden jumps reflect how the real relationship is actually moving day to day."
+            },
+            {
+              "_key": "sa17-017",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa17-017s1", "_type": "span", "marks": [], "text": "What Comes Next" }
+              ]
+            },
+            {
+              "_key": "sa17-018",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa17-018s1", "_type": "span", "marks": [], "text": "What is actually needed is a hedge ratio that updates continuously, a little with every new day's data, rather than staying frozen for a month and then jumping. The next three lessons cover exactly that: the Kalman filter, a method that lets \u03b2 evolve smoothly through time instead of being periodically recalculated from scratch." }
+              ]
+            },
+            {
+              "_key": "sa17-019",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "What actually breaks when \u03b2 goes stale?",
+              "question": "A trader keeps using a hedge ratio estimated a year ago, even though the true relationship between the two stocks has since shifted meaningfully. What is the most direct consequence?",
+              "options": [
+                "Nothing changes, since correlation is unaffected by the hedge ratio",
+                "The position is no longer properly hedged, and the z-scores computed from the resulting spread no longer reflect the pair's actual current behavior",
+                "The stop-loss threshold from Lesson 14 automatically adjusts to compensate",
+                "The cointegration test result from Lesson 11 is retroactively invalidated"
+              ],
+              "correctIndex": 1,
+              "explanation": "A stale hedge ratio means the position no longer cancels out the shared driver the way it was designed to, and since the spread itself is defined using \u03b2, every z-score computed from that spread inherits the same staleness, potentially producing misleading entry, exit, and stop-loss signals."
+            },
+            {
+              "_key": "sa17-020",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "When would you want to re-check the hedge ratio?",
+              "scenario": "You have an open pairs trade on HDFC Bank and ICICI Bank. Midway through the trade, HDFC Bank announces a major corporate restructuring, similar in scale to its 2023 merger with HDFC Limited.",
+              "prompt": "What would you want to do, and why?",
+              "modelAnswer": "A structural event of this scale is exactly the kind of thing that can shift a hedge ratio discontinuously, not gradually. Rather than waiting for the next scheduled rolling re-estimation, you would want to re-check the relationship promptly, since the position's actual hedge, and every z-score computed from it, may already no longer reflect the pair's real current relationship. This is also a moment to revisit Lesson 4's kind of judgment: is this a temporary reaction or a genuine, lasting change to the relationship?"
+            },
+            {
+              "_key": "sa17-021",
+              "_type": "flashcardSet",
+              "title": "Hedge Ratio Drift: Core Terms",
+              "cards": [
+                { "_key": "sa17-021f1", "term": "Static hedge ratio", "definition": "A hedge ratio (\u03b2) estimated once from a fixed historical window and then used unchanged for the life of a trade, even as the true relationship between the two stocks evolves." },
+                { "_key": "sa17-021f2", "term": "Rolling re-estimation", "definition": "Periodically recomputing the hedge ratio on a trailing window of recent data, a naive fix for hedge ratio drift that introduces its own window-length tradeoff and sudden jumps at each rebalance." },
+                { "_key": "sa17-021f3", "term": "Hedge ratio drift", "definition": "The gradual or sudden change in the true statistical relationship between two securities over time, which a fixed, one-time hedge ratio estimate fails to capture." }
+              ]
+            },
+            {
+              "_key": "sa17-022",
+              "_type": "keyTakeaways",
+              "points": [
+                "A hedge ratio estimated once from historical data describes that history. It does not guarantee the same relationship holds going forward, especially after a structural event like a merger.",
+                "In this lesson's illustrative example, the same pair's hedge ratio moved from \u03b2 \u2248 1.39 to \u03b2 \u2248 1.58 across two windows, a meaningful 13% shift, not noise.",
+                "A stale hedge ratio leaves a position improperly hedged and corrupts every z-score computed from the resulting spread, potentially producing misleading signals.",
+                "Periodically re-estimating \u03b2 on a rolling window is a naive fix that carries its own tradeoff (window length) and introduces sudden jumps at each rebalance, rather than a smooth evolution.",
+                "The next three lessons cover the Kalman filter, a method that updates the hedge ratio continuously with each new observation instead of freezing it or resetting it in discrete jumps."
+              ]
+            },
+            {
+              "_key": "sa17-023",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice. The HDFC Bank and HDFC Limited merger completed in July 2023 is a real, publicly known event, used here as factual context. All price levels, hedge ratios, and rebalance figures are illustrative and constructed for teaching purposes, not actual historical data. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

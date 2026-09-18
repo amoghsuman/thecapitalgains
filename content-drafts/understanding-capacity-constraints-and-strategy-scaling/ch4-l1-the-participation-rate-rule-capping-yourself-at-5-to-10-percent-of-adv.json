@@ -1,0 +1,186 @@
+{
+  "courseSlug": "understanding-capacity-constraints-and-strategy-scaling",
+  "chapters": [
+    {
+      "title": "Chapter 4: Estimating How Much Capital a Strategy Can Actually Absorb",
+      "lessons": [
+        {
+          "title": "The Participation Rate Rule: Capping Yourself at 5 to 10 Percent of ADV",
+          "slug": "the-participation-rate-rule-capping-yourself-at-5-to-10-percent-of-adv",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "c1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c1s1", "text": "Chapter 1 defined practical capacity. Chapter 2 gave you the tools to price impact cost. Chapter 3 warned that the number can move even without you touching your AUM. This chapter turns all of it into an actual figure: how much can this strategy hold. Start with the single most common heuristic on any trading desk, the participation rate rule.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c2s1", "text": "The Rule: Never More Than 5 to 10 Percent of ADV", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c3",
+              "style": "normal",
+              "markDefs": [
+                { "_type": "glossaryTerm", "_key": "gt1", "definition": "The share of a stock's average daily volume you allow yourself to trade in a single day, most commonly kept between 5 and 10 percent as a starting heuristic." }
+              ],
+              "children": [
+                { "_type": "span", "_key": "c3s1", "text": "The starting heuristic used across most desks is simple: keep your ", "marks": [] },
+                { "_type": "span", "_key": "c3s2", "text": "participation rate", "marks": ["gt1"] },
+                { "_type": "span", "_key": "c3s3", "text": ", the share of a stock's ADV you trade in a single day, between 5 and 10 percent. This is not an arbitrary round number. Plugging it into the square-root model from Chapter 2 shows exactly why it became the norm.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "statGrid",
+              "_key": "c4",
+              "stats": [
+                { "label": "5% participation", "value": "~0.34% impact cost", "context": "Using sigma 2%, Y 0.75, from Chapter 2" },
+                { "label": "10% participation", "value": "~0.47% impact cost", "context": "Roughly the upper edge of the conventional range" },
+                { "label": "20% participation", "value": "~0.67% impact cost", "context": "Cost is still rising meaningfully beyond the conventional range" }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c5",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c5s1", "text": "At 5 to 10 percent participation, a single day's impact cost stays under roughly half a percent for a typically volatile mid-cap, tolerable against most strategies' expected edge. Push past that range and cost keeps climbing, just more slowly than order size itself, exactly the square-root behavior from Chapter 2.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c6",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c6s1", "text": "From Participation Cap to Position Size", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c7",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c7s1", "text": "A participation cap alone only tells you how much to trade in one day. To size an actual position, combine it with how many days you are willing to spend building it. If you cap yourself at p percent of ADV per day and allow N days to build the position, assuming ADV stays roughly steady across those days, the maximum position size is N times p times ADV. This is the same effective-participation logic from the Chapter 2 case study, just rearranged to solve for size instead of cost.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "mathBlock",
+              "_key": "c8",
+              "latex": "Q_{max} = N \\cdot p \\cdot ADV",
+              "caption": "Maximum position size given a daily participation cap p, an execution horizon of N days, and average daily volume ADV, held roughly steady across those days."
+            },
+            {
+              "_type": "table",
+              "_key": "c9",
+              "caption": "Maximum position size for the Chapter 2 case study stock, ADV Rs 25 Cr",
+              "headers": ["Participation Cap", "1-Day Horizon", "5-Day Horizon"],
+              "rows": [
+                { "cells": ["5%", "Rs 1.25 Cr", "Rs 6.25 Cr"] },
+                { "cells": ["10%", "Rs 2.5 Cr", "Rs 12.5 Cr"] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c10",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c10s1", "text": "Why Not Just Push the Cap Higher and Trade Bigger?", "marks": [] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "c11",
+              "type": "warning",
+              "text": "Pushing participation much past 15 to 20 percent does more than raise cost along the square-root curve. It also raises information leakage risk, a sustained, one-directional flow that large enough to be noticed by other participants, who then trade ahead of you and worsen your own fills. In practice, the model's own calibration tends to get worse, not just the formula's inputs, once you are a genuinely dominant share of a stock's daily flow, the breakdown region described back in Chapter 1."
+            },
+            {
+              "_type": "block",
+              "_key": "c12",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c12s1", "text": "The Rule Is a Starting Point, Not a Universal Constant", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "c13",
+              "headers": ["Liquidity Tier", "Typical Participation Cap"],
+              "rows": [
+                { "cells": ["Large-cap stocks and index futures", "10 to 15%, sometimes higher intraday"] },
+                { "cells": ["Liquid mid-cap", "5 to 10%"] },
+                { "cells": ["Small-cap or thinly traded", "1 to 3%"] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c14",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c14s1", "text": "The thinner the book, the smaller the cap should be, since both leakage risk and the cost of walking through limited depth are worse in an illiquid name. This is exactly the small-cap vulnerability the Chapter 3 case study ran into, applied here as a sizing rule rather than a warning sign.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c15",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c15s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "c16",
+              "variant": "numericInput",
+              "title": "Size a Position Under a Participation Cap",
+              "prompt": "A small-cap stock has ADV of Rs 4 crore. Given its thin liquidity, you set a conservative participation cap of 2% per day, and allow yourself 4 trading days to build the position. What is the maximum position size, in Rs lakh?",
+              "correctValue": 32,
+              "tolerance": 1,
+              "unit": "Rs lakh",
+              "explanation": "Q_max = N x p x ADV = 4 x 0.02 x Rs 4 crore = Rs 0.32 crore, or Rs 32 lakh."
+            },
+            {
+              "_type": "block",
+              "_key": "c17",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c17s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "c18",
+              "text": "A participation cap turns an abstract worry about size into a concrete daily limit, and a concrete daily limit, combined with a chosen execution horizon, turns into an actual maximum position size. Everything else in this chapter builds on this one relationship."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "c19",
+              "points": [
+                "Capping participation at 5 to 10% of ADV keeps single-day impact cost under roughly half a percent for a typical mid-cap, which is why that range became the conventional starting heuristic.",
+                "Maximum position size follows directly from the participation cap and the execution horizon: N days times p percent times ADV, held roughly steady.",
+                "Pushing participation well past the conventional range raises both cost, along the square-root curve, and information leakage risk, which is why the cap should tighten rather than loosen as size grows.",
+                "The right cap depends on liquidity tier, tighter for thinly traded small-caps, looser for deep, liquid large-caps and index futures, not a single number applied everywhere."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

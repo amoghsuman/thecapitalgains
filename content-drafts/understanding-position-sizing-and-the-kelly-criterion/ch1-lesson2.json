@@ -1,0 +1,284 @@
+{
+  "courseSlug": "understanding-position-sizing-and-the-kelly-criterion",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Position Sizing Is the Real Edge",
+      "lessons": [
+        {
+          "title": "The Anatomy of a Bet: Edge, Odds, and Bankroll",
+          "slug": "the-anatomy-of-a-bet-edge-odds-and-bankroll",
+          "body": [
+            {
+              "_key": "c1l2-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l2-001s1", "_type": "span", "marks": [], "text": "The previous lesson showed that identical edges can produce wildly different outcomes depending on how much capital is risked per trade. Before any sizing formula can tell you how much to bet, it needs exactly three numbers about the bet itself. Get sloppy about any one of the three and the formula will confidently hand you the wrong answer. This lesson defines each one precisely, using real trading examples instead of coin-flip language." }
+              ]
+            },
+            {
+              "_key": "c1l2-002",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l2-002s1", "_type": "span", "marks": [], "text": "The Three Numbers Every Sizing Decision Needs" }
+              ]
+            },
+            {
+              "_key": "c1l2-003",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l2-003s1", "_type": "span", "marks": [], "text": "Every position sizing formula, including the one Chapter 2 derives, is built from three inputs: the probability of winning, the payoff ratio between a typical win and a typical loss, and the bankroll the bet is sized against. Get comfortable estimating each of these honestly before worrying about the formula that combines them." }
+              ]
+            },
+            {
+              "_key": "c1l2-004",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l2-004s1", "_type": "span", "marks": [], "text": "Probability (p): How Often You're Actually Right" }
+              ]
+            },
+            {
+              "_key": "c1l2-005",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l2-005s1", "_type": "span", "marks": [], "text": "In this course, p is not a feeling. It is the win rate measured from a system's actual track record, ideally including some out-of-sample or forward-tested trades, not just a curve-fitted backtest on Streak or a spreadsheet of historical NSE data. A backtest win rate is a starting estimate, and estimates from small samples move around far more than most traders expect." }
+              ]
+            },
+            {
+              "_key": "c1l2-006",
+              "_type": "mathBlock",
+              "latex": "SE(p) = \\sqrt{\\dfrac{p(1-p)}{n}}",
+              "caption": "Standard error of a win rate measured from n trades"
+            },
+            {
+              "_key": "c1l2-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l2-007s1", "_type": "span", "marks": [], "text": "Apply this to a strategy that measured a 55% win rate. The table below shows how much that number can be trusted at two different sample sizes, using a 95% confidence interval." }
+              ]
+            },
+            {
+              "_key": "c1l2-008",
+              "_type": "table",
+              "caption": "How reliable is a 55% measured win rate?",
+              "headers": ["Trades in sample (n)", "95% confidence interval for true p", "What this means"],
+              "rows": [
+                { "_key": "c1l2-008r1", "_type": "tableRow", "cells": ["30", "37% to 73%", "Could plausibly be a losing system"] },
+                { "_key": "c1l2-008r2", "_type": "tableRow", "cells": ["300", "49% to 61%", "Reasonably trustworthy estimate"] }
+              ]
+            },
+            {
+              "_key": "c1l2-009",
+              "_type": "callout",
+              "type": "warning",
+              "text": "A win rate measured on 30 trades is barely more than a guess dressed up as a statistic. Its true value could easily be below 50%, in which case the \"edge\" does not exist at all. Never feed a small-sample win rate directly into a sizing formula without discounting it. Chapter 3 covers exactly how to size around this uncertainty."
+            },
+            {
+              "_key": "c1l2-010",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Reading a confidence interval",
+              "question": "A trader backtests a strategy on 30 trades and measures a 55% win rate. Based on this lesson, what is the most accurate conclusion?",
+              "options": [
+                "The strategy has a confirmed 10% edge and can be sized aggressively",
+                "The sample is too small to be confident the true win rate is even above 50%",
+                "Win rate does not matter for position sizing, only the payoff ratio does",
+                "30 trades is always enough for any trading strategy"
+              ],
+              "correctIndex": 1,
+              "explanation": "At n = 30, the 95% confidence interval for a measured 55% win rate stretches from roughly 37% to 73%. The true win rate could plausibly be below 50%, meaning the strategy might not have a positive edge at all. Larger samples narrow this range considerably."
+            },
+            {
+              "_key": "c1l2-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l2-011s1", "_type": "span", "marks": [], "text": "Payoff Ratio (b): How Much You Win vs How Much You Lose" }
+              ]
+            },
+            {
+              "_key": "c1l2-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "c1l2-012m1", "_type": "glossaryTerm", "definition": "The ratio of the average rupee amount won on a winning trade to the average rupee amount lost on a losing trade, expressed as a single number rather than in the \"3 to 1\" phrasing used in betting." }
+              ],
+              "children": [
+                { "_key": "c1l2-012s1", "_type": "span", "marks": [], "text": "Betting and gambling literature calls this \"the odds,\" usually written as \"3 to 1.\" In trading, it is cleaner to work with the " },
+                { "_key": "c1l2-012s2", "_type": "span", "marks": ["c1l2-012m1"], "text": "payoff ratio" },
+                { "_key": "c1l2-012s3", "_type": "span", "marks": [], "text": ", written as a single number b: your average win divided by your average loss. A payoff ratio of 3 means a typical win is three times the size of a typical loss." }
+              ]
+            },
+            {
+              "_key": "c1l2-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l2-013s1", "_type": "span", "marks": [], "text": "Two archetypes make this concrete. A trader selling Bank Nifty weekly options for premium tends to win often but by small amounts, and lose rarely but by larger amounts relative to each win. A trend-following swing trader in Nifty large-caps often does the opposite: wins less than half the time, but each winner runs far past each loss." }
+              ]
+            },
+            {
+              "_key": "c1l2-014",
+              "_type": "table",
+              "caption": "Two very different edges, both real",
+              "headers": ["Archetype", "Win rate (p)", "Avg win / avg loss", "Payoff ratio (b)"],
+              "rows": [
+                { "_key": "c1l2-014r1", "_type": "tableRow", "cells": ["Bank Nifty options seller", "55%", "₹8,000 / ₹6,000", "1.33"] },
+                { "_key": "c1l2-014r2", "_type": "tableRow", "cells": ["Nifty swing trader", "40%", "₹150 / ₹50 per share (target ₹1,150, stop ₹950, entry ₹1,000)", "3.00"] }
+              ]
+            },
+            {
+              "_key": "c1l2-015",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l2-015s1", "_type": "span", "marks": [], "text": "Bankroll: The Denominator Everyone Gets Wrong" }
+              ]
+            },
+            {
+              "_key": "c1l2-016",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l2-016s1", "_type": "span", "marks": [], "text": "Bankroll is the capital a sizing decision is measured against. It is the actual capital deployed and at risk, not the total notional exposure a leveraged position controls, and not your entire net worth if only part of it is trading capital. Confusing these is one of the fastest ways to misapply any sizing rule, Kelly included." }
+              ]
+            },
+            {
+              "_key": "c1l2-017",
+              "_type": "keyFact",
+              "label": "Bankroll ≠ notional exposure",
+              "value": "Margin deployed, not contract value",
+              "context": "A futures or options position can control notional value many times larger than the margin actually locked up. Size against the capital at risk, never against the notional."
+            },
+            {
+              "_key": "c1l2-018",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Find the real bankroll",
+              "scenario": "A trader has ₹5,00,000 in a trading account. She holds two Bank Nifty futures lots with a combined notional exposure of roughly ₹18,00,000, against which her broker has blocked ₹1,80,000 as margin. She is deciding how much to risk on a fresh, unrelated Nifty options trade.",
+              "prompt": "What figure should she treat as her bankroll for sizing the new trade, and why is it not ₹18,00,000?",
+              "modelAnswer": "Her bankroll for sizing purposes is her actual trading capital, ₹5,00,000 (or, more precisely, whatever of that ₹5,00,000 remains unblocked after the ₹1,80,000 margin already committed). The ₹18,00,000 notional exposure is not capital she owns; it is the size of the position the margin controls. Sizing a new trade against the notional figure would make every future position look tiny relative to bankroll and encourage dangerous over-leverage, exactly the mistake that sank Priya's account in the previous lesson."
+            },
+            {
+              "_key": "c1l2-019",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l2-019s1", "_type": "span", "marks": [], "text": "Expectancy: What p and b Tell You Before You Size Anything" }
+              ]
+            },
+            {
+              "_key": "c1l2-020",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l2-020s1", "_type": "span", "marks": [], "text": "Before reaching for a sizing formula, combine p and b into expectancy: the average result per rupee risked, expressed in R-multiples, where 1R is the amount risked on a single trade (typically the stop-loss distance or, for a short option, the premium at risk)." }
+              ]
+            },
+            {
+              "_key": "c1l2-021",
+              "_type": "mathBlock",
+              "latex": "E(R) = p \\cdot b - q",
+              "caption": "Expectancy per rupee risked, where q = 1 - p is the probability of a loss"
+            },
+            {
+              "_key": "c1l2-022",
+              "_type": "table",
+              "caption": "Applying the expectancy formula to both archetypes",
+              "headers": ["Archetype", "p", "b", "E(R) = p·b − q", "Reading"],
+              "rows": [
+                { "_key": "c1l2-022r1", "_type": "tableRow", "cells": ["Bank Nifty options seller", "0.55", "1.33", "0.28R", "Positive, modest edge per trade"] },
+                { "_key": "c1l2-022r2", "_type": "tableRow", "cells": ["Nifty swing trader", "0.40", "3.00", "0.60R", "Wins less often, but a larger edge per trade"] }
+              ]
+            },
+            {
+              "_key": "c1l2-023",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l2-023s1", "_type": "span", "marks": [], "text": "This is the point most new traders miss: a 40% win rate is not automatically worse than a 55% win rate. The swing trader loses more often but has a bigger edge per trade, because the payoff ratio does more work in the formula than the win rate does. Position sizing has nothing useful to say about either system until this number is worked out first." }
+              ]
+            },
+            {
+              "_key": "c1l2-024",
+              "_type": "collapsible",
+              "title": "See it computed in Python",
+              "content": [
+                {
+                  "_key": "c1l2-024a",
+                  "_type": "codeBlock",
+                  "language": "python",
+                  "caption": "Expectancy in R-multiples for both archetypes",
+                  "code": "def expectancy_r(p, b):\n    q = 1 - p\n    return p * b - q\n\n# Bank Nifty options seller\nprint(round(expectancy_r(0.55, 8000 / 6000), 2))   # 0.28\n\n# Nifty swing trader\nprint(round(expectancy_r(0.40, 150 / 50), 2))      # 0.60"
+                }
+              ]
+            },
+            {
+              "_key": "c1l2-025",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Sizing formulas, Kelly included, only ever work on top of a genuinely positive expectancy. They cannot rescue a system where E(R) is zero or negative. If E(R) comes out negative, the correct position size is zero, no matter how confident the trader feels."
+            },
+            {
+              "_key": "c1l2-026",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Work out a third system's expectancy",
+              "prompt": "A trader's covered-call writing system wins 70% of the time, with an average win of ₹4,000 and an average loss of ₹10,000. What is its expectancy in R-multiples? Round to two decimals.",
+              "correctValue": -0.02,
+              "tolerance": 0.02,
+              "explanation": "b = 4,000 ÷ 10,000 = 0.40. E(R) = (0.70 × 0.40) − 0.30 = 0.28 − 0.30 = −0.02R. Rounding intermediate figures can shift this slightly, but the key result is that E(R) is negative: a high win rate here is hiding a losing system, because each rare loss costs 2.5 times what each frequent win earns. No position size fixes this; the fix is a better system."
+            },
+            {
+              "_key": "c1l2-027",
+              "_type": "flashcardSet",
+              "title": "Core Terms: Sizing a Bet",
+              "cards": [
+                { "_key": "c1l2-027f1", "term": "Probability (p)", "definition": "The measured win rate of a system from its actual track record, treated as an estimate that gets more reliable with more trades." },
+                { "_key": "c1l2-027f2", "term": "Payoff ratio (b)", "definition": "Average win divided by average loss. Trading's version of gambling \"odds,\" expressed as a single number." },
+                { "_key": "c1l2-027f3", "term": "Bankroll", "definition": "The actual capital at risk that a sizing decision is measured against, never the notional value a leveraged position controls." },
+                { "_key": "c1l2-027f4", "term": "R-multiple", "definition": "A trade's result expressed as a multiple of the amount originally risked (1R), making systems with different position sizes comparable." },
+                { "_key": "c1l2-027f5", "term": "Expectancy, E(R)", "definition": "The average result per rupee risked: p·b − q. Must be positive before any position sizing formula is worth applying." }
+              ]
+            },
+            {
+              "_key": "c1l2-028",
+              "_type": "keyTakeaways",
+              "points": [
+                "Every sizing decision rests on three honestly estimated numbers: win probability (p), payoff ratio (b), and bankroll.",
+                "Win rates from small samples are unreliable. A 55% win rate on 30 trades could plausibly be a losing system.",
+                "Payoff ratio matters as much as win rate. A 40%-win-rate system with a 3:1 payoff ratio can have a bigger edge than a 55%-win-rate system with a 1.33:1 payoff ratio.",
+                "Bankroll means actual capital at risk, never the notional value a leveraged position controls.",
+                "Expectancy, E(R) = p·b − q, must be positive before position sizing has anything to optimise. No formula rescues a negative-expectancy system."
+              ]
+            },
+            {
+              "_key": "c1l2-029",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment or trading advice. The archetypes, figures and code shown are illustrative and simplified for teaching purposes. Trading in equities and derivatives carries risk of loss. Consult a SEBI-registered investment adviser before making trading or investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

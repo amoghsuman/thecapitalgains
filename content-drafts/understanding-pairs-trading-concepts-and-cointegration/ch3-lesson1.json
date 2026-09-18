@@ -1,0 +1,247 @@
+{
+  "courseSlug": "understanding-pairs-trading-concepts-and-cointegration",
+  "chapters": [
+    {
+      "title": "Chapter 3: Cointegration — Testing Whether a Pair Really Mean-Reverts",
+      "lessons": [
+        {
+          "title": "Correlation vs Cointegration: Why They Are Not the Same Thing",
+          "slug": "correlation-vs-cointegration-why-they-are-not-the-same-thing",
+          "body": [
+            {
+              "_key": "p9-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p9-001s1", "_type": "span", "marks": [], "text": "Every case study so far has stopped at the same point. Chapter 1 flagged that a correlated pair is not automatically a tradeable one. Chapter 2's case study computed a real hedge ratio, a real spread, and a real z-score for Axis Bank and Kotak Mahindra Bank, and still stopped short of confirming the pair was safe to trade. This lesson finally explains why: correlation and cointegration measure two genuinely different things, and only one of them actually justifies trusting a z-score to mean-revert." }
+              ]
+            },
+            {
+              "_key": "p9-002",
+              "_type": "bigIdea",
+              "text": "Correlation measures whether two stocks' returns move together, day to day. Cointegration measures whether the price levels of two stocks maintain a stable, long-run relationship, meaning the spread between them keeps returning to a fixed average instead of wandering off indefinitely. A pairs trade needs the second property, not the first, and the two can exist independently of each other."
+            },
+            {
+              "_key": "p9-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p9-003s1", "_type": "span", "marks": [], "text": "What Correlation Actually Measures" }
+              ]
+            },
+            {
+              "_key": "p9-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p9-004s1", "_type": "span", "marks": [], "text": "Correlation, as built in Chapter 1, is computed on daily returns: the percentage change from one day to the next. It answers a short-term question: on days when Stock A moves up, does Stock B tend to move up too, and by a proportionally similar amount? It says nothing at all about where the two stocks' prices sit relative to each other in absolute terms, today, last month, or three years ago. Two stocks can have high return correlation while one has quietly become twice as expensive as the other over time, as long as they still tend to rise and fall on the same days." }
+              ]
+            },
+            {
+              "_key": "p9-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p9-005s1", "_type": "span", "marks": [], "text": "What Cointegration Actually Measures" }
+              ]
+            },
+            {
+              "_key": "p9-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "p9-006m1", "_type": "glossaryTerm", "definition": "A time series whose statistical properties, its average level and how far it typically wanders from that average, stay stable over time, rather than drifting or trending indefinitely." }
+              ],
+              "children": [
+                { "_key": "p9-006s1", "_type": "span", "marks": [], "text": "Cointegration is a property of price levels, not returns. Two stocks are cointegrated if there is some fixed hedge ratio, the beta from Chapter 2, such that Stock A's price minus beta times Stock B's price, the spread itself, is " },
+                { "_key": "p9-006s2", "_type": "span", "marks": ["p9-006m1"], "text": "stationary" },
+                { "_key": "p9-006s3", "_type": "span", "marks": [], "text": ": it has a stable long-run average and keeps returning to it, rather than drifting away permanently. This is a much stricter requirement than correlation. It does not ask whether the two stocks tend to move on the same days. It asks whether the specific combination of the two, the spread you built in Chapter 2, behaves like a mean-reverting series at all, which is the only thing that actually makes a z-score meaningful." }
+              ]
+            },
+            {
+              "_key": "p9-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p9-007s1", "_type": "span", "marks": [], "text": "The Classic Trap: High Correlation, Not Cointegrated" }
+              ]
+            },
+            {
+              "_key": "p9-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p9-008s1", "_type": "span", "marks": [], "text": "Consider two hypothetical NSE-listed stocks, Stock P and Stock Q, both in a structurally growing sector. Both rise in most months, so their monthly returns show a high correlation, illustratively around 0.75. But Stock P has been compounding faster than Stock Q for reasons that have nothing to do with a temporary mispricing, better execution, stronger order wins, a durable cost advantage. Over two years, Stock P has more than doubled while Stock Q has gained a more modest amount. The two move together often enough to look highly correlated, while the gap between them has been widening almost the entire time, with no tendency to close." }
+              ]
+            },
+            {
+              "_key": "p9-009",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Stock P vs Stock Q, indexed prices over 12 months (hypothetical illustration)",
+              "xAxisLabel": "Month",
+              "yAxisLabel": "Indexed price (Month 1 = 100)",
+              "data": [
+                { "_key": "p9-009d1", "label": "1" },
+                { "_key": "p9-009d2", "label": "2" },
+                { "_key": "p9-009d3", "label": "3" },
+                { "_key": "p9-009d4", "label": "4" },
+                { "_key": "p9-009d5", "label": "5" },
+                { "_key": "p9-009d6", "label": "6" },
+                { "_key": "p9-009d7", "label": "7" },
+                { "_key": "p9-009d8", "label": "8" },
+                { "_key": "p9-009d9", "label": "9" },
+                { "_key": "p9-009d10", "label": "10" },
+                { "_key": "p9-009d11", "label": "11" },
+                { "_key": "p9-009d12", "label": "12" }
+              ],
+              "series": [
+                {
+                  "_key": "p9-009se1",
+                  "label": "Stock P (indexed)",
+                  "values": [100, 105, 112, 120, 130, 142, 155, 170, 188, 205, 225, 248]
+                },
+                {
+                  "_key": "p9-009se2",
+                  "label": "Stock Q (indexed)",
+                  "values": [100, 103, 107, 111, 116, 121, 126, 132, 138, 144, 151, 158]
+                }
+              ]
+            },
+            {
+              "_key": "p9-010",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Both stocks rise in almost every month, which is exactly what generates a high return correlation. But the gap between them widens in almost every month too, with no reversion at all. A spread built from these two stocks would be non-stationary: it would have trended away from its starting value and kept going, and a z-score computed on it would eventually show extreme readings that never correct, not because the market is offering a rare opportunity, but because there was never a stable mean to revert to."
+            },
+            {
+              "_key": "p9-011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p9-011s1", "_type": "span", "marks": [], "text": "This is closely related to a well-known statistical trap called spurious regression: if you run a regression between any two series that are both trending over time, you can get a high R-squared and what looks like a strong statistical relationship, purely because both series are trending, not because they are genuinely linked. It is precisely why Chapter 2's regression alone, however clean the beta looked, was never sufficient proof that HDFC Bank / ICICI Bank or Axis Bank / Kotak Mahindra Bank were safe to trade. A good-looking regression fit and a good-looking correlation number can both happen between two series that are cointegrated, or between two series that are not, and eyeballing a chart cannot reliably tell you which case you are in." }
+              ]
+            },
+            {
+              "_key": "p9-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p9-012s1", "_type": "span", "marks": [], "text": "The Less Common Flip Side" }
+              ]
+            },
+            {
+              "_key": "p9-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p9-013s1", "_type": "span", "marks": [], "text": "The reverse can also happen, though it is rarer in practice: two series can be cointegrated despite showing fairly modest day-to-day return correlation, if there is a strong structural force, such as an arbitrage mechanism, pulling their price levels back into line whenever they drift apart, even if the drifting itself happens somewhat independently day to day. The practical lesson is the same either way: correlation and cointegration are different questions, and only a direct test of the spread's own behavior, not a glance at either number, can tell you whether a pair is genuinely tradeable." }
+              ]
+            },
+            {
+              "_key": "p9-014",
+              "_type": "comparison",
+              "title": "Correlation vs cointegration",
+              "columns": [
+                {
+                  "_key": "p9-014c1",
+                  "label": "Correlation",
+                  "points": [
+                    "Measured on daily (or periodic) returns",
+                    "Asks: do the two move in the same direction on the same days?",
+                    "Says nothing about the absolute price relationship over time",
+                    "A high value can coexist with a spread that drifts away forever",
+                    "Used in this course as an initial screening filter, Chapter 1"
+                  ]
+                },
+                {
+                  "_key": "p9-014c2",
+                  "label": "Cointegration",
+                  "points": [
+                    "Measured on price levels via the spread itself",
+                    "Asks: does the spread have a stable, stationary long-run mean?",
+                    "Directly tests the property a z-score-based trade depends on",
+                    "A stricter, more specific bar than correlation",
+                    "The formal pre-trade test, covered for the rest of this chapter"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "p9-015",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "p9-015s1", "label": "What correlation tests", "value": "Co-movement of returns", "context": "A short-term, day-to-day question about direction, not price level" },
+                { "_key": "p9-015s2", "label": "What cointegration tests", "value": "Stationarity of the spread", "context": "Whether the spread has a stable mean it keeps returning to" },
+                { "_key": "p9-015s3", "label": "Risk of skipping this test", "value": "Spurious regression", "context": "A convincing-looking hedge ratio and spread built on two series that simply trend together" },
+                { "_key": "p9-015s4", "label": "Where the formal test comes from", "value": "Lessons 2–4 of this chapter", "context": "Stationarity, the Augmented Dickey-Fuller test, and the Engle-Granger method" }
+              ]
+            },
+            {
+              "_key": "p9-016",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Diagnosing the trap",
+              "question": "Two NSE stocks show a 90-day return correlation of 0.82. Their prices have also been drifting apart steadily for three years, with no sign of the gap narrowing. What is the correct conclusion?",
+              "options": [
+                "The pair is a strong candidate, since 0.82 is a high correlation",
+                "The high correlation does not confirm cointegration, and the steadily widening gap suggests the spread may be non-stationary and not mean-reverting",
+                "The pair must be cointegrated, since two unrelated stocks could not sustain a 0.82 correlation for three years",
+                "Correlation and cointegration always move together, so this scenario is not actually possible"
+              ],
+              "correctIndex": 1,
+              "explanation": "A high return correlation only confirms the two stocks tend to move in the same direction on the same days. A steadily widening, non-reverting gap between their price levels is a warning sign of a non-stationary spread, exactly the correlated-but-not-cointegrated trap this lesson describes. Confirming this properly requires the formal test covered in the rest of this chapter, not a judgment call from the chart alone."
+            },
+            {
+              "_key": "p9-017",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Explaining the difference to a friend",
+              "scenario": "A friend, new to pairs trading, says: \"I checked, these two stocks have a correlation of 0.85, that's basically the same as cointegration, right? High correlation means they'll keep moving together.\"",
+              "prompt": "How would you correct this, in your own words, using what correlation and cointegration each actually measure?",
+              "modelAnswer": "Correlation of 0.85 only tells you the two stocks' daily returns have moved in the same direction fairly often, historically. It says nothing about whether the price levels maintain a stable relationship over time, a spread built from the two could still be drifting apart permanently even with a high return correlation, as the Stock P and Stock Q example shows. Cointegration is the separate, stricter test of whether the actual spread between the two prices is stationary, meaning it has a stable average it consistently reverts to. A high correlation is a reasonable screening signal to look further, but only a cointegration test, not the correlation number, can confirm the pair is genuinely tradeable."
+            },
+            {
+              "_key": "p9-018",
+              "_type": "flashcardSet",
+              "title": "Correlation vs Cointegration: Core Terms",
+              "cards": [
+                { "_key": "p9-018f1", "term": "Correlation", "definition": "A measure of how closely two stocks' returns move together, day to day, computed on percentage changes rather than price levels." },
+                { "_key": "p9-018f2", "term": "Cointegration", "definition": "A property where a fixed linear combination (the spread) of two price series is stationary, meaning it has a stable long-run mean it consistently reverts to." },
+                { "_key": "p9-018f3", "term": "Stationary series", "definition": "A time series whose statistical properties, especially its mean, remain stable over time rather than trending or drifting indefinitely." },
+                { "_key": "p9-018f4", "term": "Spurious regression", "definition": "A statistical trap where regressing two trending, non-stationary series against each other produces a misleadingly strong-looking fit, without a genuine underlying relationship." }
+              ]
+            },
+            {
+              "_key": "p9-019",
+              "_type": "keyTakeaways",
+              "points": [
+                "Correlation measures whether two stocks' returns move together day to day. Cointegration measures whether their price levels maintain a stable, mean-reverting spread over time.",
+                "A high correlation can coexist with a spread that drifts apart permanently, the correlated-but-not-cointegrated trap illustrated by the Stock P / Stock Q example.",
+                "This is closely related to spurious regression, where two trending series can produce a convincing-looking hedge ratio and fit without a genuine, tradeable relationship.",
+                "Cointegration can, less commonly, exist even with modest return correlation, if a structural force keeps pulling the price levels back into line.",
+                "A z-score is only meaningful if the spread it is built on is stationary, which is exactly what cointegration tests and correlation does not.",
+                "Every case study in this course so far has stopped short of confirming cointegration on purpose. The rest of this chapter builds the formal test: stationarity, the Augmented Dickey-Fuller test, and the Engle-Granger method."
+              ]
+            },
+            {
+              "_key": "p9-020",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice or a recommendation to buy, sell, or short any security named here. The Stock P and Stock Q example is a hypothetical illustration built to demonstrate a statistical concept and does not describe any real listed company. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

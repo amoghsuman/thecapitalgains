@@ -1,0 +1,282 @@
+{
+  "courseSlug": "understanding-stochastic-calculus-brownian-motion-itos-lemma-and-the-path-to-black-scholes",
+  "chapters": [
+    {
+      "title": "Chapter 2: Ito Calculus: The Rules for Working With Randomness",
+      "lessons": [
+        {
+          "title": "Applying Ito's Lemma to Geometric Brownian Motion",
+          "slug": "applying-itos-lemma-to-geometric-brownian-motion",
+          "body": [
+            {
+              "_key": "c2l4-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l4-001s1", "_type": "span", "marks": [], "text": "\"Enough toy examples,\" the interviewer says. \"Now do the one that actually matters for pricing options.\" He writes dS = μS dt + σS dW on the board, the geometric Brownian motion equation this course has been previewing since Chapter 2's first lesson, and asks Rohan to find a formula for S(t) itself, not just simulate it. Rohan has no closed-form solution for this SDE sitting in memory. What he has, after three lessons of preparation, is Ito's lemma, and one well-chosen function is about to turn an unsolved equation into a famous one." }
+              ]
+            },
+            {
+              "_key": "c2l4-002",
+              "_type": "bigIdea",
+              "text": "Applying Ito's lemma to f(S) = ln(S) turns geometric Brownian motion, an SDE with no obvious closed-form solution, into one that has an exact one. The log of the price follows plain arithmetic Brownian motion, with a drift of μ minus half the variance, not μ itself. That single half-line of algebra is the most consequential result in this entire course, and it is the equation Chapter 3 builds the Black-Scholes formula directly on top of."
+            },
+            {
+              "_key": "c2l4-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l4-003s1", "_type": "span", "marks": [], "text": "The Geometric Brownian Motion SDE" }
+              ]
+            },
+            {
+              "_key": "c2l4-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l4-004s1", "_type": "span", "marks": [], "text": "Geometric Brownian motion says a stock's percentage return, not its rupee change, follows drift plus noise: over an instant, S changes by μ percent of its current value, on average, plus a random shock scaled by σ percent of its current value. This is exactly why GBM keeps prices positive: both the drift and the diffusion coefficient scale with S itself, so the smaller S gets, the smaller its absolute moves get too." }
+              ]
+            },
+            {
+              "_key": "c2l4-005",
+              "_type": "mathBlock",
+              "latex": "dS = \\mu S\\, dt + \\sigma S\\, dW \\qquad \\text{(drift } a = \\mu S \\text{, diffusion } b = \\sigma S\\text{)}",
+              "caption": "Geometric Brownian motion, in Ito's lemma's a(X,t), b(X,t) notation"
+            },
+            {
+              "_key": "c2l4-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l4-006s1", "_type": "span", "marks": [], "text": "Applying Ito's Lemma to f(S) = ln(S)" }
+              ]
+            },
+            {
+              "_key": "c2l4-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l4-007s1", "_type": "span", "marks": [], "text": "Take f(S) = ln(S). Its derivatives are f'(S) = 1/S and f''(S) = -1/S². Plug a = μS, b = σS, f'(S) = 1/S, and f''(S) = -1/S² directly into the general Ito's lemma formula from two lessons ago, with no time-dependence in f, so ∂f/∂t = 0." }
+              ]
+            },
+            {
+              "_key": "c2l4-008",
+              "_type": "mathBlock",
+              "latex": "d(\\ln S) = \\left[\\frac{1}{S}(\\mu S) + \\frac{1}{2}\\left(-\\frac{1}{S^2}\\right)(\\sigma S)^2\\right] dt + \\frac{1}{S}(\\sigma S)\\, dW",
+              "caption": "Ito's lemma applied to f(S) = ln(S), before simplifying"
+            },
+            {
+              "_key": "c2l4-009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l4-009s1", "_type": "span", "marks": [], "text": "Every S cancels cleanly. What remains is startling in its simplicity: the log of a geometric Brownian motion is itself plain arithmetic Brownian motion, with a drift of μ minus half of σ squared, and the same σ as its diffusion coefficient." }
+              ]
+            },
+            {
+              "_key": "c2l4-010",
+              "_type": "mathBlock",
+              "latex": "d(\\ln S) = \\left(\\mu - \\tfrac{1}{2}\\sigma^2\\right) dt + \\sigma\\, dW",
+              "caption": "The Ito-corrected drift of ln(S): μ minus half the variance, not μ"
+            },
+            {
+              "_key": "c2l4-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l4-011s1", "_type": "span", "marks": [], "text": "Solving the SDE: A Closed-Form Formula at Last" }
+              ]
+            },
+            {
+              "_key": "c2l4-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l4-012s1", "_type": "span", "marks": [], "text": "d(ln S) has no S left inside its drift or diffusion coefficients, both are now plain constants, so it can be integrated directly, exactly the way Chapter 1 integrated a standard Wiener process. Integrating both sides from 0 to t and exponentiating gives the first genuinely closed-form solution in this entire course, a formula for S(t) itself, not just its SDE." }
+              ]
+            },
+            {
+              "_key": "c2l4-013",
+              "_type": "mathBlock",
+              "latex": "\\ln S(t) - \\ln S(0) = \\left(\\mu - \\tfrac{1}{2}\\sigma^2\\right) t + \\sigma W(t) \\quad\\Longrightarrow\\quad S(t) = S(0)\\, \\exp\\!\\left[\\left(\\mu - \\tfrac{1}{2}\\sigma^2\\right) t + \\sigma W(t)\\right]",
+              "caption": "The exact, closed-form solution to the geometric Brownian motion SDE"
+            },
+            {
+              "_key": "c2l4-014",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Since ln S(t) is arithmetic Brownian motion, it is normally distributed, with mean ln S(0) + (μ - σ²/2)t and variance σ²t. That makes S(t) itself lognormally distributed. This is precisely the lognormal stock price assumption that sits underneath the Black-Scholes formula, and it did not have to be assumed from nowhere, this lesson just derived it directly from geometric Brownian motion and Ito's lemma."
+            },
+            {
+              "_key": "c2l4-015",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l4-015s1", "_type": "span", "marks": [], "text": "The Curious Minus Sigma-Squared-Over-Two Term" }
+              ]
+            },
+            {
+              "_key": "c2l4-016",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l4-016s1", "_type": "span", "marks": [], "text": "A natural objection: the original SDE says S drifts upward at rate μ, so shouldn't the average price grow like S(0)e^(μt)? Yet the formula just derived shows the log growing at the slower rate μ - σ²/2. Both statements are true at once, because they describe two different things: the median (typical) path grows at μ - σ²/2, while the mean (average across all possible paths) grows at the full μ. The gap between them is exactly explained by a standard fact about the lognormal distribution: for a normal variable X with mean m and variance v, E[e^X] = e^(m + v/2), not e^m." }
+              ]
+            },
+            {
+              "_key": "c2l4-017",
+              "_type": "mathBlock",
+              "latex": "E[S(t)] = S(0)\\, e^{\\left(\\mu - \\frac{1}{2}\\sigma^2\\right)t \\, + \\, \\frac{1}{2}\\sigma^2 t} = S(0)\\, e^{\\mu t}",
+              "caption": "The -σ²/2 in the log-drift is exactly cancelled by the lognormal mean adjustment"
+            },
+            {
+              "_key": "c2l4-018",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This gap between the median and the mean has a familiar name outside pure math: volatility drag, the same effect behind why a mutual fund's arithmetic average annual return usually overstates its realized CAGR, a distinction that comes up constantly in Indian personal finance content around SIPs. Higher volatility, holding the average return fixed, always pulls the typical, realized outcome further below the arithmetic average. This lesson gives that everyday observation an exact, derived formula: the gap is precisely σ²/2."
+            },
+            {
+              "_key": "c2l4-019",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l4-019s1", "_type": "span", "marks": [], "text": "Calibrating and Simulating: TCS Under the Exact Solution" }
+              ]
+            },
+            {
+              "_key": "c2l4-020",
+              "_type": "table",
+              "caption": "GBM parameters for this case study",
+              "headers": ["Parameter", "Value", "Meaning"],
+              "rows": [
+                { "_key": "c2l4-020r1", "_type": "tableRow", "cells": ["S(0)", "₹3,900", "TCS's illustrative starting price"] },
+                { "_key": "c2l4-020r2", "_type": "tableRow", "cells": ["μ", "15%", "Illustrative expected annual return"] },
+                { "_key": "c2l4-020r3", "_type": "tableRow", "cells": ["σ", "24%", "Illustrative annualized volatility"] },
+                { "_key": "c2l4-020r4", "_type": "tableRow", "cells": ["μ - σ²/2", "12.12%", "Log-drift, the median growth rate"] }
+              ]
+            },
+            {
+              "_key": "c2l4-021",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "c2l4-021s1", "label": "Median (typical) 1-year growth", "value": "12.12%", "context": "μ - σ²/2 = 0.15 - 0.0288" },
+                { "_key": "c2l4-021s2", "label": "Mean (average) 1-year growth", "value": "15.00%", "context": "The full μ, restored by the lognormal mean adjustment" },
+                { "_key": "c2l4-021s3", "label": "Gap (volatility drag)", "value": "2.88%", "context": "Exactly σ²/2 = (0.24²)/2" }
+              ]
+            },
+            {
+              "_key": "c2l4-022",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l4-022s1", "_type": "span", "marks": [], "text": "Because the exact solution is now known, simulating a GBM path no longer requires the approximate, discretized Euler-Maruyama scheme from earlier in this chapter. Each step can use the closed-form update directly, which carries no discretization bias whatsoever, regardless of how large the time step is, since it comes from the exact solution, not a first-order approximation of it." }
+              ]
+            },
+            {
+              "_key": "c2l4-023",
+              "_type": "codeBlock",
+              "language": "python",
+              "caption": "Exact GBM simulation (not Euler-Maruyama) for TCS",
+              "code": "import numpy as np\n\nS0 = 3900\nmu = 0.15\nsigma = 0.24\nT = 1.0\nn_steps = 12  # monthly\n\ndef simulate_gbm_exact(S0, mu, sigma, T, n_steps):\n    dt = T / n_steps\n    log_drift = (mu - 0.5 * sigma**2) * dt\n    path = np.zeros(n_steps + 1)\n    path[0] = S0\n    for i in range(n_steps):\n        Z = np.random.normal(0, 1)\n        path[i + 1] = path[i] * np.exp(log_drift + sigma * np.sqrt(dt) * Z)\n    return path\n\npath = simulate_gbm_exact(S0, mu, sigma, T, n_steps)\nprint(f\"S(0) = {path[0]:.2f}\")\nprint(f\"S(1 year) = {path[-1]:.2f}\")\n# This update is EXACT, unlike Euler-Maruyama: since ln S(t) is exactly\n# arithmetic Brownian motion, there is zero discretization bias here,\n# no matter how large dt is, only the randomness of W(t) itself remains."
+            },
+            {
+              "_key": "c2l4-024",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "One simulated year of TCS under geometric Brownian motion",
+              "xAxisLabel": "Month",
+              "yAxisLabel": "Simulated price (₹)",
+              "data": [
+                { "_key": "c2l4-024d1", "label": "0", "value": 3900 },
+                { "_key": "c2l4-024d2", "label": "1", "value": 3950 },
+                { "_key": "c2l4-024d3", "label": "2", "value": 3860 },
+                { "_key": "c2l4-024d4", "label": "3", "value": 4020 },
+                { "_key": "c2l4-024d5", "label": "4", "value": 4100 },
+                { "_key": "c2l4-024d6", "label": "5", "value": 3980 },
+                { "_key": "c2l4-024d7", "label": "6", "value": 4150 },
+                { "_key": "c2l4-024d8", "label": "7", "value": 4230 },
+                { "_key": "c2l4-024d9", "label": "8", "value": 4080 },
+                { "_key": "c2l4-024d10", "label": "9", "value": 4300 },
+                { "_key": "c2l4-024d11", "label": "10", "value": 4180 },
+                { "_key": "c2l4-024d12", "label": "11", "value": 4260 },
+                { "_key": "c2l4-024d13", "label": "12", "value": 4400 }
+              ]
+            },
+            {
+              "_key": "c2l4-025",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Do not calibrate μ and σ in this model from raw, unadjusted historical average returns without checking which one you have. Many data sources report an arithmetic average of period returns, which corresponds to this model's μ, while others report a compound annual growth rate, which corresponds to μ - σ²/2. Mixing the two up, feeding a CAGR figure into μ directly, systematically understates a stock's true expected drift by roughly σ²/2."
+            },
+            {
+              "_key": "c2l4-026",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Reconcile the mean and the median",
+              "question": "A colleague argues: \"Since ln S(t) has drift (μ - σ²/2), which is less than μ, the average price S(t) must also grow slower than S(0)e^(μt).\" Is this correct?",
+              "options": [
+                "Yes, correct: since the log grows slower, the price must also grow slower on average",
+                "No: E[S(t)] = S(0)e^(μt) exactly, since E[e^X] = e^(mean + variance/2) for a normal X, and that added variance/2 term exactly restores the full μ",
+                "No, because volatility only affects the variance of S(t), never its mean at all",
+                "Yes, but only because σ happens to be large in this particular example"
+              ],
+              "correctIndex": 1,
+              "explanation": "For X ~ N(m, v), E[e^X] = e^(m + v/2), not e^m. With m = (μ - σ²/2)t and v = σ²t, this gives E[S(t)] = S(0)·e^((μ - σ²/2)t + σ²t/2) = S(0)·e^(μt), the full μ. The -σ²/2 in the log-drift and the +σ²/2 from the lognormal mean adjustment cancel exactly; only the median grows at the slower rate."
+            },
+            {
+              "_key": "c2l4-027",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Compute the log-drift",
+              "prompt": "Using this lesson's TCS calibration (μ = 15%, σ = 24%), what is the log-drift, μ - σ²/2, expressed as a percentage?",
+              "correctValue": 12.12,
+              "tolerance": 0.05,
+              "unit": "%",
+              "explanation": "σ² = 0.24² = 0.0576, so σ²/2 = 0.0288 = 2.88%. Log-drift = μ - σ²/2 = 15% - 2.88% = 12.12%. This is the rate at which the median (typical) simulated price actually grows, not the 15% figure fed into the model as μ."
+            },
+            {
+              "_key": "c2l4-028",
+              "_type": "flashcardSet",
+              "title": "Core Terms From This Lesson",
+              "cards": [
+                { "_key": "c2l4-028f1", "term": "Geometric Brownian motion (GBM)", "definition": "The SDE dS = μS dt + σS dW, where both drift and diffusion scale with the current price, keeping the price strictly positive and modeling percentage, not absolute, returns." },
+                { "_key": "c2l4-028f2", "term": "Lognormal distribution", "definition": "The distribution of a variable whose natural log is normally distributed. GBM's closed-form solution shows S(t) is lognormal, since ln S(t) follows arithmetic Brownian motion." },
+                { "_key": "c2l4-028f3", "term": "Volatility drag", "definition": "The gap, exactly σ²/2, between a lognormal process's mean growth rate (μ) and its median or typical growth rate (μ - σ²/2); higher volatility widens this gap even when μ is unchanged." },
+                { "_key": "c2l4-028f4", "term": "Exact GBM simulation", "definition": "Simulating S(t) by directly applying the closed-form solution at each step, S(t+Δt) = S(t)·exp[(μ-σ²/2)Δt + σ√Δt·Z], which carries zero discretization bias, unlike the Euler-Maruyama method used for SDEs without a known closed form." }
+              ]
+            },
+            {
+              "_key": "c2l4-029",
+              "_type": "keyTakeaways",
+              "points": [
+                "Applying Ito's lemma to f(S) = ln(S) for geometric Brownian motion (dS = μS dt + σS dW) gives d(ln S) = (μ - σ²/2) dt + σ dW, plain arithmetic Brownian motion in the log.",
+                "Integrating gives the exact closed-form solution S(t) = S(0)·exp[(μ - σ²/2)t + σW(t)], the first fully solved SDE in this course, and the lognormal stock price model underneath Black-Scholes.",
+                "The median (typical) price grows at μ - σ²/2, while the mean (average across all paths) grows at the full μ; the two differ by exactly σ²/2, a gap known outside this course as volatility drag.",
+                "Because the closed-form solution is known, GBM can be simulated exactly at each step, with zero discretization bias, unlike SDEs that must rely on the approximate Euler-Maruyama method.",
+                "Chapter 3 now takes this exact solution and, alongside a hedging argument, uses it to derive the Black-Scholes partial differential equation and, ultimately, the closed-form option pricing formula itself."
+              ]
+            },
+            {
+              "_key": "c2l4-030",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to buy, sell, or hold any security named here. The TCS price level, expected return, and volatility figures are simplified illustrative numbers, not live market data or a forecast. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,186 @@
+{
+  "courseSlug": "advanced-risk-management-value-at-risk-and-stress-testing",
+  "chapters": [
+    {
+      "title": "Chapter 6: Liquidity Risk and Liquidity-Adjusted VaR",
+      "lessons": [
+        {
+          "title": "Liquidity Under Stress: When Spreads Widen and Depth Disappears",
+          "slug": "liquidity-under-stress-when-spreads-widen-and-depth-disappears",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "v1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "v1s1", "text": "Every liquidity figure computed so far in this chapter used calm-market inputs, a stock's ordinary spread, its ordinary trading volume. Under genuine stress, both of those inputs deteriorate at the same time: spreads widen as market makers demand more compensation for risk, and depth shrinks as buyers disappear and only sellers remain. This lesson stress tests the liquidity model itself, the same discipline Chapter 4 applied to market risk factors, now applied to spread and depth.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "keyFact",
+              "_key": "v2",
+              "label": "Liquidity Under Stress",
+              "value": "A scenario where bid-ask spreads widen and average daily trading depth shrinks simultaneously, both making exit costlier at once",
+              "context": "A liquidity model calibrated only on calm-market data will badly understate risk exactly when a crisis hits."
+            },
+            {
+              "_type": "block",
+              "_key": "v3",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "v3s1", "text": "Building a Liquidity Stress Scenario", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "v4",
+              "caption": "Normal vs stressed liquidity inputs for the mid-cap stock used throughout this chapter (illustrative multipliers, grounded in general market microstructure research rather than precise Indian historical data)",
+              "headers": ["Input", "Normal conditions", "Stress scenario", "Multiplier"],
+              "rows": [
+                { "cells": ["Daily volatility (sigma)", "2%", "5%", "2.5x"] },
+                { "cells": ["Average daily traded value (ADV)", "Rs 5,00,00,000", "Rs 2,00,00,000", "0.4x (60% shrinkage)"] },
+                { "cells": ["Bid-ask spread", "0.2%", "0.6%", "3x"] },
+                { "cells": ["Spread volatility", "0.08%", "0.24%", "3x"] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "v5",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "v5s1", "text": "Recomputing L-VaR Under Stress", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "v6",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "v6s1", "text": "Applying these stressed inputs to the same Rs 1,00,00,000 position from the last two lessons:", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "v7",
+              "caption": "Market VaR, liquidity cost, and total L-VaR, normal vs stress",
+              "headers": ["Measure", "Normal", "Stress", "Ratio"],
+              "rows": [
+                { "cells": ["Market VaR (99%)", "Rs 4,65,200", "Rs 11,63,000", "2.50x"] },
+                { "cells": ["Participation rate (Q / ADV)", "20%", "50%", "2.50x"] },
+                { "cells": ["Liquidity cost (participation model)", "Rs 99,443", "Rs 3,83,553", "3.86x"] },
+                { "cells": ["Total L-VaR", "Rs 5,64,643", "Rs 15,46,553", "2.74x"] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "v8",
+              "type": "warning",
+              "text": "Look at how the ratios compare. Volatility rose 2.5x, and market VaR rose exactly 2.5x with it, that part is linear by construction. But total L-VaR rose 2.74x, more than the market risk component alone. The reason is compounding: the same Rs 1,00,00,000 order is now 50% of a pool that shrank to Rs 2,00,00,000, versus 20% of a normal Rs 5,00,00,000 pool, so the market impact term, which scales with the square root of participation, worsens on two fronts simultaneously, higher volatility and a much higher participation rate, not just one."
+            },
+            {
+              "_type": "block",
+              "_key": "v9",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "v9s1", "text": "The BDSS View Under Stress", "marks": [] }
+              ]
+            },
+            {
+              "_type": "statGrid",
+              "_key": "v10",
+              "stats": [
+                { "label": "BDSS liquidity cost, normal", "value": "Rs 19,304", "context": "0.193% of position value" },
+                { "label": "BDSS liquidity cost, stress", "value": "Rs 57,912", "context": "Using the 3x spread and spread-volatility multipliers" },
+                { "label": "Ratio", "value": "3.00x", "context": "Tracks the spread multiplier directly, since BDSS is spread-driven, not size-driven" }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "v11",
+              "type": "insight",
+              "text": "The BDSS cost scales exactly 3x, matching the spread and spread-volatility multiplier directly, since that model does not involve order size or participation rate at all. The participation model's cost, by contrast, amplified nearly 4x, 3.86x, because it is exposed to two compounding stress channels, the wider spread and the shrinking pool, at once. This is a useful diagnostic in itself: whichever model shows the larger stress amplification for a given position tells you whether that position's liquidity risk is driven more by its own size or by how badly market-wide conditions could deteriorate."
+            },
+            {
+              "_type": "block",
+              "_key": "v12",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "v12s1", "text": "Tying It Back to the Stress Testing Framework", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "v13",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "v13s1", "text": "Chapter 4 built a framework around historical and hypothetical scenarios applied to market risk factors, equity, currency, rates. A complete framework needs the same discipline applied to liquidity inputs, spread and depth, as their own scenario category, not folded silently into the market risk scenarios. A firm's scenario library, from Chapter 4's health check, should explicitly include at least one liquidity stress case for every material position, especially anything that is not deeply liquid on an ordinary day.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "v14",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "v14s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "v15",
+              "variant": "numericInput",
+              "title": "A Milder Stress Scenario",
+              "prompt": "Using the same Rs 1,00,00,000 position, if a milder stress scenario assumed only a 2x spread multiplier (spread becomes 0.4%, spread volatility becomes 0.16%) with everything else at normal levels, what would the BDSS liquidity cost be, in rupees? Use the formula 0.5 x (spread + z x spread volatility) x V, with z = 2.326.",
+              "correctValue": 38608,
+              "tolerance": 500,
+              "unit": "Rs",
+              "explanation": "0.5 x (0.4% + 2.326 x 0.16%) x Rs 1,00,00,000 = 0.5 x (0.4% + 0.372%) x Rs 1,00,00,000 = 0.5 x 0.772% x Rs 1,00,00,000 = 0.386% x Rs 1,00,00,000 = Rs 38,608. Compare this to the normal BDSS cost of Rs 19,304, exactly double, tracking the 2x spread multiplier precisely, as expected for a model that scales directly with spread."
+            },
+            {
+              "_type": "exercise",
+              "_key": "v16",
+              "variant": "scenario",
+              "title": "Acting on a Liquidity Stress Test",
+              "scenario": "A desk holds the Rs 1,00,00,000 mid-cap position from this lesson ahead of a known binary event, a major earnings release, two trading days away. The desk's liquidity stress test, using the multipliers in this lesson, shows L-VaR jumping from Rs 5,64,643 to Rs 15,46,553 under stressed liquidity conditions.",
+              "prompt": "What would you recommend the desk consider doing before the earnings release, and why is this a liquidity-specific decision rather than a market-risk decision?",
+              "modelAnswer": "The desk should consider reducing position size, or beginning to exit gradually, before the earnings release itself, precisely because liquidity, unlike a pure market move, can be partially managed by acting before the stress event rather than after it. Once earnings are released and the market reacts, if the reaction is adverse, both the spread and the available depth are likely to deteriorate immediately, exactly the conditions this lesson modeled, making any exit at that point far more expensive than exiting calmly beforehand. This is a liquidity-specific insight because market risk itself, the price move from the earnings surprise, cannot be avoided by trading early, but the liquidity cost of exiting can be substantially reduced by trading before the stress hits rather than during it."
+            },
+            {
+              "_type": "block",
+              "_key": "v17",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "v17s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "v18",
+              "text": "Market risk and liquidity risk do not just add up under stress, they compound. A position that looks moderately risky on volatility alone can become dramatically more expensive to exit once the pool it trades in shrinks at the same moment its own risk rises."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "v19",
+              "points": [
+                "Under genuine stress, spreads widen and market depth shrinks at the same time, and a liquidity model calibrated only on calm-market data will understate risk exactly when it matters most.",
+                "In this chapter's worked example, market volatility rose 2.5x under stress, but total L-VaR rose 2.74x, because the participation-based liquidity cost is exposed to both the volatility increase and the shrinking pool of available depth simultaneously.",
+                "The BDSS spread-volatility cost scaled cleanly with the spread multiplier, 3x, since it does not depend on order size, while the participation model amplified further, 3.86x, since it depends on both spread and depth.",
+                "A complete stress testing framework, building on Chapter 4, needs liquidity stress scenarios as their own category, not folded silently into market risk scenarios.",
+                "Acting before a known stress event, rather than during or after it, is one of the few genuine levers available against liquidity risk specifically, since market risk itself cannot be avoided by early trading, but liquidity cost often can be reduced by it.",
+                "This closes Chapter 6: bid-ask spread and market impact quantify the everyday cost of exiting a position, L-VaR builds that cost directly into the risk number, and liquidity stress testing shows how badly that cost can compound exactly when a crisis hits."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

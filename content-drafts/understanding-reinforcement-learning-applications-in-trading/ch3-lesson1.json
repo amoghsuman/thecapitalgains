@@ -1,0 +1,234 @@
+{
+  "courseSlug": "understanding-reinforcement-learning-applications-in-trading",
+  "chapters": [
+    {
+      "title": "Chapter 3: Building a Trading Environment",
+      "lessons": [
+        {
+          "title": "Designing a Reward Function That Doesn't Blow Up: Sharpe, Drawdown, and Transaction Costs",
+          "slug": "designing-a-reward-function-that-doesnt-blow-up-sharpe-drawdown-and-transaction-costs",
+          "body": [
+            {
+              "_key": "rl3l1b01",
+              "_type": "bigIdea",
+              "text": "A reward function is a promise to the agent about what counts as good. Every earlier lesson that warned about reckless RL trading behavior was really describing a broken promise. This lesson writes a better one, in three layers: risk-adjusted return, drawdown penalty, and honest transaction costs."
+            },
+            {
+              "_key": "rl3l1b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl3l1b02s1", "_type": "span", "text": "Why Raw P&L Reward Fails: A Quick Recap and a Concrete Fix", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl3l1b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl3l1b03s1",
+                  "_type": "span",
+                  "text": "Chapter 1 established why a reward built purely from raw profit and loss is dangerous: it has no built-in reason to avoid a strategy that wins small and often, then occasionally takes a catastrophic loss, and it rewards larger, more frequent positions right up until they cause damage. This lesson builds the fix, concretely, in three layers: a risk-adjusted core based on the Sharpe ratio, an explicit drawdown penalty, and realistic transaction costs, combined into one reward function ready to train against in the next lesson's environment.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl3l1b04",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl3l1b04s1", "_type": "span", "text": "The Differential Sharpe Ratio: Rewarding Risk-Adjusted Return Step by Step", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl3l1b05",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl3l1b05s1",
+                  "_type": "span",
+                  "text": "The Sharpe ratio, excess return divided by return volatility, is normally computed over an entire period once it is finished, which is a problem for an RL agent that needs a reward at every single step, not just at the end of an episode. Moody and Saffell's differential Sharpe ratio, introduced in their 1998 paper on reinforcement learning for trading systems, solves this by maintaining running estimates of the mean and variance of returns and computing, at each step, the marginal contribution that step's return makes to the Sharpe ratio accumulated so far.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl3l1b06",
+              "_type": "mathBlock",
+              "latex": "D_t \\approx \\frac{B_{t-1}\\,\\Delta A_t \\;-\\; \\tfrac{1}{2} A_{t-1}\\,\\Delta B_t}{\\left(B_{t-1} - A_{t-1}^2\\right)^{3/2}}",
+              "caption": "A simplified version of Moody and Saffell's (1998) differential Sharpe ratio. A_t and B_t are running estimates of the mean and mean-square of returns, updated a little at each step; ΔA_t and ΔB_t are how much this step's return shifted those running estimates. The full derivation involves more steps than this course needs to reproduce, but the idea to take away is precise: each step's reward is the marginal improvement, or damage, that step made to a continuously updated, risk-adjusted performance measure, not just that step's raw profit."
+            },
+            {
+              "_key": "rl3l1b07",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl3l1b07s1",
+                  "_type": "span",
+                  "text": "In practice, this means a small profit made during an unusually volatile stretch can receive a smaller reward, or even a penalty, than an identical profit made during a calm stretch, because the volatile step contributed less to, or actively hurt, the running Sharpe ratio. This is exactly the risk-awareness a raw P&L reward lacks.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl3l1b08",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl3l1b08s1", "_type": "span", "text": "Penalizing Drawdown Directly", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl3l1b09",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl3l1b09s1",
+                  "_type": "span",
+                  "text": "A second, more directly interpretable approach adds an explicit penalty for drawdown, the decline from the highest equity level reached so far, directly into the reward at every step.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl3l1b10",
+              "_type": "mathBlock",
+              "latex": "DD_t = \\max\\!\\left(0,\\; \\frac{\\text{PeakEquity}_t - \\text{Equity}_t}{\\text{PeakEquity}_t}\\right)",
+              "caption": "Current drawdown as a fraction of the highest equity level reached so far in the episode. It is zero at a new equity high and grows as equity falls further below that peak."
+            },
+            {
+              "_key": "rl3l1b11",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl3l1b11s1",
+                  "_type": "span",
+                  "text": "Subtracting β times this drawdown term from the reward at every step directly penalizes any state where the strategy is underwater, not just the moment a loss is realized. Unlike a pure Sharpe-based reward, which penalizes volatility symmetrically in both directions, a drawdown penalty targets exactly the asymmetry that actually matters to a trader: upside volatility, a sudden gain, is not something any reasonable reward function should punish, only downside.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl3l1b12",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl3l1b12s1", "_type": "span", "text": "Building In Transaction Costs So the Agent Doesn't Trade Illusions", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl3l1b13",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl3l1b13s1",
+                  "_type": "span",
+                  "text": "Chapter 1's lesson on live failure modes covered why a backtest that ignores transaction costs overstates a strategy's real edge. The same discipline belongs inside the reward function itself, not just in the backtest evaluating it afterward, since a reward that ignores costs teaches the agent to trade as if costs don't exist, exactly the illusion Chapter 1 warned against.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl3l1b14",
+              "_type": "mathBlock",
+              "latex": "r_t = \\Delta \\text{PnL}_t \\;-\\; c \\,|\\Delta \\text{position}_t| \\;-\\; \\beta \\cdot DD_t",
+              "caption": "A complete, risk-aware reward: the step's raw mark-to-market P&L change, minus a transaction cost proportional to how much the position changed (turnover), minus a drawdown penalty scaled by β. Every term here is something the earlier lessons have already justified individually; this is where they are assembled."
+            },
+            {
+              "_key": "rl3l1b15",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl3l1b15s1", "_type": "span", "text": "Putting It Together: A Worked Example", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl3l1b16",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl3l1b16s1",
+                  "_type": "span",
+                  "text": "Take one step of a Nifty 50 futures agent: gross mark-to-market P&L rises by ₹1,200, the agent adds 2 lots to its position with a transaction cost of ₹50 per lot, and the strategy is currently 3% below its equity peak, with the drawdown penalty weight β set so that a 3% drawdown costs ₹300 in reward.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl3l1b17",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "rl3l1b17st1", "label": "Gross P&L Change", "value": "+₹1,200", "context": "Raw mark-to-market gain this step" },
+                { "_key": "rl3l1b17st2", "label": "Transaction Cost", "value": "-₹100", "context": "2 lots added × ₹50 per lot" },
+                { "_key": "rl3l1b17st3", "label": "Drawdown Penalty", "value": "-₹300", "context": "3% current drawdown × chosen β weight" },
+                { "_key": "rl3l1b17st4", "label": "Net Reward", "value": "+₹800", "context": "What the agent actually receives and learns from" }
+              ]
+            },
+            {
+              "_key": "rl3l1b18",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Every β, c, and η introduced in this lesson is a new hyperparameter, and hyperparameters can be overfit just as easily as a strategy's entry rules can. A drawdown penalty set too aggressively can train an agent so risk-averse it barely trades at all, which looks safe in a backtest and is genuinely useless in practice. Treat these settings with the same discipline as any other strategy parameter: tune them on one period, validate on another the agent never saw, a theme this course returns to in detail once backtesting and validation are covered."
+            },
+            {
+              "_key": "rl3l1b19",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Diagnosing a Reward That Discourages All Trading",
+              "scenario": "A researcher sets β very high in the combined reward function above, reasoning that a strong drawdown penalty will keep the agent safe. After training, the resulting policy trades extremely rarely, produces a very smooth but nearly flat equity curve, and captures almost none of the underlying instrument's genuine moves.",
+              "prompt": "What likely went wrong, and how would you adjust the reward function to fix it?",
+              "modelAnswer": "Setting β too high means the drawdown penalty term dominates the reward relative to the gross P&L term, so the agent learns that the safest way to avoid penalty is to avoid taking positions large or frequent enough to ever create meaningful drawdown in the first place, effectively learning to do nothing. The flat, low-drawdown equity curve is not a sign the strategy is safe and effective; it is a sign the reward function has been dominated by risk-aversion to the point that it no longer rewards genuine opportunity capture. The fix is to reduce β relative to the scale of typical P&L swings, or to cap the penalty so it grows with drawdown up to a point but does not overwhelm the reward at moderate, expected levels of drawdown, then re-validate that the resulting policy actually trades and captures a reasonable share of the instrument's real moves, not just that its equity curve looks smooth."
+            },
+            {
+              "_key": "rl3l1b20",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why Add a Transaction Cost Term Inside the Reward",
+              "question": "Why does the reward function in this lesson subtract a transaction cost term, c·|Δposition|, rather than relying only on realistic costs being applied in the backtest that evaluates the trained agent afterward?",
+              "options": [
+                "Because transaction costs are irrelevant to how the agent behaves, only to how its results are reported",
+                "Because if the reward itself ignores costs, the agent is trained to believe frequent trading is free, and will learn a policy that trades far more than a cost-aware policy would, regardless of what the backtest reports afterward",
+                "Because Indian exchanges do not allow backtests to include transaction costs",
+                "Because transaction costs only matter for options strategies, not futures strategies"
+              ],
+              "correctIndex": 1,
+              "explanation": "The reward function is what the agent is actually trained to optimize. If it omits transaction costs, the agent learns a policy that treats trading as free and will overtrade relative to what is actually profitable once real costs apply, no matter how accurately a separate backtest reports those costs afterward. Realistic costs need to be inside the reward the agent trains against, not just in the evaluation applied to it afterward, for the two to actually agree."
+            },
+            {
+              "_key": "rl3l1b21",
+              "_type": "keyTakeaways",
+              "points": [
+                "A risk-aware reward function is typically built from three layers: a risk-adjusted core (like a differential Sharpe ratio), an explicit drawdown penalty, and realistic transaction costs",
+                "Moody and Saffell's differential Sharpe ratio turns the Sharpe ratio, normally a whole-period statistic, into a per-step reward by tracking each step's marginal contribution to a running risk-adjusted performance measure",
+                "A drawdown penalty targets downside risk specifically, unlike a Sharpe-based reward that penalizes volatility symmetrically in both directions, even though upside volatility is not something a reward function should discourage",
+                "Transaction costs belong inside the reward function itself, not just in a separate backtest evaluation, or the agent trains to believe trading is free and learns to overtrade",
+                "Every weight introduced to balance these terms, such as β for the drawdown penalty, is itself a hyperparameter that can be overfit or mistuned; a penalty set too aggressively can train an agent that avoids risk by barely trading at all",
+                "The next lesson turns this reward function, along with the state and action design from Chapter 1, into a working, code-level trading environment on real Nifty 50 data"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

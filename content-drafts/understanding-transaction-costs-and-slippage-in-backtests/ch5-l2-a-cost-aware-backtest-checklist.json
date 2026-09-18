@@ -1,0 +1,202 @@
+{
+  "courseSlug": "understanding-transaction-costs-and-slippage-in-backtests",
+  "chapters": [
+    {
+      "title": "Chapter 5: Building Realistic Backtests",
+      "lessons": [
+        {
+          "title": "A Cost-Aware Backtest Checklist",
+          "slug": "a-cost-aware-backtest-checklist",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "s1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "s1s1", "text": "This lesson introduces no new mechanics. It consolidates every check this course has built, across explicit costs, slippage and impact, turnover and break-even, and methodology integrity, into one checklist to run before trusting any backtest enough to trade on it.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "s2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "s2s1", "text": "Category 1: Explicit Costs (Chapter 2)", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "s3",
+              "variant": "checklist",
+              "title": "Explicit Cost Checks",
+              "steps": [
+                "Brokerage modeled against your actual or intended broker's real fee schedule, including any flat-or-percentage, whichever-is-lower rule.",
+                "STT, exchange transaction charges, SEBI fees, and stamp duty modeled per segment, delivery, intraday, futures, and options each have different rates.",
+                "GST applied only to brokerage, exchange charges, and SEBI fees, never to STT or stamp duty.",
+                "All rates sourced from current broker or exchange circulars, not carried over from an old reference without checking for changes such as the October 2024 F&O STT increase."
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "s4",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "s4s1", "text": "Category 2: Slippage and Market Impact (Chapter 3)", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "s5",
+              "variant": "checklist",
+              "title": "Slippage and Impact Checks",
+              "steps": [
+                "Spread cost calibrated to each stock's actual liquidity tier, not one flat number applied across large-cap and small-cap trades alike.",
+                "Market impact modeled from order size relative to average daily traded value, using the square-root law or an equivalent, not folded into brokerage or ignored.",
+                "Average daily traded value sourced per stock, per day, not a single static estimate for the entire backtest period.",
+                "Strategy-specific execution effects considered where relevant, such as momentum drift cost for signals that chase an already-moving price."
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "s6",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "s6s1", "text": "Category 3: Turnover and Break-Even (Chapter 4)", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "s7",
+              "variant": "checklist",
+              "title": "Turnover and Break-Even Checks",
+              "steps": [
+                "Portfolio turnover ratio, or equivalently average holding period, computed for the strategy exactly as implemented, not assumed.",
+                "Break-even gross CAGR calculated as turnover ratio multiplied by round-trip cost.",
+                "A 2x to 3x safety margin required above break-even before treating the strategy as live-ready, not bare break-even.",
+                "Cost and impact assumptions re-checked at the actual capital size intended for live trading, not the backtest's default or convenient size."
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "s8",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "s8s1", "text": "Category 4: Methodology Integrity (Chapter 5)", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "s9",
+              "variant": "checklist",
+              "title": "Methodology Integrity Checks",
+              "steps": [
+                "No fundamental or corporate action data used before its actual public availability date.",
+                "Fills assigned realistically, such as the next session's open after a close-based signal, never the same bar as the signal itself.",
+                "Backtest universe reflects historical index membership at each point in time, not today's membership applied retroactively.",
+                "The cost model is applied inside every backtest run used for strategy selection, never bolted on only to the already-chosen final candidate."
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "s10",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "s10s1", "text": "One Master Table: Where Each Check Comes From", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "s11",
+              "caption": "What each category costs you if skipped",
+              "headers": ["Category", "Source", "Cost of Skipping It"],
+              "rows": [
+                { "cells": ["Explicit costs", "Chapter 2", "In the Bank Nifty scalping case study, transaction costs alone consumed 91.3% of gross profit"] },
+                { "cells": ["Slippage and market impact", "Chapter 3", "In Chapter 1's case study, market impact alone accounted for 40.4% of the 18.3-point gap between backtest and live"] },
+                { "cells": ["Turnover and break-even", "Chapter 4", "In the daily vs monthly case study, the higher gross CAGR strategy (18%) actually delivered the lower net CAGR (6.75% vs 13.10%)"] },
+                { "cells": ["Methodology integrity", "Chapter 5, Lesson 1", "A single missing one-day shift in fill timing inflated gross CAGR by 6.24 points, before any cost model was even applied"] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "s12",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "s12s1", "text": "Using This Checklist in Practice", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "s13",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "s13s1", "text": "Run all four categories before every go or no-go decision, not as a box-ticking formality but as an actual gate a strategy has to clear. Re-run the relevant sections whenever anything material changes, a new universe, a change in intended capital, a different rebalance frequency, since each of those changes what the checklist's own numbers would say.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "s14",
+              "type": "insight",
+              "text": "Notice that none of these four categories are optional add-ons to a working backtest, each one is the subject of an entire chapter in this course because each one has, on its own, been shown to turn a profitable-looking strategy into an unprofitable one."
+            },
+            {
+              "_type": "block",
+              "_key": "s15",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "s15s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "s16",
+              "variant": "quiz",
+              "title": "Quick Check",
+              "question": "A colleague says their backtest is trustworthy because they carefully modeled brokerage, STT, and GST using current rates. Based on this course, is that sufficient?",
+              "options": [
+                "Yes, explicit costs are the only thing that matters for backtest realism",
+                "No, explicit costs are only Category 1 of four; slippage and market impact, turnover and break-even discipline, and methodology integrity each independently have the power to invalidate a backtest",
+                "No, but only because GST rates change too often to model reliably",
+                "Yes, as long as the strategy trades cash equity and not F&O"
+              ],
+              "correctIndex": 1,
+              "explanation": "Explicit costs are necessary but not sufficient. This course showed slippage and market impact, turnover-driven cost drag, and methodology bugs like look-ahead bias and unrealistic fills each independently capable of turning a profitable-looking backtest into a losing live strategy, entirely separate from whether brokerage and STT were modeled correctly."
+            },
+            {
+              "_type": "block",
+              "_key": "s17",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "s17s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "s18",
+              "text": "A trustworthy backtest is not one clever fix, it is four independent disciplines holding at once: explicit costs priced correctly, slippage and impact modeled by liquidity, turnover kept under break-even with a real safety margin, and the underlying methodology free of look-ahead bias and unrealistic fills. Skip any one category and the other three cannot save you."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "s19",
+              "points": [
+                "A cost-aware backtest checklist has four independent categories: explicit costs, slippage and market impact, turnover and break-even discipline, and methodology integrity, each covered by its own chapter in this course.",
+                "Every category in this checklist was shown, in a dedicated case study, to be capable of turning a profitable-looking backtest into an unprofitable live strategy on its own.",
+                "The checklist should be run as an actual go/no-go gate before live capital is committed, and re-run whenever the strategy's universe, capital size, or rebalance frequency changes materially.",
+                "Modeling explicit costs correctly, while necessary, is not sufficient on its own, a backtest can still fail from unmodeled slippage, excessive turnover, or methodology bugs even with a perfect cost stack."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

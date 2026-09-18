@@ -1,0 +1,242 @@
+{
+  "courseSlug": "understanding-optimization-theory-convex-optimization-and-lagrange-multipliers-for-portfolio-construction",
+  "chapters": [
+    {
+      "title": "Chapter 4: Lagrange Multipliers: Optimization Under Equality Constraints",
+      "lessons": [
+        {
+          "title": "Why Lagrange Multipliers Work: Geometric Intuition (Tangency of Contours)",
+          "slug": "why-lagrange-multipliers-work-geometric-intuition-tangency-of-contours",
+          "body": [
+            {
+              "_key": "oc4l2-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc4l2-001s1", "_type": "span", "marks": [], "text": "Ananya can now run the algebra: build the Lagrangian, take the partial derivatives, solve the system. The interviewer pushes further. Why does setting the gradient of the objective proportional to the gradient of the constraint find the optimum? What is actually happening geometrically? This lesson answers that with a picture, not just equations: tangency." }
+              ]
+            },
+            {
+              "_key": "oc4l2-002",
+              "_type": "bigIdea",
+              "text": "At the constrained optimum, the objective's contour line is tangent to the constraint curve. If they crossed instead of just touching, you could always slide along the constraint to find a better point. Tangency is the only place where sliding stops helping."
+            },
+            {
+              "_key": "oc4l2-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc4l2-003s1", "_type": "span", "marks": [], "text": "Contour Lines: A Topographic Map of the Objective" }
+              ]
+            },
+            {
+              "_key": "oc4l2-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "oc4l2-004m1", "_type": "glossaryTerm", "definition": "The set of every point where a function takes exactly the same value, like an elevation line on a topographic map connecting every point at the same height." }
+              ],
+              "children": [
+                { "_key": "oc4l2-004s1", "_type": "span", "marks": [], "text": "A " },
+                { "_key": "oc4l2-004s2", "_type": "span", "marks": ["oc4l2-004m1"], "text": "contour line" },
+                { "_key": "oc4l2-004s3", "_type": "span", "marks": [], "text": " connects every point where a function has the same value. For the toy bowl f(w1, w2) = w1² + w2², the contour where f equals some constant k is a perfect circle of radius square-root-of-k, centered at the origin." }
+              ]
+            },
+            {
+              "_key": "oc4l2-005",
+              "_type": "table",
+              "caption": "Contour circles of f(w1, w2) = w1² + w2²",
+              "headers": ["Contour Value (k)", "Shape", "Radius"],
+              "rows": [
+                { "_key": "oc4l2-005r1", "_type": "tableRow", "cells": ["1", "Circle", "1"] },
+                { "_key": "oc4l2-005r2", "_type": "tableRow", "cells": ["4", "Circle", "2"] },
+                { "_key": "oc4l2-005r3", "_type": "tableRow", "cells": ["9", "Circle", "3"] }
+              ]
+            },
+            {
+              "_key": "oc4l2-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc4l2-006s1", "_type": "span", "marks": [], "text": "Portfolio variance, wᵀΣw, behaves the same way but with tilted, stretched ellipses instead of perfect circles, since Chapter 2 proved it is a positive definite quadratic bowl whenever the assets are not perfectly, identically correlated." }
+              ]
+            },
+            {
+              "_key": "oc4l2-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc4l2-007s1", "_type": "span", "marks": [], "text": "The Constraint Is a Curve You're Not Allowed to Leave" }
+              ]
+            },
+            {
+              "_key": "oc4l2-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc4l2-008s1", "_type": "span", "marks": [], "text": "The budget constraint, w1 + w2 = 1, is a straight line cutting across the plane of possible weights. An equality constraint does not leave you an area to search, it collapses the feasible region down to a single curve. Every candidate solution has to sit exactly on that line, nowhere else." }
+              ]
+            },
+            {
+              "_key": "oc4l2-009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc4l2-009s1", "_type": "span", "marks": [], "text": "The Tangency Condition: Where Sliding No Longer Helps" }
+              ]
+            },
+            {
+              "_key": "oc4l2-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc4l2-010s1", "_type": "span", "marks": [], "text": "Walk along the budget line and watch which contour ellipse you are standing on at each step. If the line currently crosses straight through a contour, entering it on one side and exiting on the other, you can always take a small step further along the line and land on a smaller contour, a lower variance. The line only stops crossing contours, and instead just grazes one without entering or leaving it, at a single special point: where the line is tangent to that contour." }
+              ]
+            },
+            {
+              "_key": "oc4l2-011",
+              "_type": "mathBlock",
+              "latex": "\\nabla f(\\mathbf{x}^*) = \\lambda \\nabla g(\\mathbf{x}^*)",
+              "caption": "Two curves are tangent exactly when their gradients, which point perpendicular to each curve, are parallel to each other. This is the geometric statement of the same condition Lesson 1's algebra already produced."
+            },
+            {
+              "_key": "oc4l2-012",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Rearrange Lesson 1's first-order condition, ∂L/∂xi = ∂f/∂xi - λ ∂g/∂xi = 0, for every i at once, and it says exactly this: ∇f = λ∇g. The algebra and the picture are the same fact told two ways. Tangency of contour and constraint IS parallel gradients IS the Lagrangian's stationarity condition."
+            },
+            {
+              "_key": "oc4l2-013",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc4l2-013s1", "_type": "span", "marks": [], "text": "Visualizing It for the Minimum Variance Problem" }
+              ]
+            },
+            {
+              "_key": "oc4l2-014",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc4l2-014s1", "_type": "span", "marks": [], "text": "Picture the Reliance-TCS variance ellipses and the budget line crossing through them. Too small an ellipse, and the budget line misses it entirely, no feasible portfolio reaches that little risk. Too large, and the line slices straight through it at two points, meaning a smaller ellipse is still reachable by sliding along the line. There is exactly one ellipse where the line just touches it, at a single point, without crossing. That touch point is the minimum variance portfolio." }
+              ]
+            },
+            {
+              "_key": "oc4l2-015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc4l2-015s1", "_type": "span", "marks": [], "text": "Walking along the budget line is the same thing as varying w1 alone, exactly Chapter 3's substitution move. Plotting portfolio variance against w1 as you walk the line makes the tangency point visible directly, as the bottom of a curve instead of an abstract touching-ellipses picture." }
+              ]
+            },
+            {
+              "_key": "oc4l2-016",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Portfolio variance while walking along the budget line (Reliance weight w1, TCS weight = 1 - w1)",
+              "xAxisLabel": "w1 (Reliance weight)",
+              "yAxisLabel": "Portfolio variance",
+              "data": [
+                { "_key": "oc4l2-016d1", "label": "0.1", "value": 0.0505 },
+                { "_key": "oc4l2-016d2", "label": "0.2", "value": 0.0454 },
+                { "_key": "oc4l2-016d3", "label": "0.3", "value": 0.0423 },
+                { "_key": "oc4l2-016d4", "label": "0.3984", "value": 0.0413 },
+                { "_key": "oc4l2-016d5", "label": "0.5", "value": 0.0424 },
+                { "_key": "oc4l2-016d6", "label": "0.6", "value": 0.0455 },
+                { "_key": "oc4l2-016d7", "label": "0.7", "value": 0.0507 },
+                { "_key": "oc4l2-016d8", "label": "0.8", "value": 0.0579 }
+              ]
+            },
+            {
+              "_key": "oc4l2-017",
+              "_type": "callout",
+              "type": "insight",
+              "text": "The curve dips to its lowest point exactly at w1 = 0.3984, precisely the value Chapters 3 and 4 both derived, by substitution and by the Lagrangian respectively. On either side of that point, variance rises, which is exactly what a tangency point looks like when you flatten the picture down to one dimension: the contour ellipse and the budget line touch there and nowhere else nearby offers an improvement."
+            },
+            {
+              "_key": "oc4l2-018",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc4l2-018s1", "_type": "span", "marks": [], "text": "Why This Matches the Lagrangian's Algebra" }
+              ]
+            },
+            {
+              "_key": "oc4l2-019",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc4l2-019s1", "_type": "span", "marks": [], "text": "The point where the slope of that one-dimensional curve, df/dw1, hits zero is the bottom of the bowl along the constraint line. That is precisely the tangency point, and precisely where ∇f = λ∇g holds in the full, un-substituted picture. Three chapters, three different-looking calculations (plain calculus, the Lagrangian, and this tangency picture) all land on the same point, because they are three views of one underlying fact." }
+              ]
+            },
+            {
+              "_key": "oc4l2-020",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Read the tangency picture",
+              "question": "At a candidate solution, the budget-constraint line crosses through, rather than just touches, one of portfolio variance's contour ellipses. What does this tell you?",
+              "options": [
+                "This must be the minimum variance portfolio, since it satisfies the budget constraint",
+                "This is not yet the minimum; sliding further along the budget line in one direction reaches a smaller contour, meaning lower variance",
+                "The covariance matrix must be invalid",
+                "Nothing; crossing or tangent makes no difference to optimality"
+              ],
+              "correctIndex": 1,
+              "explanation": "If the constraint line crosses a contour instead of just touching it, the line passes from outside that contour to inside it and back outside, meaning some nearby feasible point on the line sits on a smaller, lower-variance contour. You can keep sliding along the constraint to reduce variance further. Only at a tangency point, where the line just grazes a contour without crossing it, is there no feasible direction left that improves the objective."
+            },
+            {
+              "_key": "oc4l2-021",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Diagnose your position on the constraint line",
+              "scenario": "You manage a two-stock portfolio sitting on the budget constraint line. You test two nearby feasible points, one on each side of your current weights, and find that variance is lower at both of them compared to your current point.",
+              "prompt": "What does this tell you about whether your current point is the tangency point, and what should you do next?",
+              "modelAnswer": "If variance is lower on both sides, your current point is sitting near a local maximum along the constraint line, the opposite of what you want, and is definitely not the tangency point that marks the minimum variance portfolio. At the true tangency point, moving in either direction along the line should increase variance, since it is the bottom of the bowl along that line. Move toward whichever neighboring point has the lower variance, then repeat the comparison from there, walking down the curve until neither direction improves further. That stopping point is the tangency point."
+            },
+            {
+              "_key": "oc4l2-022",
+              "_type": "flashcardSet",
+              "title": "Tangency Intuition: Core Terms",
+              "cards": [
+                { "_key": "oc4l2-022f1", "term": "Contour line (level curve)", "definition": "The set of all points where a function takes the same value, like an elevation line on a topographic map." },
+                { "_key": "oc4l2-022f2", "term": "Tangency condition", "definition": "The point where a constraint curve just touches a contour line without crossing it. Marks the constrained optimum." },
+                { "_key": "oc4l2-022f3", "term": "Parallel gradients", "definition": "∇f(x*) = λ∇g(x*). The gradient of the objective points in the same, or exactly opposite, direction as the gradient of the constraint at the optimum. The algebraic form of tangency." },
+                { "_key": "oc4l2-022f4", "term": "Crossing (non-tangent) point", "definition": "A point where the constraint curve passes through a contour rather than touching it, always improvable by sliding along the constraint." }
+              ]
+            },
+            {
+              "_key": "oc4l2-023",
+              "_type": "keyTakeaways",
+              "points": [
+                "A contour line connects every point where the objective function has the same value, like elevation lines on a topographic map.",
+                "An equality constraint collapses the feasible region to a single curve. Walking along that curve crosses different contours, except at one special point.",
+                "At that special point, the constraint curve is tangent to a contour line rather than crossing it, and sliding in either direction along the constraint no longer improves the objective.",
+                "Tangency happens exactly when the objective's gradient is parallel to the constraint's gradient, ∇f = λ∇g, which is the same equation Lesson 1's Lagrangian algebra already produces.",
+                "For the Reliance-TCS problem, plotting variance while walking along the budget line shows the tangency point directly, as the bottom of a curve at w1 = 0.3984, matching every earlier chapter's answer.",
+                "Plain calculus with substitution, the Lagrangian, and this tangency picture are three different views of the exact same underlying fact."
+              ]
+            },
+            {
+              "_key": "oc4l2-024",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to buy or sell any security named here. Covariance figures and chart values used in the worked example are illustrative, not live or historical market data. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

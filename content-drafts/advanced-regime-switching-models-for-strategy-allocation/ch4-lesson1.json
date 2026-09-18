@@ -1,0 +1,226 @@
+{
+  "courseSlug": "advanced-regime-switching-models-for-strategy-allocation",
+  "chapters": [
+    {
+      "title": "Chapter 4: Markov Switching Regression Models",
+      "lessons": [
+        {
+          "title": "Markov Switching Models: Letting Parameters Change With the Regime",
+          "slug": "markov-switching-models-letting-parameters-change-with-the-regime",
+          "body": [
+            {
+              "_key": "rswc4l1b01",
+              "_type": "bigIdea",
+              "text": "A Markov switching model is not a new algorithm bolted onto the HMM from Chapter 3. It is the same hidden state machine, now driving a regression's own coefficients instead of just labeling days."
+            },
+            {
+              "_key": "rswc4l1b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc4l1b02s1",
+                  "_type": "span",
+                  "text": "Here is something worth sitting with for a moment: Chapter 3's Gaussian HMM, mean and standard deviation switching by hidden state, is already a Markov switching model. It just happens to be the simplest possible one, with a regime-dependent mean and variance and nothing else. This chapter generalizes that same idea to richer equations, where regime-dependent coefficients describe not just the level of returns but their dynamics.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc4l1b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc4l1b03s1",
+                  "_type": "span",
+                  "text": "From Classifying Regimes to Regime-Dependent Coefficients",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc4l1b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc4l1b04s1",
+                  "_type": "span",
+                  "text": "Take an ordinary autoregressive model of returns, where today's return depends partly on yesterday's. A Markov switching autoregression, MS-AR, lets every coefficient in that equation depend on the hidden regime at time t, using the exact same transition matrix machinery from Chapter 3.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc4l1b05",
+              "_type": "mathBlock",
+              "latex": "y_t = c_{s_t} + \\phi_{s_t}\\, y_{t-1} + \\epsilon_t, \\qquad \\epsilon_t \\sim N(0, \\sigma_{s_t}^2)",
+              "caption": "A Markov switching AR(1) model: the intercept c, the autoregressive coefficient phi, and the error variance sigma-squared can all differ by hidden state s_t"
+            },
+            {
+              "_key": "rswc4l1b06",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc4l1b06s1",
+                  "_type": "span",
+                  "text": "Set phi to zero in every state and this collapses back to Chapter 3's plain Gaussian HMM: only the mean and variance switch, with no dependence on the previous day's return at all. Allow phi to differ by state and you are modeling something genuinely new, how strongly today's return depends on yesterday's, and letting that dependence itself change with the regime.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc4l1b07",
+              "_type": "table",
+              "caption": "Chapter 3's HMM as a special case of this chapter's Markov switching regression",
+              "headers": ["Model", "What Switches by Regime", "What Stays Fixed"],
+              "rows": [
+                {
+                  "_key": "rswc4l1b07r1",
+                  "_type": "tableRow",
+                  "cells": ["Chapter 3's Gaussian HMM", "Mean return, variance", "No dependence on the previous day's return at all"]
+                },
+                {
+                  "_key": "rswc4l1b07r2",
+                  "_type": "tableRow",
+                  "cells": ["Markov Switching AR (this chapter)", "Mean return, variance, and the autoregressive coefficient phi", "The overall model form: still one equation, with regime-dependent coefficients plugged in"]
+                }
+              ]
+            },
+            {
+              "_key": "rswc4l1b08",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc4l1b08s1",
+                  "_type": "span",
+                  "text": "Why This Matters for Volatility, Not Just Mean Returns",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc4l1b09",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc4l1b09s1",
+                  "_type": "span",
+                  "text": "There is a genuine economic reason to expect phi itself to change by regime, beyond just the mean and variance. Shocks tend to be more persistent during stressed periods: a large move on a panic day is more likely to be followed by another large move than a large move on a calm day is. Chapter 3's model can capture 'volatility is higher in the stressed state,' a static fact about that state. It cannot capture 'volatility shocks decay more slowly once you are in the stressed state,' a dynamic fact about how the stressed state behaves over time. That distinction is exactly what the next lesson's Markov switching autoregression on volatility is built to capture.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc4l1b10",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc4l1b10s1",
+                  "_type": "span",
+                  "text": "A Famous Example: Hamilton and the US Business Cycle",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc4l1b11",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc4l1b11s1",
+                  "_type": "span",
+                  "text": "This entire family of models traces back to a single, famous 1989 paper by economist James Hamilton, which applied a 2-state Markov switching model to quarterly US GNP growth to statistically identify recessions and expansions, without being told in advance when either one occurred. It is one of the most cited papers in modern macroeconometrics, and the same core machinery, a hidden state driving a regression's coefficients, is what this chapter applies to Nifty and Bank Nifty returns instead of GNP growth.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc4l1b12",
+              "_type": "table",
+              "caption": "Hamilton's original application versus this course's application",
+              "headers": ["Aspect", "Hamilton (1989)", "This Course"],
+              "rows": [
+                {
+                  "_key": "rswc4l1b12r1",
+                  "_type": "tableRow",
+                  "cells": ["Data", "Quarterly US real GNP growth", "Daily Nifty and Bank Nifty returns"]
+                },
+                {
+                  "_key": "rswc4l1b12r2",
+                  "_type": "tableRow",
+                  "cells": ["States", "2 (recession, expansion)", "2 to 4, chosen using Chapter 3's AIC/BIC discipline"]
+                },
+                {
+                  "_key": "rswc4l1b12r3",
+                  "_type": "tableRow",
+                  "cells": ["Regime-dependent parameter", "Mean growth rate", "Mean return, and, in the next lesson, volatility persistence"]
+                },
+                {
+                  "_key": "rswc4l1b12r4",
+                  "_type": "tableRow",
+                  "cells": ["Purpose", "Statistically date business cycle turning points", "Statistically date market regime turning points to drive strategy allocation"]
+                }
+              ]
+            },
+            {
+              "_key": "rswc4l1b13",
+              "_type": "callout",
+              "type": "insight",
+              "text": "The reason this framework has survived over three decades of use across macroeconomics and finance is not novelty, it is the same idea applied wherever a system's behavior genuinely changes character over time: let the data tell you when the regime switched, instead of assuming the same fixed model holds forever."
+            },
+            {
+              "_key": "rswc4l1b14",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Recovering Chapter 3's HMM as a Special Case",
+              "question": "In the Markov switching AR(1) equation, y_t = c(s_t) + phi(s_t) * y_(t-1) + epsilon_t, what change recovers Chapter 3's plain Gaussian HMM exactly?",
+              "options": [
+                "Set the number of states to exactly 2",
+                "Set phi(s_t) to zero in every state, leaving only a regime-dependent mean and variance",
+                "Remove the hidden state s_t entirely",
+                "Set the transition matrix to the identity matrix"
+              ],
+              "correctIndex": 1,
+              "explanation": "With phi forced to zero, the equation reduces to y_t = c(s_t) + epsilon_t, a regime-dependent mean and variance with no dependence on the previous observation, exactly Chapter 3's Gaussian HMM. The hidden state and transition matrix are unchanged; only the regression equation attached to each state gets simpler."
+            },
+            {
+              "_key": "rswc4l1b15",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Choosing What Should Switch",
+              "scenario": "You are building a Markov switching model for Bank Nifty returns and considering three candidate parameters to let switch by regime: the mean return, the return variance, and the autoregressive coefficient on lagged returns. A colleague suggests it is simplest to let all three switch freely across 4 states.",
+              "prompt": "What is the risk in immediately letting every parameter switch across every state, and how would you decide which parameters genuinely need to be regime-dependent versus fixed?",
+              "modelAnswer": "Letting every parameter switch across every state multiplies the free parameter count fast, which directly increases the AIC and BIC penalty from Chapter 3's Lesson 5 and raises the risk of fitting noise rather than genuine structure, especially for the autoregressive coefficient, which is usually estimated less precisely than the mean or variance. The right approach is to start with the parameters that have a clear economic justification for switching, mean and variance almost always do, since calm and stressed periods visibly differ in both, and add the autoregressive coefficient only if there is a specific, testable reason to expect persistence itself to change by regime, such as the volatility-clustering argument in this lesson. Compare the AIC and BIC of a model with only mean and variance switching against one that also lets phi switch, and only keep the added complexity if the improvement is large enough to justify the extra parameters."
+            },
+            {
+              "_key": "rswc4l1b16",
+              "_type": "keyTakeaways",
+              "points": [
+                "Chapter 3's Gaussian HMM is already a simple Markov switching model, with only the mean and variance depending on the hidden state",
+                "A Markov switching autoregression generalizes this by letting the autoregressive coefficient, and in principle any coefficient, also depend on the hidden state",
+                "There is a real economic reason to let persistence itself switch by regime: shocks can decay more slowly in a stressed regime than in a calm one, something a static mean-and-variance model cannot express",
+                "This entire framework traces back to Hamilton's 1989 application to the US business cycle, and the same machinery now applies to Nifty and Bank Nifty returns",
+                "Every additional regime-dependent parameter adds to the AIC/BIC complexity penalty, so parameters should only switch by regime when there is a specific, testable reason to expect them to"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

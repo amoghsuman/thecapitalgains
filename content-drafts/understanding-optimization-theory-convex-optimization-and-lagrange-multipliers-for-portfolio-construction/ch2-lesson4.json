@@ -1,0 +1,300 @@
+{
+  "courseSlug": "understanding-optimization-theory-convex-optimization-and-lagrange-multipliers-for-portfolio-construction",
+  "chapters": [
+    {
+      "title": "Chapter 2: Convexity: The Property That Makes Optimization Tractable",
+      "lessons": [
+        {
+          "title": "Convex Optimization Problems: Why a Local Minimum Is the Global Minimum",
+          "slug": "convex-optimization-problems-why-a-local-minimum-is-the-global-minimum",
+          "body": [
+            {
+              "_key": "oc2l4-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l4-001s1", "_type": "span", "marks": [], "text": "Fine, the interviewer says, you've shown portfolio variance is convex and the feasible region is convex. Why does that actually help you? Ananya starts to answer with something about smooth bowls, then stops. She can describe the shape, but she has not yet connected it to the one guarantee that makes optimization actually trustworthy: that finding a good point is the same as finding the best point. This lesson proves exactly that connection, and it is the payoff for everything built across this chapter." }
+              ]
+            },
+            {
+              "_key": "oc2l4-002",
+              "_type": "bigIdea",
+              "text": "In a convex optimization problem, there is no such thing as a false summit. Any point where you can no longer improve by looking nearby is, automatically, the best point in the entire feasible region, not just a good one close to where you happened to start."
+            },
+            {
+              "_key": "oc2l4-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l4-003s1", "_type": "span", "marks": [], "text": "Local vs Global Minimum, Defined" }
+              ]
+            },
+            {
+              "_key": "oc2l4-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "oc2l4-004m1", "_type": "glossaryTerm", "definition": "A feasible point where the objective function's value is at least as good as every other feasible point close by, within some small neighborhood. It may or may not be the best point overall." },
+                { "_key": "oc2l4-004m2", "_type": "glossaryTerm", "definition": "A feasible point where the objective function's value is at least as good as every other feasible point in the entire feasible region, near or far. This is what you actually want when solving a real problem." }
+              ],
+              "children": [
+                { "_key": "oc2l4-004s1", "_type": "span", "marks": [], "text": "A " },
+                { "_key": "oc2l4-004s2", "_type": "span", "marks": ["oc2l4-004m1"], "text": "local minimum" },
+                { "_key": "oc2l4-004s3", "_type": "span", "marks": [], "text": " only has to beat its neighbors. A " },
+                { "_key": "oc2l4-004s4", "_type": "span", "marks": ["oc2l4-004m2"], "text": "global minimum" },
+                { "_key": "oc2l4-004s5", "_type": "span", "marks": [], "text": " has to beat everyone, everywhere in the feasible region. In general, a local minimum is not guaranteed to be global. That gap is exactly what makes some optimization problems untrustworthy." }
+              ]
+            },
+            {
+              "_key": "oc2l4-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l4-005s1", "_type": "span", "marks": [], "text": "Where Non-Convex Problems Trap You" }
+              ]
+            },
+            {
+              "_key": "oc2l4-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l4-006s1", "_type": "span", "marks": [], "text": "Recall f(x) = x⁴ - 2x² from the previous lesson's quiz, confirmed not convex because its second derivative dips negative in the middle. Plotted out, the trap is visible directly." }
+              ]
+            },
+            {
+              "_key": "oc2l4-007",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "A non-convex function with two local minima: f(x) = x⁴ - 2x²",
+              "xAxisLabel": "x",
+              "yAxisLabel": "f(x)",
+              "data": [
+                { "_key": "oc2l4-007d1", "label": "-1.5", "value": 0.56 },
+                { "_key": "oc2l4-007d2", "label": "-1.25", "value": -0.68 },
+                { "_key": "oc2l4-007d3", "label": "-1", "value": -1 },
+                { "_key": "oc2l4-007d4", "label": "-0.75", "value": -0.81 },
+                { "_key": "oc2l4-007d5", "label": "-0.5", "value": -0.44 },
+                { "_key": "oc2l4-007d6", "label": "-0.25", "value": -0.12 },
+                { "_key": "oc2l4-007d7", "label": "0", "value": 0 },
+                { "_key": "oc2l4-007d8", "label": "0.25", "value": -0.12 },
+                { "_key": "oc2l4-007d9", "label": "0.5", "value": -0.44 },
+                { "_key": "oc2l4-007d10", "label": "0.75", "value": -0.81 },
+                { "_key": "oc2l4-007d11", "label": "1", "value": -1 },
+                { "_key": "oc2l4-007d12", "label": "1.25", "value": -0.68 },
+                { "_key": "oc2l4-007d13", "label": "1.5", "value": 0.56 }
+              ]
+            },
+            {
+              "_key": "oc2l4-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l4-008s1", "_type": "span", "marks": [], "text": "Two valleys, at x = -1 and x = 1, both local minima, tied in this symmetric example at f = -1, with a false peak at x = 0 between them. A gradient-based search that starts anywhere near x = 0.3 slides down into the valley at x = 1 and stops there, having no way of knowing, from inside that valley, whether an equally good or better valley exists somewhere else. In a less tidy, asymmetric version of this shape, the two valleys would not be tied, and the search could easily settle for the worse one without any warning that it did." }
+              ]
+            },
+            {
+              "_key": "oc2l4-009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l4-009s1", "_type": "span", "marks": [], "text": "The Convex Optimization Guarantee" }
+              ]
+            },
+            {
+              "_key": "oc2l4-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l4-010s1", "_type": "span", "marks": [], "text": "Convex problems cannot have this trap. Here is the theorem, and it applies whenever the objective function is convex and the feasible region is convex, exactly the situation proven for portfolio variance in the previous three lessons." }
+              ]
+            },
+            {
+              "_key": "oc2l4-011",
+              "_type": "mathBlock",
+              "latex": "\\text{If } f \\text{ is convex, } C \\text{ is convex, and } \\mathbf{x}^* \\text{ is a local minimum of } f \\text{ over } C, \\text{ then } \\mathbf{x}^* \\text{ is a global minimum of } f \\text{ over } C.",
+              "caption": "The central theorem of convex optimization."
+            },
+            {
+              "_key": "oc2l4-012",
+              "_type": "collapsible",
+              "title": "Show me the proof",
+              "content": [
+                {
+                  "_key": "oc2l4-012a",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    { "_key": "oc2l4-012as1", "_type": "span", "marks": [], "text": "Suppose, for contradiction, that x* is a local minimum but not a global one. Then some other feasible point y exists with a strictly lower objective value." }
+                  ]
+                },
+                {
+                  "_key": "oc2l4-012b",
+                  "_type": "mathBlock",
+                  "latex": "\\mathbf{y} \\in C, \\quad f(\\mathbf{y}) < f(\\mathbf{x}^*)",
+                  "caption": ""
+                },
+                {
+                  "_key": "oc2l4-012c",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    { "_key": "oc2l4-012cs1", "_type": "span", "marks": [], "text": "Consider a small step from x* toward y, of size t." }
+                  ]
+                },
+                {
+                  "_key": "oc2l4-012d",
+                  "_type": "mathBlock",
+                  "latex": "\\mathbf{z}_t = t\\mathbf{y} + (1-t)\\mathbf{x}^*, \\quad t \\in (0, 1]",
+                  "caption": "Because C is convex, z_t is feasible for every such t."
+                },
+                {
+                  "_key": "oc2l4-012e",
+                  "_type": "mathBlock",
+                  "latex": "f(\\mathbf{z}_t) \\leq t\\,f(\\mathbf{y}) + (1-t)\\,f(\\mathbf{x}^*)",
+                  "caption": "Because f is convex, its value at z_t is bounded by the straight-line blend of the two endpoint values."
+                },
+                {
+                  "_key": "oc2l4-012f",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    { "_key": "oc2l4-012fs1", "_type": "span", "marks": [], "text": "Since f(y) is strictly less than f(x*), this bound is strictly below f(x*) for every t in (0, 1], including t values arbitrarily close to zero, where z_t sits arbitrarily close to x* itself." }
+                  ]
+                },
+                {
+                  "_key": "oc2l4-012g",
+                  "_type": "mathBlock",
+                  "latex": "f(\\mathbf{z}_t) < f(\\mathbf{x}^*) \\quad \\text{for every } t \\in (0, 1]",
+                  "caption": ""
+                },
+                {
+                  "_key": "oc2l4-012h",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    { "_key": "oc2l4-012hs1", "_type": "span", "marks": [], "text": "That contradicts x* being a local minimum, since a local minimum requires no nearby feasible point to have a strictly lower objective value. The assumption must be false. No such y can exist, so x* was already the global minimum." }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "oc2l4-013",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This is the guarantee the whole course has been building toward. Portfolio variance is always convex (Lesson 3). Standard portfolio constraints, budget rules, no-short-selling, position caps, form a convex feasible region (Lesson 1). Put those together with this lesson's theorem: whenever the tools built in Chapters 3 through 5 hand you a point satisfying the optimality conditions, you can stop searching immediately. It is provably the best portfolio in the entire feasible region, not just a good one nearby."
+            },
+            {
+              "_key": "oc2l4-014",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l4-014s1", "_type": "span", "marks": [], "text": "Practical Consequence: No Need for Multiple Starting Points" }
+              ]
+            },
+            {
+              "_key": "oc2l4-015",
+              "_type": "comparison",
+              "title": "Convex vs Non-Convex Optimization in Practice",
+              "columns": [
+                {
+                  "_key": "oc2l4-015c1",
+                  "label": "Convex Optimization (This Course)",
+                  "points": [
+                    "Any point satisfying the optimality conditions is the global optimum",
+                    "One solve, from any reasonable starting point, is enough",
+                    "No need to compare results across multiple random restarts",
+                    "The optimizer's answer comes with a mathematical guarantee attached"
+                  ]
+                },
+                {
+                  "_key": "oc2l4-015c2",
+                  "label": "Non-Convex Optimization (Common in ML, Not This Course)",
+                  "points": [
+                    "A found solution might be a local trap, not the true best",
+                    "Practitioners often restart from many random starting points",
+                    "Even many restarts give no formal guarantee of finding the global optimum",
+                    "Results can be sensitive to initialization and solver settings"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "oc2l4-016",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Is the extra step necessary?",
+              "question": "A junior quant argues: since our minimum variance optimizer found a solution, we should also test 10 different random starting points to make sure we did not get stuck in a bad local minimum. Is this extra step necessary for the standard Markowitz minimum variance problem?",
+              "options": [
+                "Yes, always, regardless of the problem type",
+                "No, because the problem is convex: any point satisfying the optimality conditions is automatically the global minimum, so extra starting points cannot find a better answer",
+                "Yes, but only if there are more than 10 stocks in the portfolio",
+                "No, because portfolio optimization problems never have more than one feasible solution"
+              ],
+              "correctIndex": 1,
+              "explanation": "Because the minimum variance problem is convex (convex objective, convex feasible region), this lesson's theorem guarantees any local minimum is the global minimum. Testing multiple starting points is a heuristic that only matters for non-convex problems, where different starting points can land in different, unequal local minima. It solves a problem convex optimization simply does not have."
+            },
+            {
+              "_key": "oc2l4-017",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "When the guarantee breaks",
+              "scenario": "A fund adds a cardinality rule to its minimum variance mandate: hold at most 15 out of 50 candidate stocks. Chapter 2's first lesson already showed that this rule breaks convexity of the feasible region.",
+              "prompt": "Does the local-minimum-equals-global-minimum guarantee from this lesson still apply to this modified problem? What does your answer imply about how the fund would need to search for a solution?",
+              "modelAnswer": "No, the guarantee no longer applies. It requires BOTH the objective and the feasible region to be convex. Adding the cardinality rule breaks convexity of the feasible region, even though portfolio variance itself is still convex on its own. Without the guarantee, a solver could get stuck at a local minimum, a good-looking 15-stock combination, that is not actually the best 15-stock combination available. In practice, problems like this need combinatorial search techniques, or a convex relaxation followed by rounding, rather than the pure Lagrange multiplier and KKT methods this course builds, which rely on convexity holding throughout the whole problem."
+            },
+            {
+              "_key": "oc2l4-018",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "oc2l4-018s1", "label": "Convex objective + convex feasible region", "value": "Local min = global min", "context": "Guaranteed by this lesson's theorem" },
+                { "_key": "oc2l4-018s2", "label": "Non-convex objective or feasible region", "value": "No such guarantee", "context": "A found local minimum could be far from the true best answer" }
+              ]
+            },
+            {
+              "_key": "oc2l4-019",
+              "_type": "flashcardSet",
+              "title": "Local vs Global Minimum: Core Terms",
+              "cards": [
+                { "_key": "oc2l4-019f1", "term": "Local minimum", "definition": "A feasible point that beats every nearby feasible point, but not necessarily every feasible point overall." },
+                { "_key": "oc2l4-019f2", "term": "Global minimum", "definition": "A feasible point that beats every other feasible point in the entire feasible region." },
+                { "_key": "oc2l4-019f3", "term": "Convex optimization problem", "definition": "A problem where both the objective function and the feasible region are convex." },
+                { "_key": "oc2l4-019f4", "term": "The convex optimization guarantee", "definition": "In a convex optimization problem, every local minimum is automatically a global minimum. There is no false summit to get trapped in." }
+              ]
+            },
+            {
+              "_key": "oc2l4-020",
+              "_type": "keyTakeaways",
+              "points": [
+                "A local minimum only has to beat nearby points; a global minimum has to beat every point in the entire feasible region. In general, these are not the same point.",
+                "Non-convex functions, like x⁴ - 2x², can have multiple local minima. A search that finds one has no guarantee it found the best one.",
+                "The central theorem of this chapter: if the objective function is convex and the feasible region is convex, every local minimum is automatically the global minimum.",
+                "Because portfolio variance is always convex (Lesson 3) and standard linear portfolio constraints form a convex feasible region (Lesson 1), this guarantee applies to the Markowitz problem every time.",
+                "Convex problems never need the multiple-random-restart heuristic that non-convex problems, common in machine learning, typically require.",
+                "The guarantee breaks the moment either piece, the objective or the feasible region, stops being convex, as a cardinality rule demonstrates.",
+                "Chapter 2 is complete: convex sets, convex functions, why portfolio variance qualifies, and why that guarantees a reliable solution. Chapter 3 builds the actual toolkit, gradients and Hessians, used to find that solution."
+              ]
+            },
+            {
+              "_key": "oc2l4-021",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to buy or sell any security. Mathematical examples are illustrations of optimization theory, not descriptions of any specific fund's methodology. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

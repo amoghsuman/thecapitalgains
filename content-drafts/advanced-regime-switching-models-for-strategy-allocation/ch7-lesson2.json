@@ -1,0 +1,209 @@
+{
+  "courseSlug": "advanced-regime-switching-models-for-strategy-allocation",
+  "chapters": [
+    {
+      "title": "Chapter 7: Backtesting Regime-Switching Systems Rigorously",
+      "lessons": [
+        {
+          "title": "Walk-Forward Validation for Regime-Switching Strategies",
+          "slug": "walk-forward-validation-for-regime-switching-strategies",
+          "body": [
+            {
+              "_key": "rswc7l2b01",
+              "_type": "bigIdea",
+              "text": "Walk-forward validation is the mechanical discipline that turns Lesson 1's diagnosis into working code: refit periodically, using only the past, and never let a single day's signal come from a fit that could see that day's future."
+            },
+            {
+              "_key": "rswc7l2b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc7l2b02s1",
+                  "_type": "span",
+                  "text": "The previous lesson named the problem. This lesson builds the fix: a loop that refits the model repeatedly, using only data available at each point in time, and generates every signal from that specific fit's own filtered probabilities, never from a single full-sample fit.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l2b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc7l2b03s1",
+                  "_type": "span",
+                  "text": "Two Walk-Forward Schemes: Rolling vs Expanding Window",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l2b04",
+              "_type": "table",
+              "caption": "Two standard walk-forward window schemes",
+              "headers": ["", "Expanding Window", "Rolling Window"],
+              "rows": [
+                {
+                  "_key": "rswc7l2b04r1",
+                  "_type": "tableRow",
+                  "cells": ["Uses", "All history from the start up to now", "Only the most recent N periods"]
+                },
+                {
+                  "_key": "rswc7l2b04r2",
+                  "_type": "tableRow",
+                  "cells": ["Advantage", "More data generally means more stable parameter estimates over time", "Adapts faster if market structure has genuinely changed"]
+                },
+                {
+                  "_key": "rswc7l2b04r3",
+                  "_type": "tableRow",
+                  "cells": ["Drawback", "Slow to adapt if the market's fundamental character has shifted permanently", "Less data at each refit means noisier estimates, especially early on"]
+                },
+                {
+                  "_key": "rswc7l2b04r4",
+                  "_type": "tableRow",
+                  "cells": ["Best suited to", "Dynamics believed to be structurally stable over long periods", "Markets or strategies where structural change is itself a live risk"]
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l2b05",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc7l2b05s1",
+                  "_type": "span",
+                  "text": "Building the Walk-Forward Loop",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l2b06",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "import numpy as np\nfrom statsmodels.tsa.regime_switching.markov_autoregression import MarkovAutoregression\n\nMIN_TRAIN_SIZE = 500\nREFIT_EVERY = 21  # trading days, roughly one month\n\nlog_rv = np.log(nifty_df['realized_vol_20d']).dropna()\npoint_in_time_probs = []\n\nfor t in range(MIN_TRAIN_SIZE, len(log_rv), REFIT_EVERY):\n    train_data = log_rv.iloc[:t + 1]  # everything up to and including day t, nothing after\n\n    ms_model = MarkovAutoregression(\n        train_data, k_regimes=2, order=1,\n        switching_ar=True, switching_variance=True,\n    )\n    ms_result = ms_model.fit(search_reps=10)\n\n    # This fit has never seen anything past day t, so its own last filtered\n    # value is a genuinely point-in-time estimate for day t.\n    todays_prob = ms_result.filtered_marginal_probabilities.iloc[-1]\n    point_in_time_probs.append((log_rv.index[t], todays_prob))\n\n    # Between refits, this same probability is held as the signal rather than\n    # updated daily: a common, honestly approximate compromise between the\n    # ideal, computationally expensive daily refit and a single static fit.",
+              "caption": "An expanding-window walk-forward loop using statsmodels' MarkovAutoregression"
+            },
+            {
+              "_key": "rswc7l2b07",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc7l2b07s1",
+                  "_type": "span",
+                  "text": "The key line is train_data = log_rv.iloc[:t + 1]: every single fit only ever sees data up to and including day t, never beyond it. That single slicing decision is what separates this loop from Lesson 1's trap, everything else in the code is otherwise identical to Chapter 4's fitting machinery.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l2b08",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc7l2b08s1",
+                  "_type": "span",
+                  "text": "The Real Cost: Computation Time vs Correctness",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l2b09",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc7l2b09s1",
+                  "_type": "span",
+                  "text": "Refitting every single day, the truly gold-standard version of this loop, means running a full model fit, with multiple randomized starting points to avoid local optima as in Chapter 4, once per trading day. That is a genuinely large amount of computation for years of daily data. Refitting less often and holding the signal stale between refits is a real approximation, not a free simplification, and the size of that approximation error grows with how long the model goes between refits.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l2b10",
+              "_type": "table",
+              "caption": "Refit frequency: correctness versus cost",
+              "headers": ["Refit Frequency", "Correctness", "Computational Cost", "Typical Use"],
+              "rows": [
+                {
+                  "_key": "rswc7l2b10r1",
+                  "_type": "tableRow",
+                  "cells": ["Daily", "Gold standard: always genuinely point-in-time", "Very high, one full multi-seed fit per day", "Research validation, lower-frequency strategies"]
+                },
+                {
+                  "_key": "rswc7l2b10r2",
+                  "_type": "tableRow",
+                  "cells": ["Weekly or monthly", "A held-stale approximation between refits", "Moderate", "Most practical systematic desks"]
+                },
+                {
+                  "_key": "rswc7l2b10r3",
+                  "_type": "tableRow",
+                  "cells": ["Once, on the full sample", "Not point-in-time at all; this is Lesson 1's leak", "Lowest", "Never acceptable for generating real signals"]
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l2b11",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Notice the honest middle ground here: refitting monthly is not as rigorous as refitting daily, and this lesson does not pretend otherwise. It is, however, an entirely different category of error from Lesson 1's single full-sample fit. A month of staleness between refits is a bounded, measurable approximation. A full-sample fit used to label the whole history is not an approximation at all, it is a fundamentally different, invalid experiment wearing a backtest's clothing."
+            },
+            {
+              "_key": "rswc7l2b12",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Setting Up Your Own Walk-Forward Loop",
+              "steps": [
+                "Choose an expanding or rolling window based on whether you believe the underlying dynamics are structurally stable over your full sample",
+                "Set MIN_TRAIN_SIZE large enough for a stable first fit, at minimum a couple of years of daily data for an equity index",
+                "Choose REFIT_EVERY based on a deliberate tradeoff between computational cost and staleness, not just whatever runs fastest",
+                "In every fit, slice training data strictly up to and including the current point in time, and double check the slice with a print statement before trusting the loop",
+                "Pull only ms_result.filtered_marginal_probabilities.iloc[-1] from each fit, never smoothed_marginal_probabilities or model.predict(), for anything that becomes a trading signal",
+                "Compare the resulting walk-forward Sharpe ratio against a naive single-fit backtest on the same strategy logic; a large gap confirms how much of the naive version was look-ahead bias"
+              ]
+            },
+            {
+              "_key": "rswc7l2b13",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why the Slicing Line Matters Most",
+              "question": "In this lesson's code, why is train_data = log_rv.iloc[:t + 1] the single most important line in the entire loop?",
+              "options": [
+                "It is the line that sets the number of regimes",
+                "It is the line that guarantees every fit only ever sees data up to and including day t, which is exactly what separates a valid walk-forward loop from Lesson 1's look-ahead-biased trap",
+                "It is the line that determines the refit frequency",
+                "It is the line that chooses between filtered and smoothed probabilities"
+              ],
+              "correctIndex": 1,
+              "explanation": "Every other line in the loop, the model specification, the fitting call, the refit frequency, could be correct and the loop would still leak the future if this slicing line accidentally included data past day t. This single boundary is what makes the entire exercise point-in-time valid."
+            },
+            {
+              "_key": "rswc7l2b14",
+              "_type": "keyTakeaways",
+              "points": [
+                "Walk-forward validation refits a model periodically using only data available up to each point in time, generating signals exclusively from that fit's own filtered probabilities",
+                "Expanding windows use all history up to now; rolling windows use only the most recent period; the right choice depends on whether the underlying dynamics are believed to be structurally stable",
+                "The critical correctness guarantee in a walk-forward loop is a single slicing boundary: every fit must only see data up to and including the current point in time",
+                "Refitting daily is the gold standard but computationally expensive; refitting weekly or monthly and holding the signal stale in between is a common, honestly bounded approximation, not a free shortcut",
+                "This staleness approximation is a fundamentally different, much smaller error than Lesson 1's single full-sample fit, which is not an approximation of point-in-time behavior at all"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

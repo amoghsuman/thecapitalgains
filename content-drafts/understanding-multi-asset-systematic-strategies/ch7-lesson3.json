@@ -1,0 +1,200 @@
+{
+  "courseSlug": "understanding-multi-asset-systematic-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 7: Combining Strategies into a Multi-Strategy Book",
+      "lessons": [
+        {
+          "title": "Rebalancing a Multi-Strategy Book: Frequency, Bands, and Turnover Costs",
+          "slug": "rebalancing-a-multi-strategy-book-frequency-bands-and-turnover-costs",
+          "body": [
+            {
+              "_key": "mac7l3b01",
+              "_type": "bigIdea",
+              "text": "The three-layer sizing chain this course just finished building, individual positions, sleeve weights, portfolio leverage, does not need to rebalance on one shared schedule. Treating all three layers identically either drowns the book in unnecessary turnover or lets a genuine drift sit uncorrected for too long. Each layer needs its own cadence, matched to how fast and how reliably its underlying signal actually moves."
+            },
+            {
+              "_key": "mac7l3b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac7l3b02s1",
+                  "_type": "span",
+                  "text": "This lesson operationalizes the full system built across Chapters 4 through 7: how often each layer of the book should actually be rebalanced, how no-trade bands should differ layer by layer, and how turnover cost compounds very differently depending on which layer triggers a change.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac7l3b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac7l3b03s1", "_type": "span", "text": "Three Layers, Three Different Natural Rebalancing Frequencies", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac7l3b04",
+              "_type": "table",
+              "caption": "Natural Rebalancing Cadence by Layer",
+              "headers": ["Layer", "Natural Cadence", "Why"],
+              "rows": [
+                { "_key": "mac7l3b04r1", "_type": "tableRow", "cells": ["Individual Asset Vol-Scaling", "Fastest (weekly-ish trading, daily re-estimation)", "EWMA volatility updates daily and is relatively responsive even over short windows"] },
+                { "_key": "mac7l3b04r2", "_type": "tableRow", "cells": ["Portfolio-Level Leverage", "Moderate (monthly-ish)", "Combines many assets' volatility, which averages out some individual noise, moving more slowly than any one position's own vol estimate"] },
+                { "_key": "mac7l3b04r3", "_type": "tableRow", "cells": ["Sleeve-Level Risk Parity Weights", "Slowest (quarterly or longer)", "Depends on strategy-return correlation, which, per Chapter 3's standard error formula, needs a long window to estimate reliably; re-solving too often mostly reacts to noise"] }
+              ]
+            },
+            {
+              "_key": "mac7l3b05",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac7l3b05s1",
+                  "_type": "span",
+                  "text": "One distinction worth being precise about: the estimation window and the rebalancing frequency are two separate decisions. A desk can, and generally should, use a long rolling window, two years of data or more, to estimate sleeve correlation reliably, continuously updating that estimate every single day, while still only acting on it, actually trading to a new sleeve allocation, once a quarter. The window answers \"how much data to trust\"; the rebalancing frequency answers \"how often to actually pull the trigger.\"",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac7l3b06",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac7l3b06s1", "_type": "span", "text": "No-Trade Bands at Every Layer", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac7l3b07",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac7l3b07s1",
+                  "_type": "span",
+                  "text": "Chapter 6's no-trade band, introduced for portfolio-level leverage, needs an equivalent at every layer, each tuned to that layer's own reliability. A faster-moving, noisier estimate, individual asset volatility, needs a wider band, since small day-to-day fluctuations are more likely to be statistical noise than genuine signal. A slower-moving, more reliable estimate, sleeve correlation measured over a long window, can use a tighter band, since a meaningful drift there is more likely to reflect a genuine structural shift rather than noise, and is rare enough that acting on it decisively is worth the cost.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac7l3b08",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac7l3b08s1", "_type": "span", "text": "Turnover Cost Accounting Across the Full System", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac7l3b09",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac7l3b09s1",
+                  "_type": "span",
+                  "text": "Not every rebalancing event costs the same. Resizing a single asset's vol-scaled position touches exactly that one position. Rebalancing portfolio-level leverage touches every position in the book proportionally, since the whole system scales up or down together. Re-solving sleeve-level risk parity weights is the most expensive event of the three, since a meaningful shift in sleeve weights, trend moving from 36% to, say, 30%, requires resizing every individual asset position inside the affected sleeves, potentially reshuffling a large share of the book's total capital in one event.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac7l3b10",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "mac7l3b10st1", "label": "Positions Touched per Asset-Level Rebalance", "value": "1", "context": "Only the single asset whose vol estimate breached its no-trade band" },
+                { "_key": "mac7l3b10st2", "label": "Positions Touched per Sleeve Reweight", "value": "All positions across affected sleeves", "context": "The most expensive rebalancing event in the system, by design the least frequent" },
+                { "_key": "mac7l3b10st3", "label": "Recommended Sleeve Reweight Frequency", "value": "Quarterly or longer", "context": "Matched to how long a window sleeve correlation needs to be estimated reliably" }
+              ]
+            },
+            {
+              "_key": "mac7l3b11",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac7l3b11s1", "_type": "span", "text": "Practical Cadence: A Concrete Example Calendar", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac7l3b12",
+              "_type": "table",
+              "caption": "An Illustrative Rebalancing Calendar",
+              "headers": ["Frequency", "Action"],
+              "rows": [
+                { "_key": "mac7l3b12r1", "_type": "tableRow", "cells": ["Daily", "Recompute EWMA volatility and correlation estimates for every asset and sleeve; no trading yet"] },
+                { "_key": "mac7l3b12r2", "_type": "tableRow", "cells": ["Weekly", "Check each individual asset position against its vol-scaling no-trade band; trade only if breached"] },
+                { "_key": "mac7l3b12r3", "_type": "tableRow", "cells": ["Monthly", "Check overall portfolio leverage against its target volatility band; trade if breached"] },
+                { "_key": "mac7l3b12r4", "_type": "tableRow", "cells": ["Quarterly", "Re-solve sleeve-level risk parity weights using the full estimation window; trade only if meaningfully different from current allocation"] }
+              ]
+            },
+            {
+              "_key": "mac7l3b13",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This calendar is not arbitrary, it is the direct operational consequence of everything this course has already established: estimates that need long windows to be trustworthy, correlation especially, should be acted on infrequently even while being monitored continuously, while estimates that are naturally more responsive can be acted on more often without excessive noise-chasing."
+            },
+            {
+              "_key": "mac7l3b14",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "The Desk That Re-Solved Sleeve Weights Every Week",
+              "scenario": "A desk, eager to keep its allocation as current as possible, re-solves its sleeve-level risk parity weights every week using a 60-day rolling correlation window, and trades to the new solved weights each time, regardless of how small the shift. Over a year, this generates substantially more turnover cost than the desk's individually vol-scaled asset positions do, despite sleeve reweighting supposedly being a lower-frequency, higher-level decision.",
+              "prompt": "What is the desk doing wrong, based on this lesson's framework?",
+              "modelAnswer": "The desk is conflating two things this lesson explicitly separates: estimation window and rebalancing frequency. A 60-day correlation window is short enough to carry meaningful statistical noise, per Chapter 3's standard error formula, so most of the week-to-week changes in the solved sleeve weights are likely just noise, not a genuine shift in the underlying relationship between strategies. Worse, sleeve reweighting is the most expensive rebalancing event in the entire system, since it touches every position across multiple sleeves at once, so applying it at a weekly cadence, driven by a noisy short window, combines the highest-cost action with the least reliable trigger. The fix is to use a longer estimation window, at least a year or two of sleeve-return data, and to only actually rebalance to the new solved weights quarterly or less often, exactly the cadence this lesson's calendar lays out."
+            },
+            {
+              "_key": "mac7l3b15",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why Sleeve Reweighting Should Happen Least Often",
+              "question": "Based on this lesson, what is the main reason sleeve-level risk parity reweighting should happen less frequently than individual asset vol-scaling?",
+              "options": [
+                "Because sleeve weights never actually need to change once set",
+                "Because sleeve correlation needs a longer estimation window to be reliable, and reweighting is also the most expensive rebalancing event, touching every position across affected sleeves at once",
+                "Because SEBI limits how often multi-strategy funds can rebalance",
+                "Because individual asset positions are more important than sleeve-level allocation"
+              ],
+              "correctIndex": 1,
+              "explanation": "Two factors compound here: sleeve correlation is genuinely harder to estimate reliably over short windows, so acting on frequent noisy estimates risks chasing statistical noise, and sleeve reweighting is also the costliest type of rebalancing event, since it resizes every position across the affected sleeves at once. Combining a low-reliability signal with a high-cost action is exactly what a well-designed rebalancing cadence avoids."
+            },
+            {
+              "_key": "mac7l3b16",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Designing a Multi-Layer Rebalancing Calendar",
+              "steps": [
+                "Have you separated the estimation window (how much data to trust) from the rebalancing frequency (how often to actually trade) for every layer?",
+                "Does each layer's no-trade band width reflect how noisy that layer's underlying estimate actually is?",
+                "Have you accounted for the fact that sleeve-level reweighting is typically the most expensive rebalancing event in the system?",
+                "Is your sleeve correlation estimation window long enough to be statistically meaningful, per Chapter 3's standard error guidance?",
+                "Have you documented a concrete calendar, not just a vague intention, for when each layer is actually reviewed and acted on?"
+              ]
+            },
+            {
+              "_key": "mac7l3b17",
+              "_type": "keyTakeaways",
+              "points": [
+                "The three-layer sizing chain, individual positions, sleeve weights, portfolio leverage, has three genuinely different natural rebalancing cadences, from fastest to slowest",
+                "Estimation window (how much data to trust) and rebalancing frequency (how often to trade) are separate decisions; a long window can be updated daily while only being acted on quarterly",
+                "No-trade bands should be tuned per layer: wider for faster, noisier estimates, tighter for slower, more reliable ones",
+                "Sleeve-level reweighting is the most expensive rebalancing event in the system, since it resizes every position across affected sleeves at once, which is exactly why it should happen least often",
+                "A concrete calendar, daily re-estimation, weekly asset-level checks, monthly leverage checks, quarterly sleeve reweighting, is a direct operational consequence of this course's earlier work on estimation reliability, not an arbitrary schedule",
+                "Combining a low-reliability estimate with a high-cost rebalancing action, as in this lesson's scenario, is the specific mistake a well-designed cadence is built to avoid"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

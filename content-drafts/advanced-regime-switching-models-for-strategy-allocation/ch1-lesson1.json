@@ -1,0 +1,339 @@
+{
+  "courseSlug": "advanced-regime-switching-models-for-strategy-allocation",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Markets Have Regimes",
+      "lessons": [
+        {
+          "title": "Why One Strategy Never Works Forever: The Case for Regime Awareness",
+          "slug": "why-one-strategy-never-works-forever-the-case-for-regime-awareness",
+          "body": [
+            {
+              "_key": "rswc1l1b01",
+              "_type": "bigIdea",
+              "text": "A trading strategy is not a fixed edge. It is a bet on which type of market shows up next. Change the market underneath it, and the exact same rules can turn a strategy that was printing money into one that is quietly bleeding it."
+            },
+            {
+              "_key": "rswc1l1b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc1l1b02s1",
+                  "_type": "span",
+                  "text": "Every systematic strategy you build in this course carries a hidden assumption about the kind of market it is trading in. A moving average crossover system assumes prices trend. A pairs trade assumes a spread reverts. A short volatility strategy assumes calm. None of these assumptions hold all the time, and when the market quietly changes character under a strategy that was never told to expect it, backtested outperformance turns into live losses without a single line of the strategy's code changing.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l1b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc1l1b03s1",
+                  "_type": "span",
+                  "text": "The Trend-Following System That Made Money, Then Stopped",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l1b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc1l1b04s1",
+                  "_type": "span",
+                  "text": "Take a simple, common systematic setup: a 50-day and 200-day moving average crossover on Nifty 50 futures, traded on the NSE, with signals executed the way many retail and prop desks in India actually route orders, through a broker API such as Zerodha's Kite Connect. Go long when the 50-day average crosses above the 200-day, go flat or short when it crosses back below. There is no forecasting, no discretion, and no parameter that changes from one year to the next.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l1b05",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc1l1b05s1",
+                  "_type": "span",
+                  "text": "Nifty fell roughly 38% peak to trough during the COVID crash of February to March 2020, then staged one of its sharpest recoveries on record, more than doubling off the March 2020 low by late 2021. That is close to the ideal environment for a trend-following system: a clean, sustained directional move with few sharp reversals to shake it out. Then 2022 arrived. Rising interest rates, heavy FII selling, and the Russia-Ukraine war turned the index choppy and range-bound for most of the year, pulling it into a correction by June before it clawed most of that back by December without ever establishing a clean trend in either direction.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l1b06",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Illustrative: 50/200-Day Crossover System vs Nifty 50 Buy and Hold (rebased to 100 at June 2020)",
+              "xAxisLabel": "Quarter",
+              "yAxisLabel": "Index (rebased)",
+              "data": [
+                { "_key": "rswc1l1b06d1", "label": "Q2 2020" },
+                { "_key": "rswc1l1b06d2", "label": "Q3 2020" },
+                { "_key": "rswc1l1b06d3", "label": "Q4 2020" },
+                { "_key": "rswc1l1b06d4", "label": "Q1 2021" },
+                { "_key": "rswc1l1b06d5", "label": "Q2 2021" },
+                { "_key": "rswc1l1b06d6", "label": "Q3 2021" },
+                { "_key": "rswc1l1b06d7", "label": "Q4 2021" },
+                { "_key": "rswc1l1b06d8", "label": "Q1 2022" },
+                { "_key": "rswc1l1b06d9", "label": "Q2 2022" },
+                { "_key": "rswc1l1b06d10", "label": "Q3 2022" },
+                { "_key": "rswc1l1b06d11", "label": "Q4 2022" }
+              ],
+              "series": [
+                {
+                  "_key": "rswc1l1b06s1",
+                  "label": "Trend-Following System",
+                  "values": [100, 108, 122, 135, 141, 156, 149, 143, 131, 138, 129]
+                },
+                {
+                  "_key": "rswc1l1b06s2",
+                  "label": "Nifty 50 (Buy and Hold)",
+                  "values": [100, 115, 131, 145, 148, 162, 158, 152, 140, 148, 162]
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l1b07",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "The equity curve above is a stylized illustration built to match the well-documented shape of these two periods: a strong, sustained rally through 2020 to 2021, followed by a choppy, range-bound 2022. It is not an actual backtest output and should not be read as historical performance data for any specific fund or system."
+            },
+            {
+              "_key": "rswc1l1b08",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "rswc1l1m01",
+                  "_type": "glossaryTerm",
+                  "definition": "A rapid reversal that triggers a strategy's entry signal shortly before the market moves against it, forcing an exit at a loss, only for the market to reverse again in the original direction. Trend-following systems are especially exposed to whipsaws in range-bound markets."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "rswc1l1b08s1",
+                  "_type": "span",
+                  "text": "The system's own logic never changed between 2020 and 2022. What changed was the market underneath it. In a trending regime, every crossover signal was followed by weeks or months of continuation, so the strategy captured the move. In a choppy, range-bound regime, the same crossover rule generated a string of false signals: buy near a local top, get stopped out near a local bottom, then buy again on the next minor bounce. This kind of repeated false start is called a ",
+                  "marks": []
+                },
+                {
+                  "_key": "rswc1l1b08s2",
+                  "_type": "span",
+                  "text": "whipsaw",
+                  "marks": ["rswc1l1m01"]
+                },
+                {
+                  "_key": "rswc1l1b08s3",
+                  "_type": "span",
+                  "text": ", and it is the single biggest cost a trend-following system pays when it is deployed in a regime it was never suited to.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l1b09",
+              "_type": "table",
+              "caption": "Same code, same rules, illustrative year-by-year performance of the crossover system above",
+              "headers": ["Period", "Net Return", "Sharpe Ratio", "Max Drawdown"],
+              "rows": [
+                {
+                  "_key": "rswc1l1b09r1",
+                  "_type": "tableRow",
+                  "cells": ["2020 (from June)", "+22%", "2.3", "-8%"]
+                },
+                {
+                  "_key": "rswc1l1b09r2",
+                  "_type": "tableRow",
+                  "cells": ["2021", "+22%", "1.6", "-9%"]
+                },
+                {
+                  "_key": "rswc1l1b09r3",
+                  "_type": "tableRow",
+                  "cells": ["2022", "-13%", "-0.6", "-19%"]
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l1b10",
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "rswc1l1b10st1",
+                  "label": "Sharpe Ratio, 2021 to 2022",
+                  "value": "1.6 → -0.6",
+                  "context": "Same 50/200-day crossover logic, unchanged code"
+                },
+                {
+                  "_key": "rswc1l1b10st2",
+                  "label": "Max Drawdown, 2022",
+                  "value": "-19%",
+                  "context": "More than double the 2021 max drawdown"
+                },
+                {
+                  "_key": "rswc1l1b10st3",
+                  "label": "Net Return, 2022",
+                  "value": "-13%",
+                  "context": "In a year the underlying index round-tripped back near its starting level"
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l1b11",
+              "_type": "mathBlock",
+              "latex": "SR = \\frac{R_p - R_f}{\\sigma_p}",
+              "caption": "Sharpe ratio: excess return per unit of volatility. The same formula, applied to the same strategy, produced +1.6 in 2021 and -0.6 in 2022."
+            },
+            {
+              "_key": "rswc1l1b12",
+              "_type": "keyFact",
+              "label": "What a -19% max drawdown means on real capital",
+              "value": "₹19 lakh on ₹1 crore of strategy capital",
+              "context": "That capital sat in cash-settled futures margin, not invested in a business quietly compounding through a rough patch. A regime the strategy could not read cost real money, fast."
+            },
+            {
+              "_key": "rswc1l1b13",
+              "_type": "comparison",
+              "title": "Which Regime Rewards Which Approach",
+              "columns": [
+                {
+                  "_key": "rswc1l1b13c1",
+                  "label": "Trending / Directional Regime",
+                  "points": [
+                    "Moving average and breakout systems capture sustained moves",
+                    "Price momentum (e.g. 12-1 month) tends to persist",
+                    "Pairs and mean-reversion trades fight the tape and bleed",
+                    "Fewer, larger winning trades; lower turnover"
+                  ]
+                },
+                {
+                  "_key": "rswc1l1b13c2",
+                  "label": "Range-Bound / Mean-Reverting Regime",
+                  "points": [
+                    "Trend and breakout systems whipsaw and pay transaction costs for nothing",
+                    "Mean-reversion and pairs trading around a stable spread perform well",
+                    "Short-volatility and theta strategies benefit from calmer realized vol",
+                    "Many small trades; edge comes from reversion, not direction"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l1b14",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc1l1b14s1",
+                  "_type": "span",
+                  "text": "This Is Not Just a Trend-Following Problem",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l1b15",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc1l1b15s1",
+                  "_type": "span",
+                  "text": "The same fragility runs the other way. A pairs trade built on two historically cointegrated NSE stocks, say a private bank and its closest peer, assumes their price spread reverts to a stable mean. That assumption is reasonable in calm, range-bound conditions. It breaks down in a crisis. During the March 2020 crash, pairwise correlations across NSE stocks spiked sharply as nearly everything sold off together regardless of sector or fundamentals, and spreads that had reverted reliably for years blew out and kept widening instead of snapping back. A mean-reversion book run through that week with no regime awareness took losses on the exact days a trend-following book would have been thriving.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l1b16",
+              "_type": "callout",
+              "type": "insight",
+              "text": "No single systematic strategy has a genuine edge in every regime. What looks like a strategy's edge in a backtest is very often the edge of the regime that backtest happened to cover."
+            },
+            {
+              "_key": "rswc1l1b17",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc1l1b17s1",
+                  "_type": "span",
+                  "text": "What This Course Builds Instead of One More Strategy",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l1b18",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc1l1b18s1",
+                  "_type": "span",
+                  "text": "The rest of this course is not about finding one strategy that survives everything. It is about building the machinery to tell, in close to real time, which regime the market is in, and to size or switch between strategies accordingly. Chapters 2 through 4 build the detection layer, starting with simple rule-based flags and working up to Hidden Markov Models and Markov-switching regression on Nifty and Bank Nifty data. Chapters 5 and 6 turn regime labels into strategy selection and capital allocation. Chapters 7 and 8 stress-test all of it against the two failure modes that quietly kill regime-switching systems in practice: backtests that cheat by knowing the regime before it happened, and risk management that assumes the regime model is always right. If you eventually run any of this on real capital through a broker API, remember that SEBI's algo trading framework requires exchange-tagged, approved algorithms for automated order routing; that registration process sits outside this course's scope, which is signal design and portfolio construction.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l1b19",
+              "_type": "callout",
+              "type": "warning",
+              "text": "The most tempting shortcut is to keep adding rules to one strategy until its backtest survives every regime in the sample. That is not regime adaptation, it is overfitting with extra steps, and Chapter 7 is built specifically to catch it before it costs you live capital."
+            },
+            {
+              "_key": "rswc1l1b20",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "The Desk With Three Strategies and One Allocator",
+              "scenario": "You run a small systematic desk with three live strategies: a Nifty 50 trend-following system, a Bank Nifty pairs trade, and a short-volatility options strategy that sells strangles when implied volatility is elevated relative to realized. Over the last two months, India VIX has fallen from 22 to 12, Nifty has been grinding higher in a narrow range with low realized volatility, and your pairs trade's spread has been mean-reverting cleanly within its historical band.",
+              "prompt": "Which of your three strategies would you expect to be earning its keep right now, and which would you expect to be struggling? What single piece of missing information would most improve this judgment?",
+              "modelAnswer": "This looks like a low-volatility, range-bound, mean-reverting regime. The pairs trade should be performing close to its historical average, since a stable, cleanly reverting spread is exactly its target environment. The short-volatility strategy should also be doing well, since it profits from realized volatility staying below the implied volatility it sold at, and a falling India VIX with tight ranges is supportive. The trend-following system is the one most likely to be struggling, since a narrow, low-volatility range starves it of the sustained directional moves it needs and instead feeds it whipsaws. The single most useful missing input is a formal regime classification, ideally probabilistic rather than a single label, so capital can be shifted toward the pairs and short-volatility strategies and away from the trend system before performance data alone forces the conclusion."
+            },
+            {
+              "_key": "rswc1l1b21",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Reading a Regime-Concentrated Backtest",
+              "question": "A systematic trader backtests a single strategy from 2018 to 2024 and reports a strong overall Sharpe ratio. A colleague points out that almost all of the outperformance came from 2020 to 2021. What is the most accurate way to describe this result?",
+              "options": [
+                "The strategy has a robust edge across all market conditions",
+                "The backtest period was too short to be meaningful",
+                "The strategy likely has an edge specific to the trending regime of 2020 to 2021, not to markets in general",
+                "The Sharpe ratio calculation must be wrong if performance is this uneven"
+              ],
+              "correctIndex": 2,
+              "explanation": "An uneven, regime-concentrated return profile is a strong signal that the strategy's edge is tied to a specific type of market rather than being regime-general. The right response is not to discard the strategy but to identify which regime it needs and pair it with regime detection or with other strategies suited to different regimes, which is exactly what the rest of this course builds toward."
+            },
+            {
+              "_key": "rswc1l1b22",
+              "_type": "keyTakeaways",
+              "points": [
+                "Every systematic strategy carries a hidden assumption about the type of market it needs: trending, range-bound, calm, or volatile",
+                "A 50/200-day crossover system on Nifty can show a strong Sharpe ratio in a trending regime and a negative one in a choppy, range-bound regime, using the exact same code",
+                "The cost of a regime mismatch shows up as whipsaws for trend systems and as broken reversion for mean-reversion and pairs trades",
+                "Correlations across NSE stocks can spike sharply in a crisis, which is exactly when mean-reversion assumptions are most likely to fail",
+                "A backtest with performance concentrated in one period is evidence of a regime-specific edge, not proof the strategy lacks one",
+                "This course builds a system to detect regimes and allocate across strategies, rather than searching for one strategy that survives every regime"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

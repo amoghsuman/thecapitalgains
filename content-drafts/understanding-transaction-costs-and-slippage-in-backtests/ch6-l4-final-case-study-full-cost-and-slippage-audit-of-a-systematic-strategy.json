@@ -1,0 +1,234 @@
+{
+  "courseSlug": "understanding-transaction-costs-and-slippage-in-backtests",
+  "chapters": [
+    {
+      "title": "Chapter 6: Capstone: From Backtest to Live Trading",
+      "lessons": [
+        {
+          "title": "Final Case Study: Full Cost and Slippage Audit of a Systematic Strategy",
+          "slug": "final-case-study-full-cost-and-slippage-audit-of-a-systematic-strategy",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "z1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "z1s1", "text": "This final case study runs the Chapter 6 audit framework, in full, on a strategy that also introduces one cost this course has not priced yet: the cost of shorting. It is the most complete application of everything this course has built, and a fitting place to close.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "z2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "z2s1", "text": "The Strategy: A Multi-Factor Long-Short Book", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "z3",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "z3s1", "text": "A systematic strategy ranks the Nifty 500 on a value, quality, and momentum composite, goes long the top 60 names and short the bottom 60, rebalancing fortnightly, on Rs 5 crore of capital split evenly between the long and short books.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "statGrid",
+              "_key": "z4",
+              "stats": [
+                { "label": "Universe and structure", "value": "Nifty 500, 60 long / 60 short", "context": "Rs 5 crore total capital, split evenly" },
+                { "label": "Rebalance", "value": "Fortnightly", "context": "~20% of each book replaced per cycle, turnover 5.2x" },
+                { "label": "Backtested gross CAGR", "value": "16.00%", "context": "Before any cost is applied" }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "z5",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "z5s1", "text": "Step 1 and 2: Classify and Price the Familiar Cost Stack", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "z6",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "z6s1", "text": "Equity delivery, mixed Nifty 500 liquidity, a blended round-trip cost of 0.25%, the same figure used for the Chapter 6, Lesson 2 audit. Nothing new so far, this is the Chapter 2 and Chapter 3 machinery applied exactly as before.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "z7",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "z7s1", "text": "Step 2b: The Cost This Course Has Not Priced Yet, Stock Borrowing", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "z8",
+              "style": "normal",
+              "markDefs": [
+                { "_type": "glossaryTerm", "_key": "gt1", "definition": "Selling a stock you do not own by borrowing shares through the exchange's Securities Lending and Borrowing (SLB) mechanism, paying a borrow fee for as long as the position is held, and returning the shares later." }
+              ],
+              "children": [
+                { "_type": "span", "_key": "z8s1", "text": "Every case study so far in this course has been long-only. Delivery-based short selling in India works through the exchange's Securities Lending and Borrowing mechanism, ", "marks": [] },
+                { "_type": "span", "_key": "z8s2", "text": "stock borrowing", "marks": ["gt1"] },
+                { "_type": "span", "_key": "z8s3", "text": ", and unlike every other cost in this course, it is charged continuously while a position is held, not once per trade. Borrow fees vary by how scarce a stock's lendable supply is, illustratively around 5% per annum for the names in this book.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "keyFact",
+              "_key": "z9",
+              "label": "Annual Cost of Shorting the Rs 2.5 Crore Short Book",
+              "value": "Rs 12,50,000 (2.50% of total capital)",
+              "context": "5% per annum borrow fee on the Rs 2.5 crore short book, continuously carried, not a per-trade cost like anything covered in Chapters 2 and 3."
+            },
+            {
+              "_type": "block",
+              "_key": "z10",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "z10s1", "text": "Step 3: Total Cost Drag and Break-Even", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "z11",
+              "caption": "Combining trading cost drag with the borrow cost",
+              "headers": ["Component", "Calculation", "Drag (% of Total Capital)"],
+              "rows": [
+                { "cells": ["Trading cost drag", "Turnover 5.2x x 0.25% round-trip cost", "1.30%"] },
+                { "cells": ["Short borrow (SLB) cost", "5% p.a. on the Rs 2.5 crore short book", "2.50%"] },
+                { "cells": ["Total cost drag / break-even gross CAGR", "1.30% + 2.50%", "3.80%"] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "z12",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "z12s1", "text": "Step 4: Methodology Check", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "z13",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "z13s1", "text": "The backtest fills at next-session prices, uses historically accurate Nifty 500 membership, and applies no fundamental data before its actual announcement date. No methodology flags, on the trading side. But borrow fees carry their own version of Chapter 6, Lesson 1's calibration drift: the 5% assumption is an average, and fees on individual names can spike well above that when a stock becomes hard to borrow, particularly for names the strategy's own short list makes more crowded.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "z14",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "z14s1", "text": "Step 5: Margin and Decision", "marks": [] }
+              ]
+            },
+            {
+              "_type": "chart",
+              "_key": "z15",
+              "chartType": "bar",
+              "title": "Gross CAGR vs Break-Even and Net CAGR",
+              "xAxisLabel": "",
+              "yAxisLabel": "CAGR (%)",
+              "data": [
+                { "label": "Break-Even Gross CAGR", "value": 3.80 },
+                { "label": "Actual Gross CAGR", "value": 16.00 },
+                { "label": "Net CAGR", "value": 12.20 }
+              ]
+            },
+            {
+              "_type": "statGrid",
+              "_key": "z16",
+              "stats": [
+                { "label": "Net CAGR", "value": "12.20%", "context": "16.00% gross minus 3.80% total cost drag" },
+                { "label": "Safety margin", "value": "≈4.21x", "context": "16.00% / 3.80%, above the 2x to 3x guideline" },
+                { "label": "Residual-gap flag", "value": "SLB rate volatility", "context": "Borrow fees can spike on crowded short names, unlike any cost modeled in Chapters 2 or 3" }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "z17",
+              "type": "insight",
+              "text": "A 4.21x margin clears the Chapter 4 guideline comfortably, well above the 1.6x margin that flagged Chapter 4's daily rebalance strategy as risky. The honest final decision here is Go, with a specific monitoring condition, not a blanket Go: track actual realized SLB rates against the 5% assumption monthly, since that single input, not turnover, not spread, not market impact, is this strategy's largest source of residual, unmodeled risk."
+            },
+            {
+              "_type": "block",
+              "_key": "z18",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "z18s1", "text": "What This Final Case Study Demonstrates", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "z19",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "z19s1", "text": "Every tool from this course, the explicit cost stack, spread and impact, turnover and break-even, the audit process, and the residual-gap thinking from this chapter, applied cleanly to a strategy type this course had not touched before. The framework did not need a new formula to handle stock borrowing, it needed one new cost input, priced with the same discipline, and folded into the same break-even and margin logic already built. That is the actual payoff of everything in this course: not a fixed list of costs to check, but a way of thinking that extends to costs you have not seen yet.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "z20",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "z20s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "z21",
+              "variant": "scenario",
+              "title": "Final Scenario",
+              "scenario": "A colleague reviews this same long-short strategy and proposes shorting only highly liquid, easy-to-borrow large-cap names to reduce the risk flagged in Step 5, even though this means dropping some strong-scoring but harder-to-borrow midcap short candidates from the book.",
+              "prompt": "Using this course's framework, how would you evaluate whether that trade-off is worth making?",
+              "modelAnswer": "Re-run the same five-step audit on the revised short universe rather than assuming the change is obviously good. Restricting shorts to liquid, easy-to-borrow names likely lowers the SLB rate assumption below 5%, shrinking that 2.50% drag component and the residual-gap risk it carries. But it may also reduce the strategy's gross CAGR, since some of the strongest-scoring short candidates are being excluded on liquidity grounds rather than signal quality. The right comparison is not whether risk went down, it is whether the new safety margin, gross CAGR divided by the new, lower break-even, is better or worse than the original 4.21x, computed the same way as every other decision in this course."
+            },
+            {
+              "_type": "block",
+              "_key": "z22",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "z22s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "z23",
+              "text": "A long-short book added one cost this course never explicitly priced, the cost of borrowing shares to short, and the framework absorbed it without needing a new set of rules: classify it, price it, fold it into cost drag and break-even, flag its residual calibration risk, and decide with a margin. That is what it means to have actually learned this course's method, rather than its list of numbers."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "z24",
+              "points": [
+                "A multi-factor long-short strategy on the Nifty 500 showed a 16.00% gross CAGR against a 3.80% total cost drag, combining a familiar 1.30% trading cost drag with a 2.50% short-borrowing (SLB) cost this course had not priced before.",
+                "Net CAGR came to 12.20%, with a 4.21x safety margin, comfortably above the 2x to 3x guideline from Chapter 4.",
+                "Stock borrowing cost is charged continuously while a short position is held, not per trade, and its rate can spike well above the assumed average on crowded, hard-to-borrow names, a residual-gap risk in the spirit of Chapter 6, Lesson 1.",
+                "The audit framework built across this course generalizes to cost types it never explicitly covered, which is the actual capability this course was built to teach, not a fixed checklist, but a method for pricing any cost a real strategy turns out to have."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

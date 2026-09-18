@@ -1,0 +1,182 @@
+{
+  "courseSlug": "understanding-momentum-and-trend-following-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 7: Trading Momentum and Trend Strategies in India",
+      "lessons": [
+        {
+          "title": "SEBI's Algorithmic Trading Framework: What You Need to Know",
+          "slug": "sebis-algorithmic-trading-framework-what-you-need-to-know",
+          "body": [
+            {
+              "_key": "m26-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m26-001s1", "_type": "span", "marks": [], "text": "This course has mentioned SEBI's algorithmic trading framework as a caveat in nearly every lesson that discussed automating a strategy, without ever explaining what it actually requires. This is that lesson. The short version: in India, you cannot simply point an API at your broker and start firing automated orders. Every algorithmic strategy needs to be registered and tagged before it can trade with real capital." }
+              ]
+            },
+            {
+              "_key": "m26-002",
+              "_type": "bigIdea",
+              "text": "SEBI regulates algorithmic trading through a broker-mediated registration and order-tagging system, not through a blanket ban or an unrestricted free-for-all. Every approved automated strategy receives a unique algo identifier, and every order that strategy places must carry that tag, giving exchanges a clean audit trail between manual and automated order flow."
+            },
+            {
+              "_key": "m26-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m26-003s1", "_type": "span", "marks": [], "text": "Why Algo Trading Is Regulated Differently From Manual Trading" }
+              ]
+            },
+            {
+              "_key": "m26-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m26-004s1", "_type": "span", "marks": [], "text": "An automated system can place far more orders, far faster, than a person clicking buy and sell manually, which raises real concerns a regulator has to take seriously: a malfunctioning or poorly tested algorithm sending a runaway stream of erroneous orders, the systemic risk of many automated strategies reacting to the same signal simultaneously, and the practical difficulty of policing market manipulation or unfair advantage when order flow is machine-generated. Manual trading doesn't raise these specific risks at anywhere near the same scale, which is why algorithmic trading carries its own separate compliance layer on top of standard trading rules." }
+              ]
+            },
+            {
+              "_key": "m26-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m26-005s1", "_type": "span", "marks": [], "text": "The Core Mechanism: Registration and Order Tagging" }
+              ]
+            },
+            {
+              "_key": "m26-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "m26-006m1", "_type": "glossaryTerm", "definition": "A unique identifier assigned by the exchange, through your broker, to an approved automated trading strategy, which must be attached to every order that strategy places." }
+              ],
+              "children": [
+                { "_key": "m26-006s1", "_type": "span", "marks": [], "text": "The framework centres on a straightforward mechanism: a strategy intended to place orders automatically has to be registered, typically empanelled through your broker with the exchange, before it can trade with real capital. Once approved, the strategy receives a unique " },
+                { "_key": "m26-006s2", "_type": "span", "marks": ["m26-006m1"], "text": "algo ID" },
+                { "_key": "m26-006s3", "_type": "span", "marks": [], "text": ", and every single order the strategy places must carry that tag. This lets the exchange distinguish algorithmic order flow from manual order flow cleanly, and trace any specific order back to the exact registered strategy that generated it, the audit trail that makes the rest of the regulatory framework enforceable at all." }
+              ]
+            },
+            {
+              "_key": "m26-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m26-007s1", "_type": "span", "marks": [], "text": "Two Paths for a Retail Systematic Trader" }
+              ]
+            },
+            {
+              "_key": "m26-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m26-008s1", "_type": "span", "marks": [], "text": "A trader building and running their own system, using an API like the Kite Connect examples referenced throughout this course, needs their specific strategy registered and tagged through their broker before going live, along with meeting whatever additional security requirements the broker and exchange specify, such as stronger authentication on the API connection itself. A trader instead choosing to use a third-party algo trading platform or strategy provider is relying on that provider's own registration status, and should confirm the provider is operating within the current framework before allocating capital to it. Neither path lets a strategy trade real capital purely on the strength of a good backtest and a working script." }
+              ]
+            },
+            {
+              "_key": "m26-009",
+              "_type": "table",
+              "caption": "Manual trading vs registered algorithmic trading in India (general framework, not exhaustive)",
+              "headers": ["Aspect", "Manual trading", "Registered algorithmic trading"],
+              "rows": [
+                { "_key": "m26-009r1", "_type": "tableRow", "cells": ["Pre-approval needed", "No", "Yes, strategy registered through broker/exchange"] },
+                { "_key": "m26-009r2", "_type": "tableRow", "cells": ["Order tagging", "Not applicable", "Every order tagged with a unique algo ID"] },
+                { "_key": "m26-009r3", "_type": "tableRow", "cells": ["Audit trail", "Standard order records", "Strategy-level traceability via the algo ID"] },
+                { "_key": "m26-009r4", "_type": "tableRow", "cells": ["Who is responsible for compliance", "The trader placing each order", "The trader, with the broker's empanelment process as a gatekeeper"] }
+              ]
+            },
+            {
+              "_key": "m26-010",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m26-010s1", "_type": "span", "marks": [], "text": "What This Means for Every Strategy Built in This Course" }
+              ]
+            },
+            {
+              "_key": "m26-011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m26-011s1", "_type": "span", "marks": [], "text": "The crossover systems from Chapter 2, the RSI and combined signals from Chapter 3, the ranking system from Chapter 4, and the sizing and stop logic from Chapter 5 are all, mechanically, exactly the kind of rule-based systems this framework is built to govern the moment they are connected to a broker API and allowed to place orders without a human clicking confirm on each one. Working code and a validated backtest are necessary but not sufficient, registration and tagging through your broker is a required step before any of it touches real capital in fully automated form." }
+              ]
+            },
+            {
+              "_key": "m26-012",
+              "_type": "callout",
+              "type": "warning",
+              "text": "This regulatory area has been actively evolving and the specific procedures, forms, and technical requirements change as SEBI and the exchanges update their circulars. Treat this lesson as a map of the general shape of the framework, not a substitute for reading your broker's current algo trading documentation and the latest SEBI and exchange circulars directly before registering any strategy."
+            },
+            {
+              "_key": "m26-013",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Can you go live immediately?",
+              "question": "You have backtested the combined trend-and-momentum system from Chapter 3, validated it out-of-sample as covered in Chapter 6, and written working code to place orders via your broker's API. Can you start running it live with real capital immediately?",
+              "options": [
+                "Yes, a validated backtest and working code are sufficient on their own",
+                "No, the strategy needs to be registered with the exchange through your broker and receive a unique algo ID before it can place automated orders with real capital",
+                "Yes, but only if it trades fewer than 10 times a day",
+                "No, algorithmic trading is entirely prohibited for retail traders in India"
+              ],
+              "correctIndex": 1,
+              "explanation": "A validated backtest and working code satisfy the strategy design side of things, but SEBI's framework requires the strategy itself to be registered and tagged with a unique algo ID before it can place automated orders with real capital, a separate compliance step."
+            },
+            {
+              "_key": "m26-014",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Evaluating a third-party algo platform",
+              "scenario": "A friend recommends a third-party platform that lets you upload a trading rule and have it executed automatically through your own broker account, claiming it 'handles everything' and you don't need to worry about any registration.",
+              "prompt": "Based on this lesson, what would you want to verify before trusting this claim?",
+              "modelAnswer": "Whether the platform itself is properly registered and empanelled under SEBI's algorithmic trading framework, and whether the strategies it runs on your behalf are correctly tagged with algo IDs when orders reach the exchange. 'Handles everything' is exactly the kind of claim worth verifying independently rather than taking at face value, since the compliance obligation ultimately concerns your account and your capital. Checking the platform's registration status and asking directly how order tagging works for strategies run through it would be reasonable due diligence before connecting it to a live broker account."
+            },
+            {
+              "_key": "m26-015",
+              "_type": "toolLink",
+              "label": "Read SEBI's current algorithmic trading circulars directly on sebi.gov.in",
+              "url": "https://www.sebi.gov.in",
+              "description": "SEBI publishes its algorithmic trading circulars and framework updates directly on its official site, the authoritative source to check before registering any strategy, given how actively this area has been updated."
+            },
+            {
+              "_key": "m26-016",
+              "_type": "flashcardSet",
+              "title": "SEBI Algo Framework: Core Terms",
+              "cards": [
+                { "_key": "m26-016f1", "term": "Algo ID", "definition": "A unique identifier assigned to an approved automated trading strategy, which must be attached to every order that strategy places, enabling exchange-level audit tracing." },
+                { "_key": "m26-016f2", "term": "Empanelment", "definition": "The process of registering an automated trading strategy through a broker with the exchange before it is permitted to place live orders." },
+                { "_key": "m26-016f3", "term": "Order tagging", "definition": "Attaching a strategy's algo ID to every order it places, distinguishing algorithmic order flow from manual order flow at the exchange level." }
+              ]
+            },
+            {
+              "_key": "m26-017",
+              "_type": "keyTakeaways",
+              "points": [
+                "SEBI's algorithmic trading framework requires automated strategies to be registered, typically empanelled through your broker with the exchange, before they can place live orders with real capital.",
+                "Approved strategies receive a unique algo ID, and every order they place must carry that tag, creating an exchange-level audit trail distinguishing algorithmic from manual order flow.",
+                "Both building your own API-based system and using a third-party algo platform require confirming proper registration, the compliance obligation doesn't disappear just because a third party is handling execution.",
+                "Every strategy built in this course, from the Chapter 2 crossover system to the Chapter 4 ranking system, needs this registration step before being run fully automated with real capital.",
+                "This area evolves actively. Always confirm current requirements directly with your broker and SEBI's own published circulars rather than relying on any fixed description, including this one."
+              ]
+            },
+            {
+              "_key": "m26-018",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice or legal or compliance advice. SEBI's algorithmic trading framework and its specific requirements change over time. Always verify current rules directly with SEBI, the exchanges, and your broker before registering or running any automated trading strategy. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

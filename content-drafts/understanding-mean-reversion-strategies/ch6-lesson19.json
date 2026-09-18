@@ -1,0 +1,138 @@
+{
+  "courseSlug": "understanding-mean-reversion-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 6: From One Asset to Two — An Introduction to Pairs-Based Reversion",
+      "lessons": [
+        {
+          "title": "Why Two-Asset Reversion Is More Robust Than Single-Asset Reversion",
+          "slug": "why-two-asset-reversion-is-more-robust-than-single-asset-reversion",
+          "body": [
+            {
+              "_key": "mr6l19-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr6l19-001s1", "_type": "span", "marks": [], "text": "Every strategy in Chapters 3 to 5 bets on the same underlying assumption: that one company's own price, or valuation, returns to something close to its own recent history. Chapter 1 spent an entire lesson on the ways that assumption fails, because a single company's fundamentals can, and sometimes do, permanently change. There is a different way to build a reversion trade that sidesteps a large part of that risk, not by predicting a company any better, but by betting on something narrower: the relationship between two companies, instead of either company alone." }
+              ]
+            },
+            {
+              "_key": "mr6l19-002",
+              "_type": "bigIdea",
+              "text": "A single-asset reversion trade is exposed to everything that can move that one stock: company-specific news, sector-wide shifts, and broad market moves, all at once. A two-asset, or pairs, trade holds a long position in one stock and an offsetting short position in a related one, so that sector-wide and market-wide moves largely cancel between the two legs, leaving only the narrower question of whether the specific relationship between the two companies holds."
+            },
+            {
+              "_key": "mr6l19-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr6l19-003s1", "_type": "span", "marks": [], "text": "A Shared Shock, Seen Two Ways" }
+              ]
+            },
+            {
+              "_key": "mr6l19-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr6l19-004s1", "_type": "span", "marks": [], "text": "Suppose two large NSE-listed private banks, sharing a similar customer base and largely the same interest rate environment, both fall on the same day after an unexpected RBI rate move. Bank A falls 12%. Bank B falls 9%. A single-asset trader looking only at Bank A sees a 12% stretch below its recent average and has to decide, using every tool from Chapters 1 to 3, whether the entire banking sector's repricing is temporary noise or a genuine, lasting shift, a judgment call about the whole sector's future. A pairs trader holding Bank B long and Bank A short is asking a much narrower question. The gap between the two banks moved by only 3 percentage points, 12% minus 9%, regardless of what the sector as a whole does next. The pairs trader does not need a view on whether banking stocks recover. Only on whether Bank A and Bank B, which have moved together for years, keep moving together." }
+              ]
+            },
+            {
+              "_key": "mr6l19-005",
+              "_type": "table",
+              "caption": "What each kind of trade is actually exposed to",
+              "headers": ["Risk Source", "Single-Asset Reversion", "Pairs (Two-Asset) Reversion"],
+              "rows": [
+                { "_key": "mr6l19-005r1", "cells": ["Company-specific news (only one company)", "Directly exposed, the entire thesis rests on this one company", "Exposed only through the relationship, can cause the two legs to diverge"] },
+                { "_key": "mr6l19-005r2", "cells": ["Sector-wide shift (affects both companies similarly)", "Directly exposed, no offsetting position", "Largely cancels, since both legs move in the same direction"] },
+                { "_key": "mr6l19-005r3", "cells": ["Market-wide move (a broad Nifty rally or crash)", "Directly exposed, the position has full market beta", "Largely cancels, if the position is sized to be roughly market-neutral"] },
+                { "_key": "mr6l19-005r4", "cells": ["What actually breaks the trade", "Any of the three sources above, if the move turns out to be permanent", "Mainly the relationship itself breaking down, a narrower, more specific risk"] }
+              ]
+            },
+            {
+              "_key": "mr6l19-006",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Narrower is not the same as safer. A pairs trade trades away broad market and sector risk in exchange for a different, specific risk: the two companies' fortunes genuinely and permanently diverging, one gaining structural market share from the other, one making a strategic misstep the other avoids. That risk needs its own name and its own formal test, which is exactly what Lesson 2 introduces next."
+            },
+            {
+              "_key": "mr6l19-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr6l19-007s1", "_type": "span", "marks": [], "text": "Why This Genuinely Helps" }
+              ]
+            },
+            {
+              "_key": "mr6l19-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr6l19-008s1", "_type": "span", "marks": [], "text": "Go back to Chapter 1's hardest problem: telling a temporary overreaction apart from a genuine, permanent change. That judgment call is difficult precisely because it requires forming a view on an entire company, or an entire sector, or an entire market, all things a single trader has limited ability to independently verify in real time. A pairs trade shrinks that judgment call down to a much smaller, more specific question: are these two particular, closely related companies likely to keep behaving like each other, the way they have for years. That is often a genuinely easier question to have an informed view on, especially for two companies you already understand well, than forecasting an entire sector's fate." }
+              ]
+            },
+            {
+              "_key": "mr6l19-009",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Measure the relative move",
+              "prompt": "Stock P falls 15% and Stock Q, in the same sector, falls 11% on the same day, both reacting to the same shared regulatory announcement. What is the size of the relative move between the two stocks, in percentage points?",
+              "correctValue": 4,
+              "tolerance": 0.5,
+              "unit": "pp",
+              "explanation": "15% - 11% = 4 percentage points. That 4-point gap, not the much larger 15% or 11% individual moves, is what a pairs trade built on this relationship is actually exposed to."
+            },
+            {
+              "_key": "mr6l19-010",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Who takes the direct hit?",
+              "question": "A single-asset reversion trader holds an unhedged long position in one large private bank. A pairs trader holds a long position in that same bank offset by a short position in a similar, related bank. An unexpected RBI rate move hits the entire banking sector, and both banks fall by a similar amount on the same day. Whose position is more directly exposed to this shock?",
+              "options": [
+                "The single-asset trader, whose unhedged position absorbs the full sector-wide move directly",
+                "The pairs trader, since holding two positions is always riskier than holding one",
+                "Both traders are equally exposed, since they hold positions in the same sector",
+                "Neither trader is exposed, since RBI rate moves do not affect bank stock prices"
+              ],
+              "correctIndex": 0,
+              "explanation": "The pairs trader's short leg in a similarly affected bank largely offsets the sector-wide move, since both banks fall together. The single-asset trader has no such offset and absorbs the full sector-wide decline directly. This is the core mechanism behind Chapter 6's claim that pairs trading is more robust to sector and market-wide shocks, not a claim that it is risk-free."
+            },
+            {
+              "_key": "mr6l19-011",
+              "_type": "flashcardSet",
+              "title": "Pairs-Based Reversion: Core Terms",
+              "cards": [
+                { "_key": "mr6l19-011f1", "term": "Pairs trade", "definition": "A position built from a long holding in one security and an offsetting short holding in a related security, structured so its return depends mainly on the relationship between the two, not on the direction of either alone." },
+                { "_key": "mr6l19-011f2", "term": "Market-neutral", "definition": "A position sized so that broad market or sector-wide moves affect both legs similarly and largely cancel out, isolating the relationship between the two positions as the main driver of return." },
+                { "_key": "mr6l19-011f3", "term": "Idiosyncratic risk", "definition": "Risk specific to a single company, as opposed to sector-wide or market-wide risk. A pairs trade is still exposed to idiosyncratic risk through the possibility that only one leg is affected." },
+                { "_key": "mr6l19-011f4", "term": "Divergence risk", "definition": "The risk that two previously related companies' fortunes permanently diverge, breaking the relationship a pairs trade depends on, the main risk a pairs trade takes on in exchange for reduced market and sector exposure." }
+              ]
+            },
+            {
+              "_key": "mr6l19-012",
+              "_type": "keyTakeaways",
+              "points": [
+                "A single-asset reversion trade is directly exposed to company-specific, sector-wide, and market-wide risk all at once, since it holds only one unhedged position.",
+                "A pairs trade, long one security and short a related one, largely cancels out sector-wide and market-wide moves, since both legs move in the same direction together.",
+                "In exchange, a pairs trade takes on a narrower but real risk of its own: the two companies' relationship permanently diverging, rather than either company's absolute price being wrong.",
+                "This narrower risk is often a genuinely easier question to form a view on than forecasting an entire company or sector's future, which is why pairs-based reversion is a natural extension of everything covered so far.",
+                "Lesson 2 introduces the statistical distinction, correlation versus cointegration, needed to tell a genuinely stable relationship apart from two stocks that simply happen to move together for now."
+              ]
+            },
+            {
+              "_key": "mr6l19-013",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice or a recommendation to buy, sell, or hold any security. All figures in this lesson are hypothetical and illustrative and do not represent actual historical prices of any stock. Pairs trading and short selling carry real risk of loss, including the risk of losses on both legs simultaneously, and are not risk-free strategies. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,383 @@
+{
+  "courseSlug": "understanding-alternative-data-in-quantitative-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Alternative Data Matters in Quant Research",
+      "lessons": [
+        {
+          "title": "The Alternative Data Ecosystem: Providers, Aggregators, and Buy-Side Users in India",
+          "slug": "the-alternative-data-ecosystem-providers-aggregators-and-buy-side-users-in-india",
+          "body": [
+            {
+              "_key": "c1l4k001",
+              "_type": "bigIdea",
+              "text": "No single company hands you alpha in a box. Every alternative dataset passes through three hands before it reaches your model: the source that generates it, the vendor that packages it, and your own desk that turns it into a signal."
+            },
+            {
+              "_key": "c1l4k002",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l4k002s1",
+                  "_type": "span",
+                  "text": "By now you can define alternative data, model its decay, and score a new source on six dimensions. This lesson closes Chapter 1 by mapping the industry itself: who generates the raw exhaust of everyday activity, who turns that exhaust into something a quant desk can license or scrape, and who sits at the end of the chain actually trading on it. Understanding this map matters because it tells you where to look for new sources and, in India specifically, why so much of the real edge still comes from building your own pipeline rather than buying a finished product.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l4k003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l4k003s1",
+                  "_type": "span",
+                  "text": "The Three Layers of the Alternative Data Supply Chain",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l4k004",
+              "_type": "table",
+              "caption": "Every dataset you will ever use moves through these three layers",
+              "headers": ["Layer", "What It Does", "Examples"],
+              "rows": [
+                {
+                  "_key": "c1l4k004r1",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Generators (raw sources)",
+                    "Create the underlying activity as a byproduct of something unrelated to finance: an app being used, a vehicle being registered, a satellite passing overhead",
+                    "App stores and app usage logs, satellite operators, government registries such as VAHAN and GSTN, e-commerce platforms, job boards"
+                  ]
+                },
+                {
+                  "_key": "c1l4k004r2",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Aggregators and vendors",
+                    "Collect raw feeds at scale, clean and standardize them, build historical backfill, handle licensing, and distribute a usable product",
+                    "Web and app data aggregators, satellite imagery processors, alt-data discovery marketplaces that catalogue what exists"
+                  ]
+                },
+                {
+                  "_key": "c1l4k004r3",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Buy-side consumers",
+                    "License or scrape the processed data, engineer features, validate signals, and size positions against a risk budget",
+                    "Quant hedge funds, SEBI-registered portfolio managers, proprietary trading firms, sell-side research desks publishing data-driven trackers"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c1l4k005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l4k005s1",
+                  "_type": "span",
+                  "text": "Aggregators and Vendors: Turning Raw Feeds Into a Usable Product",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l4k006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l4k006s1",
+                  "_type": "span",
+                  "text": "A raw feed is rarely usable on its own. Someone has to negotiate access or build a scraper, normalize inconsistent formats, backfill history so you can actually test a hypothesis, strip out anything that creates legal exposure, and ship the result through an API, a cloud data share, or a downloadable file. This is the job of an aggregator, and the space broadly splits into two business models.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l4k007",
+              "_type": "comparison",
+              "title": "Two Kinds of Aggregator Businesses",
+              "columns": [
+                {
+                  "_key": "c1l4k007c1",
+                  "label": "Discovery and Evaluation Platforms",
+                  "points": [
+                    "Do not generate or process data themselves",
+                    "Catalogue hundreds of datasets so a quant desk can search by sector, geography, or use case",
+                    "Examples in this category globally include Eagle Alpha and Neudata, both built around helping buy-side teams find and evaluate vendors",
+                    "Useful for scanning the market quickly, but you still do the due diligence"
+                  ]
+                },
+                {
+                  "_key": "c1l4k007c2",
+                  "label": "Data Aggregators and Processors",
+                  "points": [
+                    "Actually collect, clean, and sell a specific data product",
+                    "Examples globally include YipitData (transaction and web panel data), Advan (location and foot traffic data), and Similarweb (web traffic analytics)",
+                    "You are buying their processing pipeline as much as their raw data",
+                    "Global coverage of India is usually thinner than coverage of the US or Europe"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c1l4k008",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l4k008s1",
+                  "_type": "span",
+                  "text": "Where India's Own Ecosystem Starts: Public Portals You Can Access Today",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l4k009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l4k009s1",
+                  "_type": "span",
+                  "text": "Some of the richest generator-layer sources in India are government portals that were never designed with a quant desk in mind, which is precisely what makes them alternative data rather than a financial product. These are legitimate, publicly accessible starting points worth exploring directly.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l4k010",
+              "_type": "toolLink",
+              "label": "data.gov.in: Open Government Data Platform India",
+              "url": "https://data.gov.in",
+              "description": "A central repository of datasets published by Indian government ministries and departments, spanning trade, agriculture, transport, and more."
+            },
+            {
+              "_key": "c1l4k011",
+              "_type": "toolLink",
+              "label": "VAHAN Dashboard: Vehicle Registration Data",
+              "url": "https://vahan.parivahan.gov.in",
+              "description": "The Ministry of Road Transport and Highways portal aggregating RTO-level vehicle registration data, covered in the previous lesson's SIAM vs VAHAN case study."
+            },
+            {
+              "_key": "c1l4k012",
+              "_type": "toolLink",
+              "label": "NPCI: National Payments Corporation of India",
+              "url": "https://www.npci.org.in",
+              "description": "Publishes periodic UPI transaction volume and value data, one of the most widely watched consumption nowcasting sources in India."
+            },
+            {
+              "_key": "c1l4k013",
+              "_type": "toolLink",
+              "label": "E-Way Bill Portal",
+              "url": "https://ewaybillgst.gov.in",
+              "description": "The GST Network's e-way bill system, generating a running record of goods movement across India that can proxy freight and logistics activity."
+            },
+            {
+              "_key": "c1l4k014",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l4k014s1",
+                  "_type": "span",
+                  "text": "Why India's Ecosystem Looks Different From the US",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l4k015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l4k015s1",
+                  "_type": "span",
+                  "text": "The US and European alternative data industry has a dense layer of specialized commercial vendors built over more than a decade, covering everything from parking lot imagery to email receipt panels. India's commercial vendor layer is thinner and newer. Global aggregators are steadily adding India coverage as more funds ask for it, but a meaningful share of what Indian quant desks actually use still comes from directly scraping or licensing government and public sources like the ones above, rather than buying an already-packaged product.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l4k016",
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "c1l4k016s1",
+                  "label": "Vendor layer maturity",
+                  "value": "Thinner than the US",
+                  "context": "Fewer specialized commercial alt-data vendors focused specifically on Indian equities"
+                },
+                {
+                  "_key": "c1l4k016s2",
+                  "label": "Common workaround",
+                  "value": "Build your own",
+                  "context": "Many Indian desks scrape or license public portals directly rather than waiting for a polished vendor product"
+                },
+                {
+                  "_key": "c1l4k016s3",
+                  "label": "The upside of the gap",
+                  "value": "Lower lambda",
+                  "context": "Less commercial packaging means less crowding, and a slower decay rate for whoever does the engineering work first"
+                }
+              ]
+            },
+            {
+              "_key": "c1l4k017",
+              "_type": "timeline",
+              "title": "The Evolution of India's Digital Data Trail",
+              "events": [
+                {
+                  "_key": "c1l4k017e1",
+                  "date": "2016",
+                  "title": "UPI launches",
+                  "description": "The National Payments Corporation of India launches UPI, eventually creating a high-frequency transaction data trail that becomes a widely used consumption proxy."
+                },
+                {
+                  "_key": "c1l4k017e2",
+                  "date": "2017",
+                  "title": "GST rollout begins",
+                  "description": "The Goods and Services Tax replaces a fragmented state tax system, laying the groundwork for a unified digital trail of goods movement across India."
+                },
+                {
+                  "_key": "c1l4k017e3",
+                  "date": "2018",
+                  "title": "E-way bills become mandatory",
+                  "description": "E-way bill generation becomes compulsory for interstate movement of goods above a threshold value, creating the freight and logistics proxy used in Chapter 2."
+                },
+                {
+                  "_key": "c1l4k017e4",
+                  "date": "2020s",
+                  "title": "Global vendors and sell-side desks scale up India coverage",
+                  "description": "As more funds request Indian equity coverage, global data aggregators and Indian brokerage research desks increasingly build and publish trackers on top of these public data trails, VAHAN and UPI among the most cited."
+                }
+              ]
+            },
+            {
+              "_key": "c1l4k018",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l4k018s1",
+                  "_type": "span",
+                  "text": "Who Sits on the Buy Side",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l4k019",
+              "_type": "table",
+              "caption": "The main buyers and users of alternative data in Indian markets",
+              "headers": ["Buy-Side User", "What They Use It For", "Typical Constraint"],
+              "rows": [
+                {
+                  "_key": "c1l4k019r1",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Quant hedge funds and SEBI-registered portfolio managers",
+                    "Building systematic signals that feed into a fund's core book",
+                    "Needs enough breadth and capacity to matter at the fund's AUM scale"
+                  ]
+                },
+                {
+                  "_key": "c1l4k019r2",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Proprietary trading firms",
+                    "Faster, shorter-horizon signals, often intraday to multi-day",
+                    "Prioritizes timeliness heavily and can tolerate narrower breadth"
+                  ]
+                },
+                {
+                  "_key": "c1l4k019r3",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Sell-side research desks at brokerages",
+                    "Publishing differentiated trackers, such as VAHAN-based auto sales notes, for institutional clients",
+                    "Does not trade the data directly, but needs the source to be credible and defensible"
+                  ]
+                },
+                {
+                  "_key": "c1l4k019r4",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Larger AMCs and family offices scaling into systematic strategies",
+                    "Usually licensing an established vendor product rather than building in-house",
+                    "Has budget for licensing but less dedicated engineering bandwidth than a pure quant fund"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c1l4k020",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Trace a Dataset From Raw Source to Live Signal",
+              "steps": [
+                "Identify the raw generator: what real-world activity produces this data as a byproduct, and who logs it first",
+                "Identify the aggregator layer: is a vendor already cleaning and packaging this, or would your desk have to build that layer itself",
+                "Estimate historical depth: how far back can you get a clean, comparable series to backtest against",
+                "Score the source on the six-dimension framework from the previous lesson",
+                "Confirm the compliance test: is this independently reproducible by any other paying party, with no dependency on an insider",
+                "Only after all four steps, decide whether to license, scrape, or walk away"
+              ]
+            },
+            {
+              "_key": "c1l4k021",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "Name the Layer",
+              "textWithBlank": "A company that collects raw web traffic logs from thousands of retailer websites, cleans them, backfills five years of history, and sells API access to hedge funds is acting as an ___ in the alternative data supply chain.",
+              "correctAnswers": ["aggregator", "vendor", "aggregator/vendor", "data aggregator", "data vendor"],
+              "explanation": "This is the aggregator or vendor layer: it does not generate the underlying web traffic itself, and it is not the buy-side desk trading on it. Its job is turning a messy raw feed into a clean, licensable product."
+            },
+            {
+              "_key": "c1l4k022",
+              "_type": "callout",
+              "type": "insight",
+              "text": "In India, knowing the raw government portals directly, VAHAN, GSTN's e-way bill system, NPCI's UPI data, is not a fallback for desks that cannot afford a vendor. For now, it is often the frontier itself, because the vendor layer has not fully commoditized these sources the way it has in more mature markets."
+            },
+            {
+              "_key": "c1l4k023",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "Vendor and platform names mentioned in this lesson are used to illustrate categories of business models in the alternative data industry. This is not an endorsement, and any decision to license or subscribe to a specific vendor should go through your organisation's own procurement, legal, and compliance review."
+            },
+            {
+              "_key": "c1l4k024",
+              "_type": "keyTakeaways",
+              "points": [
+                "Every alternative dataset passes through three layers: generators who create the raw activity, aggregators and vendors who clean and package it, and buy-side consumers who turn it into a signal",
+                "Aggregators split broadly into discovery and evaluation platforms, such as Eagle Alpha and Neudata, and actual data processors, such as YipitData, Advan, and Similarweb",
+                "India's commercial vendor layer is thinner than the US or Europe's, so government and public portals like VAHAN, the e-way bill system, and NPCI's UPI data are often the real starting point",
+                "UPI (2016) and GST with its e-way bill system (2017 to 2018) created two of India's richest modern digital data trails, and coverage of them by global vendors and sell-side desks is still growing",
+                "Buy-side users differ in what they need: hedge funds and PMS need breadth and capacity, prop desks need timeliness, sell-side desks need credibility, and larger AMCs often prefer licensing over building",
+                "A thinner vendor ecosystem is a burden in engineering effort, but it is also an opportunity, since less commercial packaging means less crowding and a slower decay rate for whoever builds the pipeline first"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

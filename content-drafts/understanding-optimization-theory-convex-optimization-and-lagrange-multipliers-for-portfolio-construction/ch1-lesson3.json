@@ -1,0 +1,285 @@
+{
+  "courseSlug": "understanding-optimization-theory-convex-optimization-and-lagrange-multipliers-for-portfolio-construction",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Optimization Theory Matters for Portfolio Construction",
+      "lessons": [
+        {
+          "title": "Unconstrained vs Constrained Optimization: A Key Distinction",
+          "slug": "unconstrained-vs-constrained-optimization-a-key-distinction",
+          "body": [
+            {
+              "_key": "oc1l3-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc1l3-001s1", "_type": "span", "marks": [], "text": "Ananya pushes back on the interviewer. Why do I need any special machinery at all, she asks. Can't I just solve the budget constraint for one weight and substitute it into the variance formula? Then I'm left with plain calculus, no constraints, no Lagrange, no fuss. The interviewer smiles. That works, he says, for three stocks and one constraint. Now do it for fifty stocks with a return target, a sector cap, and a no-short-selling rule. Before this course can hand Ananya a tool that scales, she needs to understand exactly why unconstrained and constrained problems are different animals, and why the easy trick she just described stops being easy." }
+              ]
+            },
+            {
+              "_key": "oc1l3-002",
+              "_type": "bigIdea",
+              "text": "An unconstrained problem lets you search the entire space of decision variables freely. A constrained problem restricts you to a smaller region carved out by rules. The two need different tools, because the best point in the full space is often not even inside the allowed region."
+            },
+            {
+              "_key": "oc1l3-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc1l3-003s1", "_type": "span", "marks": [], "text": "What Makes a Problem Unconstrained" }
+              ]
+            },
+            {
+              "_key": "oc1l3-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "oc1l3-004m1", "_type": "glossaryTerm", "definition": "An optimization problem where the decision variables can take any value at all, with no rules restricting them. The search space is the entire space of possible inputs." }
+              ],
+              "children": [
+                { "_key": "oc1l3-004s1", "_type": "span", "marks": [], "text": "An " },
+                { "_key": "oc1l3-004s2", "_type": "span", "marks": ["oc1l3-004m1"], "text": "unconstrained optimization problem" },
+                { "_key": "oc1l3-004s3", "_type": "span", "marks": [], "text": " has no rules at all on the decision variables. You are free to search anywhere. Take the simplest possible example: find the value of x that minimizes a function." }
+              ]
+            },
+            {
+              "_key": "oc1l3-005",
+              "_type": "mathBlock",
+              "latex": "\\min_{x} \\; f(x) = (x - 3)^2",
+              "caption": "No constraint on x whatsoever. It can be any real number."
+            },
+            {
+              "_key": "oc1l3-006",
+              "_type": "mathBlock",
+              "latex": "f'(x) = 2(x-3) = 0 \\quad \\Rightarrow \\quad x = 3",
+              "caption": "First-year calculus: set the derivative to zero and solve. Chapter 3 formalizes exactly why this works and extends it to many variables."
+            },
+            {
+              "_key": "oc1l3-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc1l3-007s1", "_type": "span", "marks": [], "text": "Pure unconstrained problems are rare in portfolio construction. Almost every real portfolio problem carries at least a budget rule. But unconstrained optimization is not irrelevant, it is the engine inside every constrained method this course builds. Lagrange multipliers in Chapter 4 work by converting a constrained problem into an unconstrained one in disguise, then applying exactly this kind of derivative-equals-zero logic." }
+              ]
+            },
+            {
+              "_key": "oc1l3-008",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc1l3-008s1", "_type": "span", "marks": [], "text": "What Makes a Problem Constrained" }
+              ]
+            },
+            {
+              "_key": "oc1l3-009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "oc1l3-009m1", "_type": "glossaryTerm", "definition": "A rule that the decision variables must satisfy exactly, written with an equals sign. Example: portfolio weights must sum to exactly 1." },
+                { "_key": "oc1l3-009m2", "_type": "glossaryTerm", "definition": "A rule that the decision variables must satisfy as a bound, written with a less-than-or-equal or greater-than-or-equal sign. Example: no weight can be negative (no short-selling)." }
+              ],
+              "children": [
+                { "_key": "oc1l3-009s1", "_type": "span", "marks": [], "text": "A constrained optimization problem restricts the search to decision variables obeying one or more rules. Those rules come in two flavors. An " },
+                { "_key": "oc1l3-009s2", "_type": "span", "marks": ["oc1l3-009m1"], "text": "equality constraint" },
+                { "_key": "oc1l3-009s3", "_type": "span", "marks": [], "text": " must be satisfied exactly, like the budget rule from the last two lessons. An " },
+                { "_key": "oc1l3-009s4", "_type": "span", "marks": ["oc1l3-009m2"], "text": "inequality constraint" },
+                { "_key": "oc1l3-009s5", "_type": "span", "marks": [], "text": " sets a bound the variables must stay within, like a rule against short-selling." }
+              ]
+            },
+            {
+              "_key": "oc1l3-010",
+              "_type": "table",
+              "caption": "Constraint types in portfolio construction",
+              "headers": ["Rule", "Type", "Written As"],
+              "rows": [
+                { "_key": "oc1l3-010r1", "_type": "tableRow", "cells": ["Full investment (budget rule)", "Equality", "w1 + w2 + ... + wN = 1"] },
+                { "_key": "oc1l3-010r2", "_type": "tableRow", "cells": ["Hit a target return exactly", "Equality", "wᵀμ = R*"] },
+                { "_key": "oc1l3-010r3", "_type": "tableRow", "cells": ["No short-selling", "Inequality", "wi ≥ 0 for every i"] },
+                { "_key": "oc1l3-010r4", "_type": "tableRow", "cells": ["No single stock over 30%", "Inequality", "wi ≤ 0.30 for every i"] }
+              ]
+            },
+            {
+              "_key": "oc1l3-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc1l3-011s1", "_type": "span", "marks": [], "text": "Why Plain Calculus Fails on a Constrained Problem" }
+              ]
+            },
+            {
+              "_key": "oc1l3-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc1l3-012s1", "_type": "span", "marks": [], "text": "Take a toy version of the minimum variance problem: two variables, minimize the sum of their squares, subject to them adding up to 1." }
+              ]
+            },
+            {
+              "_key": "oc1l3-013",
+              "_type": "mathBlock",
+              "latex": "\\min_{x_1, x_2} \\; f(x_1, x_2) = x_1^2 + x_2^2",
+              "caption": "The objective, standing in for portfolio variance in this simplified toy problem."
+            },
+            {
+              "_key": "oc1l3-014",
+              "_type": "mathBlock",
+              "latex": "\\text{subject to} \\quad x_1 + x_2 = 1",
+              "caption": "The constraint, standing in for the budget rule."
+            },
+            {
+              "_key": "oc1l3-015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc1l3-015s1", "_type": "span", "marks": [], "text": "If you ignore the constraint and set each partial derivative to zero independently, both give x1 = 0 and x2 = 0. That is the unconstrained minimum, and it is the single lowest point the objective function reaches anywhere. But it breaks the rule: 0 + 0 does not equal 1. The unconstrained answer is not even a candidate. Plain calculus, applied naively, hands you a point that is not allowed to exist." }
+              ]
+            },
+            {
+              "_key": "oc1l3-016",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "oc1l3-016s1", "label": "Unconstrained minimum", "value": "(0, 0)", "context": "Lowest point of x1² + x2² with no restrictions; objective value = 0" },
+                { "_key": "oc1l3-016s2", "label": "Constraint check", "value": "0 + 0 ≠ 1", "context": "Fails the rule. This point is outside the feasible region entirely." },
+                { "_key": "oc1l3-016s3", "label": "Correct constrained minimum", "value": "(0.5, 0.5)", "context": "Derived below; objective value = 0.5, higher than the unconstrained answer, because it has to obey the rule" }
+              ]
+            },
+            {
+              "_key": "oc1l3-017",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc1l3-017s1", "_type": "span", "marks": [], "text": "The Substitution Trick, and Why It Doesn't Scale" }
+              ]
+            },
+            {
+              "_key": "oc1l3-018",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc1l3-018s1", "_type": "span", "marks": [], "text": "Ananya's instinct is exactly right for a problem this small. Solve the constraint for one variable, substitute it into the objective, and the constraint disappears, leaving an ordinary unconstrained problem." }
+              ]
+            },
+            {
+              "_key": "oc1l3-019",
+              "_type": "mathBlock",
+              "latex": "x_2 = 1 - x_1",
+              "caption": "Solve the constraint for x2."
+            },
+            {
+              "_key": "oc1l3-020",
+              "_type": "mathBlock",
+              "latex": "f(x_1) = x_1^2 + (1-x_1)^2 = 2x_1^2 - 2x_1 + 1",
+              "caption": "Substitute into the objective. Now there is only one variable and no constraint."
+            },
+            {
+              "_key": "oc1l3-021",
+              "_type": "mathBlock",
+              "latex": "f'(x_1) = 4x_1 - 2 = 0 \\quad \\Rightarrow \\quad x_1 = 0.5, \\; x_2 = 0.5",
+              "caption": "Ordinary unconstrained calculus finishes the job. This matches the constrained minimum shown in the stat grid above."
+            },
+            {
+              "_key": "oc1l3-022",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This worked cleanly because the constraint was linear and easy to solve for one variable. Scale this up to a 50-stock portfolio with a return target, a sector cap, and a no-short-selling rule, and substitution means solving one messy equation for one weight in terms of 49 others, then repeating the logic for every additional constraint. It gets unreadable fast, obscures what is actually driving the answer, and simply cannot handle inequality constraints like no-short-selling at all, since those do not pin down an exact value to substitute. Lagrange multipliers, starting in Chapter 4, solve constrained problems directly, without ever solving for one variable in terms of the others."
+            },
+            {
+              "_key": "oc1l3-023",
+              "_type": "comparison",
+              "title": "Substitution vs Lagrange Multipliers",
+              "columns": [
+                {
+                  "_key": "oc1l3-023c1",
+                  "label": "Substitution",
+                  "points": [
+                    "Fine for 1 or 2 simple, linear constraints",
+                    "Requires solving the constraint for one variable explicitly",
+                    "Becomes unreadable fast as variables and constraints grow",
+                    "Cannot handle inequality constraints like no short-selling"
+                  ]
+                },
+                {
+                  "_key": "oc1l3-023c2",
+                  "label": "Lagrange Multipliers (Chapter 4 onward)",
+                  "points": [
+                    "Scales to any number of variables and equality constraints",
+                    "Never requires solving a constraint for one variable",
+                    "Extends cleanly to inequality constraints via KKT conditions (Chapter 5)",
+                    "The multiplier itself carries a useful economic meaning, covered in Chapter 4"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "oc1l3-024",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Checklist: is your problem constrained or unconstrained?",
+              "steps": [
+                "List every rule the decision variables must obey before calling the problem set up",
+                "Check for a budget rule: must weights sum to 1? This is almost always present in portfolio problems",
+                "Check for a short-selling rule: must every weight be zero or positive?",
+                "Check for exposure limits: single-stock caps, sector caps, or turnover limits",
+                "If no rules survive this check, the problem is unconstrained, rare in real portfolio work",
+                "If any rule survives, the problem is constrained and needs Lagrange multipliers (Chapter 4) or KKT conditions (Chapter 5)"
+              ]
+            },
+            {
+              "_key": "oc1l3-025",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Constrained or not?",
+              "question": "A hedge fund's risk model minimizes the sum of squared factor exposures. The fund allows any combination of positions, including unlimited leverage and shorting, with no rule requiring capital to be fully invested. Is this optimization problem constrained or unconstrained?",
+              "options": [
+                "Constrained, because it involves multiple factors",
+                "Unconstrained, because there is no rule restricting the decision variables",
+                "Constrained, because minimizing anything implies a constraint",
+                "Cannot be determined without knowing the number of factors"
+              ],
+              "correctIndex": 1,
+              "explanation": "A problem is constrained only if the decision variables must obey some rule. Here there is no budget rule, no short-selling restriction, and no leverage cap, so every combination of positions is feasible. This is genuinely unconstrained, even though it involves multiple variables."
+            },
+            {
+              "_key": "oc1l3-026",
+              "_type": "flashcardSet",
+              "title": "Constrained vs Unconstrained: Core Terms",
+              "cards": [
+                { "_key": "oc1l3-026f1", "term": "Unconstrained optimization", "definition": "A problem where the decision variables can take any value, with no restricting rules." },
+                { "_key": "oc1l3-026f2", "term": "Constrained optimization", "definition": "A problem where the decision variables must satisfy one or more rules, narrowing the search to a feasible region." },
+                { "_key": "oc1l3-026f3", "term": "Equality constraint", "definition": "A rule the decision variables must satisfy exactly, such as portfolio weights summing to 1." },
+                { "_key": "oc1l3-026f4", "term": "Inequality constraint", "definition": "A rule that sets a bound the decision variables must stay within, such as no negative weights." },
+                { "_key": "oc1l3-026f5", "term": "Substitution method", "definition": "Solving a constraint for one variable and plugging it into the objective, turning a constrained problem into an unconstrained one. Works for simple cases but does not scale." }
+              ]
+            },
+            {
+              "_key": "oc1l3-027",
+              "_type": "keyTakeaways",
+              "points": [
+                "Unconstrained problems let decision variables take any value; constrained problems restrict them with rules called constraints.",
+                "Equality constraints must be met exactly (weights summing to 1). Inequality constraints set a bound (no negative weights).",
+                "Applying plain calculus while ignoring constraints can produce an answer that violates the rules entirely, as the toy example's (0, 0) result showed.",
+                "Substitution turns a constrained problem into an unconstrained one for simple cases, but breaks down as the number of variables and constraints grows, and cannot handle inequality constraints.",
+                "Lagrange multipliers, starting in Chapter 4, solve constrained problems directly and scale to real portfolio sizes without substitution."
+              ]
+            },
+            {
+              "_key": "oc1l3-028",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to buy or sell any security. The toy problems used here are simplified mathematical illustrations, not real portfolio recommendations. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

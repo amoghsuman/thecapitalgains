@@ -1,0 +1,228 @@
+{
+  "courseSlug": "understanding-momentum-and-trend-following-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 6: Backtesting and the Traps That Break Trend and Momentum Strategies",
+      "lessons": [
+        {
+          "title": "Case Study: Stress-Testing a Momentum Backtest for Hidden Bias",
+          "slug": "case-study-stress-testing-a-momentum-backtest-for-hidden-bias",
+          "body": [
+            {
+              "_key": "m24-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m24-001s1", "_type": "span", "marks": [], "text": "This chapter now has a full checklist: survivorship bias, look-ahead bias, data snooping, overfitting, and realistic costs. Time to point it at a real target, this course's own Tata Motors backtest from Chapter 2, Lesson 4, and audit it properly instead of taking its own earlier disclaimers at face value." }
+              ]
+            },
+            {
+              "_key": "m24-002",
+              "_type": "bigIdea",
+              "text": "A rigorous backtest review walks through each specific bias by name and checks it individually, rather than reaching for a vague, general sense of trust or distrust. Some checks will come back clean. Others won't. The value is in knowing precisely which is which, and this audit finds a genuine surprise: the Tata Motors backtest's real weakness was never the one most people would guess first."
+            },
+            {
+              "_key": "m24-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m24-003s1", "_type": "span", "marks": [], "text": "Recap: What Chapter 2's Case Study Actually Claimed" }
+              ]
+            },
+            {
+              "_key": "m24-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m24-004s1", "_type": "span", "marks": [], "text": "A filtered 50-day/200-day crossover rule, applied to an illustrative Tata Motors price path from February 2019 to the end of 2024, produced a headline strategy return of +547.7%, against a buy-and-hold return of +179.4% over the same period, with a strategy max drawdown of roughly -22% versus buy-and-hold's roughly -81%. That lesson already flagged real limitations. This audit goes through them one at a time, using the specific vocabulary this chapter has since built." }
+              ]
+            },
+            {
+              "_key": "m24-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m24-005s1", "_type": "span", "marks": [], "text": "Audit 1: Survivorship and Look-Ahead Bias" }
+              ]
+            },
+            {
+              "_key": "m24-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m24-006s1", "_type": "span", "marks": [], "text": "Survivorship bias, as defined in Lesson 1, specifically concerns testing on a universe that excludes historical failures. A single-stock backtest on one company that is still actively listed today doesn't carry this particular risk in its classic form, there is no universe membership list being quietly filtered. Look-ahead bias is also clean here on a technical level: the 50-day and 200-day SMAs used only past price data at every point, nothing about the signal construction peeked ahead. Neither of these is where the real problem lives." }
+              ]
+            },
+            {
+              "_key": "m24-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m24-007s1", "_type": "span", "marks": [], "text": "Audit 2: Data Snooping and Overfitting" }
+              ]
+            },
+            {
+              "_key": "m24-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m24-008s1", "_type": "span", "marks": [], "text": "Both of these also come back relatively clean. The strategy's parameters, the 50-day and 200-day windows, the 1% separation band, and the 20-day slope lookback, were introduced and fixed in Chapter 2, Lesson 3, before the Tata Motors example was ever run. They were not tuned by testing many combinations against this specific stock's history and keeping the best one, the mechanism Lesson 1 of this chapter described for data snooping. Nor is there evidence of overfitting in the Lesson 2 sense, a small, standard parameter set applied as-is, not a heavily flexible model bent to match this one stock's noise." }
+              ]
+            },
+            {
+              "_key": "m24-009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m24-009s1", "_type": "span", "marks": [], "text": "Audit 3: Transaction Costs, Also a Minor Issue Here" }
+              ]
+            },
+            {
+              "_key": "m24-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m24-010s1", "_type": "span", "marks": [], "text": "Reviewing that case study's trade log: it produced only 2 completed long round trips, entry to exit, across nearly 6 years, exactly the kind of low-turnover behavior a slow, filtered 200-day-anchored crossover system should produce. Applying the last lesson's illustrative 0.15% per round trip, 2 round trips comes to a total cost drag of roughly 0.3% across the entire multi-year period, essentially negligible against a headline return in the hundreds of percent. For once, turnover isn't the problem." }
+              ]
+            },
+            {
+              "_key": "m24-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m24-011s1", "_type": "span", "marks": [], "text": "Audit 4: Sample Size and Selection, the Real Weak Point" }
+              ]
+            },
+            {
+              "_key": "m24-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m24-012s1", "_type": "span", "marks": [], "text": "Here is where the original case study's own disclaimer was pointing all along, and where this audit lands too. Two completed trades on one stock is not a sample size, it is barely an anecdote. And Tata Motors wasn't picked at random, that lesson explicitly chose it because its price history already contained a dramatic crash and an equally dramatic recovery, a form of selection bias distinct from the survivorship bias checked in Audit 1: not excluding failed companies from a universe, but actively selecting one company's history because it flatters the strategy being demonstrated. Two trades cannot distinguish a genuine, repeatable edge from a strategy that simply got lucky twice on a single, favorably chosen stock." }
+              ]
+            },
+            {
+              "_key": "m24-013",
+              "_type": "table",
+              "caption": "Full audit summary: Chapter 2's Tata Motors backtest",
+              "headers": ["Check", "Present?", "Severity"],
+              "rows": [
+                { "_key": "m24-013r1", "_type": "tableRow", "cells": ["Survivorship bias", "No (single, currently listed stock)", "N/A"] },
+                { "_key": "m24-013r2", "_type": "tableRow", "cells": ["Look-ahead bias", "No (signal used only past data)", "N/A"] },
+                { "_key": "m24-013r3", "_type": "tableRow", "cells": ["Data snooping", "No (parameters fixed before testing)", "Low"] },
+                { "_key": "m24-013r4", "_type": "tableRow", "cells": ["Overfitting", "No (standard, untuned parameters)", "Low"] },
+                { "_key": "m24-013r5", "_type": "tableRow", "cells": ["Transaction costs", "Minor (only 2 round trips)", "Low"] },
+                { "_key": "m24-013r6", "_type": "tableRow", "cells": ["Stock selection bias", "Yes (Tata Motors chosen for its known history)", "High"] },
+                { "_key": "m24-013r7", "_type": "tableRow", "cells": ["Sample size", "Severe (2 completed trades total)", "High"] }
+              ]
+            },
+            {
+              "_key": "m24-014",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This is the value of a specific, named checklist over a vague sense of skepticism. A rushed critique might have guessed the Tata Motors backtest's problem was curve-fitting or ignored costs, and been wrong on both counts. The actual weak point, a tiny, non-random sample, is easy to miss without walking through each check individually and is exactly why Chapter 4's own 15-stock case study, and any serious real-world test, needs a broad, properly sourced universe and dozens or hundreds of trades before its results mean anything statistically."
+            },
+            {
+              "_key": "m24-015",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m24-015s1", "_type": "span", "marks": [], "text": "What Would Actually Fix It" }
+              ]
+            },
+            {
+              "_key": "m24-016",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m24-016s1", "_type": "span", "marks": [], "text": "A genuinely trustworthy version of this test would run the same, unmodified rule across a broad universe, hundreds of Nifty 500 stocks rather than one, using point-in-time index membership rather than today's constituent list, over a long enough history to produce many dozens of completed trades, validated out-of-sample or via walk-forward testing, and reported net of realistic costs. That is a materially larger undertaking than an illustrative single-stock teaching example, and it is precisely the gap between a worked example built to demonstrate mechanics and a backtest built to actually justify risking capital." }
+              ]
+            },
+            {
+              "_key": "m24-017",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Confirm the cost drag calculation",
+              "prompt": "Using the illustrative 0.15% per round trip cost from the last lesson, what is the total cost drag, in percent, from the Tata Motors backtest's 2 completed round trips?",
+              "correctValue": 0.3,
+              "tolerance": 0.02,
+              "unit": "%",
+              "explanation": "2 round trips x 0.15% = 0.3%. Against a headline strategy return of +547.7%, this cost drag is essentially negligible, confirming that transaction costs were not the real issue with this particular backtest."
+            },
+            {
+              "_key": "m24-018",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "What was the actual weak point?",
+              "question": "Based on this audit, what was the single biggest, most severe issue with the original Tata Motors backtest from Chapter 2?",
+              "options": [
+                "Overfitting, since too many parameters were tuned to the data",
+                "Transaction costs, since the strategy traded too frequently",
+                "Sample size and stock-selection bias, since the test relied on only 2 completed trades on one stock chosen for its already-known favorable history",
+                "Look-ahead bias, since future prices were used in the signal"
+              ],
+              "correctIndex": 2,
+              "explanation": "The audit found overfitting, data snooping, and transaction costs were all minor or absent in this specific case. The severe issue was a tiny, non-random sample: 2 trades on one stock picked because its history was already known to suit the strategy being demonstrated."
+            },
+            {
+              "_key": "m24-019",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Applying the checklist to a new claim",
+              "scenario": "A friend shows you a backtest of a different momentum strategy, run across all 500 Nifty 500 stocks using point-in-time membership, with 340 completed round trips over 8 years, validated with walk-forward testing, and reported net of a realistic cost assumption. It shows a modest but positive Sharpe ratio of 0.6.",
+              "prompt": "Based on everything in this chapter, how would you compare the credibility of this backtest to the original Tata Motors example, even though its headline number, a Sharpe of 0.6, sounds far less exciting than +547.7%?",
+              "modelAnswer": "This backtest is far more credible, despite the much less dramatic headline number, precisely because it addresses every weak point the audit found in the Tata Motors example: a broad, properly sourced universe instead of one hand-picked stock, point-in-time membership avoiding look-ahead bias, hundreds of trades instead of 2, walk-forward validation guarding against overfitting, and realistic costs already netted out. A modest, honestly measured edge across a large, unbiased sample is worth far more than a spectacular return built on 2 trades and a favorably chosen example, exactly the lesson this whole chapter has been building toward."
+            },
+            {
+              "_key": "m24-020",
+              "_type": "toolLink",
+              "label": "Explore point-in-time historical constituent data via NSE's official index archives",
+              "url": "https://www.niftyindices.com",
+              "description": "Building the kind of broad, properly sourced backtest described in this lesson's 'What Would Actually Fix It' section starts with point-in-time index constituent data, which NSE Indices' own archives are a genuine starting point for."
+            },
+            {
+              "_key": "m24-021",
+              "_type": "flashcardSet",
+              "title": "Backtest Auditing: Core Terms",
+              "cards": [
+                { "_key": "m24-021f1", "term": "Stock-selection bias", "definition": "Choosing a specific security to test a strategy on because its history is already known to flatter that strategy, distinct from survivorship bias's universe-exclusion mechanism." },
+                { "_key": "m24-021f2", "term": "Sample size (backtesting)", "definition": "The number of independent trades or observations a backtest produces, with too few, such as 2 completed trades, making it impossible to distinguish genuine edge from luck." },
+                { "_key": "m24-021f3", "term": "Backtest audit checklist", "definition": "A systematic review of a backtest against each specific bias, survivorship, look-ahead, data snooping, overfitting, and cost realism, individually rather than through general impression." }
+              ]
+            },
+            {
+              "_key": "m24-022",
+              "_type": "keyTakeaways",
+              "points": [
+                "A proper backtest audit checks each specific bias individually: survivorship, look-ahead, data snooping, overfitting, and realistic costs, rather than relying on a general sense of trust.",
+                "The Tata Motors backtest from Chapter 2 came back clean on survivorship bias, look-ahead bias, data snooping, overfitting, and even transaction costs, since it only involved 2 low-cost round trips.",
+                "Its real, severe weakness was sample size and stock-selection bias: only 2 completed trades on one stock chosen because its history was already known to favor the strategy.",
+                "A single dramatic backtest result is not automatically more trustworthy than a modest one, a broad, unbiased, high-trade-count result net of costs, even with a far less exciting headline number, is the one worth taking seriously.",
+                "This closes Chapter 6's toolkit: naming each specific bias (Lesson 1), detecting overfitting through out-of-sample and walk-forward testing (Lesson 2), accounting for real costs (Lesson 3), and now applying the full checklist to a concrete, familiar example in this case study."
+              ]
+            },
+            {
+              "_key": "m24-023",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice or a recommendation to buy, sell, or hold Tata Motors or any other security. All figures referenced from the Chapter 2 case study remain illustrative and hypothetical, as originally disclosed there, and this audit does not represent an actual computed statistical test. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

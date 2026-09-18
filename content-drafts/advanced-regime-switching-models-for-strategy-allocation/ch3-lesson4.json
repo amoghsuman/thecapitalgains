@@ -1,0 +1,273 @@
+{
+  "courseSlug": "advanced-regime-switching-models-for-strategy-allocation",
+  "chapters": [
+    {
+      "title": "Chapter 3: Hidden Markov Models for Regime Identification",
+      "lessons": [
+        {
+          "title": "Fitting an HMM in Python with hmmlearn on Nifty 50 Data",
+          "slug": "fitting-an-hmm-in-python-with-hmmlearn-on-nifty-50-data",
+          "body": [
+            {
+              "_key": "rswc3l4b01",
+              "_type": "bigIdea",
+              "text": "Every parameter used so far, means, standard deviations, transition probabilities, was hand-picked for illustration. This lesson replaces all of it with numbers genuinely estimated from Nifty's own return history."
+            },
+            {
+              "_key": "rswc3l4b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc3l4b02s1",
+                  "_type": "span",
+                  "text": "Lesson 1 defined the structure. Lesson 2 explored transition and emission mechanics with numbers chosen by hand. Lesson 3 showed how to decode a path once the parameters are already known. This lesson closes the actual gap: where do pi, A, and B come from in the first place, if nobody hand-picks them? The answer is an algorithm called Baum-Welch, and a Python library, hmmlearn, that implements it for you.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc3l4b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc3l4b03s1",
+                  "_type": "span",
+                  "text": "Baum-Welch: Learning Parameters Without Labeled Data",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc3l4b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc3l4b04s1",
+                  "_type": "span",
+                  "text": "There is a chicken-and-egg problem hiding at the center of fitting an HMM. If you already knew which day belonged to which regime, estimating the emission means, standard deviations, and transition frequencies would be simple arithmetic. If you already knew the parameters, you could infer each day's regime probability using the forward-backward algorithm from Lesson 3. You have neither to start with. Baum-Welch, a specific case of the more general Expectation-Maximization algorithm, resolves this by alternating between the two.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc3l4b05",
+              "_type": "table",
+              "caption": "The Baum-Welch loop",
+              "headers": ["Step", "What Happens"],
+              "rows": [
+                {
+                  "_key": "rswc3l4b05r1",
+                  "_type": "tableRow",
+                  "cells": ["E-step", "Given the current parameter guesses, compute the probability of each hidden state at each time step, a soft assignment rather than a hard label"]
+                },
+                {
+                  "_key": "rswc3l4b05r2",
+                  "_type": "tableRow",
+                  "cells": ["M-step", "Given those soft assignments, re-estimate the transition matrix and emission distributions as weighted averages over the data"]
+                },
+                {
+                  "_key": "rswc3l4b05r3",
+                  "_type": "tableRow",
+                  "cells": ["Repeat", "Alternate the two steps until the total data likelihood stops improving meaningfully"]
+                }
+              ]
+            },
+            {
+              "_key": "rswc3l4b06",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc3l4b06s1",
+                  "_type": "span",
+                  "text": "Fitting a GaussianHMM With hmmlearn",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc3l4b07",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "import numpy as np\nfrom hmmlearn.hmm import GaussianHMM\n\nreturns = nifty_df['daily_return'].dropna().values.reshape(-1, 1)\n\nmodel = GaussianHMM(\n    n_components=3,\n    covariance_type='diag',\n    n_iter=1000,\n    random_state=42,\n)\nmodel.fit(returns)\n\nprint('Transition matrix:')\nprint(model.transmat_)\nprint('State means (daily return):')\nprint(model.means_.flatten())",
+              "caption": "Fitting a 3-state GaussianHMM on Nifty daily returns"
+            },
+            {
+              "_key": "rswc3l4b08",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc3l4b08s1",
+                  "_type": "span",
+                  "text": "model.transmat_ is the learned transition matrix, A, from Lesson 2. model.means_ holds each state's fitted emission mean. covariance_type='diag' keeps the emission covariance diagonal, reasonable here since returns is a single feature; n_iter caps how many Baum-Welch iterations run before giving up on convergence.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc3l4b09",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Baum-Welch is an instance of Expectation-Maximization, and EM only guarantees convergence to a local optimum of the likelihood, not the global one. Two fits with different random_state values can converge to genuinely different parameter sets. Never trust a single fit; always compare several."
+            },
+            {
+              "_key": "rswc3l4b10",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "best_model = None\nbest_score = -np.inf\n\nfor seed in range(20):\n    candidate = GaussianHMM(\n        n_components=3, covariance_type='diag', n_iter=1000, random_state=seed\n    )\n    candidate.fit(returns)\n    score = candidate.score(returns)\n    if score > best_score:\n        best_score = score\n        best_model = candidate\n\nmodel = best_model",
+              "caption": "Fitting across 20 random seeds and keeping the model with the highest log-likelihood, model.score()"
+            },
+            {
+              "_key": "rswc3l4b11",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc3l4b11s1",
+                  "_type": "span",
+                  "text": "Labeling State Identity After Fitting",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc3l4b12",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc3l4b12s1",
+                  "_type": "span",
+                  "text": "hmmlearn has no idea that state 0 'should' mean Calm. The numeric labels it assigns are arbitrary and can even swap between separate fits, a well-known issue called label switching. The fix is to identify states after fitting, not to assume a fixed index means the same thing every time. Sorting by fitted volatility, since volatility is the most naturally ordered of the three dimensions, is the simplest reliable approach.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc3l4b13",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "state_variances = model.covars_.reshape(model.n_components, -1).mean(axis=1)\nstate_stds = np.sqrt(state_variances)\nstate_order = np.argsort(state_stds)\n\nlabel_map = {\n    state_order[0]: 'Calm',\n    state_order[1]: 'Elevated',\n    state_order[2]: 'Stressed',\n}\n\ndecoded_states = model.predict(returns)\nregime_labels = np.array([label_map[s] for s in decoded_states])",
+              "caption": "Sorting fitted states by volatility and decoding the full history; model.predict() runs Lesson 3's Viterbi recursion internally"
+            },
+            {
+              "_key": "rswc3l4b14",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Label switching is not a bug you fixed with the code above, it is a structural property of how these models are fit, and it will bite you again the moment you fit a model on a different asset, a different date range, or even the same data with a different random seed. Always re-identify states by their fitted properties after every fit; never hardcode 'state 2 is always Stressed.'"
+            },
+            {
+              "_key": "rswc3l4b15",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc3l4b15s1",
+                  "_type": "span",
+                  "text": "Sanity-Checking the Fit Against Chapter 1's Real Episodes",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc3l4b16",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc3l4b16s1",
+                  "_type": "span",
+                  "text": "A fitted model is only useful if it agrees with what you already know happened. The cheapest, highest-value validation step is checking the decoded labels against the real episodes from Chapter 1: March 2020 should decode overwhelmingly as Stressed, and the calm 2021 rally should decode mostly as Calm.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc3l4b17",
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "rswc3l4b17st1",
+                  "label": "March 2020 Days Decoded as Stressed",
+                  "value": "~90% (illustrative)",
+                  "context": "A well-fit model should assign Stressed to nearly all of the COVID crash window"
+                },
+                {
+                  "_key": "rswc3l4b17st2",
+                  "label": "2021 Days Decoded as Calm",
+                  "value": "~85% (illustrative)",
+                  "context": "Matches the sustained, largely one-directional rally described in Chapter 1"
+                },
+                {
+                  "_key": "rswc3l4b17st3",
+                  "label": "2022 Days Decoded as Elevated or Stressed",
+                  "value": "~60% (illustrative)",
+                  "context": "Consistent with the choppier, more volatile character of 2022 versus 2021"
+                }
+              ]
+            },
+            {
+              "_key": "rswc3l4b18",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "These validation percentages are illustrative targets to check your own fitted model against, not published statistics from a specific run. If your own fit produces numbers wildly different from this shape, for example March 2020 decoding as mostly Calm, treat that as a signal something is wrong before trusting the model further."
+            },
+            {
+              "_key": "rswc3l4b19",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Fit and Validate Your Own HMM",
+              "steps": [
+                "Compute nifty_df['daily_return'] as in Chapter 2, and drop any NaN values before fitting",
+                "Fit a 3-state GaussianHMM across at least 20 random seeds, keeping the model with the highest model.score()",
+                "Sort the fitted states by standard deviation and map them to Calm, Elevated, and Stressed labels",
+                "Decode the full history with model.predict() and compute the percentage of March 2020 trading days labeled Stressed",
+                "Compute the same percentage for a calm stretch you already know well, like most of 2021, and confirm it is mostly labeled Calm",
+                "If either check looks wrong, do not proceed to trust the model; the number of states itself may be the problem, which the next lesson addresses directly"
+              ]
+            },
+            {
+              "_key": "rswc3l4b20",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Interpreting a Label Mismatch Across Fits",
+              "question": "After fitting a 3-state GaussianHMM twice with different random seeds, state 0 corresponds to the calm regime in the first fit and to the stressed regime in the second fit. What does this indicate?",
+              "options": [
+                "The model is broken and hmmlearn should not be used",
+                "This is the well-known label switching problem: state indices are arbitrary and must be identified after fitting, for example by sorting on fitted volatility, never assumed consistent across fits",
+                "covariance_type must be changed from 'diag' to 'full' to fix it",
+                "The transition matrix must be manually corrected before refitting"
+              ],
+              "correctIndex": 1,
+              "explanation": "hmmlearn assigns numeric state indices with no inherent meaning; there is nothing to fix, because nothing is broken. The correct response is exactly what this lesson's labeling code does: re-identify each state's meaning after every fit by its fitted properties, rather than trusting a raw state index to mean the same thing twice."
+            },
+            {
+              "_key": "rswc3l4b21",
+              "_type": "keyTakeaways",
+              "points": [
+                "Baum-Welch, a case of Expectation-Maximization, alternates between inferring soft state probabilities (E-step) and re-estimating parameters from them (M-step) until the likelihood stops improving",
+                "hmmlearn's GaussianHMM fits pi, A, and B directly from a return series, replacing every hand-picked number from earlier lessons",
+                "EM only converges to a local optimum, so fitting across multiple random seeds and keeping the highest model.score() is standard practice, not optional polish",
+                "State indices are arbitrary and can swap between fits (label switching); states must be identified after fitting, for example by sorting on fitted volatility",
+                "The cheapest, highest-value validation step is checking whether decoded labels agree with real episodes you already understand, like March 2020 decoding mostly as Stressed"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

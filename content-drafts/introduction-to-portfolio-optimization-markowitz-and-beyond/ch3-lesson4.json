@@ -1,0 +1,237 @@
+{
+  "courseSlug": "introduction-to-portfolio-optimization-markowitz-and-beyond",
+  "chapters": [
+    {
+      "title": "Chapter 3: The Markowitz Mean-Variance Framework",
+      "lessons": [
+        {
+          "title": "Solving for the Efficient Frontier: The Optimization Problem Explained",
+          "slug": "solving-for-the-efficient-frontier-the-optimization-problem-explained",
+          "body": [
+            {
+              "_key": "poc3l4-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc3l4-001s1", "_type": "span", "marks": [], "text": "Lesson 3 solved for exactly one portfolio: the single point with the lowest possible risk, ignoring return entirely. A frontier needs every point, not just one. This lesson adds a single new ingredient, a target return, and shows what falls out when you solve for the lowest-risk portfolio at every target return in turn." }
+              ]
+            },
+            {
+              "_key": "poc3l4-002",
+              "_type": "bigIdea",
+              "text": "The efficient frontier is not one optimization problem. It is the same optimization problem, solved once for every possible target return. What makes this tractable, instead of an infinite amount of work, is a genuinely elegant result: the solution turns out to be linear in the target return."
+            },
+            {
+              "_key": "poc3l4-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc3l4-003s1", "_type": "span", "marks": [], "text": "The Full Optimization Problem" }
+              ]
+            },
+            {
+              "_key": "poc3l4-004",
+              "_type": "mathBlock",
+              "latex": "\\min_{w} \\; w^T \\Sigma w \\quad \\text{subject to} \\quad w^T \\mu = R^{*}, \\quad w^T \\mathbf{1} = 1",
+              "caption": "Minimize portfolio variance, subject to hitting a target expected return R*, and weights summing to 1. Solve this once per R*, and each solution is one point on the frontier."
+            },
+            {
+              "_key": "poc3l4-005",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc3l4-005s1", "_type": "span", "marks": [], "text": "Lesson 3 solved the special case with no return constraint at all, which is exactly what happens if you let R* float freely to whatever minimizes risk. Now R* is pinned down first, and the optimizer has to find the least risky way to hit it." }
+              ]
+            },
+            {
+              "_key": "poc3l4-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc3l4-006s1", "_type": "span", "marks": [], "text": "Solving It: Lagrange Multipliers" }
+              ]
+            },
+            {
+              "_key": "poc3l4-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc3l4-007s1", "_type": "span", "marks": [], "text": "A constrained minimization like this is solved with a Lagrangian: fold both constraints into the objective, each with its own multiplier, then take the derivative with respect to the weights and set it to zero." }
+              ]
+            },
+            {
+              "_key": "poc3l4-008",
+              "_type": "mathBlock",
+              "latex": "\\mathcal{L}(w, \\lambda_1, \\lambda_2) = w^T \\Sigma w - \\lambda_1 (w^T \\mu - R^{*}) - \\lambda_2 (w^T \\mathbf{1} - 1)",
+              "caption": "The Lagrangian: the original objective, minus each constraint multiplied by its own Lagrange multiplier."
+            },
+            {
+              "_key": "poc3l4-009",
+              "_type": "mathBlock",
+              "latex": "2\\Sigma w - \\lambda_1 \\mu - \\lambda_2 \\mathbf{1} = 0 \\quad \\Rightarrow \\quad w = \\tfrac{1}{2}\\Sigma^{-1}(\\lambda_1 \\mu + \\lambda_2 \\mathbf{1})",
+              "caption": "Setting the gradient to zero and solving for w. Both multipliers are still unknown at this point."
+            },
+            {
+              "_key": "poc3l4-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc3l4-010s1", "_type": "span", "marks": [], "text": "Substitute this w back into the two original constraints, and lambda1 and lambda2 can be solved for directly. The algebra is mechanical, and it always reduces to three fixed scalar numbers, built once from the covariance matrix, the expected return vector, and nothing else: A = 1-transpose times Sigma-inverse times 1, B = 1-transpose times Sigma-inverse times mu, and C = mu-transpose times Sigma-inverse times mu. Solving fully for the weights gives the punchline of this lesson." }
+              ]
+            },
+            {
+              "_key": "poc3l4-011",
+              "_type": "mathBlock",
+              "latex": "w^{*}(R^{*}) = \\underbrace{\\frac{C - B R^{*}}{D}\\,\\Sigma^{-1}\\mathbf{1}}_{\\text{fixed vector}} \\;+\\; \\underbrace{\\frac{A R^{*} - B}{D}}_{\\text{scales with } R^{*}}\\,\\Sigma^{-1}\\mu \\qquad D = AC - B^2",
+              "caption": "The full closed-form solution: two fixed vectors, blended in proportions that depend only on the single number R*."
+            },
+            {
+              "_key": "poc3l4-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc3l4-012s1", "_type": "span", "marks": [], "text": "Two-Fund Separation: a Beautiful Shortcut" }
+              ]
+            },
+            {
+              "_key": "poc3l4-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc3l4-013s1", "_type": "span", "marks": [], "text": "Look closely at the formula above. Stripped of the constants, it has the shape w*(R*) = g + h x R*, where g and h are two fixed vectors that do not depend on R* at all. That means the weights change in a straight line as the target return changes. This has a genuinely useful consequence: pick ANY two distinct efficient portfolios, and every other point on the entire frontier is just a weighted blend of those two. This is called two-fund separation. You never have to re-run the full optimization for a new target return. Two solved points and simple interpolation get you the rest." }
+              ]
+            },
+            {
+              "_key": "poc3l4-014",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc3l4-014s1", "_type": "span", "marks": [], "text": "Applying It: Three Points on the Real Frontier" }
+              ]
+            },
+            {
+              "_key": "poc3l4-015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc3l4-015s1", "_type": "span", "marks": [], "text": "Reusing Chapter 2's four-stock covariance matrix, TCS, Maruti Suzuki, HDFC Bank, and HUL, along with illustrative expected annualized returns of 16%, 20%, 17%, and 11%, here is the formula solved at three target returns." }
+              ]
+            },
+            {
+              "_key": "poc3l4-016",
+              "_type": "table",
+              "caption": "Three solved points on the four-stock efficient frontier",
+              "headers": ["Target return", "TCS", "Maruti", "HDFC Bank", "HUL", "Risk"],
+              "rows": [
+                { "_key": "poc3l4-016r1", "_type": "tableRow", "cells": ["14.0% (minimum variance)", "28.1%", "8.6%", "13.8%", "49.5%", "13.80%"] },
+                { "_key": "poc3l4-016r2", "_type": "tableRow", "cells": ["16.0%", "30.9%", "24.5%", "20.9%", "23.8%", "15.26%"] },
+                { "_key": "poc3l4-016r3", "_type": "tableRow", "cells": ["18.0%", "33.7%", "40.4%", "27.9%", "-2.1%", "16.85%"] }
+              ]
+            },
+            {
+              "_key": "poc3l4-017",
+              "_type": "callout",
+              "type": "warning",
+              "text": "At an 18% target return, HUL's weight turns negative, -2.1%, a short position. To reach for enough return, the unconstrained optimizer decides the least-volatile stock is actually holding the portfolio back, and briefly bets against it. This is exactly the warning from Lesson 3 made concrete: nothing in this formula stops a weight from going negative. Chapter 6 covers what changes once a no-short-selling rule is added."
+            },
+            {
+              "_key": "poc3l4-018",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Two-fund separation, verified: the 16% row is not a coincidence. Blend the 14.0% portfolio and the 18.0% portfolio in roughly equal proportion (the exact blend fraction is 0.4992, since 16% sits almost exactly halfway between 14.0% and 18.0%), and you land on precisely the 16% row's weights, to two decimal places, without solving the optimization a third time."
+            },
+            {
+              "_key": "poc3l4-019",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc3l4-019s1", "_type": "span", "marks": [], "text": "How This Actually Gets Solved in Practice" }
+              ]
+            },
+            {
+              "_key": "poc3l4-020",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc3l4-020s1", "_type": "span", "marks": [], "text": "Nobody on a real desk hand-derives A, B, C, and D. The closed form above is useful for understanding WHY the frontier is linear in weights, but the moment a constraint like no short-selling gets added, the clean algebra breaks down, since the solution is no longer guaranteed to land inside the allowed region. At that point, everyone reaches for a numerical solver instead." }
+              ]
+            },
+            {
+              "_key": "poc3l4-021",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "import numpy as np\nfrom scipy.optimize import minimize\n\ncov_matrix = np.array([\n    [484.0, 184.8, 137.5, 39.6],\n    [184.8, 784.0, 245.0, 75.6],\n    [137.5, 245.0, 625.0, 90.0],\n    [39.6,  75.6,  90.0,  324.0],\n])\nexpected_returns = np.array([16, 20, 17, 11])\ntarget_return = 16.0\n\ndef portfolio_variance(w):\n    return w @ cov_matrix @ w\n\nconstraints = [\n    {\"type\": \"eq\", \"fun\": lambda w: np.sum(w) - 1},\n    {\"type\": \"eq\", \"fun\": lambda w: w @ expected_returns - target_return},\n]\nresult = minimize(\n    portfolio_variance,\n    x0=np.full(4, 0.25),\n    constraints=constraints,\n    method=\"SLSQP\",\n)\n\nprint(\"Weights:\", np.round(result.x * 100, 1))\nprint(\"Risk:\", round(np.sqrt(result.fun), 2))\n# Matches the closed-form 16% row above, without ever computing A, B, C, or D directly.\n# Adding bounds=[(0, 1)] * 4 to minimize() would enforce no short-selling, changing the answer.",
+              "caption": "SLSQP solves the same constrained problem numerically. Adding bounds=[(0, 1)] * 4 enforces no negative weights, exactly the fix Chapter 6 discusses."
+            },
+            {
+              "_key": "poc3l4-022",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Use two-fund separation directly",
+              "prompt": "Using this lesson's 14.0% (minimum variance) and 18.0% portfolios as the two reference funds, what blend fraction (as a decimal between 0 and 1, where 0 means 100% the 14.0% portfolio and 1 means 100% the 18.0% portfolio) gets you to a target return of exactly 15.0%?",
+              "correctValue": 0.25,
+              "tolerance": 0.02,
+              "unit": "",
+              "explanation": "Since weights are linear in target return, the blend fraction is just the position of 15.0% between 14.0% and 18.0%: (15.0 - 14.0) / (18.0 - 14.0) = 1 / 4 = 0.25. No new optimization is needed, only this ratio applied to the two known weight vectors."
+            },
+            {
+              "_key": "poc3l4-023",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Reading the negative weight",
+              "question": "In this lesson's 18.0% target-return portfolio, HUL's weight came out to -2.1%. What does this mean in practice?",
+              "options": [
+                "The calculation is wrong, since portfolio weights can never be negative",
+                "It means HUL should simply be left out of the portfolio at zero weight",
+                "It means the optimizer wants to short HUL, borrowing and selling it, to free up more capital for the higher-return stocks",
+                "It means HUL's expected return was entered incorrectly"
+              ],
+              "correctIndex": 2,
+              "explanation": "A negative weight in an unconstrained mean-variance optimization means the solver wants to short that asset: sell borrowed shares, and use the proceeds to increase the allocation to other assets, in this case the higher-returning ones needed to hit the 18% target. Whether that is actually implementable depends on real-world constraints, exactly what Chapter 6 covers."
+            },
+            {
+              "_key": "poc3l4-024",
+              "_type": "flashcardSet",
+              "title": "Solving the Frontier: Core Terms",
+              "cards": [
+                { "_key": "poc3l4-024f1", "term": "Mean-variance optimization problem", "definition": "Minimize portfolio variance (w-transpose Sigma w) subject to hitting a target expected return and weights summing to 1." },
+                { "_key": "poc3l4-024f2", "term": "Lagrange multiplier", "definition": "A variable introduced to fold a constraint into an optimization's objective function, allowing a constrained problem to be solved with ordinary calculus." },
+                { "_key": "poc3l4-024f3", "term": "Two-fund separation", "definition": "The result that every efficient portfolio's weights are a linear function of its target return, meaning any two distinct efficient portfolios can be blended to reconstruct every other point on the frontier." }
+              ]
+            },
+            {
+              "_key": "poc3l4-025",
+              "_type": "keyTakeaways",
+              "points": [
+                "The efficient frontier comes from solving the same problem, minimize variance subject to a target return and weights summing to 1, once for every possible target return.",
+                "Lagrange multipliers solve this constrained problem, and the resulting formula shows that optimal weights are a LINEAR function of the target return, not a complicated curve.",
+                "Two-fund separation follows directly: any two distinct efficient portfolios can be blended to produce every other point on the frontier, without re-running the optimization.",
+                "Applied to four real Nifty 50 stocks, a target return of 18% pushed HUL's weight negative, a genuine short position, demonstrating Lesson 3's warning with a concrete number.",
+                "In practice, numerical solvers like SLSQP replace hand-derived closed-form algebra, especially once real-world constraints like no short-selling are added and the clean formula no longer applies.",
+                "This lesson completes the technical core of Markowitz's framework. Lesson 5 builds the full frontier for five real Nifty 50 stocks from end to end."
+              ]
+            },
+            {
+              "_key": "poc3l4-026",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to buy, sell, or short any security named here. All expected return, risk, and weight figures used in the examples and exercises are illustrative, not live or historical market data. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

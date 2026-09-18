@@ -1,0 +1,223 @@
+{
+  "courseSlug": "understanding-transaction-costs-and-slippage-in-backtests",
+  "chapters": [
+    {
+      "title": "Chapter 4: Strategy Sensitivity and Break-Even Analysis",
+      "lessons": [
+        {
+          "title": "Why High-Turnover Strategies Suffer More Than Low-Turnover Strategies",
+          "slug": "why-high-turnover-strategies-suffer-more-than-low-turnover-strategies",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "n1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "n1s1", "text": "Turnover has come up in nearly every lesson so far, the optimizer trap in Chapter 1, the Bank Nifty scalping case study in Chapter 2, the momentum execution case study in Chapter 3. This lesson makes the relationship explicit and general: one formula that explains why every one of those examples turned out the way it did, and that applies to any strategy you build next.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "n2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "n2s1", "text": "Defining Turnover Precisely", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "n3",
+              "style": "normal",
+              "markDefs": [
+                { "_type": "glossaryTerm", "_key": "gt1", "definition": "The value of buys plus sells over a year, divided by two, divided by average portfolio value. A turnover ratio of 1.0 means the portfolio was, on average, fully replaced once over the year." }
+              ],
+              "children": [
+                { "_type": "span", "_key": "n3s1", "text": "The standard definition of ", "marks": [] },
+                { "_type": "span", "_key": "n3s2", "text": "portfolio turnover ratio", "marks": ["gt1"] },
+                { "_type": "span", "_key": "n3s3", "text": " is total buys plus total sells over a year, divided by two, divided by average portfolio value. Dividing by two matters, without it, buying and then selling the same position would be double-counted as two full turnovers instead of one. A turnover ratio of 1.0 means the portfolio effectively changed hands once during the year. A ratio of 13.0 means the equivalent of the entire portfolio was replaced thirteen times over.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "n4",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "n4s1", "text": "The Cost Drag Formula", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "n5",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "n5s1", "text": "Every cost this course has built, brokerage, STT, exchange charges, GST, spread, and market impact, is charged per round trip. Turnover ratio tells you how many round-trip equivalents a strategy generates in a year. Multiply the two together and you get the strategy's total annual cost drag as a share of capital.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "mathBlock",
+              "_key": "n6",
+              "latex": "\\text{Cost Drag (\\% per year)} = \\text{Turnover Ratio} \\times \\text{Round-Trip Cost (\\%)}",
+              "caption": "Round-Trip Cost should be the all-in figure: transaction costs plus spread plus market impact, from Chapters 2 and 3, not transaction costs alone."
+            },
+            {
+              "_type": "block",
+              "_key": "n7",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "n7s1", "text": "Turnover Across Strategy Types", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "n8",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "n8s1", "text": "Take five strategy archetypes and a single, blended, all-in round-trip cost of 0.30% of trade value, a reasonable estimate once transaction costs, spread, and moderate market impact are combined for a typical liquid-to-midcap NSE stock.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "n9",
+              "caption": "Illustrative annual turnover by strategy type",
+              "headers": ["Strategy Type", "Rebalance Pattern", "Annual Turnover Ratio"],
+              "rows": [
+                { "cells": ["Buy & Hold", "~10% of portfolio adjusted per year", "0.1x"] },
+                { "cells": ["Quarterly Rebalance", "~25% replaced each quarter", "1.0x"] },
+                { "cells": ["Monthly Rebalance", "~25% replaced each month", "3.0x"] },
+                { "cells": ["Weekly Rotation", "~25% replaced each week", "13.0x"] },
+                { "cells": ["Daily Rebalance", "~15% repositioned each trading day", "37.5x"] }
+              ]
+            },
+            {
+              "_type": "chart",
+              "_key": "n10",
+              "chartType": "bar",
+              "title": "Annual Cost Drag by Strategy Type (0.30% Blended Round-Trip Cost)",
+              "xAxisLabel": "Strategy Type",
+              "yAxisLabel": "Cost Drag (% of Capital per Year)",
+              "data": [
+                { "label": "Buy & Hold", "value": 0.03 },
+                { "label": "Quarterly", "value": 0.30 },
+                { "label": "Monthly", "value": 0.90 },
+                { "label": "Weekly", "value": 3.90 },
+                { "label": "Daily", "value": 11.25 }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "n11",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "n11s1", "text": "Same Gross Edge, Different Survival Odds", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "n12",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "n12s1", "text": "Give all five strategies the same 12% gross CAGR in a backtest, purely to isolate what turnover alone does to the outcome.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "n13",
+              "caption": "Same 12% gross CAGR, five different turnover levels",
+              "headers": ["Strategy Type", "Turnover", "Cost Drag", "Net CAGR"],
+              "rows": [
+                { "cells": ["Buy & Hold", "0.1x", "0.03%", "11.97%"] },
+                { "cells": ["Quarterly Rebalance", "1.0x", "0.30%", "11.70%"] },
+                { "cells": ["Monthly Rebalance", "3.0x", "0.90%", "11.10%"] },
+                { "cells": ["Weekly Rotation", "13.0x", "3.90%", "8.10%"] },
+                { "cells": ["Daily Rebalance", "37.5x", "11.25%", "0.75%"] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "n14",
+              "type": "warning",
+              "text": "An identical 12% gross edge survives almost untouched for a buy-and-hold strategy and is reduced to essentially nothing for a daily-rebalanced one, not because the daily strategy's signal is worse, but purely because its turnover multiplies the same round-trip cost far more times in a year. This is the same mechanism behind the Bank Nifty scalping case study in Chapter 2 and the optimizer trap in Chapter 1, restated as one general formula."
+            },
+            {
+              "_type": "block",
+              "_key": "n15",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "n15s1", "text": "The General Lesson: Turnover Is a Multiplier on Every Cost You Have Modeled", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "n16",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "n16s1", "text": "Every rate this course has priced, brokerage, STT, spread, market impact, is a per-round-trip number. Turnover is simply how many round trips a strategy generates. That makes turnover the single biggest lever on total annual cost, bigger than any individual rate, because it multiplies all of them at once. Halving a strategy's brokerage saves a fraction of a rupee per trade. Halving its turnover halves the total cost drag outright.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "codeBlock",
+              "_key": "n17",
+              "language": "python",
+              "caption": "Cost drag from turnover ratio and round-trip cost",
+              "code": "def cost_drag_pct(turnover_ratio, round_trip_cost_pct):\n    \"\"\"Annual cost drag as a percentage of capital.\"\"\"\n    return turnover_ratio * round_trip_cost_pct\n\ndef net_cagr(gross_cagr_pct, turnover_ratio, round_trip_cost_pct):\n    return gross_cagr_pct - cost_drag_pct(turnover_ratio, round_trip_cost_pct)\n\n# Weekly rotation strategy from the table above\nprint(round(net_cagr(12.0, 13.0, 0.30), 2))  # 8.1"
+            },
+            {
+              "_type": "block",
+              "_key": "n18",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "n18s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "n19",
+              "variant": "numericInput",
+              "title": "Quick Check",
+              "prompt": "A strategy has an annual turnover ratio of 5.0x and faces a blended round-trip cost of 0.40%. What is its annual cost drag, in percentage points of capital?",
+              "correctValue": 2,
+              "tolerance": 0,
+              "unit": "%",
+              "explanation": "5.0 multiplied by 0.40% is 2.0%. If this strategy's gross CAGR were, say, 10%, its net CAGR would fall to roughly 8%, purely from turnover multiplying the round-trip cost, before considering whether 0.40% was even a conservative estimate."
+            },
+            {
+              "_type": "block",
+              "_key": "n20",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "n20s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "n21",
+              "text": "Cost drag is turnover multiplied by round-trip cost, nothing more exotic than that. It is why identical gross edges survive wildly differently depending on how often a strategy trades, and it is the single most powerful lever on total cost, because it multiplies every other rate in this course at once rather than adjusting just one of them."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "n22",
+              "points": [
+                "Portfolio turnover ratio measures how many times, on average, a portfolio is fully replaced over a year; annual cost drag equals turnover ratio multiplied by round-trip cost.",
+                "At a fixed 0.30% blended round-trip cost, a 12% gross CAGR survives at 11.97% for a buy-and-hold strategy but falls to 0.75% for a daily-rebalanced one, purely from turnover.",
+                "Turnover is a multiplier on every cost this course has priced at once, transaction costs, spread, and market impact together, which makes it the single biggest lever on total annual cost.",
+                "The Bank Nifty scalping case study in Chapter 2 and the optimizer trap in Chapter 1 are both specific instances of this one general formula, not separate phenomena."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

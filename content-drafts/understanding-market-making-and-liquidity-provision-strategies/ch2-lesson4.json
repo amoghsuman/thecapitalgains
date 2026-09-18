@@ -1,0 +1,227 @@
+{
+  "courseSlug": "understanding-market-making-and-liquidity-provision-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 2: The Bid-Ask Spread: What It Is Made Of",
+      "lessons": [
+        {
+          "title": "Tick Size and Spread: How NSE's Tick Rules Shape Market Maker Behaviour",
+          "slug": "tick-size-and-spread-how-nses-tick-rules-shape-market-maker-behaviour",
+          "body": [
+            {
+              "_key": "mmc2l4b01",
+              "_type": "bigIdea",
+              "text": "If the true economic cost of quoting an instrument works out to less than one tick, the spread does not shrink to match that cost. It gets stuck at one tick, and the difference between the tick and the true cost becomes pure profit for whoever is first in the queue."
+            },
+            {
+              "_key": "mmc2l4b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc2l4b02s1",
+                  "_type": "span",
+                  "text": "The Minimum Tick as a Floor, Not a Cost",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc2l4b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "mmc2l4m01",
+                  "_type": "glossaryTerm",
+                  "definition": "The smallest allowed increment between two prices in an exchange's order book. NSE's minimum tick size for equity derivatives option premiums is ₹0.05, meaning no quote can improve on another by less than that amount, however small the underlying costs justifying a spread actually are."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "mmc2l4b03s1",
+                  "_type": "span",
+                  "text": "Every prior lesson in this chapter has treated the spread as something a market maker chooses, freely, to cover order processing, inventory, and adverse selection cost. In reality, that choice is bounded from below by the exchange's ",
+                  "marks": []
+                },
+                {
+                  "_key": "mmc2l4b03s2",
+                  "_type": "span",
+                  "text": "minimum tick size",
+                  "marks": ["mmc2l4m01"]
+                },
+                {
+                  "_key": "mmc2l4b03s3",
+                  "_type": "span",
+                  "text": ". If the sum of a market maker's true costs on some contract works out to less than one tick, it still cannot quote a spread narrower than one tick, because no smaller price increment is legally permitted on the book. The quoted spread, in that case, is not describing the market maker's costs at all; it is simply describing the exchange's rule.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc2l4b04",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc2l4b04s1",
+                  "_type": "span",
+                  "text": "Tick-Constrained vs Cost-Constrained Quoting",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc2l4b05",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc2l4b05s1",
+                  "_type": "span",
+                  "text": "Whether the tick actually binds depends entirely on the premium being quoted, because NSE's ₹0.05 minimum tick is a fixed rupee amount, not a percentage of price. A single tick is a trivial fraction of a premium worth several thousand rupees, deep in the money, so a market maker there is genuinely cost-constrained: it can quote as tight as its actual costs allow, several ticks wide if needed. The same ₹0.05 tick is a large fraction of a premium worth only a few rupees, far out of the money, so that quote is tick-constrained: the spread sits at exactly one tick, wider, in relative terms, than the market maker's true costs would ever demand on their own.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc2l4b06",
+              "_type": "mathBlock",
+              "latex": "\\text{Relative tick size} = \\frac{\\text{Tick}}{\\text{Premium}} \\times 100\\%",
+              "caption": "The same absolute tick of ₹0.05 represents a vastly different relative cost depending on how expensive the instrument being quoted is."
+            },
+            {
+              "_key": "mmc2l4b07",
+              "_type": "table",
+              "caption": "The same ₹0.05 tick, two very different premiums",
+              "headers": ["Option Premium", "Relative Tick Size", "Likely Quoting Regime"],
+              "rows": [
+                { "_key": "mmc2l4b07r1", "_type": "tableRow", "cells": ["₹5,000 (deep in the money)", "0.001%", "Cost-constrained: spread reflects true order processing, inventory, and adverse selection cost"] },
+                { "_key": "mmc2l4b07r2", "_type": "tableRow", "cells": ["₹150 (near the money)", "0.03%", "Usually cost-constrained, though close enough to the tick that a very liquid strike can still sit at one tick"] },
+                { "_key": "mmc2l4b07r3", "_type": "tableRow", "cells": ["₹1.50 (far out of the money)", "3.33%", "Tick-constrained: the spread is set by the exchange's minimum tick, not by the market maker's actual costs"] }
+              ]
+            },
+            {
+              "_key": "mmc2l4b08",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "How Binding Is the Tick?",
+              "prompt": "A far out-of-the-money weekly option is priced at ₹1.20. Given NSE's minimum tick size of ₹0.05, what percentage of the premium does a single tick represent? Round to two decimals.",
+              "correctValue": 4.17,
+              "tolerance": 0.1,
+              "unit": "%",
+              "explanation": "0.05 ÷ 1.20 × 100 ≈ 4.17%. A single tick here is over 4% of the entire premium, which means the quoted spread on this option is almost certainly set by the exchange's minimum tick rule rather than by the market maker's true order processing, inventory, and adverse selection costs. A trader buying and then selling this option pays that tick-driven spread as a real cost regardless of why it exists."
+            },
+            {
+              "_key": "mmc2l4b09",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc2l4b09s1",
+                  "_type": "span",
+                  "text": "Why Being First in the Queue Becomes Precious When Tick-Constrained",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc2l4b10",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc2l4b10s1",
+                  "_type": "span",
+                  "text": "When a contract is tick-constrained, every market maker quoting it is stuck at the same bid and the same ask, because none of them can legally improve on the price by less than a full tick. Recall from Chapter 1 that NSE matches orders using price-time priority: since price competition is capped by the tick, the only thing left to compete on is time, meaning whoever's order got into the queue at that price first gets filled first, and captures the full tick-sized edge over the market maker's true cost. This is exactly why speed and queue position matter most, and are fought over most fiercely, in precisely the contracts where the tick is binding rather than the underlying cost.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc2l4b11",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Tick-constrained quoting is a large part of why colocation and low-latency infrastructure matter so much to a market making business. It is not simply about being fast for its own sake; it is about winning the queue position that captures a tick-sized edge that pure cost-based pricing would never have awarded in the first place. Chapter 5 covers this race directly."
+            },
+            {
+              "_key": "mmc2l4b12",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc2l4b12s1",
+                  "_type": "span",
+                  "text": "The Trade-off in Setting Tick Size",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc2l4b13",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc2l4b13s1",
+                  "_type": "span",
+                  "text": "An exchange choosing a tick size is balancing two opposing problems. A tick that is too large keeps spreads artificially wide on cheap or thinly traded contracts well beyond what true costs justify, handing rent to whichever market maker wins the queue and quietly taxing every taker who trades there. A tick that is too small lets quotes shift by economically meaningless amounts constantly, which increases message traffic on the matching engine and can make it harder for a market maker to hold a stable, quotable price long enough to recover even its order processing cost on a genuinely illiquid name. NSE and SEBI periodically review tick size rules with exactly this trade-off in mind.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc2l4b14",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson uses NSE's well-established ₹0.05 minimum tick for equity derivatives option premiums. Cash market equities can carry different tick sizes across different price bands, and these rules are reviewed and revised periodically by SEBI and the exchanges; check the current NSE circular for the specific segment and price band you are working with before relying on a tick size in a model."
+            },
+            {
+              "_key": "mmc2l4b15",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "The Retail Trader Buying a Lottery-Ticket Option",
+              "scenario": "A retail trader repeatedly buys and sells deep out-of-the-money weekly options priced around ₹1 to ₹2, chasing occasional large percentage moves. Each round trip, the trader crosses a spread of one tick, ₹0.05, on entry and again on exit.",
+              "prompt": "In relative terms, how large is this trader's round-trip spread cost compared to a trader doing the same thing on a ₹500 option, and what is driving that difference?",
+              "modelAnswer": "On a ₹1 to ₹2 option, a ₹0.05 tick is somewhere between 2.5% and 5% of the premium per side, so a full round trip can cost several percent of the position's value purely in spread, before considering brokerage or other charges. On a ₹500 option, the same ₹0.05 tick is a negligible 0.01% of premium, so the round-trip spread cost in relative terms is far smaller. The difference is not that the far out-of-the-money option is somehow more expensive to make a market in; it is that the fixed, absolute minimum tick becomes a much larger proportion of a small premium, making this exactly the kind of cheap, low-premium option where tick-constrained spreads quietly impose the largest relative trading cost."
+            },
+            {
+              "_key": "mmc2l4b16",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Tick-Constrained or Cost-Constrained?",
+              "question": "A liquid, deep in-the-money Nifty option with a premium of ₹6,200 is quoted at a two-tick spread. What does this most likely indicate?",
+              "options": [
+                "The market is tick-constrained and the spread reflects the exchange's minimum tick rule",
+                "The market is cost-constrained and the spread reflects the market maker's actual order processing, inventory, and adverse selection costs",
+                "The exchange has set a special wider tick size for this contract",
+                "The option is illiquid and no real market maker is quoting it"
+              ],
+              "correctIndex": 1,
+              "explanation": "At a ₹6,200 premium, one tick of ₹0.05 is a vanishingly small fraction of the price, so the exchange's minimum tick is almost never the binding constraint here. A two-tick spread on a contract like this reflects the market maker's genuine costs rather than an artificial floor imposed by the tick rule, unlike the far out-of-the-money example earlier in this lesson."
+            },
+            {
+              "_key": "mmc2l4b17",
+              "_type": "keyTakeaways",
+              "points": [
+                "NSE's minimum tick size sets a floor under the quoted spread that applies regardless of a market maker's actual costs",
+                "Whether the tick binds depends on relative tick size, tick divided by premium, not on the absolute tick amount alone",
+                "High-premium options are typically cost-constrained, with spreads reflecting true order processing, inventory, and adverse selection cost",
+                "Low-premium, far out-of-the-money options are often tick-constrained, with the spread set purely by the exchange's minimum tick rule",
+                "When a market is tick-constrained, all market makers are stuck at the same price, so competition shifts to queue position under price-time priority, which is a major reason speed and colocation matter",
+                "Exchanges balance too-large a tick, which hands rent to market makers beyond their true costs, against too-small a tick, which raises message traffic and can undermine order processing cost recovery on illiquid names"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

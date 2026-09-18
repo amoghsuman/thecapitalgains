@@ -1,0 +1,225 @@
+{
+  "courseSlug": "understanding-stochastic-calculus-brownian-motion-itos-lemma-and-the-path-to-black-scholes",
+  "chapters": [
+    {
+      "title": "Chapter 4: Beyond Black-Scholes: Extensions of the Toolkit",
+      "lessons": [
+        {
+          "title": "Pricing a Put and Verifying Put-Call Parity With Ito's Tools",
+          "slug": "pricing-a-put-and-verifying-put-call-parity-with-itos-tools",
+          "body": [
+            {
+              "_key": "c4l1-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l1-001s1", "_type": "span", "marks": [], "text": "Rohan got the job. His first assignment on the desk, a week in: price a put, not a call. He almost reaches for a fresh derivation, then stops. Nothing about the machinery built over the last fourteen lessons was specific to calls. Only the payoff changes. This lesson prices a put using exactly the same risk-neutral tools, then uses those same tools to prove put-call parity in about three lines, a result usually presented as a standalone arbitrage argument with no connection to anything in this course." }
+              ]
+            },
+            {
+              "_key": "c4l1-002",
+              "_type": "bigIdea",
+              "text": "A put option's price falls out of the exact same Feynman-Kac expectation used for a call, just with the payoff max(K-S_T, 0) instead of max(S_T-K, 0). And put-call parity, usually proven with a standalone static arbitrage argument, is provable in three lines using nothing but linearity of expectation and the martingale property proved in the previous lesson."
+            },
+            {
+              "_key": "c4l1-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l1-003s1", "_type": "span", "marks": [], "text": "Pricing a Put: Same Machinery, Different Payoff" }
+              ]
+            },
+            {
+              "_key": "c4l1-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l1-004s1", "_type": "span", "marks": [], "text": "A European put struck at K pays max(K - S_T, 0) at expiry, the mirror image of a call's payoff. The same Feynman-Kac expectation from two lessons ago applies without any new derivation." }
+              ]
+            },
+            {
+              "_key": "c4l1-005",
+              "_type": "mathBlock",
+              "latex": "P(S,t) = e^{-r\\tau}\\, E^Q\\big[\\max(K - S_T,\\ 0)\\big]",
+              "caption": "The put price, via the same risk-neutral expectation used for the call"
+            },
+            {
+              "_key": "c4l1-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l1-006s1", "_type": "span", "marks": [], "text": "Splitting this expectation the same way as the call, and using the standard normal fact that 1 - N(x) = N(-x), reuses every algebraic step from the previous chapter's derivation with every inequality flipped. The result is the put's own closed-form formula, with the same d1 and d2 as the call." }
+              ]
+            },
+            {
+              "_key": "c4l1-007",
+              "_type": "mathBlock",
+              "latex": "P(S,t) = K e^{-r\\tau}\\, N(-d_2) \\; - \\; S\\, N(-d_1)",
+              "caption": "The Black-Scholes formula for a European put, with the same d1, d2 as the call"
+            },
+            {
+              "_key": "c4l1-008",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l1-008s1", "_type": "span", "marks": [], "text": "Put-Call Parity: The Familiar Static Argument" }
+              ]
+            },
+            {
+              "_key": "c4l1-009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l1-009s1", "_type": "span", "marks": [], "text": "Put-call parity is usually proven with a standalone argument: a long call plus a short put, both struck at K, replicates a forward contract on the stock, and a forward's fair value is S minus the discounted strike. That argument uses no stochastic calculus at all, only the observation that a long call and a short put pay off identically to owning the stock outright and financing the strike at the risk-free rate." }
+              ]
+            },
+            {
+              "_key": "c4l1-010",
+              "_type": "mathBlock",
+              "latex": "C - P = S - K e^{-r\\tau}",
+              "caption": "Put-call parity, the standard result"
+            },
+            {
+              "_key": "c4l1-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l1-011s1", "_type": "span", "marks": [], "text": "Put-Call Parity: The Three-Line Stochastic Proof" }
+              ]
+            },
+            {
+              "_key": "c4l1-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l1-012s1", "_type": "span", "marks": [], "text": "This course's tools reach the same result faster, and reveal exactly why it is true. Start from one elementary algebraic identity, true for any real number x, checked by considering the two cases x ≥ 0 and x < 0 separately: exactly one of the two max terms is ever nonzero, and it always equals x." }
+              ]
+            },
+            {
+              "_key": "c4l1-013",
+              "_type": "mathBlock",
+              "latex": "\\max(x, 0) - \\max(-x, 0) = x, \\qquad \\text{for every real number } x",
+              "caption": "An elementary identity, checked case by case"
+            },
+            {
+              "_key": "c4l1-014",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l1-014s1", "_type": "span", "marks": [], "text": "Set x = S_T - K. Then max(S_T-K, 0) - max(K-S_T, 0) = S_T - K, exactly the call payoff minus the put payoff. Apply e^(-rτ)E^Q[·] to both sides, using linearity of expectation to split it, and one fact from the previous lesson finishes the proof: the discounted stock price is a martingale under Q, so E^Q[S_T] = S·e^(rτ) exactly." }
+              ]
+            },
+            {
+              "_key": "c4l1-015",
+              "_type": "mathBlock",
+              "latex": "C - P = e^{-r\\tau} E^Q\\big[S_T - K\\big] = e^{-r\\tau}\\Big(\\underbrace{E^Q[S_T]}_{=\\ S e^{r\\tau}} - K\\Big) = S - K e^{-r\\tau}",
+              "caption": "Put-call parity, proved in three lines using this course's own results"
+            },
+            {
+              "_key": "c4l1-016",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Notice what this proof did not need: no new assumptions, no fresh hedging argument, no integral calculation. It reused exactly three things already built in this course: linearity of expectation, one elementary case-by-case identity, and Chapter 3's martingale fact that E^Q[S_T] = S·e^(rτ). The static \"replicate a forward\" argument and this stochastic proof are not two different explanations of the same coincidence, they describe the identical underlying fact from two different vantage points."
+            },
+            {
+              "_key": "c4l1-017",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l1-017s1", "_type": "span", "marks": [], "text": "Verifying With the TCS Numbers" }
+              ]
+            },
+            {
+              "_key": "c4l1-018",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l1-018s1", "_type": "span", "marks": [], "text": "Reuse Chapter 3's TCS call price, ₹172.40, computed with S = ₹3,900, K = ₹4,000, r = 7%, σ = 24%, τ = 0.25. Put-call parity gives the put price directly, no new N(d) calculation required, and the direct put formula should land on the same number." }
+              ]
+            },
+            {
+              "_key": "c4l1-019",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "c4l1-019s1", "label": "Via parity: C - (S - Ke^-rτ)", "value": "≈ ₹203.01", "context": "172.40 - (3900 - 3930.61)" },
+                { "_key": "c4l1-019s2", "label": "Via direct put formula", "value": "≈ ₹203.01", "context": "K e^-rτ N(-d2) - S N(-d1)" },
+                { "_key": "c4l1-019s3", "label": "N(-d1), N(-d2)", "value": "0.5021, 0.5498", "context": "1 - N(d1), 1 - N(d2) from Chapter 3's Lesson 4 values" }
+              ]
+            },
+            {
+              "_key": "c4l1-020",
+              "_type": "codeBlock",
+              "language": "python",
+              "caption": "Confirming both routes give the same put price",
+              "code": "from math import log, sqrt, exp, erf\n\nS, K, r, sigma, tau = 3900, 4000, 0.07, 0.24, 0.25\n\ndef norm_cdf(x):\n    return 0.5 * (1 + erf(x / sqrt(2)))\n\nd1 = (log(S/K) + (r + 0.5*sigma**2)*tau) / (sigma*sqrt(tau))\nd2 = d1 - sigma*sqrt(tau)\n\ncall_price = S * norm_cdf(d1) - K * exp(-r*tau) * norm_cdf(d2)\nput_price_direct = K * exp(-r*tau) * norm_cdf(-d2) - S * norm_cdf(-d1)\nput_price_parity = call_price - (S - K * exp(-r*tau))\n\nprint(f\"Call price:              Rs {call_price:.2f}\")\nprint(f\"Put price (direct):      Rs {put_price_direct:.2f}\")\nprint(f\"Put price (via parity):  Rs {put_price_parity:.2f}\")\n\n# Typical output:\n# Call price:              Rs 172.40\n# Put price (direct):      Rs 203.01\n# Put price (via parity):  Rs 203.01"
+            },
+            {
+              "_key": "c4l1-021",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Identify the reused fact",
+              "question": "The three-line stochastic proof of put-call parity relies on E^Q[S_T] = S·e^(rτ). Where did this fact come from?",
+              "options": [
+                "It is a new assumption introduced specifically for this proof",
+                "It follows from the discounted stock price, e^(-rt)S(t), being a martingale under Q, proved in the previous lesson using Ito's product rule",
+                "It follows from the boundary condition of the Black-Scholes PDE",
+                "It is only true when the option is exactly at the money"
+              ],
+              "correctIndex": 1,
+              "explanation": "The previous lesson showed d(e^(-rt)S) = σe^(-rt)S dW̃, zero drift under Q. Zero drift means E^Q[e^(-rt)S(t)] stays constant at S(0) for every t, which rearranges directly to E^Q[S_T] = S·e^(rτ). No new assumption was needed here."
+            },
+            {
+              "_key": "c4l1-022",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Compute P - C directly",
+              "prompt": "Using S = ₹3,900, K = ₹4,000, r = 7%, τ = 0.25, what is P - C, using put-call parity rearranged as P - C = Ke^(-rτ) - S?",
+              "correctValue": 30.61,
+              "tolerance": 0.5,
+              "unit": "₹",
+              "explanation": "Ke^(-rτ) = 4,000 × e^(-0.07×0.25) = 4,000 × 0.98265 ≈ 3,930.61. P - C = 3,930.61 - 3,900 = ₹30.61. This matches the earlier calculation: P ≈ 172.40 + 30.61 ≈ ₹203.01, consistent with the direct formula's ₹203.01."
+            },
+            {
+              "_key": "c4l1-023",
+              "_type": "flashcardSet",
+              "title": "Core Terms From This Lesson",
+              "cards": [
+                { "_key": "c4l1-023f1", "term": "Put option payoff", "definition": "max(K - S_T, 0), the mirror image of a call's max(S_T - K, 0) payoff; priced with the identical Feynman-Kac expectation, only the payoff function changes." },
+                { "_key": "c4l1-023f2", "term": "Put-call parity", "definition": "C - P = S - Ke^(-rτ), the no-arbitrage relationship between a call and put struck at the same K and expiring at the same T." },
+                { "_key": "c4l1-023f3", "term": "max(x,0) - max(-x,0) = x", "definition": "An elementary identity, true for every real x, that underlies the stochastic proof of put-call parity when applied to x = S_T - K." }
+              ]
+            },
+            {
+              "_key": "c4l1-024",
+              "_type": "keyTakeaways",
+              "points": [
+                "A put's price, P(S,t) = e^(-rτ)E^Q[max(K-S_T,0)], uses the identical risk-neutral machinery as a call; only the payoff function changes, giving P = Ke^(-rτ)N(-d2) - SN(-d1).",
+                "Put-call parity, C - P = S - Ke^(-rτ), has both a familiar static arbitrage proof and a three-line stochastic proof using linearity of expectation, the identity max(x,0)-max(-x,0)=x, and the martingale property from the previous lesson.",
+                "Both derivations describe the same underlying fact; the stochastic proof simply exposes the mechanism (E^Q[S_T]=Se^(rτ)) that the static argument leaves implicit.",
+                "Numerically verifying TCS's put price two independent ways, direct formula and parity, confirms both give the same answer, ≈ ₹203.",
+                "The next lesson extends this toolkit in a different direction: from one stock to several, building the multivariate version of Ito's lemma this chapter needs for basket and spread instruments."
+              ]
+            },
+            {
+              "_key": "c4l1-025",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to buy, sell, or hold any security named here. The TCS price, strike, rate, and volatility figures are simplified illustrative numbers, not live market data or a forecast. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

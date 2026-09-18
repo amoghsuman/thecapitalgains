@@ -1,0 +1,248 @@
+{
+  "courseSlug": "building-an-angel-investment-portfolio-diversification-and-follow-on-strategy",
+  "chapters": [
+    {
+      "title": "Chapter 2: The Math of Portfolio Construction",
+      "lessons": [
+        {
+          "title": "Expected Value and Return Multiples: The Math Behind Every Bet",
+          "slug": "expected-value-and-return-multiples-the-math-behind-every-bet",
+          "body": [
+            {
+              "_key": "c2l1-001",
+              "_type": "bigIdea",
+              "text": "Two angels can look at the exact same startup, agree on the exact same odds of success, and still walk away with completely different expected returns, purely because of the valuation each one paid to get in."
+            },
+            {
+              "_key": "c2l1-002",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l1-002s1", "_type": "span", "text": "Chapter 1 built the math of the whole portfolio: how many bets, what loss ratio to expect, what MOIC and IRR you are realistically chasing. This chapter zooms into a single bet. Before a cheque gets written, there is a specific, calculable question worth answering: given what you believe about this company's chances, and given the valuation you are being asked to pay, does this specific investment clear a reasonable bar? That question has a name, expected value, and it is more precise than \"I like the founder\" or \"this feels like a hot deal.\"", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l1-003",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l1-003s1", "_type": "span", "text": "Building a Probability-Weighted Exit Value", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l1-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l1-004s1", "_type": "span", "text": "Before you can value a bet, you need a rough distribution of how it could end, each ending assigned a probability and an exit value. This is necessarily a judgment call, built from comparable outcomes in the sector and stage, the founder's track record, and how crowded the space already is, not a formula that spits out the right answer on its own. What the exercise forces is rigour: writing your assumptions down in numbers makes them arguable and improvable, instead of staying a vague, unexamined feeling about the deal.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l1-005",
+              "_type": "table",
+              "caption": "An illustrative exit-value distribution for a seed-stage startup",
+              "headers": ["Outcome", "Probability", "Exit Value"],
+              "rows": [
+                { "_key": "c2l1-005r1", "_type": "tableRow", "cells": ["Shuts down", "55%", "₹0"] },
+                { "_key": "c2l1-005r2", "_type": "tableRow", "cells": ["Soft landing / acquihire", "25%", "₹15 crore"] },
+                { "_key": "c2l1-005r3", "_type": "tableRow", "cells": ["Solid outcome", "15%", "₹150 crore"] },
+                { "_key": "c2l1-005r4", "_type": "tableRow", "cells": ["Breakout outcome", "5%", "₹1,500 crore"] }
+              ]
+            },
+            {
+              "_key": "c2l1-006",
+              "_type": "mathBlock",
+              "latex": "E[\\text{Exit Value}] = \\sum_{i} P_i \\times \\text{Exit}_i",
+              "caption": "P(i) = probability of outcome i, Exit(i) = the company's exit value in that outcome"
+            },
+            {
+              "_key": "c2l1-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l1-007s1", "_type": "span", "text": "For the table above: (0.55 × ₹0) + (0.25 × ₹15 crore) + (0.15 × ₹150 crore) + (0.05 × ₹1,500 crore) = ₹0 + ₹3.75 crore + ₹22.5 crore + ₹75 crore = ₹101.25 crore. That is the probability-weighted exit value of this company, not a prediction of what it will actually be worth, a blend across every scenario, weighted by how likely each one is.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l1-008",
+              "_type": "keyFact",
+              "label": "Probability-Weighted Exit Value",
+              "value": "₹101.25 crore",
+              "context": "The blended value across all four scenarios in the table, weighted by their probabilities."
+            },
+            {
+              "_key": "c2l1-009",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l1-009s1", "_type": "span", "text": "From Expected Exit Value to Your Expected Multiple", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l1-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l1-010s1", "_type": "span", "text": "Your return multiple in any single outcome is your ownership percentage times the exit value, divided by your cheque size. Your ownership percentage is your cheque divided by the post-money valuation. Substitute one into the other and the cheque size cancels out completely, leaving a strikingly simple result: your expected return multiple depends only on the expected exit value relative to the valuation you paid, not on how large your cheque was.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l1-011",
+              "_type": "mathBlock",
+              "latex": "\\text{Expected Multiple} = \\frac{E[\\text{Exit Value}]}{\\text{Post-Money Valuation at Entry}}",
+              "caption": "Holds regardless of cheque size, before accounting for future dilution. Ownership percentage and cheque size cancel out of the algebra entirely."
+            },
+            {
+              "_key": "c2l1-012",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This is the single most useful, and most underused, number in early-stage investing. It says a ₹5 lakh cheque and a ₹50 lakh cheque into the identical company at the identical valuation have the exact same expected return multiple. What changes with cheque size is how many rupees you make in expectation, not the multiple itself. The multiple is entirely a function of price paid versus expected value created."
+            },
+            {
+              "_key": "c2l1-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l1-013s1", "_type": "span", "text": "Working the full example: you invest ₹50 lakh at a ₹20 crore post-money valuation, giving you 2.5% ownership (₹50 lakh ÷ ₹20 crore). Your expected multiple is ₹101.25 crore ÷ ₹20 crore = 5.06x. In rupee terms, that is an expected proceeds figure of ₹50 lakh × 5.06 ≈ ₹2.53 crore against the ₹50 lakh you put at risk.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l1-014",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "c2l1-014s1", "label": "Cheque Size", "value": "₹50,00,000", "context": "Capital at risk in this single position" },
+                { "_key": "c2l1-014s2", "label": "Ownership", "value": "2.5%", "context": "₹50 lakh ÷ ₹20 crore post-money" },
+                { "_key": "c2l1-014s3", "label": "Expected Multiple", "value": "5.06x", "context": "₹101.25 crore E[Exit] ÷ ₹20 crore post-money" },
+                { "_key": "c2l1-014s4", "label": "Expected Proceeds", "value": "₹2.53 crore", "context": "5.06x applied to the ₹50 lakh cheque" }
+              ]
+            },
+            {
+              "_key": "c2l1-015",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l1-015s1", "_type": "span", "text": "Why Valuation Discipline Matters More Than Most First-Time Angels Think", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l1-016",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l1-016s1", "_type": "span", "text": "Because expected multiple equals expected exit value divided by entry valuation, it moves inversely and proportionally with the price you pay. Double the valuation for the same company with the same odds, and the expected multiple is cut exactly in half. This is the same company, the same founders, the same probability distribution of outcomes, and a dramatically worse expected bet, purely because of price.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l1-017",
+              "_type": "table",
+              "caption": "Same company, same E[Exit] of ₹101.25 crore, three different entry valuations",
+              "headers": ["Post-Money Valuation at Entry", "Expected Multiple"],
+              "rows": [
+                { "_key": "c2l1-017r1", "_type": "tableRow", "cells": ["₹10 crore", "10.13x"] },
+                { "_key": "c2l1-017r2", "_type": "tableRow", "cells": ["₹20 crore", "5.06x"] },
+                { "_key": "c2l1-017r3", "_type": "tableRow", "cells": ["₹40 crore", "2.53x"] }
+              ]
+            },
+            {
+              "_key": "c2l1-018",
+              "_type": "chart",
+              "chartType": "bar",
+              "title": "Expected Multiple Falls as Entry Valuation Rises",
+              "xAxisLabel": "Post-Money Valuation at Entry",
+              "yAxisLabel": "Expected Multiple",
+              "data": [
+                { "_key": "c2l1-018d1", "label": "₹10 Cr", "value": 10.13 },
+                { "_key": "c2l1-018d2", "label": "₹20 Cr", "value": 5.06 },
+                { "_key": "c2l1-018d3", "label": "₹40 Cr", "value": 2.53 }
+              ]
+            },
+            {
+              "_key": "c2l1-019",
+              "_type": "callout",
+              "type": "warning",
+              "text": "This is the actual mechanism behind FOMO destroying returns in hot rounds. When a round is oversubscribed and valuations get bid up fast, nothing about the company's odds of success has changed, only the price has. A genuinely excellent company bought at twice a sensible valuation is now, mathematically, only a mediocre expected bet. Excitement about the founder or the sector is not a substitute for checking what price you are actually paying for that excitement."
+            },
+            {
+              "_key": "c2l1-020",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Compute Your Own Expected Multiple",
+              "prompt": "A different startup has this exit-value distribution: 60% chance of ₹0, 20% chance of ₹10 crore, 15% chance of ₹80 crore, 5% chance of ₹800 crore. You are offered an allocation at a ₹15 crore post-money valuation. What is the expected multiple? Answer as a multiple, e.g. 4.0 for 4.0x.",
+              "correctValue": 3.6,
+              "tolerance": 0.1,
+              "unit": "x",
+              "explanation": "E[Exit] = (0.6 × ₹0) + (0.2 × ₹10 crore) + (0.15 × ₹80 crore) + (0.05 × ₹800 crore) = ₹0 + ₹2 crore + ₹12 crore + ₹40 crore = ₹54 crore. Expected multiple = ₹54 crore ÷ ₹15 crore = 3.6x."
+            },
+            {
+              "_key": "c2l1-021",
+              "_type": "collapsible",
+              "title": "Build This as a Quick Script",
+              "content": [
+                {
+                  "_key": "c2l1-021a",
+                  "_type": "codeBlock",
+                  "language": "python",
+                  "code": "def expected_multiple(distribution, postmoney_cr):\n    \"\"\"distribution: list of (probability, exit_value_in_cr) tuples\"\"\"\n    expected_exit = sum(p * exit_val for p, exit_val in distribution)\n    return expected_exit / postmoney_cr\n\ndistribution = [\n    (0.55, 0),      # shuts down\n    (0.25, 15),     # soft landing, Rs crore\n    (0.15, 150),    # solid outcome, Rs crore\n    (0.05, 1500),   # breakout outcome, Rs crore\n]\n\nprint(round(expected_multiple(distribution, postmoney_cr=20), 2))  # 5.06",
+                  "caption": "Swap in your own probabilities and exit values to sanity-check any deal before writing a cheque."
+                }
+              ]
+            },
+            {
+              "_key": "c2l1-022",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l1-022s1", "_type": "span", "text": "The Limits of This Model", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l1-023",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l1-023s1", "_type": "span", "text": "This framework is a discipline tool, not a precision instrument. Four things it deliberately simplifies away: the probabilities themselves are your own estimates, so a confidently wrong distribution produces a confidently wrong expected multiple, garbage in and garbage out; it assumes your ownership percentage holds constant through to exit, when in reality future funding rounds dilute you unless you exercise pro-rata rights, covered fully in Chapter 4; it ignores holding period entirely, and Lesson 1.3 already showed that the same multiple realised over 5 years versus 10 years means very different annualised returns; and real outcome distributions rarely collapse cleanly into four buckets the way this illustration does.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l1-024",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "Expected value math cannot replace real diligence on the founders, the market, and early traction. It depends entirely on the quality of the probability estimates that diligence produces. Treat this framework as a sanity check on price and a forcing function for writing your assumptions down, not as a substitute for doing the underlying work of forming those assumptions."
+            },
+            {
+              "_key": "c2l1-025",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "A Round That Closed 3x Oversubscribed",
+              "scenario": "A startup you diligenced carefully, and genuinely like, raised its round at a ₹60 crore post-money valuation after the round closed 3x oversubscribed in 48 hours. Your original expected-value work, done two weeks earlier, was based on a ₹25 crore post-money valuation you expected going in.",
+              "prompt": "Nothing about the company has changed. What has changed about the deal, and what would you actually do?",
+              "modelAnswer": "The company's probability distribution of outcomes has not changed, only the price has, and expected multiple moves inversely with price. At ₹25 crore post-money the deal may have cleared a reasonable bar; at ₹60 crore, the same expected exit value produces an expected multiple less than half of what it was, since 25/60 is well under half. Recompute the expected multiple at the new valuation before deciding anything. If it no longer clears your bar, the honest move is to pass or size down significantly, even though it feels like walking away from a hot deal. The oversubscription and the speed of the round are social proof, not evidence about the underlying odds, and they are exactly the conditions under which overpaying is easiest to talk yourself into."
+            },
+            {
+              "_key": "c2l1-026",
+              "_type": "keyTakeaways",
+              "points": [
+                "Expected value turns a gut feeling about a deal into a specific, arguable, improvable number: probability-weighted exit value divided by entry valuation",
+                "Your expected return multiple depends only on price paid relative to expected value created, cheque size does not affect the multiple, only the rupees at stake",
+                "Because of that relationship, expected multiple moves inversely and proportionally with entry valuation, doubling the price you pay halves your expected multiple",
+                "FOMO-driven overpaying in hot, oversubscribed rounds is not a vague risk, it is a direct, calculable destruction of expected value",
+                "This framework depends entirely on the quality of your probability estimates and ignores dilution and holding period, so treat it as a discipline check, not a precise valuation"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

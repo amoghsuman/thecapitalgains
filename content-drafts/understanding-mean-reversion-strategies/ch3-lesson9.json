@@ -1,0 +1,217 @@
+{
+  "courseSlug": "understanding-mean-reversion-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 3: Single-Asset Mean Reversion Strategies",
+      "lessons": [
+        {
+          "title": "Bollinger Bands: Trading Price Extremes on Indian Stocks",
+          "slug": "bollinger-bands-trading-price-extremes-on-indian-stocks",
+          "body": [
+            {
+              "_key": "mr3l9-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr3l9-001s1", "_type": "span", "marks": [], "text": "Open any stock's chart on Kite, TradingView, or Chartink and you have almost certainly seen a pair of wavy lines wrapped around the price like a rubber band, tightening and loosening as the stock gets calmer or more volatile. That is Bollinger Bands, developed by John Bollinger in the 1980s and, by now, probably the single most-viewed technical indicator among Indian retail traders. Chapter 2 spent four lessons building z-score, autocorrelation, half-life, and theta from first principles. This lesson shows you that Bollinger Bands is, underneath the marketing, exactly one of those tools already, wearing a chart instead of a formula." }
+              ]
+            },
+            {
+              "_key": "mr3l9-002",
+              "_type": "bigIdea",
+              "text": "Bollinger Bands plot a rolling average price with two lines drawn a fixed number of standard deviations above and below it. A price closing outside the bands is, mathematically, identical to a z-score beyond that same threshold. The indicator's real value is not a new idea, it is making Chapter 2's statistics visible on a chart without anyone needing to run a calculation."
+            },
+            {
+              "_key": "mr3l9-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr3l9-003s1", "_type": "span", "marks": [], "text": "The Three Lines" }
+              ]
+            },
+            {
+              "_key": "mr3l9-004",
+              "_type": "mathBlock",
+              "latex": "\\text{Middle} = SMA_n(P), \\quad \\text{Upper} = \\text{Middle} + k\\sigma_n, \\quad \\text{Lower} = \\text{Middle} - k\\sigma_n",
+              "caption": "The standard setup uses n = 20 trading days and k = 2 standard deviations, the same 20-day window and the same ±2 threshold used throughout Chapter 2."
+            },
+            {
+              "_key": "mr3l9-005",
+              "_type": "table",
+              "caption": "Bollinger Bands, translated back into Chapter 2's language",
+              "headers": ["Bollinger Bands Term", "Chapter 2 Equivalent"],
+              "rows": [
+                { "_key": "mr3l9-005r1", "cells": ["Middle band", "The 20-day rolling mean from Lesson 5's z-score formula"] },
+                { "_key": "mr3l9-005r2", "cells": ["Price sitting on the middle band", "z-score ≈ 0"] },
+                { "_key": "mr3l9-005r3", "cells": ["Price touching the upper band", "z-score ≈ +2"] },
+                { "_key": "mr3l9-005r4", "cells": ["Price touching the lower band", "z-score ≈ -2"] },
+                { "_key": "mr3l9-005r5", "cells": ["Band width", "A visual proxy for the 20-day rolling standard deviation itself"] }
+              ]
+            },
+            {
+              "_key": "mr3l9-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr3l9-006s1", "_type": "span", "marks": [], "text": "Reading Bollinger Bands as a Reversion Signal" }
+              ]
+            },
+            {
+              "_key": "mr3l9-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr3l9-007s1", "_type": "span", "marks": [], "text": "The classic mean reversion reading is straightforward: a close below the lower band flags a stock as statistically oversold relative to its own recent range, a candidate to buy expecting a move back toward the middle band. A close above the upper band flags it as statistically overbought, a candidate to sell or short expecting the same pull back the other way. This is precisely the z-score threshold logic from Lesson 5, just read off a chart instead of a spreadsheet." }
+              ]
+            },
+            {
+              "_key": "mr3l9-008",
+              "_type": "callout",
+              "type": "warning",
+              "text": "This reading breaks down in exactly the way Lesson 2 warned about. A genuinely trending stock can \"walk the band\", closing at or beyond the upper band for days or weeks in a row while it keeps rising, because strong, sustained buying keeps pushing both the price and the rolling mean higher together. Reading every band touch as an automatic sell signal, with no regard for whether the stock is trending or range-bound, is the single most common way new traders misuse this indicator."
+            },
+            {
+              "_key": "mr3l9-009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr3l9-009s1", "_type": "span", "marks": [], "text": "A Worked Example" }
+              ]
+            },
+            {
+              "_key": "mr3l9-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr3l9-010s1", "_type": "span", "marks": [], "text": "Suppose an NSE-listed stock has a 20-day simple moving average of ₹500 and a 20-day standard deviation of ₹15. With the standard k of 2, the upper band sits at ₹530 and the lower band at ₹470. If the stock closes today at ₹465, it has closed below the lower band, equivalent to a z-score of (465 minus 500) divided by 15, which is -2.33. A range-bound trader would flag this as a reversion candidate worth investigating further using the half-life check from Chapter 2, and the fundamental check from Chapter 1, before acting." }
+              ]
+            },
+            {
+              "_key": "mr3l9-011",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "import pandas as pd\n\n# 'close' is a pandas Series of daily closing prices\nwindow = 20\nk = 2\n\nmiddle_band = close.rolling(window).mean()\nrolling_std = close.rolling(window).std()\n\nupper_band = middle_band + k * rolling_std\nlower_band = middle_band - k * rolling_std\n\nclosed_below_lower = close < lower_band\nclosed_above_upper = close > upper_band\n\nprint(close.tail())\nprint(\"Closed below lower band:\", closed_below_lower.iloc[-1])\nprint(\"Closed above upper band:\", closed_above_upper.iloc[-1])",
+              "caption": "Computing Bollinger Bands and flagging band-breaking closes with pandas."
+            },
+            {
+              "_key": "mr3l9-012",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Price with 20-day Bollinger Bands, k = 2 (illustrative)",
+              "xAxisLabel": "Trading day",
+              "yAxisLabel": "Price (₹)",
+              "data": [
+                { "_key": "mr3l9-012d1", "label": "1" },
+                { "_key": "mr3l9-012d2", "label": "5" },
+                { "_key": "mr3l9-012d3", "label": "10" },
+                { "_key": "mr3l9-012d4", "label": "15" },
+                { "_key": "mr3l9-012d5", "label": "20" },
+                { "_key": "mr3l9-012d6", "label": "25" },
+                { "_key": "mr3l9-012d7", "label": "30" },
+                { "_key": "mr3l9-012d8", "label": "35" },
+                { "_key": "mr3l9-012d9", "label": "40" }
+              ],
+              "series": [
+                { "_key": "mr3l9-012se1", "label": "Close", "values": [500, 512, 528, 515, 498, 471, 465, 486, 505] },
+                { "_key": "mr3l9-012se2", "label": "Upper band", "values": [528, 529, 530, 530, 529, 528, 528, 529, 530] },
+                { "_key": "mr3l9-012se3", "label": "Lower band", "values": [472, 471, 470, 470, 471, 472, 472, 471, 470] }
+              ]
+            },
+            {
+              "_key": "mr3l9-013",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr3l9-013s1", "_type": "span", "marks": [], "text": "Band Width: The Squeeze" }
+              ]
+            },
+            {
+              "_key": "mr3l9-014",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr3l9-014s1", "_type": "span", "marks": [], "text": "Band width, the gap between the upper and lower band as a percentage of the middle band, is not itself a reversion signal, but it is useful context. A stock whose bands have narrowed sharply is going through an unusually quiet stretch, which often, though not always, precedes a sharp move once that quiet breaks. Whether that move turns into a genuine trend or a sharp reversion depends on everything else covered in this course, but a squeeze is a reasonable prompt to pay closer attention." }
+              ]
+            },
+            {
+              "_key": "mr3l9-015",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "mr3l9-015s1", "label": "Normal bandwidth (this example)", "value": "12% of price", "context": "(₹530 - ₹470) / ₹500. Typical recent volatility, plenty of room before a close counts as band-breaking" },
+                { "_key": "mr3l9-015s2", "label": "Squeezed bandwidth (same stock, quieter period)", "value": "~5% of price", "context": "Volatility compressed well below normal, a setup Chapter 4 revisits directly as volatility mean reversion" }
+              ]
+            },
+            {
+              "_key": "mr3l9-016",
+              "_type": "callout",
+              "type": "insight",
+              "text": "A squeeze is really volatility itself sitting at an unusually low z-score relative to its own recent history, the exact same logic as this chapter, just applied to the standard deviation instead of the price. Chapter 4 builds that idea out fully."
+            },
+            {
+              "_key": "mr3l9-017",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Build the lower band",
+              "prompt": "A stock's 20-day simple moving average is ₹740 and its 20-day standard deviation is ₹18. Using the standard k = 2 setup, what is the lower Bollinger Band value?",
+              "correctValue": 704,
+              "tolerance": 1,
+              "unit": "₹",
+              "explanation": "Lower band = 740 - (2 x 18) = 740 - 36 = ₹704. A close below this level would be equivalent to a z-score below -2."
+            },
+            {
+              "_key": "mr3l9-018",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Reversion signal, or walking the band?",
+              "question": "A stock has closed above its upper Bollinger Band for eleven consecutive trading days, with rising volumes and multiple brokerages raising target prices after an earnings beat. What does this most likely represent?",
+              "options": [
+                "A reliable sell signal, since any close above the upper band means the stock is overbought",
+                "A trending stock \"walking the band\", where the classic reversion reading is unreliable and the move may well continue",
+                "Definitive proof the stock is now permanently overvalued",
+                "A random technical artifact with no informational content"
+              ],
+              "correctIndex": 1,
+              "explanation": "Eleven consecutive closes above the upper band, alongside rising volumes and improving fundamentals, is the textbook description of a stock walking the band during a genuine uptrend, the momentum case from Lesson 2, not a stretched, overreacting price waiting to snap back. Treating every band touch as an automatic reversion signal ignores the regime the stock is actually in."
+            },
+            {
+              "_key": "mr3l9-019",
+              "_type": "flashcardSet",
+              "title": "Bollinger Bands: Core Terms",
+              "cards": [
+                { "_key": "mr3l9-019f1", "term": "Bollinger Bands", "definition": "A technical indicator plotting a rolling moving average (the middle band) with two bands drawn a fixed number of standard deviations above and below it, standardly a 20-day average and 2 standard deviations." },
+                { "_key": "mr3l9-019f2", "term": "Band touch / band break", "definition": "A price closing at or beyond the upper or lower band, mathematically equivalent to a z-score beyond the corresponding threshold, typically ±2." },
+                { "_key": "mr3l9-019f3", "term": "Walking the band", "definition": "A pattern where price repeatedly closes at or beyond one band for an extended stretch during a strong trend, making the classic reversion reading of that band unreliable." },
+                { "_key": "mr3l9-019f4", "term": "Band width (the squeeze)", "definition": "The gap between the upper and lower bands, usually expressed as a percentage of the middle band. A sharp narrowing, a squeeze, often precedes a sharp move in either direction." }
+              ]
+            },
+            {
+              "_key": "mr3l9-020",
+              "_type": "keyTakeaways",
+              "points": [
+                "Bollinger Bands plot a rolling mean with bands at a fixed number of standard deviations above and below it, most commonly a 20-day mean and 2 standard deviations, the same parameters used throughout Chapter 2.",
+                "A close beyond either band is mathematically the same event as a z-score beyond that same threshold, just read visually off a chart.",
+                "The classic reversion reading, buy below the lower band, sell above the upper band, only works well in range-bound conditions. In a genuine trend, price can \"walk the band\" for extended stretches without reverting.",
+                "Band width is a proxy for recent volatility. A sharp narrowing (a squeeze) does not itself signal reversion, but often precedes a larger move, and previews the volatility reversion covered in Chapter 4.",
+                "Every caution from Chapters 1 and 2 still applies here: a band-breaking close is a prompt to investigate, using half-life and a fundamental check, not an automatic trade signal on its own."
+              ]
+            },
+            {
+              "_key": "mr3l9-021",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice or a recommendation to buy, sell, or hold any security. All prices, band values, and the accompanying chart and code sample use hypothetical, illustrative data and do not represent actual historical prices of any stock. Technical indicators such as Bollinger Bands do not guarantee future price behavior. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

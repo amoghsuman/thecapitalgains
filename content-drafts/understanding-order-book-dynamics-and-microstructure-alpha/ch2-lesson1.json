@@ -1,0 +1,286 @@
+{
+  "courseSlug": "understanding-order-book-dynamics-and-microstructure-alpha",
+  "chapters": [
+    {
+      "title": "Chapter 2: Price Formation, Spreads and Liquidity",
+      "lessons": [
+        {
+          "title": "The Bid-Ask Spread Decomposed: Order Processing, Inventory and Adverse Selection Costs",
+          "slug": "the-bid-ask-spread-decomposed-order-processing-inventory-and-adverse-selection-costs",
+          "body": [
+            {
+              "_key": "obc2l1b01",
+              "_type": "bigIdea",
+              "text": "A bid-ask spread is not a fee the exchange charges you. It is compensation a liquidity provider demands for three separate risks bundled into a single number, and knowing which risk is dominating tells you exactly when to expect that number to blow out."
+            },
+            {
+              "_key": "obc2l1b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obc2l1b02s1",
+                  "_type": "span",
+                  "text": "The Spread Is Not Just a Transaction Cost",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obc2l1b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obc2l1b03s1",
+                  "_type": "span",
+                  "text": "The naive view treats a bid-ask spread as pure friction, a tax on trading. The more useful view, and the one market microstructure research has built up since work like Roll's 1984 model and Glosten and Milgrom's 1985 framework, treats the spread as compensation for a market maker or other liquidity provider actually standing ready to trade continuously in both directions, whether or not they want to at that moment. That compensation splits into three genuinely distinct components, and each one responds to different conditions, which is exactly why the spread on the same stock can sit at one tick for hours and jump to five times that within minutes with nothing structural about the stock itself having changed.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obc2l1b04",
+              "_type": "table",
+              "caption": "The three components of a bid-ask spread",
+              "headers": ["Component", "Compensates For", "Typically Moves With"],
+              "rows": [
+                { "_key": "obc2l1b04r1", "_type": "tableRow", "cells": ["Order Processing", "The fixed cost of running a market-making operation", "Roughly constant; small on liquid stocks"] },
+                { "_key": "obc2l1b04r2", "_type": "tableRow", "cells": ["Inventory Holding", "The risk of holding an unwanted, directional position", "One-sided order flow, position and capital constraints"] },
+                { "_key": "obc2l1b04r3", "_type": "tableRow", "cells": ["Adverse Selection", "The risk of trading against a counterparty who knows more", "News flow, earnings, corporate actions, information asymmetry"] }
+              ]
+            },
+            {
+              "_key": "obc2l1b05",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obc2l1b05s1",
+                  "_type": "span",
+                  "text": "Order Processing and Inventory: The Mechanical Half",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obc2l1b06",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obc2l1b06s1",
+                  "_type": "span",
+                  "text": "Order processing cost is the simplest component: exchange transaction charges, technology and connectivity costs, the capital tied up while quoting, and a reasonable margin. It is the closest thing to a genuine flat fee in the whole spread, it barely moves minute to minute, and on a liquid NSE large cap it typically accounts for only a small sliver of a one-tick spread.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obc2l1b07",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obc2l1b07s1",
+                  "_type": "span",
+                  "text": "Inventory holding cost is less obvious but just as mechanical. A market maker does not want a large net position in any single stock, since that position carries the same directional price risk any trader takes on. If buy orders keep hitting their ask, their inventory of that stock keeps shrinking and they build an unwanted short exposure; if sell orders keep hitting their bid, the opposite happens. Either way, the market maker responds by skewing quotes, lowering both bid and ask to attract sellers and discourage buyers if inventory has gone too short, or raising both to do the reverse. That skew widens the effective spread a taker experiences around the true midpoint, and it is why a string of strongly one-directional order flow in a thin stock can move quotes even before a single trade prints at a worse price.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obc2l1b08",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obc2l1b08s1",
+                  "_type": "span",
+                  "text": "Adverse Selection: The Component That Actually Moves the Most",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obc2l1b09",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "obc2l1m01",
+                  "_type": "glossaryTerm",
+                  "definition": "The risk a liquidity provider takes that whoever is trading against them knows something the liquidity provider does not, and is therefore trading a genuinely profitable direction at the liquidity provider's expense."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "obc2l1b09s1",
+                  "_type": "span",
+                  "text": "Glosten and Milgrom's insight is the one that matters most in practice. A market maker never knows why any individual order arrives. Some orders come from traders rebalancing a portfolio, hedging, or simply needing liquidity, with no private information at all. Others come from traders who know something the market maker does not, ahead of results, a corporate action, or any other piece of information not yet in the price. Trading against the first group is profitable for the market maker on average; trading against the second group, called ",
+                  "marks": []
+                },
+                {
+                  "_key": "obc2l1b09s2",
+                  "_type": "span",
+                  "text": "adverse selection",
+                  "marks": ["obc2l1m01"]
+                },
+                {
+                  "_key": "obc2l1b09s3",
+                  "_type": "span",
+                  "text": " risk, is systematically unprofitable. Since the market maker cannot tell the two apart order by order, the only way to survive is to price the spread wide enough that profits from uninformed flow cover expected losses to informed flow. This component is small when information asymmetry is low and expands sharply the moment it rises, which is exactly why it dominates spread behavior around news.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obc2l1b10",
+              "_type": "mathBlock",
+              "latex": "S = 2\\sqrt{-\\,\\text{Cov}(\\Delta P_t, \\Delta P_{t-1})}",
+              "caption": "Roll's (1984) implied spread estimator. It infers the effective spread purely from the negative serial correlation that bid-ask bounce creates in successive trade-to-trade price changes, without needing quote data at all, useful for reconstructing spreads from historical trade prices alone."
+            },
+            {
+              "_key": "obc2l1b11",
+              "_type": "comparison",
+              "title": "Who a Market Maker Is Actually Trading Against",
+              "columns": [
+                {
+                  "_key": "obc2l1b11c1",
+                  "label": "Uninformed (Noise) Flow",
+                  "points": [
+                    "Trades for liquidity, rebalancing, or portfolio reasons, not private information",
+                    "Profitable for the market maker to trade against, on average",
+                    "Funds the market maker's ability to keep quoting continuously",
+                    "The dominant share of order flow in most liquid NSE names on a normal day"
+                  ]
+                },
+                {
+                  "_key": "obc2l1b11c2",
+                  "label": "Informed Flow",
+                  "points": [
+                    "Trades on information not yet reflected in the current price",
+                    "Unprofitable for the market maker to trade against, on average",
+                    "Forces the spread wider to offset expected losses",
+                    "Concentrated around earnings, corporate actions, and scheduled news"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "obc2l1b12",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obc2l1b12s1",
+                  "_type": "span",
+                  "text": "Why Spreads Widen Around Earnings and Events in Indian Markets",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obc2l1b13",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obc2l1b13s1",
+                  "_type": "span",
+                  "text": "On results day for an NSE-listed company, or ahead of a scheduled event like an RBI monetary policy announcement or Union Budget day, spreads on affected stocks and index derivatives routinely widen well beyond their normal levels. This is almost entirely an adverse selection story rather than an inventory one, since market makers are not suddenly stuck with unwanted positions before the news is even out. What changes is the probability that the next order arriving is from someone with better information about the outcome, and every liquidity provider still willing to quote has to charge more for that risk. It is also why liquidity providers sometimes reduce the size they quote, or step back from the book almost entirely, in the minutes before a scheduled announcement, effectively refusing to underwrite adverse selection risk they cannot price with any confidence.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obc2l1b14",
+              "_type": "keyFact",
+              "label": "Illustrative Spread Widening Ahead of Scheduled Results",
+              "value": "1 tick to 5 or more ticks",
+              "context": "A typical pattern in the minutes before a liquid stock's quarterly results are due, as market makers price in rising adverse selection risk. Figures are illustrative, not observed trade data."
+            },
+            {
+              "_key": "obc2l1b15",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obc2l1b15s1",
+                  "_type": "span",
+                  "text": "What This Means for You as a Liquidity Taker",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obc2l1b16",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obc2l1b16s1",
+                  "_type": "span",
+                  "text": "Knowing which component is driving a wide spread changes what you should do about it. A spread that is wide because a stock is simply thin and rarely traded is mostly an order-processing and inventory story, and it tends to be stable and roughly the same width day after day, something you can plan around and size into. A spread that suddenly widens on an otherwise liquid, normally tight stock is far more likely to be an adverse selection story, a signal that the market does not fully trust the current price, and trading aggressively into that widened spread means trading directly against whatever informed flow caused it to widen in the first place.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obc2l1b17",
+              "_type": "callout",
+              "type": "insight",
+              "text": "A wide spread is not expensive for the same reason every time. A structurally illiquid stock's spread is a stable cost you can plan around. A liquid stock's spread suddenly widening is the market telling you it does not trust the current price, and that is a very different, and more dangerous, kind of expensive."
+            },
+            {
+              "_key": "obc2l1b18",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Two Wide Spreads, Two Different Causes",
+              "scenario": "Stock A is a thinly traded small cap that has quoted a spread of roughly ₹1.20 on almost every trading day for months, regardless of news flow. Stock B is a liquid, normally one-tick-spread large cap whose spread suddenly widens to eight ticks starting twenty minutes before its scheduled quarterly results are due for release.",
+              "prompt": "Which spread component most plausibly explains each stock's wide spread, and how should a trader's willingness to trade aggressively into each spread differ?",
+              "modelAnswer": "Stock A's persistently wide, stable spread is best explained by order processing and inventory costs: low trading volume means a market maker's capital sits tied up longer and inventory is harder to offload, but there is no reason to think information asymmetry is unusually high on any given day, so the spread stays roughly constant. It is a cost that can be planned around. Stock B's sudden widening right before results is almost entirely an adverse selection story: the market maker has no new inventory problem in those twenty minutes, but the probability that incoming orders are informed about the results has risen sharply, so quotes widen to compensate. A trader should be far more cautious about trading aggressively into Stock B's widened spread right before results, since doing so means trading against exactly the kind of informed flow the wider spread exists to price in, while Stock A's spread is simply a cost of trading an illiquid name at any time."
+            },
+            {
+              "_key": "obc2l1b19",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why the Spread Widens Even Without an Inventory Problem",
+              "question": "A liquid stock's order processing costs and the market maker's inventory position are both unchanged, yet the quoted spread doubles in the minutes before a scheduled news announcement. What best explains this?",
+              "options": [
+                "The exchange raises transaction charges automatically before scheduled announcements",
+                "Rising adverse selection risk means the market maker must charge more to offset expected losses to informed traders",
+                "The tick size on NSE automatically increases before scheduled news events",
+                "This cannot happen if inventory and order processing costs are genuinely unchanged"
+              ],
+              "correctIndex": 1,
+              "explanation": "With order processing and inventory costs held constant, a widening spread has to be explained by the third component. As the probability that incoming orders are informed rises ahead of scheduled news, adverse selection risk rises, and the market maker must charge a wider spread purely to keep expected profit non-negative against that risk, independent of any change in inventory or fixed costs."
+            },
+            {
+              "_key": "obc2l1b20",
+              "_type": "keyTakeaways",
+              "points": [
+                "A bid-ask spread bundles three distinct components: order processing costs, inventory holding costs, and adverse selection costs",
+                "Order processing cost is roughly fixed and usually the smallest component on a liquid stock",
+                "Inventory holding cost rises with one-sided order flow, as a market maker skews quotes to rebalance an unwanted position",
+                "Adverse selection cost, from Glosten and Milgrom's framework, compensates for the risk of trading against informed counterparties, and it is the component that moves the most",
+                "Roll's model shows effective spread can be inferred purely from the negative serial correlation bid-ask bounce creates in trade prices",
+                "A persistently wide spread in a thin stock is a stable cost; a sudden widening in a normally liquid stock is a warning that information asymmetry has spiked"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

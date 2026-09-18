@@ -1,0 +1,183 @@
+{
+  "courseSlug": "introduction-to-machine-learning-for-trading-what-actually-works",
+  "chapters": [
+    {
+      "title": "Chapter 3: Models That Are Actually Used in Practice",
+      "lessons": [
+        {
+          "title": "Why Deep Learning Usually Disappoints in Trading",
+          "slug": "why-deep-learning-usually-disappoints-in-trading",
+          "body": [
+            {
+              "_key": "mlt11-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt11-001s1", "_type": "span", "marks": [], "text": "A prop trading applicant spends three weeks building an LSTM to predict Bank Nifty's next-hour direction, tuning the number of layers, dropout rate, and learning rate schedule. The finished model performs worse, out-of-sample, than the simple logistic regression from Lesson 9, built in an afternoon. This is not an unusual outcome. It is close to the median outcome for a first deep learning trading project, and this lesson explains why, without teaching you to build one yet, that comes properly in this course's advanced sequel, once the discipline in this lesson is second nature." }
+              ]
+            },
+            {
+              "_key": "mlt11-002",
+              "_type": "bigIdea",
+              "text": "Deep learning's core advantage, automatically learning complex representations from huge amounts of data, is exactly what makes it a poor fit for most retail and intermediate trading problems, where usable historical data is small, relationships are noisy and change over time, and every extra layer of complexity adds another way to quietly overfit."
+            },
+            {
+              "_key": "mlt11-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt11-003s1", "_type": "span", "marks": [], "text": "The Data Problem: Trading Doesn't Have Enough of It" }
+              ]
+            },
+            {
+              "_key": "mlt11-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt11-004s1", "_type": "span", "marks": [], "text": "Deep learning earned its reputation on problems with enormous datasets, millions of labeled images, billions of words of text. Daily NSE price data does not look anything like that. Even pooling data across many stocks does not cleanly fix this, because market regimes shift over time, a low-interest-rate, high-liquidity period behaves differently from a risk-off, high-rate one, so older rows do not simply add more of the same signal, they can partly describe a market that no longer exists." }
+              ]
+            },
+            {
+              "_key": "mlt11-005",
+              "_type": "keyFact",
+              "label": "Roughly 15 years of daily NSE trading data for one stock",
+              "value": "~3,700 rows",
+              "context": "A modest dataset by deep learning standards, where models are typically trained on millions of examples. This alone is a major reason deep learning struggles specifically on daily-frequency trading data."
+            },
+            {
+              "_key": "mlt11-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt11-006s1", "_type": "span", "marks": [], "text": "Non-Stationarity: The Past Stops Looking Like the Present" }
+              ]
+            },
+            {
+              "_key": "mlt11-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "mlt11-007m1", "_type": "glossaryTerm", "definition": "A shift in the underlying statistical relationships driving market behavior, such as changing interest rate conditions, liquidity, or investor composition, that can make patterns learned from an earlier period stop working." }
+              ],
+              "children": [
+                { "_key": "mlt11-007s1", "_type": "span", "marks": [], "text": "A photograph of a cat is a cat forever, the relationship between pixels and the label never changes, which is part of why deep learning works so well on images. Market relationships are not like that. As more traders discover and exploit a genuine pattern, it tends to weaken, the alpha decay named back in Lesson 1. Markets also pass through " },
+                { "_key": "mlt11-007s2", "_type": "span", "marks": ["mlt11-007m1"], "text": "regime shifts" },
+                { "_key": "mlt11-007s3", "_type": "span", "marks": [], "text": ", periods with meaningfully different volatility, liquidity, or macro conditions. A model with millions of parameters trained mostly on data from one regime has more than enough capacity to memorize that specific regime's quirks in fine detail, which makes it worse, not better, once conditions genuinely change, precisely because it had more room to overfit to something that was never going to stay true." }
+              ]
+            },
+            {
+              "_key": "mlt11-008",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt11-008s1", "_type": "span", "marks": [], "text": "Complexity Multiplies the Ways to Fool Yourself" }
+              ]
+            },
+            {
+              "_key": "mlt11-009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt11-009s1", "_type": "span", "marks": [], "text": "A deep learning project usually involves searching over many architectures and hyperparameters, number of layers, dropout rate, learning rate, batch size, and picking whichever configuration performs best on a validation window. Even with a correctly built, leak-free chronological split from Chapter 2, trying 50 different configurations against the same validation window means the 'winning' configuration is partly winning by chance, some configuration was always going to look best on that specific stretch of data, whether or not it is genuinely the most robust choice. This is the same underlying risk as trying many different trading strategies until one looks profitable, just relocated into the hyperparameter search instead of the strategy itself." }
+              ]
+            },
+            {
+              "_key": "mlt11-010",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Correctly splitting your data, as Chapter 2 taught, is necessary but not sufficient. A validation window that gets checked against dozens of model configurations, one after another, starts to behave a little like a second training set: the configuration search itself can quietly overfit to that specific window, which is one more reason deep learning's larger hyperparameter space adds real risk beyond what a linear model or a tree ensemble carries."
+            },
+            {
+              "_key": "mlt11-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt11-011s1", "_type": "span", "marks": [], "text": "Where Deep Learning Can Genuinely Help" }
+              ]
+            },
+            {
+              "_key": "mlt11-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt11-012s1", "_type": "span", "marks": [], "text": "None of this makes deep learning useless for trading. At institutional scale, with tick-by-tick data across hundreds of instruments, years of order book snapshots, or large alternative datasets, the data-hunger problem genuinely goes away, and architectures built for sequences, like recurrent networks, or for pattern recognition, like convolutional networks on OHLCV data, can add real value on top of what trees and linear models can do. This course's advanced sequel covers exactly this, once you have practiced the leak-free validation and honest evaluation habits this course builds first, the same habits that matter even more, not less, as model complexity grows." }
+              ]
+            },
+            {
+              "_key": "mlt11-013",
+              "_type": "table",
+              "caption": "Model class versus typical data needs, for retail and intermediate trading",
+              "headers": ["Model Class", "Typical Data Needed", "Typical Fit at Retail/Intermediate Scale"],
+              "rows": [
+                { "_key": "mlt11-013r1", "cells": ["Linear (Lesson 9)", "Works reasonably with a few hundred rows", "Strong default, hard to badly overfit"] },
+                { "_key": "mlt11-013r2", "cells": ["Tree ensembles (Lesson 10)", "Works well with a few thousand rows", "Strong default, captures interactions automatically"] },
+                { "_key": "mlt11-013r3", "cells": ["Deep learning", "Typically needs tens of thousands to millions of rows, or high-frequency/alternative data", "Usually underdelivers at typical daily-data scale without a deliberate, well-resourced setup"] }
+              ]
+            },
+            {
+              "_key": "mlt11-014",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Diagnosing the LSTM project",
+              "question": "The prop trading applicant from the start of this lesson tried 60 different LSTM architectures against the same validation window before picking the best one, which still underperformed the simple logistic regression from Lesson 9 when finally checked on a fresh, later time period. What is the most likely combined explanation?",
+              "options": [
+                "LSTMs are never useful for any trading problem, at any data scale",
+                "Limited data relative to the model's complexity, and a hyperparameter search that quietly overfit to the validation window by trying so many configurations against it, both contributed",
+                "The logistic regression must have used a leaked feature to outperform",
+                "The applicant simply did not train for long enough"
+              ],
+              "correctIndex": 1,
+              "explanation": "Both effects compound here: a few thousand daily rows is a small dataset for a model with an LSTM's parameter count, and searching over 60 configurations against the same validation window gives the search many chances to find something that looks good on that specific window by chance, rather than something that genuinely generalizes to the later, fresh period."
+            },
+            {
+              "_key": "mlt11-015",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Should this desk use deep learning?",
+              "scenario": "A quant desk has access to five years of tick-by-tick order book data across 40 highly liquid NSE stocks, amounting to hundreds of millions of data points, and is deciding between a gradient boosting model and a recurrent neural network for a short-horizon signal.",
+              "prompt": "Does this scenario change the usual advice to prefer simpler models first? Why or why not?",
+              "modelAnswer": "Yes, this scenario is meaningfully different from the typical retail or intermediate daily-data case this lesson focuses on. Hundreds of millions of tick-level data points is close to the scale where deep learning's usual advantage, learning complex patterns from large amounts of data, can actually apply, rather than being undermined by a small dataset. A recurrent network becomes a genuinely reasonable option to test here, though the desk should still validate it with the same walk-forward, leak-free discipline from Chapter 2, and should still compare it honestly against a well-tuned gradient boosting baseline rather than assuming complexity alone guarantees a better result."
+            },
+            {
+              "_key": "mlt11-016",
+              "_type": "flashcardSet",
+              "title": "Deep Learning in Trading: Core Terms",
+              "cards": [
+                { "_key": "mlt11-016f1", "term": "Data hunger", "definition": "The tendency of deep learning models to require very large amounts of training data to learn reliable patterns, a poor match for the limited size of most daily trading datasets." },
+                { "_key": "mlt11-016f2", "term": "Regime shift", "definition": "A shift in the underlying statistical relationships driving market behavior, such as changing interest rate conditions, liquidity, or investor composition, that can make patterns learned from an earlier period stop working." },
+                { "_key": "mlt11-016f3", "term": "Hyperparameter search overfitting", "definition": "A risk where trying many model configurations against the same validation window lets the best-performing configuration be partly chosen by chance, rather than because it is genuinely the most robust." },
+                { "_key": "mlt11-016f4", "term": "Alpha decay", "definition": "The tendency for a genuine trading edge to weaken over time as more traders discover and exploit the same pattern." },
+                { "_key": "mlt11-016f5", "term": "Recurrent neural network (RNN/LSTM)", "definition": "A deep learning architecture designed to process sequences of data over time, such as a series of price bars, covered in depth in this course's advanced sequel." }
+              ]
+            },
+            {
+              "_key": "mlt11-017",
+              "_type": "keyTakeaways",
+              "points": [
+                "Deep learning's strength, learning from very large datasets, is a poor match for most daily-frequency trading problems, where even 15 years of one stock's history is only a few thousand rows.",
+                "Market relationships are non-stationary: alpha decay and regime shifts mean a highly flexible model can end up memorizing a specific period's quirks rather than a durable pattern.",
+                "Searching over many architectures and hyperparameters against the same validation window can quietly overfit the search itself, even when the underlying train/test split is built correctly.",
+                "None of this makes deep learning useless. At institutional scale, with tick-level or alternative data far larger than typical daily datasets, it can add real value, the subject of this course's advanced sequel.",
+                "For most retail and intermediate trading problems today, linear models and tree ensembles remain the stronger starting point, precisely because they are harder to badly overfit on the amount of data actually available."
+              ]
+            },
+            {
+              "_key": "mlt11-018",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice. All figures cited are approximate and illustrative. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

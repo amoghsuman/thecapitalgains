@@ -1,0 +1,241 @@
+{
+  "courseSlug": "understanding-market-making-and-liquidity-provision-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 4: Adverse Selection and Informed Order Flow",
+      "lessons": [
+        {
+          "title": "The PIN Model: Estimating the Probability of Informed Trading",
+          "slug": "the-pin-model-estimating-the-probability-of-informed-trading",
+          "body": [
+            {
+              "_key": "mmc4l2b01",
+              "_type": "bigIdea",
+              "text": "Glosten-Milgrom tells you that a wider spread is the right response to a higher fraction of informed traders. It does not tell you how to measure that fraction on an actual stock, on an actual day. The PIN model is the bridge from that theory to a number you can estimate from real trade data."
+            },
+            {
+              "_key": "mmc4l2b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc4l2b02s1",
+                  "_type": "span",
+                  "text": "From a Theoretical Fraction to an Estimable Number",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc4l2b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "mmc4l2m01",
+                  "_type": "glossaryTerm",
+                  "definition": "A structural model, developed by Easley, Kiefer, O'Hara, and Paperman in 1996, that estimates the probability a randomly chosen trade comes from an informed trader, using only observable daily counts of buyer-initiated and seller-initiated trades, fitted through maximum likelihood."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "mmc4l2b03s1",
+                  "_type": "span",
+                  "text": "The ",
+                  "marks": []
+                },
+                {
+                  "_key": "mmc4l2b03s2",
+                  "_type": "span",
+                  "text": "PIN model",
+                  "marks": ["mmc4l2m01"]
+                },
+                {
+                  "_key": "mmc4l2b03s3",
+                  "_type": "span",
+                  "text": " starts from an assumption that would be impossible to verify directly: each trading day, there is some probability that a genuine information event has occurred, and if it has, informed traders arrive and trade in the direction of that information, buying on good news, selling on bad. Nobody can observe whether an information event actually happened on a given day, or who exactly the informed traders were. What can be observed, from ordinary trade data, is simply how many buyer-initiated and how many seller-initiated trades happened that day. The PIN model's contribution is a way to work backward from those observable counts to an estimate of the unobservable structure behind them.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc4l2b04",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc4l2b04s1",
+                  "_type": "span",
+                  "text": "The Model's Five Parameters",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc4l2b05",
+              "_type": "table",
+              "caption": "The five structural parameters the PIN model estimates from daily buy and sell counts",
+              "headers": ["Parameter", "Meaning"],
+              "rows": [
+                { "_key": "mmc4l2b05r1", "_type": "tableRow", "cells": ["α (alpha)", "Probability that an information event occurs on a given day"] },
+                { "_key": "mmc4l2b05r2", "_type": "tableRow", "cells": ["δ (delta)", "Given an event occurs, the probability it is bad news rather than good news"] },
+                { "_key": "mmc4l2b05r3", "_type": "tableRow", "cells": ["μ (mu)", "The arrival rate of informed traders on a day when an information event has occurred"] },
+                { "_key": "mmc4l2b05r4", "_type": "tableRow", "cells": ["εb (epsilon-buy)", "The background arrival rate of uninformed buyers, present every day regardless of any event"] },
+                { "_key": "mmc4l2b05r5", "_type": "tableRow", "cells": ["εs (epsilon-sell)", "The background arrival rate of uninformed sellers, present every day regardless of any event"] }
+              ]
+            },
+            {
+              "_key": "mmc4l2b06",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc4l2b06s1",
+                  "_type": "span",
+                  "text": "On an ordinary day with no information event, buys and sells both arrive only from the uninformed background rates, εb and εs. On a good-news day, buys additionally get the informed arrival rate μ layered on top of εb, while sells stay at their background rate εs. On a bad-news day, it is the reverse: sells get μ added to εs, while buys stay at εb. Fitting these five parameters to a long history of daily buy and sell counts, using maximum likelihood, is what lets a researcher recover a plausible estimate of each one, even though no single day's data reveals which type of day it actually was.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc4l2b07",
+              "_type": "mathBlock",
+              "latex": "PIN = \\frac{\\alpha \\mu}{\\alpha \\mu + \\varepsilon_b + \\varepsilon_s}",
+              "caption": "Once the five parameters are estimated, PIN combines them into a single probability: the share of all order flow, averaged across event and non-event days, that comes from informed trading."
+            },
+            {
+              "_key": "mmc4l2b08",
+              "_type": "keyFact",
+              "label": "Worked Example",
+              "value": "PIN = 20%",
+              "context": "With α = 0.25, μ = 60, εb = 30, and εs = 30: PIN = (0.25 × 60) ÷ (0.25 × 60 + 30 + 30) = 15 ÷ 75 = 0.20. About one in five trades on this stock is estimated to originate from informed traders."
+            },
+            {
+              "_key": "mmc4l2b09",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Recomputing PIN With a Higher Informed Arrival Rate",
+              "prompt": "Using the same estimated parameters as the worked example, α = 0.25, εb = 30, εs = 30, but with μ now estimated at 90 instead of 60, what is the resulting PIN? Give your answer as a percentage, rounded to one decimal.",
+              "correctValue": 27.3,
+              "tolerance": 0.2,
+              "unit": "%",
+              "explanation": "PIN = (0.25 × 90) ÷ (0.25 × 90 + 30 + 30) = 22.5 ÷ 82.5 ≈ 0.273, or 27.3%. A higher informed arrival rate on event days raises PIN even with the same event probability and the same background uninformed flow, which matches the Glosten-Milgrom intuition that more informed participation drives a higher effective informed share of total order flow."
+            },
+            {
+              "_key": "mmc4l2b10",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc4l2b10s1",
+                  "_type": "span",
+                  "text": "Reading PIN in Practice",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc4l2b11",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc4l2b11s1",
+                  "_type": "span",
+                  "text": "PIN is most useful as a comparative tool. Estimated across many stocks, it consistently comes out lower for large, widely followed, heavily traded names and higher for smaller, thinly covered ones, which lines up exactly with Chapter 2's explanation of why Nifty options trade tighter than a small-cap stock's options. Estimated across time for the same stock, PIN tends to rise in the days leading into a scheduled information event like quarterly results, even before the results are announced, which is itself a useful, if imperfect, early warning that a market maker's spread should probably be widening ahead of the announcement rather than only on the day of it.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc4l2b12",
+              "_type": "table",
+              "caption": "Illustrative pattern of PIN across different types of instruments (stylised, not measured values)",
+              "headers": ["Instrument Type", "Typical PIN Pattern", "Why"],
+              "rows": [
+                { "_key": "mmc4l2b12r1", "_type": "tableRow", "cells": ["Nifty index options", "Low and relatively stable", "Company-specific information is diluted across many constituents"] },
+                { "_key": "mmc4l2b12r2", "_type": "tableRow", "cells": ["Large, widely held single stocks", "Moderate, rising ahead of results", "More analyst and public coverage narrows, but does not eliminate, the informed edge"] },
+                { "_key": "mmc4l2b12r3", "_type": "tableRow", "cells": ["Small, thinly covered single stocks", "Higher on average, with sharp spikes around corporate events", "Fewer independent information sources concentrate any edge that does exist"] }
+              ]
+            },
+            {
+              "_key": "mmc4l2b13",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc4l2b13s1",
+                  "_type": "span",
+                  "text": "Limitations of PIN",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc4l2b14",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc4l2b14s1",
+                  "_type": "span",
+                  "text": "PIN has two practical weak points worth knowing before relying on it. First, it needs each trade classified as buyer-initiated or seller-initiated, which is not always directly recorded and typically has to be inferred from trade prices relative to the prevailing quote, using an algorithm such as the Lee-Ready method, introducing classification error before the model is even fit. Second, the maximum likelihood estimation behind PIN is known to run into numerical stability problems on stocks with very high daily trade counts, where the underlying probabilities become extremely small and the likelihood function is difficult to optimise reliably. Both of these are exactly why PIN is treated in this course as a foundational, largely retrospective research tool rather than something computed live, intraday, on a trading desk.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc4l2b15",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "PIN is typically estimated once from a stretch of historical daily data, not recalculated tick by tick. A market maker that wants a signal closer to real time, updating throughout a single trading session, needs a different tool, which is exactly what the next lesson's order flow toxicity measure, VPIN, is built for."
+            },
+            {
+              "_key": "mmc4l2b16",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Comparing Two Desks' Risk",
+              "scenario": "A research team estimates PIN at 8% for a large Nifty constituent stock's options and 35% for a thinly covered small-cap stock's options, both over the same six-month window.",
+              "prompt": "What should a market maker running both books conclude about how much spread cushion each one needs for adverse selection specifically, holding order processing and inventory cost aside?",
+              "modelAnswer": "The small-cap book, with an estimated PIN more than four times higher, needs a substantially larger adverse selection cushion in its spread than the large-cap book, since a much higher share of its order flow is estimated to originate from informed traders. This is consistent with Chapter 2's explanation of why single-stock options on smaller, less-covered companies structurally carry wider spreads than index products: PIN gives that intuition an actual, comparable number rather than leaving it as a qualitative argument."
+            },
+            {
+              "_key": "mmc4l2b17",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "What PIN Actually Requires",
+              "question": "Which of the following is a genuine practical requirement for estimating PIN, as described in this lesson?",
+              "options": [
+                "Direct knowledge of which specific traders are informed on any given day",
+                "Classifying historical trades as buyer-initiated or seller-initiated, typically through an algorithm rather than a direct record",
+                "Access to the exchange's confidential clearing member identities",
+                "A live feed of the current bid-ask spread at every instant"
+              ],
+              "correctIndex": 1,
+              "explanation": "PIN never requires knowing which specific traders are informed; that is precisely the unobservable quantity it is designed to estimate around. What it does require is a daily count of buyer-initiated versus seller-initiated trades, and since that classification is often not directly recorded, it is typically inferred using a trade classification algorithm such as Lee-Ready before the PIN model can even be fit."
+            },
+            {
+              "_key": "mmc4l2b18",
+              "_type": "keyTakeaways",
+              "points": [
+                "The PIN model estimates the probability that a randomly chosen trade is informed, using only observable daily buy and sell trade counts",
+                "Its five parameters, α, δ, μ, εb, and εs, describe the probability of an information event, its direction, the informed arrival rate, and the background uninformed buy and sell rates",
+                "PIN = αμ ÷ (αμ + εb + εs) combines these into a single, comparable probability across stocks or across time",
+                "PIN tends to be lower for index products and large, widely covered stocks, and higher for smaller, thinly covered ones, formalising Chapter 2's spread comparison",
+                "PIN's practical limitations, needing inferred trade classification and facing maximum likelihood estimation issues on high-volume stocks, are why it functions as a research tool rather than a live trading signal",
+                "The next lesson introduces VPIN, a related measure designed to update closer to real time using trading volume rather than daily trade counts"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

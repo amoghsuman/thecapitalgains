@@ -1,0 +1,252 @@
+{
+  "courseSlug": "understanding-momentum-and-trend-following-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 4: Cross-Sectional Momentum - Ranking and Rotation",
+      "lessons": [
+        {
+          "title": "Case Study: Constructing a Simple Momentum Portfolio from Nifty 200 Stocks",
+          "slug": "case-study-constructing-a-simple-momentum-portfolio-from-nifty-200-stocks",
+          "body": [
+            {
+              "_key": "m16-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m16-001s1", "_type": "span", "marks": [], "text": "Time to run the full pipeline from Lesson 3 end to end: universe, risk-adjusted ranking, skip-month convention, quarterly rebalance, equal-weighted top selections, on an illustrative 15-stock slice of a Nifty 200-style universe, spanning two rebalance dates so the rotation this chapter is named for actually shows up in the numbers." }
+              ]
+            },
+            {
+              "_key": "m16-002",
+              "_type": "bigIdea",
+              "text": "A momentum portfolio is not a static list. It is a rule, re-applied on a schedule, that keeps rotating capital toward whatever is currently showing the strongest risk-adjusted trend, dropping names as they fade and picking up new leadership as it emerges, without anyone needing to forecast the rotation in advance."
+            },
+            {
+              "_key": "m16-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m16-003s1", "_type": "span", "marks": [], "text": "The Setup: A 15-Stock Slice, Selection 1" }
+              ]
+            },
+            {
+              "_key": "m16-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m16-004s1", "_type": "span", "marks": [], "text": "Fifteen hypothetical stocks across sectors, ranked by 6-month risk-adjusted momentum score as of the first selection date, top 5 selected for an equal-weighted portfolio." }
+              ]
+            },
+            {
+              "_key": "m16-005",
+              "_type": "table",
+              "caption": "Selection 1: 6-month formation return, volatility, and momentum score (illustrative, hypothetical stocks)",
+              "headers": ["Stock", "6-month return", "Volatility", "Momentum score", "Rank"],
+              "rows": [
+                { "_key": "m16-005r1", "_type": "tableRow", "cells": ["PSU Defence Co.", "45%", "30%", "1.50", "1"] },
+                { "_key": "m16-005r2", "_type": "tableRow", "cells": ["PSU Bank Co.", "32%", "24%", "1.33", "2"] },
+                { "_key": "m16-005r3", "_type": "tableRow", "cells": ["Energy Co.", "26%", "20%", "1.30", "3"] },
+                { "_key": "m16-005r4", "_type": "tableRow", "cells": ["Auto Co.", "28%", "22%", "1.27", "4"] },
+                { "_key": "m16-005r5", "_type": "tableRow", "cells": ["Infra Co.", "30%", "26%", "1.15", "5"] },
+                { "_key": "m16-005r6", "_type": "tableRow", "cells": ["Cement Co.", "22%", "21%", "1.05", "6"] },
+                { "_key": "m16-005r7", "_type": "tableRow", "cells": ["Pharma Co.", "18%", "19%", "0.95", "7"] },
+                { "_key": "m16-005r8", "_type": "tableRow", "cells": ["Metal Co.", "35%", "38%", "0.92", "8"] },
+                { "_key": "m16-005r9", "_type": "tableRow", "cells": ["Realty Co.", "40%", "45%", "0.89", "9"] },
+                { "_key": "m16-005r10", "_type": "tableRow", "cells": ["Private Bank Co.", "15%", "17%", "0.88", "10"] },
+                { "_key": "m16-005r11", "_type": "tableRow", "cells": ["Chemicals Co.", "20%", "23%", "0.87", "11"] },
+                { "_key": "m16-005r12", "_type": "tableRow", "cells": ["FMCG Co.", "12%", "14%", "0.86", "12"] },
+                { "_key": "m16-005r13", "_type": "tableRow", "cells": ["IT Services Co.", "8%", "20%", "0.40", "13"] },
+                { "_key": "m16-005r14", "_type": "tableRow", "cells": ["Telecom Co.", "10%", "25%", "0.40", "14"] },
+                { "_key": "m16-005r15", "_type": "tableRow", "cells": ["Insurance Co.", "5%", "18%", "0.28", "15"] }
+              ]
+            },
+            {
+              "_key": "m16-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m16-006s1", "_type": "span", "marks": [], "text": "The Portfolio: Equal-Weighted Top 5, Held for One Quarter" }
+              ]
+            },
+            {
+              "_key": "m16-007",
+              "_type": "mathBlock",
+              "latex": "\\text{Portfolio Return} = \\frac{1}{N}\\sum_{i=1}^{N} r_i, \\quad N = 5",
+              "caption": "Equal-weighted portfolio return: the simple average of each selected stock's return over the holding period."
+            },
+            {
+              "_key": "m16-008",
+              "_type": "table",
+              "caption": "Q1 holding-period returns for the selected top 5 (illustrative, distinct from the formation-period returns used to rank them)",
+              "headers": ["Stock", "Q1 holding-period return"],
+              "rows": [
+                { "_key": "m16-008r1", "_type": "tableRow", "cells": ["PSU Defence Co.", "+22%"] },
+                { "_key": "m16-008r2", "_type": "tableRow", "cells": ["PSU Bank Co.", "+15%"] },
+                { "_key": "m16-008r3", "_type": "tableRow", "cells": ["Energy Co.", "+5%"] },
+                { "_key": "m16-008r4", "_type": "tableRow", "cells": ["Auto Co.", "+18%"] },
+                { "_key": "m16-008r5", "_type": "tableRow", "cells": ["Infra Co.", "+3%"] }
+              ]
+            },
+            {
+              "_key": "m16-009",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "m16-009s1", "label": "Equal-weighted portfolio return (Q1)", "value": "+12.6% (illustrative)", "context": "(22 + 15 + 5 + 18 + 3) / 5 = 63 / 5" },
+                { "_key": "m16-009s2", "label": "Illustrative broad universe return (Q1)", "value": "+7.0% (illustrative)", "context": "A hypothetical benchmark return for the same quarter across the full 15-stock universe" },
+                { "_key": "m16-009s3", "label": "Illustrative outperformance", "value": "+5.6 percentage points", "context": "Roughly in line with the order of magnitude discussed in Lesson 2's academic coverage, not identical to it" },
+                { "_key": "m16-009s4", "label": "Weakest two holdings this quarter", "value": "Energy Co. and Infra Co.", "context": "Both still positive, but the weakest of the five, a preview of who is likely to drop out at the next rebalance" }
+              ]
+            },
+            {
+              "_key": "m16-010",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m16-010s1", "_type": "span", "marks": [], "text": "Rebalancing: Selection 2, Three Months Later" }
+              ]
+            },
+            {
+              "_key": "m16-011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m16-011s1", "_type": "span", "marks": [], "text": "At the next quarterly rebalance, the formation window rolls forward and every stock is re-scored fresh. PSU Defence Co. and PSU Bank Co. accelerate further. Cement Co. and Realty Co., outside the original top 5, strengthen enough to enter it. Energy Co. and Infra Co., already the weakest two of the prior selection, fade out of the top 5 entirely." }
+              ]
+            },
+            {
+              "_key": "m16-012",
+              "_type": "table",
+              "caption": "Selection 2: updated momentum scores at the next rebalance (illustrative, top candidates only)",
+              "headers": ["Stock", "6-month return", "Volatility", "Momentum score", "New rank"],
+              "rows": [
+                { "_key": "m16-012r1", "_type": "tableRow", "cells": ["PSU Defence Co.", "50%", "28%", "1.79", "1"] },
+                { "_key": "m16-012r2", "_type": "tableRow", "cells": ["PSU Bank Co.", "38%", "25%", "1.52", "2"] },
+                { "_key": "m16-012r3", "_type": "tableRow", "cells": ["Auto Co.", "33%", "24%", "1.38", "3"] },
+                { "_key": "m16-012r4", "_type": "tableRow", "cells": ["Cement Co.", "30%", "22%", "1.36", "4"] },
+                { "_key": "m16-012r5", "_type": "tableRow", "cells": ["Realty Co.", "55%", "42%", "1.31", "5"] },
+                { "_key": "m16-012r6", "_type": "tableRow", "cells": ["Energy Co.", "20%", "22%", "0.91", "Dropped from top 5"] },
+                { "_key": "m16-012r7", "_type": "tableRow", "cells": ["Infra Co.", "18%", "24%", "0.75", "Dropped from top 5"] }
+              ]
+            },
+            {
+              "_key": "m16-013",
+              "_type": "comparison",
+              "title": "Rotation From Selection 1 to Selection 2",
+              "columns": [
+                {
+                  "_key": "m16-013c1",
+                  "label": "Stayed in the Top 5",
+                  "points": [
+                    "PSU Defence Co., strengthened further",
+                    "PSU Bank Co., strengthened further",
+                    "Auto Co., held its position"
+                  ]
+                },
+                {
+                  "_key": "m16-013c2",
+                  "label": "Dropped Out / Rotated In",
+                  "points": [
+                    "Energy Co. dropped, the weakest holder last quarter",
+                    "Infra Co. dropped, also the weakest last quarter",
+                    "Cement Co. rotated in, strengthened enough to qualify",
+                    "Realty Co. rotated in, accelerated sharply"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "m16-014",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This is cross-sectional momentum's rotation mechanism working exactly as designed. Nobody had to predict in advance that PSU and defence names would keep leading, or that Realty would accelerate into contention. The ranking process itself surfaced the change, and the two names that had already looked weakest within the prior quarter's portfolio, Energy Co. and Infra Co., were precisely the two that rotated out. This mirrors the real 2023-2024 leadership rotation into PSU, defence, and infrastructure names covered in Chapter 1's case study."
+            },
+            {
+              "_key": "m16-015",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m16-015s1", "_type": "span", "marks": [], "text": "What This Case Study Does Not Prove" }
+              ]
+            },
+            {
+              "_key": "m16-016",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m16-016s1", "_type": "span", "marks": [], "text": "Two quarters of hypothetical data on a 15-stock illustrative universe is a demonstration of mechanics, not a validated strategy, the same honest caveat this course has applied to every worked example so far. This case study also ignores the transaction costs of rebalancing five positions in and out every quarter, ignores taxes on realized gains, and says nothing yet about position sizing or risk management if one of the five holdings suffers a sharp reversal on its own. Those topics, along with the rigorous, multi-year, cost-aware backtesting this small example is not, are covered later in this course." }
+              ]
+            },
+            {
+              "_key": "m16-017",
+              "_type": "callout",
+              "type": "warning",
+              "text": "A concentrated equal-weighted portfolio of just 5 stocks, as used here for simplicity, carries real single-stock risk that a broader top-decile selection from the full Nifty 200 would diversify away. Treat the position count in this illustration as a teaching simplification, not a recommended portfolio size."
+            },
+            {
+              "_key": "m16-018",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Recompute the portfolio return",
+              "prompt": "If Infra Co.'s Q1 holding-period return had instead been +13% rather than +3%, while every other holding's return stayed the same, what would the new equal-weighted portfolio return have been, in percent?",
+              "correctValue": 14.6,
+              "tolerance": 0.2,
+              "unit": "%",
+              "explanation": "(22 + 15 + 5 + 18 + 13) / 5 = 73 / 5 = 14.6%. Swapping one holding's return from +3% to +13%, a 10 percentage point change, raises the equal-weighted average by 10/5 = 2 percentage points, from 12.6% to 14.6%."
+            },
+            {
+              "_key": "m16-019",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Should the system have kept Infra Co.?",
+              "scenario": "A colleague argues the system made a mistake dropping Infra Co., since it still had a positive return both quarters and never actually lost money.",
+              "prompt": "Based on this lesson, how would you respond to your colleague's argument?",
+              "modelAnswer": "The system isn't designed to hold every stock that made money, it is designed to hold the stocks with the strongest risk-adjusted momentum relative to the rest of the universe at each rebalance. Infra Co. being positive both quarters doesn't matter if other stocks, Cement Co. and Realty Co. in this case, are now showing meaningfully stronger risk-adjusted trends. Capital is limited, and a cross-sectional system's entire logic is reallocating it toward the relatively strongest names at each rebalance, not holding onto anything that simply avoided losing money."
+            },
+            {
+              "_key": "m16-020",
+              "_type": "toolLink",
+              "label": "Screen and rank NSE stocks by trailing return on screener.in",
+              "url": "https://www.screener.in",
+              "description": "screener.in's custom screens can approximate the ranking step of this pipeline on real Nifty 200 constituents, a practical next step beyond this lesson's illustrative 15-stock example."
+            },
+            {
+              "_key": "m16-021",
+              "_type": "flashcardSet",
+              "title": "Momentum Portfolio Case Study: Core Terms",
+              "cards": [
+                { "_key": "m16-021f1", "term": "Rotation", "definition": "The process of a ranking system dropping stocks that have weakened and replacing them with stocks that have newly qualified, repeated at every rebalance." },
+                { "_key": "m16-021f2", "term": "Rebalance date", "definition": "A scheduled point in time at which a ranking system re-scores its universe and updates the portfolio's holdings accordingly." },
+                { "_key": "m16-021f3", "term": "Equal-weighted portfolio", "definition": "A portfolio construction approach that allocates the same amount of capital to every selected holding, regardless of its individual rank or score." }
+              ]
+            },
+            {
+              "_key": "m16-022",
+              "_type": "keyTakeaways",
+              "points": [
+                "Applying the full pipeline from Lesson 3, universe, risk-adjusted score, skip-month convention, quarterly rebalance, equal weighting, to an illustrative 15-stock universe produced a portfolio that outperformed a hypothetical broader benchmark in its first quarter.",
+                "The weakest two holdings in that first quarter, Energy Co. and Infra Co., were precisely the two that rotated out at the next rebalance, replaced by Cement Co. and Realty Co. as they strengthened.",
+                "This rotation mechanism requires no forecasting of which sector leads next, only a disciplined, repeated re-ranking process, mirroring the real 2023-2024 PSU and infrastructure leadership shift from Chapter 1.",
+                "A concentrated 5-stock equal-weighted portfolio carries real single-stock risk that this simplified illustration does not address.",
+                "This case study closes the chapter's toolkit: universe and metric design from Lesson 3, and a full worked rotation from formation to rebalance in this lesson, built on the academic foundations from Lessons 1 and 2."
+              ]
+            },
+            {
+              "_key": "m16-023",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice. All stock names, returns, volatilities, and dates in this case study are entirely hypothetical and illustrative, constructed for teaching purposes, and do not represent any real securities or actual historical performance. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,207 @@
+{
+  "courseSlug": "understanding-numerical-methods-in-quantitative-finance-binomial-trees-and-finite-difference-methods",
+  "chapters": [
+    {
+      "title": "Chapter 4: Finite Difference Methods for Option Pricing",
+      "lessons": [
+        {
+          "title": "From Trees to PDEs: The Black-Scholes Equation as a Diffusion Problem",
+          "slug": "from-trees-to-pdes-the-black-scholes-equation-as-a-diffusion-problem",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "p1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "p1s1", "text": "Chapter 3, Lesson 3 showed a tree's price converging toward Black-Scholes as steps grew. Lesson 4 pulled Delta, Gamma, and Theta out of that same tree's own nodes. Neither lesson said exactly what continuous object the tree was converging toward, only that it did. This lesson names it, an actual differential equation, and shows the Greeks already computed are its own ingredients. Once that is visible, Chapter 4 stops needing a tree at all.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "p2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "p2s1", "text": "The Black-Scholes Partial Differential Equation", "marks": [] }
+              ]
+            },
+            {
+              "_type": "mathBlock",
+              "_key": "p3",
+              "latex": "\\frac{\\partial f}{\\partial t} + rS\\frac{\\partial f}{\\partial S} + \\frac{1}{2}\\sigma^2 S^2 \\frac{\\partial^2 f}{\\partial S^2} = rf",
+              "caption": "The Black-Scholes partial differential equation (PDE). It holds at every point in price and time, for any derivative f whose payoff depends only on S and t."
+            },
+            {
+              "_type": "block",
+              "_key": "p4",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "p4s1", "text": "Read left to right: how the option's value changes with time, plus how it changes with the stock's drift at the risk-free rate, plus a curvature term scaled by variance, all forced to sum to exactly the risk-free return on the option's own current value. That last requirement is no-arbitrage again, in continuous form, the exact same idea Chapter 2, Lesson 2 proved with a replicating portfolio, just written as a differential equation instead of a one-step comparison.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "p5",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "p5s1", "text": "The Greeks Were Already Hiding Inside This Equation", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "p6",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "p6s1", "text": "Every derivative in the equation above already has a name from Chapter 3, Lesson 4. The rate of change with time is Theta. The first price derivative is Delta. The second price derivative, curvature, is Gamma. Substitute those names in directly.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "mathBlock",
+              "_key": "p7",
+              "latex": "\\Theta + rS\\,\\Delta + \\frac{1}{2}\\sigma^2 S^2\\,\\Gamma = rf",
+              "caption": "The exact same equation, in the language Lesson 4 already built. This should hold for the Greeks computed from any properly built tree, more precisely as N grows."
+            },
+            {
+              "_type": "block",
+              "_key": "p8",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "p8s1", "text": "This is checkable, not just assertable. Plug Lesson 4's six-step Delta, Gamma, and Theta into the left side and compare against r times the six-step price on the right. Then repeat at larger N and watch the gap close.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "p9",
+              "caption": "The PDE identity, checked directly against tree-computed Greeks at growing N",
+              "headers": ["N", "Left Side (Theta + rS·Delta + ½σ²S²·Gamma)", "Right Side (r × price)", "Gap"],
+              "rows": [
+                { "cells": ["6", "65.55", "55.13", "18.9%"] },
+                { "cells": ["20", "59.11", "56.39", "4.8%"] },
+                { "cells": ["50", "57.77", "56.71", "1.9%"] },
+                { "cells": ["100", "57.35", "56.82", "0.9%"] },
+                { "cells": ["300", "57.07", "56.90", "0.3%"] },
+                { "cells": ["600", "57.00", "56.92", "0.15%"] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "p10",
+              "type": "insight",
+              "text": "The gap shrinks the same way Lesson 3's price error did, and for the same underlying reason. The tree's Greeks are finite-difference estimates of the exact derivatives in the PDE, accurate approximations that improve as the tree gets finer, not the exact continuous quantities themselves until N reaches the limit. The PDE is not a separate fact about options, it is the equation the tree has been quietly discretizing this entire time."
+            },
+            {
+              "_type": "block",
+              "_key": "p11",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "p11s1", "text": "From a Discrete Recursion to a Continuous Equation", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "p12",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "p12s1", "text": "Chapter 2, Lesson 1's one-step formula is, underneath the notation, a difference equation relating an option's value at one point in time to its value one small step later. Chapter 1, Lesson 3 argued that shrinking that step lets the discrete process converge to a continuous one. Standard results from numerical analysis, expanding that same difference equation as delta-t shrinks toward zero, show precisely what it converges to, and it is exactly the PDE above. That derivation sits outside this course's scope, but the shape of the result should feel familiar by now, it is the same convergence story Lesson 3 already told, just carried one step further to reveal what the limit actually is.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "p13",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "p13s1", "text": "Terminal and Boundary Conditions: The Other Half of the Problem", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "p14",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "p14s1", "text": "A differential equation alone has infinitely many solutions. Pinning down the one that actually describes a specific option needs a terminal condition, the payoff at expiry, exactly what every tree's terminal nodes have supplied from the very first worked example in this course, plus boundary conditions describing what happens at the extremes of price.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "p15",
+              "caption": "Conditions that pin down a unique solution",
+              "headers": ["Condition", "Call", "Put"],
+              "rows": [
+                { "cells": ["Terminal, at t = T", "f = max(S − K, 0)", "f = max(K − S, 0)"] },
+                { "cells": ["Boundary, as S → 0", "f → 0, a call on a worthless stock is worthless", "f → K e^(−r(T−t)), a put becomes certain to be exercised at K"] },
+                { "cells": ["Boundary, as S → infinity", "f → S − K e^(−r(T−t)), certain to be exercised", "f → 0, a put on an unbounded stock is worthless"] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "p16",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "p16s1", "text": "What Changes in Chapter 4", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "p17",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "p17s1", "text": "Everything built through Chapter 3 approached this PDE indirectly, build a lattice of discrete price paths, take risk-neutral expectations, and let the result approximate the equation as a side effect of enough steps. Chapter 4 stops approaching it indirectly. It builds a grid of discrete price levels and time points, and approximates the partial derivatives in this exact equation directly at every grid point, using finite differences, in place of a lattice of branching outcomes. The terminal and boundary conditions above are exactly what makes that grid solvable, the known edges the solution gets built inward from.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "p18",
+              "variant": "quiz",
+              "title": "Quick Check",
+              "question": "In the Black-Scholes PDE, Theta + rS·Delta + ½σ²S²·Gamma = rf, which Greek corresponds to the second-derivative, curvature term?",
+              "options": [
+                "Theta",
+                "Delta",
+                "Gamma",
+                "Rho"
+              ],
+              "correctIndex": 2,
+              "explanation": "Gamma is the rate of change of Delta, the option value's second derivative with respect to the stock price, exactly the curvature term scaled by ½σ²S² in the PDE. Theta is the time derivative, Delta is the first price derivative, and Rho does not appear in this equation at all, since the risk-free rate r is treated as a fixed input here, not a variable being differentiated with respect to."
+            },
+            {
+              "_type": "exercise",
+              "_key": "p19",
+              "variant": "scenario",
+              "title": "Justifying a Boundary Condition",
+              "scenario": "A colleague looking at the boundary conditions table asks why a call option's value approaches S minus K times e to the minus r times remaining time, rather than simply S minus K, as the stock price grows very large.",
+              "prompt": "How would you explain this specific boundary condition?",
+              "modelAnswer": "As the stock price grows extremely large relative to the strike, exercise becomes a near-certainty, so the call effectively behaves like a forward contract to buy the stock at K on the expiry date rather than a genuine option anymore. The value of that forward-like position today is the stock price minus the present value of the strike, not minus the strike's raw face value, because the K rupees are only paid at expiry, not today. Discounting K by e to the minus r times the remaining time to expiry is exactly the same time-value-of-money logic used throughout this course, from Chapter 1's risk-neutral discounting onward, applied here at the boundary rather than at a tree node."
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "p20",
+              "text": "A binomial tree was never a separate technique from Black-Scholes, it was always a discrete approximation of one specific differential equation, converging toward it as steps grow, its Greeks converging toward that equation's own derivatives along the way. Chapter 4 simply stops approximating that equation through a tree and starts solving it directly."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "p21",
+              "points": [
+                "The Black-Scholes PDE, Theta plus rS times Delta plus half sigma squared S squared times Gamma equals rf, is the continuous equation every tree in this course has been discretely approximating.",
+                "Checked directly against Chapter 3, Lesson 4's tree-computed Greeks, this identity's error shrinks from about 19% at N = 6 to about 0.15% at N = 600, the same convergence pattern as Lesson 3's price check, now applied to the equation itself.",
+                "The PDE alone has infinitely many solutions. A terminal condition, the known payoff at expiry, and boundary conditions at S approaching zero and infinity are what pin down the one solution that describes a specific option.",
+                "A tree approaches this PDE indirectly, through many small risk-neutral steps. Chapter 4 approaches it directly, approximating its derivatives on a grid of price and time points instead.",
+                "Terminal conditions are exactly what a tree's terminal nodes already supplied throughout this course, the payoff formula, now the known edge a finite difference grid gets built inward from."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,361 @@
+{
+  "courseSlug": "advanced-regime-switching-models-for-strategy-allocation",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Markets Have Regimes",
+      "lessons": [
+        {
+          "title": "Anatomy of a Regime: Trend, Volatility, and Correlation Shifts",
+          "slug": "anatomy-of-a-regime-trend-volatility-and-correlation-shifts",
+          "body": [
+            {
+              "_key": "rswc1l2b01",
+              "_type": "bigIdea",
+              "text": "A regime is not one thing. It is three separate dials set at once: trend, volatility, and correlation. Two markets can both be 'trending' and behave nothing alike, because the other two dials are set completely differently."
+            },
+            {
+              "_key": "rswc1l2b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc1l2b02s1",
+                  "_type": "span",
+                  "text": "The last lesson used 'regime' loosely, the way traders use it on a desk: a stretch of market behavior that feels different from what came before. Before you can detect a regime with a model, you need a precise definition of what you are detecting. This lesson breaks a regime down into three measurable dimensions. Every detection method in Chapters 2 through 4, from a simple moving average flag to a full Hidden Markov Model, is ultimately trying to read one or more of these three dials.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l2b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc1l2b03s1",
+                  "_type": "span",
+                  "text": "Dimension One: Trend, or Direction",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l2b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc1l2b04s1",
+                  "_type": "span",
+                  "text": "Trend asks a single question: are prices drifting persistently in one direction, or oscillating around a level without going anywhere? Nifty's move off the March 2020 low was a strong trend regime, sustained direction, few deep pullbacks. Nifty through most of 2022 was closer to a trendless regime, a wide, choppy range with no persistent direction for months at a stretch, exactly the environment that broke the crossover system in the previous lesson. Trend is usually the first dimension traders reach for, and the one this course spends the least additional time defining, because it is the one you already have strong intuition for.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l2b05",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc1l2b05s1",
+                  "_type": "span",
+                  "text": "Dimension Two: Volatility Level",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l2b06",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc1l2b06s1",
+                  "_type": "span",
+                  "text": "Volatility asks how large and how frequent price swings are, independent of direction. A market can trend calmly or trend violently. The most common backward-looking measure is realized volatility, the annualized standard deviation of daily returns:",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l2b07",
+              "_type": "mathBlock",
+              "latex": "\\sigma_{\\text{annualized}} = \\text{std}(r_{\\text{daily}}) \\times \\sqrt{252}",
+              "caption": "Realized volatility: the annualized standard deviation of daily returns, refined further when we build detection rules in Chapter 2"
+            },
+            {
+              "_key": "rswc1l2b08",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc1l2b08s1",
+                  "_type": "span",
+                  "text": "India's forward-looking equivalent is India VIX, computed by NSE from Nifty options prices and read as the market's own estimate of volatility over the next 30 days. India VIX typically sits in the low-to-mid teens during calm periods. It behaves completely differently during stress.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l2b09",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Illustrative: India VIX, Quarter-End Levels, Q4 2019 to Q4 2022",
+              "xAxisLabel": "Quarter",
+              "yAxisLabel": "India VIX",
+              "data": [
+                { "_key": "rswc1l2b09d1", "label": "Q4 2019", "value": 15 },
+                { "_key": "rswc1l2b09d2", "label": "Q1 2020", "value": 60 },
+                { "_key": "rswc1l2b09d3", "label": "Q2 2020", "value": 30 },
+                { "_key": "rswc1l2b09d4", "label": "Q3 2020", "value": 22 },
+                { "_key": "rswc1l2b09d5", "label": "Q4 2020", "value": 20 },
+                { "_key": "rswc1l2b09d6", "label": "Q1 2021", "value": 24 },
+                { "_key": "rswc1l2b09d7", "label": "Q2 2021", "value": 15 },
+                { "_key": "rswc1l2b09d8", "label": "Q3 2021", "value": 14 },
+                { "_key": "rswc1l2b09d9", "label": "Q4 2021", "value": 17 },
+                { "_key": "rswc1l2b09d10", "label": "Q1 2022", "value": 25 },
+                { "_key": "rswc1l2b09d11", "label": "Q2 2022", "value": 21 },
+                { "_key": "rswc1l2b09d12", "label": "Q3 2022", "value": 19 },
+                { "_key": "rswc1l2b09d13", "label": "Q4 2022", "value": 14 }
+              ]
+            },
+            {
+              "_key": "rswc1l2b10",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "India VIX quarter-end levels above are rounded, illustrative figures built to match its well-documented history, a sharp spike around the COVID crash and a smaller pickup around the Russia-Ukraine war in early 2022. They are not sourced tick-by-tick from NSE and should not be used as exact historical data."
+            },
+            {
+              "_key": "rswc1l2b11",
+              "_type": "keyFact",
+              "label": "India VIX's most extreme reading on record",
+              "value": "Above 80, intraday, in the last week of March 2020",
+              "context": "Against a long-run average in the low-to-mid teens, that is not a bigger version of a normal day. It is a different volatility regime entirely, and strategies sized for calm markets get overwhelmed in it."
+            },
+            {
+              "_key": "rswc1l2b12",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc1l2b12s1",
+                  "_type": "span",
+                  "text": "Dimension Three: Correlation Structure",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l2b13",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc1l2b13s1",
+                  "_type": "span",
+                  "text": "Correlation asks how closely different stocks or assets move together. In calm, range-bound conditions, Nifty 50 constituents move with a moderate, dispersed correlation structure: banks trade on rate expectations, IT trades on the rupee and US demand, autos trade on their own volume cycle. In a genuine panic, that dispersion collapses. Nearly everything sells off together, regardless of sector or fundamentals, and pairwise correlations converge sharply toward 1.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l2b14",
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "rswc1l2b14st1",
+                  "label": "Avg Pairwise Correlation, Calm Regime",
+                  "value": "~0.30 to 0.40",
+                  "context": "Nifty 50 constituents, a typical range-bound, low-VIX stretch (illustrative)"
+                },
+                {
+                  "_key": "rswc1l2b14st2",
+                  "label": "Avg Pairwise Correlation, Crisis Regime",
+                  "value": "~0.75 to 0.85",
+                  "context": "Nifty 50 constituents, a March 2020 style panic (illustrative)"
+                },
+                {
+                  "_key": "rswc1l2b14st3",
+                  "label": "Diversification Benefit Lost",
+                  "value": "Most of it",
+                  "context": "When correlations converge toward 1, a diversified portfolio starts behaving like a single leveraged bet on the index"
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l2b15",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc1l2b15s1",
+                  "_type": "span",
+                  "text": "This is the dimension most portfolio and pairs strategies quietly depend on and most rarely monitor directly. A pairs trade needs its two legs to keep behaving differently enough to revert. A sector rotation strategy needs sectors to actually rotate rather than move as one block. Both assumptions fail together, in the same regime, for the same reason.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l2b16",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc1l2b16s1",
+                  "_type": "span",
+                  "text": "Why Three Dimensions, Not Just One",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l2b17",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc1l2b17s1",
+                  "_type": "span",
+                  "text": "Real regimes are combinations of all three dials, and the same trend reading can sit inside very different regimes depending on where the other two dials are set. The table below names four archetypes you will keep meeting through this course.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l2b18",
+              "_type": "table",
+              "caption": "Four regime archetypes built from the three dimensions",
+              "headers": ["Archetype", "Trend", "Volatility", "Correlation", "Example"],
+              "rows": [
+                {
+                  "_key": "rswc1l2b18r1",
+                  "_type": "tableRow",
+                  "cells": ["Calm Uptrend", "Persistent, up", "Low", "Moderate, dispersed", "Nifty through most of 2023 into early 2024"]
+                },
+                {
+                  "_key": "rswc1l2b18r2",
+                  "_type": "tableRow",
+                  "cells": ["Panic Selloff", "Sharp, down", "Very high", "High, converging toward 1", "Nifty in the last week of March 2020"]
+                },
+                {
+                  "_key": "rswc1l2b18r3",
+                  "_type": "tableRow",
+                  "cells": ["Range-Bound Chop", "Flat, no persistence", "Low to moderate", "Moderate, sector-dispersed", "Nifty for large stretches of 2022"]
+                },
+                {
+                  "_key": "rswc1l2b18r4",
+                  "_type": "tableRow",
+                  "cells": ["Volatile Whipsaw", "Frequent reversals", "High", "Elevated, but below panic levels", "Nifty in Q1 2022, around the Russia-Ukraine war shock"]
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l2b19",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Trend, volatility, and correlation are three separate dials, not one. A market can trend while volatility stays low, a healthy bull run, or trend while volatility spikes, a panic decline. Treating 'trending' and 'calm' as the same thing is one of the most common regime-reading mistakes, and it is exactly what made the Calm Uptrend and Panic Selloff rows above look similar on a simple trend filter alone."
+            },
+            {
+              "_key": "rswc1l2b20",
+              "_type": "flashcardSet",
+              "title": "Regime Vocabulary Check",
+              "cards": [
+                {
+                  "_key": "rswc1l2b20c1",
+                  "term": "Regime",
+                  "definition": "A period during which a market's trend, volatility, and correlation structure are broadly stable, before shifting to a different, also broadly stable, combination."
+                },
+                {
+                  "_key": "rswc1l2b20c2",
+                  "term": "Trend Dimension",
+                  "definition": "Whether prices are drifting persistently in one direction or oscillating without sustained direction."
+                },
+                {
+                  "_key": "rswc1l2b20c3",
+                  "term": "Volatility Dimension",
+                  "definition": "How large and how frequent price swings are, typically measured through realized volatility or a forward-looking measure like India VIX."
+                },
+                {
+                  "_key": "rswc1l2b20c4",
+                  "term": "Correlation Dimension",
+                  "definition": "How closely different stocks or assets move together; tends to rise sharply toward 1 during market stress."
+                },
+                {
+                  "_key": "rswc1l2b20c5",
+                  "term": "Regime Archetype",
+                  "definition": "A named combination of trend, volatility, and correlation readings, such as a calm uptrend or a panic selloff, used as shorthand for a market's overall character."
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l2b21",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc1l2b21s1",
+                  "_type": "span",
+                  "text": "Chapter 2 turns each of these three dials into a concrete, computable signal: moving averages and price slope for trend, rolling realized volatility and India VIX for volatility, and rolling correlation matrices for correlation structure. Chapter 3 then shows how to fold all three into a single statistical model, a Hidden Markov Model, instead of eyeballing three separate charts and guessing where they overlap.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l2b22",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Reading the Three Dimensions on a Real Index",
+              "steps": [
+                "Pull Nifty 50's daily closing prices for the last 12 months from NSE historical data or a data vendor of your choice",
+                "Compute the 50-day and 200-day moving averages and note whether the 50-day is currently above or below the 200-day: that is your trend reading",
+                "Compute the 20-day annualized realized volatility of daily returns and compare it with the current India VIX level: that is your volatility reading",
+                "Pick 10 Nifty 50 constituents across at least three sectors and compute their pairwise return correlation over the last 60 trading days: that is your correlation reading",
+                "Match your three readings against the regime archetype table above and write one sentence naming the closest archetype"
+              ]
+            },
+            {
+              "_key": "rswc1l2b23",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Telling Two Trends Apart",
+              "question": "Which of the following best illustrates a 'trending but high volatility' regime, as distinct from a calm uptrend?",
+              "options": [
+                "Nifty grinding higher through most of 2023 with India VIX in the low teens",
+                "Nifty falling sharply in March 2020 with India VIX spiking above 80",
+                "Nifty moving sideways in a tight range through mid-2022",
+                "Nifty consolidating on unusually low trading volumes"
+              ],
+              "correctIndex": 1,
+              "explanation": "Both are trending regimes in the sense that price moved persistently in one direction, but they sit in completely different volatility and correlation settings. The first row is a calm uptrend; the second is a panic selloff. A trend filter alone cannot tell them apart, which is exactly why volatility and correlation are tracked as separate dimensions rather than folded into trend."
+            },
+            {
+              "_key": "rswc1l2b24",
+              "_type": "keyTakeaways",
+              "points": [
+                "A regime is defined by three dimensions, not one: trend (direction), volatility (magnitude of swings), and correlation (how assets move together)",
+                "Realized volatility, the annualized standard deviation of daily returns, is the standard backward-looking measure of the volatility dimension; India VIX is its forward-looking counterpart",
+                "India VIX typically sits in the low-to-mid teens in calm periods and spiked above 80 intraday during the March 2020 panic",
+                "Correlations across Nifty 50 constituents tend to converge sharply toward 1 during crises, which is when diversification benefits disappear",
+                "The same trend reading can sit inside very different regimes depending on the volatility and correlation dials, so a trend filter alone cannot tell a calm uptrend from a panic selloff",
+                "Chapters 2 through 4 turn these three dimensions into measurable signals and then combine them into a single statistical regime model"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

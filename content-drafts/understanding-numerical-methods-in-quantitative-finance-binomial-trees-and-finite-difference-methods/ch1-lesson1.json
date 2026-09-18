@@ -1,0 +1,199 @@
+{
+  "courseSlug": "understanding-numerical-methods-in-quantitative-finance-binomial-trees-and-finite-difference-methods",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Numerical Methods? Foundations of Option Pricing Beyond Closed-Form",
+      "lessons": [
+        {
+          "title": "Why Some Options Can't Be Priced With a Formula: The Limits of Black-Scholes",
+          "slug": "why-some-options-cant-be-priced-with-a-formula-the-limits-of-black-scholes",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "a1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "a1s1", "text": "Black-Scholes is the formula every options course opens with, and for good reason. Feed it five inputs, spot price, strike, time to expiry, volatility, and the risk-free rate, and it returns an exact price for a European call or put in one line of algebra. It is elegant, fast, and correct, for the narrow slice of the options universe it was built for. The moment you step outside that slice, and most of what a real derivatives desk prices lives outside it, the formula has nothing to say. This course exists because of that gap.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "mathBlock",
+              "_key": "a2",
+              "latex": "C = S_0 N(d_1) - K e^{-rT} N(d_2), \\quad d_1 = \\frac{\\ln(S_0/K) + \\left(r + \\tfrac{1}{2}\\sigma^2\\right)T}{\\sigma\\sqrt{T}}, \\quad d_2 = d_1 - \\sigma\\sqrt{T}",
+              "caption": "The Black-Scholes closed-form price for a European call. Finite, memorizable, exact under the model's assumptions, and the benchmark every numerical method in this course will be checked against."
+            },
+            {
+              "_type": "block",
+              "_key": "a3",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "a3s1", "text": "What Black-Scholes Actually Assumes", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "a4",
+              "style": "normal",
+              "markDefs": [ { "_type": "glossaryTerm", "_key": "gt1", "definition": "A price you can compute directly from a formula in a fixed number of steps, as opposed to a price you have to approximate through simulation or iteration." } ],
+              "children": [
+                { "_type": "span", "_key": "a4s1", "text": "A ", "marks": [] },
+                { "_type": "span", "_key": "a4s2", "text": "closed-form solution", "marks": ["gt1"] },
+                { "_type": "span", "_key": "a4s3", "text": " this clean does not come free. It rests on a specific set of assumptions about the option and the market it trades in, and every one of them is a place the model can quietly stop matching reality.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "a5",
+              "caption": "Black-Scholes assumptions and what breaks when they don't hold",
+              "headers": ["Assumption", "What Breaks If It's Violated"],
+              "rows": [
+                { "cells": ["Exercised only at expiry (European-style)", "American options, exercisable any day up to expiry, need a fundamentally different calculation"] },
+                { "cells": ["Constant volatility for the option's whole life", "Real markets price a volatility smile or skew, India VIX and Nifty options included, so a single sigma is only ever an approximation"] },
+                { "cells": ["No dividends, or a known continuous yield at best", "Discrete, date-specific dividends, the norm for Indian companies, break the closed-form math outright"] },
+                { "cells": ["Payoff depends only on the price at expiry", "Path-dependent payoffs, like Asian or barrier options common in commodity and currency hedging, are not covered at all"] },
+                { "cells": ["Frictionless, continuous trading", "Real markets have bid-ask spreads, lot sizes, and margin. This course sets that aside too, to focus purely on the pricing problem"] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "a6",
+              "type": "insight",
+              "text": "If you have only ever traded options on the NSE, the early-exercise discussion below might feel academic. SEBI mandated European-style exercise for all exchange-traded equity and index derivatives back in October 2016, precisely to remove this complexity for the Indian retail market. But the moment you interview for a prop trading desk that also trades US-listed names, price an ESOP or a convertible bond's embedded option, or trade global markets through GIFT City access, American-style exercise is back on the table, and Black-Scholes alone cannot price it."
+            },
+            {
+              "_type": "block",
+              "_key": "a7",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "a7s1", "text": "Why Early Exercise Breaks the Formula", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "a8",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "a8s1", "text": "For an American call on a stock that pays no dividends, it turns out early exercise is never optimal, so the American and European call prices are identical, and Black-Scholes happens to work. Puts do not get this free pass, and neither does a call on a dividend-paying stock. Intuition: exercising early on a deep in-the-money put locks in the intrinsic value today, which you can then invest at the risk-free rate. Waiting instead means holding an asset whose upside from here is capped, since the stock can only fall so far before it hits zero. Past a certain point, cash in hand today beats a wait-and-see option on a stock that has little room left to drop.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "statGrid",
+              "_key": "a9",
+              "stats": [
+                { "label": "Exercise now", "value": "₹160 intrinsic value + ~₹5.6 interest over 6 months", "context": "A 6-month American put, strike ₹200, on a stock now at ₹40, at a 7% risk-free rate" },
+                { "label": "Wait until expiry (European)", "value": "₹160, capped", "context": "The stock is already near zero, so there is almost no further downside left to wait for" },
+                { "label": "Early-exercise premium", "value": "≈ ₹5-6 per share", "context": "Value the Black-Scholes put formula cannot see, because it assumes exercise only at expiry" }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "a10",
+              "type": "warning",
+              "text": "This is a simplified illustration to build the right intuition, not a precise valuation. The actual early-exercise premium depends on the full distribution of future price paths and the exact timing decision at every point along them, which is exactly what a binomial tree, built with backward induction in Chapters 2 and 3, computes properly."
+            },
+            {
+              "_type": "exercise",
+              "_key": "a11",
+              "variant": "scenario",
+              "title": "Marking a Crashed Position",
+              "scenario": "A prop trading desk holds a deep in-the-money American put on a stock that has crashed after a weak earnings print. A junior quant on the desk suggests marking the position with the Black-Scholes put formula, reasoning: \"it's deep ITM anyway, so time value barely matters.\"",
+              "prompt": "What is wrong with this reasoning, and which direction is the marked value likely to be wrong in?",
+              "modelAnswer": "Black-Scholes prices a European put, which cannot be exercised before expiry. A deep ITM American put on a stock that has just crashed is exactly the case where early exercise is most likely optimal, since the stock has little room left to fall and the holder is better off locking in the intrinsic value now and earning interest on it rather than waiting. Using the European formula here ignores that early-exercise premium entirely, so it will understate the option's true value. The fix is a method that respects American exercise, a binomial tree with backward induction, which is exactly what the next two chapters build."
+            },
+            {
+              "_type": "block",
+              "_key": "a12",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "a12s1", "text": "Two More Places the Formula Runs Out", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "a13",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "a13s1", "text": "Path dependency is the second gap. An Asian option pays off on the average price over the option's life rather than the price on any single day, and Indian corporates hedging crude oil imports or USD/INR exposure use exactly this structure because it smooths out the effect of a single bad pricing day. A barrier option activates or cancels if the underlying touches a level along the way, common in structured notes sold to Indian HNI clients. Black-Scholes only ever looks at the terminal price. It has no mechanism for a payoff that depends on the whole path.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "a14",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "a14s1", "text": "The volatility smile is the third. Black-Scholes assumes one constant sigma applies to every strike and every maturity. Plot the implied volatility of actual Nifty options across strikes on any given day and you will not see a flat line, you will see a smile or skew, deep OTM puts trading at meaningfully higher implied volatility than at-the-money options, a pattern visible in India VIX behaviour too. Pricing a book consistently with that smile needs a model that lets volatility vary by strike and time, which again means solving numerically rather than reading off one formula.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "a15",
+              "variant": "quiz",
+              "title": "Quick Check",
+              "question": "Which of the following is NOT an assumption behind the Black-Scholes formula?",
+              "options": [
+                "The option can only be exercised at expiry",
+                "Volatility is constant over the option's life",
+                "The underlying stock pays a discrete, date-specific dividend",
+                "Trading is frictionless and continuous"
+              ],
+              "correctIndex": 2,
+              "explanation": "Black-Scholes assumes no dividends, or at most a known continuous yield, never a discrete, specific-date dividend. Real Indian companies almost always pay discrete dividends declared around results season, one of several everyday mismatches between the model's assumptions and how NSE-listed stocks actually trade."
+            },
+            {
+              "_type": "block",
+              "_key": "a16",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "a16s1", "text": "A Map of What's Ahead", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "a17",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "a17s1", "text": "This course builds two of the standard ways around these gaps. A binomial tree breaks time into discrete steps, builds out every possible price path the stock could take, and works backward from expiry checking whether early exercise beats holding at every single node. A finite difference method takes the Black-Scholes partial differential equation directly, the equation the closed-form solution happens to solve exactly for the European case, and solves it on a grid of discrete price and time points instead, which handles early exercise and awkward boundary conditions just as naturally.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "a18",
+              "caption": "Where each numerical method fits",
+              "headers": ["Method", "Best For", "In This Course"],
+              "rows": [
+                { "cells": ["Binomial Tree", "American exercise, intuitive step-by-step backward induction, low dimensionality", "Chapters 2 and 3"] },
+                { "cells": ["Finite Difference", "Solving the pricing PDE directly on a grid, flexible boundary and exercise conditions", "Chapter 4"] },
+                { "cells": ["Monte Carlo Simulation", "Path-dependent and multi-asset payoffs, high dimensionality", "Covered in this platform's separate Monte Carlo simulation course"] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "a19",
+              "text": "Black-Scholes is the exact answer to a narrow question. Binomial trees and finite difference methods are how you get a reliable answer to almost every other question a real derivatives desk actually asks."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "a20",
+              "points": [
+                "Black-Scholes prices European options exactly, in closed form, but only under its assumptions: European exercise, constant volatility, no discrete dividends, no path dependency.",
+                "SEBI's October 2016 mandate makes NSE-listed equity and index derivatives European-style, but American exercise stays very much alive in global markets, ESOPs, convertible bonds, and GIFT City-routed trades.",
+                "American options can carry real early-exercise value, especially deep in-the-money puts, that a European formula silently ignores.",
+                "Path-dependent payoffs like Asian and barrier options, and the volatility smile, are two more places where a single closed-form price simply does not exist.",
+                "Binomial trees (Chapters 2 and 3) and finite difference methods (Chapter 4) are the two numerical techniques this course builds, chosen because between them they cover almost everything Black-Scholes cannot."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

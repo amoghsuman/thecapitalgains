@@ -1,0 +1,498 @@
+{
+  "courseSlug": "understanding-options-as-a-hedging-tool-for-investors",
+  "chapters": [
+    {
+      "title": "Chapter 4: Calls, Covered Calls, and Collars",
+      "lessons": [
+        {
+          "title": "Covered Calls for Investors: Earning Premium on Stocks You Plan to Hold",
+          "slug": "covered-calls-for-investors-earning-premium-on-stocks-you-plan-to-hold",
+          "body": [
+            {
+              "_key": "c4l1-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l1-001s1",
+                  "_type": "span",
+                  "text": "So far this course has been about paying premium to protect what you own. This chapter flips the table. If you own shares and would be content to sell them at a higher price, someone in the market will pay you today for the right to buy them from you at that price. That is a covered call. It is often sold on social media as \"monthly salary from your portfolio\". It is not a salary, and it is not a hedge. It is a trade: you swap some of your upside for cash now. Done with open eyes, it is one of the most sensible option strategies available to a long-term investor. Done for the income alone, it quietly sells your best stocks at the worst time.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l1-002",
+              "_type": "bigIdea",
+              "text": "A covered call pays you a small, certain premium today in exchange for giving up gains above the strike. It cushions a fall only by the size of that premium. Sell calls only at prices you would genuinely be happy to sell your shares at."
+            },
+            {
+              "_key": "c4l1-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l1-003s1",
+                  "_type": "span",
+                  "text": "How a Covered Call Works",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l1-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c4l1-004m1",
+                  "_type": "glossaryTerm",
+                  "definition": "Owning shares and selling a call option on the same shares, so that the obligation to deliver them at the strike is backed by shares you already hold."
+                },
+                {
+                  "_key": "c4l1-004m2",
+                  "_type": "glossaryTerm",
+                  "definition": "When a short call ends in the money at expiry and your shares are delivered to the buyer at the strike price."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c4l1-004s1",
+                  "_type": "span",
+                  "text": "A ",
+                  "marks": []
+                },
+                {
+                  "_key": "c4l1-004s2",
+                  "_type": "span",
+                  "text": "covered call",
+                  "marks": ["c4l1-004m1"]
+                },
+                {
+                  "_key": "c4l1-004s3",
+                  "_type": "span",
+                  "text": " has two legs: shares you already own, and a call you sell on those shares, usually at a strike above today's price. You collect the premium immediately. If the stock stays below the strike at expiry, the call expires worthless and you keep both the premium and the shares. If the stock ends above the strike, your shares are ",
+                  "marks": []
+                },
+                {
+                  "_key": "c4l1-004s4",
+                  "_type": "span",
+                  "text": "called away",
+                  "marks": ["c4l1-004m2"]
+                },
+                {
+                  "_key": "c4l1-004s5",
+                  "_type": "span",
+                  "text": " at the strike, because NSE stock options are physically settled. Either way, the premium is yours.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l1-005",
+              "_type": "mathBlock",
+              "latex": "\\begin{aligned} \\text{Maximum profit per share} &= (K - S_0) + C \\\\ \\text{Effective sale price if called} &= K + C \\\\ \\text{Breakeven} &= S_0 - C \\end{aligned}",
+              "caption": "S₀ = share price when the call is sold, K = strike, C = call premium received per share"
+            },
+            {
+              "_key": "c4l1-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l1-006s1",
+                  "_type": "span",
+                  "text": "Worked Example: A Dividend Stock Held for Years",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l1-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l1-007s1",
+                  "_type": "span",
+                  "text": "Mahesh, 56, a retired bank officer in Kolkata, has held ITC for over a decade for its steady dividends. Assume the stock is at ₹420 and one option lot is 1,600 shares, which he owns, worth ₹6,72,000. He thinks the stock will drift sideways for a while and would honestly be content to sell at ₹440 or above. He sells one lot of the one-month 440 call at ₹3.40.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l1-008",
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "c4l1-008a",
+                  "label": "Premium received",
+                  "value": "₹5,440",
+                  "context": "₹3.40 × 1,600 shares, about 0.81% of the holding"
+                },
+                {
+                  "_key": "c4l1-008b",
+                  "label": "Maximum profit",
+                  "value": "₹37,440",
+                  "context": "(440 − 420 + 3.40) × 1,600, about 5.6%"
+                },
+                {
+                  "_key": "c4l1-008c",
+                  "label": "Effective sale price if called",
+                  "value": "₹443.40",
+                  "context": "Strike plus premium"
+                },
+                {
+                  "_key": "c4l1-008d",
+                  "label": "Breakeven",
+                  "value": "₹416.60",
+                  "context": "The premium cushions only the first ₹3.40 of any fall"
+                }
+              ]
+            },
+            {
+              "_key": "c4l1-009",
+              "_type": "payoffDiagram",
+              "instrumentType": "call",
+              "position": "short",
+              "strikePrice": 440,
+              "premium": 3.4,
+              "spotPriceRange": { "min": 380, "max": 500 },
+              "caption": "The short 440 call on its own, per share. Mahesh keeps ₹3.40 below 440, and the call loses a rupee for every rupee ITC closes above 443.40. His shares gain those same rupees, which is why the combined position is capped rather than exposed."
+            },
+            {
+              "_key": "c4l1-010",
+              "_type": "table",
+              "caption": "Mahesh's 1,600 shares at expiry, with and without the 440 call sold at ₹3.40 (illustrative)",
+              "headers": ["ITC at expiry", "Shares alone", "Call result", "Shares plus short call"],
+              "rows": [
+                { "_key": "c4l1-010r1", "_type": "tableRow", "cells": ["₹360", "−₹96,000", "+₹5,440", "−₹90,560"] },
+                { "_key": "c4l1-010r2", "_type": "tableRow", "cells": ["₹400", "−₹32,000", "+₹5,440", "−₹26,560"] },
+                { "_key": "c4l1-010r3", "_type": "tableRow", "cells": ["₹420", "₹0", "+₹5,440", "+₹5,440"] },
+                { "_key": "c4l1-010r4", "_type": "tableRow", "cells": ["₹440", "+₹32,000", "+₹5,440", "+₹37,440"] },
+                { "_key": "c4l1-010r5", "_type": "tableRow", "cells": ["₹460", "+₹64,000", "(3.40 − 20) × 1,600 = −₹26,560", "+₹37,440 (shares called away at 440)"] },
+                { "_key": "c4l1-010r6", "_type": "tableRow", "cells": ["₹500", "+₹1,28,000", "(3.40 − 60) × 1,600 = −₹90,560", "+₹37,440 (shares called away at 440)"] }
+              ]
+            },
+            {
+              "_key": "c4l1-011",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Profit or loss at expiry: shares alone vs covered call",
+              "xAxisLabel": "ITC at expiry (₹)",
+              "yAxisLabel": "Profit or loss (₹)",
+              "data": [
+                { "_key": "c4l1-011d1", "label": "360" },
+                { "_key": "c4l1-011d2", "label": "400" },
+                { "_key": "c4l1-011d3", "label": "420" },
+                { "_key": "c4l1-011d4", "label": "440" },
+                { "_key": "c4l1-011d5", "label": "460" },
+                { "_key": "c4l1-011d6", "label": "500" }
+              ],
+              "series": [
+                { "_key": "c4l1-011s1", "label": "Shares alone", "values": [-96000, -32000, 0, 32000, 64000, 128000] },
+                { "_key": "c4l1-011s2", "label": "Shares plus 440 call", "values": [-90560, -26560, 5440, 37440, 37440, 37440] }
+              ]
+            },
+            {
+              "_key": "c4l1-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l1-012s1",
+                  "_type": "span",
+                  "text": "Compare this chart with the protective put chart from Chapter 2. The protective put flattened the left side and kept the right side open. The covered call does the opposite: it flattens the right side and leaves the left side almost untouched. On a fall to ₹360, the covered call saves Mahesh just ₹5,440 of a ₹96,000 loss.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l1-013",
+              "_type": "callout",
+              "type": "warning",
+              "text": "A covered call is not downside protection. It slightly reduces losses, by exactly the premium, and it caps gains. Investors who start selling calls \"to reduce risk\" often discover in a correction that their portfolio falls almost as much as before, and in the next rally that their best shares have been sold. If you want protection, you need a put. Lesson 2 shows how to combine the two."
+            },
+            {
+              "_key": "c4l1-014",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Which way is the cap?",
+              "question": "Compared with holding the shares alone, a covered call mainly changes which part of the outcome?",
+              "options": [
+                "It limits losses if the stock falls sharply",
+                "It limits gains above the strike, and adds a small cushion equal to the premium",
+                "It removes the obligation to sell the shares",
+                "It doubles the dividend income on the shares"
+              ],
+              "correctIndex": 1,
+              "explanation": "Selling the call caps your upside at the strike plus premium. The premium offsets only the first few rupees of a fall, so large losses remain largely intact. Dividends are unaffected, but the obligation to sell at the strike is exactly what you took on."
+            },
+            {
+              "_key": "c4l1-015",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l1-015s1",
+                  "_type": "span",
+                  "text": "Choosing the Strike: Income vs Keeping Your Shares",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l1-016",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l1-016s1",
+                  "_type": "span",
+                  "text": "For covered calls, the strike is a selling price you commit to in advance. Closer strikes pay more but are more likely to take your shares. Further strikes pay little but let the stock run.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l1-017",
+              "_type": "table",
+              "caption": "One-month calls on 1,600 shares at ₹420 (illustrative model premiums)",
+              "headers": ["Strike", "Premium", "Premium received", "Premium as % of holding", "Maximum profit", "Rough model chance of being called away"],
+              "rows": [
+                { "_key": "c4l1-017r1", "_type": "tableRow", "cells": ["430 (2.4% above)", "₹6.30", "₹10,080", "1.50%", "₹26,080 (3.9%)", "About 36%"] },
+                { "_key": "c4l1-017r2", "_type": "tableRow", "cells": ["440 (4.8% above)", "₹3.40", "₹5,440", "0.81%", "₹37,440 (5.6%)", "About 23%"] },
+                { "_key": "c4l1-017r3", "_type": "tableRow", "cells": ["460 (9.5% above)", "₹0.75", "₹1,200", "0.18%", "₹65,200 (9.7%)", "About 6%"] }
+              ]
+            },
+            {
+              "_key": "c4l1-018",
+              "_type": "callout",
+              "type": "insight",
+              "text": "The 0.81% a month from the 440 call looks like nearly 10% a year if you multiply by twelve. Do not do that. You will not collect it every month, because some months the shares get called away or volatility is too low to bother. Every month the stock rallies past the strike, you give up the gain above it. And premium income is taxed as business income, which is typically heavier than the tax on long-term gains on shares. Real covered call returns are far less tidy than the headline."
+            },
+            {
+              "_key": "c4l1-019",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Maximum profit on a covered call",
+              "prompt": "Divya owns 475 shares of a large cap telecom stock at ₹1,800, which is one lot in this example. She sells the one-month 1,900 call at ₹22. What is her maximum total profit at expiry, in rupees?",
+              "correctValue": 57950,
+              "tolerance": 0,
+              "unit": "₹",
+              "explanation": "Maximum profit per share = (1,900 − 1,800) + 22 = ₹122. Total = 122 × 475 = ₹57,950. That happens at any price of ₹1,900 or above at expiry, where her shares are called away at an effective price of ₹1,922."
+            },
+            {
+              "_key": "c4l1-020",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "What happens above the strike",
+              "textWithBlank": "If a stock closes above the strike of your short call at expiry, your shares are called ___ at the strike price.",
+              "correctAnswers": ["away"],
+              "explanation": "Stock options on NSE are physically settled, so an in-the-money short call at expiry means delivering your shares at the strike. If you want to keep them, you must buy back the call before expiry, usually at a loss."
+            },
+            {
+              "_key": "c4l1-021",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l1-021s1",
+                  "_type": "span",
+                  "text": "When Covered Calls Make Sense",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l1-022",
+              "_type": "comparison",
+              "title": "Good and poor candidates for covered calls",
+              "columns": [
+                {
+                  "_key": "c4l1-022c1",
+                  "label": "Good fit",
+                  "points": [
+                    "Mature, steady stocks you expect to move sideways or rise slowly",
+                    "Holdings you would be genuinely content to sell at the strike",
+                    "A target exit price you already had in mind",
+                    "Stocks with liquid options and a holding of at least one full lot",
+                    "Periods of higher implied volatility, when premiums are richer"
+                  ]
+                },
+                {
+                  "_key": "c4l1-022c2",
+                  "label": "Poor fit",
+                  "points": [
+                    "Your highest-conviction compounders that you never want to sell",
+                    "Stocks with results, demergers or big announcements before expiry",
+                    "Shares with large unrealised gains, where being called away triggers heavy tax",
+                    "ESOP or promoter-linked holdings restricted by insider trading rules",
+                    "Anyone treating it as downside protection"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c4l1-023",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Selling a call needs margin, even when you own the shares. Most brokers let you pledge the shares as collateral after a haircut, but SEBI rules require that part of your F&O margin be held in cash or cash equivalents rather than pledged shares. Check your broker's margin requirement before you sell. Chapter 5 covers margin, settlement and taxes in detail."
+            },
+            {
+              "_key": "c4l1-024",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "The monthly salary that sold the winner",
+              "scenario": "Rekha, 38, a chartered accountant in Mumbai, owns 750 shares of a fast-growing financial services stock bought three years ago at ₹4,200. It trades at ₹7,000, one lot in this example. A finfluencer convinces her to sell a one-month call 5% above the market every month as a \"monthly salary\". In month three, she sells the 7,350 call at ₹95. The company then reports blowout quarterly results and the stock closes at ₹8,400 on expiry day.",
+              "prompt": "Work out what the covered call cost Rekha, and what she should take away from it.",
+              "modelAnswer": "1. Her shares are called away at ₹7,350. Including the ₹95 premium, her effective sale price is ₹7,445.\n2. Had she simply held, her shares would be worth ₹8,400. The call cost her (8,400 − 7,445) × 750 = ₹7,16,250 of upside, against ₹71,250 of premium collected that month.\n3. She has also sold a long-term holding she never intended to sell. The sale triggers capital gains tax on the gain from ₹4,200. If she wants to own the stock again, she must buy back at a much higher price.\n4. The mistake was not the covered call itself. It was selling calls on her highest-conviction growth holding, every month including results month, at a strike she was not genuinely happy to sell at.\n5. Better approach: sell covered calls only on steady holdings she is content to exit, skip months with results or major announcements, choose strikes at prices she would actually sell at, and never think of the premium as a salary.\nThe lesson: every covered call is a pre-agreed sale. Only agree to sales you want."
+            },
+            {
+              "_key": "c4l1-025",
+              "_type": "collapsible",
+              "title": "Can I sell Nifty calls against my index funds?",
+              "content": [
+                {
+                  "_key": "c4l1-025a",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c4l1-025as1",
+                      "_type": "span",
+                      "text": "Economically, selling Nifty calls against a Nifty 50 index fund of the same size behaves like a covered call. In practice, it is much messier than a covered call on shares:",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c4l1-025b",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c4l1-025bs1",
+                      "_type": "span",
+                      "text": "Index options are cash-settled. If the Nifty rallies, you pay the loss on the call in cash while your fund's gain stays on paper. You need spare cash, or you must redeem units.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c4l1-025c",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c4l1-025cs1",
+                      "_type": "span",
+                      "text": "Mutual fund units usually cannot be pledged as easily as shares, and the full margin for an uncovered short index call can be large.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c4l1-025d",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c4l1-025ds1",
+                      "_type": "span",
+                      "text": "The tax treatment does not line up neatly. Results on the call are business income, while the fund's gains are capital gains, taxed differently and often realised in a different year, or not at all if you keep holding the units. Chapter 5 covers how the two interact.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c4l1-025e",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c4l1-025es1",
+                      "_type": "span",
+                      "text": "For most mutual fund investors, the risks and admin outweigh the modest premium. It is a strategy for experienced investors with spare cash and a clear understanding of these mismatches.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c4l1-026",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Before you sell a covered call",
+              "steps": [
+                "Confirm you hold at least one full lot of the shares in your demat account and the stock is in the F&O segment.",
+                "Write down the price at which you would genuinely be content to sell. Only consider strikes at or above it.",
+                "Check the calendar for results, dividends, AGMs or corporate actions before expiry, and skip months with major events.",
+                "Calculate maximum profit, effective sale price and breakeven, and estimate the capital gains tax if the shares are called away.",
+                "Check your broker's margin requirement, including how much must be in cash, and decide in advance what you will do if the stock nears the strike before expiry."
+              ]
+            },
+            {
+              "_key": "c4l1-027",
+              "_type": "toolLink",
+              "label": "NSE Option Chain",
+              "url": "https://www.nseindia.com/option-chain",
+              "description": "Select a stock to see call premiums by strike and expiry, and compare how much each strike pays against how far it is from the current price."
+            },
+            {
+              "_key": "c4l1-028",
+              "_type": "flashcardSet",
+              "title": "Covered Calls",
+              "cards": [
+                { "_key": "c4l1-028f1", "term": "Covered call", "definition": "Owning shares and selling a call on the same shares, collecting premium in exchange for capping upside at the strike." },
+                { "_key": "c4l1-028f2", "term": "Called away", "definition": "Your shares being delivered at the strike when a short call is in the money at expiry." },
+                { "_key": "c4l1-028f3", "term": "Effective sale price", "definition": "Strike + premium received. What you effectively get per share if called away." },
+                { "_key": "c4l1-028f4", "term": "Covered call breakeven", "definition": "Share price when the call was sold − premium." },
+                { "_key": "c4l1-028f5", "term": "Opportunity cost", "definition": "The gain above the strike you give up if the stock rallies strongly before expiry." },
+                { "_key": "c4l1-028f6", "term": "Premium income", "definition": "The premium collected from selling calls. Taxed as business income, not as a capital gain." }
+              ]
+            },
+            {
+              "_key": "c4l1-029",
+              "_type": "keyTakeaways",
+              "points": [
+                "A covered call is shares plus a short call on those shares: premium now, in exchange for capping gains at the strike.",
+                "Maximum profit = (K − S₀) + C, effective sale price = K + C, breakeven = S₀ − C.",
+                "It cushions a fall only by the premium. It is income with a cap, not protection.",
+                "Closer strikes pay more but are more likely to take your shares. Only use strikes you would genuinely sell at.",
+                "Avoid selling calls on high-conviction compounders, before results or big events, or where being called away triggers heavy tax.",
+                "Never annualise a single month's premium. Real returns are reduced by capped rallies, skipped months, costs and taxes."
+              ]
+            },
+            {
+              "_key": "c4l1-030",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice. Share prices, lot sizes and option premiums are illustrative, and the stocks named are examples, not recommendations. Selling options requires margin and carries risk. Tax treatment depends on your circumstances. Consult a SEBI-registered investment adviser and a tax professional before using covered calls."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

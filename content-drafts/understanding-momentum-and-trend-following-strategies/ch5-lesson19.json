@@ -1,0 +1,271 @@
+{
+  "courseSlug": "understanding-momentum-and-trend-following-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 5: Risk Management for Trend and Momentum Strategies",
+      "lessons": [
+        {
+          "title": "Trailing Stops and Volatility-Based Exits",
+          "slug": "trailing-stops-and-volatility-based-exits",
+          "body": [
+            {
+              "_key": "m19-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m19-001s1", "_type": "span", "marks": [], "text": "Position sizing controls how much capital is at risk. Exit discipline controls how long that risk stays on the table, and how much of an open gain actually gets kept. This lesson builds an exit rule that adapts to each stock's own noise level, using the same volatility-aware thinking behind the inverse-volatility sizing from the last lesson." }
+              ]
+            },
+            {
+              "_key": "m19-002",
+              "_type": "bigIdea",
+              "text": "A fixed-percentage stop applies the same threshold to every stock regardless of how much that stock normally moves, which is exactly wrong. A volatile stock will trigger a tight fixed stop on ordinary noise, and a calm stock will barely test a loose fixed stop even during a genuine reversal. An exit built from the asset's own volatility fixes both problems at once."
+            },
+            {
+              "_key": "m19-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m19-003s1", "_type": "span", "marks": [], "text": "The Problem With Fixed-Percentage Stops" }
+              ]
+            },
+            {
+              "_key": "m19-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m19-004s1", "_type": "span", "marks": [], "text": "An 8% stop-loss sounds like a sensible, disciplined rule until you apply it to two very different stocks. A volatile small cap can move 8% in an ordinary week without any real change in trend, meaning a fixed 8% stop gets triggered repeatedly on pure noise. A calm, large-cap blue chip might rarely move 8% even during a genuine, meaningful reversal, meaning the same fixed stop barely reacts until a large amount of the position's gain has already been given back. The stock's own volatility, not a single number applied to every position, should set the distance." }
+              ]
+            },
+            {
+              "_key": "m19-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m19-005s1", "_type": "span", "marks": [], "text": "Average True Range (ATR): Measuring an Asset's Own Noise" }
+              ]
+            },
+            {
+              "_key": "m19-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "m19-006m1", "_type": "glossaryTerm", "definition": "Developed by J. Welles Wilder, the same creator of RSI, True Range measures a single day's real trading range, including any overnight gap, and ATR smooths it into a running measure of an asset's typical daily movement." }
+              ],
+              "children": [
+                { "_key": "m19-006s1", "_type": "span", "marks": ["m19-006m1"], "text": "Average True Range" },
+                { "_key": "m19-006s2", "_type": "span", "marks": [], "text": ", ATR, developed by J. Welles Wilder, the same creator of RSI, measures a stock's own typical daily movement directly from its own price history. It starts with True Range, a single day's real trading range, which captures a gap up or down at the open that a simple high-minus-low range would miss entirely." }
+              ]
+            },
+            {
+              "_key": "m19-007",
+              "_type": "mathBlock",
+              "latex": "TR_t = \\max\\big(H_t - L_t,\\ |H_t - C_{t-1}|,\\ |L_t - C_{t-1}|\\big)",
+              "caption": "True Range: the largest of today's high-low range, the gap between today's high and yesterday's close, and the gap between today's low and yesterday's close. ATR is a smoothed running average of True Range over n periods, typically 14."
+            },
+            {
+              "_key": "m19-008",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m19-008s1", "_type": "span", "marks": [], "text": "Worked Example: True Range and ATR on Six Illustrative Days" }
+              ]
+            },
+            {
+              "_key": "m19-009",
+              "_type": "candlestickChart",
+              "title": "Six illustrative OHLC days",
+              "data": [
+                { "_key": "m19-009d1", "date": "Day 1", "open": 101, "high": 105, "low": 100, "close": 103 },
+                { "_key": "m19-009d2", "date": "Day 2", "open": 104, "high": 107, "low": 102, "close": 106 },
+                { "_key": "m19-009d3", "date": "Day 3", "open": 107, "high": 110, "low": 104, "close": 108 },
+                { "_key": "m19-009d4", "date": "Day 4", "open": 108, "high": 109, "low": 105, "close": 107 },
+                { "_key": "m19-009d5", "date": "Day 5", "open": 108, "high": 112, "low": 106, "close": 111 },
+                { "_key": "m19-009d6", "date": "Day 6", "open": 107, "high": 108, "low": 103, "close": 104 }
+              ]
+            },
+            {
+              "_key": "m19-010",
+              "_type": "table",
+              "caption": "True Range calculation, Days 2-6 (illustrative)",
+              "headers": ["Day", "High", "Low", "Prev. close", "H-L", "|H - prev close|", "|L - prev close|", "True Range"],
+              "rows": [
+                { "_key": "m19-010r1", "_type": "tableRow", "cells": ["2", "107", "102", "103", "5", "4", "1", "5"] },
+                { "_key": "m19-010r2", "_type": "tableRow", "cells": ["3", "110", "104", "106", "6", "4", "2", "6"] },
+                { "_key": "m19-010r3", "_type": "tableRow", "cells": ["4", "109", "105", "108", "4", "1", "3", "4"] },
+                { "_key": "m19-010r4", "_type": "tableRow", "cells": ["5", "112", "106", "107", "6", "5", "1", "6"] },
+                { "_key": "m19-010r5", "_type": "tableRow", "cells": ["6", "108", "103", "111", "5", "3", "8", "8"] }
+              ]
+            },
+            {
+              "_key": "m19-011",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Day 6 is the whole point of using True Range instead of a plain high-low range. The day's own high-low range is only 5, but the stock gapped down from a prior close of 111 to an open of 107, and the low-to-prior-close gap of 8 is what True Range correctly captures as the day's real trading range. A simple high-minus-low calculation would have understated this day's actual volatility by more than a third."
+            },
+            {
+              "_key": "m19-012",
+              "_type": "keyFact",
+              "label": "5-day simple ATR from this table",
+              "value": "(5 + 6 + 4 + 6 + 8) / 5 = 5.8",
+              "context": "A simple average for this short illustration. Real implementations typically use Wilder's smoothing method, the same approach covered for RSI in Chapter 3."
+            },
+            {
+              "_key": "m19-013",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m19-013s1", "_type": "span", "marks": [], "text": "ATR-Based Trailing Stops" }
+              ]
+            },
+            {
+              "_key": "m19-014",
+              "_type": "mathBlock",
+              "latex": "\\text{Stop}_t = \\max\\Big(\\text{Stop}_{t-1},\\ \\text{HighestClose}_{1:t} - k \\cdot ATR_t\\Big)",
+              "caption": "A trailing ATR stop, sometimes called a chandelier exit: the stop sits k times ATR below the highest close since entry, and only ever ratchets upward as new highs are made, never loosening back down."
+            },
+            {
+              "_key": "m19-015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m19-015s1", "_type": "span", "marks": [], "text": "Using the 5.8 ATR calculated above and a common multiplier of 3, entering at Day 1's close of ₹103, the stop trails the highest close reached since entry, never the current price directly, and never moves down even on a pullback day." }
+              ]
+            },
+            {
+              "_key": "m19-016",
+              "_type": "table",
+              "caption": "Trailing stop walkthrough, k = 3, ATR = 5.8 (illustrative, simplified with a constant ATR)",
+              "headers": ["Day", "Close", "Highest close since entry", "Stop level", "Triggered?"],
+              "rows": [
+                { "_key": "m19-016r1", "_type": "tableRow", "cells": ["1", "103", "103", "85.6", "No"] },
+                { "_key": "m19-016r2", "_type": "tableRow", "cells": ["2", "106", "106", "88.6", "No"] },
+                { "_key": "m19-016r3", "_type": "tableRow", "cells": ["3", "108", "108", "90.6", "No"] },
+                { "_key": "m19-016r4", "_type": "tableRow", "cells": ["4", "107", "108 (unchanged)", "90.6 (unchanged)", "No"] },
+                { "_key": "m19-016r5", "_type": "tableRow", "cells": ["5", "111", "111", "93.6", "No"] },
+                { "_key": "m19-016r6", "_type": "tableRow", "cells": ["6", "104", "111 (unchanged)", "93.6 (unchanged)", "No, close still above the stop"] }
+              ]
+            },
+            {
+              "_key": "m19-017",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Day 4's pullback to ₹107 does not lower the stop. The stop is anchored to the highest close reached so far, not the current price, which is exactly why it is called a trailing stop rather than a following one. This is a deliberate design choice: it locks in a widening cushion as a position moves favorably, and it never gives that cushion back just because of a single down day."
+            },
+            {
+              "_key": "m19-018",
+              "_type": "comparison",
+              "title": "Fixed-Percentage Stop vs ATR-Based Stop",
+              "columns": [
+                {
+                  "_key": "m19-018c1",
+                  "label": "Fixed-Percentage Stop",
+                  "points": [
+                    "Same threshold applied to every stock",
+                    "Too tight for volatile names, triggers on noise",
+                    "Too loose for calm names, gives back too much",
+                    "Simple to calculate and explain"
+                  ]
+                },
+                {
+                  "_key": "m19-018c2",
+                  "label": "ATR-Based Trailing Stop",
+                  "points": [
+                    "Distance adapts to each stock's own volatility",
+                    "Wider on genuinely volatile names, avoiding noise-driven exits",
+                    "Tighter on genuinely calm names, exiting sooner on a real reversal",
+                    "Requires ongoing ATR recalculation as data updates"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "m19-019",
+              "_type": "codeBlock",
+              "language": "python",
+              "caption": "ATR and a chandelier-style trailing stop in pandas",
+              "code": "import pandas as pd\n\ndf = pd.DataFrame({\n    \"high\": [105, 107, 110, 109, 112, 108],\n    \"low\": [100, 102, 104, 105, 106, 103],\n    \"close\": [103, 106, 108, 107, 111, 104],\n})\n\nprev_close = df[\"close\"].shift(1)\ntrue_range = pd.concat([\n    df[\"high\"] - df[\"low\"],\n    (df[\"high\"] - prev_close).abs(),\n    (df[\"low\"] - prev_close).abs(),\n], axis=1).max(axis=1)\n\natr = true_range.rolling(window=5).mean()\n\nk = 3\nhighest_close = df[\"close\"].cummax()\nraw_stop = highest_close - k * atr\ntrailing_stop = raw_stop.cummax()  # only ratchets upward\n\nprint(pd.DataFrame({\"close\": df[\"close\"], \"true_range\": true_range, \"atr\": atr, \"trailing_stop\": trailing_stop}))"
+            },
+            {
+              "_key": "m19-020",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Calculate a single day's True Range",
+              "prompt": "A stock's high today is ₹150, its low is ₹142, and yesterday's close was ₹138. What is today's True Range?",
+              "correctValue": 12,
+              "tolerance": 0.5,
+              "unit": "₹",
+              "explanation": "max(150-142, |150-138|, |142-138|) = max(8, 12, 4) = 12. The gap between today's high and yesterday's close, 12, is larger than today's own high-low range of 8, which is exactly the kind of gap True Range is built to capture."
+            },
+            {
+              "_key": "m19-021",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Does the trailing stop move down?",
+              "question": "A position's trailing stop is at ₹90.6 after reaching a highest close of ₹108. The stock then closes at ₹95 the next day, well above the stop, but below the recent high. What happens to the stop level?",
+              "options": [
+                "It moves down to reflect the lower close",
+                "It stays at ₹90.6, since it only ratchets upward from new highs, never down on a pullback",
+                "It is triggered immediately, since the price fell",
+                "It resets to zero and the position must be re-entered"
+              ],
+              "correctIndex": 1,
+              "explanation": "A trailing stop is anchored to the highest close reached since entry, not the current price. A pullback that stays above the existing stop level does not lower it, the stop only ever moves up as new highs are made."
+            },
+            {
+              "_key": "m19-022",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Choosing the multiplier",
+              "scenario": "A trader is deciding between a 2x ATR trailing stop and a 4x ATR trailing stop for the same momentum strategy.",
+              "prompt": "Based on this lesson, what is the practical trade-off between using a tighter (2x) versus a wider (4x) ATR multiplier?",
+              "modelAnswer": "A tighter 2x ATR stop locks in gains sooner and limits how much of an open profit can be given back, but sits closer to the stock's normal daily noise, increasing the chance of being stopped out of a position that is still in a genuine, intact trend. A wider 4x ATR stop gives a position much more room to breathe through normal volatility, reducing noise-driven exits, but allows a larger giveback of profit before the stop actually triggers if the trend does reverse. Neither is objectively correct, it is a direct trade-off between exiting early and often versus exiting late but rarely on noise, similar in spirit to the filter trade-offs covered in Chapter 2."
+            },
+            {
+              "_key": "m19-023",
+              "_type": "toolLink",
+              "label": "Overlay ATR on any NSE or BSE stock chart on TradingView",
+              "url": "https://www.tradingview.com",
+              "description": "TradingView includes ATR as a standard built-in indicator, useful for seeing how a stock's own volatility, and an ATR-based stop distance, changes over time in practice."
+            },
+            {
+              "_key": "m19-024",
+              "_type": "flashcardSet",
+              "title": "Trailing Stops: Core Terms",
+              "cards": [
+                { "_key": "m19-024f1", "term": "True Range", "definition": "A single day's real trading range, the largest of the high-low range, the gap from the prior close to today's high, and the gap from the prior close to today's low." },
+                { "_key": "m19-024f2", "term": "Average True Range (ATR)", "definition": "A smoothed running average of True Range over n periods, measuring a stock's typical daily movement, developed by J. Welles Wilder." },
+                { "_key": "m19-024f3", "term": "Trailing stop", "definition": "An exit level that ratchets in the position's favor as new highs (or lows, for a short) are made, but never loosens back on a pullback." },
+                { "_key": "m19-024f4", "term": "Chandelier exit", "definition": "A trailing stop set a fixed multiple of ATR below the highest close since entry, a common practitioner implementation of an ATR-based exit." }
+              ]
+            },
+            {
+              "_key": "m19-025",
+              "_type": "keyTakeaways",
+              "points": [
+                "A fixed-percentage stop applies the same threshold to every stock regardless of its own typical volatility, too tight for volatile names, too loose for calm ones.",
+                "True Range captures a day's real trading range including any overnight gap, which a simple high-minus-low calculation misses entirely.",
+                "ATR, a smoothed average of True Range, measures a stock's own typical movement and can be used to set a stop distance that adapts to that stock specifically.",
+                "A trailing ATR stop, or chandelier exit, sits a fixed multiple of ATR below the highest close since entry and only ever moves in the position's favor, never loosening on a pullback.",
+                "The choice of ATR multiplier is a direct trade-off between exiting early and often on noise versus exiting late but rarely, the same kind of design trade-off covered for crossover filters in Chapter 2."
+              ]
+            },
+            {
+              "_key": "m19-026",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice. The OHLC price series used throughout is entirely illustrative and does not represent any real security. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

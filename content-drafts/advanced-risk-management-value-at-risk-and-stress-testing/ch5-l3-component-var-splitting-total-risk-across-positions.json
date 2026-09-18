@@ -1,0 +1,190 @@
+{
+  "courseSlug": "advanced-risk-management-value-at-risk-and-stress-testing",
+  "chapters": [
+    {
+      "title": "Chapter 5: Portfolio Risk Decomposition (Marginal, Component, and Incremental VaR)",
+      "lessons": [
+        {
+          "title": "Component VaR: Splitting Total Risk Across Positions",
+          "slug": "component-var-splitting-total-risk-across-positions",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "q1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "q1s1", "text": "The last lesson previewed the result, marginal VaR multiplied by position size adds up exactly to total portfolio VaR. This lesson formalizes that into Component VaR, the standard tool for building an actual risk budget across a real book, and extends the worked example to three positions to show exactly how a small position can hide a disproportionately large share of total risk.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "mathBlock",
+              "_key": "q2",
+              "latex": "\\text{Component VaR}_i = \\text{MVaR}_i \\times V_i, \\qquad \\sum_i \\text{Component VaR}_i = \\text{Total Portfolio VaR}",
+              "caption": "Component VaR is marginal VaR scaled up to the position's full size. The components always sum exactly to the total, a direct consequence of Euler's theorem for homogeneous functions, applied to VaR's positive homogeneity property from Chapter 3."
+            },
+            {
+              "_type": "block",
+              "_key": "q3",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "q3s1", "text": "Extending to Three Positions: A Hidden Concentration", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "q4",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "q4s1", "text": "Add a third position to the Nifty-and-gold portfolio: Rs 20,00,000 in Bank Nifty futures, daily volatility 1.5%, correlated 0.85 with Nifty, since both track large-cap Indian equities and financials are heavily represented in Nifty itself, and -0.05 with gold. This is exactly the setup from the reasoning exercise two lessons ago, now with real numbers attached.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "q5",
+              "caption": "The three-position portfolio",
+              "headers": ["Position", "Value", "Volatility", "Correlation with Nifty", "Correlation with Gold"],
+              "rows": [
+                { "cells": ["Nifty futures", "Rs 50,00,000", "1.2%", "1.00", "-0.10"] },
+                { "cells": ["Gold", "Rs 30,00,000", "1.0%", "-0.10", "1.00"] },
+                { "cells": ["Bank Nifty futures", "Rs 20,00,000", "1.5%", "0.85", "-0.05"] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "q6",
+              "caption": "Standalone VaR (99%), each position held alone",
+              "headers": ["Position", "Standalone VaR", "Naive share of total"],
+              "rows": [
+                { "cells": ["Nifty futures", "Rs 1,39,560", "50.0%"] },
+                { "cells": ["Gold", "Rs 69,780", "25.0%"] },
+                { "cells": ["Bank Nifty futures", "Rs 69,780", "25.0%"] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "q7",
+              "type": "warning",
+              "text": "Look closely at that table. Gold and Bank Nifty have identical standalone VaR, Rs 69,780 each, purely by construction here, a smaller position with higher volatility (Bank Nifty) can land on the same standalone figure as a larger position with lower volatility (gold). If standalone VaR were a fair measure of contribution to portfolio risk, these two positions should carry roughly equal weight in the book's total risk. They do not, as the actual Component VaR figures below show."
+            },
+            {
+              "_type": "table",
+              "_key": "q8",
+              "caption": "True Component VaR (99%), the exact, fully additive attribution",
+              "headers": ["Position", "Component VaR", "True share of total"],
+              "rows": [
+                { "cells": ["Nifty futures", "Rs 1,28,647", "61.8%"] },
+                { "cells": ["Gold", "Rs 17,543", "8.4%"] },
+                { "cells": ["Bank Nifty futures", "Rs 61,984", "29.8%"] },
+                { "cells": ["Total portfolio VaR", "Rs 2,08,174", "100%"] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "q9",
+              "type": "warning",
+              "text": "Bank Nifty is the smallest position by rupee value, only 20% of the book's total Rs 1 crore notional, yet it carries 29.8% of total portfolio risk, more than its rupee weight and even slightly more than its naive standalone share. Gold, despite having the exact same standalone VaR as Bank Nifty, carries only 8.4% of true risk, a more than 3.5x gap between two positions a standalone-VaR view would have called equally risky. This is exactly the 'hidden concentration' the reasoning exercise two lessons back predicted: a highly correlated position quietly duplicates risk that is already sitting in the book, and Component VaR is what makes that visible with an exact number instead of an intuition."
+            },
+            {
+              "_type": "block",
+              "_key": "q10",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "q10s1", "text": "Building a Risk Budget", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "q11",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "q11s1", "text": "A risk budget allocates a firm's risk-taking capacity across desks, strategies, or positions using Component VaR rather than notional size, exactly because notional size and standalone risk both miss the correlation effect that actually determines a position's contribution to the book.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "comparison",
+              "_key": "q12",
+              "title": "Allocating by Notional Value vs Allocating by Component VaR",
+              "columns": [
+                {
+                  "label": "By Notional Value",
+                  "points": [
+                    "Bank Nifty gets 20% of the risk budget, matching its 20% share of total capital deployed",
+                    "Ignores correlation with existing positions entirely",
+                    "Would understate how much risk Bank Nifty is actually adding to this specific book"
+                  ]
+                },
+                {
+                  "label": "By Component VaR",
+                  "points": [
+                    "Bank Nifty is recognized as carrying 29.8% of total risk, despite its smaller notional",
+                    "Directly reflects how the position interacts with everything else already held",
+                    "Gives a risk committee an honest, exact basis for setting position limits or hedging priorities"
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "q13",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "q13s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "q14",
+              "variant": "numericInput",
+              "title": "Verify the Additivity Property",
+              "prompt": "Using the Component VaR figures above, Rs 1,28,647 for Nifty, Rs 17,543 for gold, and Rs 61,984 for Bank Nifty, what do they sum to, in rupees? Compare your answer to the total portfolio VaR stated in the table.",
+              "correctValue": 208174,
+              "tolerance": 5,
+              "unit": "Rs",
+              "explanation": "1,28,647 + 17,543 + 61,984 = 2,08,174, matching the total portfolio VaR exactly. This additivity is guaranteed by construction, not a coincidence of these particular numbers, it holds for any portfolio under the Parametric VaR framework."
+            },
+            {
+              "_type": "exercise",
+              "_key": "q15",
+              "variant": "scenario",
+              "title": "Deciding Where to Cut Risk",
+              "scenario": "The risk committee tells this desk to reduce total portfolio VaR by roughly 25%, from Rs 2,08,174 to about Rs 1,56,000, with minimal disruption to the book's overall size.",
+              "prompt": "Based on the Component VaR table, which position should be trimmed first, and why is this a better answer than trimming whichever position has the largest notional value?",
+              "modelAnswer": "Bank Nifty should be the first position considered for trimming, not because it is the largest position, it is actually the smallest by notional, but because it carries the second-largest Component VaR, Rs 61,984, nearly 30% of total risk, driven almost entirely by its high correlation with the already-large Nifty position. Trimming Bank Nifty removes risk efficiently, cutting a large chunk of Component VaR for a relatively small reduction in notional exposure. Trimming gold instead would barely move total VaR, since gold's Component VaR is only Rs 17,543, while trimming Nifty would be the most notionally disruptive option for the smallest proportional risk reduction per rupee cut, given Nifty already dominates the book."
+            },
+            {
+              "_type": "block",
+              "_key": "q16",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "q16s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "q17",
+              "text": "The smallest position in a book can carry the biggest share of its risk. Component VaR is the only tool in this course that proves that with an exact number instead of a hunch, and its shares always add up to the whole."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "q18",
+              "points": [
+                "Component VaR is marginal VaR scaled to a position's full size, and every position's Component VaR sums exactly to total portfolio VaR, guaranteed by VaR's positive homogeneity property.",
+                "In the three-position worked example, gold and Bank Nifty had identical standalone VaR, Rs 69,780 each, but wildly different true contributions, Rs 17,543 versus Rs 61,984, purely due to correlation with the rest of the book.",
+                "Bank Nifty, the smallest position by notional at only 20% of the book, carried nearly 30% of total portfolio risk, a hidden concentration that standalone VaR or notional weighting alone would never reveal.",
+                "A proper risk budget allocates limits and hedging priorities using Component VaR, not notional size or standalone risk, since those both ignore exactly the correlation effect that determines a position's real contribution.",
+                "The next lesson covers Incremental VaR, the effect of adding or removing an entire position at once, a blunter but often more directly actionable question than the infinitesimal sensitivity behind marginal and component VaR."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

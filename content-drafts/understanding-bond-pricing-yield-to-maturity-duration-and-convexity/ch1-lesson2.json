@@ -1,0 +1,479 @@
+{
+  "courseSlug": "understanding-bond-pricing-yield-to-maturity-duration-and-convexity",
+  "chapters": [
+    {
+      "title": "Chapter 1: Pricing a Bond from Its Cash Flows",
+      "lessons": [
+        {
+          "title": "Pricing a Bond as a Stream of Discounted Cash Flows",
+          "slug": "pricing-a-bond-as-a-stream-of-discounted-cash-flows",
+          "body": [
+            {
+              "_key": "c1l2-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l2-001s1",
+                  "_type": "span",
+                  "text": "In the last lesson you turned a bond into a list of dates and amounts. Now comes the question every buyer on RBI Retail Direct or the NSE RFQ platform is really asking: what is that list worth today, in rupees? The answer is not the sum of the cash flows. ₹3,590 arriving in 2033 is worth less than ₹3,590 in your bank account this morning. This lesson shows you exactly how much less, and how adding up those shrunken amounts gives you the price of any bond.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l2-002",
+              "_type": "bigIdea",
+              "text": "A bond's price is the sum of what each of its future payments is worth today, discounted at the yield the market currently demands. The coupon decides the cash flows. The market decides the discount rate."
+            },
+            {
+              "_key": "c1l2-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l2-003s1",
+                  "_type": "span",
+                  "text": "Step One: The Present Value of a Single Payment",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l2-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c1l2-004m1",
+                  "_type": "glossaryTerm",
+                  "definition": "What a future cash flow is worth today, after adjusting for the return you could earn on the money in the meantime."
+                },
+                {
+                  "_key": "c1l2-004m2",
+                  "_type": "glossaryTerm",
+                  "definition": "The annual rate used to convert future cash flows into present values. For bonds, this is the market yield on comparable bonds."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c1l2-004s1",
+                  "_type": "span",
+                  "text": "If a bank FD pays 7% a year, ₹71,299 placed today grows to ₹1,00,000 in five years. Turn that around and ₹1,00,000 promised five years from now has a ",
+                  "marks": []
+                },
+                {
+                  "_key": "c1l2-004s2",
+                  "_type": "span",
+                  "text": "present value",
+                  "marks": ["c1l2-004m1"]
+                },
+                {
+                  "_key": "c1l2-004s3",
+                  "_type": "span",
+                  "text": " of ₹71,299 at a 7% ",
+                  "marks": []
+                },
+                {
+                  "_key": "c1l2-004s4",
+                  "_type": "span",
+                  "text": "discount rate",
+                  "marks": ["c1l2-004m2"]
+                },
+                {
+                  "_key": "c1l2-004s5",
+                  "_type": "span",
+                  "text": ". Nobody rational would pay more than that for the promise, because they could get the same ₹1,00,000 by putting ₹71,299 in the FD instead.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l2-005",
+              "_type": "mathBlock",
+              "latex": "PV = \\frac{CF}{(1 + r)^{t}}",
+              "caption": "CF = cash flow, r = discount rate per period, t = number of periods away. ₹1,00,000 ÷ 1.07⁵ = ₹71,299."
+            },
+            {
+              "_key": "c1l2-006",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Discount one payment",
+              "prompt": "An NCD will repay ₹50,000 exactly three years from today. If comparable bonds yield 8% a year (annual compounding), what is that single payment worth today? Round to the nearest rupee.",
+              "correctValue": 39692,
+              "tolerance": 1,
+              "unit": "₹",
+              "explanation": "PV = ₹50,000 ÷ 1.08³ = ₹50,000 ÷ 1.259712 = ₹39,692. Three years of waiting at 8% costs you about ₹10,308 of value."
+            },
+            {
+              "_key": "c1l2-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l2-007s1",
+                  "_type": "span",
+                  "text": "Step Two: Discount Every Cash Flow and Add Them Up",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l2-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l2-008s1",
+                  "_type": "span",
+                  "text": "A bond is just many single payments in a row. Discount each one by how far away it is, then add them. Because Indian G-Secs pay coupons twice a year, we work in half-year periods: halve the annual coupon, halve the annual yield, and count periods instead of years.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l2-009",
+              "_type": "mathBlock",
+              "latex": "P = \\sum_{t=1}^{n} \\frac{C/m}{(1 + y/m)^{t}} + \\frac{FV}{(1 + y/m)^{n}}",
+              "caption": "P = price, C = annual coupon in ₹, FV = face value, y = annual market yield, m = coupons per year (2 for G-Secs), n = coupon periods remaining."
+            },
+            {
+              "_key": "c1l2-010",
+              "_type": "comparison",
+              "title": "The Two Rates in Every Bond Price",
+              "columns": [
+                {
+                  "_key": "c1l2-010c1",
+                  "label": "Coupon rate",
+                  "points": [
+                    "Printed in the bond's name, like the 7.10% in \"7.10% GS 2031\"",
+                    "Fixed on the day the bond is issued",
+                    "Decides the size of each cash flow (the numerator)",
+                    "Set by the issuer and the auction"
+                  ]
+                },
+                {
+                  "_key": "c1l2-010c2",
+                  "label": "Market yield",
+                  "points": [
+                    "The return investors demand today on comparable bonds",
+                    "Changes every trading day with RBI policy, inflation and demand",
+                    "Decides how heavily each cash flow is discounted (the denominator)",
+                    "Set by buyers and sellers in the market"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c1l2-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l2-011s1",
+                  "_type": "span",
+                  "text": "Worked Example: A 7.10% G-Sec with Five Years Left",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l2-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l2-012s1",
+                  "_type": "span",
+                  "text": "Take an illustrative Government of India bond with a 7.10% coupon and exactly five years to maturity, priced on a coupon date so there is no accrued interest to worry about (that is the next lesson). Comparable G-Secs currently yield 6.80%. So the inputs are: coupon per period ₹3.55 per ₹100 face value, discount rate per period 3.40%, and 10 periods remaining.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l2-013",
+              "_type": "table",
+              "caption": "Pricing 7.10% coupon, 5 years remaining, at a 6.80% market yield (per ₹100 face value)",
+              "headers": ["Period (half-years)", "Cash flow (₹)", "Discount factor 1 ÷ 1.034^t", "Present value (₹)"],
+              "rows": [
+                { "_key": "c1l2-013r01", "_type": "tableRow", "cells": ["1", "3.55", "0.967118", "3.43"] },
+                { "_key": "c1l2-013r02", "_type": "tableRow", "cells": ["2", "3.55", "0.935317", "3.32"] },
+                { "_key": "c1l2-013r03", "_type": "tableRow", "cells": ["3", "3.55", "0.904562", "3.21"] },
+                { "_key": "c1l2-013r04", "_type": "tableRow", "cells": ["4", "3.55", "0.874818", "3.11"] },
+                { "_key": "c1l2-013r05", "_type": "tableRow", "cells": ["5", "3.55", "0.846052", "3.00"] },
+                { "_key": "c1l2-013r06", "_type": "tableRow", "cells": ["6", "3.55", "0.818233", "2.90"] },
+                { "_key": "c1l2-013r07", "_type": "tableRow", "cells": ["7", "3.55", "0.791327", "2.81"] },
+                { "_key": "c1l2-013r08", "_type": "tableRow", "cells": ["8", "3.55", "0.765307", "2.72"] },
+                { "_key": "c1l2-013r09", "_type": "tableRow", "cells": ["9", "3.55", "0.740142", "2.63"] },
+                { "_key": "c1l2-013r10", "_type": "tableRow", "cells": ["10", "103.55", "0.715805", "74.12"] },
+                { "_key": "c1l2-013r11", "_type": "tableRow", "cells": ["Total", "135.50", "", "101.25"] }
+              ]
+            },
+            {
+              "_key": "c1l2-014",
+              "_type": "chart",
+              "chartType": "bar",
+              "title": "What Each Payment Is Promised vs What It Is Worth Today (₹ per ₹100 face value)",
+              "xAxisLabel": "Half-year period",
+              "yAxisLabel": "₹",
+              "data": [
+                { "_key": "c1l2-014d01", "label": "1" },
+                { "_key": "c1l2-014d02", "label": "2" },
+                { "_key": "c1l2-014d03", "label": "3" },
+                { "_key": "c1l2-014d04", "label": "4" },
+                { "_key": "c1l2-014d05", "label": "5" },
+                { "_key": "c1l2-014d06", "label": "6" },
+                { "_key": "c1l2-014d07", "label": "7" },
+                { "_key": "c1l2-014d08", "label": "8" },
+                { "_key": "c1l2-014d09", "label": "9" },
+                { "_key": "c1l2-014d10", "label": "10" }
+              ],
+              "series": [
+                {
+                  "_key": "c1l2-014s1",
+                  "label": "Promised cash flow",
+                  "values": [3.55, 3.55, 3.55, 3.55, 3.55, 3.55, 3.55, 3.55, 3.55, 103.55]
+                },
+                {
+                  "_key": "c1l2-014s2",
+                  "label": "Present value at 6.80%",
+                  "values": [3.43, 3.32, 3.21, 3.11, 3.00, 2.90, 2.81, 2.72, 2.63, 74.12]
+                }
+              ]
+            },
+            {
+              "_key": "c1l2-015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l2-015s1",
+                  "_type": "span",
+                  "text": "The bond promises ₹135.50 in total, but its fair price today is ₹101.25. Notice the pattern down the table: the same ₹3.55 coupon is worth ₹3.43 in six months but only ₹2.63 in four and a half years. The further away a payment is, the harder discounting bites. And the final ₹103.55 loses almost ₹29.43 of its face amount to discounting, more than all the other nine coupons are worth combined.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l2-016",
+              "_type": "donutChart",
+              "title": "Where the ₹101.25 Price Comes From",
+              "data": [
+                { "_key": "c1l2-016d1", "label": "Present value of all 10 coupons (₹29.67)", "value": 29.67 },
+                { "_key": "c1l2-016d2", "label": "Present value of ₹100 face value (₹71.58)", "value": 71.58 }
+              ]
+            },
+            {
+              "_key": "c1l2-017",
+              "_type": "keyFact",
+              "label": "Share of the price that comes from the principal",
+              "value": "70.7%",
+              "context": "₹71.58 of ₹101.25. For a five-year bond, the repayment of face value dominates; the coupons contribute less than a third."
+            },
+            {
+              "_key": "c1l2-018",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why not discount at the coupon rate?",
+              "question": "A friend says the 7.10% G-Sec above should be discounted at 7.10%, its own coupon rate. Why does the market use 6.80% instead?",
+              "options": [
+                "Because RBI fixes the discount rate for every G-Sec at issue",
+                "Because 6.80% is what investors can earn today on comparable bonds, so no one will accept less from this one",
+                "Because the coupon rate is only used for corporate bonds",
+                "Because discounting at the coupon rate would give a price below ₹100"
+              ],
+              "correctIndex": 1,
+              "explanation": "The discount rate is an opportunity cost: the return you give up by buying this bond instead of a comparable one. If similar G-Secs yield 6.80% today, a bond paying 7.10% coupons is worth more than ₹100. Discounting at its own coupon rate would always give exactly ₹100, which is only correct on the day market yields equal the coupon."
+            },
+            {
+              "_key": "c1l2-019",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l2-019s1",
+                  "_type": "span",
+                  "text": "Same Bond, Different Yields, Different Prices",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l2-020",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l2-020s1",
+                  "_type": "span",
+                  "text": "The cash flows of this bond never change. Only the discount rate does. Reprice the same 7.10% bond at different market yields and you get the relationship every bond investor must internalise: ",
+                  "marks": []
+                },
+                {
+                  "_key": "c1l2-020s2",
+                  "_type": "span",
+                  "text": "when yields rise, prices fall; when yields fall, prices rise.",
+                  "marks": ["strong"]
+                },
+                {
+                  "_key": "c1l2-020s3",
+                  "_type": "span",
+                  "text": " This is why a debt mutual fund NAV jumps on the day RBI surprises the market with a rate cut, and why gilt funds can show negative returns in a month when yields spike.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l2-021",
+              "_type": "table",
+              "caption": "7.10% coupon, 5 years remaining, repriced at different market yields (per ₹100 face value)",
+              "headers": ["Market yield", "Price (₹)", "Change vs ₹100", "Trades at"],
+              "rows": [
+                { "_key": "c1l2-021r1", "_type": "tableRow", "cells": ["6.30%", "103.39", "+3.39", "Premium"] },
+                { "_key": "c1l2-021r2", "_type": "tableRow", "cells": ["6.80%", "101.25", "+1.25", "Premium"] },
+                { "_key": "c1l2-021r3", "_type": "tableRow", "cells": ["7.10%", "100.00", "0.00", "Par"] },
+                { "_key": "c1l2-021r4", "_type": "tableRow", "cells": ["7.40%", "98.76", "−1.24", "Discount"] },
+                { "_key": "c1l2-021r5", "_type": "tableRow", "cells": ["7.80%", "97.15", "−2.85", "Discount"] }
+              ]
+            },
+            {
+              "_key": "c1l2-022",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Price vs Market Yield for the 7.10% Bond",
+              "xAxisLabel": "Market yield",
+              "yAxisLabel": "Price (₹ per ₹100 face value)",
+              "data": [
+                { "_key": "c1l2-022d1", "label": "6.30%", "value": 103.39 },
+                { "_key": "c1l2-022d2", "label": "6.80%", "value": 101.25 },
+                { "_key": "c1l2-022d3", "label": "7.10%", "value": 100.00 },
+                { "_key": "c1l2-022d4", "label": "7.40%", "value": 98.76 },
+                { "_key": "c1l2-022d5", "label": "7.80%", "value": 97.15 }
+              ]
+            },
+            {
+              "_key": "c1l2-023",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Look closely at the table. Starting from par at 7.10%, a 30 basis point fall in yield to 6.80% adds ₹1.25 to the price, while a 30 basis point rise to 7.40% takes away only ₹1.24. The gain from falling yields is slightly bigger than the loss from rising yields of the same size, and the gap widens as the moves get larger. That curvature has a name, convexity, and Chapter 4 is devoted to it. Lesson 4 of this chapter explains the premium, par and discount pattern in detail."
+            },
+            {
+              "_key": "c1l2-024",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "The par rule",
+              "textWithBlank": "A bond trades at exactly its face value when the market yield equals its ___ rate.",
+              "correctAnswers": ["coupon", "coupon rate"],
+              "explanation": "When the discount rate equals the coupon rate, the present value of all cash flows is exactly ₹100 per ₹100 face value. That is why the 7.10% bond prices at ₹100.00 when the market yield is 7.10%."
+            },
+            {
+              "_key": "c1l2-025",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Price a bond yourself",
+              "prompt": "A corporate bond has an 8% annual coupon paid semi-annually, ₹100 face value and exactly two years to maturity, priced on a coupon date. Comparable bonds yield 7%. What is its price per ₹100 face value? Round to two decimal places.",
+              "correctValue": 101.84,
+              "tolerance": 0.02,
+              "unit": "₹",
+              "explanation": "Coupon per period = ₹4. Discount rate per period = 3.5%. Periods = 4. Price = 4 ÷ 1.035 + 4 ÷ 1.035² + 4 ÷ 1.035³ + 104 ÷ 1.035⁴ = 3.865 + 3.734 + 3.608 + 90.630 = ₹101.84. It trades at a premium because its coupon is above the market yield."
+            },
+            {
+              "_key": "c1l2-026",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l2-026s1",
+                  "_type": "span",
+                  "text": "Doing It in Excel or Google Sheets",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l2-027",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l2-027s1",
+                  "_type": "span",
+                  "text": "For a bond priced on a coupon date, the built-in PV function does the whole table in one cell. Enter the per-period yield, the number of periods, the per-period coupon and the face value, with the cash flows as negative numbers so the price comes out positive. For our example: =PV(6.8%/2, 10, -3.55, -100) returns 101.25. Between coupon dates you need Excel's PRICE function instead, which handles accrued interest and exact day counts; we will use it in the next lesson.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l2-028",
+              "_type": "collapsible",
+              "title": "Show me the same calculation in Python",
+              "content": [
+                {
+                  "_key": "c1l2-029",
+                  "_type": "codeBlock",
+                  "language": "python",
+                  "code": "def bond_price(face, coupon_rate, market_yield, years, freq=2):\n    \"\"\"Price a bond on a coupon date by discounting every cash flow.\"\"\"\n    periods = int(years * freq)\n    coupon = face * coupon_rate / freq\n    rate = market_yield / freq\n    price = 0.0\n    for t in range(1, periods + 1):\n        cash_flow = coupon + (face if t == periods else 0)\n        price += cash_flow / (1 + rate) ** t\n    return price\n\nfor y in [0.063, 0.068, 0.071, 0.074, 0.078]:\n    print(f\"Yield {y:.2%}: price Rs {bond_price(100, 0.071, y, 5):.2f}\")\n\n# Yield 6.30%: price Rs 103.39\n# Yield 6.80%: price Rs 101.25\n# Yield 7.10%: price Rs 100.00\n# Yield 7.40%: price Rs 98.76\n# Yield 7.80%: price Rs 97.15",
+                  "caption": "Reproduces the repricing table above. Works only for pricing on a coupon date."
+                }
+              ]
+            },
+            {
+              "_key": "c1l2-030",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Is the platform's price fair?",
+              "scenario": "Neha Agarwal, a doctor in Jaipur with a large surplus, is browsing a SEBI-registered online bond platform. It offers an AAA-rated PSU bond with an 8.00% annual coupon, ₹10,000 face value and exactly three years to maturity, priced on its coupon date at ₹10,150 per bond. Other AAA PSU bonds with three years left are trading at a 7.60% yield on the NSE RFQ platform.",
+              "prompt": "Work out what the bond should be worth at a 7.60% yield, and tell Neha whether ₹10,150 is a fair price. What yield is she actually getting at ₹10,150?",
+              "modelAnswer": "1. Cash flows per bond: ₹800 at the end of years 1 and 2, and ₹10,800 at the end of year 3.\n2. Present values at 7.60%: ₹800 ÷ 1.076 = ₹743.49; ₹800 ÷ 1.076² = ₹690.98; ₹10,800 ÷ 1.076³ = ₹8,669.36.\n3. Fair price = ₹743.49 + ₹690.98 + ₹8,669.36 = ₹10,103.83.\n4. The platform asks ₹10,150, about ₹46 more per bond. On 20 bonds (₹2 lakh face value) that is roughly ₹923 of overpayment.\n5. At ₹10,150, the yield Neha actually earns is about 7.42%, not 7.60%. The extra price is the platform's spread, and it comes straight out of her return.\n6. Before buying, Neha should compare the platform's quoted yield with recent trades in the same or similar bonds on the NSE or BSE RFQ platforms."
+            },
+            {
+              "_key": "c1l2-031",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Price any fixed-coupon bond on a coupon date",
+              "steps": [
+                "Write down face value, coupon rate, coupon frequency and the number of coupon periods remaining.",
+                "Find the current market yield on comparable bonds: same issuer type, rating and residual maturity.",
+                "Convert to per-period figures: coupon ÷ frequency, yield ÷ frequency.",
+                "Discount each cash flow by (1 + per-period yield) raised to its period number.",
+                "Add all the present values. That total is the fair price.",
+                "Cross-check with =PV(yield/frequency, periods, -coupon per period, -face value).",
+                "Compare your fair price with the quoted price. A higher quote means a lower yield for you."
+              ]
+            },
+            {
+              "_key": "c1l2-032",
+              "_type": "keyTakeaways",
+              "points": [
+                "A future rupee is worth less than a rupee today. Present value = cash flow ÷ (1 + r)^t.",
+                "A bond's price is the sum of the present values of all its coupons and its face value.",
+                "The coupon rate sets the cash flows; the market yield on comparable bonds sets the discount rate.",
+                "For semi-annual G-Secs, halve the coupon and the yield, and count half-year periods.",
+                "Our 7.10% bond with five years left is worth ₹101.25 at a 6.80% yield, and 70.7% of that comes from the principal.",
+                "Yields up, prices down. Yields down, prices up. At a yield equal to the coupon, the price is exactly par.",
+                "Paying more than fair value means earning less than the market yield: Neha's ₹46 premium cut her yield from 7.60% to about 7.42%."
+              ]
+            },
+            {
+              "_key": "c1l2-033",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice. The bonds, yields, investors and platform prices shown are illustrative. Real bond prices also depend on accrued interest, exact day counts, liquidity and credit quality, and quoted prices on bond platforms can include spreads. Verify details on RBI Retail Direct, NSE, BSE or the issue documents, and consult a SEBI-registered investment adviser before investing."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

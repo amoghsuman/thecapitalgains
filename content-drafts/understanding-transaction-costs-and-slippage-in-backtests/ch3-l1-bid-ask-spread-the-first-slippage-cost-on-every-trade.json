@@ -1,0 +1,238 @@
+{
+  "courseSlug": "understanding-transaction-costs-and-slippage-in-backtests",
+  "chapters": [
+    {
+      "title": "Chapter 3: Slippage and Market Impact",
+      "lessons": [
+        {
+          "title": "Bid-Ask Spread: The First Slippage Cost on Every Trade",
+          "slug": "bid-ask-spread-the-first-slippage-cost-on-every-trade",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "j1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "j1s1", "text": "Chapters 1 and 2 covered explicit costs, brokerage, STT, exchange charges, SEBI fees, stamp duty, and GST, all published, all identical for every trader using the same broker. Slippage has no rate card, and the simplest, most universal piece of it does not even require a large order. Buy a single share with a market order and you already pay it, before size or market impact enter the picture at all.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "j2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "j2s1", "text": "What the Bid-Ask Spread Actually Is", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "j3",
+              "style": "normal",
+              "markDefs": [
+                { "_type": "glossaryTerm", "_key": "gt1", "definition": "The gap between the best (highest) price buyers are currently willing to pay for a stock and the best (lowest) price sellers are currently willing to accept." }
+              ],
+              "children": [
+                { "_type": "span", "_key": "j3s1", "text": "At any moment, the NSE order book shows a best bid, the highest price a buyer is currently offering, and a best ask, the lowest price a seller is currently offering. The gap between them is the ", "marks": [] },
+                { "_type": "span", "_key": "j3s2", "text": "bid-ask spread", "marks": ["gt1"] },
+                { "_type": "span", "_key": "j3s3", "text": ". A market order to buy fills at the ask. A market order to sell fills at the bid. Neither one fills at the price in between, the midpoint, that most price charts and most backtests actually use.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "keyFact",
+              "_key": "j4",
+              "label": "Worked Example: A Single Nifty 50 Stock",
+              "value": "Bid ₹998.50 / Ask ₹999.00",
+              "context": "Midpoint ₹998.75. A market buy fills at ₹999.00, a market sell fills at ₹998.50, a spread of ₹0.50, about 0.05% of the midpoint."
+            },
+            {
+              "_type": "block",
+              "_key": "j5",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "j5s1", "text": "The Half-Spread: Why Even One Share Costs You", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "j6",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "j6s1", "text": "A backtest built on closing prices typically assumes you transact exactly at the midpoint. In reality, buying costs you the half-spread above the midpoint, and selling costs you the half-spread below it. A round trip, buying and later selling, pays the half-spread twice, which adds up to the full quoted spread. Nothing about order size caused this, it exists purely because a market order has to cross the gap between the best bid and the best ask.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "j7",
+              "caption": "Round trip on 100 shares of the Nifty 50 stock above, spread cost only",
+              "headers": ["Leg", "Fill Price", "vs Midpoint (₹998.75)", "Cost on 100 Shares"],
+              "rows": [
+                { "cells": ["Buy (market order)", "₹999.00 (the ask)", "+₹0.25 (half-spread)", "₹25.00"] },
+                { "cells": ["Sell (market order)", "₹998.50 (the bid)", "-₹0.25 (half-spread)", "₹25.00"] },
+                { "cells": ["Round-trip total", "Both legs", "Full spread: ₹0.50", "₹50.00 (≈0.05% of trade value)"] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "j8",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "j8s1", "text": "Spread Width Across the Market Cap Spectrum", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "j9",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "j9s1", "text": "Spread is not a constant, it depends heavily on how liquid the stock is. The Nifty 50 example above is close to the tightest spreads available on the NSE. Move down the market cap ladder and spreads widen quickly, because fewer market participants are quoting on both sides at any moment.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "chart",
+              "_key": "j10",
+              "chartType": "bar",
+              "title": "Illustrative Round-Trip Spread Cost by Market Cap Tier",
+              "xAxisLabel": "Market Cap Tier",
+              "yAxisLabel": "Round-Trip Spread Cost (% of Trade Value)",
+              "data": [
+                { "label": "Nifty 50", "value": 0.04 },
+                { "label": "Nifty Midcap 150", "value": 0.12 },
+                { "label": "Nifty Smallcap 250", "value": 0.35 },
+                { "label": "Thinly Traded Smallcap", "value": 0.75 }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "j11",
+              "caption": "Typical round-trip spread cost ranges by tier",
+              "headers": ["Tier", "Typical Round-Trip Spread Cost"],
+              "rows": [
+                { "cells": ["Nifty 50", "~0.03% to 0.05%"] },
+                { "cells": ["Nifty Midcap 150", "~0.08% to 0.15%"] },
+                { "cells": ["Nifty Smallcap 250", "~0.20% to 0.50%"] },
+                { "cells": ["Thinly traded smallcap or low-volume days", "0.50%+, sometimes well over 1%"] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "j12",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "j12s1", "text": "What Determines Spread Width", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "j13",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "j13s1", "text": "Four things drive how wide a spread gets: average daily traded value, since more liquid names attract more competing quotes; volatility, since market makers widen quotes when the risk of being caught on the wrong side rises; order book depth, since a stock can have a tight spread but very little size resting at the best price; and time of day, since spreads are typically wider in the first and last few minutes of the NSE trading session than during the stable midday period.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "j14",
+              "type": "insight",
+              "text": "A backtest built purely on end-of-day closing prices cannot see any of this. Spread was almost certainly wider at 9:16 am, right after the opening session, than it was for the rest of the day, and wider still around a results announcement or a sudden news move. Using one static, average spread assumption is a simplification, a reasonable one for many strategies, but worth naming explicitly rather than pretending it does not exist."
+            },
+            {
+              "_type": "block",
+              "_key": "j15",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "j15s1", "text": "Quoted Spread vs Effective Spread", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "j16",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "j16s1", "text": "Everything in this lesson assumes your order is small enough to fill entirely at the best bid or best ask. That is the quoted spread. Once an order is larger than what is resting at the best price, it starts eating into the next price levels in the order book, and the average fill price moves further from the midpoint than the quoted spread alone would suggest. That additional, size-driven cost is market impact, not spread, and it is the subject of the next lesson.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "j17",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "j17s1", "text": "Modeling Half-Spread Cost in a Backtest", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "j18",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "j18s1", "text": "The simplest realistic upgrade to a midpoint-based backtest is to assume every buy fills at midpoint plus half the spread, and every sell fills at midpoint minus half the spread, using a spread assumption tied to the stock's typical liquidity tier.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "codeBlock",
+              "_key": "j19",
+              "language": "python",
+              "caption": "Half-spread cost by liquidity tier",
+              "code": "SPREAD_BY_TIER = {\n    \"nifty50\": 0.0004,          # 0.04%\n    \"midcap150\": 0.0012,        # 0.12%\n    \"smallcap250\": 0.0035,      # 0.35%\n    \"illiquid_smallcap\": 0.0075,  # 0.75%\n}\n\ndef spread_cost(trade_value, tier, side):\n    \"\"\"One-way (single leg) cost of crossing half the spread.\n    Call once for the buy leg and once for the sell leg.\n    \"\"\"\n    half_spread = SPREAD_BY_TIER[tier] / 2\n    return trade_value * half_spread\n\n# Round trip on the ₹99,875 Nifty 50 example above\nround_trip = spread_cost(99875, \"nifty50\", \"buy\") + spread_cost(99875, \"nifty50\", \"sell\")\nprint(round(round_trip, 2))  # 39.95, matching the ~0.04% round-trip spread assumption for this tier"
+            },
+            {
+              "_type": "block",
+              "_key": "j20",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "j20s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "j21",
+              "variant": "numericInput",
+              "title": "Quick Check",
+              "prompt": "A Nifty Midcap 150 stock has a round-trip spread cost of 0.12% of trade value. You trade ₹5,00,000 round trip. What is the pure spread cost, in rupees?",
+              "correctValue": 600,
+              "tolerance": 0,
+              "unit": "₹",
+              "explanation": "0.12% of ₹5,00,000 is ₹600. This is the cost of simply crossing the spread, buying at the ask and selling at the bid, with no assumption yet about order size being large enough to move the price, which is what the next lesson, market impact, adds on top."
+            },
+            {
+              "_type": "block",
+              "_key": "j22",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "j22s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "j23",
+              "text": "A backtest that fills every trade at the midpoint is already wrong before market impact enters the picture, because a market order never trades at the midpoint, it crosses the spread and fills at the ask or the bid. Spread cost applies to every single trade regardless of size, and it widens sharply as liquidity thins out down the market cap ladder."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "j24",
+              "points": [
+                "A market order buys at the ask and sells at the bid, never at the midpoint, so every trade pays a half-spread cost on entry and another on exit, adding up to the full quoted spread on a round trip.",
+                "Spread cost applies even to a single share, it requires no order size assumption at all, unlike market impact.",
+                "Spread widens sharply moving down the market cap ladder, from roughly 0.03% to 0.05% round trip on Nifty 50 names to 0.50% or more on thinly traded smallcaps.",
+                "Spread also varies by time of day and around volatile events, a detail an end-of-day, single-spread-assumption backtest necessarily simplifies away."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,230 @@
+{
+  "courseSlug": "understanding-pairs-trading-concepts-and-cointegration",
+  "chapters": [
+    {
+      "title": "Chapter 2: The Spread and the Z-Score",
+      "lessons": [
+        {
+          "title": "Setting Entry and Exit Thresholds From the Z-Score",
+          "slug": "setting-entry-and-exit-thresholds-from-the-z-score",
+          "body": [
+            {
+              "_key": "p7-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p7-001s1", "_type": "span", "marks": [], "text": "In Lesson 2, the HDFC Bank / ICICI Bank z-score touched negative 1.79 in Week 6, close to a stretched reading but not quite at the commonly used negative 2 threshold. That raises the practical question this lesson answers: at what exact z-score do you actually enter a trade, at what z-score do you get out with a profit, and at what z-score do you accept the relationship may have broken and cut the loss? A z-score without rules attached to it is just a number on a chart. Turning it into a trading system means picking specific thresholds and committing to them before the trade, not in the middle of it." }
+              ]
+            },
+            {
+              "_key": "p7-002",
+              "_type": "bigIdea",
+              "text": "A z-score-based system needs three thresholds decided in advance: an entry threshold where the spread is stretched enough to bet on reversion, an exit threshold where the spread has reverted enough to take the profit, and a stop-loss threshold where the spread has moved so far against you that you accept the relationship may have broken down instead of just stretched."
+            },
+            {
+              "_key": "p7-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p7-003s1", "_type": "span", "marks": [], "text": "The Classic Three-Band System" }
+              ]
+            },
+            {
+              "_key": "p7-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p7-004s1", "_type": "span", "marks": [], "text": "A widely used starting point uses three bands, in both directions. Enter a trade when the z-score crosses plus or minus 2, a level the spread historically visits only rarely. Exit when the z-score reverts back to somewhere near 0, the spread's average, capturing the reversion you entered the trade for. Set a stop-loss further out, commonly around plus or minus 3.5, as the point where you accept the spread may no longer be behaving like the mean-reverting series it was when you entered, and exit to limit further loss rather than hoping it reverts eventually." }
+              ]
+            },
+            {
+              "_key": "p7-005",
+              "_type": "table",
+              "caption": "A classic three-band z-score threshold system",
+              "headers": ["Band", "Typical z-score level", "Action"],
+              "rows": [
+                { "_key": "p7-005r1", "cells": ["Entry (spread below mean)", "z ≤ −2", "Go long Stock A, short Stock B, betting the spread reverts upward"] },
+                { "_key": "p7-005r2", "cells": ["Entry (spread above mean)", "z ≥ +2", "Short Stock A, go long Stock B, betting the spread reverts downward"] },
+                { "_key": "p7-005r3", "cells": ["Exit", "z crosses back near 0", "Close the position, the spread has reverted toward its mean"] },
+                { "_key": "p7-005r4", "cells": ["Stop-loss", "z ≤ −3.5 or z ≥ +3.5", "Close the position at a loss, the relationship may have broken down"] }
+              ]
+            },
+            {
+              "_key": "p7-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p7-006s1", "_type": "span", "marks": [], "text": "Reading the Direction Correctly" }
+              ]
+            },
+            {
+              "_key": "p7-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p7-007s1", "_type": "span", "marks": [], "text": "Recall the spread is Stock A's price minus beta times Stock B's price. When the z-score is very negative, the spread is unusually low, meaning Stock A is cheap relative to Stock B given their historical relationship. The trade that profits if this reverts is long Stock A, short Stock B. When the z-score is very positive, the spread is unusually high, Stock A is rich relative to Stock B, and the trade that profits from reversion is short Stock A, long Stock B. Getting this backwards, going long when you should be short, is a common beginner mistake that turns a correct read of the signal into a loss." }
+              ]
+            },
+            {
+              "_key": "p7-008",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "A full entry-to-exit z-score cycle (illustrative, different window)",
+              "xAxisLabel": "Trading week",
+              "yAxisLabel": "Z-score",
+              "data": [
+                { "_key": "p7-008d1", "label": "1", "value": 0.3 },
+                { "_key": "p7-008d2", "label": "2", "value": 0.6 },
+                { "_key": "p7-008d3", "label": "3", "value": 1.0 },
+                { "_key": "p7-008d4", "label": "4", "value": 1.4 },
+                { "_key": "p7-008d5", "label": "5", "value": 1.8 },
+                { "_key": "p7-008d6", "label": "6", "value": 2.1 },
+                { "_key": "p7-008d7", "label": "7", "value": 1.9 },
+                { "_key": "p7-008d8", "label": "8", "value": 1.3 },
+                { "_key": "p7-008d9", "label": "9", "value": 0.7 },
+                { "_key": "p7-008d10", "label": "10", "value": 0.1 },
+                { "_key": "p7-008d11", "label": "11", "value": -0.4 },
+                { "_key": "p7-008d12", "label": "12", "value": -0.9 },
+                { "_key": "p7-008d13", "label": "13", "value": -1.5 },
+                { "_key": "p7-008d14", "label": "14", "value": -2.0 }
+              ]
+            },
+            {
+              "_key": "p7-009",
+              "_type": "callout",
+              "type": "insight",
+              "text": "The z-score crosses +2 in Week 6, triggering a short-the-spread entry (short Stock A, long Stock B). It reverts back through roughly 0 by Week 10, triggering an exit with a profit. By Week 14, the same series has swung all the way to −2.0, triggering the opposite entry, long Stock A, short Stock B. A single spread can generate trade signals in both directions over time."
+            },
+            {
+              "_key": "p7-010",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p7-010s1", "_type": "span", "marks": [], "text": "What the Stop-Loss Protects Against" }
+              ]
+            },
+            {
+              "_key": "p7-011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p7-011s1", "_type": "span", "marks": [], "text": "Picture an alternate version of Week 6's entry at z equal to plus 2, where instead of reverting, the spread keeps widening, plus 2.4, plus 2.9, plus 3.6. At plus 3.5, the stop-loss level, the position is closed at a loss. Without that rule, the trade stays open on the hope that a plus 3.6 reading is still \"due\" to revert, when it may instead be telling you the relationship has structurally changed, exactly the scenario Chapter 1 flagged as divergence risk. A stop-loss does not guarantee the relationship has broken, it simply caps how much you lose finding out." }
+              ]
+            },
+            {
+              "_key": "p7-012",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Exiting the instant the z-score touches exactly 0 can cause whipsaws, repeatedly entering and exiting as the z-score oscillates tightly around the mean. Many traders build in a small buffer, for example exiting anywhere in a band from −0.25 to +0.25, rather than demanding an exact zero crossing."
+            },
+            {
+              "_key": "p7-013",
+              "_type": "comparison",
+              "title": "Tight thresholds vs wide thresholds",
+              "columns": [
+                {
+                  "_key": "p7-013c1",
+                  "label": "Tighter thresholds (e.g. entry at ±1.5)",
+                  "points": [
+                    "More trade signals, more frequent entries",
+                    "Lower conviction per trade, closer to normal, unremarkable readings",
+                    "Higher transaction costs from more frequent trading",
+                    "More exposure to whipsaws around the entry level"
+                  ]
+                },
+                {
+                  "_key": "p7-013c2",
+                  "label": "Wider thresholds (e.g. entry at ±2.5)",
+                  "points": [
+                    "Fewer trade signals, more selective entries",
+                    "Higher conviction per trade, a genuinely rare historical reading",
+                    "Lower transaction costs from less frequent trading",
+                    "Risk of missing smaller, still-profitable reversion opportunities"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "p7-014",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "p7-014s1", "label": "Classic entry threshold", "value": "z = ±2", "context": "A historically rare reading under a normal distribution assumption" },
+                { "_key": "p7-014s2", "label": "Classic exit target", "value": "z ≈ 0", "context": "Often with a small buffer band to avoid whipsaws right at the crossing" },
+                { "_key": "p7-014s3", "label": "Classic stop-loss", "value": "z = ±3.5", "context": "Caps losses if the relationship may have broken down rather than merely stretched" },
+                { "_key": "p7-014s4", "label": "Direction when z is very negative", "value": "Long A, short B", "context": "Stock A is cheap relative to Stock B; the trade bets on the gap closing" }
+              ]
+            },
+            {
+              "_key": "p7-015",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "textWithBlank": "When the z-score is very negative, the spread is below its historical mean, meaning Stock A is cheap relative to Stock B. A pairs trader would go ___ Stock A and short Stock B, betting the gap closes.",
+              "correctAnswers": ["long", "buy"],
+              "explanation": "A negative z-score means the spread (Price A minus beta times Price B) is unusually low, so Stock A is priced cheap relative to Stock B given their historical relationship. Betting on reversion means buying (going long) Stock A while shorting Stock B."
+            },
+            {
+              "_key": "p7-016",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Walking the thresholds",
+              "scenario": "Using a three-band system, entry at ±2, exit near 0, stop-loss at ±3.5, you are short the spread (short Stock A, long Stock B) after entering at z = +2.1. Over the following weeks, the z-score moves to +2.6, then +3.2, then +3.7.",
+              "prompt": "What should happen at each of these three readings, and why?",
+              "modelAnswer": "At +2.6 and +3.2, no action is required, the position stays open since neither the exit level (near 0) nor the stop-loss level (+3.5) has been reached, even though the trade is currently showing a loss as the spread moves further against the entry. At +3.7, the z-score has crossed the +3.5 stop-loss threshold, so the position should be closed at a loss. This protects against the possibility that the relationship has broken down rather than merely stretched further before reverting."
+            },
+            {
+              "_key": "p7-017",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Choosing thresholds",
+              "question": "A trader switches their entry threshold from z = ±2 to z = ±1.2 on the same pair. What is the most likely effect?",
+              "options": [
+                "Fewer trades, each with higher statistical conviction",
+                "More trades, each entered at a less extreme, more common reading",
+                "No change, since the exit threshold determines trade frequency, not the entry threshold",
+                "The hedge ratio will need to be recalculated as a result"
+              ],
+              "correctIndex": 1,
+              "explanation": "A looser entry threshold like ±1.2 is a more common z-score reading than ±2, so it will trigger entries more often, but each entry represents a less unusual, lower-conviction stretch in the spread. This trades trade frequency against per-trade statistical edge and typically raises transaction costs."
+            },
+            {
+              "_key": "p7-018",
+              "_type": "flashcardSet",
+              "title": "Entry and Exit Thresholds: Core Terms",
+              "cards": [
+                { "_key": "p7-018f1", "term": "Entry threshold", "definition": "The z-score level, commonly ±2, at which a pairs trader opens a position, betting the stretched spread will revert toward its mean." },
+                { "_key": "p7-018f2", "term": "Exit threshold", "definition": "The z-score level, typically near 0 with a small buffer, at which a pairs trader closes a position after the spread has reverted." },
+                { "_key": "p7-018f3", "term": "Stop-loss threshold", "definition": "A z-score level further from the mean than the entry threshold, commonly ±3.5, at which a losing position is closed to limit further loss if the relationship may have broken down." },
+                { "_key": "p7-018f4", "term": "Whipsaw", "definition": "Repeated, rapid entering and exiting of a position caused by a signal oscillating tightly around its threshold, often mitigated with a buffer band around the exit level." }
+              ]
+            },
+            {
+              "_key": "p7-019",
+              "_type": "keyTakeaways",
+              "points": [
+                "A tradeable z-score system needs three thresholds fixed in advance: entry, exit, and stop-loss, not decided in the moment.",
+                "A classic starting point is entry at ±2, exit near 0, and stop-loss around ±3.5, though the exact levels can be tuned per pair.",
+                "When the z-score is very negative, the spread is unusually low and the trade is long Stock A, short Stock B. When very positive, the trade is short Stock A, long Stock B.",
+                "The stop-loss exists specifically to protect against the relationship having broken down rather than merely stretched, capping losses rather than betting indefinitely on reversion.",
+                "A small buffer around the exit level, rather than an exact zero crossing, helps avoid whipsaws from a z-score oscillating around its mean.",
+                "Tighter thresholds mean more, lower-conviction trades and higher costs. Wider thresholds mean fewer, higher-conviction trades and the risk of missing smaller opportunities."
+              ]
+            },
+            {
+              "_key": "p7-020",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice or a recommendation to buy, sell, or short any security named here. All z-score levels, thresholds, and chart values are illustrative and do not represent actual historical data or guaranteed profitable rules. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

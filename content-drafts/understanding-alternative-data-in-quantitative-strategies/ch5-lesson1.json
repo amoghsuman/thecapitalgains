@@ -1,0 +1,277 @@
+{
+  "courseSlug": "understanding-alternative-data-in-quantitative-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 5: Signal Research and Alpha Construction",
+      "lessons": [
+        {
+          "title": "From Feature to Signal: Hypothesis-Driven Research Design",
+          "slug": "from-feature-to-signal-hypothesis-driven-research-design",
+          "body": [
+            {
+              "_key": "c5l1k001",
+              "_type": "bigIdea",
+              "text": "A feature that correlates with returns is not a signal. It is a candidate, and the difference between the two is whether you had a reason to test it before you saw the correlation."
+            },
+            {
+              "_key": "c5l1k002",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l1k002s1",
+                  "_type": "span",
+                  "text": "Chapter 4 left you with clean, point-in-time correct, calendar-aligned features. It is tempting to throw all of them at a battery of statistical tests and see what sticks. This lesson explains exactly why that instinct, however natural, is the single most reliable way to build a strategy that looks brilliant in a backtest and does nothing in live trading, and gives you the discipline to avoid it.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l1k003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l1k003s1",
+                  "_type": "span",
+                  "text": "The Data Mining Trap: Why 'It Correlates' Isn't Enough",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l1k004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l1k004s1",
+                  "_type": "span",
+                  "text": "A standard statistical significance threshold of 5% means, by definition, that a genuinely random, meaningless feature will still look 'significant' about one time in twenty, purely by chance. Test enough random features against future returns and some will pass that bar with no real relationship behind them at all. This is not a hypothetical risk, it is basic probability, and it scales directly with how many things you test.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l1k005",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "How Many False Positives Should You Expect?",
+              "prompt": "You test 200 independent, genuinely random alt data features against future stock returns, using a 5% significance threshold for each individual test. Purely by chance, roughly how many of them would you expect to appear 'statistically significant,' even though none of them have any real relationship with returns?",
+              "correctValue": 10,
+              "tolerance": 1,
+              "unit": "",
+              "explanation": "200 features x 5% expected false positive rate = 10 features that would appear significant purely by chance. This is exactly why testing a large batch of features without any prior hypothesis, and then reporting only the ones that 'worked,' produces a strategy built on noise dressed up as a discovery."
+            },
+            {
+              "_key": "c5l1k006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l1k006s1",
+                  "_type": "span",
+                  "text": "Hypothesis-First Research: The Five Elements of a Testable Signal Hypothesis",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l1k007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l1k007s1",
+                  "_type": "span",
+                  "text": "The discipline that protects you from the data mining trap is simple to state and hard to follow consistently: write down a specific, falsifiable hypothesis before you run the statistical test, not after you have already seen which features look promising.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l1k008",
+              "_type": "table",
+              "caption": "Every testable hypothesis needs all five elements defined before the test runs",
+              "headers": ["Element", "What It Specifies", "Example"],
+              "rows": [
+                {
+                  "_key": "c5l1k008r1",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Target variable",
+                    "The specific outcome you are trying to predict",
+                    "20-trading-day forward excess return relative to the sector index"
+                  ]
+                },
+                {
+                  "_key": "c5l1k008r2",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Feature",
+                    "The specific alt data feature being tested",
+                    "Year-on-year growth in VAHAN vehicle registrations, cross-sectionally z-scored"
+                  ]
+                },
+                {
+                  "_key": "c5l1k008r3",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Universe",
+                    "Which companies or sector the hypothesis applies to",
+                    "Listed two-wheeler and passenger vehicle manufacturers"
+                  ]
+                },
+                {
+                  "_key": "c5l1k008r4",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Horizon",
+                    "The time window over which the relationship is expected to hold",
+                    "The signal should predict returns over the following one to two months, roughly matching the lag to the next quarterly result"
+                  ]
+                },
+                {
+                  "_key": "c5l1k008r5",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Economic rationale",
+                    "The specific, falsifiable reason the feature should predict the target, stated before testing",
+                    "Higher registration growth reflects real unit sales the market has not yet seen in a quarterly filing, so a positive surprise should follow"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c5l1k009",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Turning a Hunch Into a Testable Hypothesis",
+              "scenario": "A researcher on your desk says: 'I think web traffic to Nykaa's site is related to its stock price.' That is the entire idea as originally proposed.",
+              "prompt": "Rewrite this hunch as a properly specified hypothesis using the five elements from this lesson, and explain what is wrong with testing the original, unspecified version directly against the data.",
+              "modelAnswer": "A properly specified version might read: Target variable, 15-trading-day forward excess return versus the sector's peer group. Feature, month-on-month growth in estimated website and app traffic, cross-sectionally z-scored against comparable beauty and personal care e-commerce peers. Universe, listed beauty and personal care e-commerce companies. Horizon, the relationship should hold over roughly two to three weeks, plausibly ahead of monthly or quarterly disclosure. Economic rationale, rising site traffic plausibly reflects rising order volume ahead of the company's own disclosure of that volume, which the market has not yet priced in. The original unspecified version, 'traffic is related to the stock price,' names no target horizon, no universe boundary, and no rationale, which means almost any statistical result could be claimed as confirming it after the fact. Specifying all five elements first is what makes the hypothesis falsifiable rather than infinitely flexible."
+            },
+            {
+              "_key": "c5l1k010",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l1k010s1",
+                  "_type": "span",
+                  "text": "Pre-Registration and the Research Log",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l1k011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c5l1m001",
+                  "_type": "glossaryTerm",
+                  "definition": "Writing down a hypothesis, including the expected relationship direction and rough magnitude, before running the statistical test that evaluates it. Borrowed from academic research practice, it prevents a researcher from quietly adjusting the hypothesis after seeing the result."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c5l1k011s2",
+                  "_type": "span",
+                  "text": "Pre-registration",
+                  "marks": ["c5l1m001"]
+                },
+                {
+                  "_key": "c5l1k011s3",
+                  "_type": "span",
+                  "text": ", a practice borrowed directly from academic research methodology, means committing your five elements and expected direction to a written record before running the test, so you cannot quietly reinterpret a weak or opposite result as a success after the fact. Just as important is keeping a research log of every hypothesis tested, including the ones that failed. If your desk has tested 40 alt data hypotheses this year and reports only the 3 that worked, anyone reviewing those 3 results, including you six months later, has no way to judge whether they represent a real edge or the expected handful of chance successes the earlier exercise calculated.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l1k012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l1k012s1",
+                  "_type": "span",
+                  "text": "Reserve a Holdout: Protecting Out-of-Sample Data From Yourself",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l1k013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l1k013s1",
+                  "_type": "span",
+                  "text": "Before developing a feature, set aside a final stretch of time, a holdout period, that you do not look at, do not plot, and do not summary-statistic your way around while building the hypothesis. Once the hypothesis is fully specified and pre-registered on the in-sample period, you get exactly one look at the holdout to confirm or reject it. Going back to adjust the hypothesis after seeing the holdout result defeats the entire purpose of having reserved it.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l1k014",
+              "_type": "collapsible",
+              "title": "An honest caveat: perfect purity is not achievable, discipline still matters",
+              "content": [
+                {
+                  "_key": "c5l1k014b1",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c5l1k014b1s1",
+                      "_type": "span",
+                      "text": "In practice, no researcher approaches a dataset with zero prior information. You chose to investigate VAHAN data for auto stocks because you already know something about how the sector works, which is itself a form of using knowledge gained from the market before the formal test. This does not make the discipline in this lesson pointless, it just means the goal is minimizing and tracking how much peeking happens, not achieving an impossible standard of total ignorance. A researcher who pre-registers hypotheses, logs every attempt, and genuinely protects a holdout is meaningfully more trustworthy than one who does not, even though neither is operating in a perfect vacuum.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c5l1k015",
+              "_type": "callout",
+              "type": "insight",
+              "text": "The next lesson gives you the statistical tools to measure whether a signal actually works. This lesson is what makes those tools trustworthy in the first place. A rigorous statistical test applied to a hypothesis you only formed after seeing the data is still, underneath the math, just a well-dressed coincidence."
+            },
+            {
+              "_key": "c5l1k016",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "Company and feature examples in this lesson are illustrative for teaching the research process and are not recommendations to trade any security or a claim that any specific hypothesis described here has been validated."
+            },
+            {
+              "_key": "c5l1k017",
+              "_type": "keyTakeaways",
+              "points": [
+                "Testing many features without a prior hypothesis guarantees some will appear statistically significant by chance alone, roughly 5% of independent tests at a 5% significance threshold",
+                "A properly specified hypothesis needs all five elements defined before testing: target variable, feature, universe, horizon, and a falsifiable economic rationale",
+                "Pre-registering the hypothesis and expected direction before testing, and logging every hypothesis tried including failures, protects against quietly reinterpreting a weak result as a success",
+                "A protected holdout period, untouched during hypothesis development and checked only once at the end, is the closest thing to an honest final test a researcher can give a signal",
+                "No researcher works from total ignorance, prior sector knowledge always shapes which ideas get investigated, so the realistic goal is minimizing and tracking peeking, not eliminating it entirely",
+                "This lesson's research discipline is what makes the statistical validation techniques in the next lesson actually mean something, rather than dressing up a coincidence in rigorous-looking math"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

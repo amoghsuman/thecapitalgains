@@ -1,0 +1,234 @@
+{
+  "courseSlug": "advanced-risk-management-value-at-risk-and-stress-testing",
+  "chapters": [
+    {
+      "title": "Chapter 4: Stress Testing and Scenario Analysis",
+      "lessons": [
+        {
+          "title": "Hypothetical Scenarios and Sensitivity Analysis",
+          "slug": "hypothetical-scenarios-and-sensitivity-analysis",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "m1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "m1s1", "text": "Historical scenarios are grounded in fact, but they are permanently limited to shapes that have already occurred. Hypothetical scenarios remove that constraint on purpose: you construct a plausible, forward-looking combination of shocks tailored to a vulnerability your specific portfolio actually has today, whether or not any past crisis happened to test it. Sensitivity analysis is the companion technique, instead of one full combined scenario, it isolates single risk factors to show exactly how much each one, on its own, is costing you.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "keyFact",
+              "_key": "m2",
+              "label": "Hypothetical Scenario",
+              "value": "A constructed, forward-looking combination of shocks, grounded in plausible economic logic rather than historical replay",
+              "context": "Built to test a specific vulnerability, not to recreate a specific past event."
+            },
+            {
+              "_type": "block",
+              "_key": "m3",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "m3s1", "text": "Building a Credible Hypothetical Scenario", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "m4",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "m4s1", "text": "A hypothetical scenario needs a causal story, not just a number pulled out of the air. 'Nifty falls 30%' is an arbitrary shock. 'A Middle East supply disruption spikes crude oil prices, which widens India's current account deficit given its heavy oil import dependence, which pressures the rupee, which pushes up inflation expectations and rate-hike fears, which corrects equity valuations' is a scenario a risk committee can actually evaluate and argue with. It also needs to avoid two failure modes: too tame to actually stress anything, or so extreme it loses credibility and gets dismissed as theatre.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "m5",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "m5s1", "text": "Worked Example: An India-Specific Oil Shock", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "m6",
+              "caption": "Hypothetical scenario: a Middle East supply disruption spikes Brent crude 50%",
+              "headers": ["Transmission step", "Assumed shock"],
+              "rows": [
+                { "cells": ["India's oil import bill rises sharply, widening the current account deficit", "Brent crude +50%"] },
+                { "cells": ["Currency pressure as the trade deficit widens", "INR depreciates 12%"] },
+                { "cells": ["Inflation and RBI rate-hike expectations reprice bonds", "10-year G-Sec yield +100 bps"] },
+                { "cells": ["Equity markets reprice on tighter policy and margin pressure from costlier input fuel", "Nifty falls 20%"] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "m7",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "m7s1", "text": "Applying this to the same three-position portfolio from the last lesson, Rs 50,00,000 Nifty equity, an unhedged USD 60,000 payable worth roughly Rs 45,00,000, and Rs 20,00,000 of G-Sec bonds at 5-year modified duration:", "marks": [] }
+              ]
+            },
+            {
+              "_type": "statGrid",
+              "_key": "m8",
+              "stats": [
+                { "label": "Equity P&L", "value": "-Rs 10,00,000", "context": "0.20 x Rs 50,00,000" },
+                { "label": "FX payable P&L", "value": "-Rs 5,40,000", "context": "0.12 x Rs 45,00,000" },
+                { "label": "Bond P&L and total", "value": "-Rs 1,00,000 / -Rs 16,40,000", "context": "Bond: 5 x 0.01 x Rs 20,00,000. Total across all three positions" }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "m9",
+              "type": "insight",
+              "text": "This hypothetical's total loss, Rs 16,40,000, is actually milder than all three historical scenarios from the last lesson. That does not make it a wasted exercise. It reveals something the historical scenarios did not: the specific channel through which an oil shock hurts this portfolio is almost entirely the FX leg, since the portfolio has no direct energy sector or crude-linked position at all. If this firm's actual business involves oil imports beyond just the modeled payable, this scenario is flagging a concentration the historical crises, none of which were oil-driven, never tested."
+            },
+            {
+              "_type": "block",
+              "_key": "m10",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "m10s1", "text": "Sensitivity Analysis: Isolating One Factor at a Time", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "m11",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "m11s1", "text": "A full scenario bundles several shocks together, which is realistic but makes it hard to see which single factor is actually driving the loss. Sensitivity analysis strips that away: move one risk factor across a range of values, hold everything else fixed, and read off exactly how much each increment costs.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "m12",
+              "caption": "Equity-only sensitivity, Rs 50,00,000 Nifty position, all else held fixed",
+              "headers": ["Nifty decline", "Loss"],
+              "rows": [
+                { "cells": ["-10%", "Rs 5,00,000"] },
+                { "cells": ["-20%", "Rs 10,00,000"] },
+                { "cells": ["-30%", "Rs 15,00,000"] },
+                { "cells": ["-40%", "Rs 20,00,000"] },
+                { "cells": ["-50%", "Rs 25,00,000"] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "m13",
+              "caption": "FX-only sensitivity, Rs 45,00,000 payable, all else held fixed",
+              "headers": ["INR depreciation", "Loss"],
+              "rows": [
+                { "cells": ["-5%", "Rs 2,25,000"] },
+                { "cells": ["-10%", "Rs 4,50,000"] },
+                { "cells": ["-15%", "Rs 6,75,000"] },
+                { "cells": ["-20%", "Rs 9,00,000"] },
+                { "cells": ["-25%", "Rs 11,25,000"] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "m14",
+              "type": "insight",
+              "text": "Read the two tables side by side: a 10% move costs Rs 5,00,000 on the equity leg but only Rs 4,50,000 on the FX leg, close, but the equity position is the marginally larger driver purely because its notional, Rs 50,00,000, is bigger than the FX payable's Rs 45,00,000. This kind of comparison is exactly how a risk desk identifies which single factor deserves the most attention, or the first hedge, when resources are limited."
+            },
+            {
+              "_type": "block",
+              "_key": "m15",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "m15s1", "text": "Two-Factor Sensitivity Grids", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "m16",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "m16s1", "text": "Single-factor sensitivity is useful but assumes every other risk factor stays still, which is rarely true in a real crisis. A two-factor grid varies two risk factors together, across a range each, showing how combined moves compound.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "m17",
+              "caption": "Combined equity and FX loss (Rs), Nifty decline (rows) vs INR depreciation (columns)",
+              "headers": ["Nifty decline \\ INR depreciation", "-5%", "-15%", "-25%"],
+              "rows": [
+                { "cells": ["-10%", "Rs 7,25,000", "Rs 11,75,000", "Rs 16,25,000"] },
+                { "cells": ["-30%", "Rs 17,25,000", "Rs 21,75,000", "Rs 26,25,000"] },
+                { "cells": ["-50%", "Rs 27,25,000", "Rs 31,75,000", "Rs 36,25,000"] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "m18",
+              "type": "warning",
+              "text": "The bottom-right corner, Nifty down 50% and INR down 25% simultaneously, produces a combined equity-and-FX loss of Rs 36,25,000, this excludes the bond leg entirely. That is worse than both the Taper Tantrum (Rs 19,85,000 total) and COVID (Rs 23,10,000 total) scenarios from the last lesson, though still short of GFC's Rs 42,75,000. No single historical crisis in the last lesson combined a 50% equity crash with a 25% currency move at the same time, GFC had the worse equity shock, Taper Tantrum had the worse currency shock, but never both at their individual worst simultaneously. A sensitivity grid lets you deliberately explore that corner of the risk space anyway, which is precisely the kind of scenario reverse stress testing, from the first lesson of this chapter, is designed to hunt for."
+            },
+            {
+              "_type": "block",
+              "_key": "m19",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "m19s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "m20",
+              "variant": "numericInput",
+              "title": "Read a Sensitivity Grid",
+              "prompt": "Using the combined equity and FX loss formula, Loss = (Nifty decline x Rs 50,00,000) + (INR depreciation x Rs 45,00,000), what is the combined loss, in rupees, for a Nifty decline of 30% and an INR depreciation of 5%?",
+              "correctValue": 1725000,
+              "tolerance": 10000,
+              "unit": "Rs",
+              "explanation": "0.30 x Rs 50,00,000 = Rs 15,00,000, plus 0.05 x Rs 45,00,000 = Rs 2,25,000, for a total of Rs 17,25,000, matching the grid cell at the -30% row and -5% column."
+            },
+            {
+              "_type": "exercise",
+              "_key": "m21",
+              "variant": "scenario",
+              "title": "Designing a New Hypothetical Scenario",
+              "scenario": "A quant researcher applicant is asked, in an interview, to propose one hypothetical stress scenario relevant to a portfolio heavily weighted toward Indian IT services exporter stocks, such as TCS, Infosys, and Wipro, rather than the oil-import-payable portfolio used in this lesson.",
+              "prompt": "What causal story would make a credible hypothetical scenario for this specific portfolio, and which risk factors should it shock?",
+              "modelAnswer": "A credible scenario should be grounded in what actually drives IT exporter revenue and valuations: a sharp US economic slowdown or recession fear that causes major US clients to cut technology spending budgets, combined with a rupee appreciation, the opposite direction of the earlier example, since IT exporters earn in dollars and a stronger rupee reduces their rupee-denominated revenue when converted back. A well-built scenario would shock US corporate IT spending growth downward, model reduced revenue guidance for the sector, and layer a rupee appreciation shock on top, rather than just picking an arbitrary equity decline number with no story behind it."
+            },
+            {
+              "_type": "block",
+              "_key": "m22",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "m22s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "m23",
+              "text": "A hypothetical scenario is only as good as the story behind it. A sensitivity grid can find a worse combination than history ever produced, but only if you deliberately go looking in the corners history never visited."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "m24",
+              "points": [
+                "Hypothetical scenarios are forward-looking and grounded in economic causal logic, built to test a specific current vulnerability rather than replay a past event.",
+                "A credible scenario needs a clear transmission story from trigger to shocked risk factors, and must avoid being either too tame to matter or too extreme to be taken seriously.",
+                "Single-factor sensitivity analysis isolates each risk factor's marginal cost, useful for identifying which exposure most deserves attention or hedging first.",
+                "Two-factor sensitivity grids can surface combined outcomes worse than any single historical scenario, since real crises rarely hit every risk factor at its individual historical worst simultaneously.",
+                "The next lesson pulls historical scenarios, hypothetical scenarios, and sensitivity grids together into a single, repeatable stress testing framework for an actual trading book."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

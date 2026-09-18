@@ -1,0 +1,384 @@
+{
+  "courseSlug": "introduction-to-angel-investing-what-it-means-to-invest-in-startups",
+  "chapters": [
+    {
+      "title": "Chapter 2: How Startup Funding Rounds Work",
+      "lessons": [
+        {
+          "title": "The Instruments Angels Use: Equity Shares, CCPS, Convertible Notes and iSAFE",
+          "slug": "the-instruments-angels-use-equity-shares-ccps-convertible-notes-and-isafe",
+          "body": [
+            {
+              "_key": "c2l3-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-001s1", "_type": "span", "text": "So far in this course, you have simply \"bought shares\". Real term sheets are less simple. One founder offers you CCPS, another a convertible note with a ₹20 crore cap, a third an iSAFE. These are not just legal labels. The instrument decides when your price is fixed, what you get if the company is sold cheaply, and even whether you are allowed to invest at all. This lesson covers the four instruments Indian angels actually meet, the rules that govern them, and the maths behind caps, discounts and liquidation preference.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l3-002",
+              "_type": "bigIdea",
+              "text": "Every investment instrument answers two questions: when is your price fixed, and who gets paid first if things go wrong? Know those two answers and you understand the instrument."
+            },
+            {
+              "_key": "c2l3-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-003s1", "_type": "span", "text": "The Four Instruments at a Glance", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l3-004",
+              "_type": "table",
+              "caption": "Instruments used in Indian startup rounds",
+              "headers": ["Instrument", "What it is", "When your price is fixed", "Paid before ordinary shareholders?", "Typically used in"],
+              "rows": [
+                { "_key": "c2l3-004r1", "_type": "tableRow", "cells": ["Equity shares", "Ordinary ownership in the company", "On the day you invest", "No, equity is paid last", "Small direct angel rounds, founders' own holdings"] },
+                { "_key": "c2l3-004r2", "_type": "tableRow", "cells": ["CCPS", "Preference shares that must convert into equity shares", "On the day you invest, through a conversion ratio", "Yes, up to the negotiated liquidation preference", "Most VC rounds and many organised angel rounds"] },
+                { "_key": "c2l3-004r3", "_type": "tableRow", "cells": ["Convertible note", "A deposit-like instrument that converts into shares later", "At the next priced round, using a cap or discount", "Ranks as a claim on the company until it converts", "Quick seed and bridge rounds by DPIIT-recognised startups"] },
+                { "_key": "c2l3-004r4", "_type": "tableRow", "cells": ["iSAFE", "A short-form agreement, legally issued as CCPS", "At the next priced round, using a cap or discount", "Yes, up to the amount invested", "Fast early-stage rounds that want to avoid a valuation negotiation"] }
+              ]
+            },
+            {
+              "_key": "c2l3-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-005s1", "_type": "span", "text": "Equity Shares: The Plain Option", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l3-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-006s1", "_type": "span", "text": "Equity shares are exactly what founders hold and what you buy on NSE or BSE in a listed company. They carry voting rights and a proportional claim on everything left after all other claims are paid. They are simple, cheap to document and treat everyone equally. The downside for an angel is that equality: if the company is sold for less than investors put in, holders of preference instruments get paid first, and equity shareholders often receive little or nothing.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l3-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-007s1", "_type": "span", "text": "CCPS: What Most Serious Rounds Use", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l3-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "c2l3-008m1", "_type": "glossaryTerm", "definition": "Compulsorily Convertible Preference Shares: preference shares that must convert into equity shares by a fixed date or on specified events such as the next round or an IPO." },
+                { "_key": "c2l3-008m2", "_type": "glossaryTerm", "definition": "The right to receive a set amount, usually 1x the money invested, from a sale or shutdown before ordinary equity shareholders receive anything." }
+              ],
+              "children": [
+                { "_key": "c2l3-008s2", "_type": "span", "text": "CCPS", "marks": ["c2l3-008m1"] },
+                { "_key": "c2l3-008s3", "_type": "span", "text": " are the workhorse of Indian venture deals. They give investors protections while they wait, most importantly a ", "marks": [] },
+                { "_key": "c2l3-008s4", "_type": "span", "text": "liquidation preference", "marks": ["c2l3-008m2"] },
+                { "_key": "c2l3-008s5", "_type": "span", "text": ", and then convert into ordinary equity so investors share fully in the upside. Three reasons they dominate:", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l3-009",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-009s1", "_type": "span", "text": "Downside protection. ", "marks": ["strong"] },
+                { "_key": "c2l3-009s2", "_type": "span", "text": "Holders can be paid ahead of equity shareholders in a sale or shutdown, and can negotiate anti-dilution rights.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l3-010",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-010s1", "_type": "span", "text": "Foreign investment rules. ", "marks": ["strong"] },
+                { "_key": "c2l3-010s2", "_type": "span", "text": "Under FEMA, only fully and mandatorily convertible preference shares count as equity for foreign investment. Optionally convertible or redeemable preference shares are treated as debt, which brings far stricter rules. Any round with a foreign VC therefore tends to use CCPS.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l3-011",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-011s1", "_type": "span", "text": "A token dividend. ", "marks": ["strong"] },
+                { "_key": "c2l3-011s2", "_type": "span", "text": "Preference shares must carry a preferential dividend, so CCPS usually specify a nominal rate, a tiny fraction of a percent. Nobody invests in CCPS for the dividend.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l3-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-012s1", "_type": "span", "text": "Here is why liquidation preference matters to you. KhetSetu raised ₹10 crore from investors holding CCPS with a 1x non-participating liquidation preference, which means they can take either their ₹10 crore back or their ownership share of the sale price, whichever is higher, but not both. They own 25% of the company. You hold 1% in equity shares. The company is sold for ₹16 crore.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l3-013",
+              "_type": "table",
+              "caption": "A ₹16 crore sale with and without a 1x liquidation preference (illustrative)",
+              "headers": ["Scenario", "CCPS investors (25%)", "Everyone else (75%)", "Your 1% equity stake"],
+              "rows": [
+                { "_key": "c2l3-013r1", "_type": "tableRow", "cells": ["Everyone shares by ownership", "25% × ₹16 crore = ₹4 crore", "₹12 crore", "₹16 lakh"] },
+                { "_key": "c2l3-013r2", "_type": "tableRow", "cells": ["CCPS take their 1x preference", "₹10 crore, since it beats ₹4 crore", "₹16 crore − ₹10 crore = ₹6 crore", "1/75 of ₹6 crore = ₹8 lakh"] }
+              ]
+            },
+            {
+              "_key": "c2l3-014",
+              "_type": "callout",
+              "type": "insight",
+              "text": "The same sale pays you half as much once a liquidation preference sits above your equity. Preferences barely matter in a huge exit, when everyone converts and shares by ownership. They matter enormously in the modest exits that are far more common. Chapter 4 goes deeper into participating preferences, multiples above 1x and how to negotiate them."
+            },
+            {
+              "_key": "c2l3-015",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-015s1", "_type": "span", "text": "Convertible Notes: Deferring the Valuation Fight", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l3-016",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "c2l3-016m1", "_type": "glossaryTerm", "definition": "The maximum valuation at which a note or iSAFE converts, however high the next round is priced. It rewards early investors if the company's value rises quickly." },
+                { "_key": "c2l3-016m2", "_type": "glossaryTerm", "definition": "A percentage reduction on the next round's share price that the note holder gets when converting, for example 20% off." }
+              ],
+              "children": [
+                { "_key": "c2l3-016s1", "_type": "span", "text": "Early-stage founders and angels often cannot agree on a valuation for a company with no revenue. A convertible note sidesteps the argument: you put money in now, and it converts into shares at the next priced round. Your reward for going first is a ", "marks": [] },
+                { "_key": "c2l3-016s2", "_type": "span", "text": "valuation cap", "marks": ["c2l3-016m1"] },
+                { "_key": "c2l3-016s3", "_type": "span", "text": ", a ", "marks": [] },
+                { "_key": "c2l3-016s4", "_type": "span", "text": "discount", "marks": ["c2l3-016m2"] },
+                { "_key": "c2l3-016s5", "_type": "span", "text": ", or both, and you convert at whichever gives the lower price. In India, the rules are specific. Convertible notes were enabled in June 2016 through an amendment to the Companies (Acceptance of Deposits) Rules, 2014. Only DPIIT-recognised startups can issue them, each investor must put in at least ₹25 lakh in a single tranche, and the note must convert or be repaid within 10 years of issue, a limit extended from the original 5 years.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l3-017",
+              "_type": "keyFact",
+              "label": "Convertible note minimum per investor",
+              "value": "₹25 lakh in a single tranche",
+              "context": "Only DPIIT-recognised startups can issue convertible notes, and they must convert or be repaid within 10 years."
+            },
+            {
+              "_key": "c2l3-018",
+              "_type": "mathBlock",
+              "latex": "\\text{Conversion price} = \\min\\left(\\text{Next round price} \\times (1 - \\text{Discount}),\\; \\frac{\\text{Valuation cap}}{\\text{Fully diluted shares before the round}}\\right)",
+              "caption": "You convert at whichever price is lower, so you receive more shares. Interest, if the note carries any, usually converts too; it is ignored here."
+            },
+            {
+              "_key": "c2l3-019",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-019s1", "_type": "span", "text": "Worked example: you invest ₹25 lakh in a note with a ₹20 crore cap and a 20% discount. A year later, the company raises a priced round at a ₹40 crore pre-money valuation, with 4,00,000 fully diluted shares, so new investors pay ₹1,000 per share.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l3-020",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "number",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-020s1", "_type": "span", "text": "Discount price: ", "marks": ["strong"] },
+                { "_key": "c2l3-020s2", "_type": "span", "text": "₹1,000 × (1 − 0.20) = ₹800.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l3-021",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "number",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-021s1", "_type": "span", "text": "Cap price: ", "marks": ["strong"] },
+                { "_key": "c2l3-021s2", "_type": "span", "text": "₹20 crore ÷ 4,00,000 shares = ₹500.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l3-022",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "number",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-022s1", "_type": "span", "text": "You convert at the lower price, ₹500: ", "marks": ["strong"] },
+                { "_key": "c2l3-022s2", "_type": "span", "text": "₹25,00,000 ÷ ₹500 = 5,000 shares. A new investor putting the same ₹25 lakh into the priced round gets only 2,500 shares.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l3-023",
+              "_type": "chart",
+              "chartType": "bar",
+              "title": "Shares received for ₹25 lakh (illustrative)",
+              "xAxisLabel": "How the ₹25 lakh was invested",
+              "yAxisLabel": "Shares",
+              "data": [
+                { "_key": "c2l3-023d1", "label": "New investor at ₹1,000", "value": 2500 },
+                { "_key": "c2l3-023d2", "label": "Note with discount only (₹800)", "value": 3125 },
+                { "_key": "c2l3-023d3", "label": "Note with ₹20 crore cap (₹500)", "value": 5000 }
+              ]
+            },
+            {
+              "_key": "c2l3-024",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Which term bites?",
+              "prompt": "You hold a ₹25 lakh note with a ₹30 crore cap and a 20% discount. The next round is priced at a ₹25 crore pre-money valuation, at ₹500 per share, with 5,00,000 fully diluted shares before the round. How many shares do you receive?",
+              "correctValue": 6250,
+              "tolerance": 0,
+              "unit": "shares",
+              "explanation": "Discount price = ₹500 × 0.8 = ₹400. Cap price = ₹30 crore ÷ 5,00,000 = ₹600. The round is priced below the cap, so the cap does not help; you convert at the lower price of ₹400. ₹25,00,000 ÷ ₹400 = 6,250 shares."
+            },
+            {
+              "_key": "c2l3-025",
+              "_type": "callout",
+              "type": "warning",
+              "text": "A note with no cap is a weak deal for an angel. If the company's value soars before the next round, a discount alone gives you only slightly more shares than the new investors, despite taking far more risk. And a note's claim to repayment offers little comfort in practice: a startup that fails to raise a priced round usually has no cash left to repay anyone."
+            },
+            {
+              "_key": "c2l3-026",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-026s1", "_type": "span", "text": "iSAFE: India's Version of the SAFE", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l3-027",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-027s1", "_type": "span", "text": "In the US, Y Combinator's SAFE (Simple Agreement for Future Equity) became a popular way to fund early startups without a valuation or a loan. Indian company law does not recognise a SAFE as such, so in July 2019 the early-stage fund 100X.VC introduced the iSAFE, short for India Simple Agreement for Future Equity. Legally, an iSAFE is issued as CCPS, which keeps it within the Companies Act. It carries no interest, only a nominal non-cumulative dividend of 0.0001% to satisfy preference share requirements. It converts into equity at a later priced round using a cap, a discount or both, and if the startup is wound up, iSAFE holders are repaid up to their investment ahead of equity shareholders.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l3-028",
+              "_type": "comparison",
+              "title": "Convertible note vs iSAFE",
+              "columns": [
+                {
+                  "_key": "c2l3-028c1",
+                  "label": "Convertible note",
+                  "points": [
+                    "Governed by the deposit rules; only DPIIT-recognised startups can issue it",
+                    "Minimum ₹25 lakh per investor in a single tranche",
+                    "Can carry interest and must convert or be repaid within 10 years",
+                    "Price set at the next round through a cap, a discount or both"
+                  ]
+                },
+                {
+                  "_key": "c2l3-028c2",
+                  "label": "iSAFE",
+                  "points": [
+                    "Issued as CCPS under the Companies Act",
+                    "No deposit-rule minimum ticket, which suits smaller angel cheques",
+                    "No interest; only a nominal 0.0001% non-cumulative dividend",
+                    "Price set at the next round through a cap, a discount or both, with preference up to the amount invested"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-029",
+              "_type": "toolLink",
+              "label": "100X.VC: iSAFE Notes",
+              "url": "https://www.100x.vc/isafe",
+              "description": "Read the originator's explanation of how iSAFE notes are structured and download the template to see real clauses."
+            },
+            {
+              "_key": "c2l3-030",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "The foreign investor's instrument",
+              "question": "A Singapore-based VC fund wants to invest in a Bengaluru startup and have its investment treated as equity, not debt, under FEMA. Which instrument fits?",
+              "options": [
+                "Optionally convertible preference shares",
+                "Redeemable preference shares",
+                "Compulsorily convertible preference shares (CCPS)",
+                "A plain loan with an equity kicker"
+              ],
+              "correctIndex": 2,
+              "explanation": "Under FEMA, only fully and mandatorily convertible preference shares count as equity instruments for foreign investment. Optionally convertible or redeemable preference shares are treated as debt, bringing much stricter borrowing rules. This is a big reason CCPS dominate Indian VC rounds."
+            },
+            {
+              "_key": "c2l3-031",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Sneha's three offers",
+              "scenario": "Sneha, an angel in Jaipur, has ₹10 lakh for one deal. A DPIIT-recognised edtech startup gives her three options:\nOption 1: a convertible note with a ₹15 crore cap.\nOption 2: an iSAFE with a ₹15 crore cap and a 20% discount.\nOption 3: equity shares at a ₹12 crore post-money valuation.",
+              "prompt": "Which options can Sneha actually take, and how should she compare the ones that are open to her?",
+              "modelAnswer": "1. Option 1 is closed to her. Even though the startup is DPIIT-recognised, a convertible note needs at least ₹25 lakh from each investor in a single tranche, and she has ₹10 lakh.\n2. Option 3 fixes her price today: ₹10 lakh ÷ ₹12 crore buys about 0.83%. It is simple, but equity sits last in line if the company is sold cheaply.\n3. Option 2 defers the price. If the next round is priced well above ₹15 crore, she converts at the cap, which is a somewhat higher price than Option 3's ₹12 crore. If the next round is priced low, the 20% discount gives her a better price than new investors. As CCPS, it also gives her a preference up to her ₹10 lakh in a wind-up.\n4. Before choosing, she should ask: is the cap on a pre-money or post-money basis and fully diluted? What triggers conversion? What happens if the company never raises a priced round?\n5. A reasonable conclusion: Option 3 gives a lower, certain price with no protection; Option 2 gives price uncertainty but a preference and discount. The right answer depends on how confident she is about the next round's valuation."
+            },
+            {
+              "_key": "c2l3-032",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "Name the term",
+              "textWithBlank": "The maximum valuation at which a convertible note or iSAFE converts, however high the next round is priced, is called the valuation ___.",
+              "correctAnswers": ["cap", "ceiling"],
+              "explanation": "The valuation cap protects early investors: if the company's value rises sharply before the priced round, they still convert as if the valuation were the cap."
+            },
+            {
+              "_key": "c2l3-033",
+              "_type": "flashcardSet",
+              "title": "Startup Investment Instruments",
+              "cards": [
+                { "_key": "c2l3-033f1", "term": "Equity shares", "definition": "Ordinary ownership with voting rights, paid last in a sale or shutdown." },
+                { "_key": "c2l3-033f2", "term": "CCPS", "definition": "Compulsorily Convertible Preference Shares: carry preference rights, must convert into equity, and count as equity for foreign investment under FEMA." },
+                { "_key": "c2l3-033f3", "term": "Liquidation preference", "definition": "The right to receive a set amount, usually 1x the investment, before equity shareholders in a sale or shutdown." },
+                { "_key": "c2l3-033f4", "term": "Convertible note", "definition": "An instrument that converts into shares at the next priced round; in India, only DPIIT startups can issue it, with a ₹25 lakh minimum per investor." },
+                { "_key": "c2l3-033f5", "term": "Valuation cap", "definition": "The maximum valuation at which a note or iSAFE converts." },
+                { "_key": "c2l3-033f6", "term": "Discount", "definition": "A percentage reduction on the next round's share price given to note or iSAFE holders at conversion." },
+                { "_key": "c2l3-033f7", "term": "iSAFE", "definition": "India Simple Agreement for Future Equity, introduced by 100X.VC in 2019 and issued as CCPS." }
+              ]
+            },
+            {
+              "_key": "c2l3-034",
+              "_type": "keyTakeaways",
+              "points": [
+                "Judge any instrument by two questions: when is the price fixed, and who gets paid first if things go wrong?",
+                "Equity shares fix the price today and are simple, but sit last in line in a sale or shutdown.",
+                "CCPS dominate Indian VC rounds because they combine preference rights with equity treatment under FEMA.",
+                "A liquidation preference can halve what an equity holder receives in a modest exit, while barely mattering in a huge one.",
+                "Convertible notes defer the valuation, but only DPIIT-recognised startups can issue them, with at least ₹25 lakh per investor and conversion or repayment within 10 years.",
+                "Notes and iSAFEs convert at the lower of the capped price and the discounted price; a note without a cap is weak for an angel."
+              ]
+            },
+            {
+              "_key": "c2l3-035",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment, legal or tax advice. Rules on convertible notes, preference shares and foreign investment are complex and change over time, and actual terms vary by deal. All companies, people and figures in the examples are illustrative. Consult a SEBI-registered investment adviser and a qualified legal professional before investing."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,231 @@
+{
+  "courseSlug": "advanced-machine-learning-techniques-for-trading-ensembles-and-deep-learning",
+  "chapters": [
+    {
+      "title": "Chapter 4: Deep Learning Foundations for Market Sequences",
+      "lessons": [
+        {
+          "title": "Recurrent Networks and LSTMs: Modeling Price Sequences on Indian Indices",
+          "slug": "recurrent-networks-and-lstms-modeling-price-sequences-on-indian-indices",
+          "body": [
+            {
+              "_key": "amlc4l2b01",
+              "_type": "bigIdea",
+              "text": "An LSTM's entire value proposition is remembering what matters across a sequence while forgetting what does not, so it can weigh 'this move matters because of what happened 15 days ago' without you hand-engineering that lag into a feature. That same memory mechanism is exactly what will memorize regime-specific noise if you let it, which is why this lesson spends as much time on constraint as on architecture."
+            },
+            {
+              "_key": "amlc4l2b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc4l2b02s1", "_type": "span", "text": "Why Plain Feedforward Networks Don't Fit Sequences", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc4l2b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc4l2b03s1",
+                  "_type": "span",
+                  "text": "Feed a flattened window of the last 30 days' prices into a plain feedforward network, and it treats each day as an independent, unordered input. It has no built-in notion that day 12 came before day 13, and no shared machinery for recognizing a 3-day dip whether it happens at the start or the end of the window, it has to learn that pattern separately at every position. A recurrent network processes the sequence one step at a time, carrying forward a hidden state that summarizes everything seen so far, which is what lets it recognize the same kind of pattern regardless of where in time it occurs.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc4l2b04",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc4l2b04s1", "_type": "span", "text": "The Vanishing Gradient Problem and Why LSTMs Exist", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc4l2b05",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "amlc4l2m01",
+                  "_type": "glossaryTerm",
+                  "definition": "A gated recurrent architecture, introduced by Hochreiter and Schmidhuber in 1997, that maintains a separate cell state alongside its hidden state, with forget, input, and output gates controlling what information is kept, added, or exposed at each time step."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "amlc4l2b05s1",
+                  "_type": "span",
+                  "text": "A plain recurrent network struggles to learn long-range dependencies. Backpropagation through time repeatedly multiplies gradients by the same weight matrix at every step, and over enough steps that product tends toward zero, or occasionally explodes, making it hard for the network to connect an event 30 days ago to today's prediction. The ",
+                  "marks": []
+                },
+                { "_key": "amlc4l2b05s2", "_type": "span", "text": "LSTM", "marks": ["amlc4l2m01"] },
+                {
+                  "_key": "amlc4l2b05s3",
+                  "_type": "span",
+                  "text": " was built specifically to fix this, adding a cell state that gradients can flow along more directly, with gates that give the network an explicit, learnable choice about what to keep, add, and output at each step, rather than being forced to pass everything through the same repeated multiplication.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc4l2b06",
+              "_type": "mathBlock",
+              "latex": "\\begin{aligned} f_t &= \\sigma(W_f[h_{t-1}, x_t] + b_f) \\\\ i_t &= \\sigma(W_i[h_{t-1}, x_t] + b_i) \\\\ \\tilde{C}_t &= \\tanh(W_C[h_{t-1}, x_t] + b_C) \\\\ C_t &= f_t \\odot C_{t-1} + i_t \\odot \\tilde{C}_t \\\\ o_t &= \\sigma(W_o[h_{t-1}, x_t] + b_o) \\\\ h_t &= o_t \\odot \\tanh(C_t) \\end{aligned}",
+              "caption": "fₜ (forget gate) decides what to erase from the cell state, iₜ (input gate) decides what new information to add, and oₜ (output gate) decides what part of the cell state to expose as this step's hidden state. σ is the sigmoid function, keeping each gate between 0 and 1, and ⊙ is elementwise multiplication."
+            },
+            {
+              "_key": "amlc4l2b07",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc4l2b07s1", "_type": "span", "text": "What Goes Into the Sequence: Windowing Price Data", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc4l2b08",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc4l2b08s1",
+                  "_type": "span",
+                  "text": "Instead of a row of engineered features per stock per date, an LSTM here takes a rolling window of the last W days' OHLCV values as a sequence of vectors, shape (W, number of features), with the same triple-barrier label from Chapter 1 attached at the end of the window. A typical starting window is 20 to 60 trading days, long enough to capture a meaningful pattern, short enough that the network is not asked to carry information across an unreasonably long stretch.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc4l2b09",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc4l2b09s1",
+                  "_type": "span",
+                  "text": "Each window needs normalizing, prices from a ₹200 stock and a ₹4,000 stock cannot be fed to the same network unscaled, and this is where a specific, easy-to-miss leak lives. Normalize each window using only statistics computed from that window itself, its own first price, its own trailing mean and standard deviation, never a mean or standard deviation computed across the entire training set. A global statistic computed over the full dataset necessarily includes information from dates after the window you are normalizing, a quiet but real form of the look-ahead bias this course has flagged since Chapter 1.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc4l2b10",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Normalizing every window by a single mean and standard deviation computed once across the whole training set is one of the most common, least obvious leaks in sequence modeling for markets. It feels like ordinary preprocessing, and it silently hands every window a small amount of information about the future. Normalize within each window, using only data available up to that window's own last day."
+            },
+            {
+              "_key": "amlc4l2b11",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc4l2b11s1", "_type": "span", "text": "A Minimal PyTorch LSTM for This Course", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc4l2b12",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "import torch\nimport torch.nn as nn\n\nclass LSTMSignal(nn.Module):\n    def __init__(self, input_size, hidden_size=16, num_layers=1, dropout=0.3):\n        super().__init__()\n        self.lstm = nn.LSTM(\n            input_size=input_size,\n            hidden_size=hidden_size,\n            num_layers=num_layers,\n            batch_first=True,\n            dropout=dropout if num_layers > 1 else 0.0,  # PyTorch ignores dropout when num_layers == 1\n        )\n        self.drop = nn.Dropout(dropout)\n        self.fc = nn.Linear(hidden_size, 1)\n\n    def forward(self, x):\n        _, (h_n, _) = self.lstm(x)     # h_n: (num_layers, batch, hidden_size)\n        out = self.drop(h_n[-1])       # final layer's last hidden state\n        return torch.sigmoid(self.fc(out)).squeeze(-1)\n\nmodel = LSTMSignal(input_size=5, hidden_size=16)\noptimizer = torch.optim.Adam(model.parameters(), lr=1e-3, weight_decay=1e-4)\n\nfor epoch in range(max_epochs):\n    optimizer.zero_grad()\n    preds = model(X_batch)\n    loss = criterion(preds, y_batch)\n    loss.backward()\n    torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)\n    optimizer.step()",
+              "caption": "hidden_size=16 is deliberately small. weight_decay in the optimizer is L2 regularization, the same idea as reg_lambda in Chapter 2's XGBoost recipe, and clip_grad_norm_ caps how large a single update step can be, guarding against the exploding-gradient half of this lesson's earlier warning."
+            },
+            {
+              "_key": "amlc4l2b13",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc4l2b13s1", "_type": "span", "text": "Regularizing an LSTM for Thin-Signal Data", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc4l2b14",
+              "_type": "table",
+              "caption": "A reasonable starting point, not a universal optimum",
+              "headers": ["Setting", "Starting Value", "Why"],
+              "rows": [
+                { "_key": "amlc4l2b14r1", "_type": "tableRow", "cells": ["hidden_size", "8 to 32", "More units mean more capacity to memorize noise on data this thin; start small"] },
+                { "_key": "amlc4l2b14r2", "_type": "tableRow", "cells": ["num_layers", "1, rarely 2", "Depth adds capacity fast; one layer is usually enough for the amount of genuine signal available"] },
+                { "_key": "amlc4l2b14r3", "_type": "tableRow", "cells": ["dropout", "0.2 to 0.5", "Applied between layers and before the final linear layer to fight overfitting directly"] },
+                { "_key": "amlc4l2b14r4", "_type": "tableRow", "cells": ["weight_decay (optimizer)", "1e-4 to 1e-3", "L2 regularization on the weights, the same idea as reg_lambda for XGBoost in Chapter 2"] },
+                { "_key": "amlc4l2b14r5", "_type": "tableRow", "cells": ["Gradient clipping (max norm)", "≈1.0", "Prevents the exploding-gradient half of this lesson's vanishing/exploding gradient problem"] },
+                { "_key": "amlc4l2b14r6", "_type": "tableRow", "cells": ["Early stopping", "Chronological validation split", "Unchanged from Chapter 2; still the single most important control"] }
+              ]
+            },
+            {
+              "_key": "amlc4l2b15",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Every one of these settings exists to fight the same risk the previous lesson named directly: an LSTM has more parameters than the tree ensembles from Chapters 2 and 3, and more parameters is more capacity to memorize noise, not more capacity to find signal that was not there. Small hidden size, heavy dropout, real weight decay, and strict early stopping are not conservative extras here, they are the minimum discipline this model type requires."
+            },
+            {
+              "_key": "amlc4l2b16",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc4l2b16s1", "_type": "span", "text": "What's Next", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc4l2b17",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc4l2b17s1",
+                  "_type": "span",
+                  "text": "Recurrence is not the only way to process a sequence. The next lesson covers 1D convolutional networks, which scan a price window with learned filters instead of stepping through it one day at a time, often cheaper to train and, for some pattern types, a genuinely better fit, before this chapter closes with a case study building an LSTM volatility forecaster for Nifty Bank.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc4l2b18",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "Why LSTMs Exist",
+              "textWithBlank": "Plain recurrent networks struggle to learn long-range dependencies because gradients tend to ___ as they are backpropagated through many time steps, a problem LSTM's gated cell state was specifically designed to mitigate.",
+              "correctAnswers": ["vanish", "vanish or explode", "shrink"],
+              "explanation": "Repeated multiplication through many time steps during backpropagation through time causes gradients to vanish, or less commonly explode, in a plain RNN, making it hard to connect an event far in the past to today's prediction. Hochreiter and Schmidhuber's 1997 LSTM architecture adds a cell state with forget, input, and output gates specifically to let gradients flow more directly across time steps."
+            },
+            {
+              "_key": "amlc4l2b19",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Before You Trust an LSTM's Windowed Input",
+              "steps": [
+                "Each window is normalized using only statistics available within, or before, that window, never global dataset statistics computed across the full training period",
+                "Hidden size and number of layers are kept small and deliberately constrained, not scaled up to 'give the model more room'",
+                "Dropout and weight decay are both applied, not just one",
+                "Gradients are clipped to a fixed norm to prevent the exploding-gradient half of the vanishing/exploding gradient problem",
+                "Early stopping uses a chronologically ordered validation split, exactly as it did for gradient boosting in Chapter 2"
+              ]
+            },
+            {
+              "_key": "amlc4l2b20",
+              "_type": "keyTakeaways",
+              "points": [
+                "Recurrent networks carry a hidden state forward through a sequence, letting them recognize a pattern regardless of where in time it occurs, unlike a feedforward network fed a flattened window",
+                "Plain RNNs suffer from vanishing (or exploding) gradients over long sequences; LSTMs add a gated cell state specifically to let gradients flow more directly across time steps",
+                "Windowed price sequences must be normalized using only statistics available within each window, never a global statistic computed across the full training set, which would leak future information",
+                "A minimal, heavily regularized LSTM, small hidden size, real dropout, weight decay, and gradient clipping, is the right starting point given how much more capacity a network has to memorize noise compared to Chapter 2's tree ensembles",
+                "Early stopping on a chronologically ordered validation split remains the single most important control, unchanged from gradient boosting",
+                "The next lesson introduces 1D CNNs as a different, often cheaper way to process the same kind of sequence"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

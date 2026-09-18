@@ -1,0 +1,269 @@
+{
+  "courseSlug": "understanding-cap-tables-and-equity-dilution-for-founders",
+  "chapters": [
+    {
+      "title": "Chapter 3: How Fundraising Dilutes You",
+      "lessons": [
+        {
+          "title": "Convertibles and Your Cap Table: CCDs, iSAFEs and Valuation Caps",
+          "slug": "convertibles-and-your-cap-table-ccds-isafes-and-valuation-caps",
+          "body": [
+            {
+              "_key": "j1", "_type": "block", "style": "normal", "markDefs": [],
+              "children": [
+                { "_key": "j1s1", "_type": "span", "marks": [], "text": "TiffinBox's cap table has carried one polite fiction for two years: a line reading \"note holder, about 500 shares\". Nobody checked it. At the Series A the note actually converts, the lawyer applies the contract rather than the estimate, and the holder receives 584 shares. Eighty-four shares appear from nowhere, and they come out of the founders. This lesson is about making sure that never happens to you." }
+              ]
+            },
+            {
+              "_key": "j2", "_type": "bigIdea",
+              "text": "A convertible is dilution you have already agreed to but have not yet counted. The terms were fixed the day you signed. The only thing left to decide is whether you will be surprised by them."
+            },
+            {
+              "_key": "j3", "_type": "block", "style": "h2", "markDefs": [],
+              "children": [ { "_key": "j3s1", "_type": "span", "marks": [], "text": "Why Founders Reach for Convertibles" } ]
+            },
+            {
+              "_key": "j4", "_type": "block", "style": "normal",
+              "markDefs": [
+                { "_key": "jg1", "_type": "glossaryTerm", "definition": "An instrument that takes money in now and turns into equity shares later, usually at the price set by the next priced round, adjusted by a discount or a valuation cap." }
+              ],
+              "children": [
+                { "_key": "j4s1", "_type": "span", "marks": [], "text": "A " },
+                { "_key": "j4s2", "_type": "span", "marks": ["jg1"], "text": "convertible instrument" },
+                { "_key": "j4s3", "_type": "span", "marks": [], "text": " lets you take money today without agreeing what the company is worth today. For a pre-revenue startup that is genuinely useful: valuation arguments are expensive, slow and often unwinnable when there is nothing to value. The price gets set later, by the next round, and the early investor is rewarded for going first." }
+              ]
+            },
+            {
+              "_key": "j5", "_type": "comparison",
+              "title": "Priced round vs convertible",
+              "columns": [
+                {
+                  "_key": "j5c1", "label": "Priced round",
+                  "points": [
+                    "Valuation agreed today, dilution known today",
+                    "Shares issued immediately, cap table is complete",
+                    "Slower and more expensive to document",
+                    "Needs a valuation exercise before allotment"
+                  ]
+                },
+                {
+                  "_key": "j5c2", "label": "Convertible",
+                  "points": [
+                    "No valuation fight today, money arrives faster",
+                    "Dilution is real but sits off the share register until conversion",
+                    "Cheaper to document, useful for bridging between rounds",
+                    "Terms compound quietly if you sign several of them"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "j6", "_type": "block", "style": "h2", "markDefs": [],
+              "children": [ { "_key": "j6s1", "_type": "span", "marks": [], "text": "What Indian Startups Actually Use" } ]
+            },
+            {
+              "_key": "j7", "_type": "block", "style": "normal", "markDefs": [],
+              "children": [
+                { "_key": "j7s1", "_type": "span", "marks": [], "text": "The American SAFE does not translate cleanly into Indian company law, so the market here uses a small set of instruments that achieve the same thing within the Companies Act and FEMA framework." }
+              ]
+            },
+            {
+              "_key": "j8", "_type": "table",
+              "caption": "Convertible instruments used by Indian startups",
+              "headers": ["Instrument", "What it is", "Typical use", "Points to check"],
+              "rows": [
+                { "_key": "j8r1", "_type": "tableRow", "cells": ["CCPS", "Compulsorily convertible preference shares", "The standard instrument for priced venture rounds in India", "Carries a liquidation preference, covered in Chapter 4"] },
+                { "_key": "j8r2", "_type": "tableRow", "cells": ["CCD", "Compulsorily convertible debenture", "Bridge funding and rounds where investors want a debt-like instrument that must convert", "Conversion formula, tenure and whether any interest accrues"] },
+                { "_key": "j8r3", "_type": "tableRow", "cells": ["Convertible note", "A borrowing that converts into equity, available to DPIIT-recognised startups subject to a minimum amount per investor and a maximum conversion period", "Early pre-seed cheques, including from non-resident investors under the applicable FEMA rules", "Eligibility, the minimum ticket size and the conversion deadline"] },
+                { "_key": "j8r4", "_type": "tableRow", "cells": ["iSAFE", "An India-adapted simple agreement for future equity, structured as preference shares", "Pre-seed and accelerator cheques", "Cap, discount and what happens if no priced round ever comes"] }
+              ]
+            },
+            {
+              "_key": "j9", "_type": "callout", "type": "insight",
+              "text": "Convertible notes in India are not a free-form instrument. They are available to startups recognised by DPIIT, have a minimum investment amount per investor in a single tranche, and must convert into equity within a maximum period set by the rules. Non-resident investors can use them only within the FEMA framework. Confirm current eligibility, thresholds and timelines with your CA before you rely on a note, because these conditions have been amended more than once."
+            },
+            {
+              "_key": "j10", "_type": "block", "style": "h2", "markDefs": [],
+              "children": [ { "_key": "j10s1", "_type": "span", "marks": [], "text": "Discount and Cap: The Two Levers" } ]
+            },
+            {
+              "_key": "j11", "_type": "block", "style": "normal", "markDefs": [],
+              "children": [
+                { "_key": "j11s1", "_type": "span", "marks": [], "text": "Almost every convertible has one or both of these. A discount gives the holder a percentage off the next round's price. A valuation cap sets a maximum valuation at which their money converts, however well you do. When both are present, the holder converts at whichever gives them the lower price, which means whichever gives you more dilution." }
+              ]
+            },
+            {
+              "_key": "j12", "_type": "mathBlock",
+              "latex": "\\text{Discount price} = \\text{Round price} \\times (1 - d) \\qquad \\text{Cap price} = \\frac{\\text{Valuation cap}}{\\text{Pre-round fully diluted shares}}",
+              "caption": "Two prices are calculated, and the holder converts at the lower one"
+            },
+            {
+              "_key": "j13", "_type": "block", "style": "normal", "markDefs": [],
+              "children": [
+                { "_key": "j13s1", "_type": "span", "marks": [], "text": "TiffinBox's note is ₹32 lakh with a 20% discount and a ₹10 crore valuation cap. The Series A is priced at ₹10,000 per share, and there were 18,250 fully diluted shares before the note converts. Run both routes." }
+              ]
+            },
+            {
+              "_key": "j14", "_type": "table",
+              "caption": "TiffinBox note conversion: two routes, one winner",
+              "headers": ["Route", "Conversion price", "Shares received", "Effective valuation for the note"],
+              "rows": [
+                { "_key": "j14r1", "_type": "tableRow", "cells": ["20% discount to the round price", "₹8,000", "400", "₹14.6 crore"] },
+                { "_key": "j14r2", "_type": "tableRow", "cells": ["₹10 crore valuation cap", "₹5,479", "584", "₹10 crore"] },
+                { "_key": "j14r3", "_type": "tableRow", "cells": ["What the holder actually gets", "₹5,479", "584", "₹10 crore"] }
+              ]
+            },
+            {
+              "_key": "j15", "_type": "collapsible",
+              "title": "Show me the math",
+              "content": [
+                {
+                  "_key": "j15p1", "_type": "block", "style": "normal", "markDefs": [],
+                  "children": [
+                    { "_key": "j15p1s1", "_type": "span", "marks": [], "text": "Discount route: the round price is ₹10,000, so the discounted price is ₹10,000 × 0.80 = ₹8,000. Shares = ₹32,00,000 ÷ ₹8,000 = 400." }
+                  ]
+                },
+                {
+                  "_key": "j15p2", "_type": "block", "style": "normal", "markDefs": [],
+                  "children": [
+                    { "_key": "j15p2s1", "_type": "span", "marks": [], "text": "Cap route: the cap price is ₹10,00,00,000 ÷ 18,250 = ₹5,479.45. Shares = ₹32,00,000 ÷ ₹5,479.45 = 584. The cap gives the holder 184 more shares, so the cap route wins. The effective discount to the round price is not 20% but about 45%." }
+                  ]
+                },
+                {
+                  "_key": "j15p3", "_type": "block", "style": "normal", "markDefs": [],
+                  "children": [
+                    { "_key": "j15p3s1", "_type": "span", "marks": [], "text": "The old cap table assumed 500 shares, using a 20% discount to the seed price of ₹8,000. The contract delivers 584. Those extra 84 shares are about 0.3% of the post-round company, taken from everyone who is not the note holder, and mostly from the founders." }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "j16", "_type": "statGrid",
+              "stats": [
+                { "_key": "j16s1", "label": "Note amount", "value": "₹32 lakh", "context": "Signed two years before the Series A" },
+                { "_key": "j16s2", "label": "Conversion price", "value": "₹5,479", "context": "Against a round price of ₹10,000" },
+                { "_key": "j16s3", "label": "Shares received", "value": "584", "context": "Not the 400 the discount alone would give" },
+                { "_key": "j16s4", "label": "Effective discount", "value": "About 45%", "context": "The cap, not the stated 20%, did the work" }
+              ]
+            },
+            {
+              "_key": "j17", "_type": "block", "style": "h2", "markDefs": [],
+              "children": [ { "_key": "j17s1", "_type": "span", "marks": [], "text": "The Cap Bites Hardest When You Succeed" } ]
+            },
+            {
+              "_key": "j18", "_type": "block", "style": "normal", "markDefs": [],
+              "children": [
+                { "_key": "j18s1", "_type": "span", "marks": [], "text": "This is the part founders miss. A discount is proportional: whatever the round price is, the holder pays 80% of it. A cap is absolute. Once your valuation climbs past the cap, the holder's share count stops falling. The better your Series A, the larger the slice that ₹32 lakh buys, relative to what the same money would buy at the round price." }
+              ]
+            },
+            {
+              "_key": "j19", "_type": "chart", "chartType": "line",
+              "title": "Shares the ₹32 lakh note receives, by Series A pre-money valuation",
+              "xAxisLabel": "Series A pre-money valuation (₹ crore)", "yAxisLabel": "Shares received on conversion",
+              "data": [
+                { "_key": "j19d1", "label": "8", "value": 912 },
+                { "_key": "j19d2", "label": "12", "value": 608 },
+                { "_key": "j19d3", "label": "18.75", "value": 584 },
+                { "_key": "j19d4", "label": "30", "value": 584 },
+                { "_key": "j19d5", "label": "50", "value": 584 }
+              ]
+            },
+            {
+              "_key": "j20", "_type": "block", "style": "normal", "markDefs": [],
+              "children": [
+                { "_key": "j20s1", "_type": "span", "marks": [], "text": "Below a ₹10 crore round valuation the discount is doing the work, and the note holder's shares fall as your valuation rises. Above it, the cap takes over and the line goes flat at 584 shares. A cap is a floor under the investor's ownership, which is exactly why they ask for one." }
+              ]
+            },
+            {
+              "_key": "j21", "_type": "callout", "type": "warning",
+              "text": "Convertibles stack. Three notes signed eighteen months apart, each with its own cap and discount, convert together at the next round and can add up to far more dilution than any single conversation suggested. Every time you sign one, update the fully diluted cap table with the shares it would produce at a realistic next-round valuation, and keep that model beside the term sheet."
+            },
+            {
+              "_key": "j22", "_type": "keyFact",
+              "label": "Who pays for the conversion",
+              "value": "Usually the existing shareholders",
+              "context": "In most deals, notes convert immediately before the new round, so the converted shares sit in the pre-money share count. Like the ESOP top-up in the previous lesson, that means founders and earlier investors absorb the dilution, not the incoming investor."
+            },
+            {
+              "_key": "j23", "_type": "exercise", "variant": "numericInput",
+              "title": "Which route, and how many shares?",
+              "prompt": "A ₹50 lakh convertible has a 25% discount and a ₹15 crore valuation cap. The next round is priced at ₹12,000 per share, and the company had 20,000 fully diluted shares before conversion. How many shares does the holder receive? Round down to a whole share.",
+              "correctValue": 666, "tolerance": 2, "unit": "shares",
+              "explanation": "Discount price = ₹12,000 × 0.75 = ₹9,000, giving ₹50,00,000 ÷ ₹9,000 = 555 shares. Cap price = ₹15,00,00,000 ÷ 20,000 = ₹7,500, giving ₹50,00,000 ÷ ₹7,500 = 666 shares. The holder takes the lower price, so the cap route wins with 666 shares."
+            },
+            {
+              "_key": "j24", "_type": "exercise", "variant": "fillInTheBlank",
+              "title": "Name the ceiling",
+              "textWithBlank": "The maximum company valuation at which a convertible will turn into equity, however high the next round is priced, is called the valuation ___.",
+              "correctAnswers": ["cap", "ceiling"],
+              "explanation": "The cap protects the early investor's percentage if the company's value jumps between the convertible and the priced round. For the founder, it is a fixed cost that grows in real terms as the valuation rises."
+            },
+            {
+              "_key": "j25", "_type": "exercise", "variant": "quiz",
+              "title": "Read the conversion clause",
+              "question": "A convertible note says the holder converts at \"the lower of a 20% discount to the Series A price and the price implied by a ₹20 crore valuation cap\". Your Series A is priced at a ₹16 crore pre-money valuation. Which applies?",
+              "options": [
+                "The cap, because a cap always overrides a discount",
+                "The discount, because at a ₹16 crore valuation the discounted price is below the price implied by the ₹20 crore cap",
+                "Neither, because the round valuation is below the cap so the note does not convert",
+                "Both are applied one after the other, giving a 20% discount to the capped price"
+              ],
+              "correctIndex": 1,
+              "explanation": "The cap only binds when the round is priced above it. Here the round is below the cap, so the cap price is higher than the round price and the 20% discount gives the holder the better deal. The two are alternatives, not cumulative, unless the contract expressly says otherwise."
+            },
+            {
+              "_key": "j26", "_type": "exercise", "variant": "scenario",
+              "title": "Three notes come due at once",
+              "scenario": "Your Ahmedabad consumer startup has 20,000 fully diluted shares and you hold 10,000 of them. Over 18 months you raised ₹1.5 crore across three convertibles: ₹75 lakh with a ₹8 crore cap and a 20% discount, ₹50 lakh with a ₹10 crore cap and a 15% discount, and ₹25 lakh with a ₹12 crore cap and no discount. A Series A investor now offers ₹10 crore at ₹40 crore pre-money, for 20% post-money, with all notes converting immediately before the round and no ESOP change.",
+              "prompt": "Work out the share counts and your resulting stake, then say what you should have done differently.",
+              "modelAnswer": "Step 1: the round price. ₹40 crore ÷ 20,000 shares = ₹20,000 per share.\n\nStep 2: each note, cap price against discount price, taking the lower.\nNote 1: cap price = ₹8,00,00,000 ÷ 20,000 = ₹4,000, giving 1,875 shares. Discount price = ₹16,000, giving 469 shares. Cap wins: 1,875 shares.\nNote 2: cap price = ₹5,000, giving 1,000 shares. Discount price = ₹17,000, giving 294 shares. Cap wins: 1,000 shares.\nNote 3: cap price = ₹6,000, giving 416 shares after rounding down. No discount to compare.\nTotal from notes: 3,291 shares.\n\nStep 3: the round. Pre-round fully diluted becomes 20,000 + 3,291 = 23,291. The investor takes 20% post-money, so the total becomes 23,291 ÷ 0.80 = 29,114 shares and the investor receives 5,823.\n\nStep 4: your stake. 10,000 ÷ 29,114 = 34.35%. Without the notes you would have held 10,000 ÷ 25,000 = 40.00%. The ₹1.5 crore of convertible money cost you 5.65 percentage points, and at the post-money valuation of ₹50 crore those 3,291 note shares are worth about ₹5.65 crore for ₹1.5 crore invested.\n\nWhat to do differently:\n1. Model every note at a realistic next-round valuation the day you sign it, and keep the fully diluted cap table updated with those shares.\n2. Watch low caps. The ₹8 crore cap on the first note produced more than half the note dilution on its own.\n3. Raise caps as the company progresses. Signing a second and third note at caps barely above the first ignores the value you built in between.\n4. Consider whether a small priced round would have been cheaper than three notes with compounding terms.\n5. Negotiate whether notes convert pre-money or post-money. Pre-money conversion means you and the earlier holders pay for all of it."
+            },
+            {
+              "_key": "j27", "_type": "exercise", "variant": "checklist",
+              "title": "Before you sign a convertible",
+              "steps": [
+                "Write down the cap and the discount, and calculate both conversion prices at two or three realistic next-round valuations.",
+                "Add the resulting shares to your fully diluted cap table the same day, and label the assumption you used.",
+                "Check whether the cap is pre-money or post-money and which share count the cap price is divided by.",
+                "Confirm whether the instrument converts before or alongside the next round, and who bears that dilution.",
+                "Check the maturity or longstop date and what happens if no priced round occurs by then.",
+                "Confirm the instrument suits your company: eligibility, minimum amount and conversion deadline for notes, and FEMA compliance for any non-resident investor.",
+                "Add up all outstanding convertibles together, not one at a time.",
+                "Get a company secretary or lawyer to check the conversion formula in writing before you sign."
+              ]
+            },
+            {
+              "_key": "j28", "_type": "flashcardSet",
+              "title": "Convertible Terms",
+              "cards": [
+                { "_key": "j28c1", "term": "Valuation cap", "definition": "The maximum valuation at which a convertible turns into equity, regardless of how high the next round is priced." },
+                { "_key": "j28c2", "term": "Discount", "definition": "A percentage reduction on the next round's price per share, given to the convertible holder for investing earlier." },
+                { "_key": "j28c3", "term": "CCD", "definition": "Compulsorily convertible debenture: a debt instrument that must convert into equity shares." },
+                { "_key": "j28c4", "term": "CCPS", "definition": "Compulsorily convertible preference shares, the standard instrument for priced venture rounds in India." },
+                { "_key": "j28c5", "term": "iSAFE", "definition": "An India-adapted simple agreement for future equity, structured as preference shares rather than the American SAFE contract." },
+                { "_key": "j28c6", "term": "Conversion price", "definition": "The per-share price at which a convertible turns into equity, being the lower of the discount price and the cap price." },
+                { "_key": "j28c7", "term": "Longstop date", "definition": "The date by which a convertible must convert or be repaid if no qualifying round has happened." }
+              ]
+            },
+            {
+              "_key": "j29", "_type": "keyTakeaways",
+              "points": [
+                "A convertible takes money now and sets its price later, which is useful when there is nothing to value yet.",
+                "Indian startups use CCPS, CCDs, convertible notes and iSAFEs rather than the American SAFE, and notes carry eligibility and timing conditions.",
+                "A discount is proportional to the round price. A cap is absolute, and it bites harder the better your next round is.",
+                "When a convertible has both, the holder converts at the lower price, which is the one that dilutes you more.",
+                "TiffinBox's ₹32 lakh note converted at ₹5,479 rather than the ₹8,000 discount price, giving 584 shares instead of 400 and an effective discount of about 45%.",
+                "Convertibles usually convert into the pre-money share count, so existing shareholders absorb that dilution.",
+                "Model every convertible on your fully diluted cap table the day you sign it, and model them all together."
+              ]
+            },
+            {
+              "_key": "j30", "_type": "callout", "type": "disclaimer",
+              "text": "This lesson is for education only and is not legal, tax or investment advice. TiffinBox Foods and the other startups described are fictional, and all amounts, caps, discounts and share counts are illustrative. Eligibility conditions, minimum amounts and conversion timelines for convertible notes, the rules for non-resident investment under FEMA, and the valuation requirements that apply when shares are issued all change over time and depend on your facts. Conversion mechanics are governed by the actual contract. Consult a qualified chartered accountant, company secretary or lawyer before issuing or converting any instrument."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

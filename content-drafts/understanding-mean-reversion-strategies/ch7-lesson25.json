@@ -1,0 +1,214 @@
+{
+  "courseSlug": "understanding-mean-reversion-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 7: Building and Backtesting a Mean Reversion System",
+      "lessons": [
+        {
+          "title": "Common Backtesting Traps: Look-Ahead Bias, Overfitting, and Survivorship Bias",
+          "slug": "common-backtesting-traps-look-ahead-bias-overfitting-and-survivorship-bias",
+          "body": [
+            {
+              "_key": "mr7l25-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr7l25-001s1", "_type": "span", "marks": [], "text": "Every backtest in this course has quietly avoided one trap and never explicitly discussed two others. Chapter 3 already fixed look-ahead bias by filling every entry at the next trading day's open, never the same close that generated the signal. This lesson names that fix properly, then covers the two traps that can make a perfectly honest, look-ahead-free backtest still lie to you: overfitting your own parameters to noise, and quietly excluding the very stocks whose failures would have hurt you most." }
+              ]
+            },
+            {
+              "_key": "mr7l25-002",
+              "_type": "bigIdea",
+              "text": "A backtest can be free of look-ahead bias and still be dishonest in two other ways: by fitting its rules so precisely to one historical sample that they capture noise instead of a real pattern, and by testing only on stocks that survived to be listed today, silently erasing the DHFLs and Jet Airways that a real, live strategy would have actually traded."
+            },
+            {
+              "_key": "mr7l25-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr7l25-003s1", "_type": "span", "marks": [], "text": "Look-Ahead Bias: A Quick Recap" }
+              ]
+            },
+            {
+              "_key": "mr7l25-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr7l25-004s1", "_type": "span", "marks": [], "text": "Chapter 3, Lesson 4 covered this in full: a backtest that fills a trade at the same closing price that triggered its own entry signal is using information that would not actually have been available to act on in real time. Every backtest since has filled entries on the next trading day's open specifically to avoid this. If you build your own system from scratch, this is the first thing to check, before anything in this lesson." }
+              ]
+            },
+            {
+              "_key": "mr7l25-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr7l25-005s1", "_type": "span", "marks": [], "text": "Overfitting: When a Strategy Memorizes the Past" }
+              ]
+            },
+            {
+              "_key": "mr7l25-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "mr7l25-006m1", "_type": "glossaryTerm", "definition": "Tuning a strategy's rules so precisely to a specific historical dataset that it captures random noise in that sample rather than a genuine, repeatable pattern, and performs far worse on new data." }
+              ],
+              "children": [
+                { "_key": "mr7l25-006s1", "_type": "span", "marks": [], "text": "Every threshold in this course, a 20-day window, |z| beyond 2, a 5% stop-loss, an RSI of 30 or 70, is a deliberately round, sensible number, chosen for reasons explained in the text, not because it happened to produce the best-looking backtest. That was a design choice, not an accident. " },
+                { "_key": "mr7l25-006s2", "_type": "span", "marks": ["mr7l25-006m1"], "text": "Overfitting" },
+                { "_key": "mr7l25-006s3", "_type": "span", "marks": [], "text": " is what happens when a threshold like |z| beyond 2.137, a stop-loss at 4.6%, and an RSI cutoff at 33.8 gets selected purely because that exact combination produced the highest historical return on one specific dataset. A suspiciously precise, unexplainable parameter is itself a warning sign, not a sign of rigor." }
+              ]
+            },
+            {
+              "_key": "mr7l25-007",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Chapter 7's multi-signal system combined four separate filters: z-score, half-life, moving-average slope, and RSI. That is more sophisticated than a single-signal strategy, and it is also more dangerous in exactly this way. Four thresholds give an overfitter four separate knobs to quietly tune until the backtest looks good, instead of one. Sophistication is not the same as robustness, and a system with more filters deserves more scrutiny for overfitting, not less."
+            },
+            {
+              "_key": "mr7l25-008",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr7l25-008s1", "_type": "span", "marks": [], "text": "The Fix: In-Sample vs Out-of-Sample Testing" }
+              ]
+            },
+            {
+              "_key": "mr7l25-009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr7l25-009s1", "_type": "span", "marks": [], "text": "Split your historical data into two periods. Design and tune every rule and threshold using only the earlier period, the in-sample data. Then run the strategy, completely unchanged, on the later period it never influenced, the out-of-sample data. A genuine, repeatable pattern tends to survive this split reasonably intact. An overfit strategy, one that memorized noise specific to the in-sample period, tends to fall apart." }
+              ]
+            },
+            {
+              "_key": "mr7l25-010",
+              "_type": "table",
+              "caption": "A typical overfitting fingerprint",
+              "headers": ["", "In-Sample (2020 to 2022)", "Out-of-Sample (2023 to 2024)"],
+              "rows": [
+                { "_key": "mr7l25-010r1", "cells": ["Win rate", "70%", "45%"] },
+                { "_key": "mr7l25-010r2", "cells": ["Interpretation", "The period the strategy's thresholds were tuned on", "A period the strategy never saw during tuning, its honest test"] }
+              ]
+            },
+            {
+              "_key": "mr7l25-011",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "in_sample = close.loc[:\"2022-12-31\"]\nout_of_sample = close.loc[\"2023-01-01\":]\n\n# Tune every threshold using only in_sample.\n# Then run the exact same, unchanged rules on out_of_sample.\nin_sample_trades = backtest_stock(\"TICKER\", in_sample)\nout_of_sample_trades = backtest_stock(\"TICKER\", out_of_sample)\n\n# A sharp drop in performance from in-sample to out-of-sample\n# is the fingerprint of a strategy that was overfit.",
+              "caption": "The core discipline: tune on one period, test unchanged on a later, unseen period."
+            },
+            {
+              "_key": "mr7l25-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr7l25-012s1", "_type": "span", "marks": [], "text": "Survivorship Bias: The Backtest That Forgets Its Own Casualties" }
+              ]
+            },
+            {
+              "_key": "mr7l25-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "mr7l25-013m1", "_type": "glossaryTerm", "definition": "The error of testing a strategy only on securities that still exist today, silently excluding companies that were delisted, went bankrupt, or were acquired during the historical test period." }
+              ],
+              "children": [
+                { "_key": "mr7l25-013s1", "_type": "span", "marks": [], "text": "Build a backtest using today's list of Nifty 500 constituents and run it across 2015 to 2024, and something important is missing without you ever noticing: Jet Airways, delisted after its 2019 insolvency, and DHFL, absorbed out of existence after its own default and resolution, are not in today's constituent list, so they are simply not in your data at all. Chapter 8's entire case study on Yes Bank and DHFL exists because those are exactly the kind of trades a naive reversion strategy would have taken and lost badly on. A backtest built on " },
+                { "_key": "mr7l25-013s2", "_type": "span", "marks": ["mr7l25-013m1"], "text": "survivorship bias" },
+                { "_key": "mr7l25-013s3", "_type": "span", "marks": [], "text": " never sees those losses, because the stocks that would have generated them have been quietly erased from history by the simple act of using today's list to look backward." }
+              ]
+            },
+            {
+              "_key": "mr7l25-014",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This is the statistical machinery behind Chapter 8's warning made precise. A strategy that looks excellent in a backtest built on survivors alone is not a better strategy than one tested honestly. It is a strategy that has never been shown its own worst-case trades."
+            },
+            {
+              "_key": "mr7l25-015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr7l25-015s1", "_type": "span", "marks": [], "text": "The correct fix is a point-in-time universe: the actual list of index constituents as it stood on each historical date, including names that were later delisted, merged away, or removed from the index. Assembling this kind of dataset is a genuine data-acquisition challenge, well beyond a single free data source for most retail traders, but knowing the bias exists, and being suspicious of any backtest that does not explicitly address it, costs nothing." }
+              ]
+            },
+            {
+              "_key": "mr7l25-016",
+              "_type": "table",
+              "caption": "Three backtesting traps, one table",
+              "headers": ["Trap", "What It Does", "The Fix"],
+              "rows": [
+                { "_key": "mr7l25-016r1", "cells": ["Look-ahead bias", "Uses information not actually available at the moment of the trade", "Fill entries only at the next available price, never the signal's own close"] },
+                { "_key": "mr7l25-016r2", "cells": ["Overfitting", "Tunes thresholds to fit noise in one specific historical sample", "Round, deliberately chosen parameters, plus in-sample vs out-of-sample testing"] },
+                { "_key": "mr7l25-016r3", "cells": ["Survivorship bias", "Excludes delisted or failed companies from the historical universe", "Use a point-in-time universe that includes later-delisted names"] }
+              ]
+            },
+            {
+              "_key": "mr7l25-017",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Measure the overfitting drop",
+              "prompt": "A strategy shows a 70% win rate in-sample and a 45% win rate out-of-sample. What is the drop in win rate, in percentage points?",
+              "correctValue": 25,
+              "tolerance": 1,
+              "unit": "pp",
+              "explanation": "70 - 45 = 25 percentage points. A drop this large from in-sample to out-of-sample is a strong fingerprint of overfitting, the strategy's thresholds fit the tuning period's noise rather than a pattern that generalizes."
+            },
+            {
+              "_key": "mr7l25-018",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Spot the bias",
+              "question": "A trader backtests a mean reversion strategy across NSE largecap stocks from 2015 to 2023, using today's Nifty 100 constituent list applied to the entire historical period. What bias does this most likely introduce?",
+              "options": [
+                "Look-ahead bias, since the backtest uses information from the future",
+                "Survivorship bias, since companies delisted or merged away during that period, like Jet Airways or DHFL, are silently excluded from the test",
+                "No bias, since the Nifty 100 is a well-diversified index",
+                "Overfitting, since the strategy has too many parameters"
+              ],
+              "correctIndex": 1,
+              "explanation": "Using today's constituent list to test a strategy across past years silently excludes any company that was delisted, went bankrupt, or was removed from the index during that period. Those excluded names are disproportionately the ones a naive reversion strategy would have lost badly on, exactly Chapter 8's Yes Bank and DHFL case study, which is why this specific setup is the classic fingerprint of survivorship bias."
+            },
+            {
+              "_key": "mr7l25-019",
+              "_type": "flashcardSet",
+              "title": "Backtesting Traps: Core Terms",
+              "cards": [
+                { "_key": "mr7l25-019f1", "term": "Look-ahead bias", "definition": "Using information in a backtest that would not actually have been available at the moment a trade was placed, most commonly filling at a price the signal itself was calculated from." },
+                { "_key": "mr7l25-019f2", "term": "Overfitting", "definition": "Tuning a strategy's parameters so precisely to one historical dataset that they capture random noise rather than a genuine, repeatable pattern, causing performance to collapse on new data." },
+                { "_key": "mr7l25-019f3", "term": "In-sample / out-of-sample testing", "definition": "Tuning a strategy's rules on one historical period (in-sample), then testing the unchanged rules on a separate, later period the tuning never saw (out-of-sample), to detect overfitting." },
+                { "_key": "mr7l25-019f4", "term": "Survivorship bias", "definition": "Testing a strategy only on securities that still exist today, silently excluding companies delisted, bankrupted, or merged away during the historical test period." },
+                { "_key": "mr7l25-019f5", "term": "Point-in-time universe", "definition": "The correct fix for survivorship bias: using the actual list of constituents as it stood on each historical date, including names later delisted or removed." }
+              ]
+            },
+            {
+              "_key": "mr7l25-020",
+              "_type": "keyTakeaways",
+              "points": [
+                "Look-ahead bias, filling a trade at a price not actually available at signal time, is fixed throughout this course by filling entries at the next trading day's open.",
+                "Overfitting happens when parameters are tuned so precisely to one historical dataset that they capture noise rather than a real pattern. Deliberately round, explainable parameters and out-of-sample testing are the defense.",
+                "A system with more filters, like Chapter 7's multi-signal strategy, has more parameters that could be overfit, not fewer, and deserves more scrutiny, not less, for that reason.",
+                "Survivorship bias comes from testing only on stocks that still exist today, silently excluding companies like Jet Airways and DHFL that were delisted during the test period, exactly the names a naive reversion strategy would have lost badly on.",
+                "The correct fix for survivorship bias, a point-in-time universe, is a genuine data challenge, but simply knowing to distrust a backtest that doesn't address it is a meaningful, free safeguard."
+              ]
+            },
+            {
+              "_key": "mr7l25-021",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice or a recommendation to buy, sell, or hold any security. All win rates, dates, and the accompanying code sample in this lesson use hypothetical, illustrative data and do not represent actual historical backtest results. References to Jet Airways and DHFL describe general, publicly reported historical events. Backtested performance, with or without these biases, does not guarantee future results. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

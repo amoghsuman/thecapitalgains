@@ -1,0 +1,238 @@
+{
+  "courseSlug": "understanding-order-book-dynamics-and-microstructure-alpha",
+  "chapters": [
+    {
+      "title": "Chapter 1: Foundations of the Limit Order Book",
+      "lessons": [
+        {
+          "title": "Reading Level 2 and Level 3 Market Depth in Practice (Kite, NSE Data Feeds)",
+          "slug": "reading-level-2-and-level-3-market-depth-in-practice-kite-nse-data-feeds",
+          "body": [
+            {
+              "_key": "obl4b01",
+              "_type": "bigIdea",
+              "text": "Everything in the last three lessons assumed you could actually see the order book. In practice, what you can see depends entirely on which data level you are paying for, or not paying for, and most retail tools stop well short of what real microstructure research needs."
+            },
+            {
+              "_key": "obl4b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obl4b02s1",
+                  "_type": "span",
+                  "text": "Level 1, Level 2, and Level 3: What Each Actually Shows",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obl4b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obl4b03s1",
+                  "_type": "span",
+                  "text": "Market data on Indian exchanges is sold and consumed in tiers, and the tier you have access to directly limits what kind of microstructure work you can actually do.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obl4b04",
+              "_type": "table",
+              "caption": "Market data tiers and where you typically access each on Indian markets",
+              "headers": ["Level", "What It Shows", "Typical Source in India"],
+              "rows": [
+                { "_key": "obl4b04r1", "_type": "tableRow", "cells": ["Level 1", "Last traded price, best bid and ask, day open/high/low, total volume", "Every retail broker app and website"] },
+                { "_key": "obl4b04r2", "_type": "tableRow", "cells": ["Level 2 (5-level depth)", "Top five bid and ask price levels, with aggregate quantity and order count at each level", "Kite's market depth window; Kite Connect's quote and depth API; NSE's Best 5 data"] },
+                { "_key": "obl4b04r3", "_type": "tableRow", "cells": ["Level 3 (tick-by-tick)", "Every individual order add, modify, and cancel event, enough to reconstruct the full book", "NSE Tick-by-Tick (TBT) feed, typically consumed via colocation or a licensed data vendor"] }
+              ]
+            },
+            {
+              "_key": "obl4b05",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obl4b05s1",
+                  "_type": "span",
+                  "text": "What Kite, or Any Indian Broker Terminal, Actually Gives You",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obl4b06",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obl4b06s1",
+                  "_type": "span",
+                  "text": "The market depth window in Zerodha's Kite, and the equivalent screen on most other Indian broker platforms, is Level 2 data: five price levels on each side of the book, each showing quantity and number of orders resting there, plus the total buy and sell quantity across all displayed levels. This is exactly the shape of the snapshot table used in the previous two lessons, and it is enough to compute a spread, a mid price, and a basic sense of how lopsided the book is between buyers and sellers. Kite Connect, the API version of the same platform, exposes this programmatically, which is how you turn manual reading of the depth window into code you can run repeatedly and backtest against.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obl4b07",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "from kiteconnect import KiteConnect\n\nkite = KiteConnect(api_key=\"your_api_key\")\nkite.set_access_token(\"your_access_token\")\n\nquote = kite.quote([\"NSE:RELIANCE\"])\ndepth = quote[\"NSE:RELIANCE\"][\"depth\"]\n\nbest_bid = depth[\"buy\"][0]\nbest_ask = depth[\"sell\"][0]\n\nprint(f\"Best bid: {best_bid['quantity']} @ {best_bid['price']}\")\nprint(f\"Best ask: {best_ask['quantity']} @ {best_ask['price']}\")\nprint(f\"Levels available: {len(depth['buy'])} bid, {len(depth['sell'])} ask\")\n# Levels available: 5 bid, 5 ask",
+              "caption": "Pulling five-level market depth for Reliance through Kite Connect's quote() call. depth['buy'] and depth['sell'] each return up to five price levels, the same shape as the snapshot tables in the previous two lessons."
+            },
+            {
+              "_key": "obl4b08",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [
+                {
+                  "_key": "obl4m01",
+                  "_type": "glossaryTerm",
+                  "definition": "A data feed that reports every individual order event, additions, modifications, and cancellations, as it happens on the exchange, rather than a periodic snapshot of the book's current state."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "obl4b08s1",
+                  "_type": "span",
+                  "text": "Level 3 and Tick-by-Tick: Where Real Microstructure Research Lives",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obl4b09",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obl4b09s1",
+                  "_type": "span",
+                  "text": "NSE's ",
+                  "marks": []
+                },
+                {
+                  "_key": "obl4b09s2",
+                  "_type": "span",
+                  "text": "tick-by-tick",
+                  "marks": ["obl4m01"]
+                },
+                {
+                  "_key": "obl4b09s3",
+                  "_type": "span",
+                  "text": " feed is a different product entirely from the five-level depth Kite shows you. Instead of a snapshot of where the book stands, it streams every single order event as it happens: every new order, every modification, every cancellation, every trade, each tagged with enough detail that a system consuming the full feed can reconstruct the exact order book, at every price level, at every instant, including where any individual order sits in the queue at its price. This is the data prop trading desks and market makers actually operate on, and it is typically consumed through exchange colocation, where a firm's own servers sit physically inside the exchange's data center to minimize the transmission delay of receiving and acting on this feed.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obl4b10",
+              "_type": "comparison",
+              "title": "Level 2 Depth vs Level 3 Tick-by-Tick",
+              "columns": [
+                {
+                  "_key": "obl4b10c1",
+                  "label": "Level 2 (5-Level Depth)",
+                  "points": [
+                    "Aggregated quantity per level, not individual orders",
+                    "Available through Kite Connect and most Indian broker APIs",
+                    "Enough to compute spread, mid price, and basic order book imbalance",
+                    "Cannot tell you your own queue position within a price level"
+                  ]
+                },
+                {
+                  "_key": "obl4b10c2",
+                  "label": "Level 3 (Tick-by-Tick)",
+                  "points": [
+                    "Every individual order and every add, modify, cancel event",
+                    "Requires a licensed NSE data feed, usually consumed via colocation",
+                    "Needed for true queue-position modeling and HFT-grade signals",
+                    "Full detail this course's Chapter 4 signals are designed to approximate without"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "obl4b11",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obl4b11s1",
+                  "_type": "span",
+                  "text": "Building Real Signals on What You Can Actually Get",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obl4b12",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obl4b12s1",
+                  "_type": "span",
+                  "text": "The honest starting point for a quant researcher or a prop trading applicant outside a firm with colocation access is Level 2 depth, polled or streamed through Kite Connect's WebSocket ticker in full mode, which pushes five-level depth updates in real time rather than requiring you to poll. This is a real constraint, not a workaround to be embarrassed about: order book imbalance, one of the signals built in Chapter 4, is computed entirely from aggregated depth at a handful of price levels, exactly what Level 2 provides. What Level 2 genuinely cannot give you is your own precise position in the queue at a price level, or the ability to distinguish one large order from several smaller ones stacked at the same price, both of which matter for the kind of latency-sensitive queue-position strategies covered conceptually in Chapter 4 but which this course does not attempt to build live, since that requires infrastructure and data licensing far beyond a laptop and a broker API.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obl4b13",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "NSE's tick-by-tick feed and colocation access involve separate exchange licensing, infrastructure, and cost, well outside what a Kite Connect subscription provides. This course builds and backtests signals on Level 2 depth data, which is genuinely useful and accessible, while being explicit about which strategies in this space actually require Level 3 infrastructure to run live."
+            },
+            {
+              "_key": "obl4b14",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Matching the Signal to the Data",
+              "question": "You want to build and backtest a short-horizon signal that predicts price direction using order book imbalance, computed from the aggregated quantity resting on the bid side versus the ask side across the top few price levels. Which data source is actually sufficient for this?",
+              "options": [
+                "Level 1 data alone, since it includes the best bid and ask",
+                "Level 2, five-level depth data, of the kind Kite Connect provides",
+                "Level 3 tick-by-tick data with full order-level detail and colocation",
+                "None of these, order book imbalance cannot be computed without colocation"
+              ],
+              "correctIndex": 1,
+              "explanation": "Order book imbalance, as built in Chapter 4, is a function of aggregated quantity across a handful of depth levels, exactly what Level 2 data supplies. Level 1 alone lacks the depth beyond the best bid and ask needed for a meaningful imbalance calculation, and Level 3 tick-by-tick data is more than the signal actually requires, it is needed for queue-position and order-level work, not for depth-aggregated signals like this one."
+            },
+            {
+              "_key": "obl4b15",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "The Queue-Position Question Level 2 Cannot Answer",
+              "scenario": "A prop trading applicant wants to estimate, before placing a limit order, roughly how many milliseconds it would take for that order to reach the front of the queue at a given price level, based on how many individual orders are already resting ahead of it. They currently only have access to Kite Connect's five-level depth data.",
+              "prompt": "Why is Level 2 depth data insufficient for this specific question, and what would actually be needed to answer it?",
+              "modelAnswer": "Level 2 depth only reports the aggregate quantity and, on some feeds, an order count at each price level, it does not report the individual size or arrival time of each resting order that make up that aggregate. Estimating time-to-front-of-queue requires knowing exactly how many orders are ahead, their individual sizes, and the rate at which orders ahead are being filled or cancelled, all of which is only visible in a tick-by-tick, Level 3 feed that reports every individual order event. This is precisely the kind of question that separates strategies buildable on a Kite Connect subscription from strategies that require exchange colocation and a licensed tick-by-tick data feed."
+            },
+            {
+              "_key": "obl4b16",
+              "_type": "keyTakeaways",
+              "points": [
+                "Level 1 gives last traded price and the best bid/ask only; Level 2 gives five-level aggregated depth; Level 3 tick-by-tick gives every individual order event",
+                "Kite's market depth window and Kite Connect's quote and depth API both expose Level 2 data, sufficient for spread, mid price, and depth-aggregated signals",
+                "Level 3 tick-by-tick data is typically consumed via NSE colocation and is what genuine queue-position and HFT-grade research actually runs on",
+                "Order book imbalance and the other Chapter 4 signals are deliberately built on Level 2 depth, which is realistic to access without institutional infrastructure",
+                "Level 2 data cannot tell you your own queue position at a price level or distinguish individual orders within an aggregated quantity figure",
+                "Being explicit about which data tier a strategy actually needs is itself a microstructure skill, since it determines whether a signal is realistically buildable on a retail setup or requires institutional-grade infrastructure"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

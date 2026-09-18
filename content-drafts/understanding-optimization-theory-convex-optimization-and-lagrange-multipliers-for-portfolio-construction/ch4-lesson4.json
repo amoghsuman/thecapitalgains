@@ -1,0 +1,236 @@
+{
+  "courseSlug": "understanding-optimization-theory-convex-optimization-and-lagrange-multipliers-for-portfolio-construction",
+  "chapters": [
+    {
+      "title": "Chapter 4: Lagrange Multipliers: Optimization Under Equality Constraints",
+      "lessons": [
+        {
+          "title": "Case Study: Deriving the Minimum Variance Portfolio Using Lagrange Multipliers",
+          "slug": "case-study-deriving-the-minimum-variance-portfolio-using-lagrange-multipliers",
+          "body": [
+            {
+              "_key": "oc4l4-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc4l4-001s1", "_type": "span", "marks": [], "text": "Every worked example so far in this chapter has quietly stuck to two assets, to keep the algebra visible. This case study turns the crank on three, using the exact closed-form matrix formula from the previous lesson, then asks the honest follow-up question: what happens when that formula's answer includes a number you are not actually allowed to use?" }
+              ]
+            },
+            {
+              "_key": "oc4l4-002",
+              "_type": "bigIdea",
+              "text": "The closed-form minimum variance formula does not care how many assets you feed it. It also does not know, or care, whether your mandate allows short-selling. Both of those facts matter for what this case study is about to show."
+            },
+            {
+              "_key": "oc4l4-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc4l4-003s1", "_type": "span", "marks": [], "text": "The Setup: Reliance, TCS, and HDFC Bank Together" }
+              ]
+            },
+            {
+              "_key": "oc4l4-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc4l4-004s1", "_type": "span", "marks": [], "text": "Reuse the exact three-stock covariance matrix from Chapter 1's case study, no target return this time, just the pure minimum variance problem, fully invested, shorting allowed for now." }
+              ]
+            },
+            {
+              "_key": "oc4l4-005",
+              "_type": "table",
+              "caption": "Covariance matrix, Reliance, TCS, HDFC Bank (from Chapter 1)",
+              "headers": ["", "Reliance", "TCS", "HDFC Bank"],
+              "rows": [
+                { "_key": "oc4l4-005r1", "_type": "tableRow", "cells": ["Reliance", "0.0784", "0.0168", "0.0255"] },
+                { "_key": "oc4l4-005r2", "_type": "tableRow", "cells": ["TCS", "0.0168", "0.0576", "0.0125"] },
+                { "_key": "oc4l4-005r3", "_type": "tableRow", "cells": ["HDFC Bank", "0.0255", "0.0125", "0.0676"] }
+              ]
+            },
+            {
+              "_key": "oc4l4-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc4l4-006s1", "_type": "span", "marks": [], "text": "Solving via the Closed-Form Matrix Formula" }
+              ]
+            },
+            {
+              "_key": "oc4l4-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc4l4-007s1", "_type": "span", "marks": [], "text": "Rather than compute the full inverse of Sigma, it is faster to solve Σx = 1 directly, a system of three linear equations, then normalize the result. That vector x is proportional to Σ⁻¹1." }
+              ]
+            },
+            {
+              "_key": "oc4l4-008",
+              "_type": "collapsible",
+              "title": "Show me the elimination steps",
+              "content": [
+                {
+                  "_key": "oc4l4-008a",
+                  "_type": "mathBlock",
+                  "latex": "0.0784x_1 + 0.0168x_2 + 0.0255x_3 = 1 \\\\ 0.0168x_1 + 0.0576x_2 + 0.0125x_3 = 1 \\\\ 0.0255x_1 + 0.0125x_2 + 0.0676x_3 = 1",
+                  "caption": "The system to solve: Σx = 1."
+                },
+                {
+                  "_key": "oc4l4-008b",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    { "_key": "oc4l4-008bs1", "_type": "span", "marks": [], "text": "Eliminate x1 from equations 2 and 3 using equation 1, then eliminate x2 from the resulting equation 3 using the resulting equation 2, standard Gaussian elimination." }
+                  ]
+                },
+                {
+                  "_key": "oc4l4-008c",
+                  "_type": "mathBlock",
+                  "latex": "0.0540x_2 + 0.007036x_3 = 0.785714 \\\\ 0.007036x_2 + 0.059306x_3 = 0.674745",
+                  "caption": "After eliminating x1."
+                },
+                {
+                  "_key": "oc4l4-008d",
+                  "_type": "mathBlock",
+                  "latex": "0.058389x_3 = 0.572374 \\quad \\Rightarrow \\quad x_3 \\approx 9.803",
+                  "caption": "After eliminating x2 from the second equation above."
+                },
+                {
+                  "_key": "oc4l4-008e",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    { "_key": "oc4l4-008es1", "_type": "span", "marks": [], "text": "Back-substituting x3 into the two-variable equation gives x2, and back-substituting both into the original first equation gives x1." }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "oc4l4-009",
+              "_type": "mathBlock",
+              "latex": "\\Sigma^{-1}\\mathbf{1} \\approx \\begin{bmatrix} 6.724 \\\\ 13.273 \\\\ 9.803 \\end{bmatrix}, \\qquad \\mathbf{1}^T\\Sigma^{-1}\\mathbf{1} \\approx 29.800",
+              "caption": "The solved vector, and its sum."
+            },
+            {
+              "_key": "oc4l4-010",
+              "_type": "mathBlock",
+              "latex": "\\mathbf{w}^* = \\frac{1}{29.800}\\begin{bmatrix} 6.724 \\\\ 13.273 \\\\ 9.803 \\end{bmatrix} \\approx \\begin{bmatrix} 0.2256 \\\\ 0.4454 \\\\ 0.3290 \\end{bmatrix}",
+              "caption": "The closed-form minimum variance portfolio for all three stocks at once."
+            },
+            {
+              "_key": "oc4l4-011",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "oc4l4-011s1", "label": "Reliance", "value": "22.56%", "context": "w1*" },
+                { "_key": "oc4l4-011s2", "label": "TCS", "value": "44.54%", "context": "w2*, the largest weight" },
+                { "_key": "oc4l4-011s3", "label": "HDFC Bank", "value": "32.90%", "context": "w3*" }
+              ]
+            },
+            {
+              "_key": "oc4l4-012",
+              "_type": "callout",
+              "type": "insight",
+              "text": "TCS gets nearly half the portfolio, and it is not an accident. Look back at the covariance matrix: TCS has both the lowest individual variance (0.0576) of the three, and the lowest covariance with each of the other two (0.0168 with Reliance, 0.0125 with HDFC Bank). It is the least risky stock on its own, and the one that shares the least risk with its neighbors, exactly the combination this course's very first chapters said would earn the largest allocation in a risk-minimizing portfolio."
+            },
+            {
+              "_key": "oc4l4-013",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc4l4-013s1", "_type": "span", "marks": [], "text": "When the Formula Wants to Short Something" }
+              ]
+            },
+            {
+              "_key": "oc4l4-014",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc4l4-014s1", "_type": "span", "marks": [], "text": "The three-stock example above happened to come out fully long-only on its own. That is not guaranteed. Take a constructed two-stock example: Stock X has 40% volatility, Stock Y has 20% volatility, and the two are correlated at 0.9, high enough that they behave almost like the same underlying risk at different intensities." }
+              ]
+            },
+            {
+              "_key": "oc4l4-015",
+              "_type": "mathBlock",
+              "latex": "\\sigma_X^2 = 0.16, \\quad \\sigma_Y^2 = 0.04, \\quad \\sigma_{XY} = (0.9)(0.4)(0.2) = 0.072",
+              "caption": "Inputs for the constructed example."
+            },
+            {
+              "_key": "oc4l4-016",
+              "_type": "mathBlock",
+              "latex": "w_X^* = \\frac{\\sigma_Y^2 - \\sigma_{XY}}{\\sigma_X^2 + \\sigma_Y^2 - 2\\sigma_{XY}} = \\frac{0.04 - 0.072}{0.16 + 0.04 - 0.144} = \\frac{-0.032}{0.056} \\approx -0.5714",
+              "caption": "The unconstrained minimum variance weight on Stock X is negative: about -57%. Stock Y's weight is then 1.5714, about 157%."
+            },
+            {
+              "_key": "oc4l4-017",
+              "_type": "callout",
+              "type": "warning",
+              "text": "This is not a computation error. Shorting the more volatile, highly correlated stock and using the proceeds to lever up the calmer one genuinely minimizes variance here, it is a hedge, not a mistake. But if your actual mandate forbids short-selling, this answer is unusable exactly as computed. Pure Lagrange multipliers solve the equality-constrained problem correctly and completely. They have no mechanism at all for a rule like wi ≥ 0, because that rule is an inequality, not an equality. This is precisely the gap Chapter 5's KKT conditions are built to close."
+            },
+            {
+              "_key": "oc4l4-018",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Predict the sign",
+              "question": "Stock X has volatility 35%, Stock Y has volatility 15%, and their correlation is 0.85. Without fully solving, would you expect the unconstrained minimum variance portfolio to require a negative (short) weight on Stock X?",
+              "options": [
+                "No, minimum variance portfolios never short anything",
+                "Yes, because correlation (0.85) exceeds the ratio of the lower volatility to the higher volatility (0.15/0.35 ≈ 0.43), the condition under which the formula shorts the more volatile asset",
+                "No, because both individual variances are positive",
+                "Yes, but only because Stock X's variance happens to be larger, regardless of correlation"
+              ],
+              "correctIndex": 1,
+              "explanation": "The two-asset formula shorts the higher-volatility asset exactly when correlation exceeds the ratio of the lower volatility to the higher volatility, here 0.15/0.35 ≈ 0.43. Since 0.85 comfortably exceeds that threshold, the unconstrained minimum variance solution shorts Stock X to hedge out the risk the two highly correlated stocks share, then goes correspondingly overweight Stock Y."
+            },
+            {
+              "_key": "oc4l4-019",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "A mandate collides with the math",
+              "scenario": "You run the closed-form minimum variance formula on a 4-stock portfolio and get weights (0.35, -0.12, 0.48, 0.29). Your mandate explicitly prohibits short-selling.",
+              "prompt": "What does this result tell you, and what should you do next given the tools this course has built so far?",
+              "modelAnswer": "The -0.12 weight on the second stock means the unconstrained solution wants to short that stock to hedge out risk it shares with the others, but the mandate does not allow that. Pure Lagrange multipliers only handle equality constraints and have no mechanism to enforce a no-short-selling rule, so this result, while mathematically optimal for the equality-only version of the problem, is not usable for the actual, more restrictive mandate. The next step is the extended method, KKT conditions, covered starting in Chapter 5, which can incorporate wi ≥ 0 directly and will produce a different, fully long, portfolio that is optimal subject to that additional rule."
+            },
+            {
+              "_key": "oc4l4-020",
+              "_type": "flashcardSet",
+              "title": "Applying the Closed-Form Formula: Core Terms",
+              "cards": [
+                { "_key": "oc4l4-020f1", "term": "Solving Σx = 1 directly", "definition": "A faster route to Σ⁻¹1 than computing the full matrix inverse, since only that one vector is actually needed for the minimum variance formula." },
+                { "_key": "oc4l4-020f2", "term": "Unconstrained minimum variance portfolio", "definition": "The solution to w* = Σ⁻¹1 / (1ᵀΣ⁻¹1), which may include negative (short) weights if that genuinely minimizes variance." },
+                { "_key": "oc4l4-020f3", "term": "Hedge-driven short position", "definition": "A negative weight that arises because shorting a highly correlated, more volatile asset reduces portfolio variance, a real economic effect, not a computational error." },
+                { "_key": "oc4l4-020f4", "term": "The equality-constraint gap", "definition": "Pure Lagrange multipliers cannot enforce inequality constraints like no short-selling, since those rules are not equalities. Closed by KKT conditions, starting in Chapter 5." }
+              ]
+            },
+            {
+              "_key": "oc4l4-021",
+              "_type": "keyTakeaways",
+              "points": [
+                "The closed-form formula, w* = Σ⁻¹1 / (1ᵀΣ⁻¹1), scales cleanly to any number of assets. For Reliance, TCS, and HDFC Bank, it gives roughly 22.56%, 44.54%, and 32.90%.",
+                "TCS earns the largest weight because it has both the lowest individual variance and the lowest covariances with the other two stocks, the same diversification logic from Chapter 1, now expressed through the formula itself.",
+                "The unconstrained solution can include negative weights when two assets are highly correlated and one is notably more volatile than the other, a genuine variance-reducing hedge, not an error.",
+                "Pure Lagrange multipliers have no way to enforce inequality constraints like no-short-selling, because those rules are inequalities, not equalities.",
+                "When a computed weight violates a real mandate, the next step is KKT conditions, starting in Chapter 5, which extend this exact machinery to handle inequality constraints directly.",
+                "The next lesson in this chapter tackles the two-constraint case, a target return alongside the budget rule, the setup needed to trace the full efficient frontier."
+              ]
+            },
+            {
+              "_key": "oc4l4-022",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to buy or sell any security named here. Short-selling carries substantial additional risk, including potentially unlimited loss, and is subject to regulatory and brokerage restrictions in India. Covariance figures used are illustrative, not live or historical market data. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

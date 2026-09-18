@@ -1,0 +1,279 @@
+{
+  "courseSlug": "understanding-order-book-dynamics-and-microstructure-alpha",
+  "chapters": [
+    {
+      "title": "Chapter 3: Order Flow and Price Impact",
+      "lessons": [
+        {
+          "title": "Kyle's Lambda and Measuring the Price Impact of Informed Trading",
+          "slug": "kyles-lambda-and-measuring-the-price-impact-of-informed-trading",
+          "body": [
+            {
+              "_key": "obc3l3b01",
+              "_type": "bigIdea",
+              "text": "Kyle's lambda puts an actual number on how much price should move for every unit of net order flow that hits a stock, turning the vague sense that a stock is illiquid into a coefficient you can estimate, compare across stocks, and use directly in execution planning."
+            },
+            {
+              "_key": "obc3l3b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obc3l3b02s1",
+                  "_type": "span",
+                  "text": "Kyle (1985): A Market Maker Who Cannot Tell Informed From Noise",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obc3l3b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obc3l3b03s1",
+                  "_type": "span",
+                  "text": "Kyle's 1985 model builds on the same core problem as Glosten and Milgrom's framework from Chapter 2, a market maker who cannot tell which orders are informed, but asks a different question. Instead of setting a bid-ask spread, Kyle's market maker sets a single price as a linear function of the total net order flow it observes, aggregated across every participant, informed and uninformed together, since it can only see the combined total, never any individual trader's identity or motive. The steeper that linear relationship, the more the market maker is protecting itself against the possibility that a large share of the flow it just saw is informed.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obc3l3b04",
+              "_type": "mathBlock",
+              "latex": "\\Delta P_t = \\lambda Q_t + \\varepsilon_t",
+              "caption": "The empirical form of Kyle's pricing rule. Q_t is net signed order flow over a period, built using the trade classification tools from the previous lesson or the order flow imbalance from two lessons ago. Lambda, Kyle's lambda, is the price impact coefficient: rupees of price movement per unit of net order flow."
+            },
+            {
+              "_key": "obc3l3b05",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [
+                {
+                  "_key": "obc3l3m01",
+                  "_type": "glossaryTerm",
+                  "definition": "The slope coefficient linking net signed order flow to the resulting price change. A high lambda means a given amount of net buying or selling moves price a lot; a low lambda means deep, competitive liquidity absorbs the same flow with little price reaction."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "obc3l3b05s1",
+                  "_type": "span",
+                  "text": "What Lambda Actually Measures",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obc3l3b06",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obc3l3b06s1",
+                  "_type": "span",
+                  "text": "A high ",
+                  "marks": []
+                },
+                {
+                  "_key": "obc3l3b06s2",
+                  "_type": "span",
+                  "text": "lambda",
+                  "marks": ["obc3l3m01"]
+                },
+                {
+                  "_key": "obc3l3b06s3",
+                  "_type": "span",
+                  "text": " means a given amount of net buying or selling moves price a lot, exactly what you would expect if the market maker believes a large share of order flow in that stock tends to be informed, or simply if there is not enough competing liquidity, Chapter 2's voluntary liquidity providers, to absorb volume without moving price. A low lambda means the opposite: deep, competitive liquidity absorbs substantial order flow with barely any price reaction. Lambda is really the same adverse selection risk from Chapter 2's spread decomposition, expressed not as a spread in rupees but as a slope, a rate of price change per unit of flow, which makes it directly comparable across stocks of very different price levels and typical trade sizes in a way a raw spread in rupees is not.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obc3l3b07",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obc3l3b07s1",
+                  "_type": "span",
+                  "text": "Estimating Lambda From Data",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obc3l3b08",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obc3l3b08s1",
+                  "_type": "span",
+                  "text": "In practice, lambda is estimated by regressing price changes on contemporaneous signed order flow across many short time buckets, and the slope of that regression line is the estimate. That slope comes from the same covariance-over-variance identity behind any ordinary least squares regression.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obc3l3b09",
+              "_type": "mathBlock",
+              "latex": "\\lambda = \\frac{\\text{Cov}(\\Delta P_t, Q_t)}{\\text{Var}(Q_t)}",
+              "caption": "Kyle's lambda as an OLS regression slope: the covariance between price changes and net signed order flow, divided by the variance of that order flow, across a sample of time buckets."
+            },
+            {
+              "_key": "obc3l3b10",
+              "_type": "table",
+              "caption": "Five illustrative buckets of net signed order flow and the resulting price change",
+              "headers": ["Bucket", "Net Signed Order Flow Q ('000 shares)", "Price Change ΔP (₹)"],
+              "rows": [
+                { "_key": "obc3l3b10r1", "_type": "tableRow", "cells": ["1", "-2", "-0.10"] },
+                { "_key": "obc3l3b10r2", "_type": "tableRow", "cells": ["2", "-1", "-0.05"] },
+                { "_key": "obc3l3b10r3", "_type": "tableRow", "cells": ["3", "0", "0.00"] },
+                { "_key": "obc3l3b10r4", "_type": "tableRow", "cells": ["4", "1", "0.05"] },
+                { "_key": "obc3l3b10r5", "_type": "tableRow", "cells": ["5", "2", "0.10"] }
+              ]
+            },
+            {
+              "_key": "obc3l3b11",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "def kyle_lambda(order_flow, price_changes):\n    n = len(order_flow)\n    q_mean = sum(order_flow) / n\n    p_mean = sum(price_changes) / n\n    cov = sum((q - q_mean) * (p - p_mean) for q, p in zip(order_flow, price_changes)) / n\n    var = sum((q - q_mean) ** 2 for q in order_flow) / n\n    return cov / var\n\norder_flow = [-2, -1, 0, 1, 2]                     # net signed order flow, '000 shares\nprice_changes = [-0.10, -0.05, 0.00, 0.05, 0.10]   # rupees\n\nlam = kyle_lambda(order_flow, price_changes)\nprint(f\"Kyle's lambda: {lam:.4f}\")\n# Kyle's lambda: 0.0500",
+              "caption": "Computing lambda from the table above via the covariance-over-variance identity. This stock's price moves exactly one tick, ₹0.05, for every 1,000 shares of net signed order flow."
+            },
+            {
+              "_key": "obc3l3b12",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obc3l3b12s1",
+                  "_type": "span",
+                  "text": "Comparing Lambda Across Liquid and Illiquid Stocks",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obc3l3b13",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obc3l3b13s1",
+                  "_type": "span",
+                  "text": "Revisit Stock L and Stock S from Chapter 2's liquidity case study, using illustrative lambda values consistent with that lesson's spread and depth figures.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obc3l3b14",
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "obc3l3b14st1",
+                  "label": "Illustrative λ, Stock L (Liquid Large Cap)",
+                  "value": "₹0.05 per 1,000 shares",
+                  "context": "Roughly one tick of price impact per 1,000 shares of net signed order flow"
+                },
+                {
+                  "_key": "obc3l3b14st2",
+                  "label": "Illustrative λ, Stock S (Illiquid Small Cap)",
+                  "value": "₹1.25 per 1,000 shares",
+                  "context": "25 times Stock L's impact for the same net order flow, in line with Chapter 2's case study"
+                },
+                {
+                  "_key": "obc3l3b14st3",
+                  "label": "Order Flow Needed to Move Stock S One Tick",
+                  "value": "~40 shares",
+                  "context": "Compared to roughly 1,000 shares of net flow needed to move Stock L by the same one tick"
+                }
+              ]
+            },
+            {
+              "_key": "obc3l3b15",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obc3l3b15s1",
+                  "_type": "span",
+                  "text": "Using Lambda for Execution Planning",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obc3l3b16",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obc3l3b16s1",
+                  "_type": "span",
+                  "text": "This is exactly the number Chapter 1's opening trader, the one whose correct fundamental call still lost money to execution, would have wanted before clicking buy. Knowing a stock's approximate lambda from recent history lets you estimate the expected price impact of an order before sending it, simply by multiplying lambda by the order's net signed size. It will not predict the exact fill price, real execution still depends on the specific shape of the book at that instant, but it gives a first-pass estimate of how much a large order alone is likely to move price, independent of the spread itself, which is often the single most useful number for deciding whether to split an order or trade it in one shot.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obc3l3b17",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Kyle's lambda and the adverse selection component of the bid-ask spread are two different windows onto the same underlying risk. The spread prices that risk into a single static number quoted before any trade happens; lambda measures how that same risk actually plays out, rupee by rupee, as real order flow arrives."
+            },
+            {
+              "_key": "obc3l3b18",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Estimating Expected Price Impact",
+              "prompt": "A stock's estimated Kyle's lambda is ₹0.08 per 1,000 shares of net signed order flow. What is the expected price impact, in rupees, of a net buy order flow of 25,000 shares?",
+              "correctValue": 2,
+              "tolerance": 0.05,
+              "unit": "₹",
+              "explanation": "Expected impact = λ × Q = ₹0.08 per 1,000 shares × 25 (thousands of shares) = ₹2.00. This is a first-pass estimate of how much the order alone is likely to move price, before accounting for the specific shape of the book at the moment the order is sent."
+            },
+            {
+              "_key": "obc3l3b19",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Reading Two Very Different Lambdas",
+              "question": "Stock A shows an estimated Kyle's lambda of ₹0.03 per 1,000 shares of net order flow. Stock B shows ₹0.90 per 1,000 shares. What does this most directly imply about Stock B relative to Stock A?",
+              "options": [
+                "Stock B has a smaller tick size, which mechanically inflates its lambda",
+                "The same amount of net order flow produces a much larger price move in Stock B, consistent with Stock B being far less liquid",
+                "Stock B simply has more total trading volume than Stock A",
+                "Lambda measures trading volume directly, so Stock B trades 30 times more shares per day than Stock A"
+              ],
+              "correctIndex": 1,
+              "explanation": "Lambda is a price-impact-per-unit-of-flow coefficient, not a volume or tick size measure. A lambda thirty times larger means the identical net order flow moves Stock B's price about thirty times as much as it moves Stock A's, which is the direct, quantified signature of Stock B having far less liquidity able to absorb that flow without a price reaction."
+            },
+            {
+              "_key": "obc3l3b20",
+              "_type": "keyTakeaways",
+              "points": [
+                "Kyle's 1985 model has a market maker set price as a linear function of total observed net order flow, unable to distinguish informed from uninformed participants within it",
+                "Lambda is the slope of that relationship: rupees of price change per unit of net signed order flow",
+                "Lambda is estimated in practice as an OLS regression slope, equal to the covariance of price changes and order flow divided by the variance of order flow",
+                "A high lambda signals thin liquidity or a high perceived share of informed trading; a low lambda signals deep, competitive liquidity absorbing flow with little price reaction",
+                "Lambda and the bid-ask spread's adverse selection component measure the same underlying risk from two different angles, one static and quoted, one dynamic and realized",
+                "Multiplying an estimated lambda by a planned order's net signed size gives a fast, practical first-pass estimate of expected price impact before the order is ever sent"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,204 @@
+{
+  "courseSlug": "understanding-numerical-methods-in-quantitative-finance-binomial-trees-and-finite-difference-methods",
+  "chapters": [
+    {
+      "title": "Chapter 3: American Options, Convergence, and Tree Limitations",
+      "lessons": [
+        {
+          "title": "Where Trees Break Down: Oscillation, Speed, and Path-Dependent Payoffs",
+          "slug": "where-trees-break-down-oscillation-speed-and-path-dependent-payoffs",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "o1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "o1s1", "text": "Chapters 2 and 3 built a genuinely capable tool: calibrated from real volatility, provably arbitrage-free, handles American exercise natively, and hands back three Greeks almost for free. This closing lesson is the honest accounting of where that tool stops being the right one to reach for, three separate limitations, each real, each the actual reason Chapter 4 exists.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "o2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "o2s1", "text": "Oscillation Is Not Just a Curiosity", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "o3",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "o3s1", "text": "Lesson 3 showed price oscillating above and below the true value at low N before settling down. Gamma, built from a difference of differences, oscillates harder and settles more slowly, on the exact same Nifty call used throughout this chapter.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "o4",
+              "caption": "Gamma across step counts, same option throughout",
+              "headers": ["N", "Price", "Gamma"],
+              "rows": [
+                { "cells": ["4", "₹835.01", "0.000292"] },
+                { "cells": ["5", "₹906.96", "0.000245"] },
+                { "cells": ["6", "₹848.23", "0.000267"] },
+                { "cells": ["7", "₹898.04", "0.000241"] },
+                { "cells": ["8", "₹855.01", "0.000256"] },
+                { "cells": ["9", "₹893.09", "0.000238"] },
+                { "cells": ["10", "₹859.12", "0.000250"] },
+                { "cells": ["100", "₹874.23", "0.000231"] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "o5",
+              "type": "warning",
+              "text": "By N = 100 the price already sits within a rupee and a half of the true Black-Scholes value, comfortably converged for most purposes. Gamma at that same N is still visibly settling. A risk desk trusting a single step count's Gamma without checking it against a neighbouring N is trusting a number that may still be more sensitive to N than the price it was computed alongside."
+            },
+            {
+              "_type": "block",
+              "_key": "o6",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "o6s1", "text": "The Computational Cost Actually Scales Quadratically", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "o7",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "o7s1", "text": "Chapter 2, Lesson 3 celebrated recombination for cutting terminal nodes from 2 to the power N down to N plus 1. That is true, but it is only the last level. Full backward induction touches every node at every level on the way back to the root, not just the terminal ones, and that total comes to roughly N times N plus 1, divided by 2.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "o8",
+              "caption": "Total nodes touched across the whole backward induction, not just terminal nodes",
+              "headers": ["N", "Total Nodes Touched"],
+              "rows": [
+                { "cells": ["10", "66"] },
+                { "cells": ["100", "5,151"] },
+                { "cells": ["1,000", "501,501"] },
+                { "cells": ["10,000", "50,015,001"] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "o9",
+              "type": "insight",
+              "text": "Multiplying N by 10 multiplies the total work by roughly 100, not 10, quadratic growth, not linear. Lesson 3's rule of thumb, doubling N roughly halves the error, still holds, but it comes at a computational cost that itself grows the whole time. Getting a tenth of the current error is not a ten-times-the-work decision, it is closer to a hundred-times-the-work one. Chapter 1's live-quoting-versus-overnight-report trade-off was never just about accuracy, it was always this cost curve underneath it."
+            },
+            {
+              "_type": "block",
+              "_key": "o10",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "o10s1", "text": "Chapter 1, Lesson 5 already flagged the other side of this, adding underlying assets makes a tree's node count explode combinatorially, not just its step count. Both costs are real, and both point in the same direction, trees are cheap for a single underlying at a moderate N, and stop being cheap fast once either dimension grows.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "o11",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "o11s1", "text": "Path-Dependent Payoffs: What Recombination Actually Throws Away", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "o12",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "o12s1", "text": "Recombination's entire efficiency gain, Chapter 2, Lesson 3's central insight, comes from treating an up-then-down path and a down-then-up path as the same node, because they land on the same stock price. For a standard payoff, one that only cares about the price at that node, that merge costs nothing, the two paths really were equivalent for pricing purposes. For a payoff that depends on the path itself, an Asian option's average price so far, or whether a barrier was touched along the way, those two paths are not equivalent at all, they carry different histories, and the tree has already discarded the difference by the time it matters.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "o13",
+              "type": "warning",
+              "text": "Trees can be adapted for this, augmenting each node with extra state, a running average bucket, a barrier-touched flag, but doing so gives back much of the efficiency recombination bought in the first place, and the bookkeeping grows quickly. That refinement sits outside this course's scope. It is exactly why Chapter 1, Lesson 5 pointed path-dependent and multi-asset payoffs toward Monte Carlo, where every simulated path already carries its own full history with no merging at all."
+            },
+            {
+              "_type": "block",
+              "_key": "o14",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "o14s1", "text": "What Chapter 4 Actually Fixes, and What It Doesn't", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "o15",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "o15s1", "text": "Finite difference methods are not the fix for path dependency or multiple underlyings, a price grid loses path history exactly the way a tree does, and a grid for several assets grows combinatorially just as badly. What changes in Chapter 4 is the numerical behaviour: a different discretization of the same underlying PDE, with its own convergence profile, and one grid solve returning prices across a whole range of spot values at once, rather than one path at a time. Chapter 4 also introduces its own failure mode, instability, a different problem from a tree's oscillation, and just as real.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "o16",
+              "caption": "A reality check against Chapter 1's method map",
+              "headers": ["Limitation", "Binomial Tree", "Finite Difference (Chapter 4)", "Monte Carlo"],
+              "rows": [
+                { "cells": ["Low-N oscillation / stability", "Present, as shown above", "A different failure mode, covered next chapter", "Not applicable, converges smoothly with more paths"] },
+                { "cells": ["Cost growth with precision", "Quadratic in steps", "Similarly grows with grid resolution", "Grows with the number of simulated paths, slower per unit of precision"] },
+                { "cells": ["Path-dependent payoffs", "Breaks, history is discarded on recombination", "Breaks the same way, a grid loses history too", "Natural fit, each path keeps its own history"] },
+                { "cells": ["American exercise", "Natural, checked at every node", "Natural, checked at every grid point", "Needs extra machinery, Longstaff-Schwartz"] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "o17",
+              "variant": "quiz",
+              "title": "Quick Check",
+              "question": "Why does a standard recombining binomial tree fail to correctly price an Asian option, whose payoff depends on the average stock price over its whole life?",
+              "options": [
+                "Because trees cannot handle options with more than one strike price",
+                "Because recombination merges paths with different histories into a single node once they reach the same stock price, discarding the running average each path actually had",
+                "Because Asian options can only be priced with continuous compounding",
+                "Because the risk-neutral probability p is undefined for path-dependent payoffs"
+              ],
+              "correctIndex": 1,
+              "explanation": "Recombination is what makes a tree cheap: an up-then-down path and a down-then-up path collapse into one node because they reach the same price. For a plain payoff that only depends on that final price, nothing is lost. An Asian option's payoff depends on the average price along the path, which differs between those two merged paths, so the single node they've been collapsed into can no longer carry the one number the payoff formula actually needs."
+            },
+            {
+              "_type": "exercise",
+              "_key": "o18",
+              "variant": "scenario",
+              "title": "A Junior Quant's Shortcut",
+              "scenario": "A junior quant wants to price a 3-month Asian call on Nifty, averaging the index level over the option's life, and proposes reusing Chapter 2, Lesson 5's exact six-step tree unchanged, just replacing the terminal payoff formula, max(final price minus strike, 0), with one based on the average of the six step-by-step prices along the path instead.",
+              "prompt": "Will this work? What specifically goes wrong at the terminal nodes?",
+              "modelAnswer": "It will not work as described. Chapter 2, Lesson 5's terminal nodes are indexed only by j, the number of up-moves out of six steps, because every path with the same j lands on the identical final price and was deliberately merged there by recombination. Multiple distinct paths share each terminal node, uu-du-dd style orderings differ, and those different orderings produce different running averages even while landing on the same final price. The tree, as built, has no way to know which specific path's average to use at a merged node, because it never kept that information in the first place. Correctly pricing this Asian option needs either an augmented tree that tracks the running average as extra state per node, at a real cost to the efficiency recombination bought, or a different method entirely, Monte Carlo being the natural one from Chapter 1's map."
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "o19",
+              "text": "A binomial tree's efficiency and its blind spots come from the exact same source, recombination. It is what turns an impossible 2 to the power N into a tractable N plus 1, and it is exactly what makes path-dependent payoffs unpriceable on a standard tree, because both effects are the same act, merging paths that share a current price and discarding whatever made them different."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "o20",
+              "points": [
+                "Gamma, and Greeks generally, oscillate more and converge more slowly with N than price does, verified directly on this chapter's own Nifty call, a real practical risk when reading Greeks off a single, unchecked step count.",
+                "Full backward induction touches roughly N times N plus 1 over 2 nodes, not just N plus 1 terminal ones, so computational cost grows quadratically with steps, not linearly.",
+                "Recombination merges paths with different histories into one node whenever they reach the same price, which is exactly why standard trees cannot correctly price path-dependent payoffs like Asian or barrier options without significant, efficiency-costing modification.",
+                "Finite difference methods, built in Chapter 4, do not fix path dependency or multi-asset dimensionality, both problems come from the same history-discarding, combinatorially-growing structure a grid shares with a tree.",
+                "What Chapter 4 changes is the numerical behaviour of the approximation itself, a different convergence and stability profile, and the ability to solve for a whole range of spot prices in a single pass, real advantages, just not a fix for these three limitations."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

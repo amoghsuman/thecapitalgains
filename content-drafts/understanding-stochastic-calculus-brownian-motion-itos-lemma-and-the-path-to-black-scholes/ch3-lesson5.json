@@ -1,0 +1,270 @@
+{
+  "courseSlug": "understanding-stochastic-calculus-brownian-motion-itos-lemma-and-the-path-to-black-scholes",
+  "chapters": [
+    {
+      "title": "Chapter 3: The Path to Black-Scholes",
+      "lessons": [
+        {
+          "title": "Risk-Neutral Pricing Through the Stochastic Calculus Lens",
+          "slug": "risk-neutral-pricing-through-the-stochastic-calculus-lens",
+          "body": [
+            {
+              "_key": "c3l5-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l5-001s1", "_type": "span", "marks": [], "text": "\"One last question,\" the interviewer says. \"You replaced μ with r and got the right answer. Why does that actually work, mathematically, not just as a trick that happens to match the PDE?\" This is the loose end the last two lessons deliberately left dangling. Its answer, a genuine change of the underlying probability measure, is the final tool this course builds, and it uses every major result from the previous fourteen lessons at once." }
+              ]
+            },
+            {
+              "_key": "c3l5-002",
+              "_type": "bigIdea",
+              "text": "Girsanov's theorem allows a genuine, rigorous change of probability measure that turns a Wiener process with drift into a driftless one. Applied to the stock's SDE, it turns real-world GBM with drift μ into risk-neutral GBM with drift r, under a new, equally valid measure Q. Under Q, the discounted stock price has exactly zero drift, a property called being a martingale, and that property is precisely why discounting an expected payoff under Q gives an arbitrage-free price."
+            },
+            {
+              "_key": "c3l5-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l5-003s1", "_type": "span", "marks": [], "text": "Girsanov's Theorem: Changing the Probability Measure" }
+              ]
+            },
+            {
+              "_key": "c3l5-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "c3l5-004m1", "_type": "glossaryTerm", "definition": "A well-defined way of assigning probabilities to outcomes. Two different measures can both be mathematically valid at once, agreeing on which outcomes are possible while disagreeing on their exact probabilities." }
+              ],
+              "children": [
+                { "_key": "c3l5-004s1", "_type": "span", "marks": [], "text": "Girsanov's theorem states that shifting a Wiener process by a constant times time produces another Wiener process, valid under a different, but equally legitimate, probability " },
+                { "_key": "c3l5-004s2", "_type": "span", "marks": ["c3l5-004m1"], "text": "measure" },
+                { "_key": "c3l5-004s3", "_type": "span", "marks": [], "text": ". Concretely, if W(t) is a Wiener process under the real-world measure P, then W̃(t) = W(t) + θt is itself a driftless Wiener process, but under a new measure Q, related to P by a specific, well-defined change of probabilities (a Radon-Nikodym derivative, a technical construction this course does not build from scratch). The constant θ is called the market price of risk." }
+              ]
+            },
+            {
+              "_key": "c3l5-005",
+              "_type": "mathBlock",
+              "latex": "\\theta = \\frac{\\mu - r}{\\sigma}, \\qquad \\tilde{W}(t) = W(t) + \\theta t \\ \\text{ is a Wiener process under a new measure } Q",
+              "caption": "The market price of risk, and the Girsanov shift"
+            },
+            {
+              "_key": "c3l5-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l5-006s1", "_type": "span", "marks": [], "text": "Transforming the Stock's SDE Under the New Measure" }
+              ]
+            },
+            {
+              "_key": "c3l5-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l5-007s1", "_type": "span", "marks": [], "text": "Rearranging W̃ = W + θt gives dW = dW̃ - θ dt. Substitute this directly into the stock's original SDE, dS = μS dt + σS dW, and watch what happens to the drift." }
+              ]
+            },
+            {
+              "_key": "c3l5-008",
+              "_type": "mathBlock",
+              "latex": "dS = \\mu S\\, dt + \\sigma S(d\\tilde W - \\theta\\, dt) = (\\mu - \\sigma\\theta) S\\, dt + \\sigma S\\, d\\tilde W",
+              "caption": "Substituting the Girsanov shift into the stock's SDE"
+            },
+            {
+              "_key": "c3l5-009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l5-009s1", "_type": "span", "marks": [], "text": "Plug in θ = (μ-r)/σ: the drift becomes μ - σ·(μ-r)/σ = μ - (μ-r) = r, exactly. This is not a coincidence or a convenient approximation, it is the specific value of θ that Girsanov's theorem requires to make this cancellation exact." }
+              ]
+            },
+            {
+              "_key": "c3l5-010",
+              "_type": "mathBlock",
+              "latex": "dS = r S\\, dt + \\sigma S\\, d\\tilde{W} \\qquad \\text{(risk-neutral GBM, under measure } Q\\text{)}",
+              "caption": "Under Q, the stock genuinely follows GBM with drift r, not an approximation"
+            },
+            {
+              "_key": "c3l5-011",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This is the rigorous version of the substitution the previous lesson used without proof. There really is a valid probability measure, Q, under which the stock's true dynamics have drift r. Lesson 4's Feynman-Kac shortcut was not a computational trick riding on a coincidence; it was correctly identifying which measure's expectation the PDE corresponds to."
+            },
+            {
+              "_key": "c3l5-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l5-012s1", "_type": "span", "marks": [], "text": "The Defining Property: Discounted Prices Are Martingales Under Q" }
+              ]
+            },
+            {
+              "_key": "c3l5-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "c3l5-013m1", "_type": "glossaryTerm", "definition": "A stochastic process whose expected future value, given everything known today, always equals today's value. Informally, a fair game with no predictable drift in either direction." }
+              ],
+              "children": [
+                { "_key": "c3l5-013s1", "_type": "span", "marks": [], "text": "Check what happens to the discounted stock price, e^(-rt)S(t), under Q, using Chapter 2's Ito product rule one final time. Since e^(-rt) is a purely deterministic function with zero diffusion coefficient, d(e^(-rt)) = -r·e^(-rt) dt, with no dW term and no Ito correction term either, exactly matching an ordinary calculus derivative. The covariation term between e^(-rt) and S is therefore exactly zero, by Chapter 2's own multiplication rules, since it involves dt multiplied by dW̃." }
+              ]
+            },
+            {
+              "_key": "c3l5-014",
+              "_type": "mathBlock",
+              "latex": "d\\big(e^{-rt}S\\big) = e^{-rt}\\, dS + S\\, d(e^{-rt}) + \\underbrace{d(e^{-rt})\\, dS}_{=\\ 0} = e^{-rt}(rS\\,dt + \\sigma S\\, d\\tilde W) - r e^{-rt}S\\, dt",
+              "caption": "Ito's product rule applied to the discounted stock price, under Q"
+            },
+            {
+              "_key": "c3l5-015",
+              "_type": "mathBlock",
+              "latex": "d\\big(e^{-rt}S\\big) = \\big(r e^{-rt}S - r e^{-rt}S\\big)\\, dt + \\sigma e^{-rt}S\\, d\\tilde{W} = \\sigma e^{-rt}S\\, d\\tilde{W} \\qquad \\text{(zero drift!)}",
+              "caption": "The rS dt terms cancel exactly, leaving no drift at all under Q"
+            },
+            {
+              "_key": "c3l5-016",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This is a real martingale, not just an analogy. With zero drift under Q, the discounted stock price's expected future value always equals its value today: E^Q[e^(-rT)S(T)] = S(0) for every T. That single property is the formal definition of a risk-neutral measure, and it is exactly what makes discounting an expected payoff under Q produce a price with no riskless arbitrage hiding inside it."
+            },
+            {
+              "_key": "c3l5-017",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l5-017s1", "_type": "span", "marks": [], "text": "The Fundamental Theorem of Asset Pricing, Briefly" }
+              ]
+            },
+            {
+              "_key": "c3l5-018",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l5-018s1", "_type": "span", "marks": [], "text": "The fundamental theorem of asset pricing states, at the level of rigor this course can support without a full measure-theory treatment, that a market is free of arbitrage if and only if such a measure Q exists, and every payoff is uniquely replicable (as Lesson 2's hedge did) if and only if that Q is unique. The Black-Scholes market model satisfies both conditions, which is precisely why Lesson 2's hedging argument and Lesson 4's risk-neutral expectation, two seemingly different routes, arrive at the exact same price. They are not two different theories that happen to agree; they are two views of the same underlying mathematical fact." }
+              ]
+            },
+            {
+              "_key": "c3l5-019",
+              "_type": "comparison",
+              "title": "Two Routes to the Same Black-Scholes Price",
+              "columns": [
+                {
+                  "_key": "c3l5-019c1",
+                  "label": "Hedging route (Lessons 2-3)",
+                  "points": [
+                    "Build a portfolio, short 1 option, long Δ = C_S shares, that cancels all randomness",
+                    "No-arbitrage forces this riskless portfolio to earn exactly r",
+                    "Leads to the Black-Scholes PDE"
+                  ]
+                },
+                {
+                  "_key": "c3l5-019c2",
+                  "label": "Risk-neutral route (Lessons 4-5)",
+                  "points": [
+                    "Change measure via Girsanov, replacing μ with r",
+                    "Discounted stock price becomes a martingale under the new measure Q",
+                    "Leads to C = e^(-rτ)E^Q[payoff], the same formula"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c3l5-020",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l5-020s1", "_type": "span", "marks": [], "text": "The Market Price of Risk: A Worked Number" }
+              ]
+            },
+            {
+              "_key": "c3l5-021",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l5-021s1", "_type": "span", "marks": [], "text": "Using the previous lesson's TCS calibration, μ = 15%, r = 7%, σ = 24%, the market price of risk works out to a clean, interpretable number: the extra expected return, per unit of volatility, that investors demand for holding TCS instead of a riskless asset. It has exactly the same form as a Sharpe ratio, and that is not a coincidence either." }
+              ]
+            },
+            {
+              "_key": "c3l5-022",
+              "_type": "keyFact",
+              "label": "Market price of risk, θ, for TCS",
+              "value": "0.333",
+              "context": "(0.15 - 0.07) / 0.24; identical in form to a Sharpe ratio, excess return per unit of volatility"
+            },
+            {
+              "_key": "c3l5-023",
+              "_type": "codeBlock",
+              "language": "python",
+              "caption": "Numerically confirming the martingale property under Q",
+              "code": "import numpy as np\n\nS0, mu, r, sigma = 3900, 0.15, 0.07, 0.24\ntheta = (mu - r) / sigma\nprint(f\"Market price of risk, theta: {theta:.4f}\")\n\n# Simulate under Q (risk-neutral drift = r), then check E[discounted S(t)]\n# stays flat at S0 across several horizons, confirming zero drift.\nn_sims = 200_000\nfor t in [0.25, 0.5, 1.0, 2.0]:\n    Z = np.random.normal(0, 1, n_sims)\n    S_t = S0 * np.exp((r - 0.5*sigma**2)*t + sigma*np.sqrt(t)*Z)\n    discounted_mean = np.exp(-r*t) * np.mean(S_t)\n    print(f\"t = {t:>4}: E[e^(-rt) S(t)] = {discounted_mean:.2f}  (theoretical: {S0})\")\n\n# Typical output:\n# Market price of risk, theta: 0.3333\n# t = 0.25: E[e^(-rt) S(t)] = 3898.71  (theoretical: 3900)\n# t =  0.5: E[e^(-rt) S(t)] = 3901.84  (theoretical: 3900)\n# t =  1.0: E[e^(-rt) S(t)] = 3897.55  (theoretical: 3900)\n# t =  2.0: E[e^(-rt) S(t)] = 3903.92  (theoretical: 3900)"
+            },
+            {
+              "_key": "c3l5-024",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Interpret the market price of risk",
+              "question": "What does θ = (μ - r)/σ represent?",
+              "options": [
+                "The option's implied volatility",
+                "The extra expected return, per unit of volatility, that investors demand for holding the risky stock instead of the riskless asset",
+                "The probability that a call option finishes in the money",
+                "The risk-free rate itself, restated in different units"
+              ],
+              "correctIndex": 1,
+              "explanation": "θ measures how much extra expected return (μ - r) the stock offers per unit of risk (σ), the same structure as a Sharpe ratio. Girsanov's theorem uses this exact quantity as the shift needed to change measure and remove the drift discrepancy between μ and r."
+            },
+            {
+              "_key": "c3l5-025",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Compute the market price of risk for RELIANCE",
+              "prompt": "Using Chapter 2's Reliance Industries calibration (μ = 12%, r = 7%, σ = 22%), what is the market price of risk, θ = (μ - r)/σ?",
+              "correctValue": 0.227,
+              "tolerance": 0.005,
+              "explanation": "θ = (0.12 - 0.07) / 0.22 = 0.05 / 0.22 ≈ 0.227. This is lower than TCS's 0.333, meaning the market demanded less extra return per unit of risk for holding Reliance under this lesson's illustrative numbers, not a real comparison of the two stocks' actual risk-adjusted returns."
+            },
+            {
+              "_key": "c3l5-026",
+              "_type": "flashcardSet",
+              "title": "Core Terms From This Lesson",
+              "cards": [
+                { "_key": "c3l5-026f1", "term": "Girsanov's theorem", "definition": "A theorem allowing a rigorous change of probability measure under which a Wiener process with drift becomes driftless (or differently drifted) under a new, equivalent measure." },
+                { "_key": "c3l5-026f2", "term": "Market price of risk, θ", "definition": "θ = (μ-r)/σ, the extra expected return per unit of volatility a risky asset offers over the risk-free rate; the exact shift Girsanov's theorem uses to change measure." },
+                { "_key": "c3l5-026f3", "term": "Martingale", "definition": "A process whose expected future value, given all information today, equals its value today. The discounted stock price is a martingale under the risk-neutral measure Q." },
+                { "_key": "c3l5-026f4", "term": "Fundamental theorem of asset pricing", "definition": "The result connecting no-arbitrage to the existence of an equivalent martingale measure Q, and market completeness to the uniqueness of that measure." }
+              ]
+            },
+            {
+              "_key": "c3l5-027",
+              "_type": "keyTakeaways",
+              "points": [
+                "Girsanov's theorem rigorously justifies replacing μ with r: shifting W by θ = (μ-r)/σ produces a genuine Wiener process W̃ under a new measure Q, under which the stock's SDE becomes dS = rS dt + σS dW̃.",
+                "Under Q, the discounted stock price e^(-rt)S(t) has exactly zero drift, verified directly using Chapter 2's Ito product rule; this martingale property is the formal definition of a risk-neutral measure.",
+                "The fundamental theorem of asset pricing ties this to no-arbitrage and market completeness, explaining why the hedging route (Lessons 2-3) and the risk-neutral route (Lessons 4-5) arrive at the identical Black-Scholes price, not by coincidence.",
+                "The market price of risk, θ, has the same structure as a Sharpe ratio: excess expected return per unit of volatility, and it is the exact quantity Girsanov's theorem needs to eliminate the drift discrepancy.",
+                "Course recap: starting from a coin-flip random walk (Chapter 1), this course built the Wiener process and its four properties, proved it is nowhere differentiable yet has finite quadratic variation equal to t, derived and applied Ito's lemma to solve geometric Brownian motion in closed form (Chapter 2), then built a riskless hedge, derived the Black-Scholes PDE, solved it via Feynman-Kac, and finally justified the risk-neutral shortcut rigorously with Girsanov's theorem (Chapter 3).",
+                "From here, the natural next steps, beyond this course's scope, are the models built to relax Black-Scholes's seven assumptions: stochastic volatility models, jump-diffusion processes for market gaps, and the multi-asset extensions of Ito's product rule and Girsanov's theorem introduced along the way."
+              ]
+            },
+            {
+              "_key": "c3l5-028",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to buy, sell, or hold any security named here. The TCS and Reliance Industries figures used throughout this course are simplified illustrative numbers, not live market data or a forecast. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

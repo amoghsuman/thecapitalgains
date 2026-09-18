@@ -1,0 +1,233 @@
+{
+  "courseSlug": "understanding-position-sizing-and-the-kelly-criterion",
+  "chapters": [
+    {
+      "title": "Chapter 3: Fractional Kelly and Practical Adjustments",
+      "lessons": [
+        {
+          "title": "Estimation Error: Why Your Edge Number Is Probably Wrong",
+          "slug": "estimation-error-why-your-edge-number-is-probably-wrong",
+          "body": [
+            {
+              "_key": "c3l3-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l3-001s1", "_type": "span", "marks": [], "text": "Lesson 1.2 showed that a 55% win rate measured on 30 trades could plausibly be anywhere from 37% to 73%. Every f* computed since then has quietly used a single point estimate as if it were exact. This lesson formalizes what happens when it isn't, why the direction of the error matters far more than its size, and how to size in a way that respects the uncertainty rather than ignoring it." }
+              ]
+            },
+            {
+              "_key": "c3l3-002",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l3-002s1", "_type": "span", "marks": [], "text": "How Sensitive Is f* to Errors in p?" }
+              ]
+            },
+            {
+              "_key": "c3l3-003",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l3-003s1", "_type": "span", "marks": [], "text": "Take the Kelly formula from Lesson 2.2, f* = p − q/b, and ask how much f* moves for a small error in p." }
+              ]
+            },
+            {
+              "_key": "c3l3-004",
+              "_type": "mathBlock",
+              "latex": "\\dfrac{df^{*}}{dp} = \\dfrac{d}{dp}\\left[p - \\dfrac{1-p}{b}\\right] = 1 + \\dfrac{1}{b}",
+              "caption": "Every percentage point of error in p is amplified by this factor in f*"
+            },
+            {
+              "_key": "c3l3-005",
+              "_type": "table",
+              "caption": "How much a 1-point error in p moves f*, by payoff ratio",
+              "headers": ["Payoff ratio (b)", "Sensitivity, 1 + 1/b", "Example"],
+              "rows": [
+                { "_key": "c3l3-005r1", "_type": "tableRow", "cells": ["1.00", "2.00", "Even-money bet"] },
+                { "_key": "c3l3-005r2", "_type": "tableRow", "cells": ["1.33", "1.75", "Bank Nifty options seller"] },
+                { "_key": "c3l3-005r3", "_type": "tableRow", "cells": ["2.00", "1.50", "—"] },
+                { "_key": "c3l3-005r4", "_type": "tableRow", "cells": ["3.00", "1.33", "Nifty swing trader"] },
+                { "_key": "c3l3-005r5", "_type": "tableRow", "cells": ["5.00", "1.20", "—"] }
+              ]
+            },
+            {
+              "_key": "c3l3-006",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Lower payoff ratios amplify win-rate estimation error more. A premium-selling system with b close to 1 is more exposed to a mismeasured win rate than a trend-following system with b of 3 or more, even before comparing how reliable either win-rate estimate actually is. High-win-rate, low-payoff-ratio strategies deserve extra caution on this front specifically."
+            },
+            {
+              "_key": "c3l3-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l3-007s1", "_type": "span", "marks": [], "text": "Sizing Uncertainty Compounds Through the Formula" }
+              ]
+            },
+            {
+              "_key": "c3l3-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l3-008s1", "_type": "span", "marks": [], "text": "Suppose the Bank Nifty options seller's 55% win rate was measured on 120 trades. Apply Lesson 1.2's standard-error formula, then multiply by the sensitivity factor from the table above to see how that uncertainty in p becomes uncertainty in f* itself." }
+              ]
+            },
+            {
+              "_key": "c3l3-009",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "c3l3-009s1", "label": "SE(p), n = 120", "value": "4.54%", "context": "√(0.55 × 0.45 ÷ 120)" },
+                { "_key": "c3l3-009s2", "label": "Sensitivity, 1 + 1/b", "value": "1.75", "context": "b = 1.33" },
+                { "_key": "c3l3-009s3", "label": "SE(f*)", "value": "≈7.95%", "context": "4.54% × 1.75" },
+                { "_key": "c3l3-009s4", "label": "Point-estimate f*", "value": "21.25%", "context": "From Lesson 2.2" }
+              ]
+            },
+            {
+              "_key": "c3l3-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l3-010s1", "_type": "span", "marks": [], "text": "A standard error of roughly 8 percentage points on a 21.25% estimate is not a rounding concern. At a 95% confidence level, the true f* here could plausibly sit anywhere from roughly 5.7% to 36.8%. Treating 21.25% as a precise number, rather than the center of a wide range, is the mistake this lesson exists to correct." }
+              ]
+            },
+            {
+              "_key": "c3l3-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l3-011s1", "_type": "span", "marks": [], "text": "The Asymmetry of Getting It Wrong" }
+              ]
+            },
+            {
+              "_key": "c3l3-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l3-012s1", "_type": "span", "marks": [], "text": "Not all errors cost the same. Take the even-money system from Lesson 2.1, where the true win rate is 55% and true f* is 10%. Compare what happens when a trader's estimate of p is wrong by the same 5 or 15 points, in each direction, and they size based on that wrong estimate." }
+              ]
+            },
+            {
+              "_key": "c3l3-013",
+              "_type": "table",
+              "caption": "Same-sized errors, opposite directions, true p = 0.55",
+              "headers": ["Trader believes p is", "Sizes at f", "Actual growth rate g(f)", "What happened"],
+              "rows": [
+                { "_key": "c3l3-013r1", "_type": "tableRow", "cells": ["50% (underestimate)", "0%", "0.00%", "Forgoes all growth, loses nothing"] },
+                { "_key": "c3l3-013r2", "_type": "tableRow", "cells": ["55% (correct)", "10%", "0.50%", "Maximum growth rate"] },
+                { "_key": "c3l3-013r3", "_type": "tableRow", "cells": ["60% (overestimate)", "20%", "−0.01%", "Already gives up the entire edge"] },
+                { "_key": "c3l3-013r4", "_type": "tableRow", "cells": ["70% (overestimate)", "40%", "−4.48%", "Actively destroys capital, every trade"] }
+              ]
+            },
+            {
+              "_key": "c3l3-014",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Actual growth rate g(f) if true p = 0.55, whatever f is chosen",
+              "xAxisLabel": "Bet fraction actually used (f)",
+              "yAxisLabel": "Growth rate per trade (%)",
+              "data": [
+                { "_key": "c3l3-014d1", "label": "0.00", "value": 0.00 },
+                { "_key": "c3l3-014d2", "label": "0.10", "value": 0.50 },
+                { "_key": "c3l3-014d3", "label": "0.20", "value": -0.01 },
+                { "_key": "c3l3-014d4", "label": "0.30", "value": -1.62 },
+                { "_key": "c3l3-014d5", "label": "0.40", "value": -4.48 }
+              ]
+            },
+            {
+              "_key": "c3l3-015",
+              "_type": "callout",
+              "type": "warning",
+              "text": "The left side of this curve is nearly flat near zero. The right side falls off a cliff. Underestimating p wastes some growth, bounded at worst by giving up everything and sitting at zero. Overestimating p by the same amount can turn a genuinely positive edge into active capital destruction, with no floor on how bad it gets as the overestimate grows. This asymmetry, not just caution for its own sake, is the real argument for rounding estimation errors downward rather than treating them as equally likely to help or hurt."
+            },
+            {
+              "_key": "c3l3-016",
+              "_type": "bigIdea",
+              "text": "When your estimate of edge is uncertain, size down, not up. The cost of overestimating is unbounded. The cost of underestimating is just a slower climb."
+            },
+            {
+              "_key": "c3l3-017",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l3-017s1", "_type": "span", "marks": [], "text": "A Practical Discounting Rule" }
+              ]
+            },
+            {
+              "_key": "c3l3-018",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l3-018s1", "_type": "span", "marks": [], "text": "There is no single textbook-endorsed formula for exactly how much to discount an uncertain estimate; this is a judgment call, and practitioners handle it in more than one reasonable way. One defensible, mechanical approach used throughout this course: compute f* using the lower bound of p's confidence interval instead of the raw point estimate, then apply fractional Kelly from Lesson 3.2 on top of that already-conservative number." }
+              ]
+            },
+            {
+              "_key": "c3l3-019",
+              "_type": "table",
+              "caption": "Stacking both adjustments for the Bank Nifty options seller",
+              "headers": ["Step", "p used", "f*"],
+              "rows": [
+                { "_key": "c3l3-019r1", "_type": "tableRow", "cells": ["Raw point estimate", "55.0%", "21.25%"] },
+                { "_key": "c3l3-019r2", "_type": "tableRow", "cells": ["Lower bound of 95% CI (n = 120)", "46.1%", "5.67%"] },
+                { "_key": "c3l3-019r3", "_type": "tableRow", "cells": ["Same, then half-Kelly", "46.1%", "2.84%"] }
+              ]
+            },
+            {
+              "_key": "c3l3-020",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l3-020s1", "_type": "span", "marks": [], "text": "Stacking both adjustments takes this system from a naive 21.25% down to 2.84%, roughly a seven-and-a-half-fold reduction. That gap is the honest distance between \"what the formula outputs from a single backtest\" and \"what a careful trader should actually risk.\"" }
+              ]
+            },
+            {
+              "_key": "c3l3-021",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Apply the discount to the swing trader",
+              "prompt": "The Nifty swing trader from Lesson 2.4 measured p = 40% on 85 trades, with a 95% confidence interval lower bound of 29.6% (from Lesson 2.4). Using b = 3.00, what is f* if computed from this conservative lower-bound p instead of the raw 40%? Give your answer as a percentage, rounded to two decimals.",
+              "correctValue": 6.13,
+              "tolerance": 0.1,
+              "unit": "%",
+              "explanation": "E(R) = (0.296 × 3.00) − 0.704 = 0.888 − 0.704 = 0.184R. f* = 0.184 ÷ 3.00 ≈ 0.0613, or 6.13%, versus the raw point-estimate f* of 20%. The uncertainty flagged back in Lesson 2.4 turns out to matter a great deal once it is actually built into the sizing decision."
+            },
+            {
+              "_key": "c3l3-022",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This lower-bound-plus-fractional-Kelly approach is one reasonable convention, not the only one. Other practitioners shrink p toward 50% (or toward breakeven) by some factor tied to sample size, use only out-of-sample or walk-forward results rather than in-sample backtest statistics, or size using a deliberately pessimistic estimate reviewed periodically as more trades accumulate. What matters is having some systematic discipline for estimation error, not which specific version is used."
+            },
+            {
+              "_key": "c3l3-023",
+              "_type": "keyTakeaways",
+              "points": [
+                "f* is more sensitive to errors in p when the payoff ratio b is lower; df*/dp = 1 + 1/b.",
+                "Estimation uncertainty in p compounds through this sensitivity into meaningful uncertainty in f* itself, not just a small rounding error.",
+                "Errors are not symmetric in cost: underestimating an edge wastes growth, bounded at giving up everything; overestimating can destroy capital, with no floor on how bad it gets.",
+                "A practical discipline is to compute f* from a conservative, lower-bound estimate of p rather than the raw point estimate, then apply fractional Kelly on top.",
+                "For the Bank Nifty options seller worked example, this combination reduced the naive 21.25% Kelly fraction to 2.84%, a roughly seven-and-a-half-fold cut."
+              ]
+            },
+            {
+              "_key": "c3l3-024",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "The sample sizes, confidence intervals, and figures in this lesson build on the illustrative examples used throughout this course and are for teaching purposes, not a validated live trading strategy. This lesson is for education only and is not investment or trading advice. Consult a SEBI-registered investment adviser before making trading or investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

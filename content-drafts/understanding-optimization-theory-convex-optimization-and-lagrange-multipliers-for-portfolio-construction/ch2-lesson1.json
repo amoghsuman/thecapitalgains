@@ -1,0 +1,287 @@
+{
+  "courseSlug": "understanding-optimization-theory-convex-optimization-and-lagrange-multipliers-for-portfolio-construction",
+  "chapters": [
+    {
+      "title": "Chapter 2: Convexity: The Property That Makes Optimization Tractable",
+      "lessons": [
+        {
+          "title": "Convex Sets: What They Are and Why They Matter",
+          "slug": "convex-sets-what-they-are-and-why-they-matter",
+          "body": [
+            {
+              "_key": "oc2l1-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l1-001s1", "_type": "span", "marks": [], "text": "Ananya's take-home submission comes back with one comment: correct framing, but you keep calling this problem convex without ever defining what that means. Prove it. She realizes she has been using the word the way everyone on finance Twitter uses it, as a synonym for well-behaved, without knowing the actual test. This lesson gives her that test. It is the single most useful idea in this entire course, because once you can check it, you will know in advance whether a problem can be solved reliably, before you write a single line of solver code." }
+              ]
+            },
+            {
+              "_key": "oc2l1-002",
+              "_type": "bigIdea",
+              "text": "A convex set is a shape with no dents. Pick any two points inside it and draw a straight line between them. If that entire line stays inside the shape, no matter which two points you picked, the set is convex. This one visual test underlies everything in Chapters 2 through 6."
+            },
+            {
+              "_key": "oc2l1-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l1-003s1", "_type": "span", "marks": [], "text": "The Formal Definition of a Convex Set" }
+              ]
+            },
+            {
+              "_key": "oc2l1-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "oc2l1-004m1", "_type": "glossaryTerm", "definition": "A weighted average of two points, tx + (1-t)y, for a weight t between 0 and 1. Geometrically, this is any point lying on the straight line segment connecting x and y, including the two endpoints themselves." }
+              ],
+              "children": [
+                { "_key": "oc2l1-004s1", "_type": "span", "marks": [], "text": "A set C is convex if, for any two points x and y in C, every " },
+                { "_key": "oc2l1-004s2", "_type": "span", "marks": ["oc2l1-004m1"], "text": "convex combination" },
+                { "_key": "oc2l1-004s3", "_type": "span", "marks": [], "text": " of x and y also belongs to C." }
+              ]
+            },
+            {
+              "_key": "oc2l1-005",
+              "_type": "mathBlock",
+              "latex": "\\text{C is convex if, for all } x, y \\in C \\text{ and all } t \\in [0,1]: \\quad tx + (1-t)y \\in C",
+              "caption": "The entire definition. Every point on the segment between any two members of C must itself be in C."
+            },
+            {
+              "_key": "oc2l1-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l1-006s1", "_type": "span", "marks": [], "text": "The Straight-Line Test, Applied to Shapes You Already Picture" }
+              ]
+            },
+            {
+              "_key": "oc2l1-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l1-007s1", "_type": "span", "marks": [], "text": "Before touching a portfolio, build the intuition on plain shapes. For each one, imagine placing two pins anywhere inside it and stretching a thread between them." }
+              ]
+            },
+            {
+              "_key": "oc2l1-008",
+              "_type": "table",
+              "caption": "The straight-line test on familiar shapes",
+              "headers": ["Shape", "Convex?", "Why"],
+              "rows": [
+                { "_key": "oc2l1-008r1", "_type": "tableRow", "cells": ["Circle (filled disk)", "Yes", "Any thread between two interior points stays inside the circle"] },
+                { "_key": "oc2l1-008r2", "_type": "tableRow", "cells": ["Square (filled)", "Yes", "Same test, works for any convex polygon"] },
+                { "_key": "oc2l1-008r3", "_type": "tableRow", "cells": ["A single straight line segment", "Yes", "Trivially true; the object is already the line"] },
+                { "_key": "oc2l1-008r4", "_type": "tableRow", "cells": ["Crescent (moon shape)", "No", "A thread between the two tips cuts outside the crescent, through the hollow"] },
+                { "_key": "oc2l1-008r5", "_type": "tableRow", "cells": ["Five-pointed star outline", "No", "A thread between two adjacent point-tips passes outside, through the notch between them"] },
+                { "_key": "oc2l1-008r6", "_type": "tableRow", "cells": ["Donut (annulus, a ring with a hole)", "No", "A thread between points on opposite sides of the ring passes straight through the empty hole"] }
+              ]
+            },
+            {
+              "_key": "oc2l1-009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l1-009s1", "_type": "span", "marks": [], "text": "Convex Sets in Portfolio Construction: The Probability Simplex Revisited" }
+              ]
+            },
+            {
+              "_key": "oc2l1-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l1-010s1", "_type": "span", "marks": [], "text": "Chapter 1 closed by naming the feasible region of a fully-invested, long-only portfolio the probability simplex, and claiming it was convex without proof. Here is the proof, using the actual definition instead of a claim. Let w and w' be any two feasible weight vectors: every entry non-negative, both summing to 1." }
+              ]
+            },
+            {
+              "_key": "oc2l1-011",
+              "_type": "mathBlock",
+              "latex": "\\mathbf{z} = t\\mathbf{w} + (1-t)\\mathbf{w}' \\quad \\text{for some } t \\in [0,1]",
+              "caption": "Take any convex combination of the two feasible portfolios."
+            },
+            {
+              "_key": "oc2l1-012",
+              "_type": "mathBlock",
+              "latex": "z_i = t \\, w_i + (1-t) \\, w_i' \\geq 0 \\quad \\text{since } t, (1-t), w_i, w_i' \\geq 0",
+              "caption": "Every entry of z stays non-negative: a non-negative weighted sum of non-negative numbers is non-negative."
+            },
+            {
+              "_key": "oc2l1-013",
+              "_type": "mathBlock",
+              "latex": "\\sum_i z_i = t \\sum_i w_i + (1-t) \\sum_i w_i' = t(1) + (1-t)(1) = 1",
+              "caption": "And z still sums to exactly 1. So z is feasible, exactly what convexity requires."
+            },
+            {
+              "_key": "oc2l1-014",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Since w and w' were any two feasible portfolios, and z is feasible for every t, the entire straight line between them stays inside the feasible region. That is the definition satisfied directly, not asserted. The five-stock feasible region from Chapter 1's case study, built from a budget rule and five no-short-selling rules, is convex by exactly this argument."
+            },
+            {
+              "_key": "oc2l1-015",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l1-015s1", "_type": "span", "marks": [], "text": "Convex Sets Formed by Linear Constraints" }
+              ]
+            },
+            {
+              "_key": "oc2l1-016",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "oc2l1-016m1", "_type": "glossaryTerm", "definition": "The set of all points on one side of a flat boundary, defined by a linear inequality such as aᵀx ≤ b. Every halfspace is convex." },
+                { "_key": "oc2l1-016m2", "_type": "glossaryTerm", "definition": "The flat boundary itself, defined by a linear equality such as aᵀx = b. Every hyperplane is convex." }
+              ],
+              "children": [
+                { "_key": "oc2l1-016s1", "_type": "span", "marks": [], "text": "The proof above is not a coincidence specific to the simplex. Every linear inequality constraint, like wi ≥ 0 or a sector cap wi ≤ 0.30, defines a " },
+                { "_key": "oc2l1-016s2", "_type": "span", "marks": ["oc2l1-016m1"], "text": "halfspace" },
+                { "_key": "oc2l1-016s3", "_type": "span", "marks": [], "text": ", and every halfspace is convex by the same straight-line argument. Every linear equality constraint, like the budget rule, defines a " },
+                { "_key": "oc2l1-016s4", "_type": "span", "marks": ["oc2l1-016m2"], "text": "hyperplane" },
+                { "_key": "oc2l1-016s5", "_type": "span", "marks": [], "text": ", which is also convex." }
+              ]
+            },
+            {
+              "_key": "oc2l1-017",
+              "_type": "keyFact",
+              "label": "Intersection of convex sets",
+              "value": "Is always convex",
+              "context": "If two points lie in every set in a collection, the line segment between them lies in every set in that collection too, since each individual set is convex. So it lies in the intersection."
+            },
+            {
+              "_key": "oc2l1-018",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This is why stacking linear portfolio constraints never breaks convexity. Budget rule, no-short-selling on five stocks, a sector cap, a single-stock cap, each one is individually a halfspace or hyperplane, each individually convex. The actual feasible region is the intersection of all of them at once, and the intersection-of-convex-sets fact guarantees that intersection is convex too, no matter how many linear rules you stack on top of each other."
+            },
+            {
+              "_key": "oc2l1-019",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l1-019s1", "_type": "span", "marks": [], "text": "What Is NOT Convex: A Cautionary Example" }
+              ]
+            },
+            {
+              "_key": "oc2l1-020",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l1-020s1", "_type": "span", "marks": [], "text": "Not every rule you might want to impose is linear, and not every rule keeps the feasible region convex. A common one: a minimum-holding rule, where any stock you hold must be at least 5% of the portfolio, either 0% or 5%-plus, nothing in between." }
+              ]
+            },
+            {
+              "_key": "oc2l1-021",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "oc2l1-021s1", "label": "Point A", "value": "w = 0", "context": "Satisfies the rule: holding nothing is allowed" },
+                { "_key": "oc2l1-021s2", "label": "Point B", "value": "w = 0.06", "context": "Satisfies the rule: 6% is above the 5% floor" },
+                { "_key": "oc2l1-021s3", "label": "Midpoint (t = 0.5)", "value": "w = 0.03", "context": "Violates the rule: 3% is neither 0 nor at least 5%. The set is not convex." }
+              ]
+            },
+            {
+              "_key": "oc2l1-022",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l1-022s1", "_type": "span", "marks": [], "text": "Cardinality rules break convexity the same way. Hold at most 8 out of 50 stocks sounds like a simple limit, but two feasible portfolios, each holding a different set of 8 stocks, can average into a portfolio touching far more than 8 names, violating the rule. Both minimum-holding and cardinality rules are common in real fund mandates, and both push the problem outside what Lagrange multipliers and KKT conditions alone can solve, into combinatorial optimization territory this course does not cover." }
+              ]
+            },
+            {
+              "_key": "oc2l1-023",
+              "_type": "comparison",
+              "title": "What Keeps a Constraint Set Convex",
+              "columns": [
+                {
+                  "_key": "oc2l1-023c1",
+                  "label": "Convexity-Preserving Constraints",
+                  "points": [
+                    "Budget rule: sum of weights equals 1",
+                    "No short-selling: every weight at least 0",
+                    "Single-stock or sector caps: a weight or weight-sum at most some limit",
+                    "Any linear equality or inequality, stacked in any combination"
+                  ]
+                },
+                {
+                  "_key": "oc2l1-023c2",
+                  "label": "Convexity-Breaking Constraints",
+                  "points": [
+                    "Minimum-holding thresholds: either 0 or at least X%",
+                    "Cardinality limits: hold at most K out of N stocks",
+                    "Sector-count requirements: exactly M of the sectors represented",
+                    "Any all-or-nothing or discrete counting rule"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "oc2l1-024",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Spot the convex constraint",
+              "question": "Which of the following portfolio constraints defines a convex set on its own?",
+              "options": [
+                "Hold at most 8 out of 50 stocks (a cardinality constraint)",
+                "Each non-zero weight must be at least 5% of the portfolio",
+                "No single weight can exceed 30% of the portfolio",
+                "Exactly 3 of the 5 sectors must be represented"
+              ],
+              "correctIndex": 2,
+              "explanation": "No single weight can exceed 30% is a simple linear inequality, wi ≤ 0.30, which defines a halfspace, and halfspaces are always convex. The other three are combinatorial or all-or-nothing rules, cardinality limits, minimum-holding thresholds, and sector-count requirements, that create gaps in the feasible set, making them non-convex."
+            },
+            {
+              "_key": "oc2l1-025",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Prove it yourself",
+              "scenario": "A colleague claims the set of portfolios with volatility below 20% (that is, where wᵀΣw is less than 0.04) is a convex set, since it looks like a bounded, rounded shape when sketched.",
+              "prompt": "Is the colleague right? What actually needs to be checked before agreeing, and why isn't \"it looks rounded\" good enough?",
+              "modelAnswer": "The set does turn out to be convex, but not because it looks rounded, that is an appeal to intuition, not a proof. The correct check is the definition itself: take any two feasible portfolios and confirm every point on the line segment between them also has volatility below 20%. This particular set is convex because portfolio variance, wᵀΣw, is itself a convex function, which the next lesson proves. The set of points where a convex function stays below a fixed threshold is always convex, a fact that gets used repeatedly for the rest of this course."
+            },
+            {
+              "_key": "oc2l1-026",
+              "_type": "flashcardSet",
+              "title": "Convex Sets: Core Terms",
+              "cards": [
+                { "_key": "oc2l1-026f1", "term": "Convex set", "definition": "A set where the straight line segment between any two points in the set lies entirely within the set." },
+                { "_key": "oc2l1-026f2", "term": "Convex combination", "definition": "A weighted average tx + (1-t)y of two points, for t between 0 and 1. Geometrically, any point on the segment connecting them." },
+                { "_key": "oc2l1-026f3", "term": "Halfspace", "definition": "The set of points on one side of a flat boundary, defined by a linear inequality such as aᵀx ≤ b. Always convex." },
+                { "_key": "oc2l1-026f4", "term": "Hyperplane", "definition": "The flat boundary itself, defined by a linear equality such as aᵀx = b. Always convex." },
+                { "_key": "oc2l1-026f5", "term": "Non-convex set", "definition": "A set with at least one dent or gap, where some line segment between two points in the set exits the set. Cardinality and minimum-holding rules typically create these." }
+              ]
+            },
+            {
+              "_key": "oc2l1-027",
+              "_type": "keyTakeaways",
+              "points": [
+                "A set is convex if the straight line between any two points inside it never leaves the set. That single test is the entire definition.",
+                "The probability simplex, the feasible region for any fully-invested, long-only portfolio, is convex, provable directly from the definition.",
+                "Halfspaces (linear inequalities) and hyperplanes (linear equalities) are always convex, and the intersection of any number of convex sets is itself convex.",
+                "This is why stacking linear portfolio constraints, budget, no-short-selling, sector caps, never breaks convexity, no matter how many you stack.",
+                "Combinatorial or all-or-nothing rules, like cardinality limits or minimum-holding thresholds, typically break convexity by creating gaps in the feasible set.",
+                "The next lesson turns from convex sets to convex functions, and the lesson after that proves portfolio variance itself is one."
+              ]
+            },
+            {
+              "_key": "oc2l1-028",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to buy or sell any security. Examples of constraint types are illustrative of mathematical properties, not a recommendation to use or avoid them in an actual fund mandate. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

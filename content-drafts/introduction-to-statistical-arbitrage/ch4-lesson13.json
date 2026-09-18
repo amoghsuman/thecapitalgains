@@ -1,0 +1,277 @@
+{
+  "courseSlug": "introduction-to-statistical-arbitrage",
+  "chapters": [
+    {
+      "title": "Chapter 4: Building a Simple Pairs Trade",
+      "lessons": [
+        {
+          "title": "Screening for Pairs: What Makes Two Stocks Good Candidates",
+          "slug": "screening-for-pairs-what-makes-two-stocks-good-candidates",
+          "body": [
+            {
+              "_key": "sa13-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa13-001s1", "_type": "span", "marks": [], "text": "The Nifty 500 index contains 500 stocks. The number of unique pairs you could form from them is 500 × 499 ÷ 2, a little under 125,000. Running a full Engle-Granger cointegration test, the way Lesson 11 and Lesson 12 did it, on every single one of those pairs would be slow, and worse, statistically dangerous. This lesson is about how to narrow nearly 125,000 candidates down to a short list worth actually testing." }
+              ]
+            },
+            {
+              "_key": "sa13-002",
+              "_type": "bigIdea",
+              "text": "Screening is not about finding the statistically \"best\" pair by brute force. It is about using cheap, sensible filters, sector, liquidity, tradeability, and correlation, to shrink a huge universe down to a small number of pairs that make economic sense, before spending the expensive formal cointegration test only on those survivors."
+            },
+            {
+              "_key": "sa13-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa13-003s1", "_type": "span", "marks": [], "text": "The Combinatorics Problem" }
+              ]
+            },
+            {
+              "_key": "sa13-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa13-004s1", "_type": "span", "marks": [], "text": "The number of unique pairs from a universe of n stocks is n(n-1)/2. That number grows fast." }
+              ]
+            },
+            {
+              "_key": "sa13-005",
+              "_type": "mathBlock",
+              "latex": "\\binom{n}{2} = \\dfrac{n(n-1)}{2}",
+              "caption": "For n = 500 (roughly the Nifty 500), this works out to 500 × 499 ÷ 2 = 124,750 possible pairs."
+            },
+            {
+              "_key": "sa13-006",
+              "_type": "keyFact",
+              "label": "Possible pairs from the Nifty 500 universe",
+              "value": "124,750",
+              "context": "Testing every single one with a full Engle-Granger procedure is computationally wasteful, and, more importantly, statistically risky."
+            },
+            {
+              "_key": "sa13-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa13-007s1", "_type": "span", "marks": [], "text": "Why You Can't Just Test Everything: The Multiple Testing Problem" }
+              ]
+            },
+            {
+              "_key": "sa13-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "sa13-008m1", "_type": "glossaryTerm", "definition": "The tendency for a fixed share of statistical tests, such as 5% at the 5% significance level, to come back \"significant\" purely by chance when many tests are run, even with no real underlying relationship." }
+              ],
+              "children": [
+                { "_key": "sa13-008s1", "_type": "span", "marks": [], "text": "A cointegration test run at the standard 5% significance level is, by construction, expected to produce a false positive, a pair that looks cointegrated purely by chance, about 5% of the time, even when there is no real relationship at all. Test 1,000 genuinely unrelated pairs, and you should expect roughly 50 of them to come back looking statistically cointegrated for no real reason. This is called the " },
+                { "_key": "sa13-008s2", "_type": "span", "marks": ["sa13-008m1"], "text": "multiple testing problem" },
+                { "_key": "sa13-008s3", "_type": "span", "marks": [], "text": ", and it is exactly why blindly running the Chapter 3 test across tens of thousands of pairs and trading whatever comes back significant is a recipe for building a portfolio out of statistical noise." }
+              ]
+            },
+            {
+              "_key": "sa13-009",
+              "_type": "keyFact",
+              "label": "Expected false positives testing 1,000 unrelated pairs at 5% significance",
+              "value": "≈ 50 pairs",
+              "context": "Purely from chance, with no real relationship between any of them. This is why economic pre-screening has to come before, not after, the statistical test."
+            },
+            {
+              "_key": "sa13-010",
+              "_type": "callout",
+              "type": "warning",
+              "text": "The fix for the multiple testing problem is not a more complicated statistical correction bolted on at the end. It is testing far fewer pairs in the first place, ones that already have a real economic reason to be linked, so a passed cointegration test is confirming a plausible story rather than being the entire basis for one."
+            },
+            {
+              "_key": "sa13-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa13-011s1", "_type": "span", "marks": [], "text": "Step 1: Start With Economic Reasoning, Not Statistics" }
+              ]
+            },
+            {
+              "_key": "sa13-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa13-012s1", "_type": "span", "marks": [], "text": "Before running any numbers, a candidate pair should have a story. Lesson 9's structural anchor concept applies directly here: shared sector and sub-industry (Lesson 1's Maruti Suzuki and Mahindra & Mahindra, Lesson 12's ACC and Ambuja Cements), a similar business model and customer base, shared input costs, or a genuine ownership link. Two stocks that only happen to have moved together over some historical window, with no story connecting them, are the kind of pair the multiple testing problem produces by accident." }
+              ]
+            },
+            {
+              "_key": "sa13-013",
+              "_type": "comparison",
+              "title": "Good Candidate Traits vs Warning Signs",
+              "columns": [
+                {
+                  "_key": "sa13-013c1",
+                  "label": "Worth Investigating Further",
+                  "points": [
+                    "Same sector or sub-industry, ideally a similar sub-segment within it",
+                    "Comparable business model, customer base, and cost structure",
+                    "A genuine ownership or structural link (holding company, common promoter)",
+                    "Similar market capitalization and share price level"
+                  ]
+                },
+                {
+                  "_key": "sa13-013c2",
+                  "label": "Treat With Caution",
+                  "points": [
+                    "The only connection you can point to is a historical correlation number",
+                    "Very different business models loosely grouped under the same broad sector label",
+                    "One leg is illiquid or thinly traded relative to the other",
+                    "Frequent recent corporate actions (mergers, demergers, large stock splits) complicating the price history"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "sa13-014",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa13-014s1", "_type": "span", "marks": [], "text": "Step 2: Practical Filters Specific to Indian Markets" }
+              ]
+            },
+            {
+              "_key": "sa13-015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa13-015s1", "_type": "span", "marks": [], "text": "A handful of practical filters matter as much as the economics. Both legs ideally need to be in the F&O segment; shorting a non-F&O stock outside the intraday window means relying on the NSE's Securities Lending and Borrowing mechanism (Lesson 2), which adds cost and complexity. Both legs need enough daily traded value that entering and exiting a meaningful position doesn't move the price against you. And both need a long enough, clean listing history, free of major unadjusted corporate actions, to make several years of price data usable for testing." }
+              ]
+            },
+            {
+              "_key": "sa13-016",
+              "_type": "table",
+              "caption": "Practical screening filters",
+              "headers": ["Filter", "Why it matters"],
+              "rows": [
+                { "_key": "sa13-016r1", "_type": "tableRow", "cells": ["F&O eligibility (both legs)", "Shorting through futures is simpler and cheaper than SLB for a non-F&O stock"] },
+                { "_key": "sa13-016r2", "_type": "tableRow", "cells": ["Average daily traded value", "Thin liquidity on either leg makes entering and exiting a position costly and slow"] },
+                { "_key": "sa13-016r3", "_type": "tableRow", "cells": ["Listing history length", "At least a few years of clean price data is needed for a trustworthy cointegration test (Lessons 10 and 11)"] },
+                { "_key": "sa13-016r4", "_type": "tableRow", "cells": ["Recent corporate actions", "Unadjusted splits, bonuses, or demergers can distort a price series and produce false signals"] }
+              ]
+            },
+            {
+              "_key": "sa13-017",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa13-017s1", "_type": "span", "marks": [], "text": "Step 3: Rank Survivors by Correlation, Then Test the Top Candidates" }
+              ]
+            },
+            {
+              "_key": "sa13-018",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa13-018s1", "_type": "span", "marks": [], "text": "Once a sector group has been filtered down by economics and tradeability, Lesson 5's return correlation becomes a cheap, fast ranking tool, not a final decision. Compute it across every remaining pair in a sector group, keep only the highest-ranked handful, and only then run the full Engle-Granger cointegration test (Lessons 10 and 11) on that short list. This ordering matters: correlation is cheap to compute across hundreds of pairs at once, while a properly run cointegration test, with the visual and economic sanity checks Lesson 12 demonstrated, is worth doing carefully on a much smaller number." }
+              ]
+            },
+            {
+              "_key": "sa13-019",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa13-019s1", "_type": "span", "marks": [], "text": "Putting It Together: A Screening Funnel" }
+              ]
+            },
+            {
+              "_key": "sa13-020",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa13-020s1", "_type": "span", "marks": [], "text": "A realistic screening process shrinks the universe in stages, not all at once." }
+              ]
+            },
+            {
+              "_key": "sa13-021",
+              "_type": "table",
+              "caption": "An illustrative screening funnel, starting from the Nifty 500",
+              "headers": ["Stage", "Illustrative pairs remaining"],
+              "rows": [
+                { "_key": "sa13-021r1", "_type": "tableRow", "cells": ["Nifty 500 universe", "124,750 possible pairs"] },
+                { "_key": "sa13-021r2", "_type": "tableRow", "cells": ["Grouped by sector and sub-industry", "≈ 3,000 to 5,000 pairs"] },
+                { "_key": "sa13-021r3", "_type": "tableRow", "cells": ["F&O-eligible and sufficiently liquid on both legs", "≈ 800 to 1,200 pairs"] },
+                { "_key": "sa13-021r4", "_type": "tableRow", "cells": ["Top correlation-ranked pairs within each sector group", "≈ 100 to 150 pairs"] },
+                { "_key": "sa13-021r5", "_type": "tableRow", "cells": ["Pass the Engle-Granger cointegration test", "≈ 15 to 30 candidate pairs"] }
+              ]
+            },
+            {
+              "_key": "sa13-022",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Notice how much of the reduction happens before a single cointegration test is run. By the time the expensive statistical test is applied, the candidate list is small enough to also sanity-check visually and economically, exactly the combination Lesson 12 used on ACC and Ambuja Cements."
+            },
+            {
+              "_key": "sa13-023",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "125,000 pairs, 200 hits",
+              "scenario": "A trader runs the Chapter 3 cointegration test across all 124,750 possible Nifty 500 pairs, with no sector or economic pre-filtering, and finds about 200 pairs that pass at the 5% significance level. He is excited and starts building positions in all 200.",
+              "prompt": "What should concern you about this approach?",
+              "modelAnswer": "At a 5% significance level, testing 124,750 pairs would produce a large number of false positives from pure chance alone, easily in the same ballpark as the 200 he found, even if very few of these pairs have any real relationship. Without economic pre-screening, there is no way to tell which of the 200 are genuine and which are statistical noise. He should instead have narrowed the universe using sector, liquidity, and business-model reasoning first, and treated the cointegration test as confirmation of a plausible story, not as a way to discover stories from scratch."
+            },
+            {
+              "_key": "sa13-024",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why filter before testing?",
+              "question": "Why does economic and liquidity pre-screening need to happen before running the Engle-Granger cointegration test, rather than after?",
+              "options": [
+                "Because the cointegration test cannot run on more than a few pairs at a time",
+                "Because testing a very large number of pairs at a fixed significance level produces a predictable number of false positives from chance alone, and pre-screening reduces how many pairs need testing in the first place",
+                "Because correlation and cointegration always give identical results",
+                "Because F&O-eligible stocks cannot be tested for cointegration"
+              ],
+              "correctIndex": 1,
+              "explanation": "The multiple testing problem means that testing many unrelated pairs will produce some statistically significant results purely by chance. Pre-screening on economics and tradeability shrinks the number of pairs tested to ones that already have a plausible reason to be linked, making a passed test far more meaningful."
+            },
+            {
+              "_key": "sa13-025",
+              "_type": "flashcardSet",
+              "title": "Screening: Core Terms",
+              "cards": [
+                { "_key": "sa13-025f1", "term": "Multiple testing problem", "definition": "The tendency for a fixed share of statistical tests, such as 5% at the 5% significance level, to come back \"significant\" purely by chance when many tests are run, even with no real underlying relationship." },
+                { "_key": "sa13-025f2", "term": "F&O eligibility", "definition": "Whether a stock has exchange-traded futures and options, which makes shorting it far simpler than relying on the NSE's Securities Lending and Borrowing mechanism." },
+                { "_key": "sa13-025f3", "term": "Screening funnel", "definition": "A staged process that narrows a large universe of possible pairs down to a short list, using cheap economic and liquidity filters before running expensive statistical tests on the survivors." }
+              ]
+            },
+            {
+              "_key": "sa13-026",
+              "_type": "keyTakeaways",
+              "points": [
+                "A universe of 500 stocks contains nearly 125,000 possible pairs. Testing all of them for cointegration is both impractical and statistically dangerous.",
+                "Testing many pairs at a fixed significance level produces a predictable number of false positives by chance alone, the multiple testing problem, which is why economic pre-screening has to come before the statistical test, not after.",
+                "Good candidate pairs start with a real story: shared sector, business model, cost structure, or ownership link, not just a historical correlation number.",
+                "Practical filters specific to Indian markets, F&O eligibility, liquidity, listing history, and clean corporate action history, matter as much as the economics.",
+                "A realistic screening process shrinks the universe in stages: sector grouping, liquidity and tradeability filters, correlation ranking, and only then the formal cointegration test on a short list of survivors."
+              ]
+            },
+            {
+              "_key": "sa13-027",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice. The screening funnel figures are illustrative estimates used to teach the process, not derived from actual Nifty 500 data. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,282 @@
+{
+  "courseSlug": "advanced-regime-switching-models-for-strategy-allocation",
+  "chapters": [
+    {
+      "title": "Chapter 2: Detecting Regimes: From Rules to Statistics",
+      "lessons": [
+        {
+          "title": "Why Rule-Based Detection Breaks Down: Whipsaws and Arbitrary Thresholds",
+          "slug": "why-rule-based-detection-breaks-down-whipsaws-and-arbitrary-thresholds",
+          "body": [
+            {
+              "_key": "rswc2l3b01",
+              "_type": "bigIdea",
+              "text": "Every rule built so far has the same flaw hiding inside it: a hard binary decision, drawn at a threshold nobody can fully justify, applied to a signal that is genuinely continuous and genuinely noisy. This lesson measures exactly what that costs."
+            },
+            {
+              "_key": "rswc2l3b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc2l3b02s1",
+                  "_type": "span",
+                  "text": "Two callouts in this chapter already flagged the problem in passing: the 50/200-day window is a convention, not a law, and thresholds create whipsaws inside the detector itself. This lesson stops flagging it and starts quantifying it, with two concrete demonstrations you can rerun on your own data.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc2l3b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc2l3b03s1",
+                  "_type": "span",
+                  "text": "Demonstration One: The Parameter Isn't Special",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc2l3b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc2l3b04s1",
+                  "_type": "span",
+                  "text": "Nothing about Nifty's structure requires a 50-day and a 200-day window specifically. They are a popular convention because a lot of other traders also use them, which gives them some self-fulfilling value, not because they are statistically optimal. Compute the same trend flag with a handful of nearby window pairs and measure how often each one disagrees with the 50/200 baseline.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc2l3b05",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "window_pairs = [(40, 150), (50, 200), (60, 220), (70, 250)]\n\nfor short_w, long_w in window_pairs:\n    short_col = f'sma_{short_w}'\n    long_col = f'sma_{long_w}'\n    flag_col = f'trend_flag_{short_w}_{long_w}'\n\n    nifty_df[short_col] = nifty_df['close'].rolling(window=short_w).mean()\n    nifty_df[long_col] = nifty_df['close'].rolling(window=long_w).mean()\n    nifty_df[flag_col] = np.where(\n        nifty_df[short_col] > nifty_df[long_col], 'up', 'down'\n    )\n\nbaseline = nifty_df['trend_flag_50_200']\nfor short_w, long_w in window_pairs:\n    flag_col = f'trend_flag_{short_w}_{long_w}'\n    disagreement = (nifty_df[flag_col] != baseline).mean()\n    print(f'{short_w}/{long_w}: {disagreement:.1%} disagreement with 50/200 baseline')",
+              "caption": "Comparing nearby moving average window pairs against the 50/200 baseline"
+            },
+            {
+              "_key": "rswc2l3b06",
+              "_type": "table",
+              "caption": "Illustrative disagreement rates against the 50/200 baseline, over a multi-year sample",
+              "headers": ["Window Pair", "Disagreement vs 50/200 Baseline"],
+              "rows": [
+                {
+                  "_key": "rswc2l3b06r1",
+                  "_type": "tableRow",
+                  "cells": ["40 / 150", "~18% of trading days"]
+                },
+                {
+                  "_key": "rswc2l3b06r2",
+                  "_type": "tableRow",
+                  "cells": ["50 / 200 (baseline)", "0% by definition"]
+                },
+                {
+                  "_key": "rswc2l3b06r3",
+                  "_type": "tableRow",
+                  "cells": ["60 / 220", "~14% of trading days"]
+                },
+                {
+                  "_key": "rswc2l3b06r4",
+                  "_type": "tableRow",
+                  "cells": ["70 / 250", "~21% of trading days"]
+                }
+              ]
+            },
+            {
+              "_key": "rswc2l3b07",
+              "_type": "callout",
+              "type": "warning",
+              "text": "These disagreement rates are illustrative, but the direction of the result is not: nearby, equally defensible parameter choices routinely disagree on close to a fifth of all trading days. There is no principled way to pick one pair over another using the same data you would use to test it, without quietly overfitting the parameter to that sample. Chapter 7 covers exactly this trap under the name look-ahead bias in parameter selection."
+            },
+            {
+              "_key": "rswc2l3b08",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc2l3b08s1",
+                  "_type": "span",
+                  "text": "Demonstration Two: Counting Whipsaws Directly",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc2l3b09",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc2l3b09s1",
+                  "_type": "span",
+                  "text": "Instead of describing 2022 as 'choppier' than 2021 in words, count it. Every day the trend flag differs from the previous day's flag is a flip, and totalling flips per quarter turns the qualitative story from Chapter 1 into a number.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc2l3b10",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "nifty_df['flag_changed'] = (\n    nifty_df['trend_flag'] != nifty_df['trend_flag'].shift(1)\n).astype(int)\n\nquarterly_flips = nifty_df.groupby(pd.Grouper(freq='Q'))['flag_changed'].sum()",
+              "caption": "Counting trend flag flips per quarter"
+            },
+            {
+              "_key": "rswc2l3b11",
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "rswc2l3b11st1",
+                  "label": "Trend Flag Flips, 2021 (illustrative)",
+                  "value": "2",
+                  "context": "A sustained, largely one-directional rally"
+                },
+                {
+                  "_key": "rswc2l3b11st2",
+                  "label": "Trend Flag Flips, 2022 (illustrative)",
+                  "value": "9",
+                  "context": "A choppy, range-bound year, matching Chapter 1's qualitative description"
+                }
+              ]
+            },
+            {
+              "_key": "rswc2l3b12",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc2l3b12s1",
+                  "_type": "span",
+                  "text": "Every flip forces a re-entry cost in a strategy built on top of this flag, transaction costs, slippage, and a fresh exposure to whatever the market does next. A year with 9 flips instead of 2 is not marginally worse than a trending year. It is a different cost regime entirely.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc2l3b13",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc2l3b13s1",
+                  "_type": "span",
+                  "text": "The Standard Patch: Hysteresis, and Its Real Cost",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc2l3b14",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc2l3b14s1",
+                  "_type": "span",
+                  "text": "The standard rule-based fix is hysteresis: require the raw flag to disagree with the current confirmed flag for several consecutive days before actually flipping it. This directly applies the persistence idea from Chapter 1's final lesson, treating a single day's flip as unconfirmed noise until it proves itself.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc2l3b15",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "def apply_hysteresis(flag_series, confirm_days=3):\n    confirmed = flag_series.copy()\n    pending_flag = None\n    pending_count = 0\n\n    for i in range(1, len(flag_series)):\n        raw = flag_series.iloc[i]\n        current_confirmed = confirmed.iloc[i - 1]\n\n        if raw == current_confirmed:\n            pending_flag = None\n            pending_count = 0\n        else:\n            if raw == pending_flag:\n                pending_count += 1\n            else:\n                pending_flag = raw\n                pending_count = 1\n\n            if pending_count >= confirm_days:\n                current_confirmed = raw\n                pending_flag = None\n                pending_count = 0\n\n        confirmed.iloc[i] = current_confirmed\n\n    return confirmed\n\nnifty_df['trend_flag_confirmed'] = apply_hysteresis(nifty_df['trend_flag'], confirm_days=3)",
+              "caption": "Requiring 3 consecutive confirming days before a flag is allowed to flip"
+            },
+            {
+              "_key": "rswc2l3b16",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Hysteresis does not remove the tradeoff from Chapter 1's final lesson, it just lets you pick a point on it deliberately. A 3-day confirmation window cuts single-day noise flips, but it also guarantees the confirmed flag is always at least 3 days behind the raw one, every single time a genuine regime shift happens. Fewer false positives is bought with more lag, not with a free lunch."
+            },
+            {
+              "_key": "rswc2l3b17",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc2l3b17s1",
+                  "_type": "span",
+                  "text": "What a Probabilistic Model Buys You Instead",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc2l3b18",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc2l3b18s1",
+                  "_type": "span",
+                  "text": "The problem was never the specific number 200, or 15, or 3. It was requiring a hard binary decision, up or down, low or extreme, confirmed or not, from a signal that is genuinely continuous and genuinely uncertain day to day. The next lesson introduces a different kind of output entirely: a probability of being in each regime, updated continuously, with the persistence idea from Chapter 1 estimated from the data itself rather than hand-picked as a confirmation window.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc2l3b19",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Every fix explored in this lesson, wider bands, more confirmation days, combining more flags, is still a hard threshold wearing a disguise. A genuinely different approach does not pick a better threshold. It stops thresholding and starts estimating a probability instead."
+            },
+            {
+              "_key": "rswc2l3b20",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Counting Flips by Hand",
+              "prompt": "A trend_flag series over 10 trading days reads: up, up, down, up, up, up, down, down, up, up. Using flag_changed = flag != flag.shift(1) as defined in this lesson, how many flip days does the series contain (the first day has no prior value to compare against, so it cannot count as a flip)?",
+              "correctValue": 4,
+              "tolerance": 0,
+              "explanation": "Flips occur at positions 3 (up to down), 4 (down to up), 7 (up to down), and 9 (down to up), for 4 total flips out of 9 comparable transitions. That is close to a flip every other day, exactly the kind of series a confirmation window is designed to quiet down."
+            },
+            {
+              "_key": "rswc2l3b21",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "What Hysteresis Actually Buys You",
+              "question": "Adding a 3-day confirmation requirement to a trend flag primarily achieves which of the following?",
+              "options": [
+                "It eliminates false signals entirely with no downside",
+                "It reduces whipsaws from noise, at the cost of a guaranteed multi-day lag on every genuine regime shift",
+                "It makes the choice of moving average window irrelevant",
+                "It converts the flag into a genuine probability of being in a given regime"
+              ],
+              "correctIndex": 1,
+              "explanation": "Hysteresis trades false positives for lag, it does not remove the tradeoff from Chapter 1's persistence discussion. It also does nothing to resolve the arbitrary-parameter problem from Demonstration One, and it still outputs a hard binary flag rather than a probability, which is exactly the gap the next lesson addresses."
+            },
+            {
+              "_key": "rswc2l3b22",
+              "_type": "keyTakeaways",
+              "points": [
+                "Nearby, equally defensible moving average window pairs can disagree on a large share of trading days, showing the 50/200 convention is popular, not statistically special",
+                "Counting flag flips per quarter turns a qualitative story like '2022 was choppier than 2021' into a concrete, comparable number",
+                "Hysteresis, requiring several consecutive confirming days before a flag flips, reduces noise-driven whipsaws but guarantees a fixed lag on every genuine regime shift",
+                "Wider bands, more confirmation days, and combining more flags are all still hard thresholds; none of them resolve the underlying tradeoff",
+                "The fix is not a better threshold, it is replacing a binary flag with a continuously updated probability, which is what the next lesson introduces"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

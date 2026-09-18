@@ -1,0 +1,236 @@
+{
+  "courseSlug": "understanding-market-making-and-liquidity-provision-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 3: Inventory Risk and Quote Skewing",
+      "lessons": [
+        {
+          "title": "Skewing Quotes to Offload Inventory Without Moving the Market",
+          "slug": "skewing-quotes-to-offload-inventory-without-moving-the-market",
+          "body": [
+            {
+              "_key": "mmc3l3b01",
+              "_type": "bigIdea",
+              "text": "The cheapest way to get rid of unwanted inventory is to make the market want to take it off your hands. The most expensive way is to announce, through an aggressive order, that you need it gone right now."
+            },
+            {
+              "_key": "mmc3l3b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc3l3b02s1",
+                  "_type": "span",
+                  "text": "Two Ways to Offload Inventory, One Cheap, One Expensive",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc3l3b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc3l3b03s1",
+                  "_type": "span",
+                  "text": "The last lesson showed how quoting around a reservation price, instead of the mid, naturally makes the side that reduces inventory more attractive and the side that adds to it less attractive. That is passive skewing: waiting for natural order flow to trade against an already-adjusted quote. The alternative is an aggressive unwind: sending a market order, or an aggressively priced limit order, to close the position outright, immediately. Both get inventory off the book eventually. They are not remotely equivalent in cost.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc3l3b04",
+              "_type": "comparison",
+              "title": "Passive Skewing vs Aggressive Unwind",
+              "columns": [
+                {
+                  "_key": "mmc3l3b04c1",
+                  "label": "Passive Skewing",
+                  "points": [
+                    "Adjusts resting quotes to bias which side gets hit next",
+                    "No spread paid, no book-walking slippage",
+                    "Timing is uncertain; depends on natural order flow arriving",
+                    "Does not signal urgency to other participants"
+                  ]
+                },
+                {
+                  "_key": "mmc3l3b04c2",
+                  "label": "Aggressive Unwind",
+                  "points": [
+                    "Sends an order that crosses the spread to trade immediately",
+                    "Pays the spread and risks walking the book, exactly as covered in Chapter 1",
+                    "Timing is certain; the position closes right away",
+                    "Can signal one-directional urgency, inviting other participants to trade ahead of the rest of the unwind"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "mmc3l3b05",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc3l3b05s1",
+                  "_type": "span",
+                  "text": "What Skewing Actually Changes: Probability, Not Certainty",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc3l3b06",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc3l3b06s1",
+                  "_type": "span",
+                  "text": "It is worth being precise about what skewing does and does not do. Shifting the reservation price makes the desired side of the trade relatively more attractive to takers, which raises the probability that the next fill moves inventory back toward flat rather than further away. It does not guarantee that fill happens by any particular moment. If order flow simply does not show up on the desired side, skewing on its own will not rescue a market maker running out of time before its own risk limits force action, which is exactly the duration risk problem from the first lesson of this chapter.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc3l3b07",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Skewing buys a market maker better odds, not a deadline. That distinction is why real desks pair a skewing rule with a hard risk limit: skew first, and only escalate to an aggressive unwind if inventory or time-to-horizon crosses a threshold the desk has decided it is not willing to tolerate passively."
+            },
+            {
+              "_key": "mmc3l3b08",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc3l3b08s1",
+                  "_type": "span",
+                  "text": "Price Skew vs Size Skew: What to Do When the Tick Won't Move",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc3l3b09",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc3l3b09s1",
+                  "_type": "span",
+                  "text": "Chapter 2 established that many contracts, especially cheap, far out-of-the-money options, are tick-constrained: the spread already sits at the exchange's minimum tick, with no room to narrow or shift by less than a full tick. Shifting a reservation price by a fraction of a tick is meaningless if the quote itself cannot move by less than a full tick. In that situation, a market maker skews through size instead of price: posting more resting quantity on the side it wants hit, and less, or none at all, on the side it wants to avoid, while the price itself stays pinned at the same one-tick spread.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc3l3b10",
+              "_type": "table",
+              "caption": "Price skew vs size skew",
+              "headers": ["Method", "When It Works", "How It Changes the Quote"],
+              "rows": [
+                { "_key": "mmc3l3b10r1", "_type": "tableRow", "cells": ["Price skew", "Cost-constrained instruments, where the spread has room above the minimum tick", "Bid and ask both shift toward the side that reduces inventory"] },
+                { "_key": "mmc3l3b10r2", "_type": "tableRow", "cells": ["Size skew", "Tick-constrained instruments, where price cannot move by less than a full tick", "Quoted size becomes asymmetric; more resting quantity on the desired side, less on the other"] }
+              ]
+            },
+            {
+              "_key": "mmc3l3b11",
+              "_type": "table",
+              "caption": "Illustrative graduated skew schedule as long inventory builds (a practical framework, not a formula-derived output)",
+              "headers": ["Inventory Band (units long)", "Price Skew", "Size Adjustment"],
+              "rows": [
+                { "_key": "mmc3l3b11r1", "_type": "tableRow", "cells": ["0 to 50", "None", "Equal size on bid and ask"] },
+                { "_key": "mmc3l3b11r2", "_type": "tableRow", "cells": ["51 to 150", "1 tick lower", "Reduced bid size, increased ask size"] },
+                { "_key": "mmc3l3b11r3", "_type": "tableRow", "cells": ["151 to 300", "2 ticks lower", "Bid size cut further, ask size at maximum comfortable level"] },
+                { "_key": "mmc3l3b11r4", "_type": "tableRow", "cells": ["300+", "3 or more ticks lower, or bid pulled entirely", "Bid minimal or zero; consider a partial aggressive unwind"] }
+              ]
+            },
+            {
+              "_key": "mmc3l3b12",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This graduated schedule is an illustrative practical framework to show how skewing typically escalates with inventory, not a literal numeric output of the Avellaneda-Stoikov formula from the previous lesson. A production system would calibrate its own skew schedule from fitted parameters, order book behaviour, and its own risk limits, rather than from a fixed table like this one."
+            },
+            {
+              "_key": "mmc3l3b13",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Skewing a Tick-Constrained Option",
+              "scenario": "A market maker is long 180 units of a far out-of-the-money weekly option priced at ₹1.40, already at the exchange's minimum one-tick spread, and inventory keeps building as sellers continue to hit its bid.",
+              "prompt": "Since the spread cannot narrow or shift by less than a full tick here, what tool does the market maker still have available to skew its quote, and how would it use it?",
+              "modelAnswer": "With price skewing unavailable because the quote is already tick-constrained, the market maker's remaining tool is size skewing: reducing the quantity it is willing to buy at its bid, while increasing the quantity it offers to sell at its ask. This makes it structurally less likely to keep buying more of the option and structurally more likely to find a buyer for its existing inventory, without needing to move the price at all, which the tick rule does not allow in any case."
+            },
+            {
+              "_key": "mmc3l3b14",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc3l3b14s1",
+                  "_type": "span",
+                  "text": "Why Aggressively Hitting the Market Backfires",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc3l3b15",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc3l3b15s1",
+                  "_type": "span",
+                  "text": "Dumping a large position with a market order looks tempting precisely because it is certain and immediate, but it reverses the market maker's entire business model in one stroke. Instead of earning the spread, it pays the spread. Instead of trading a small size at the best price, a large order walks the book exactly as described back in Chapter 1, filling at progressively worse prices as it eats through each depth level. And a sudden burst of one-directional volume is visible to every other participant watching the tape, including other market makers and fast proprietary desks, who can reasonably infer that more of the same is likely to follow and adjust their own quotes away from the unwinding market maker before it has finished.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc3l3b16",
+              "_type": "callout",
+              "type": "warning",
+              "text": "An aggressive unwind is not wrong, it is expensive, and expensive is sometimes the correct choice when duration risk has become the larger danger. The mistake is reaching for it as a default rather than as an escalation, when patient skewing was still a live option and simply had not been given enough time to work."
+            },
+            {
+              "_key": "mmc3l3b17",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Skew or Unwind?",
+              "question": "A market maker is moderately long, well within its normal risk limits, on a contract with steady two-way order flow and no news events expected for hours. What is the more appropriate first response?",
+              "options": [
+                "Immediately send a market order to flatten the position",
+                "Skew the quote to make selling to it less attractive and buying from it more attractive, and let natural flow work",
+                "Do nothing and leave the quote exactly as it was when flat",
+                "Widen the spread symmetrically around the unchanged mid price"
+              ],
+              "correctIndex": 1,
+              "explanation": "With inventory still within normal limits and steady two-way flow expected, passive skewing is the lower-cost first response: it improves the odds of the position naturally reducing without paying the spread or signalling urgency. An aggressive unwind is a reasonable next step only if inventory keeps growing or time runs short, not the default first move; leaving the quote unchanged ignores the inventory risk entirely, and a purely symmetric wider quote does nothing to bias which side gets hit next."
+            },
+            {
+              "_key": "mmc3l3b18",
+              "_type": "keyTakeaways",
+              "points": [
+                "Passive skewing biases which side of the market is more likely to trade next; it changes probability, not certainty, and does not guarantee a fill by any deadline",
+                "An aggressive unwind is certain and immediate, but pays the spread, risks walking the book, and can signal urgency that invites other participants to trade ahead of the rest of it",
+                "When a quote is tick-constrained and price cannot shift by less than a full tick, size skewing, adjusting how much quantity is offered on each side, becomes the available substitute",
+                "A graduated skew schedule that escalates with inventory size is a practical way to operationalise the reservation-price intuition from the previous lesson, though real systems calibrate this from data rather than a fixed table",
+                "Passive skewing paired with a hard risk limit that triggers an aggressive unwind only when inventory or time-to-horizon breaches a threshold is the standard pattern real desks use",
+                "Reaching for an aggressive unwind as a default, rather than an escalation, is one of the more expensive habits a market maker can develop"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

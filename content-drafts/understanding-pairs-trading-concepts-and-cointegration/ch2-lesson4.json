@@ -1,0 +1,264 @@
+{
+  "courseSlug": "understanding-pairs-trading-concepts-and-cointegration",
+  "chapters": [
+    {
+      "title": "Chapter 2: The Spread and the Z-Score",
+      "lessons": [
+        {
+          "title": "Case Study: Calculating a Spread and Z-Score for Two NSE Banking Stocks",
+          "slug": "case-study-calculating-a-spread-and-z-score-for-two-nse-banking-stocks",
+          "body": [
+            {
+              "_key": "p8-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p8-001s1", "_type": "span", "marks": [], "text": "This case study runs the full pipeline from this chapter, correlation, regression hedge ratio, spread, and z-score, on a fresh pair: Axis Bank and Kotak Mahindra Bank. Both are large private sector NSE banks with overlapping retail and corporate lending books, similar exposure to the RBI's rate cycle, and shared membership in the Nifty Bank index, the same kind of shared exposure story that made HDFC Bank and ICICI Bank a reasonable candidate pair in Chapter 1." }
+              ]
+            },
+            {
+              "_key": "p8-002",
+              "_type": "bigIdea",
+              "text": "The full pipeline runs in one direction: check correlation to screen the pair, run a regression to get a real hedge ratio, build the spread from that hedge ratio, compute a rolling mean and standard deviation of the spread, and convert today's spread into a z-score. Each step depends on the one before it, and skipping a step means trading on intuition instead of a measured signal."
+            },
+            {
+              "_key": "p8-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p8-003s1", "_type": "span", "marks": [], "text": "Step 1: Screening and Correlation" }
+              ]
+            },
+            {
+              "_key": "p8-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p8-004s1", "_type": "span", "marks": [], "text": "Pulling 180 days of NSE closing prices for both stocks and computing the correlation of their daily returns gives an illustrative reading of about 0.66, comfortably inside the typical 0.5 to 0.85 range for same-sector NSE pairs from Chapter 1. That clears the screening bar and justifies moving on to a proper regression-based hedge ratio, rather than settling for the naive price ratio." }
+              ]
+            },
+            {
+              "_key": "p8-005",
+              "_type": "keyFact",
+              "label": "180-day return correlation, Axis Bank vs Kotak Mahindra Bank",
+              "value": "≈ 0.66 (illustrative)",
+              "context": "Comfortably inside the typical 0.5 to 0.85 range for same-sector NSE pairs, enough to proceed to a regression-based hedge ratio"
+            },
+            {
+              "_key": "p8-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p8-006s1", "_type": "span", "marks": [], "text": "Step 2: The Regression Hedge Ratio" }
+              ]
+            },
+            {
+              "_key": "p8-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p8-007s1", "_type": "span", "marks": [], "text": "With Axis Bank at ₹1,150 and Kotak Mahindra Bank at ₹1,850 (illustrative), the naive price ratio is 1,150 divided by 1,850, or about 0.62. Running an OLS regression of Axis Bank's price on Kotak Mahindra Bank's price over the same 180-day window gives a beta of 0.58, the regression-based hedge ratio actually used to build the spread." }
+              ]
+            },
+            {
+              "_key": "p8-008",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "import numpy as np\nimport pandas as pd\n\n# axis_prices, kotak_prices: pandas Series of daily closes, last 180 sessions\nbeta, alpha = np.polyfit(kotak_prices, axis_prices, 1)\n\nspread = axis_prices - beta * kotak_prices\nz_score = (spread - spread.mean()) / spread.std()\n\nprint(f\"Hedge ratio (beta): {beta:.2f}\")\nprint(f\"Today's spread: {spread.iloc[-1]:.2f}\")\nprint(f\"Today's z-score: {z_score.iloc[-1]:.2f}\")",
+              "caption": "Regression hedge ratio, spread, and z-score in a few lines of pandas and numpy"
+            },
+            {
+              "_key": "p8-009",
+              "_type": "table",
+              "caption": "Naive price ratio vs regression hedge ratio (illustrative)",
+              "headers": ["Method", "Hedge ratio", "Resulting spread"],
+              "rows": [
+                { "_key": "p8-009r1", "cells": ["Price ratio", "0.62, recalculated fresh from each day's own prices", "Always ₹0 on the day it is calculated, by construction, not a trackable series"] },
+                { "_key": "p8-009r2", "cells": ["OLS regression beta", "0.58, estimated once over the 180-day window and held fixed", "₹77 today, a genuine series that moves as prices drift from the fixed ratio"] }
+              ]
+            },
+            {
+              "_key": "p8-010",
+              "_type": "callout",
+              "type": "insight",
+              "text": "The price-ratio spread is not just a different number, it is trivially zero every single day, since it is recomputed fresh from that same day's prices each time. A hedge ratio that resets itself daily can never produce a spread with a history to measure against. Only a hedge ratio estimated once over a historical window and then held fixed, like the regression beta, produces a real series with its own mean and standard deviation, which is what a z-score needs to mean anything. This is the real reason Lesson 1 insisted on a regression-based hedge ratio, not merely that the two numbers differ."
+            },
+            {
+              "_key": "p8-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p8-011s1", "_type": "span", "marks": [], "text": "Step 3: The Spread and Z-Score Over Time" }
+              ]
+            },
+            {
+              "_key": "p8-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p8-012s1", "_type": "span", "marks": [], "text": "Building the regression-based spread across the last twelve weeks gives a series with a mean of about ₹92.0 and a standard deviation of about ₹15.9. Converting each week to a z-score shows the spread drifting up through Week 4, then reversing and drifting down through Week 9, before recovering back toward its average by Week 12." }
+              ]
+            },
+            {
+              "_key": "p8-013",
+              "_type": "table",
+              "caption": "Spread and z-score, Axis Bank / Kotak Mahindra Bank (illustrative, μ ≈ ₹92.0, σ ≈ ₹15.9)",
+              "headers": ["Week", "Spread (₹)", "Z-score"],
+              "rows": [
+                { "_key": "p8-013r1", "cells": ["1", "95", "+0.19"] },
+                { "_key": "p8-013r2", "cells": ["2", "102", "+0.63"] },
+                { "_key": "p8-013r3", "cells": ["3", "110", "+1.13"] },
+                { "_key": "p8-013r4", "cells": ["4", "118", "+1.64"] },
+                { "_key": "p8-013r5", "cells": ["5", "112", "+1.26"] },
+                { "_key": "p8-013r6", "cells": ["6", "98", "+0.38"] },
+                { "_key": "p8-013r7", "cells": ["7", "85", "-0.44"] },
+                { "_key": "p8-013r8", "cells": ["8", "74", "-1.13"] },
+                { "_key": "p8-013r9", "cells": ["9", "68", "-1.51"] },
+                { "_key": "p8-013r10", "cells": ["10", "72", "-1.26"] },
+                { "_key": "p8-013r11", "cells": ["11", "80", "-0.75"] },
+                { "_key": "p8-013r12", "cells": ["12", "90", "-0.13"] }
+              ]
+            },
+            {
+              "_key": "p8-014",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Axis Bank / Kotak Mahindra Bank spread z-score (illustrative)",
+              "xAxisLabel": "Trading week",
+              "yAxisLabel": "Z-score",
+              "data": [
+                { "_key": "p8-014d1", "label": "1", "value": 0.19 },
+                { "_key": "p8-014d2", "label": "2", "value": 0.63 },
+                { "_key": "p8-014d3", "label": "3", "value": 1.13 },
+                { "_key": "p8-014d4", "label": "4", "value": 1.64 },
+                { "_key": "p8-014d5", "label": "5", "value": 1.26 },
+                { "_key": "p8-014d6", "label": "6", "value": 0.38 },
+                { "_key": "p8-014d7", "label": "7", "value": -0.44 },
+                { "_key": "p8-014d8", "label": "8", "value": -1.13 },
+                { "_key": "p8-014d9", "label": "9", "value": -1.51 },
+                { "_key": "p8-014d10", "label": "10", "value": -1.26 },
+                { "_key": "p8-014d11", "label": "11", "value": -0.75 },
+                { "_key": "p8-014d12", "label": "12", "value": -0.13 }
+              ]
+            },
+            {
+              "_key": "p8-015",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p8-015s1", "_type": "span", "marks": [], "text": "Step 4: Applying the Threshold Rules" }
+              ]
+            },
+            {
+              "_key": "p8-016",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p8-016s1", "_type": "span", "marks": [], "text": "Using the classic entry threshold of plus or minus 2 from Lesson 3, this window never actually generates a trade. The high point, plus 1.64 in Week 4, and the low point, negative 1.51 in Week 9, both fall short of the entry level. This is a realistic outcome, and an important one: not every visible swing in a chart is a statistically rare enough reading to trade. A trader disciplined about the plus or minus 2 rule sits this window out and keeps watching, rather than lowering the threshold after the fact just because Week 9 looked close." }
+              ]
+            },
+            {
+              "_key": "p8-017",
+              "_type": "callout",
+              "type": "warning",
+              "text": "It is tempting, after seeing a near miss like Week 9's negative 1.51, to say \"that was basically a signal\" and lower your entry threshold retroactively to negative 1.5 so it would have counted. This is a form of after-the-fact overfitting: tuning your rules to match what already happened, rather than committing to a threshold in advance and accepting that some stretches simply will not qualify. Chapter 4 covers this and other common backtesting mistakes in more depth."
+            },
+            {
+              "_key": "p8-018",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p8-018s1", "_type": "span", "marks": [], "text": "What This Case Study Still Doesn't Confirm" }
+              ]
+            },
+            {
+              "_key": "p8-019",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p8-019s1", "_type": "span", "marks": [], "text": "No trade was placed in this window, so there is nothing to manage yet, but that does not mean the pair is confirmed as tradeable. A correlation of 0.66 and a spread that wandered without crossing the entry threshold tells you the pipeline works and the pair behaved plausibly. It does not tell you, formally, whether this spread is actually mean-reverting in a statistically rigorous sense, or whether its apparent tendency to hover around ₹92 is just what this particular twelve-week window happened to look like. Chapter 3 introduces the cointegration test that answers that question properly, before you commit real capital the next time this z-score does cross plus or minus 2." }
+              ]
+            },
+            {
+              "_key": "p8-020",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "p8-020s1", "label": "Correlation used to screen the pair", "value": "≈ 0.66", "context": "180-day daily return correlation between Axis Bank and Kotak Mahindra Bank" },
+                { "_key": "p8-020s2", "label": "Regression hedge ratio", "value": "0.58", "context": "OLS beta from regressing Axis Bank's price on Kotak Mahindra Bank's price" },
+                { "_key": "p8-020s3", "label": "Highest z-score reached", "value": "+1.64 (Week 4)", "context": "Below the classic +2 entry threshold, no short-the-spread trade triggered" },
+                { "_key": "p8-020s4", "label": "Lowest z-score reached", "value": "-1.51 (Week 9)", "context": "Below the classic -2 entry threshold, no long-the-spread trade triggered" }
+              ]
+            },
+            {
+              "_key": "p8-021",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Would the next week trigger a trade?",
+              "prompt": "Using this pair's mean of ₹92.0 and standard deviation of ₹15.9, suppose the spread falls further in Week 13 to ₹55. What would the z-score be?",
+              "correctValue": -2.33,
+              "tolerance": 0.1,
+              "unit": "",
+              "explanation": "z = (55 − 92.0) / 15.9 = −37 / 15.9 ≈ −2.33. Unlike every week actually observed in this case study, this would cross the classic −2 entry threshold from Lesson 3, triggering a long Axis Bank, short Kotak Mahindra Bank entry."
+            },
+            {
+              "_key": "p8-022",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Reading a window with no signal",
+              "question": "In this case study, the z-score never crossed plus or minus 2 across twelve weeks. What is the correct conclusion?",
+              "options": [
+                "The pair should be dropped, since correlation and regression were a waste of effort without a trade",
+                "The threshold should be lowered so this window would have produced a trade",
+                "No trade was warranted this window, and the pair remains a valid candidate to keep monitoring on future data",
+                "The regression hedge ratio must have been calculated incorrectly, since no signal appeared"
+              ],
+              "correctIndex": 2,
+              "explanation": "A window with no qualifying signal is a normal, expected outcome, not a failure of the analysis. The pair passed the correlation screen and produced a sensible hedge ratio and spread; it simply did not stretch far enough, in this window, to justify a trade under the disciplined threshold rule. It remains a valid candidate to keep watching."
+            },
+            {
+              "_key": "p8-023",
+              "_type": "flashcardSet",
+              "title": "Chapter 2 Recap: Core Terms",
+              "cards": [
+                { "_key": "p8-023f1", "term": "Regression beta (hedge ratio)", "definition": "The slope from an OLS regression of one stock's price on another's, used as the hedge ratio because it reflects actual historical co-movement." },
+                { "_key": "p8-023f2", "term": "Spread", "definition": "Stock A's price minus beta times Stock B's price, the rupee-denominated series tracked for divergence and convergence." },
+                { "_key": "p8-023f3", "term": "Z-score", "definition": "(Spread − mean) ÷ standard deviation, expressing today's spread in standard deviation units relative to its own history." },
+                { "_key": "p8-023f4", "term": "Entry, exit, and stop-loss thresholds", "definition": "Pre-committed z-score levels, commonly ±2, near 0, and ±3.5 respectively, that turn a z-score into a rule-based trading system." },
+                { "_key": "p8-023f5", "term": "After-the-fact overfitting", "definition": "Adjusting a rule, such as an entry threshold, after seeing how a specific historical window played out, rather than committing to it in advance." }
+              ]
+            },
+            {
+              "_key": "p8-024",
+              "_type": "keyTakeaways",
+              "points": [
+                "The full spread-and-z-score pipeline runs in sequence: correlation screen, regression hedge ratio, spread construction, rolling mean and standard deviation, then the z-score itself.",
+                "A regression-based hedge ratio can meaningfully change the spread's value and even its sign compared to a naive price ratio, as seen here with ₹77 versus ₹-17.",
+                "Not every window produces a qualifying trade signal, and that is a normal, expected outcome of a disciplined threshold rule, not a sign the analysis failed.",
+                "Adjusting your entry threshold after seeing a near-miss, to make it count as a signal in hindsight, is a form of overfitting to avoid.",
+                "Passing the correlation screen and producing a sensible spread does not confirm a pair is safe to trade with real capital.",
+                "Chapter 3 introduces cointegration testing, the formal statistical check for whether a spread like this one is genuinely mean-reverting, which is the missing piece before trading this pair for real."
+              ]
+            },
+            {
+              "_key": "p8-025",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This case study is for educational purposes only and is not investment advice or a recommendation to buy, sell, or short any security named here. All prices, correlation figures, hedge ratios, spread values, and z-scores are illustrative and do not represent actual historical data. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

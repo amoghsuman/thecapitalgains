@@ -1,0 +1,130 @@
+{
+  "courseSlug": "understanding-latency-colocation-and-infrastructure-in-hft",
+  "chapters": [
+    {
+      "lessons": [
+        {
+          "title": "Order-to-Trade Ratio Penalties — Why Exchanges Tax Excessive Messaging",
+          "slug": "order-to-trade-ratio-penalties-why-exchanges-tax-excessive-messaging",
+          "body": [
+            {
+              "_key": "b1",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "b1s1", "_type": "span", "text": "A strategy that sends ten thousand orders and completes forty trades has done something to the market, even though it barely traded. What it has done is consume exchange capacity, and exchanges have a specific number for measuring exactly how much: the order-to-trade ratio.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b2",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "b2s1", "_type": "span", "text": "What the Ratio Actually Counts", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b3",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "md3a", "_type": "glossaryTerm", "definition": "The ratio of total order messages, including new orders, modifications, and cancellations, to the number of trades those orders actually resulted in." }
+              ],
+              "children": [
+                { "_key": "b3s1", "_type": "span", "text": "The ", "marks": [] },
+                { "_key": "b3s2", "_type": "span", "text": "order-to-trade ratio (OTR)", "marks": ["md3a"] },
+                { "_key": "b3s3", "_type": "span", "text": " is exactly what it sounds like: the total number of order messages, new orders, modifications, and cancellations combined, divided by the number of those orders that actually resulted in a trade. A ratio of 1 would mean every single order traded. A ratio of 250 means 250 messages were sent for every trade that actually happened.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b4",
+              "_type": "mathBlock",
+              "latex": "\\text{OTR} = \\dfrac{\\text{Orders} + \\text{Modifications} + \\text{Cancellations}}{\\text{Trades Executed}}",
+              "caption": "Order-to-trade ratio formula"
+            },
+            {
+              "_key": "b5",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Calculate the ratio",
+              "prompt": "A firm places 10,000 order messages, including new orders, modifications, and cancellations, over a trading session, of which only 40 result in an actual trade. What is the firm's order-to-trade ratio for that session?",
+              "correctValue": 250,
+              "tolerance": 5,
+              "explanation": "Order-to-trade ratio equals total order messages divided by trades executed: 10,000 divided by 40 equals 250. Every 250 messages sent, only 1 actually resulted in a trade."
+            },
+            {
+              "_key": "b6",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "b6s1", "_type": "span", "text": "Why Exchanges Care About Messaging Load", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b7",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "b7s1", "_type": "span", "text": "An exchange's matching engine and network infrastructure, the same infrastructure whose latency budget Chapter 1 broke down, has finite capacity to process messages per second. A member generating a huge volume of orders that rarely trade consumes a share of that finite capacity disproportionate to the actual market activity it contributes, potentially degrading the experience of every other member sharing the same infrastructure. Order-to-trade ratio penalties exist to price that cost back to whoever is generating it.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b8",
+              "_type": "table",
+              "caption": "Illustrative order-to-trade ratio penalty structure",
+              "headers": ["OTR Range", "Illustrative Treatment"],
+              "rows": [
+                { "_key": "b8r1", "_type": "tableRow", "cells": ["Below the baseline threshold", "No penalty, considered normal messaging activity"] },
+                { "_key": "b8r2", "_type": "tableRow", "cells": ["Moderately above threshold", "A small incremental charge per excess order message"] },
+                { "_key": "b8r3", "_type": "tableRow", "cells": ["Far above threshold", "A steeply escalating charge, designed to make sustained excessive messaging costly"] }
+              ]
+            },
+            {
+              "_key": "b9",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Treat the slab structure above as illustrative of the general principle: a low or moderate order-to-trade ratio typically carries no cost, while sustained excessive messaging becomes progressively more expensive. Exact thresholds and fee amounts are set and periodically revised by SEBI and the exchanges, so check current circulars for the actual figures before relying on any specific number."
+            },
+            {
+              "_key": "b10",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "b10s1", "_type": "span", "text": "The Market Maker Carve-Out", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b11",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "b11s1", "_type": "span", "text": "A registered market maker's entire job is to continuously update two-sided quotes as prices move, which naturally produces a very high order-to-trade ratio without anything being wrong. Punishing that behaviour with the same penalty structure applied to everyone else would undermine the liquidity provision the market depends on. Because of this, market making programs typically operate under separate, higher thresholds or specific exemptions recognized by the exchange, distinguishing continuous, legitimate quoting from the kind of excessive, low-value messaging the penalty structure is actually meant to discourage.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b12",
+              "_type": "bigIdea",
+              "text": "An order-to-trade ratio penalty is not a tax on speed. It is a tax on messaging that does not earn its keep, priced so that a firm feels the cost of the exchange capacity it is actually using."
+            },
+            {
+              "_key": "b13",
+              "_type": "keyTakeaways",
+              "points": [
+                "Order-to-trade ratio (OTR) equals total order messages, orders, modifications, and cancellations, divided by trades actually executed.",
+                "Exchanges impose escalating penalties for excessive order-to-trade ratios because a member's message volume consumes shared, finite exchange capacity, regardless of how much of it actually results in a trade.",
+                "Registered market makers typically operate under separate, higher thresholds, since continuous two-sided quoting naturally produces a high OTR as part of legitimate liquidity provision.",
+                "Managing order-to-trade ratio is a real design constraint for any strategy that fires and cancels orders frequently, not just a compliance afterthought."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

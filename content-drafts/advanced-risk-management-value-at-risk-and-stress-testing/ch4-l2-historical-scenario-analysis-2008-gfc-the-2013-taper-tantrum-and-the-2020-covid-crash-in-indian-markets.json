@@ -1,0 +1,172 @@
+{
+  "courseSlug": "advanced-risk-management-value-at-risk-and-stress-testing",
+  "chapters": [
+    {
+      "title": "Chapter 4: Stress Testing and Scenario Analysis",
+      "lessons": [
+        {
+          "title": "Historical Scenario Analysis: 2008 GFC, the 2013 Taper Tantrum, and the 2020 COVID Crash in Indian Markets",
+          "slug": "historical-scenario-analysis-2008-gfc-the-2013-taper-tantrum-and-the-2020-covid-crash-in-indian-markets",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "l1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "l1s1", "text": "Historical scenario analysis is the most literal form of stress testing: take the actual moves a real past crisis produced in the risk factors you care about, equity indices, currency, interest rates, and apply that exact pattern to today's portfolio, regardless of what caused it the first time. India has three genuinely distinct crisis templates on record, and they stress a portfolio in very different ways.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "keyFact",
+              "_key": "l2",
+              "label": "Historical Scenario Analysis",
+              "value": "Apply the actual percentage moves observed during a specific past crisis to today's current portfolio",
+              "context": "The scenario is real and undebatable, whether it can repeat, or repeat differently, is a separate judgment call."
+            },
+            {
+              "_type": "block",
+              "_key": "l3",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "l3s1", "text": "Three Crises, Three Different Shapes", "marks": [] }
+              ]
+            },
+            {
+              "_type": "timeline",
+              "_key": "l4",
+              "title": "Three Indian market crises worth stress testing against",
+              "events": [
+                { "date": "Jan to Oct 2008", "title": "Global Financial Crisis", "description": "Triggered by the US subprime mortgage collapse and Lehman Brothers' bankruptcy in September 2008. A slow-building, deeply severe equity bear market and global credit freeze, hitting financial and leveraged sectors hardest." },
+                { "date": "May to Aug 2013", "title": "Taper Tantrum", "description": "US Federal Reserve chair Ben Bernanke signaled winding down quantitative easing. India, running a large current account deficit at the time, was named among the 'Fragile Five' emerging markets and saw its currency come under severe pressure as foreign capital pulled back." },
+                { "date": "Jan to Mar 2020", "title": "COVID-19 Crash", "description": "The fastest, steepest equity drawdown in Indian market history, driven by a global pandemic shutting down economic activity, followed by an unusually fast recovery once central banks intervened aggressively." }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "l5",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "l5s1", "text": "The Numbers", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "l6",
+              "caption": "Approximate headline moves across the three crises (illustrative, for building the stress scenario below)",
+              "headers": ["Crisis", "Nifty 50 move", "USD/INR move", "10-year G-Sec yield move"],
+              "rows": [
+                { "cells": ["2008 GFC", "Roughly -60% peak to trough over about 10 months", "Roughly -25%, from about 40 to about 50 per dollar", "Roughly +150 bps, illustrative"] },
+                { "cells": ["2013 Taper Tantrum", "Roughly -15% over about 3 months", "About -23%, from roughly 55 to an all-time low of 68.85 per dollar in August 2013", "Roughly +200 bps, illustrative"] },
+                { "cells": ["2020 COVID Crash", "About -40%, from roughly 12,430 to an intraday low near 7,511 in ten weeks", "Roughly -8%, a comparatively mild currency move for a crisis this severe in equities", "Roughly -50 bps, as the RBI cut rates aggressively"] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "l7",
+              "type": "warning",
+              "text": "The Nifty and USD/INR figures above are well-documented headline facts. The bond yield moves are reasonable illustrative estimates built for this lesson's worked example, not a precise historical data series, real desk-grade stress testing would pull exact G-Sec yield curves for the specific dates used. What matters for the lesson is the pattern: GFC hit equities hardest, Taper Tantrum hit the currency hardest, and COVID was a fast, severe equity shock met with an unusually large monetary policy response."
+            },
+            {
+              "_type": "block",
+              "_key": "l8",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "l8s1", "text": "Worked Example: Applying All Three to One Portfolio", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "l9",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "l9s1", "text": "A trading firm holds three positions: Rs 50,00,000 in Nifty equity exposure, an unhedged USD 60,000 import payable due in three months, roughly Rs 45,00,000 at a base rate of Rs 75 per dollar, and Rs 20,00,000 face value of G-Sec bonds with a modified duration of 5 years. Applying each crisis's historical shock to all three positions at once shows something a single-asset view would miss entirely.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "l10",
+              "caption": "P&L breakdown by position, under each historical scenario",
+              "headers": ["Scenario", "Equity P&L", "FX payable P&L", "Bond P&L", "Total"],
+              "rows": [
+                { "cells": ["2008 GFC", "-Rs 30,00,000", "-Rs 11,25,000", "-Rs 1,50,000", "-Rs 42,75,000"] },
+                { "cells": ["2013 Taper Tantrum", "-Rs 7,50,000", "-Rs 10,35,000", "-Rs 2,00,000", "-Rs 19,85,000"] },
+                { "cells": ["2020 COVID Crash", "-Rs 20,00,000", "-Rs 3,60,000", "+Rs 50,000", "-Rs 23,10,000"] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "l11",
+              "type": "insight",
+              "text": "GFC produces the largest total loss for this specific portfolio, Rs 42,75,000, purely because this portfolio is heavily weighted toward equity, and GFC was the worst scenario for equities. But look at the FX payable line alone: Taper Tantrum's currency shock, Rs 10,35,000, is nearly as damaging as GFC's, Rs 11,25,000, on a currency move that was proportionally far more extreme. A firm with a larger unhedged dollar payable and a smaller equity book would find Taper Tantrum, not GFC, its worst-case scenario. And notice the bond line actually turns positive in the COVID scenario, since falling yields raise bond prices, a genuine partial offset that a purely equity-focused stress test would have missed completely."
+            },
+            {
+              "_type": "callout",
+              "_key": "l12",
+              "type": "insight",
+              "text": "This is the central lesson of historical scenario analysis: there is no single 'worst' historical crisis in the abstract. Which one is worst depends entirely on what a specific portfolio is actually exposed to, equity, currency, or rates, which is exactly why a serious stress testing program runs multiple distinct historical scenarios against every book, rather than picking one crisis and calling the job done."
+            },
+            {
+              "_type": "block",
+              "_key": "l13",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "l13s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "l14",
+              "variant": "numericInput",
+              "title": "Recompute the FX Leg",
+              "prompt": "Using the Taper Tantrum's roughly -23% USD/INR shock, what would the FX payable loss be if the unhedged payable were Rs 60,00,000 instead of Rs 45,00,000, in rupees?",
+              "correctValue": 1380000,
+              "tolerance": 20000,
+              "unit": "Rs",
+              "explanation": "0.23 x Rs 60,00,000 = Rs 13,80,000. A larger unhedged FX payable scales the currency-crisis loss proportionally, and would push Taper Tantrum's total loss for this portfolio much closer to, or past, the GFC scenario."
+            },
+            {
+              "_type": "exercise",
+              "_key": "l15",
+              "variant": "scenario",
+              "title": "Choosing the Right Scenario to Report",
+              "scenario": "A risk committee asks a desk to report 'the worst-case historical scenario' for its book in a single sentence, to keep the monthly report simple. The desk manages a portfolio heavily weighted toward G-Sec bonds with very little equity exposure.",
+              "prompt": "Is reducing this to a single 'worst-case' number a good idea? Which scenario would likely dominate this bond-heavy book, and why might picking just one scenario still be misleading?",
+              "modelAnswer": "For a bond-heavy book, the Taper Tantrum scenario is the most likely candidate for the worst outcome, since it combined a sharp yield spike with a severe currency shock, both of which hurt a rupee bond portfolio directly, while the GFC and COVID scenarios in the worked example above actually included a period of falling yields that would help a long-duration bond book. But reducing this to one number is still risky: it hides the fact that a future crisis is unlikely to replay any of these three scenarios exactly, and it discourages the committee from asking what a new combination, say a currency shock without matching yield moves, might do instead. A single 'worst case' number is a useful headline, not a substitute for running and reviewing the full scenario set regularly."
+            },
+            {
+              "_type": "block",
+              "_key": "l16",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "l16s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "l17",
+              "text": "There is no single worst historical crisis, only the crisis that is worst for your specific portfolio. Run more than one, or you have only tested the scenario you happened to pick."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "l18",
+              "points": [
+                "Historical scenario analysis applies a real past crisis's actual moves to today's portfolio, regardless of what originally caused those moves.",
+                "India's 2008 GFC, 2013 Taper Tantrum, and 2020 COVID crash stressed different risk factors hardest, equity, currency, and a fast equity shock met by aggressive rate cuts, respectively.",
+                "Applying all three to a multi-asset portfolio showed GFC as the worst overall for an equity-heavy book, but Taper Tantrum's currency shock was nearly as damaging on the FX leg alone, and COVID's falling yields actually helped the bond position.",
+                "Which historical scenario is 'worst' depends entirely on portfolio composition, which is why a serious stress testing program runs multiple distinct historical scenarios rather than relying on a single headline figure.",
+                "Historical scenarios are grounded in real, undebatable data, but they are still limited to shapes that have already happened, which is exactly the gap hypothetical scenario analysis, covered next, is built to fill."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,216 @@
+{
+  "courseSlug": "understanding-capacity-constraints-and-strategy-scaling",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Capacity Is the Silent Constraint on Every Strategy",
+      "lessons": [
+        {
+          "title": "Paper Returns vs Executable Returns: Where Backtests Lie",
+          "slug": "paper-returns-vs-executable-returns-where-backtests-lie",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "c1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c1s1", "text": "Run a backtest on five years of Nifty 50 data and it is not unusual to see a strategy showing 35 to 40 percent CAGR. Take that same strategy live with real capital and the return that shows up in your contract notes is often a fraction of that number. The strategy did not change. The rules did not change. What changed is that the backtest was solving an easier problem than the one you actually face: trading with real size, in a real order book, against real counterparties. This lesson is about that gap, and about the concept that explains most of it: capacity.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c2s1", "text": "The Backtest Assumes a Frictionless World", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c3",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c3s1", "text": "Most backtests, whether built on Zerodha's Kite Connect historical data, BSE's historical data portal, or NSE's own bhavcopy archives, share a quiet assumption: that you can buy or sell any quantity you want at the price shown on the chart. A backtest checks whether the Nifty closed above its 20-day moving average, decides to buy, and fills the trade at that closing price, whether the order is for 10 shares or 10 lakh shares. Real markets do not work this way. Every price you see quoted is attached to a finite quantity available at that price. Go beyond that quantity and you are no longer trading at the quoted price, you are moving it.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "c4",
+              "type": "warning",
+              "text": "A backtest that assumes unlimited fills at the quoted price is not modeling your strategy, it is modeling a version of your strategy that only exists at a very small size. The larger the capital behind the strategy, the further the backtest drifts from what you can actually achieve."
+            },
+            {
+              "_type": "block",
+              "_key": "c5",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c5s1", "text": "What Changes When Capital Gets Real", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c6",
+              "style": "normal",
+              "markDefs": [
+                { "_type": "glossaryTerm", "_key": "gt1", "definition": "The difference between the price a trade was expected to execute at and the price it actually filled at, driven mainly by order size relative to available liquidity." }
+              ],
+              "children": [
+                { "_type": "span", "_key": "c6s1", "text": "A retail trader placing a Rs 1 lakh order in a Nifty 50 stock through Zerodha barely registers on the order book. The order fills near-instantly, at or very close to the price on screen. Scale the same strategy to a prop desk managing Rs 25 crore, and the same trade idea now has to be executed as an order many multiples of average daily volume in some names. The gap between what a backtest assumes and what actually happens has a name: ", "marks": [] },
+                { "_type": "span", "_key": "c6s2", "text": "slippage", "marks": ["gt1"] },
+                { "_type": "span", "_key": "c6s3", "text": ". That gap is where paper returns and executable returns start to separate.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "statGrid",
+              "_key": "c7",
+              "stats": [
+                { "label": "Order: Rs 1 lakh in a Nifty 50 stock", "value": "Market impact: negligible", "context": "Fits comfortably within one day's traded volume" },
+                { "label": "Order: Rs 50 crore in the same stock", "value": "Market impact: material", "context": "Large enough to move the price you are trying to trade at" },
+                { "label": "Same Rs 50 crore order in a small-cap stock", "value": "Market impact: severe", "context": "A day's traded volume may not absorb the full order" }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c8",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c8s1", "text": "Where Backtests and Reality Diverge", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "c9",
+              "caption": "Backtest assumption vs what actually happens at scale",
+              "headers": ["Assumption in a Typical Backtest", "What Actually Happens at Scale"],
+              "rows": [
+                { "cells": ["You buy or sell the entire order at the quoted closing price", "Large orders eat through the order book, moving the price against you as you fill"] },
+                { "cells": ["Every trade fills fully and instantly", "Limited liquidity means large orders can go unfilled or fill over several days"] },
+                { "cells": ["Slippage is a fixed, small percentage assumption", "Slippage grows with order size relative to average daily volume"] },
+                { "cells": ["Trading costs are brokerage and STT alone", "Market impact cost can dwarf brokerage once order size crosses a threshold"] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c10",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c10s1", "text": "Capacity: The Ceiling Every Strategy Eventually Hits", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c11",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c11s1", "text": "Capacity is the maximum amount of capital a strategy can deploy before its risk-adjusted returns fall below what you are willing to accept. Every strategy has one, whether or not anyone has bothered to measure it. A strategy trading liquid Nifty 50 futures might have a capacity in the hundreds of crores. A strategy trading illiquid small-cap stocks picked off a screener.in style value screen might have a capacity of a few crore rupees before its own buying starts to erode the mispricing it is trying to capture. Capacity is not a fixed law of physics, it is a function of the instruments you trade, how patient your execution can be, and how much of the return depends on being early to a trade before others crowd in.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "chart",
+              "_key": "c12",
+              "chartType": "line",
+              "title": "Illustrative Return Decay as Deployed Capital Grows",
+              "xAxisLabel": "Capital Deployed",
+              "yAxisLabel": "Annualised Return (%)",
+              "data": [
+                { "label": "Rs 1 Cr", "value": 38 },
+                { "label": "Rs 5 Cr", "value": 34 },
+                { "label": "Rs 10 Cr", "value": 29 },
+                { "label": "Rs 25 Cr", "value": 21 },
+                { "label": "Rs 50 Cr", "value": 14 },
+                { "label": "Rs 100 Cr", "value": 9 }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c13",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c13s1", "text": "The curve above is illustrative, not drawn from any specific fund's disclosed numbers, but the shape is close to what shows up again and again in practice. Returns hold up reasonably well at small size, then bend downward, and eventually flatten out or turn negative once the strategy's own trading is large enough to move the market it is trying to profit from. Chapter 4 builds the tools to estimate where that bend happens for a specific strategy.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "c14",
+              "type": "insight",
+              "text": "This is exactly why serious quant funds treat capacity as a resource to be rationed, not a number to maximize. In India, some SEBI-registered Alternative Investment Funds running quantitative strategies close their funds to new subscriptions once they approach an estimated capacity ceiling, a decision that looks strange from outside but is simple capacity discipline from inside. A fund that keeps raising money past its strategy's capacity is not scaling, it is diluting its own edge."
+            },
+            {
+              "_type": "block",
+              "_key": "c15",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c15s1", "text": "Why This Matters However You Are Trading Today", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c16",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c16s1", "text": "If you are a retail trader running a strategy on Rs 2 lakh, capacity is not your problem yet, your order size is a rounding error to the market. But the moment you start thinking like a prop trading applicant or a quant researcher aspirant, capacity stops being a footnote and becomes one of the first questions any serious desk will ask about a strategy: not just does it work, but how much capital can it actually absorb before it stops working. Get comfortable with that question now, because the rest of this course builds the framework to answer it.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c17",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c17s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "c18",
+              "variant": "quiz",
+              "title": "Quick Check",
+              "question": "A backtest on 5 years of Nifty 50 daily data assumes every trade fills at the closing price, regardless of order size. What is this backtest most likely overestimating?",
+              "options": [
+                "The strategy's win rate",
+                "The volatility of the underlying stocks",
+                "The returns achievable once real capital and order size are involved",
+                "The number of trading days in the backtest period"
+              ],
+              "correctIndex": 2,
+              "explanation": "Assuming unlimited fills at the quoted price ignores market impact and slippage, both of which grow with order size. This is precisely the gap between paper returns and executable returns, the subject of this lesson."
+            },
+            {
+              "_type": "block",
+              "_key": "c19",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c19s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "c20",
+              "text": "A backtest tells you what a strategy could have earned trading an infinitely liquid market. Capacity tells you what it can actually earn trading yours. Every strategy has a ceiling, whether or not you have measured it yet."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "c21",
+              "points": [
+                "Backtests typically assume unlimited liquidity at the quoted price, an assumption that holds at small size and breaks down as order size grows relative to available liquidity.",
+                "The gap between backtested and live returns widens with capital deployed because market impact and slippage both scale with order size, not just with the underlying strategy logic.",
+                "Capacity is the maximum capital a strategy can deploy before risk-adjusted returns fall below an acceptable threshold, and it differs strategy by strategy and instrument by instrument.",
+                "Treating capacity as a resource to manage, rather than an afterthought, is what separates a strategy that scales cleanly from one that quietly destroys its own edge as it grows."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

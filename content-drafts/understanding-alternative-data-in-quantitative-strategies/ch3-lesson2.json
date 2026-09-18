@@ -1,0 +1,311 @@
+{
+  "courseSlug": "understanding-alternative-data-in-quantitative-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 3: Sourcing Alternative Data: Vendors, Costs, and Compliance",
+      "lessons": [
+        {
+          "title": "Data Licensing, Pricing Models, and Budgeting for a Quant Desk",
+          "slug": "data-licensing-pricing-models-and-budgeting-for-a-quant-desk",
+          "body": [
+            {
+              "_key": "c3l2k001",
+              "_type": "bigIdea",
+              "text": "A dataset is not expensive or cheap in isolation. It is only expensive or cheap relative to the profit the strategy built on it can actually generate."
+            },
+            {
+              "_key": "c3l2k002",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l2k002s1",
+                  "_type": "span",
+                  "text": "Chapter 1's six-dimension framework flagged cost as one of six things to score, but scoring cost as high or low needs a real number to compare it against. This lesson gives you the pricing structures you will encounter, a concrete budgeting heuristic to size what you should pay, negotiation tactics that actually move price, and the cross-border payment friction that catches Indian desks off guard when a vendor is based overseas.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l2k003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l2k003s1",
+                  "_type": "span",
+                  "text": "Six Common Pricing Structures",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l2k004",
+              "_type": "table",
+              "caption": "Almost every alt data contract you sign will be built from one or more of these",
+              "headers": ["Structure", "How It Works", "Who It Tends to Favor"],
+              "rows": [
+                {
+                  "_key": "c3l2k004r1",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Flat annual license",
+                    "One fixed fee for full access to the dataset for a year",
+                    "Favors heavy users who would otherwise pay more under usage-based pricing"
+                  ]
+                },
+                {
+                  "_key": "c3l2k004r2",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Seat or user-tiered",
+                    "Price scales with the number of named users who can access the data",
+                    "Favors small teams, penalizes a desk that wants to give broad internal access"
+                  ]
+                },
+                {
+                  "_key": "c3l2k004r3",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Usage or API-metered",
+                    "Price scales with API calls, records pulled, or compute consumed",
+                    "Favors light or exploratory users, can become expensive once a signal goes into production"
+                  ]
+                },
+                {
+                  "_key": "c3l2k004r4",
+                  "_type": "tableRow",
+                  "cells": [
+                    "AUM-based",
+                    "Price scales with the size of the fund or strategy the data supports",
+                    "Favors smaller funds, and means the vendor's revenue grows automatically as you scale"
+                  ]
+                },
+                {
+                  "_key": "c3l2k004r5",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Exclusivity premium",
+                    "An extra fee to prevent the vendor from selling the same feed to your direct competitors",
+                    "Rarely worth it unless the edge is large enough to justify materially higher cost"
+                  ]
+                },
+                {
+                  "_key": "c3l2k004r6",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Backfill and historical data",
+                    "Historical data for backtesting is often priced as a separate line item from the live feed",
+                    "Easy to underbudget, since a five-year backfill can cost more than a full year of live access"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c3l2k005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l2k005s1",
+                  "_type": "span",
+                  "text": "The Budgeting Heuristic: Cost as a Share of Expected Capacity",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l2k006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l2k006s1",
+                  "_type": "span",
+                  "text": "A simple, defensible way to set a ceiling on what you should pay for a dataset is to size it against the strategy's expected gross profit before data costs, then apply a policy ceiling for what share of that profit data spend is allowed to consume.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l2k007",
+              "_type": "mathBlock",
+              "latex": "\\text{Max Justified Budget} = \\text{AUM} \\times \\frac{\\text{Expected Alpha (bps)}}{10{,}000} \\times \\text{Cost Ratio Ceiling}",
+              "caption": "Expected Alpha is the strategy's expected annual excess return in basis points before data costs. Cost Ratio Ceiling is your desk's policy limit on what share of that gross profit data spend may consume, commonly somewhere in the 10 to 20 percent range depending on strategy capacity and risk appetite."
+            },
+            {
+              "_key": "c3l2k008",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Set a Data Budget Ceiling",
+              "prompt": "A strategy runs on an AUM of ₹500 crore and is expected to generate 50 basis points of annual excess return before data costs. Your desk's policy caps data spend at 15% of that expected gross profit. What is the maximum justified annual data budget, in ₹ lakh?",
+              "correctValue": 37.5,
+              "tolerance": 0.5,
+              "unit": "₹ lakh",
+              "explanation": "Expected gross profit = ₹500 crore x 0.50% = ₹2.5 crore. Maximum justified budget = 15% x ₹2.5 crore = ₹37.5 lakh. Any single dataset or combination of datasets feeding this strategy should stay within this ceiling, and a vendor pitch priced above it needs either a materially higher expected alpha estimate or a larger addressable AUM to justify it."
+            },
+            {
+              "_key": "c3l2k009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l2k009s1",
+                  "_type": "span",
+                  "text": "Negotiation Tactics That Actually Move Price",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l2k010",
+              "_type": "table",
+              "caption": "Small negotiation choices can meaningfully change the effective price of a data contract",
+              "headers": ["Tactic", "What It Does"],
+              "rows": [
+                {
+                  "_key": "c3l2k010r1",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Benchmark against two or three competing vendors",
+                    "Even an imperfect substitute gives you real leverage and a reference price point"
+                  ]
+                },
+                {
+                  "_key": "c3l2k010r2",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Weigh multi-year discounts against flexibility",
+                    "A three-year lock-in discount is only worth it if you are confident the dataset will still matter that long, given the decay dynamics from Chapter 1"
+                  ]
+                },
+                {
+                  "_key": "c3l2k010r3",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Negotiate trial-to-paid conversion terms upfront",
+                    "Lock in a maximum price increase from trial to paid before you start the trial, not after you are already dependent on the data"
+                  ]
+                },
+                {
+                  "_key": "c3l2k010r4",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Ask for a most-favored-nation style clause",
+                    "A commitment that you will not knowingly pay more than another customer of similar size or usage"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c3l2k011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l2k011s1",
+                  "_type": "span",
+                  "text": "Cross-Border Payments: The FEMA and Withholding Tax Layer",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l2k012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c3l2m001",
+                  "_type": "glossaryTerm",
+                  "definition": "The Foreign Exchange Management Act, the primary Indian law governing cross-border payments and foreign currency remittances by Indian entities."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c3l2k012s1",
+                  "_type": "span",
+                  "text": "Once you agree a price with an overseas vendor, the number on the invoice is not the last step. Paying a foreign vendor requires a ",
+                  "marks": []
+                },
+                {
+                  "_key": "c3l2k012s2",
+                  "_type": "span",
+                  "text": "FEMA",
+                  "marks": ["c3l2m001"]
+                },
+                {
+                  "_key": "c3l2k012s3",
+                  "_type": "span",
+                  "text": "-compliant remittance process, and the payment may attract withholding tax obligations under Indian income tax law depending on the nature of the service and any applicable tax treaty. In practice this usually means your finance team needs to prepare remittance certification, commonly Form 15CA and, where applicable, Form 15CB from a chartered accountant, before the bank will process the payment.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l2k013",
+              "_type": "collapsible",
+              "title": "Why this belongs in a data sourcing lesson, not just a finance manual",
+              "content": [
+                {
+                  "_key": "c3l2k013b1",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c3l2k013b1s1",
+                      "_type": "span",
+                      "text": "A researcher who negotiates a great price with a foreign vendor and then discovers the payment needs weeks of tax and compliance paperwork before the first invoice clears has effectively delayed the whole project, not just the finance step. Loop in your finance or tax team the moment you are seriously evaluating a foreign vendor, not after the contract is signed, so remittance paperwork runs in parallel with legal review of the contract itself rather than starting after it.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c3l2k014",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "One-Year Flexibility or Three-Year Discount",
+              "scenario": "A vendor offers your desk two options for a satellite-derived crop health feed: a one-year contract at full price, giving you the freedom to walk away or renegotiate annually, or a three-year contract at a 30% discount, locking in the price but also locking in the commitment. Your desk is not yet certain how central this feed will be to the strategy beyond the current monsoon season.",
+              "prompt": "Given what you know from Chapter 1 about alpha decay and from this chapter about vendor longevity risk, which option is the more defensible default, and what would change your answer?",
+              "modelAnswer": "The one-year contract is the more defensible default while genuine uncertainty remains about how central this feed will stay to the strategy. Locking in three years at a discount looks attractive on price alone, but it commits budget regardless of whether the signal continues to work, whether a better or cheaper alternative emerges, or whether the vendor itself remains reliable, none of which you can be confident about yet. The calculation would change if the feed has already been running successfully for at least a full monsoon cycle with a validated, statistically significant signal, if the six-dimension score is strong and stable, and if you have already checked the vendor's longevity risk from the previous lesson. Even then, a shorter lock-in with a smaller discount, or a two-year term with an exit clause after year one, is usually preferable to a full three-year commitment made mainly to capture a bigger discount."
+            },
+            {
+              "_key": "c3l2k015",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Every data budget decision is really two decisions stacked together: how much is this worth given the expected alpha, and how much flexibility am I giving up to get a better price. Treat them as separate questions, because a great price on the wrong commitment length is not actually a good deal."
+            },
+            {
+              "_key": "c3l2k016",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson explains general budgeting and compliance concepts and is not tax, legal, or financial advice. Consult your organisation's finance, tax, and legal teams before signing any data contract or processing any cross-border payment."
+            },
+            {
+              "_key": "c3l2k017",
+              "_type": "keyTakeaways",
+              "points": [
+                "Alt data pricing typically combines flat licenses, seat-based tiers, usage metering, AUM-based fees, exclusivity premiums, and separately priced historical backfill",
+                "Size a data budget ceiling against expected gross alpha, not against what feels affordable: Max Budget = AUM x Expected Alpha (bps) / 10,000 x Cost Ratio Ceiling",
+                "A ₹500 crore strategy expecting 50 bps of annual alpha with a 15% cost ceiling justifies at most about ₹37.5 lakh a year in data spend for that strategy",
+                "Benchmarking against competing vendors, negotiating trial-to-paid terms upfront, and weighing multi-year discounts against flexibility all meaningfully change the effective price you pay",
+                "Paying an overseas data vendor requires FEMA-compliant remittance and may trigger Indian withholding tax obligations, typically needing Form 15CA and Form 15CB",
+                "Loop in finance and tax teams the moment a foreign vendor is seriously being considered, not after the contract is signed, since cross-border payment paperwork can otherwise delay a project by weeks",
+                "A cheaper multi-year commitment is only a good deal if you already have real confidence in the signal and the vendor, not merely because the discount looks attractive on paper"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

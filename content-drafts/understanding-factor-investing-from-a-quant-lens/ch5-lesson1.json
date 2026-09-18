@@ -1,0 +1,197 @@
+{
+  "courseSlug": "understanding-factor-investing-from-a-quant-lens",
+  "chapters": [
+    {
+      "title": "Chapter 5: Capstone - Building and Presenting Your Own Factor Strategy",
+      "lessons": [
+        {
+          "title": "Designing Your Capstone Project: Choosing a Factor, Universe, and Hypothesis",
+          "slug": "designing-your-capstone-project-choosing-a-factor-universe-and-hypothesis",
+          "body": [
+            {
+              "_key": "f5l1b01",
+              "_type": "bigIdea",
+              "text": "Knowing what a Fama-French three-factor model is gets you through a definitions quiz. Being able to say 'I tested whether gross profitability improves a value screen on the Nifty 500, here is exactly how, here is what I found, and here is where I don't trust my own result' gets you a second interview."
+            },
+            {
+              "_key": "f5l1b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "f5l1b02s1", "_type": "span", "text": "You now have the full toolkit: the theory behind why factors exist, the individual factors themselves, how to build and combine a score, how to backtest it honestly, and how to construct and monitor a real portfolio. This lesson turns that toolkit into a capstone project, a piece of independent research specific enough to be genuinely yours, and honest enough about its own limitations to survive real scrutiny.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f5l1b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "f5l1b03s1", "_type": "span", "text": "Why a Capstone Project Matters for a Quant Career", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f5l1b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "f5l1b04s1", "_type": "span", "text": "Anyone can say they understand factor investing. What separates a candidate a quant desk, prop trading firm, or PM actually wants to hire is evidence of independent research judgement, the ability to form a specific hypothesis, gather and interrogate data, and reach a defensible, appropriately hedged conclusion. A vague claim like 'I studied value and momentum investing' is forgettable. A specific one, with a stated hypothesis, a described methodology, and an honest limitations section, is a concrete thing an interviewer can ask you to defend, which is exactly what makes it valuable.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f5l1b05",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "f5l1b05s1", "_type": "span", "text": "Step 1: Choose a Narrow, Well-Defined Hypothesis", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f5l1b06",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "f5l1b06s1", "_type": "span", "text": "'Does value investing work in India?' is not a project, it is a chapter title. A strong capstone hypothesis is narrow enough to actually test with the data and time you realistically have, and specific enough to be falsifiable, capable of coming back with a clear 'no' as well as a clear 'yes'.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f5l1b07",
+              "_type": "table",
+              "caption": "Weak project framing vs a strong, testable hypothesis",
+              "headers": ["Weak Framing", "Strong, Testable Hypothesis"],
+              "rows": [
+                { "_key": "f5l1b07r1", "_type": "tableRow", "cells": ["'I want to study momentum investing'", "'Does a 12-1 risk-adjusted momentum score outperform a raw 12-1 return momentum score, net of estimated transaction costs, on the Nifty 200 from 2015 to 2024?'"] },
+                { "_key": "f5l1b07r2", "_type": "tableRow", "cells": ["'I want to see if combining factors is better'", "'Does an integrated value-plus-quality composite score, per Chapter 2's gross profitability discussion, produce a higher risk-adjusted return than a value-only score over the same period and universe?'"] },
+                { "_key": "f5l1b07r3", "_type": "tableRow", "cells": ["'I want to test seasonality in Indian stocks'", "'Is there a statistically detectable return pattern in NSE smallcap stocks around India's 31 March fiscal year-end, echoing the US January effect discussed in Chapter 2?'"] }
+              ]
+            },
+            {
+              "_key": "f5l1b08",
+              "_type": "callout",
+              "type": "insight",
+              "text": "That third example is a direct callback to a hypothesis this course deliberately left open in Chapter 2's lesson on the size factor: whether a fiscal-year-end effect exists in Indian markets, analogous to the US January effect. It was framed there as a testable idea, not a proven fact, precisely because it is exactly the kind of narrow, specific, genuinely unanswered question a capstone project is built for."
+            },
+            {
+              "_key": "f5l1b09",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "f5l1b09s1", "_type": "span", "text": "Step 2: Define Your Universe and Data Sources Honestly", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f5l1b10",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "f5l1b10s1", "_type": "span", "text": "Chapter 3 was emphatic about point-in-time data and survivorship bias, and that standard does not disappear just because you are an individual researcher without an institutional data budget. What changes is what you do about it. A genuinely institutional-grade, point-in-time dataset covering the full historical NSE and BSE universe, including delisted names, is expensive and often out of reach for an independent project. The honest response is not to pretend the limitation does not exist, it is to state it plainly: 'this analysis uses the current Nifty 500 constituent list applied backward, which introduces survivorship bias; I would expect this to inflate the measured premium, since the delisted and failed companies most likely to have been flagged as statistically cheap are excluded.' That single sentence, reasoning about the likely direction of your own bias, demonstrates more research maturity than a project that simply never mentions the issue.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f5l1b11",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "f5l1b11s1", "_type": "span", "text": "Step 3: Pre-Register Your Methodology Before Looking at Results", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f5l1b12",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "f5l1m01",
+                  "_type": "glossaryTerm",
+                  "definition": "Writing down the exact methodology, metrics, breakpoints, and rebalancing rules of a study before running it, so the results cannot be quietly adjusted after the fact to produce a more favourable outcome."
+                }
+              ],
+              "children": [
+                { "_key": "f5l1b12s1", "_type": "span", "text": "Campbell Harvey, Yan Liu, and Heqing Zhu raised a pointed concern in their 2016 paper, examining the sheer number of 'factors' claimed in published finance research and arguing that many are likely false positives arising from researchers testing many variations of a signal until one happens to look statistically significant, a form of data mining sometimes called p-hacking. The discipline that protects against this is ", "marks": [] },
+                { "_key": "f5l1b12s2", "_type": "span", "text": "pre-registration", "marks": ["f5l1m01"] },
+                { "_key": "f5l1b12s3", "_type": "span", "text": ": write down your exact metrics, breakpoints, rebalancing frequency, and universe before running the analysis, and resist the temptation to quietly try a different lookback window or a different breakpoint after an initial result disappoints you. If you do explore variations, and genuine research often needs to, report that you did so explicitly, rather than presenting only the version that happened to work as if it were the only one you tried.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f5l1b13",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "f5l1b13s1", "_type": "span", "text": "Step 4: Plan for a Limitations Section From the Start", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f5l1b14",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "f5l1b14s1", "_type": "span", "text": "Treat your limitations section as a required deliverable, not an afterthought tacked on if there is time. Data quality and coverage gaps, survivorship bias if a full point-in-time dataset was not available, the specific historical period tested and whether it spans multiple macro regimes as discussed in Chapter 2, and the transaction cost assumptions used, all deserve an honest paragraph each. This is the same intellectually honest standard this course has tried to model throughout, disclaimers on hypothetical examples, hedged language around uncertain claims, and it is exactly the standard a good interviewer is listening for when they ask 'what would you do differently with more time or data?'", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f5l1b15",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Sharpening a Vague Project Idea",
+              "scenario": "A fellow learner tells you their capstone project idea: 'I want to prove that quality investing beats value investing in India.' They plan to download some financial ratios, build both a quality score and a value score, backtest them separately, and see which one has a higher total return over the last five years.",
+              "prompt": "Using the four steps from this lesson, identify at least two specific weaknesses in this plan, and rewrite it as a sharper, more defensible hypothesis.",
+              "modelAnswer": "Two clear weaknesses: first, the goal to 'prove' one factor 'beats' another over an unspecified five-year window is not a falsifiable, well-scoped hypothesis, five years is a short, single-regime sample given Chapter 2's lesson on factor cyclicality, and 'prove' suggests a predetermined conclusion rather than genuine inquiry. Second, there is no mention of transaction costs, data source limitations, or how survivorship bias will be handled or at least disclosed, all required under Steps 2 and 4. A sharper version might read: 'Over a NSE 500 universe from 2010 to 2024, spanning at least one full value-versus-growth cycle as discussed in Chapter 2, does a composite quality score produce a higher Sharpe ratio than a composite value score, net of estimated transaction costs, and how does their combined, integrated score in Chapter 3's sense compare to either alone? Data source and survivorship bias limitations will be explicitly discussed.' This version is falsifiable, spans a more meaningful time period, specifies a risk-adjusted rather than raw return comparison, and commits upfront to addressing data limitations."
+            },
+            {
+              "_key": "f5l1b16",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Test Yourself: Why Pre-Register a Methodology?",
+              "question": "Why does this lesson recommend writing down your exact methodology before looking at your results?",
+              "options": [
+                "It is required by SEBI for any published financial research",
+                "It prevents the researcher from quietly adjusting parameters after seeing disappointing results until something appears to work, a data mining problem highlighted by Harvey, Liu, and Zhu (2016)",
+                "It guarantees the strategy will be profitable when implemented live",
+                "It removes the need for a limitations section later"
+              ],
+              "correctIndex": 1,
+              "explanation": "Pre-registering a methodology guards against p-hacking, quietly trying different parameters, breakpoints, or lookback windows until one happens to produce a favourable result, and then presenting only that version. Harvey, Liu, and Zhu's 2016 research specifically raised this concern about the credibility of many published factor 'discoveries'."
+            },
+            {
+              "_key": "f5l1b17",
+              "_type": "flashcardSet",
+              "title": "Vocabulary Check: Terms From This Lesson",
+              "cards": [
+                { "_key": "f5l1b17c1", "term": "Falsifiable hypothesis", "definition": "A research question specific enough that the study could plausibly return a clear 'no' as well as a clear 'yes', rather than being vague enough to always seem confirmed." },
+                { "_key": "f5l1b17c2", "term": "Pre-registration", "definition": "Writing down a study's exact methodology, metrics, and parameters before running the analysis, to prevent adjusting the approach after the fact to produce a more favourable result." },
+                { "_key": "f5l1b17c3", "term": "P-hacking", "definition": "Testing many variations of a signal or methodology until one happens to appear statistically significant, a data mining problem that inflates the number of apparently significant, but likely false, findings." }
+              ]
+            },
+            {
+              "_key": "f5l1b18",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "The example hypotheses and project framings in this lesson are illustrative starting points for independent learning and research practice, not verified findings or investment advice. Any real research project should be conducted with careful attention to data licensing, academic integrity, and, if used for actual trading, all relevant regulatory requirements."
+            },
+            {
+              "_key": "f5l1b19",
+              "_type": "keyTakeaways",
+              "points": [
+                "A strong capstone hypothesis is narrow, specific, and falsifiable, not a broad restatement of a course topic",
+                "Combining two factors, testing a specific construction choice, or testing an open question like the Chapter 2 fiscal-year-end hypothesis all make for well-scoped, defensible projects",
+                "Data limitations, especially the absence of institutional-grade point-in-time data, should be disclosed and reasoned about explicitly, not hidden",
+                "Pre-registering your exact methodology before viewing results guards against p-hacking, a concern raised directly by Harvey, Liu, and Zhu's 2016 research into published factor 'discoveries'",
+                "A dedicated, honest limitations section, covering data quality, sample period, regime-specificity, and cost assumptions, is a sign of research maturity, not weakness",
+                "The next two lessons cover how to present this kind of project, and how to defend it under direct interview questioning"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

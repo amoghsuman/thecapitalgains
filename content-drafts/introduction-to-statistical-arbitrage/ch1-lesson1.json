@@ -1,0 +1,257 @@
+{
+  "courseSlug": "introduction-to-statistical-arbitrage",
+  "chapters": [
+    {
+      "title": "Chapter 1: What Statistical Arbitrage Actually Is",
+      "lessons": [
+        {
+          "title": "What Is Statistical Arbitrage? Market Neutrality and Alpha From Relationships, Not Direction",
+          "slug": "what-is-statistical-arbitrage-market-neutrality-and-alpha-from-relationships-not-direction",
+          "body": [
+            {
+              "_key": "sa1-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa1-001s1", "_type": "span", "marks": [], "text": "In March 2020, the Nifty 50 fell nearly 38 percent in five weeks. Most portfolios in India, equity mutual funds, PMS books, and retail demat accounts, fell hard right along with it. A small number of desks did not. One prop trader in Mumbai held a long position in Mahindra & Mahindra and an almost exactly offsetting short position in Maruti Suzuki, sized so that a move in the Nifty affected his book by close to nothing. He was not predicting the crash. He did not care which way the market went. He was betting on something much narrower: that a price relationship between two auto stocks, one that had held for years, would eventually snap back after a temporary stretch. That bet, not a view on the Nifty, is what statistical arbitrage is." }
+              ]
+            },
+            {
+              "_key": "sa1-002",
+              "_type": "bigIdea",
+              "text": "Statistical arbitrage is not a bet on whether a stock or the market goes up or down. It is a bet that a statistically stable relationship between two or more securities, which has temporarily stretched apart, will converge again. The position is built so that broad market moves cancel out, leaving the relationship itself as the source of profit or loss."
+            },
+            {
+              "_key": "sa1-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa1-003s1", "_type": "span", "marks": [], "text": "The Core Idea: Betting on a Relationship, Not a Direction" }
+              ]
+            },
+            {
+              "_key": "sa1-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "sa1-004m1", "_type": "glossaryTerm", "definition": "A position built from offsetting long and short holdings so that its return depends on the relationship between the two, not on the direction of the broader market." }
+              ],
+              "children": [
+                { "_key": "sa1-004s1", "_type": "span", "marks": [], "text": "Almost every strategy taught in a typical investing course, value investing, momentum, even most technical analysis, is directional. You form a view on where a stock or the market is headed, and you buy or sell accordingly. If you are right about direction, you make money. If you are wrong, you lose it, no matter how well reasoned your analysis was. Statistical arbitrage works differently. A stat arb trade is built to be " },
+                { "_key": "sa1-004s2", "_type": "span", "marks": ["sa1-004m1"], "text": "market neutral" },
+                { "_key": "sa1-004s3", "_type": "span", "marks": [], "text": ", meaning its profit or loss depends on the changing relationship between two positions, not on the direction either one moves in isolation." }
+              ]
+            },
+            {
+              "_key": "sa1-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa1-005s1", "_type": "span", "marks": [], "text": "A Concrete Example: Two Auto Stocks" }
+              ]
+            },
+            {
+              "_key": "sa1-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa1-006s1", "_type": "span", "marks": [], "text": "Take Maruti Suzuki and Mahindra & Mahindra, both large NSE-listed auto manufacturers. Both companies sell into the same broad Indian auto cycle: the same interest rate environment set by the RBI, the same rural demand swings, the same input cost pressures from steel and aluminium, and largely the same investor base rotating in and out of the auto sector. Because of this shared exposure, their stock prices tend to move together over long stretches. That is the relationship a stat arb trader watches." }
+              ]
+            },
+            {
+              "_key": "sa1-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa1-007s1", "_type": "span", "marks": [], "text": "The relationship is never perfectly stable day to day. A model recall at Maruti, a strong tractor-segment quarter at Mahindra, or a change in one company's export guidance can push one stock ahead of the other for a few weeks without the underlying shared story changing. A stat arb trader tracks the gap between the two, often expressed as a price ratio or a regression-based spread (the exact construction is covered in Chapter 2), and looks for moments when that gap has stretched unusually wide relative to its own history." }
+              ]
+            },
+            {
+              "_key": "sa1-008",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Maruti Suzuki vs Mahindra & Mahindra, indexed prices (illustrative)",
+              "xAxisLabel": "Trading week",
+              "yAxisLabel": "Indexed price (Week 1 = 100)",
+              "data": [
+                { "_key": "sa1-008d1", "label": "1" },
+                { "_key": "sa1-008d2", "label": "2" },
+                { "_key": "sa1-008d3", "label": "3" },
+                { "_key": "sa1-008d4", "label": "4" },
+                { "_key": "sa1-008d5", "label": "5" },
+                { "_key": "sa1-008d6", "label": "6" },
+                { "_key": "sa1-008d7", "label": "7" },
+                { "_key": "sa1-008d8", "label": "8" },
+                { "_key": "sa1-008d9", "label": "9" },
+                { "_key": "sa1-008d10", "label": "10" },
+                { "_key": "sa1-008d11", "label": "11" },
+                { "_key": "sa1-008d12", "label": "12" }
+              ],
+              "series": [
+                {
+                  "_key": "sa1-008se1",
+                  "label": "Maruti Suzuki (indexed)",
+                  "values": [100, 102, 104, 109, 114, 117, 115, 111, 107, 104, 102, 101]
+                },
+                {
+                  "_key": "sa1-008se2",
+                  "label": "Mahindra & Mahindra (indexed)",
+                  "values": [100, 101, 102, 103, 104, 105, 105, 104, 104, 103, 102, 101]
+                }
+              ]
+            },
+            {
+              "_key": "sa1-009",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Notice the two stocks start and end close together, but drift apart in the middle for stock-specific reasons before reconverging. A stat arb trade opened near Week 6, long Mahindra & Mahindra and short Maruti Suzuki, would have profited purely from that gap closing, regardless of whether the overall market rose or fell over those twelve weeks."
+            },
+            {
+              "_key": "sa1-010",
+              "_type": "keyFact",
+              "label": "A simple ₹10 lakh pairs trade",
+              "value": "₹5 lakh long M&M, ₹5 lakh short Maruti Suzuki",
+              "context": "Sized so that a 1% move in the Nifty affects both legs by a similar rupee amount, leaving the P&L driven mainly by the M&M-Maruti spread, not by the market"
+            },
+            {
+              "_key": "sa1-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa1-011s1", "_type": "span", "marks": [], "text": "Why \"Statistical\"? Probability, Not Certainty" }
+              ]
+            },
+            {
+              "_key": "sa1-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa1-012s1", "_type": "span", "marks": [], "text": "True arbitrage, buying gold in Mumbai and simultaneously selling it in Delhi at a higher price net of costs, or exploiting a brief mispricing between an NSE stock and its futures contract, is close to riskless. The two prices must converge, by construction, before the futures contract expires. Statistical arbitrage carries no such guarantee. The relationship between Maruti and Mahindra held together for years, but nothing forces it to keep holding. A permanent shift, say Mahindra losing meaningful market share to newer SUV entrants, or Maruti's EV strategy diverging sharply from Mahindra's, can break the relationship for good. This is why the strategy is called \"statistical\": the trade is a probability-weighted bet that a historically observed pattern continues, not a mathematically guaranteed profit." }
+              ]
+            },
+            {
+              "_key": "sa1-013",
+              "_type": "callout",
+              "type": "warning",
+              "text": "The single biggest way stat arb trades lose money is not the market falling. It is the spread continuing to widen after you have already entered the trade, or the underlying relationship breaking down permanently. Chapter 3 covers how to formally test whether a relationship is strong enough to trade in the first place, and Chapter 6 covers what to do when a position moves against you."
+            },
+            {
+              "_key": "sa1-014",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa1-014s1", "_type": "span", "marks": [], "text": "Where Does the Alpha Actually Come From?" }
+              ]
+            },
+            {
+              "_key": "sa1-015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa1-015s1", "_type": "span", "marks": [], "text": "If two stocks are expected to move together, why does the gap open up at all, and why does it close? Three forces are usually at work. First, stock-specific news causes short-term overreaction: a disappointing result or a one-off event moves one stock more than its long-run relationship with the other justifies, and the price partly corrects as the overreaction fades. Second, liquidity and flow effects: a large institutional order, an index rebalancing, or an FII flow that hits one stock and not the other can push prices apart temporarily with no change in fundamentals at all. Third, market segmentation: different sets of investors can dominate trading in each stock over short windows, for example a stock with heavy retail F&O activity around results versus one that does not, creating short-lived pricing gaps. In all three cases, the mispricing is expected to correct as the news is digested, the flow passes through, or the two investor bases re-align, which is exactly what a stat arb position is structured to capture." }
+              ]
+            },
+            {
+              "_key": "sa1-016",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "sa1-016s1", "label": "Net market exposure of a well-hedged pair", "value": "~0 beta", "context": "The long and short legs are sized so a broad Nifty move affects both sides similarly and cancels out" },
+                { "_key": "sa1-016s2", "label": "Positions per classic pairs trade", "value": "2 (one long, one short)", "context": "The simplest stat arb structure. Chapter 7 extends this to many positions through factors" },
+                { "_key": "sa1-016s3", "label": "What actually breaks the trade", "value": "Relationship divergence", "context": "Not a market crash. A pair can lose money in a flat or rising market if the spread keeps widening" },
+                { "_key": "sa1-016s4", "label": "What is needed before trading a pair", "value": "A formally tested relationship", "context": "Correlation alone is not enough. Chapter 3 covers cointegration testing, the real bar for tradeability" }
+              ]
+            },
+            {
+              "_key": "sa1-017",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa1-017s1", "_type": "span", "marks": [], "text": "Why This Matters for a Trader in India Right Now" }
+              ]
+            },
+            {
+              "_key": "sa1-018",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa1-018s1", "_type": "span", "marks": [], "text": "Running statistical arbitrage used to require an institutional desk and a direct market access line. That barrier has fallen sharply. Broker APIs such as Zerodha's Kite Connect and Upstox's API give retail traders programmatic access to live NSE and BSE data and order placement. Historical price data for testing relationships is freely available, and tools like screener.in make it easy to shortlist stocks within the same sector as candidate pairs. What has not changed is the regulatory boundary: SEBI's algorithmic trading framework requires order-placing strategies above certain thresholds to be tagged, and in many cases approved, through your broker, a topic covered in full in Chapter 6. For prop trading desks, and increasingly for systematizing retail traders, understanding statistical arbitrage is no longer optional background knowledge. It is one of the more accessible entry points into running a genuinely systematic, market neutral book." }
+              ]
+            },
+            {
+              "_key": "sa1-019",
+              "_type": "toolLink",
+              "label": "Screen NSE stocks by sector on screener.in",
+              "url": "https://www.screener.in",
+              "description": "A practical starting point for shortlisting same-sector stocks (auto, banking, FMCG) as candidate pairs, before testing them formally in Chapter 3."
+            },
+            {
+              "_key": "sa1-020",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Directional or market neutral?",
+              "question": "A trader buys 200 shares of Reliance Industries on NSE because she expects the Nifty 50 to rally over the next month. Is this a statistical arbitrage trade?",
+              "options": [
+                "Yes, because it involves a large, liquid NSE stock",
+                "No, because it is a directional bet on the market's direction, not a relationship between two securities",
+                "Yes, because Reliance is part of the Nifty 50 index",
+                "No, because statistical arbitrage can only be done using futures and options"
+              ],
+              "correctIndex": 1,
+              "explanation": "Statistical arbitrage requires a market-neutral structure built from a long position and an offsetting short position in related securities, so that broad market direction cancels out. A single directional stock purchase, however well reasoned, is a directional trade, not statistical arbitrage."
+            },
+            {
+              "_key": "sa1-021",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Is your friend really doing stat arb?",
+              "scenario": "A friend tells you he is \"doing statistical arbitrage\" because he buys Nifty futures whenever the index looks oversold on the RSI, and exits once it recovers.",
+              "prompt": "Is this actually statistical arbitrage? What is missing from his description of the strategy?",
+              "modelAnswer": "No, this is a directional, mean-reversion trade on a single index using a technical indicator, not statistical arbitrage. It has no offsetting short leg, so his returns depend entirely on the Nifty's direction. Real statistical arbitrage needs at least two related instruments, held long and short in a hedged ratio, so the profit comes from the relationship between them converging, not from either one moving up or down on its own."
+            },
+            {
+              "_key": "sa1-022",
+              "_type": "flashcardSet",
+              "title": "Statistical Arbitrage: Core Terms",
+              "cards": [
+                { "_key": "sa1-022f1", "term": "Statistical arbitrage", "definition": "A systematic trading strategy that profits from the convergence of a temporarily stretched, but historically stable, relationship between two or more securities. Typically structured to be market neutral." },
+                { "_key": "sa1-022f2", "term": "Market neutral", "definition": "A position built from offsetting long and short holdings so its return depends on the relationship between the positions, not on the direction of the broader market." },
+                { "_key": "sa1-022f3", "term": "Spread", "definition": "The measured gap, often a price ratio or regression-based difference, between two related securities that a stat arb trader tracks for divergence and convergence." },
+                { "_key": "sa1-022f4", "term": "Divergence risk", "definition": "The risk that a spread widens further after a trade is entered, or that the underlying relationship breaks down permanently instead of converging." },
+                { "_key": "sa1-022f5", "term": "Alpha", "definition": "Return generated from skill or a genuine mispricing, rather than simply from being invested in a rising market." }
+              ]
+            },
+            {
+              "_key": "sa1-023",
+              "_type": "keyTakeaways",
+              "points": [
+                "Statistical arbitrage is a market neutral strategy built from a long position and an offsetting short position, so that broad market moves largely cancel out.",
+                "Unlike true arbitrage, which is close to riskless, statistical arbitrage is a probability-weighted bet that a historically observed relationship continues to hold. It is not a guaranteed profit.",
+                "The trade profits when a temporarily stretched relationship between two related securities, like Maruti Suzuki and Mahindra & Mahindra, converges back toward its historical pattern.",
+                "The alpha comes from short-term overreaction to stock-specific news, temporary liquidity and flow effects, and differences in each stock's investor base, not from predicting the market's direction.",
+                "The biggest risk is not a market crash. It is the spread continuing to widen, or the relationship breaking down for good, which is why Chapter 3 introduces formal tests for whether a relationship is strong enough to trade.",
+                "Broker APIs like Zerodha's Kite Connect have made stat arb far more accessible to retail and prop traders, but SEBI's algorithmic trading framework still governs how these strategies can be run in India."
+              ]
+            },
+            {
+              "_key": "sa1-024",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice or a recommendation to buy, sell, or short any security named here. All price figures and charts are illustrative and do not represent actual historical data. Statistical arbitrage strategies carry real risk of loss and require compliance with SEBI's algorithmic trading regulations before being deployed with real capital. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

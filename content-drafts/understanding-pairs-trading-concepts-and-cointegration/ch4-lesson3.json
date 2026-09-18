@@ -1,0 +1,212 @@
+{
+  "courseSlug": "understanding-pairs-trading-concepts-and-cointegration",
+  "chapters": [
+    {
+      "title": "Chapter 4: Screening, Trading, and Managing a Pair",
+      "lessons": [
+        {
+          "title": "When a Pair Breaks Down: Stop-Losses and Structural Change",
+          "slug": "when-a-pair-breaks-down-stop-losses-and-structural-change",
+          "body": [
+            {
+              "_key": "p16-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p16-001s1", "_type": "span", "marks": [], "text": "Chapter 2 gave you a mechanical stop-loss: exit if the z-score crosses plus or minus 3.5. Chapter 4, Lesson 2 warned that a hedge ratio drifts as new data arrives. Neither of these, on its own, tells you whether a position moving against you is a normal, temporary stretch, exactly the kind of move a pairs trade is designed to sit through, or a sign the relationship you tested in Chapter 3 has genuinely broken. This lesson is about telling the two apart before your stop-loss has to do all the work." }
+              ]
+            },
+            {
+              "_key": "p16-002",
+              "_type": "bigIdea",
+              "text": "A pairs position needs layered defenses, not just one. A mechanical stop-loss reacts after the spread has already moved a lot, and says nothing about why. Rolling cointegration retesting and active monitoring for corporate actions on either leg can catch a genuine breakdown earlier, sometimes before the price action alone would have forced you out."
+            },
+            {
+              "_key": "p16-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p16-003s1", "_type": "span", "marks": [], "text": "What Actually Breaks a Pair" }
+              ]
+            },
+            {
+              "_key": "p16-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p16-004s1", "_type": "span", "marks": [], "text": "A relationship that passed a formal cointegration test does not stay valid forever. Chapter 1 already noted one real example: HDFC Bank's 2023 merger with its parent, HDFC Ltd, fundamentally changed HDFC Bank's balance sheet size and business mix overnight, the kind of event that can permanently alter how a stock relates to its former peers. Beyond mergers, common triggers include one company's asset quality or credit rating diverging from the other for a real, durable reason, not a one-quarter blip, a stock being added to or removed from an index like Nifty Bank, which changes the flow-based co-movement discussed in Chapter 1, and a regulatory or promoter-level event specific to one company alone, such as a large promoter stake sale or a governance issue, with no equivalent event on the other leg." }
+              ]
+            },
+            {
+              "_key": "p16-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p16-005s1", "_type": "span", "marks": [], "text": "The Mechanical Stop-Loss Is a Blunt Instrument" }
+              ]
+            },
+            {
+              "_key": "p16-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p16-006s1", "_type": "span", "marks": [], "text": "The plus or minus 3.5 z-score stop-loss from Chapter 2 is necessary, and you should never trade without one, but it is reactive by design. It only fires after the spread has already moved several standard deviations against you, and it cannot distinguish between an unusually large but still temporary stretch and a genuine, permanent change in the relationship. By the time a mechanical stop-loss triggers, whatever caused the move has often already been in the price for days or weeks." }
+              ]
+            },
+            {
+              "_key": "p16-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p16-007s1", "_type": "span", "marks": [], "text": "Rolling Retesting: A Smarter Early-Warning Signal" }
+              ]
+            },
+            {
+              "_key": "p16-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p16-008s1", "_type": "span", "marks": [], "text": "Rather than testing cointegration once and trusting it indefinitely, as Chapter 3's warning already flagged, rerun the Engle-Granger test on a rolling basis, for example monthly, using the most recent window of data. A pair that keeps passing is behaving as expected. A pair that suddenly fails a retest, after passing consistently for months, is showing you statistical evidence of a breakdown, often before the z-score has moved far enough to trigger the mechanical stop-loss. This does not mean you should hold a position past your stop-loss just because a retest still looks fine, the mechanical stop always applies. It means a failed retest is an additional, independent reason to exit, or at least reduce size, even if price action alone has not forced your hand yet." }
+              ]
+            },
+            {
+              "_key": "p16-009",
+              "_type": "timeline",
+              "title": "A hypothetical breakdown, caught by retesting before the stop-loss (illustrative)",
+              "events": [
+                { "_key": "p16-009e1", "date": "Month 1", "title": "Position entered", "description": "Pair enters at z = -2.1, cointegration confirmed at 5% on the formation window, hedge ratio 1.28." },
+                { "_key": "p16-009e2", "date": "Month 2", "title": "Monthly retest passes", "description": "Rolling cointegration retest on updated data still rejects the unit root null. Position held, unchanged." },
+                { "_key": "p16-009e3", "date": "Month 3", "title": "Unexpected acquisition announcement", "description": "One leg of the pair announces a large, unrelated acquisition that shifts its business mix. Z-score has only moved to -2.4, nowhere near the -3.5 stop-loss." },
+                { "_key": "p16-009e4", "date": "Month 3", "title": "Monthly retest fails", "description": "The rolling Engle-Granger retest, run after the announcement, can no longer reject the unit root null. The statistical basis for the trade is gone." },
+                { "_key": "p16-009e5", "date": "Month 3", "title": "Position exited on the failed retest", "description": "Exited based on the failed cointegration retest, not the mechanical stop-loss, avoiding a position built on a relationship that may no longer exist." }
+              ]
+            },
+            {
+              "_key": "p16-010",
+              "_type": "callout",
+              "type": "insight",
+              "text": "In this illustration, the z-score never came close to the -3.5 stop-loss, yet the underlying relationship had already broken. A trader relying on price action alone would have kept holding, waiting for a reversion that the statistics no longer supported. This is exactly the gap rolling retesting is meant to close."
+            },
+            {
+              "_key": "p16-011",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Rolling retesting is not a replacement for the mechanical stop-loss, it is a supplement to it. Never override or widen a stop-loss because a retest still passes, retests can lag a genuine breakdown too, especially if run on a monthly rather than weekly cadence. Use both: the stop-loss as the non-negotiable floor, and retesting as an earlier, statistically grounded warning system layered on top."
+            },
+            {
+              "_key": "p16-012",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Before continuing to hold a pairs position",
+              "steps": [
+                "Check for any corporate action news, M&A, large block deals, credit rating changes, on either leg since your last review",
+                "Check for any index reconstitution announcements affecting either stock",
+                "Confirm the current z-score against your entry, exit, and stop-loss thresholds",
+                "Rerun the Engle-Granger cointegration test on the latest rolling window",
+                "Recalculate the hedge ratio and compare it to the one the position was sized on",
+                "If the retest fails or the hedge ratio has drifted significantly, reduce size or exit, even if the stop-loss has not been hit"
+              ]
+            },
+            {
+              "_key": "p16-013",
+              "_type": "comparison",
+              "title": "Mechanical stop-loss vs rolling retesting",
+              "columns": [
+                {
+                  "_key": "p16-013c1",
+                  "label": "Mechanical stop-loss (z = ±3.5)",
+                  "points": [
+                    "Always active, requires no judgment calls in the moment",
+                    "Reacts only after the spread has already moved several standard deviations",
+                    "Cannot distinguish a temporary stretch from a permanent break",
+                    "The non-negotiable floor, never overridden"
+                  ]
+                },
+                {
+                  "_key": "p16-013c2",
+                  "label": "Rolling cointegration retesting",
+                  "points": [
+                    "Directly tests whether the statistical basis for the trade still holds",
+                    "Can flag a breakdown before price has moved far enough to trigger the stop",
+                    "Adds a periodic monitoring task, not something checked automatically every tick",
+                    "A supplement to the stop-loss, not a substitute for it"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "p16-014",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "p16-014s1", "label": "Real example of a relationship-changing event", "value": "HDFC Bank / HDFC Ltd merger, 2023", "context": "Permanently altered HDFC Bank's balance sheet and business mix" },
+                { "_key": "p16-014s2", "label": "Common triggers", "value": "M&A, index changes, credit divergence", "context": "Events specific to one leg that a shared, sector-wide story cannot explain" },
+                { "_key": "p16-014s3", "label": "Stop-loss role", "value": "Non-negotiable floor", "context": "Always active, never overridden by a passing retest" },
+                { "_key": "p16-014s4", "label": "Rolling retest cadence", "value": "Commonly monthly", "context": "Frequent enough to catch a breakdown early, without excessive noise from short-term fluctuation" }
+              ]
+            },
+            {
+              "_key": "p16-015",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Reacting to a failed retest",
+              "question": "Your position's z-score is currently -2.3, well short of the -3.5 stop-loss. A rolling cointegration retest this month fails to reject the unit root null, unlike every previous month. What is the most appropriate response?",
+              "options": [
+                "Ignore the retest since the stop-loss has not been triggered",
+                "Add to the position, since a wider spread now means a better entry price if it reverts",
+                "Treat the failed retest as a warning sign independent of the stop-loss, and reduce or exit the position even though price action alone has not forced an exit",
+                "Widen the stop-loss to give the position more room, since the position is not yet at a loss extreme"
+              ],
+              "correctIndex": 2,
+              "explanation": "A failed rolling retest is statistical evidence that the relationship the trade depends on may have broken down, independent of where the z-score currently sits. This lesson's point is that retesting can catch a breakdown before the mechanical stop-loss would, which is exactly why it should prompt action rather than being ignored."
+            },
+            {
+              "_key": "p16-016",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Diagnosing a widening spread",
+              "scenario": "You are long Stock A, short Stock B in a pairs trade. The spread has been widening steadily for two weeks. You notice Stock A just announced a large, unexpected acquisition of a company in a different business line, while Stock B has had no comparable news.",
+              "prompt": "Should you treat this as a normal, temporary stretch or a likely structural break, and why?",
+              "modelAnswer": "This looks like a likely structural break rather than routine noise. The widening coincides with a specific, identifiable event on only one leg, a large acquisition that changes Stock A's business mix, exactly the kind of company-specific structural trigger this lesson describes, rather than a shared sector-wide move that would affect both stocks. The appropriate response is to rerun the cointegration test on updated data rather than assuming the spread will revert on its own, and to be prepared to exit before the mechanical stop-loss is reached if the retest fails."
+            },
+            {
+              "_key": "p16-017",
+              "_type": "flashcardSet",
+              "title": "Breakdowns and Risk Management: Core Terms",
+              "cards": [
+                { "_key": "p16-017f1", "term": "Structural break", "definition": "A permanent change in the relationship between two stocks, caused by an event like a merger, index change, or company-specific fundamental shift, that a temporary spread reversion will not fix." },
+                { "_key": "p16-017f2", "term": "Rolling retesting", "definition": "Periodically rerunning the cointegration test on updated data to check whether a previously validated relationship still holds." },
+                { "_key": "p16-017f3", "term": "Mechanical stop-loss", "definition": "A pre-committed, price-based exit rule, such as a z-score of ±3.5, that always applies regardless of any other analysis." },
+                { "_key": "p16-017f4", "term": "Layered risk management", "definition": "Using more than one independent method, such as a mechanical stop-loss alongside rolling retesting, to catch different kinds of failure in a trade." }
+              ]
+            },
+            {
+              "_key": "p16-018",
+              "_type": "keyTakeaways",
+              "points": [
+                "A cointegrated pair can stop being cointegrated. Real triggers include mergers, index reconstitution, and company-specific fundamental or credit divergence.",
+                "The mechanical z-score stop-loss from Chapter 2 is necessary but reactive, it only fires after the spread has already moved a lot, and cannot diagnose why.",
+                "Rolling cointegration retesting, on a cadence like monthly, can flag a genuine breakdown earlier than price action alone, sometimes well before a stop-loss would trigger.",
+                "A failed retest should prompt reducing or exiting a position even if the z-score is nowhere near the stop-loss level.",
+                "Retesting supplements the stop-loss, it never replaces or loosens it. A passing retest is not a reason to widen or ignore your stop-loss.",
+                "A practical monitoring routine combines corporate action awareness, z-score tracking against pre-set thresholds, and periodic statistical retesting, not any single signal alone."
+              ]
+            },
+            {
+              "_key": "p16-019",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice or a recommendation to buy, sell, or short any security named here. The HDFC Bank and HDFC Ltd merger is a real historical event referenced for context; the timeline, z-scores, and other scenarios in this lesson are hypothetical illustrations and do not describe any real trade. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

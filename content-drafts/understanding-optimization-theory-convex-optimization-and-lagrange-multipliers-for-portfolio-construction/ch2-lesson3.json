@@ -1,0 +1,245 @@
+{
+  "courseSlug": "understanding-optimization-theory-convex-optimization-and-lagrange-multipliers-for-portfolio-construction",
+  "chapters": [
+    {
+      "title": "Chapter 2: Convexity: The Property That Makes Optimization Tractable",
+      "lessons": [
+        {
+          "title": "Why Portfolio Variance Is a Convex Function of Weights",
+          "slug": "why-portfolio-variance-is-a-convex-function-of-weights",
+          "body": [
+            {
+              "_key": "oc2l3-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l3-001s1", "_type": "span", "marks": [], "text": "Two lessons ago, a colleague told Ananya that portfolio variance is convex, and she had no way to check the claim. She now does: the chord test, the second-derivative test, and its many-variable generalization to a matrix called the Hessian. This lesson uses all three to prove, not assert, that wᵀΣw is convex, for any number of stocks, for any genuine covariance matrix, every single time." }
+              ]
+            },
+            {
+              "_key": "oc2l3-002",
+              "_type": "bigIdea",
+              "text": "Portfolio variance is convex not by coincidence, but because covariance matrices are never just any matrix. They are built from real variances and covariances, and that fact alone forces a property called positive semi-definiteness, which is exactly the many-variable version of f''(x) ≥ 0."
+            },
+            {
+              "_key": "oc2l3-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l3-003s1", "_type": "span", "marks": [], "text": "The Hessian of Portfolio Variance" }
+              ]
+            },
+            {
+              "_key": "oc2l3-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l3-004s1", "_type": "span", "marks": [], "text": "Take the portfolio variance function, f(w) = wᵀΣw, and differentiate it with respect to the weight vector w. This is standard matrix calculus, worth memorizing since it recurs constantly in quant finance." }
+              ]
+            },
+            {
+              "_key": "oc2l3-005",
+              "_type": "mathBlock",
+              "latex": "\\nabla f(\\mathbf{w}) = 2\\Sigma \\mathbf{w}",
+              "caption": "The gradient of portfolio variance: twice the covariance matrix, times the weight vector."
+            },
+            {
+              "_key": "oc2l3-006",
+              "_type": "mathBlock",
+              "latex": "H_f(\\mathbf{w}) = 2\\Sigma",
+              "caption": "The Hessian: the matrix of every second-order partial derivative. For this quadratic function, it works out to exactly twice the covariance matrix."
+            },
+            {
+              "_key": "oc2l3-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l3-007s1", "_type": "span", "marks": [], "text": "Notice the Hessian does not depend on w at all. Sigma is a fixed matrix, the same at every possible portfolio. That means whatever convexity conclusion this Hessian gives, it holds everywhere at once, not just near some particular set of weights. Portfolio variance is either convex over its entire domain, or not convex anywhere. There is no in-between, unlike x³ from the previous lesson." }
+              ]
+            },
+            {
+              "_key": "oc2l3-008",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l3-008s1", "_type": "span", "marks": [], "text": "What Positive Semi-Definite Means" }
+              ]
+            },
+            {
+              "_key": "oc2l3-009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "oc2l3-009m1", "_type": "glossaryTerm", "definition": "A symmetric matrix M such that xᵀMx is greater than or equal to zero for every possible vector x, not just portfolio weights. This is the many-variable version of a function's second derivative being non-negative everywhere." }
+              ],
+              "children": [
+                { "_key": "oc2l3-009s1", "_type": "span", "marks": [], "text": "A symmetric matrix M is " },
+                { "_key": "oc2l3-009s2", "_type": "span", "marks": ["oc2l3-009m1"], "text": "positive semi-definite" },
+                { "_key": "oc2l3-009s3", "_type": "span", "marks": [], "text": " (often shortened to PSD) if the following holds for every vector x you could possibly plug in." }
+              ]
+            },
+            {
+              "_key": "oc2l3-010",
+              "_type": "mathBlock",
+              "latex": "\\mathbf{x}^T M \\mathbf{x} \\geq 0 \\quad \\text{for every vector } \\mathbf{x}",
+              "caption": "The multi-variable analog of f''(x) ≥ 0. A quadratic function with a PSD Hessian is convex."
+            },
+            {
+              "_key": "oc2l3-011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l3-011s1", "_type": "span", "marks": [], "text": "Since the Hessian of portfolio variance is 2Σ, proving wᵀΣw is convex reduces entirely to proving Σ itself is positive semi-definite. That is the last step, and it turns out to be almost automatic." }
+              ]
+            },
+            {
+              "_key": "oc2l3-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l3-012s1", "_type": "span", "marks": [], "text": "Why Every Real Covariance Matrix Is Positive Semi-Definite" }
+              ]
+            },
+            {
+              "_key": "oc2l3-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l3-013s1", "_type": "span", "marks": [], "text": "Here is the argument that makes this entire course's foundation solid. Take any vector x, and think of it not as portfolio weights but simply as a set of numbers you use to combine the stocks' returns, R, into a single combined return, xᵀR. That combined return is itself a random variable, and every random variable has a variance." }
+              ]
+            },
+            {
+              "_key": "oc2l3-014",
+              "_type": "mathBlock",
+              "latex": "\\mathbf{x}^T \\Sigma \\mathbf{x} = \\text{Var}(\\mathbf{x}^T \\mathbf{R})",
+              "caption": "A standard identity: quadratic forms built from a covariance matrix always equal the variance of the corresponding linear combination of the underlying returns."
+            },
+            {
+              "_key": "oc2l3-015",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Variance can never be negative. It is built from squared deviations, and a sum of squares cannot go below zero. So xᵀΣx = Var(xᵀR) ≥ 0 for absolutely every vector x, which is exactly the definition of positive semi-definite. This is not an assumption or a lucky property of particular stocks. It follows directly from what a covariance matrix is. Every genuine covariance matrix is PSD, therefore every portfolio variance function wᵀΣw is convex, for 2 stocks or 200."
+            },
+            {
+              "_key": "oc2l3-016",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l3-016s1", "_type": "span", "marks": [], "text": "A Worked Numeric Check" }
+              ]
+            },
+            {
+              "_key": "oc2l3-017",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l3-017s1", "_type": "span", "marks": [], "text": "Take the Reliance-TCS corner of the covariance matrix from Chapter 1's case study. For a 2x2 symmetric matrix, PSD can be checked directly: both diagonal entries must be non-negative, and the determinant must be non-negative too." }
+              ]
+            },
+            {
+              "_key": "oc2l3-018",
+              "_type": "mathBlock",
+              "latex": "\\Sigma = \\begin{bmatrix} 0.0784 & 0.0168 \\\\ 0.0168 & 0.0576 \\end{bmatrix}",
+              "caption": "The Reliance-TCS covariance sub-matrix from earlier in the course."
+            },
+            {
+              "_key": "oc2l3-019",
+              "_type": "mathBlock",
+              "latex": "\\det(\\Sigma) = (0.0784)(0.0576) - (0.0168)^2 = 0.0045158 - 0.0002822 = 0.0042336 > 0",
+              "caption": "Both diagonal entries are positive, and the determinant is positive too. This matrix is not just PSD, it is strictly positive definite."
+            },
+            {
+              "_key": "oc2l3-020",
+              "_type": "keyFact",
+              "label": "Positive definite (strictly, not just semi-)",
+              "value": "Guarantees a unique global minimum",
+              "context": "When the determinant is strictly positive rather than merely zero-or-positive, the bowl has a single, unmistakable bottom rather than a flat valley of tied minima. This happens whenever no asset's returns can be written as an exact linear combination of the others."
+            },
+            {
+              "_key": "oc2l3-021",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Spot the impossible covariance matrix",
+              "question": "A junior analyst hands you a matrix and claims it is the covariance matrix of two stocks: variance of Stock A is 0.04, variance of Stock B is 0.01, and their covariance is 0.09. Is this a valid covariance matrix?",
+              "options": [
+                "Yes, both diagonal entries are positive so it must be valid",
+                "No, because the determinant, 0.04 × 0.01 minus 0.09 squared, is negative",
+                "Yes, as long as the matrix is symmetric",
+                "Cannot be determined without knowing the actual stock names"
+              ],
+              "correctIndex": 1,
+              "explanation": "Determinant check: (0.04)(0.01) - (0.09)² = 0.0004 - 0.0081, which is negative. This fails the PSD test, so it cannot be a genuine covariance matrix. Computing the implied correlation confirms it: 0.09 divided by the square root of (0.04 times 0.01) comes out to 4.5, far outside the valid range of -1 to +1. A covariance this large relative to the two variances is mathematically impossible for real data."
+            },
+            {
+              "_key": "oc2l3-022",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l3-022s1", "_type": "span", "marks": [], "text": "What This Means for the Rest of the Course" }
+              ]
+            },
+            {
+              "_key": "oc2l3-023",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "oc2l3-023s1", "label": "Is portfolio variance convex?", "value": "Always", "context": "Guaranteed for any genuine covariance matrix, proven directly from what variance means" },
+                { "_key": "oc2l3-023s2", "label": "Is the feasible region convex?", "value": "Always", "context": "For budget rules, no-short-selling, and any linear caps, proven in this chapter's first lesson" },
+                { "_key": "oc2l3-023s3", "label": "Is the Markowitz problem convex overall?", "value": "Yes", "context": "Convex objective plus convex feasible region: a fully convex optimization problem, every time" }
+              ]
+            },
+            {
+              "_key": "oc2l3-024",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Apply the proof in practice",
+              "scenario": "A risk manager estimates a new 5-stock covariance matrix using a shrinkage technique before feeding it into a portfolio optimizer.",
+              "prompt": "Before trusting the optimizer's output, what should she check about this estimated matrix, and why does it matter for whether the optimization even runs correctly?",
+              "modelAnswer": "She should check that the estimated matrix is still positive semi-definite, for instance by confirming all its eigenvalues are non-negative. This matters because the entire convexity guarantee this lesson just proved depends on Sigma being PSD. Some estimation methods, especially with limited historical data, mixed data sources, or manual adjustments, can occasionally produce a matrix that is technically not PSD due to numerical or sampling issues. If that happens, wᵀΣw stops being convex, the no-false-local-minima guarantee breaks, and every downstream tool this course builds, Lagrange multipliers and KKT conditions included, is no longer guaranteed to behave. This is exactly why practitioners often apply a nearest-PSD-matrix correction before optimizing on a shrinkage or factor-based estimate."
+            },
+            {
+              "_key": "oc2l3-025",
+              "_type": "flashcardSet",
+              "title": "Convexity of Portfolio Variance: Core Terms",
+              "cards": [
+                { "_key": "oc2l3-025f1", "term": "Gradient of wᵀΣw", "definition": "2Σw, the vector of first-order partial derivatives of portfolio variance with respect to the weights." },
+                { "_key": "oc2l3-025f2", "term": "Hessian of wᵀΣw", "definition": "2Σ, a constant matrix that does not depend on w, which is why portfolio variance's convexity holds everywhere or nowhere, never just locally." },
+                { "_key": "oc2l3-025f3", "term": "Positive semi-definite (PSD)", "definition": "A symmetric matrix M where xᵀMx ≥ 0 for every vector x. The multi-variable version of f''(x) ≥ 0." },
+                { "_key": "oc2l3-025f4", "term": "Positive definite", "definition": "A stricter version of PSD where xᵀMx > 0 for every non-zero x. Guarantees a unique global minimum rather than a tied valley of minima." },
+                { "_key": "oc2l3-025f5", "term": "xᵀΣx = Var(xᵀR)", "definition": "The identity that proves every genuine covariance matrix is automatically PSD: it equals the variance of a linear combination of returns, and variance can never be negative." }
+              ]
+            },
+            {
+              "_key": "oc2l3-026",
+              "_type": "keyTakeaways",
+              "points": [
+                "The Hessian of portfolio variance, wᵀΣw, is 2Σ, a constant matrix. Convexity holds everywhere or nowhere, never just locally.",
+                "A matrix is positive semi-definite (PSD) if xᵀMx ≥ 0 for every vector x. This is the many-variable version of f''(x) ≥ 0.",
+                "Every genuine covariance matrix is automatically PSD, because xᵀΣx equals Var(xᵀR), and variance can never be negative. This proves portfolio variance is always convex.",
+                "A 2x2 symmetric matrix is PSD exactly when both diagonal entries and its determinant are non-negative. A negative determinant reveals an implied correlation outside the valid -1 to +1 range, exposing an impossible covariance matrix.",
+                "Convex objective, wᵀΣw, plus convex feasible region, the constraints from this chapter's first lesson, means the Markowitz problem is a fully convex optimization problem, every time, for any number of stocks.",
+                "Real estimated covariance matrices can occasionally fail the PSD test due to numerical issues, which is why practitioners check and correct for it before trusting an optimizer's output."
+              ]
+            },
+            {
+              "_key": "oc2l3-027",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to buy or sell any security named here. Covariance and variance figures used in the worked examples are illustrative, not live or historical market data. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

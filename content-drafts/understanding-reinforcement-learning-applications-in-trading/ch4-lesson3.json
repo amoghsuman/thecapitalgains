@@ -1,0 +1,282 @@
+{
+  "courseSlug": "understanding-reinforcement-learning-applications-in-trading",
+  "chapters": [
+    {
+      "title": "Chapter 4: Training the Agent",
+      "lessons": [
+        {
+          "title": "Hyperparameter Tuning Without Overfitting to the Training Period",
+          "slug": "hyperparameter-tuning-without-overfitting-to-the-training-period",
+          "body": [
+            {
+              "_key": "rl4l3b01",
+              "_type": "bigIdea",
+              "text": "Choosing hyperparameters by repeatedly checking performance against the same data, even data that was never trained on directly, is its own quiet form of look-ahead bias. This lesson builds the discipline that keeps hyperparameter tuning honest."
+            },
+            {
+              "_key": "rl4l3b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl4l3b02s1", "_type": "span", "text": "The Hyperparameter List Grows Long, Fast", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl4l3b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl4l3b03s1",
+                  "_type": "span",
+                  "text": "By this point in the course, the list of settings that shape a trained agent's behavior has grown well past what any one lesson introduced in isolation. Before tuning any of them, it helps to see the full inventory in one place.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl4l3b04",
+              "_type": "table",
+              "caption": "Every Hyperparameter This Course Has Introduced So Far",
+              "headers": ["Hyperparameter", "Introduced In", "What It Controls"],
+              "rows": [
+                { "_key": "rl4l3b04r1", "_type": "tableRow", "cells": ["γ (discount factor)", "Chapter 2, MDP lesson", "How much future reward matters relative to immediate reward"] },
+                { "_key": "rl4l3b04r2", "_type": "tableRow", "cells": ["Lookback window length", "Chapter 3, state design lesson", "How much recent history the state vector directly includes"] },
+                { "_key": "rl4l3b04r3", "_type": "tableRow", "cells": ["β (drawdown penalty weight)", "Chapter 3, reward design lesson", "How aggressively drawdown is penalized in the reward"] },
+                { "_key": "rl4l3b04r4", "_type": "tableRow", "cells": ["c (transaction cost coefficient)", "Chapter 3, reward design lesson", "How heavily trading itself is costed in the reward"] },
+                { "_key": "rl4l3b04r5", "_type": "tableRow", "cells": ["learning_rate", "This chapter, training loop lesson", "How large a step each gradient update takes"] },
+                { "_key": "rl4l3b04r6", "_type": "tableRow", "cells": ["buffer_size, batch_size", "This chapter, training loop lesson", "How much experience is stored and sampled per training update"] },
+                { "_key": "rl4l3b04r7", "_type": "tableRow", "cells": ["exploration_fraction, exploration_final_eps", "This chapter, training loop lesson", "The epsilon-greedy decay schedule from Chapter 2's exploration lesson"] }
+              ]
+            },
+            {
+              "_key": "rl4l3b05",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl4l3b05s1",
+                  "_type": "span",
+                  "text": "Every one of these interacts with the others. A drawdown penalty tuned for one lookback window's typical state scale can behave completely differently with a longer window; a learning rate that works well with one buffer size can destabilize training with another. Tuning them one at a time, in isolation, risks missing exactly the kind of interaction that determines whether a strategy actually works.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl4l3b06",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl4l3b06s1", "_type": "span", "text": "Why Tuning on the Same Held-Out Data Repeatedly Is Look-Ahead Bias Again", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl4l3b07",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl4l3b07s1",
+                  "_type": "span",
+                  "text": "Chapter 1 warned about look-ahead bias in the context of normalizing state features using statistics from data that would not have been available at the time. Hyperparameter tuning creates a subtler version of the same problem, one that a simple train and test split does not actually protect against on its own.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl4l3b08",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl4l3b08s1",
+                  "_type": "span",
+                  "text": "Imagine training twenty different configurations, varying learning rate, β, and lookback window, and checking each one's performance on the same held-out period before picking the best one. Even though no single configuration ever saw that period's data during training, the process of trying many configurations and selecting whichever one happened to score best on that specific period has effectively fit the choice of hyperparameters to that period's data, through repeated testing rather than through direct training. The reported performance of the winning configuration is now optimistic, for the same underlying reason a backtest cherry-picked to a favorable regime is optimistic, just one step removed. Statisticians call this the multiple comparisons problem: test the same data enough times with enough different configurations, and something will look good on it purely by chance.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl4l3b09",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl4l3b09s1", "_type": "span", "text": "The Three-Way Split: Train, Validation, Test", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl4l3b10",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl4l3b10s1",
+                  "_type": "span",
+                  "text": "The standard fix is a three-way split, not two. A training period fits the policy's weights. A separate validation period is where hyperparameter configurations are compared and the best one selected, the many-configurations, repeated-testing step described above. A third period, the test set, is touched exactly once, only after every hyperparameter decision has already been locked in, purely to report a final, honest performance figure.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl4l3b11",
+              "_type": "table",
+              "caption": "The Three-Way Split",
+              "headers": ["Split", "Used For", "How Many Times It Gets Checked"],
+              "rows": [
+                { "_key": "rl4l3b11r1", "_type": "tableRow", "cells": ["Train", "Fitting the policy's weights during model.learn()", "Continuously, during training itself"] },
+                { "_key": "rl4l3b11r2", "_type": "tableRow", "cells": ["Validation", "Comparing hyperparameter configurations, choosing the best one", "Many times, once per configuration tried"] },
+                { "_key": "rl4l3b11r3", "_type": "tableRow", "cells": ["Test", "Reporting final performance, after every decision is already locked in", "Exactly once"] }
+              ]
+            },
+            {
+              "_key": "rl4l3b12",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl4l3b12s1",
+                  "_type": "span",
+                  "text": "A concrete illustration for this course's Nifty 50 data: training on 2019 through 2022, validating hyperparameter choices on 2023, and touching 2024 exactly once, after every other decision is final, to report the number that actually matters. Going back to look at 2024 a second time, to try just one more configuration because the first result was disappointing, quietly turns 2024 into a second validation period and undoes the entire point of holding it out.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl4l3b13",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl4l3b13s1", "_type": "span", "text": "Walk-Forward Validation: Doing This Repeatedly Across Time", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl4l3b14",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl4l3b14s1",
+                  "_type": "span",
+                  "text": "A single fixed three-way split still carries risk: the validation and test periods chosen might simply happen to be unusually favorable or unfavorable stretches, the same regime-concentration problem Chapter 1 warned about. Walk-forward validation addresses this by repeating the train, validate, test process across multiple rolling periods moving forward through time, rather than committing to one fixed split.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl4l3b15",
+              "_type": "table",
+              "caption": "An Expanding-Window Walk-Forward Scheme, Illustrative",
+              "headers": ["Fold", "Train On", "Validate On", "Test On"],
+              "rows": [
+                { "_key": "rl4l3b15r1", "_type": "tableRow", "cells": ["1", "2019 to 2020", "2021", "2022"] },
+                { "_key": "rl4l3b15r2", "_type": "tableRow", "cells": ["2", "2019 to 2021", "2022", "2023"] },
+                { "_key": "rl4l3b15r3", "_type": "tableRow", "cells": ["3", "2019 to 2022", "2023", "2024"] }
+              ]
+            },
+            {
+              "_key": "rl4l3b16",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl4l3b16s1",
+                  "_type": "span",
+                  "text": "Each fold's training window expands to include more history, while validation and test move forward together, so every year eventually plays the role of an unseen test period exactly once, and no single favorable or unfavorable year can single-handedly decide whether the whole approach looks good or bad. Aggregating performance across all three folds, rather than reporting only the best-looking one, is what turns this into an honest estimate rather than another form of cherry-picking with extra steps.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl4l3b17",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl4l3b17s1", "_type": "span", "text": "Choosing a Search Strategy: Grid, Random, or Bayesian", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl4l3b18",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl4l3b18s1",
+                  "_type": "span",
+                  "text": "Even restricted to a validation period, exhaustively trying every combination of every hyperparameter in the table above is its own version of the curse of dimensionality Chapter 3 introduced for state features: five hyperparameters with four candidate values each is already 4^5, over a thousand full training runs, each one potentially taking hours.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl4l3b19",
+              "_type": "table",
+              "caption": "Hyperparameter Search Strategies",
+              "headers": ["Search Strategy", "How It Works", "Tradeoff"],
+              "rows": [
+                { "_key": "rl4l3b19r1", "_type": "tableRow", "cells": ["Grid search", "Tries every combination of a predefined set of values for each hyperparameter", "Exhaustive and simple to reason about, but combinatorially expensive; infeasible past a handful of hyperparameters"] },
+                { "_key": "rl4l3b19r2", "_type": "tableRow", "cells": ["Random search", "Samples random combinations from each hyperparameter's range, for a fixed budget of runs", "Often finds comparably good configurations with far fewer runs than grid search, especially when only a few hyperparameters actually matter much"] },
+                { "_key": "rl4l3b19r3", "_type": "tableRow", "cells": ["Bayesian optimization (e.g. Optuna)", "Uses the results of previous runs to intelligently choose which configuration to try next", "Typically the most sample-efficient option, at the cost of added tooling complexity and a less exhaustive guarantee of finding the true best combination"] }
+              ]
+            },
+            {
+              "_key": "rl4l3b20",
+              "_type": "callout",
+              "type": "warning",
+              "text": "None of this replaces validation discipline, it only decides how efficiently the validation period gets used. A Bayesian search run against a validation period that gets checked dozens of times across hundreds of trial configurations is still vulnerable to the same multiple comparisons problem described earlier, just executed automatically instead of by hand. The number of configurations tried belongs in the same category of risk as the number of features added to a state vector: more isn't free, and every additional trial against the same validation data adds a little more optimism to whatever configuration eventually wins."
+            },
+            {
+              "_key": "rl4l3b21",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Spotting a Contaminated Test Set",
+              "scenario": "A researcher splits data into train (2019-2022), validation (2023), and test (2024), exactly as this lesson recommends. After tuning hyperparameters on the validation period and settling on a final configuration, they check its performance on the 2024 test period, are disappointed by the result, and go back to try three more hyperparameter configurations, again checking each against 2024, before picking whichever one performed best there.",
+              "prompt": "What went wrong here, and what should the researcher have done instead once the first test result was disappointing?",
+              "modelAnswer": "The moment the researcher went back and tried more configurations after seeing the first disappointing test result, checking each new configuration against 2024, the 2024 test period stopped being a genuine held-out test set and became a second validation period in practice, even though it was labeled test throughout. The final reported performance on 2024 is now optimistic for the same multiple-comparisons reason as tuning directly on it from the start, since several configurations were compared against it and the best one was selected. What the researcher should have done once the first test result was disappointing is treat that as the honest answer, not a reason to keep searching against the same data; if further tuning is genuinely warranted, it needs to happen against the validation period alone, or against an entirely new, previously untouched period, with 2024 then held out again for one final, single check once tuning is truly finished."
+            },
+            {
+              "_key": "rl4l3b22",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why a Two-Way Split Isn't Enough",
+              "question": "A researcher uses a simple train/test split, trains several different hyperparameter configurations, and checks each one's performance on the test set to decide which configuration to keep. What is the core problem with this approach, according to this lesson?",
+              "options": [
+                "There is no problem; a train/test split is sufficient as long as the test set was never used during training",
+                "The problem is that the test set is too small to be statistically meaningful",
+                "Repeatedly checking multiple configurations against the same test set to decide which one to keep contaminates that test set through the multiple comparisons problem, even though no configuration was ever trained on it directly",
+                "Train/test splits should never be used for time series data of any kind"
+              ],
+              "correctIndex": 2,
+              "explanation": "The core issue is not whether any configuration was trained on the test data directly, none were. It is that comparing several configurations against the same held-out data and selecting whichever one scored best is itself a form of fitting to that data, through repeated testing rather than through training. This is exactly why a third, separate validation period is needed for configuration selection, leaving the test set to be checked exactly once, after every decision is already final."
+            },
+            {
+              "_key": "rl4l3b23",
+              "_type": "keyTakeaways",
+              "points": [
+                "This course has accumulated a long list of hyperparameters, γ, lookback window, β, transaction cost, learning rate, buffer size, exploration schedule, and they interact with each other, so tuning them one at a time in isolation risks missing important interactions",
+                "Repeatedly checking multiple hyperparameter configurations against the same held-out data to decide which to keep contaminates that data through the multiple comparisons problem, even though no configuration ever trained on it directly",
+                "A three-way split, train, validation, test, fixes this: training fits the policy, validation is where configurations are compared and the best one chosen, and the test period is touched exactly once, after every decision is already locked in",
+                "Walk-forward validation repeats the train, validate, test process across multiple rolling periods moving through time, so no single favorable or unfavorable period can single-handedly decide whether an approach looks good",
+                "Exhaustive grid search over many hyperparameters is its own curse-of-dimensionality problem; random search and Bayesian optimization tools like Optuna are more sample-efficient alternatives, though neither one removes the need for validation discipline",
+                "The number of configurations tried against a validation period is itself a source of risk, more trials against the same data adds more optimism to whatever configuration eventually wins, whether the search was done by hand or by an automated tool"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

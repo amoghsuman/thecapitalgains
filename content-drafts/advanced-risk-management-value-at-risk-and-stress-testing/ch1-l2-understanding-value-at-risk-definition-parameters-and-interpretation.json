@@ -1,0 +1,220 @@
+{
+  "courseSlug": "advanced-risk-management-value-at-risk-and-stress-testing",
+  "chapters": [
+    {
+      "title": "Chapter 1: Foundations of Risk Measurement",
+      "lessons": [
+        {
+          "title": "Understanding Value at Risk: Definition, Parameters, and Interpretation",
+          "slug": "understanding-value-at-risk-definition-parameters-and-interpretation",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "a1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "a1s1", "text": "The last lesson ended with a gap: standard deviation and Sharpe tell you nothing about a specific rupee loss, over a specific horizon, at a specific confidence level. Value at Risk, VaR, was built to close exactly that gap. It is the single most widely used risk number in institutional finance, quoted on trading desks, written into SEBI's margining rules, and required under the Basel framework for bank capital. This lesson gives you the precise definition and the three parameters that make a VaR number meaningful.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "keyFact",
+              "_key": "a2",
+              "label": "Value at Risk (VaR)",
+              "value": "The maximum loss a portfolio is not expected to exceed, over a given time horizon, at a given confidence level",
+              "context": "It is a threshold, not a prediction of the worst possible outcome."
+            },
+            {
+              "_type": "block",
+              "_key": "a3",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "a3s1", "text": "The Three Parameters That Define a VaR Number", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "a4",
+              "style": "normal",
+              "markDefs": [
+                { "_type": "glossaryTerm", "_key": "gt1", "definition": "The length of the future period over which the potential loss is being measured, such as 1 day or 10 days." },
+                { "_type": "glossaryTerm", "_key": "gt2", "definition": "The probability threshold used to define the VaR cutoff, such as 95% or 99%. A 99% confidence level means the loss is expected to exceed VaR on only 1% of days." }
+              ],
+              "children": [
+                { "_type": "span", "_key": "a4s1", "text": "A VaR figure quoted on its own, such as \"our VaR is Rs 10 lakh,\" is not usable. It only means something once you attach three parameters: the ", "marks": [] },
+                { "_type": "span", "_key": "a4s2", "text": "time horizon", "marks": ["gt1"] },
+                { "_type": "span", "_key": "a4s3", "text": ", the ", "marks": [] },
+                { "_type": "span", "_key": "a4s4", "text": "confidence level", "marks": ["gt2"] },
+                { "_type": "span", "_key": "a4s5", "text": ", and whether the number is expressed in rupees or as a percentage of portfolio value. Change any one of the three and the number changes, even though the underlying portfolio has not moved.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "a5",
+              "caption": "How each parameter changes what a VaR number means",
+              "headers": ["Parameter", "Typical choices", "What changing it does"],
+              "rows": [
+                { "cells": ["Time horizon", "1 day (trading desks), 10 days (Basel market risk capital), 1 month (fund-level risk reporting)", "Longer horizon means more time for losses to accumulate, so VaR rises, roughly with the square root of time"] },
+                { "cells": ["Confidence level", "95%, 99%, 99.9%", "Higher confidence pushes the cutoff further into the tail, so the VaR rupee figure rises"] },
+                { "cells": ["Units", "Absolute rupees (INR), or percentage of portfolio NAV", "Rupee VaR is desk-level and position-specific, percentage VaR is comparable across portfolios of different sizes"] }
+              ]
+            },
+            {
+              "_type": "mathBlock",
+              "_key": "a6",
+              "latex": "P(\\text{Loss} > \\text{VaR}_\\alpha) = 1 - \\alpha",
+              "caption": "Formal definition. At a 99% confidence level (alpha = 0.99), there is only a 1% chance the actual loss exceeds the stated VaR over the chosen horizon."
+            },
+            {
+              "_type": "statGrid",
+              "_key": "a7",
+              "stats": [
+                { "label": "1-day VaR at 95% confidence", "value": "Rs 1.81 lakh", "context": "Illustrative Rs 1 crore Nifty futures book, 1.1% daily volatility" },
+                { "label": "1-day VaR at 99% confidence", "value": "Rs 2.56 lakh", "context": "Same book, higher confidence pushes the cutoff further into the tail" },
+                { "label": "1-day VaR at 99.9% confidence", "value": "Rs 3.40 lakh", "context": "Same book again, each step toward the tail costs more rupees of VaR" }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "a8",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "a8s1", "text": "Reading a VaR Statement Correctly", "marks": [] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "a9",
+              "type": "insight",
+              "text": "\"1-day 99% VaR of Rs 10 lakh\" means: based on this portfolio's recent risk profile, there is roughly a 99% chance that tomorrow's loss stays below Rs 10 lakh, and roughly a 1% chance it does not. In a year of about 250 trading sessions, you would statistically expect around 2 to 3 days where the loss exceeds Rs 10 lakh."
+            },
+            {
+              "_type": "callout",
+              "_key": "a10",
+              "type": "warning",
+              "text": "VaR is not the maximum possible loss. It is silent about how bad the loss gets once you are past the cutoff. A 1-day 99% VaR of Rs 10 lakh is fully consistent with a Rs 40 lakh loss happening on one of those 1% days, VaR only promises that such days are rare, not that they are capped. This is precisely the gap that Expected Shortfall, covered later in this course, is built to fix."
+            },
+            {
+              "_type": "exercise",
+              "_key": "a11",
+              "variant": "fillInTheBlank",
+              "title": "Quick Check",
+              "textWithBlank": "A fund's 1-day 95% VaR is Rs 5 lakh. This means there is roughly a ___ chance the fund loses more than Rs 5 lakh on any given day.",
+              "correctAnswers": ["5%", "5 percent", "five percent"],
+              "explanation": "95% confidence means the loss is expected to stay under the VaR figure on 95% of days, leaving a 5% chance, roughly 1 day in 20, that the loss exceeds it."
+            },
+            {
+              "_type": "comparison",
+              "_key": "a12",
+              "title": "What VaR Tells You vs What It Does Not",
+              "columns": [
+                {
+                  "label": "What VaR Tells You",
+                  "points": [
+                    "A specific rupee or percentage loss threshold",
+                    "Tied to a stated time horizon and confidence level",
+                    "How often, on average, that threshold should be breached",
+                    "A number that can be set as a formal position or capital limit"
+                  ]
+                },
+                {
+                  "label": "What VaR Does Not Tell You",
+                  "points": [
+                    "How large the loss could get once the threshold is breached",
+                    "Anything about the shape or severity of the worst 1% or 5% of days",
+                    "Whether the portfolio's future risk will resemble its recent history",
+                    "Losses from events with no precedent in the data used to build it"
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "a13",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "a13s1", "text": "VaR in Indian Market Regulation: The Exchange Margining System", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "a14",
+              "style": "normal",
+              "markDefs": [
+                { "_type": "glossaryTerm", "_key": "gt3", "definition": "An additional margin, layered on top of the VaR-based margin, specifically meant to cover losses beyond what the VaR calculation captures during sharp, sudden market moves." }
+              ],
+              "children": [
+                { "_type": "span", "_key": "a14s1", "text": "VaR is not just an academic tool in India, it sits inside SEBI's own regulatory framework. The margin you are required to maintain on a cash market equity position at NSE or BSE is derived, in large part, from a daily VaR calculation the exchange runs on each stock, based on that stock's recent volatility and liquidity. Less liquid, more volatile stocks get a higher VaR-based margin requirement than a stock like a Nifty 50 constituent. On top of that VaR-based margin, exchanges layer an ", "marks": [] },
+                { "_type": "span", "_key": "a14s2", "text": "Extreme Loss Margin", "marks": ["gt3"] },
+                { "_type": "span", "_key": "a14s3", "text": ", precisely because regulators know what you now know: VaR has a confidence level, and confidence levels leave a tail uncovered.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "a15",
+              "type": "insight",
+              "text": "This is the same structural gap from the last lesson's circuit breaker discussion, showing up in a different layer of market infrastructure. Circuit breakers pause the whole market when a move is extreme. Extreme Loss Margin protects the clearing corporation when a single position moves further than its VaR-based margin assumed. Both exist because a single confidence-level number, whether it is a VaR or a volatility estimate, is never the full risk picture."
+            },
+            {
+              "_type": "block",
+              "_key": "a16",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "a16s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "a17",
+              "variant": "scenario",
+              "title": "Scaling VaR Across Time",
+              "scenario": "A systematic trading desk computes its 1-day 99% VaR every morning at Rs 2,00,000 for a Nifty futures book. The desk's compliance team also needs a 4-day 99% VaR figure for a weekly capital adequacy report, but the desk has not built a separate 4-day model.",
+              "prompt": "Assuming daily returns are independent and identically distributed, a common shortcut scales VaR across time using the square root of the number of days. Using that rule, what is the approximate 4-day 99% VaR?",
+              "modelAnswer": "The square-root-of-time rule scales VaR by the square root of the ratio of horizons: 4-day VaR is approximately equal to 1-day VaR multiplied by the square root of 4, which is 2. Rs 2,00,000 times 2 is approximately Rs 4,00,000. This is a useful approximation, not an exact answer, since it assumes returns on consecutive days are independent and identically distributed, an assumption that tends to break down exactly when markets are stressed and returns become correlated across days."
+            },
+            {
+              "_type": "exercise",
+              "_key": "a18",
+              "variant": "numericInput",
+              "title": "Apply the Square Root of Time Rule",
+              "prompt": "A desk's 1-day 99% VaR is Rs 3,00,000. Using the square root of time rule, what is the approximate 9-day 99% VaR, in rupees?",
+              "correctValue": 900000,
+              "tolerance": 10000,
+              "unit": "Rs",
+              "explanation": "Square root of 9 is 3, so the 9-day VaR is approximately Rs 3,00,000 times 3, which is Rs 9,00,000. Remember this scaling is an approximation that assumes independent daily returns."
+            },
+            {
+              "_type": "block",
+              "_key": "a19",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "a19s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "a20",
+              "text": "A VaR number without a stated time horizon and confidence level is not a risk measure, it is just a number. State all three, rupees, horizon, confidence, or the figure means nothing."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "a21",
+              "points": [
+                "VaR is the maximum loss a portfolio is not expected to exceed, over a stated time horizon, at a stated confidence level, expressed in rupees or as a percentage of portfolio value.",
+                "Raising the confidence level or lengthening the time horizon increases the VaR figure, even if the portfolio itself has not changed.",
+                "VaR says nothing about how bad losses get once the threshold is breached, that gap is exactly what Expected Shortfall addresses later in this course.",
+                "SEBI's exchange margining system for the cash market is built around a daily VaR calculation per stock, with an Extreme Loss Margin layered on top to cover the tail VaR cannot see.",
+                "The square root of time rule lets you approximate VaR across different horizons, but it relies on an independent, identically distributed returns assumption that weakens in stressed markets."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

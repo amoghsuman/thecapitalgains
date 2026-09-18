@@ -1,0 +1,195 @@
+{
+  "courseSlug": "introduction-to-machine-learning-for-trading-what-actually-works",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Most \"ML for Trading\" Content Gets It Wrong",
+      "lessons": [
+        {
+          "title": "The Hype vs Reality of Machine Learning in Trading",
+          "slug": "the-hype-vs-reality-of-machine-learning-in-trading",
+          "body": [
+            {
+              "_key": "mlt1-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt1-001s1", "_type": "span", "marks": [], "text": "Scroll through Indian trading Telegram channels or YouTube for five minutes and you will find at least one channel selling an \"AI powered\" or \"machine learning based\" trading bot for Bank Nifty or Nifty options. The pitch is usually the same: a smooth equity curve, a headline accuracy number like 90 percent or higher, and a subscription price somewhere between ₹10,000 and ₹50,000. Almost none of these claims survive basic scrutiny. This lesson is not about whether machine learning works for trading. It does, when used correctly, and you will build real models later in this course. This lesson is about learning to tell the difference between a genuine, tested edge and a backtest dressed up to look like one." }
+              ]
+            },
+            {
+              "_key": "mlt1-002",
+              "_type": "bigIdea",
+              "text": "Machine learning does not create an edge out of nothing. It is a tool for finding patterns in the data you give it. If the data is clean, the problem is framed correctly, and the model is tested honestly, ML can uncover real, tradeable signal. If any one of those three things is wrong, the exact same tool produces a model that looks impressive on a slide and loses money the moment real capital touches it."
+            },
+            {
+              "_key": "mlt1-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt1-003s1", "_type": "span", "marks": [], "text": "Why \"AI Trading Bot\" Marketing Doesn't Hold Up" }
+              ]
+            },
+            {
+              "_key": "mlt1-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "mlt1-004m1", "_type": "glossaryTerm", "definition": "When a model fits the noise and randomness in historical data so closely that it captures patterns that do not generalize to new, unseen data, producing a backtest that looks excellent and live performance that does not." }
+              ],
+              "children": [
+                { "_key": "mlt1-004s1", "_type": "span", "marks": [], "text": "The typical \"AI trading bot\" landing page shows one chart: an equity curve that only goes up, built on a backtest over a conveniently chosen historical window, often the same window the model was built and tuned on. Testing a model only on the data it learned from is called testing in-sample, and a model tested this way will nearly always look good, in the same way a student who wrote the exam questions themselves would ace the test. The real question, whether the model works on data it has never seen, is rarely shown, because on genuinely new data most of these models perform far worse, if they work at all. This gap between in-sample and out-of-sample performance has a name: " },
+                { "_key": "mlt1-004s2", "_type": "span", "marks": ["mlt1-004m1"], "text": "overfitting" },
+                { "_key": "mlt1-004s3", "_type": "span", "marks": [], "text": ", and it is the single most common reason ML trading models fail in the real world." }
+              ]
+            },
+            {
+              "_key": "mlt1-005",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "mlt1-005s1", "label": "Individual traders who lost money in equity F&O, FY22 to FY24", "value": "93%", "context": "SEBI study, September 2024, based on data from over 1 crore individual traders" },
+                { "_key": "mlt1-005s2", "label": "Aggregate losses across individual F&O traders, FY22 to FY24", "value": "over ₹1.8 lakh crore", "context": "Most of these traders were trading manually or off tips, none of this required an 'AI model' to happen" },
+                { "_key": "mlt1-005s3", "label": "What actually determines a strategy's real edge", "value": "data quality + correct methodology + costs", "context": "Not whether the words 'machine learning' appear in its description" },
+                { "_key": "mlt1-005s4", "label": "Where most beginner ML trading models fail first", "value": "data leakage and look-ahead bias", "context": "Covered in Lesson 3 of this chapter" }
+              ]
+            },
+            {
+              "_key": "mlt1-006",
+              "_type": "callout",
+              "type": "warning",
+              "text": "A high accuracy number by itself proves nothing. A model that correctly predicts direction 87 percent of the time can still lose money overall if the 13 percent of wrong predictions are large moves against you while the 87 percent of correct predictions are tiny. Lesson 4 of this chapter walks through exactly this scenario using a realistic Nifty-style backtest."
+            },
+            {
+              "_key": "mlt1-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt1-007s1", "_type": "span", "marks": [], "text": "What Machine Learning Can Actually Do for a Trader" }
+              ]
+            },
+            {
+              "_key": "mlt1-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt1-008s1", "_type": "span", "marks": [], "text": "Used correctly, machine learning is genuinely useful in Indian markets today. A random forest or gradient boosting model can combine dozens of engineered features, past returns, volume patterns, volatility measures, sector momentum, into a single probability estimate for a stock's near-term direction, something a human eyeballing a chart cannot do consistently across 200 NSE stocks at once. Quant desks, and increasingly systematizing retail traders using broker APIs like Zerodha's Kite Connect, use these models to rank stocks, detect regime shifts between calm and volatile markets, and size positions based on estimated risk. None of this requires believing a marketing claim. It requires the discipline this course teaches: clean data, correctly framed labels, honest validation, and realistic cost assumptions." }
+              ]
+            },
+            {
+              "_key": "mlt1-009",
+              "_type": "comparison",
+              "title": "Marketing Claim vs Trading Reality",
+              "columns": [
+                {
+                  "_key": "mlt1-009c1",
+                  "label": "What the Ad Says",
+                  "points": [
+                    "92% win rate, backtested over 3 years",
+                    "AI powered signals, fully automated",
+                    "Turn ₹50,000 into ₹5 lakh in 6 months",
+                    "No losing months in the equity curve shown"
+                  ]
+                },
+                {
+                  "_key": "mlt1-009c2",
+                  "label": "What Is Actually True",
+                  "points": [
+                    "The 'backtest' is almost always in-sample, tested on the same data used to build the model",
+                    "Win rate alone says nothing about the size of wins versus losses",
+                    "The chart never shows brokerage, Securities Transaction Tax (STT), and slippage on the underlying trades",
+                    "A strategy with zero losing months on paper has almost certainly been curve-fit"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "mlt1-010",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt1-010s1", "_type": "span", "marks": [], "text": "Where the Real Edge in ML Trading Comes From" }
+              ]
+            },
+            {
+              "_key": "mlt1-011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "mlt1-011m1", "_type": "glossaryTerm", "definition": "A validation method that trains a model on one time period and tests it only on the following, unseen period, then rolls the window forward and repeats, closely mimicking how the model would actually be used in live trading." }
+              ],
+              "children": [
+                { "_key": "mlt1-011s1", "_type": "span", "marks": [], "text": "If two traders build the same random forest model on the same NSE price data, one can end up with a strategy that works and the other with one that does not. The difference is rarely the choice of algorithm. It is almost always in four places: how the data was cleaned and whether survivorship bias was removed; whether the predicted label is actually tradeable, since predicting whether a stock rises at all is a very different problem from predicting whether it rises by a specific amount in a specific window; whether the model was validated on truly unseen, time-ordered data using " },
+                { "_key": "mlt1-011s2", "_type": "span", "marks": ["mlt1-011m1"], "text": "walk-forward validation" },
+                { "_key": "mlt1-011s3", "_type": "span", "marks": [], "text": "; and whether transaction costs, Securities Transaction Tax, and slippage were subtracted before anyone called the backtest a success. Chapters 2 through 4 of this course build each of these pieces properly, one at a time." }
+              ]
+            },
+            {
+              "_key": "mlt1-012",
+              "_type": "keyFact",
+              "label": "An '87% accuracy' model",
+              "value": "can still lose money",
+              "context": "Accuracy ignores the size of wins versus losses. Lesson 4's case study shows exactly how this happens using a realistic backtest structure."
+            },
+            {
+              "_key": "mlt1-013",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Spotting a curve-fit claim",
+              "question": "A Telegram channel claims its 'AI model' predicted Bank Nifty direction correctly 91% of the time over the last two years, based on a single backtest chart with no out-of-sample period shown. What should concern you most?",
+              "options": [
+                "The model uses machine learning instead of technical indicators",
+                "There is no way to know if the 91% accuracy was tested on data the model never saw during training",
+                "Bank Nifty options are too volatile for any model to trade",
+                "A 91% accuracy figure is mathematically impossible for any trading model"
+              ],
+              "correctIndex": 1,
+              "explanation": "The core problem is not the tool. It is the missing out-of-sample validation. A model tested only on data it was built on will almost always look excellent. Whether such a claim is trustworthy depends entirely on whether performance was verified on data the model never touched during training, something this chapter covers in detail."
+            },
+            {
+              "_key": "mlt1-014",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Your friend's 'AI trading bot'",
+              "scenario": "A college friend messages you excited about a ₹15,000 subscription to an 'AI trading bot' for Nifty options. The seller's website shows a single equity curve climbing smoothly from ₹1 lakh to ₹9 lakh over 18 months, labelled 'Live Verified Results'.",
+              "prompt": "What three questions would you ask before your friend subscribes, and why does each question matter?",
+              "modelAnswer": "First, ask whether the ₹1 lakh to ₹9 lakh curve comes from real, audited trading, such as Zerodha or another broker's contract notes, or from a backtest relabelled as 'live', since backtests are trivial to make look smooth. Second, ask what the maximum drawdown was during that period, since an equity curve alone hides how much capital was at risk at any point, the strategy could have gone through a large drawdown that simply is not visible on a smoothed chart. Third, ask whether the results include brokerage, Securities Transaction Tax, GST on brokerage, and slippage on Nifty options, since these costs alone can turn a profitable-looking backtest into a losing live strategy. None of these questions require knowing anything about machine learning specifically, they are the same questions that expose almost any exaggerated trading claim."
+            },
+            {
+              "_key": "mlt1-015",
+              "_type": "flashcardSet",
+              "title": "Chapter 1 Vocabulary Check",
+              "cards": [
+                { "_key": "mlt1-015f1", "term": "Overfitting", "definition": "When a model fits the noise in historical data so closely that it fails to generalize to new, unseen data." },
+                { "_key": "mlt1-015f2", "term": "In-sample testing", "definition": "Evaluating a model's performance on the same data it was built and tuned on. Almost always overstates real performance." },
+                { "_key": "mlt1-015f3", "term": "Out-of-sample testing", "definition": "Evaluating a model on data it never saw during training or tuning. The closest thing to an honest test of whether a model actually works." },
+                { "_key": "mlt1-015f4", "term": "Walk-forward validation", "definition": "A testing method that trains a model on one period, tests it only on the following unseen period, then rolls the window forward and repeats, closely mimicking real trading." },
+                { "_key": "mlt1-015f5", "term": "Alpha decay", "definition": "The tendency for a genuine trading edge to weaken over time as more traders discover and exploit the same pattern." }
+              ]
+            },
+            {
+              "_key": "mlt1-016",
+              "_type": "keyTakeaways",
+              "points": [
+                "Machine learning is a tool for building trading signals, not a guarantee of profit. It inherits every weakness of the data and methodology behind it.",
+                "SEBI's September 2024 study found that 93% of individual F&O traders lost money between FY22 and FY24, with aggregate losses exceeding ₹1.8 lakh crore, a reminder that most losses in Indian markets have nothing to do with lacking 'AI'.",
+                "A high backtest accuracy or win rate figure, shown without out-of-sample testing, tells you almost nothing about whether a strategy will make money live.",
+                "The real edge in an ML trading strategy comes from clean data, correct methodology with no leakage, realistic cost modeling, and discipline, not from the mere presence of a machine learning model.",
+                "The rest of this chapter and course teaches you to separate genuine ML-driven edge from marketing dressed up in technical language."
+              ]
+            },
+            {
+              "_key": "mlt1-017",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice or a recommendation to use any specific trading strategy, product, or service named or implied here. Figures cited from SEBI's study are presented as publicly reported and are subject to revision. Trading in equity derivatives carries a high risk of loss, and SEBI's own studies confirm that the large majority of individual traders in this segment lose money. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

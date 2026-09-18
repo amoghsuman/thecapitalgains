@@ -1,0 +1,214 @@
+{
+  "courseSlug": "understanding-reinforcement-learning-applications-in-trading",
+  "chapters": [
+    {
+      "title": "Chapter 5: Validating and Backtesting Rigorously",
+      "lessons": [
+        {
+          "title": "Stress-Testing the Strategy Across Regimes: 2020, 2022, and Beyond",
+          "slug": "stress-testing-the-strategy-across-regimes-2020-2022-and-beyond",
+          "body": [
+            {
+              "_key": "rl5l4b01",
+              "_type": "bigIdea",
+              "text": "A strategy's average performance across several years can look perfectly respectable while quietly hiding a disastrous single year underneath it. Stress-testing exists to stop that number from being the last thing anyone checks."
+            },
+            {
+              "_key": "rl5l4b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl5l4b02s1", "_type": "span", "text": "Why Stress-Testing Is Different From Walk-Forward Validation", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl5l4b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl5l4b03s1",
+                  "_type": "span",
+                  "text": "Chapter 4's hyperparameter tuning lesson introduced walk-forward validation, testing across multiple rolling time periods to avoid regime cherry-picking. Stress-testing is a complementary, more targeted practice: rather than rolling through time generically, it deliberately runs the strategy through specific, named periods already known to have been unusually difficult or unusual for Indian markets, checking not just whether average performance across many periods looks acceptable, but whether performance survives the worst periods specifically.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl5l4b04",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl5l4b04s1", "_type": "span", "text": "Choosing Stress Periods: What Actually Happened in Indian Markets", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl5l4b05",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl5l4b05s1",
+                  "_type": "span",
+                  "text": "Indian markets have a short list of genuinely well-documented stress episodes worth testing against by name, rather than hoping a generic rolling window happens to capture one.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl5l4b06",
+              "_type": "table",
+              "caption": "Named Stress Periods Worth Testing Against",
+              "headers": ["Period", "What Happened", "What It Tests"],
+              "rows": [
+                { "_key": "rl5l4b06r1", "_type": "tableRow", "cells": ["February to March 2020", "Nifty fell roughly 38% peak to trough during the COVID crash, an extremely fast, correlated selloff across nearly every stock and sector", "Whether the strategy's risk controls, drawdown penalty, position limits, and distributional shift monitoring actually engage during a genuinely extreme, fast-moving event"] },
+                { "_key": "rl5l4b06r2", "_type": "tableRow", "cells": ["2021", "A sustained, unusually smooth bull run, Nifty more than doubling off the March 2020 low with few sharp reversals", "Whether the strategy captures a strong trend reasonably well, or is so conservatively tuned by its drawdown penalty that it under-participates in a genuinely favorable regime"] },
+                { "_key": "rl5l4b06r3", "_type": "tableRow", "cells": ["2022", "Rising rates, heavy FII selling, and the Russia-Ukraine war produced a choppy, range-bound year with no clean trend in either direction", "Whether the strategy avoids the whipsaw losses a range-bound, directionless market inflicts on anything resembling a trend-following bias"] }
+              ]
+            },
+            {
+              "_key": "rl5l4b07",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl5l4b07s1", "_type": "span", "text": "Running the Same Agent Through Each Regime", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl5l4b08",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl5l4b08s1",
+                  "_type": "span",
+                  "text": "The critical discipline is running each period separately and reporting each period's own metrics, not blending all three into one combined evaluation from the start. A strategy evaluated only on 2020 through 2022 combined can report a perfectly respectable-looking headline number while quietly failing one of the three years badly, the exact same regime-concentration risk Chapter 1 warned about in a backtest, now showing up inside an evaluation meant to guard against it.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl5l4b09",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "stress_periods = {\n    \"2020_covid_crash\": feb_mar_2020_bars,\n    \"2021_bull_trend\": full_year_2021_bars,\n    \"2022_choppy_rangebound\": full_year_2022_bars,\n}\n\nreport = {}\nfor period_name, bars in stress_periods.items():\n    env = RealisticBacktestEnv(bars)\n    returns, equity = run_evaluation_rollout(model, env)  # from the previous two lessons\n    report[period_name] = {\n        \"sharpe\": sharpe_ratio(returns),\n        \"sortino\": sortino_ratio(returns),\n        \"max_drawdown\": max_drawdown(equity),\n        \"cvar_95\": conditional_value_at_risk(returns),\n    }",
+              "caption": "Each period gets its own full metrics report, using exactly the realistic backtest environment from this chapter's first lesson and the metrics from its second. Nothing here is pooled or averaged until every individual period has already been looked at on its own."
+            },
+            {
+              "_key": "rl5l4b10",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl5l4b10s1", "_type": "span", "text": "Reading a Regime-by-Regime Report Honestly", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl5l4b11",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl5l4b11s1",
+                  "_type": "span",
+                  "text": "A regime-by-regime report can look dramatically different from a single blended figure covering the same span. The table below is an illustrative example, not this course's own trained agent's actual results, built to show how differently the same underlying performance can be told.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl5l4b12",
+              "_type": "table",
+              "caption": "Illustrative Regime-by-Regime Report",
+              "headers": ["Period", "Sharpe", "Max Drawdown", "CVaR (95%)"],
+              "rows": [
+                { "_key": "rl5l4b12r1", "_type": "tableRow", "cells": ["2020 COVID Crash (Feb-Mar)", "-1.4", "31%", "6.8% per period"] },
+                { "_key": "rl5l4b12r2", "_type": "tableRow", "cells": ["2021 Bull Trend", "2.1", "9%", "1.4% per period"] },
+                { "_key": "rl5l4b12r3", "_type": "tableRow", "cells": ["2022 Choppy Range-Bound", "-0.6", "18%", "3.9% per period"] },
+                { "_key": "rl5l4b12r4", "_type": "tableRow", "cells": ["2021-2022 Blended (separately computed, for comparison)", "0.8", "18%", "2.9% per period"] }
+              ]
+            },
+            {
+              "_key": "rl5l4b13",
+              "_type": "callout",
+              "type": "insight",
+              "text": "The blended row's Sharpe of 0.8 looks like a mild, forgettable dip from 2021's strong 2.1, not the story the individual years actually tell: a genuinely strong year followed by a genuinely poor one, with the poor year's CVaR more than double the strong year's. Reporting only the blended figure, or worse, only the best-looking individual year, is a choice about which honest story to tell, and it is exactly the kind of choice this course has warned against since Chapter 1's backtest-to-live gap discussion."
+            },
+            {
+              "_key": "rl5l4b14",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl5l4b14s1", "_type": "span", "text": "What Passing (or Failing) Stress-Testing Actually Means", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl5l4b15",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl5l4b15s1",
+                  "_type": "span",
+                  "text": "Passing this stress test is not proof the strategy is safe going forward; a period this course cannot stress-test against, because it has not happened yet, is always possible, and no amount of historical testing changes that. What passing does establish is a floor: the strategy has demonstrated it can survive, at some acceptable level, the worst conditions Indian markets have actually produced in recent memory. Failing establishes something more definitive: a strategy that cannot survive 2020's crash or 2022's chop in backtesting has no business being trusted to survive a similar or worse period live, regardless of how good its average performance elsewhere looks.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl5l4b16",
+              "_type": "callout",
+              "type": "warning",
+              "text": "There is one more trap worth naming before this chapter closes. Tuning a strategy's hyperparameters specifically until it performs acceptably on 2020 and 2022, the exact periods used to judge it, walks straight back into Chapter 4's multiple comparisons problem, just with named historical stress periods standing in for a generic validation set. These periods need the same one-touch discipline as any other held-out test data: used to judge a strategy whose design was already finalized beforehand, not used repeatedly to iterate the design until the stress test starts passing by construction rather than by genuine robustness."
+            },
+            {
+              "_key": "rl5l4b17",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Judging a Strategy From Its Regime-by-Regime Report",
+              "scenario": "A colleague presents a trained agent's results with a single, blended figure: 'Sharpe of 0.9 across 2020 through 2022, a solid, respectable number.' When you ask to see the same three years broken out individually, the 2020 COVID crash period alone shows a Sharpe of -2.8 and a max drawdown of 41%.",
+              "prompt": "Why does the blended figure alone understate what you need to know here, and what would you want to see before trusting this strategy?",
+              "modelAnswer": "A blended Sharpe of 0.9 makes the strategy sound consistently decent across the whole span, but a -2.8 Sharpe and 41% max drawdown during the 2020 crash specifically means the strategy performed disastrously during exactly the kind of fast, correlated selloff this lesson's stress-testing is built to catch, a result the blended figure's other, presumably much stronger years are quietly averaging away. Before trusting this strategy, the natural next steps are the same tools this chapter built: what does the distributional shift monitor from the previous lesson show during that period, did it flag the crash as out-of-distribution, and if so, was that flag actually acted on; what does the drawdown-penalized reward from Chapter 3 appear to have failed to prevent; and whether the -2.8 Sharpe reflects a strategy that never should have been trusted with size during a crash, or one whose risk controls simply were not engaged correctly. A single blended number, however respectable, is never sufficient grounds to trust a strategy with real capital on its own."
+            },
+            {
+              "_key": "rl5l4b18",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why Stress-Testing Doesn't Prove Future Safety",
+              "question": "According to this lesson, what does successfully passing stress tests against the 2020 crash and 2022 chop actually establish about a trading strategy?",
+              "options": [
+                "That the strategy is guaranteed to perform well in all future market conditions",
+                "That the strategy has demonstrated an acceptable floor of performance against the worst conditions Indian markets have actually produced in recent memory, without guaranteeing performance against conditions that have not yet occurred",
+                "That the strategy no longer needs any further monitoring once deployed",
+                "That the strategy's hyperparameters are now provably optimal"
+              ],
+              "correctIndex": 1,
+              "explanation": "Historical stress-testing can only test against history that has already happened. Passing it establishes a meaningful floor, evidence the strategy is not fragile against the worst conditions actually on record, but it cannot prove anything about a future regime that has never occurred before, which is exactly why the distributional shift monitoring from the previous lesson remains necessary even after a strategy has passed every historical stress test this lesson describes."
+            },
+            {
+              "_key": "rl5l4b19",
+              "_type": "keyTakeaways",
+              "points": [
+                "Stress-testing is a targeted complement to Chapter 4's generic walk-forward validation: it deliberately checks performance against specific, named historical regimes known to have been unusually difficult, rather than relying on rolling windows to happen to capture one",
+                "The February-March 2020 COVID crash, the 2021 bull trend, and the choppy, range-bound 2022 give a short, well-documented list of genuinely different Indian market regimes worth testing against by name",
+                "Every stress period needs its own separately reported metrics; blending multiple regimes into one figure can hide a severe failure in one specific period behind a merely mediocre-looking combined number",
+                "Passing historical stress tests establishes a floor of demonstrated resilience against known past conditions, not a guarantee against future conditions that have not yet occurred, which is why ongoing distributional shift monitoring remains necessary even after stress-testing passes",
+                "Tuning a strategy's hyperparameters specifically to perform well on the named stress periods used to judge it recreates Chapter 4's multiple comparisons problem, and undermines the entire point of stress-testing",
+                "With a realistic backtest environment, a full risk-aware metrics report, distributional shift monitoring, and regime-specific stress-testing now built, this chapter has assembled the validation discipline a trained RL strategy needs before any claim that it might be ready for real capital"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

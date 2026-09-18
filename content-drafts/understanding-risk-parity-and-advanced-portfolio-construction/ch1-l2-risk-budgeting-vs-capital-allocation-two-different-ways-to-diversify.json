@@ -1,0 +1,279 @@
+{
+  "courseSlug": "understanding-risk-parity-and-advanced-portfolio-construction",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Traditional Portfolio Construction Fails",
+      "lessons": [
+        {
+          "title": "Risk Budgeting vs Capital Allocation: Two Different Ways to Diversify",
+          "slug": "risk-budgeting-vs-capital-allocation-two-different-ways-to-diversify",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "b1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b1s1", "text": "Suppose you decide to sidestep everything from the last lesson and skip return forecasting entirely. You still have one more decision to make, and most investors get it wrong without realizing it: when you say a portfolio is 60% equity and 40% debt, you have described how the money is split. You have said nothing about how the risk is split. Those are different questions, and the gap between them is the entire reason risk parity exists.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b2s1", "text": "Two Different Questions: How Much Money vs How Much Risk", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b3",
+              "style": "normal",
+              "markDefs": [
+                { "_type": "glossaryTerm", "_key": "gt1", "definition": "The share of a portfolio's total rupee value invested in a given asset. A 60/40 portfolio has a 60% capital weight in equity." },
+                { "_type": "glossaryTerm", "_key": "gt2", "definition": "The share of a portfolio's total volatility that a given asset is responsible for, accounting for its own volatility and how it moves with everything else in the portfolio." }
+              ],
+              "children": [
+                { "_type": "span", "_key": "b3s1", "text": "A ", "marks": [] },
+                { "_type": "span", "_key": "b3s2", "text": "capital weight", "marks": ["gt1"] },
+                { "_type": "span", "_key": "b3s3", "text": " is simple: it is the fraction of your rupees sitting in each asset. A ", "marks": [] },
+                { "_type": "span", "_key": "b3s4", "text": "risk contribution", "marks": ["gt2"] },
+                { "_type": "span", "_key": "b3s5", "text": " is a different measurement entirely: it is the fraction of the portfolio's total volatility that traces back to each asset. These two numbers only match when every asset in the portfolio has identical volatility and identical correlation with everything else. In any real portfolio mixing equity and debt, they are nowhere close.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b4",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b4s1", "text": "The Math of Risk Contribution", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b5",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b5s1", "text": "Portfolio volatility is a homogeneous function of degree one in the weights, which is a formal way of saying something intuitive: if you scale every position up by the same factor, portfolio volatility scales up by exactly that factor too. Euler's theorem says any function with that property can be broken down exactly into a sum of per-asset contributions, with nothing left over. Applied to portfolio risk, that decomposition has a name, marginal contribution to risk, and it is the building block for everything else in this course.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "mathBlock",
+              "_key": "b6",
+              "latex": "MCTR_i = \\frac{(\\Sigma w)_i}{\\sigma_p}, \\qquad RC_i = w_i \\times MCTR_i, \\qquad \\sum_{i=1}^{n} RC_i = \\sigma_p",
+              "caption": "Marginal contribution to risk (MCTR) for asset i, its risk contribution (RC), and the Euler decomposition guaranteeing that every asset's risk contribution adds up exactly to total portfolio volatility, with nothing left unexplained."
+            },
+            {
+              "_type": "block",
+              "_key": "b7",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b7s1", "text": "(Sigma w) here means the covariance matrix multiplied by the weight vector, so the i-th entry of that product captures how asset i co-moves with the entire portfolio, not just with itself. Divide by portfolio volatility to normalize, multiply by the asset's own weight, and you get exactly how many percentage points of portfolio volatility that asset is responsible for.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b8",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b8s1", "text": "Case Study: The 60/40 Illusion", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b9",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b9s1", "text": "Take a classic Indian balanced allocation: 60% in Nifty 50 equity, 40% in 10-year Government of India securities (G-Secs). The numbers below are illustrative long-run assumptions, not a live quote, but they are in the right neighbourhood for equity and sovereign debt in India.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "statGrid",
+              "_key": "b10",
+              "stats": [
+                { "label": "Nifty 50 annualized volatility (illustrative)", "value": "14%", "context": "Long-run approximate figure for Indian large-cap equity" },
+                { "label": "10-year G-Sec annualized volatility (illustrative)", "value": "5%", "context": "Sovereign debt duration risk, far lower than equity" },
+                { "label": "Equity-debt correlation (illustrative)", "value": "-0.10", "context": "Mildly negative, typical of risk-off periods when bonds rally as equity sells off" }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b11",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b11s1", "text": "Plugging 60% equity and 40% debt into the portfolio variance formula, with these assumptions, gives a portfolio volatility of roughly 8.4%. Now run each asset's weight and covariance term through the MCTR and RC formulas above.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "b12",
+              "caption": "Capital weight vs risk contribution, 60/40 Nifty 50 and 10-year G-Sec portfolio (illustrative)",
+              "headers": ["Asset", "Capital weight", "Risk contribution"],
+              "rows": [
+                { "cells": ["Nifty 50 (equity)", "60%", "~97%"] },
+                { "cells": ["10-year G-Sec (debt)", "40%", "~3%"] }
+              ]
+            },
+            {
+              "_type": "donutChart",
+              "_key": "b13",
+              "title": "Capital allocation: 60/40",
+              "data": [
+                { "label": "Nifty 50 (equity)", "value": 60 },
+                { "label": "10-year G-Sec (debt)", "value": 40 }
+              ]
+            },
+            {
+              "_type": "donutChart",
+              "_key": "b14",
+              "title": "Risk contribution: ~97/3 (illustrative)",
+              "data": [
+                { "label": "Nifty 50 (equity)", "value": 97 },
+                { "label": "10-year G-Sec (debt)", "value": 3 }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "b15",
+              "type": "warning",
+              "text": "A 60/40 portfolio is not a moderately equity-tilted portfolio when you measure it in risk terms. Under these illustrative assumptions, equity alone accounts for nearly all of the portfolio's day-to-day volatility, because its volatility is roughly three times debt's and it still holds a larger capital share on top of that. Anyone who calls a 60/40 fund 'balanced' is describing the money, not the risk."
+            },
+            {
+              "_type": "block",
+              "_key": "b16",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b16s1", "text": "This is not a quirk of this particular example. It is the general pattern any time you combine a high-volatility asset with a low-volatility asset using capital weights alone. Equity mutual funds, hybrid funds, and even many retail model portfolios in India that describe themselves as diversified across asset classes are, in risk terms, concentrated equity bets with a debt cushion attached.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b17",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b17s1", "text": "Risk Budgets vs Capital Budgets", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b18",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b18s1", "text": "A capital budget answers 'how many rupees go where.' A risk budget answers 'how much of my portfolio's ups and downs should each sleeve be responsible for.' Once you separate the two questions, a natural follow-up appears: what if, instead of picking capital weights and accepting whatever risk contribution falls out, you picked target risk contributions directly and let the capital weights fall out instead?", "marks": [] }
+              ]
+            },
+            {
+              "_type": "comparison",
+              "_key": "b19",
+              "title": "Capital Budgeting Mindset vs Risk Budgeting Mindset",
+              "columns": [
+                {
+                  "label": "Capital Budgeting (traditional)",
+                  "points": [
+                    "Start by deciding rupee weights, e.g. 60% equity, 40% debt",
+                    "Risk contribution is whatever falls out of those weights and the assets' volatilities",
+                    "Easy to explain, easy to compute, but the realized risk mix is often accidental",
+                    "A high-volatility asset can dominate portfolio risk even at a modest capital weight"
+                  ]
+                },
+                {
+                  "label": "Risk Budgeting (this course's direction)",
+                  "points": [
+                    "Start by deciding how much risk each sleeve should contribute",
+                    "Capital weights are solved for, given each asset's volatility and correlations",
+                    "Requires computing MCTR and RC, more work than picking round-number weights",
+                    "The realized risk mix is chosen deliberately, not left to whichever asset happens to be more volatile"
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b20",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b20s1", "text": "Risk parity, which the next chapter builds from the ground up, is simply the specific case of risk budgeting where every asset gets an equal risk budget. It is one answer to the risk budgeting question, not the only possible one, but it is the natural starting point once you accept that capital weights alone tell you very little about where your portfolio's risk actually lives.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b21",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b21s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "codeBlock",
+              "_key": "b22",
+              "language": "python",
+              "code": "import numpy as np\n\ndef risk_contributions(weights, cov):\n    weights = np.array(weights)\n    port_var = weights @ cov @ weights\n    port_vol = np.sqrt(port_var)\n    mctr = (cov @ weights) / port_vol      # marginal contribution to risk, per asset\n    rc = weights * mctr                    # risk contribution, per asset\n    return port_vol, rc, rc / port_vol      # portfolio vol, RC in vol units, RC as a share\n\n# Nifty 50 (equity) and 10-year G-Sec (debt), illustrative annualized inputs\nvol = np.array([0.14, 0.05])\ncorr = -0.10\ncov = np.array([\n    [vol[0]**2,            corr * vol[0] * vol[1]],\n    [corr * vol[0] * vol[1], vol[1]**2],\n])\n\nweights = [0.60, 0.40]\nport_vol, rc, rc_share = risk_contributions(weights, cov)\n\nprint(f\"Portfolio volatility: {port_vol:.4%}\")\nprint(f\"Risk contribution (equity, debt): {rc}\")\nprint(f\"Risk contribution share: {np.round(rc_share * 100, 1)}%\")\nprint(f\"Shares sum to: {rc_share.sum():.4f}\")  # should be 1.0, by Euler's theorem",
+              "caption": "This function generalizes to any number of assets, not just two. Swap in your own covariance matrix, built from real NSE and G-Sec return series, and check how close your own 'diversified' portfolio's risk contribution shares are to its capital weights. They are almost never close."
+            },
+            {
+              "_type": "exercise",
+              "_key": "b23",
+              "variant": "scenario",
+              "title": "Rebuilding the 60/40",
+              "scenario": "Using the same volatility and correlation assumptions as the case study (equity 14%, debt 5%, correlation -0.10), you want to find capital weights that give equity and debt roughly equal risk contribution instead of the 97/3 split the 60/40 portfolio produced.",
+              "prompt": "Without solving the exact optimization yet, which direction would you move the capital weights, and roughly how large a shift do you expect it to take, given that equity's volatility is about 2.8 times debt's?",
+              "modelAnswer": "You would need to cut the equity capital weight sharply and raise the debt capital weight, likely to somewhere in the neighbourhood of 20 to 25% equity and 75 to 80% debt, though the exact figure depends on the correlation term too. The intuition: to offset an asset that is roughly 2.8 times as volatile, you need roughly that much less capital in it before their risk contributions start to converge. This 'solve for the weights that equalize risk contribution' problem is exactly what the next chapter formalizes as risk parity."
+            },
+            {
+              "_type": "exercise",
+              "_key": "b24",
+              "variant": "quiz",
+              "title": "Quick Check",
+              "question": "In the 60/40 Nifty 50 and G-Sec example, why does equity end up contributing roughly 97% of portfolio risk despite being only 60% of the capital?",
+              "options": [
+                "Because SEBI requires equity funds to disclose higher risk weightings",
+                "Because equity's volatility is much higher than debt's, and risk contribution scales with both the capital weight and the asset's covariance with the whole portfolio, not with capital weight alone",
+                "Because the correlation between equity and debt is exactly zero",
+                "Because G-Secs are risk-free and contribute no volatility at all"
+              ],
+              "correctIndex": 1,
+              "explanation": "Risk contribution depends on an asset's capital weight combined with its own volatility and its correlation with the rest of the portfolio. G-Secs are not risk-free, they carry duration risk, but at roughly a third of equity's volatility, even a 40% capital allocation to them barely registers once equity's much larger volatility is in the mix."
+            },
+            {
+              "_type": "block",
+              "_key": "b25",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b25s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "b26",
+              "text": "Capital weights and risk contributions are different measurements, and confusing them is how a 60/40 portfolio ends up behaving almost exactly like a leveraged equity bet. Risk budgeting starts from the question capital allocation skips: how much of the portfolio's volatility should each asset actually be responsible for."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "b27",
+              "points": [
+                "Capital weight is the share of rupees in an asset. Risk contribution is the share of portfolio volatility that traces back to that asset. They are only equal in special cases.",
+                "Marginal contribution to risk (MCTR) and risk contribution (RC) decompose total portfolio volatility exactly, with every asset's RC summing to the whole, by Euler's theorem.",
+                "In a 60/40 Nifty 50 and 10-year G-Sec portfolio under illustrative long-run assumptions, equity contributes roughly 97% of total risk despite being only 60% of the capital.",
+                "A 'diversified' portfolio measured only in capital terms can be a concentrated risk bet in disguise, because volatility differences across assets dominate the risk math.",
+                "Risk budgeting flips the traditional process: choose target risk contributions first, then solve for the capital weights that deliver them. Risk parity, covered starting next chapter, is the specific case where every asset gets an equal risk budget."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

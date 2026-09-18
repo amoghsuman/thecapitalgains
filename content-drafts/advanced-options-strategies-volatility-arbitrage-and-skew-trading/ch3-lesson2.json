@@ -1,0 +1,220 @@
+{
+  "courseSlug": "advanced-options-strategies-volatility-arbitrage-and-skew-trading",
+  "chapters": [
+    {
+      "title": "Chapter 3: Volatility Term Structure and Calendar Dynamics",
+      "lessons": [
+        {
+          "title": "Trading Event Vol: Budget, RBI Policy, and Earnings",
+          "slug": "trading-event-vol-budget-rbi-policy-and-earnings",
+          "body": [
+            {
+              "_key": "c3l2-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2-001s1", "_type": "span", "text": "The last lesson's RBI-day scenario left the actual trading decision unanswered on purpose. You now know the 7-day tenor was pricing a 5.5-point IV spike into the announcement. The question a desk actually has to answer is narrower and more useful than 'will the RBI surprise the market': is that inflated IV a fair price for how much Nifty will actually move, too cheap, or too expensive? This lesson is about trading that question directly.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c3l2-002",
+              "_type": "bigIdea",
+              "text": "Trading event vol is a bet on whether the option market's implied move overstates or understates the underlying's actual move around a known, dated event. It is not a bet on which way the event resolves, and the single biggest force acting on the position is the volatility crush that hits the moment the event's uncertainty resolves, regardless of direction."
+            },
+            {
+              "_key": "c3l2-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2-003s1", "_type": "span", "text": "The Implied Move", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c3l2-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "c3l2-004m1", "_type": "glossaryTerm", "definition": "A quick approximation for the ATM straddle's price, derived by Brenner and Subrahmanyam (1988): straddle ≈ 0.7979 × S × σ × √T, roughly 80% of the underlying's one-standard-deviation expected move over the option's life." }
+              ],
+              "children": [
+                { "_key": "c3l2-004s1", "_type": "span", "text": "The event-tenor ATM IV converts directly into a rupee number every trader on the desk uses as a sanity check. The underlying's one-standard-deviation expected move over the option's remaining life is approximately S × σ × √T, and the ", "marks": [] },
+                { "_key": "c3l2-004s2", "_type": "span", "text": "Brenner-Subrahmanyam approximation", "marks": ["c3l2-004m1"] },
+                { "_key": "c3l2-004s3", "_type": "span", "text": " says the ATM straddle's price sits at roughly 80% of that figure.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c3l2-005",
+              "_type": "mathBlock",
+              "latex": "\\text{1}\\sigma\\text{ implied move} \\approx S\\sigma\\sqrt{T}, \\qquad \\text{ATM straddle} \\approx 0.7979 \\, S\\sigma\\sqrt{T}",
+              "caption": "Converting event-tenor IV directly into a rupee move, and into the ATM straddle's approximate price"
+            },
+            {
+              "_key": "c3l2-006",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Sizing the implied move",
+              "prompt": "Using the previous lesson's RBI-day figures, Nifty spot 26,500, 7-day ATM IV 19.8%, T = 7/365 years, what is the one-standard-deviation implied move, in rupees, to the nearest whole rupee? (1σ move ≈ S × σ × √T)",
+              "correctValue": 727,
+              "tolerance": 10,
+              "unit": "₹",
+              "explanation": "√(7/365) ≈ 0.1385. 26,500 × 0.198 × 0.1385 ≈ 727. The market is pricing roughly a ±727 point, or about 2.7%, move on Nifty by expiry as a one-standard-deviation outcome. The ATM straddle itself should trade at roughly 0.7979 × 727 ≈ ₹580."
+            },
+            {
+              "_key": "c3l2-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2-007s1", "_type": "span", "text": "The Volatility Crush", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c3l2-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "c3l2-008m1", "_type": "glossaryTerm", "definition": "The sharp drop in an option's implied volatility, and therefore its price, immediately after a known event's uncertainty resolves. It hits regardless of which way, or how much, the underlying actually moved." }
+              ],
+              "children": [
+                { "_key": "c3l2-008s1", "_type": "span", "text": "The single largest, most reliable force acting on an event-tenor option is the ", "marks": [] },
+                { "_key": "c3l2-008s2", "_type": "span", "text": "volatility crush", "marks": ["c3l2-008m1"] },
+                { "_key": "c3l2-008s3", "_type": "span", "text": ". The moment the RBI announcement lands, the specific uncertainty priced into that 19.8% IV is gone, whether the policy was hawkish, dovish, or a complete non-event. IV collapses back toward a normal level almost immediately, and because option price is highly sensitive to IV at this magnitude, the straddle can lose a large fraction of its value even if spot has barely moved at all.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c3l2-009",
+              "_type": "table",
+              "caption": "Illustrative straddle value before and after the crush, spot held unchanged at 26,500 to isolate the vol-only effect",
+              "headers": ["", "IV", "Approx. straddle price"],
+              "rows": [
+                { "_key": "c3l2-009r1", "_type": "tableRow", "cells": ["Just before the announcement", "19.8%", "₹580"] },
+                { "_key": "c3l2-009r2", "_type": "tableRow", "cells": ["Just after, a muted outcome", "13.5%", "₹395"] },
+                { "_key": "c3l2-009r3", "_type": "tableRow", "cells": ["Change", "−6.3 pts", "−₹185, about 32%"] }
+              ]
+            },
+            {
+              "_key": "c3l2-010",
+              "_type": "callout",
+              "type": "insight",
+              "text": "That 32% loss in the table happens with spot completely flat. This is the trap that catches traders who buy a straddle purely because 'something big is happening.' A long straddle into an event needs the actual move to outrun the implied move by enough to beat the crush, not just needs the market to move at all."
+            },
+            {
+              "_key": "c3l2-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2-011s1", "_type": "span", "text": "Buying vs Selling Event Vol", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c3l2-012",
+              "_type": "comparison",
+              "title": "Two sides of the same implied-move bet",
+              "columns": [
+                {
+                  "_key": "c3l2-012c1",
+                  "label": "Long event vol (buy the straddle/strangle)",
+                  "points": [
+                    "Profits if the actual move exceeds the implied move by more than the crush costs",
+                    "Loses to the crush if the actual move is smaller than implied, even with zero directional loss",
+                    "Defined, limited risk: you cannot lose more than the premium paid",
+                    "Right when the market is complacent about genuine tail risk in the event"
+                  ]
+                },
+                {
+                  "_key": "c3l2-012c2",
+                  "label": "Short event vol (sell the straddle/strangle)",
+                  "points": [
+                    "Profits from harvesting the crush if the actual move stays inside the implied move",
+                    "Loses heavily, and can lose far more than the premium collected, if the event surprises",
+                    "Undefined risk unless structured with a hedge or wings, and margin requirements are steep",
+                    "Right when event IV looks rich relative to how the event has historically resolved, but wrong when the event genuinely surprises"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c3l2-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2-013s1", "_type": "span", "text": "This is the same volatility risk premium from Chapter 1, applied to a single dated event instead of a rolling window. Across options markets generally, implied moves ahead of scheduled events have tended to overstate the move that actually materializes more often than not, which is exactly the pattern that makes selling event vol a persistent, edge-positive strategy on average, and exactly the pattern that makes it dangerous on the events where it does not hold.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c3l2-014",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Event days bring practical friction that a clean rupee calculation does not capture. SPAN margin requirements on short options typically rise into known events, liquidity can thin out sharply in the minutes right around a 2:30 pm RBI announcement or a Budget speech, and slippage on entering or exiting a position in that window can be significant. Build and size positions well before the announcement window, not during it, and confirm margin headroom for the worst case, not just the expected one."
+            },
+            {
+              "_key": "c3l2-015",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why the flat-spot loss happens",
+              "question": "A trader buys an ATM Nifty straddle the day before an RBI announcement. Nifty closes the next day exactly where it started, unchanged. What is the most likely outcome for the straddle's value?",
+              "options": [
+                "It is unchanged, since an ATM straddle only responds to directional moves",
+                "It has lost significant value, mainly because event-tenor IV collapsed once the announcement resolved the uncertainty it was pricing",
+                "It has gained value, since implied volatility always rises after an announcement",
+                "Its value depends entirely on whether the RBI decision was hawkish or dovish"
+              ],
+              "correctIndex": 1,
+              "explanation": "A straddle has close to zero net delta near the money, but it is loaded with vega and negative theta. Even with spot completely flat, the vol crush after the announcement, plus one day of time decay, erodes the straddle's value meaningfully. This is precisely the mechanism the crush table above quantifies."
+            },
+            {
+              "_key": "c3l2-016",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Deciding the trade",
+              "scenario": "Ahead of the RBI announcement, the 7-day ATM straddle prices in a ±727 point, roughly 2.7%, one-standard-deviation implied move. Reviewing recent RBI announcements, you judge that Nifty's actual move on the announcement day has typically landed somewhere between 0.8% and 1.6%, rarely exceeding 2%, except on the rare occasion of a genuinely unexpected policy shift.",
+              "prompt": "Based on this comparison, would you lean toward buying or selling the straddle, and what would make you avoid the trade entirely?",
+              "modelAnswer": "1. The implied move, about 2.7%, looks rich relative to the typical realized range you have observed, 0.8% to 1.6%. That gap is consistent with this lesson's premise: event IV tends to overstate the move that actually materializes on average.\n2. This leans toward selling the straddle, or a defined-risk variant like a short strangle with protective wings, to harvest the gap between implied and typically realized move, rather than buying it and needing an outsized move just to overcome the crush.\n3. This is a lean based on averages, not a certainty. The 'rare occasion of a genuinely unexpected policy shift' is precisely the tail case an undefined-risk short position is exposed to, and it is the case where losses are largest, not smallest.\n4. Before committing, check position sizing against the worst historical RBI-day move you can find, not the typical one, confirm margin headroom under a stress scenario, and consider whether a defined-risk structure, buying far wings to cap the tail, is worth giving up some of the average edge for.\n5. Avoid the trade entirely if there is reason to think this particular meeting carries above-normal surprise risk, a live policy debate in the market, an unusual inflation print just before it, or global central bank uncertainty bleeding in, since that is exactly the situation where historical averages are the least reliable guide."
+            },
+            {
+              "_key": "c3l2-017",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "import math\n\ndef implied_move(S, sigma, T):\n    return S * sigma * math.sqrt(T)\n\ndef atm_straddle_approx(S, sigma, T):\n    return 0.7979 * S * sigma * math.sqrt(T)\n\nS, T = 26500, 7 / 365\npre_event_iv, post_event_iv = 0.198, 0.135\n\nmove = implied_move(S, pre_event_iv, T)\npre = atm_straddle_approx(S, pre_event_iv, T)\npost = atm_straddle_approx(S, post_event_iv, T)\n\nprint(f\"Implied 1-sigma move: {move:.0f}\")\nprint(f\"Straddle pre-event: {pre:.0f}, post-event: {post:.0f}, crush: {(pre - post) / pre:.1%}\")",
+              "caption": "Reusable implied-move and straddle-crush calculator, reproducing this lesson's worked figures"
+            },
+            {
+              "_key": "c3l2-018",
+              "_type": "flashcardSet",
+              "title": "Trading Event Vol",
+              "cards": [
+                { "_key": "c3l2-018f1", "term": "Implied move", "definition": "The one-standard-deviation move the option market is pricing over an option's remaining life, approximated as S × σ × √T." },
+                { "_key": "c3l2-018f2", "term": "Brenner-Subrahmanyam approximation", "definition": "ATM straddle price ≈ 0.7979 × S × σ × √T, a quick way to convert IV into an expected straddle price without a full pricing model." },
+                { "_key": "c3l2-018f3", "term": "Volatility crush", "definition": "The sharp drop in an option's IV, and therefore price, immediately after a known event resolves, independent of how far the underlying actually moved." },
+                { "_key": "c3l2-018f4", "term": "Long event vol", "definition": "Buying a straddle or strangle into an event, profiting only if the actual move outruns the implied move by more than the crush costs." },
+                { "_key": "c3l2-018f5", "term": "Short event vol", "definition": "Selling a straddle or strangle into an event, profiting from harvesting the crush when the actual move stays inside the implied move, but exposed to outsized tail risk if the event surprises." }
+              ]
+            },
+            {
+              "_key": "c3l2-019",
+              "_type": "keyTakeaways",
+              "points": [
+                "Event-tenor IV converts directly into a rupee implied move, S × σ × √T, and an approximate ATM straddle price, roughly 0.7979 times that move.",
+                "The volatility crush after a known event resolves is the dominant force on an event-tenor option's price, and it can produce a large loss on a long straddle even with spot completely unchanged.",
+                "Buying event vol needs the actual move to beat the implied move by enough to overcome the crush; selling event vol harvests the crush when the actual move stays inside the implied move, but carries real tail risk if the event genuinely surprises.",
+                "This is Chapter 1's volatility risk premium applied to a single dated event: implied moves ahead of scheduled events have tended to overstate realized moves on average, which is the entire rationale for selling event vol, and the entire risk in doing so.",
+                "Practical friction, margin spikes and thin liquidity right around the announcement window, must be planned for separately from the pure volatility math.",
+                "Comparing an event's implied move against its typical historical realized range is a starting point for sizing a view, never a substitute for sizing against the worst case that has actually happened."
+              ]
+            },
+            {
+              "_key": "c3l2-020",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment or trading advice. Figures for implied and realized event moves are illustrative teaching examples, not a verified historical backtest of actual RBI or Budget-day Nifty moves. Selling options carries the risk of loss exceeding premium received. Consult a SEBI-registered adviser before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

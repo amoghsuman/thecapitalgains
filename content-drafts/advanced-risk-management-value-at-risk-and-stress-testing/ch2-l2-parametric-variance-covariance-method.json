@@ -1,0 +1,276 @@
+{
+  "courseSlug": "advanced-risk-management-value-at-risk-and-stress-testing",
+  "chapters": [
+    {
+      "title": "Chapter 2: Calculating VaR: Core Methodologies",
+      "lessons": [
+        {
+          "title": "Parametric (Variance-Covariance) Method",
+          "slug": "parametric-variance-covariance-method",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "e1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "e1s1", "text": "Historical Simulation makes no assumption about the shape of returns and pays for that with window dependence. The Parametric method, also called the Variance-Covariance method, takes the opposite trade. Assume returns are normally distributed, plug your volatility estimate into a formula, and get a VaR number instantly, no sorting, no scenario replay, no waiting for a specific window of history to contain the right days.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "keyFact",
+              "_key": "e2",
+              "label": "Parametric (Variance-Covariance) VaR",
+              "value": "VaR = z-score for the confidence level, times volatility, times position value",
+              "context": "A closed-form calculation. Fast, but entirely dependent on the normal distribution assumption holding."
+            },
+            {
+              "_type": "block",
+              "_key": "e3",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "e3s1", "text": "The Core Idea: Assume a Distribution, Use a Formula", "marks": [] }
+              ]
+            },
+            {
+              "_type": "mathBlock",
+              "_key": "e4",
+              "latex": "\\text{VaR}_\\alpha = z_\\alpha \\cdot \\sigma \\cdot V",
+              "caption": "z-alpha is the one-tailed z-score for the confidence level, sigma is the position's return volatility (from the estimators covered in Chapter 1), V is position value. The expected return term is usually dropped at a 1-day horizon, since it is negligible next to the volatility term."
+            },
+            {
+              "_type": "table",
+              "_key": "e5",
+              "caption": "One-tailed z-scores for common confidence levels",
+              "headers": ["Confidence level", "z-score"],
+              "rows": [
+                { "cells": ["90%", "1.282"] },
+                { "cells": ["95%", "1.645"] },
+                { "cells": ["99%", "2.326"] },
+                { "cells": ["99.9%", "3.090"] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "e6",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "e6s1", "text": "Worked Example: A Single Position", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "e7",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "e7s1", "text": "A desk holds Rs 50,00,000 in a Nifty futures position, with a daily volatility estimate of 1.2%, computed using the EWMA approach from Chapter 1. Applying the formula at three confidence levels:", "marks": [] }
+              ]
+            },
+            {
+              "_type": "statGrid",
+              "_key": "e8",
+              "stats": [
+                { "label": "1-day VaR at 90% confidence", "value": "Rs 76,920", "context": "1.282 x 1.2% x Rs 50,00,000" },
+                { "label": "1-day VaR at 95% confidence", "value": "Rs 98,700", "context": "1.645 x 1.2% x Rs 50,00,000" },
+                { "label": "1-day VaR at 99% confidence", "value": "Rs 1,39,560", "context": "2.326 x 1.2% x Rs 50,00,000" }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "e9",
+              "type": "insight",
+              "text": "Notice there was no sorting, no historical scenarios, no window to argue about. Change the volatility estimate and every number above updates instantly. That speed is the entire appeal of the parametric method, and it is also exactly where its risk hides: the whole calculation stands or falls on sigma being the right volatility estimate and on the normal distribution assumption being reasonable."
+            },
+            {
+              "_type": "block",
+              "_key": "e10",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "e10s1", "text": "Scaling to a Portfolio: Where the Covariance Comes In", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "e11",
+              "style": "normal",
+              "markDefs": [
+                { "_type": "glossaryTerm", "_key": "gt1", "definition": "A measure of how two assets' returns move together. Positive covariance means they tend to move in the same direction, negative covariance means they tend to move in opposite directions." }
+              ],
+              "children": [
+                { "_type": "span", "_key": "e11s1", "text": "The method's full name, Variance-Covariance, is the giveaway: for a portfolio of more than one position, you cannot just add up each position's individual VaR. You need the ", "marks": [] },
+                { "_type": "span", "_key": "e11s2", "text": "covariance", "marks": ["gt1"] },
+                { "_type": "span", "_key": "e11s3", "text": " between every pair of positions, because how they move together determines whether the portfolio's combined risk is smaller or larger than the sum of its parts.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "mathBlock",
+              "_key": "e12",
+              "latex": "\\sigma_{P}^2 = (V_A\\sigma_A)^2 + (V_B\\sigma_B)^2 + 2(V_A\\sigma_A)(V_B\\sigma_B)\\rho_{AB}",
+              "caption": "Two-position portfolio variance in rupee terms. V is position value, sigma is that position's volatility, rho is the correlation between the two positions' returns."
+            },
+            {
+              "_type": "block",
+              "_key": "e13",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "e13s1", "text": "Take a desk running Rs 50,00,000 in Nifty futures (daily volatility 1.2%) alongside Rs 30,00,000 in gold (daily volatility 1.0%), assets that historically show a mild negative correlation, roughly -0.10, since gold often acts as a hedge when equities sell off.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "e14",
+              "caption": "Building portfolio volatility from two positions",
+              "headers": ["Position", "Value", "Daily volatility", "Rupee volatility (V x sigma)"],
+              "rows": [
+                { "cells": ["Nifty futures (A)", "Rs 50,00,000", "1.2%", "Rs 60,000"] },
+                { "cells": ["Gold (B)", "Rs 30,00,000", "1.0%", "Rs 30,000"] },
+                { "cells": ["Correlation (A, B)", "-0.10", "", ""] }
+              ]
+            },
+            {
+              "_type": "statGrid",
+              "_key": "e15",
+              "stats": [
+                { "label": "Portfolio rupee volatility", "value": "Rs 64,343", "context": "Computed using the variance-covariance formula with rho = -0.10" },
+                { "label": "Undiversified sum (if rho were +1)", "value": "Rs 90,000", "context": "Rs 60,000 + Rs 30,000, the case with no diversification benefit at all" },
+                { "label": "Portfolio VaR at 99%", "value": "Rs 1,49,661", "context": "2.326 x Rs 64,343" }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "e16",
+              "type": "insight",
+              "text": "Compare the portfolio VaR of Rs 1,49,661 to the sum of the two positions' individual 99% VaR figures: Rs 1,39,560 for Nifty plus Rs 69,780 for gold, which adds up to Rs 2,09,340. The portfolio's actual VaR is noticeably lower than that sum, purely because the correlation is negative. This is diversification showing up mathematically, and it is also a preview of a deeper question the next chapter takes on directly: does VaR always behave this sensibly, giving diversified portfolios credit for being diversified? The answer, as you will see with coherent risk measures, is not always yes."
+            },
+            {
+              "_type": "block",
+              "_key": "e17",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "e17s1", "text": "Where the Normal Assumption Breaks: Options and Convexity", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "e18",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "e18s1", "text": "The formula above works cleanly for linear instruments, cash equities, futures, where a 1% move in the underlying produces roughly a 1% move in the position's value. It breaks down for options. A long call option's payoff is convex, it curves, and the basic parametric approach approximates that curve with a straight line using the option's delta. That is a fine approximation for small moves and a poor one for large moves, exactly the moves VaR exists to measure.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "payoffDiagram",
+              "_key": "e19",
+              "instrumentType": "call",
+              "position": "long",
+              "strikePrice": 24000,
+              "premium": 150,
+              "spotPriceRange": { "min": 23000, "max": 25500 },
+              "caption": "A long call's actual payoff curves upward past the strike. A delta-only parametric approximation replaces this curve with a straight line at today's spot price, which understates gains on a large up-move and, more dangerously for VaR, misrepresents the loss profile on a large down-move for more complex multi-leg option positions."
+            },
+            {
+              "_type": "callout",
+              "_key": "e20",
+              "type": "warning",
+              "text": "This is called delta-normal VaR when applied to options, and desks that run it need to know its blind spot: it captures directional (delta) risk reasonably well but misses gamma risk, the risk that the delta itself changes as the underlying moves. For an options book, especially one with short gamma positions like written straddles or naked short options, delta-normal VaR can understate risk substantially during a large move. Monte Carlo simulation, covered next, is the standard fix."
+            },
+            {
+              "_type": "block",
+              "_key": "e21",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "e21s1", "text": "Strengths and Weaknesses", "marks": [] }
+              ]
+            },
+            {
+              "_type": "comparison",
+              "_key": "e22",
+              "title": "Parametric VaR: Strengths and Weaknesses",
+              "columns": [
+                {
+                  "label": "Strengths",
+                  "points": [
+                    "Closed-form, computes instantly, no sorting or simulation needed",
+                    "Scales cleanly to large multi-asset portfolios using a covariance matrix",
+                    "Easy to decompose, you can see exactly which position or correlation is driving the number",
+                    "No dependence on a specific historical window"
+                  ]
+                },
+                {
+                  "label": "Weaknesses",
+                  "points": [
+                    "Assumes normally distributed returns, understating the fat tails shown in Chapter 1",
+                    "Correlations used in calm markets often break down exactly when a crisis hits",
+                    "Poor fit for options and other convex, nonlinear payoffs without further adjustment",
+                    "Only as reliable as the volatility and correlation estimates feeding it"
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "e23",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "e23s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "e24",
+              "variant": "numericInput",
+              "title": "Compute a Parametric VaR",
+              "prompt": "A position worth Rs 25,00,000 has an estimated daily volatility of 1.5%. What is its 1-day 95% Parametric VaR, in rupees? Use z(95%) = 1.645.",
+              "correctValue": 61688,
+              "tolerance": 500,
+              "unit": "Rs",
+              "explanation": "VaR = 1.645 x 1.5% x Rs 25,00,000 = Rs 61,687.5, rounded to Rs 61,688."
+            },
+            {
+              "_type": "exercise",
+              "_key": "e25",
+              "variant": "scenario",
+              "title": "A Correlation Assumption Under Stress",
+              "scenario": "A multi-asset desk's Parametric VaR model uses a correlation of -0.10 between Nifty and gold, estimated from the last two calm years. During a sharp global risk-off event, both assets sell off together for three straight sessions, briefly showing a positive correlation instead.",
+              "prompt": "What does this do to the desk's VaR estimate, and why is this a known limitation of the Parametric method rather than a one-off glitch?",
+              "modelAnswer": "If the model keeps using the old -0.10 correlation while the true, live correlation has turned positive, the model understates the portfolio's actual risk exactly when it matters most, during the stress event itself. Correlations are not stable constants, they tend to rise toward 1 in a crisis as most assets get sold together for liquidity or fear reasons, which is the opposite of what a diversification-based model assumes. This is a well-documented weakness of Parametric VaR, not a coding error, and it is a core reason stress testing, covered later in this course, exists as a separate discipline from VaR rather than a replacement for it."
+            },
+            {
+              "_type": "block",
+              "_key": "e26",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "e26s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "e27",
+              "text": "Parametric VaR is fast because it assumes the answer's shape in advance, normal returns, stable correlations, linear payoffs. Every one of those assumptions is exactly where the method can quietly fail."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "e28",
+              "points": [
+                "Parametric (Variance-Covariance) VaR computes instantly using VaR = z-score x volatility x position value, assuming a normal distribution.",
+                "For portfolios of more than one asset, correlation between positions determines whether combined VaR is smaller than the simple sum of individual VaRs, the mathematical signature of diversification.",
+                "The method fits linear instruments well but understates risk on convex, nonlinear positions like options, since delta-normal VaR approximates a curved payoff with a straight line.",
+                "Correlations estimated from calm periods routinely break down during stress, exactly when accurate risk numbers matter most, which is a core motivation for stress testing later in this course."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

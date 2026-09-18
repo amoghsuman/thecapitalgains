@@ -1,0 +1,206 @@
+{
+  "courseSlug": "introduction-to-statistical-arbitrage",
+  "chapters": [
+    {
+      "title": "Chapter 6: Risk, Costs, and Why Backtests Lie",
+      "lessons": [
+        {
+          "title": "Setting Up to Trade Stat Arb in India: Brokers, Algo Rules, and SEBI Basics",
+          "slug": "setting-up-to-trade-stat-arb-in-india-brokers-algo-rules-and-sebi-basics",
+          "body": [
+            {
+              "_key": "sa24-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa24-001s1", "_type": "span", "marks": [], "text": "Across this course, a few practical details have come up in passing: Zerodha's Kite Connect in Lesson 1, the NSE's SLB mechanism in Lesson 2, F&O eligibility as a screening filter in Lesson 13, margin as a brief mention in Lesson 15. This lesson pulls all of it together into what actually needs to be in place before a stat arb strategy like the ones built in this course goes live with real capital in India." }
+              ]
+            },
+            {
+              "_key": "sa24-002",
+              "_type": "bigIdea",
+              "text": "Running even a simple two-stock pairs strategy touches three separate systems at once: your broker's trading and data infrastructure, the exchange's margin rules, and SEBI's regulatory framework for algorithmic trading. All three matter before a single rupee gets deployed, and getting any one of them wrong can be more costly than a bad hedge ratio."
+            },
+            {
+              "_key": "sa24-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa24-003s1", "_type": "span", "marks": [], "text": "Broker Infrastructure: What You Actually Need" }
+              ]
+            },
+            {
+              "_key": "sa24-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa24-004s1", "_type": "span", "marks": [], "text": "Placing trades programmatically, rather than clicking buy and sell manually, requires API access from your broker. Zerodha's Kite Connect, referenced throughout this course, is the best known example among Indian discount brokers, alongside comparable offerings from Upstox, Angel One, and others. API access is typically a separate, paid subscription from your regular trading account, and it is what lets code, not a person, place and monitor orders. Historical and live price data, needed for everything from Lesson 5's correlation screen to a live z-score calculation, usually comes either through the same API or a separate data vendor." }
+              ]
+            },
+            {
+              "_key": "sa24-005",
+              "_type": "table",
+              "caption": "Broker infrastructure checklist",
+              "headers": ["Component", "Why it's needed"],
+              "rows": [
+                { "_key": "sa24-005r1", "_type": "tableRow", "cells": ["Trading and Demat account with API access", "The base account, plus a broker that actually offers programmatic order placement"] },
+                { "_key": "sa24-005r2", "_type": "tableRow", "cells": ["API subscription (developer keys)", "Typically a separate paid add-on to place and manage orders through code rather than manually"] },
+                { "_key": "sa24-005r3", "_type": "tableRow", "cells": ["Historical data access", "For screening, correlation, hedge ratio fitting, and cointegration testing, exactly as used throughout Chapters 2 and 3"] },
+                { "_key": "sa24-005r4", "_type": "tableRow", "cells": ["Live data feed", "For computing today's z-score and checking entry, exit, and stop-loss conditions in real time"] },
+                { "_key": "sa24-005r5", "_type": "tableRow", "cells": ["A place to actually run the code", "A personal machine or a small cloud server with reliable uptime; a strategy holding positions for days to weeks does not need the ultra-low-latency colocation setup high-frequency strategies do"] }
+              ]
+            },
+            {
+              "_key": "sa24-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa24-006s1", "_type": "span", "marks": [], "text": "SEBI's Algorithmic Trading Framework: What Applies to You" }
+              ]
+            },
+            {
+              "_key": "sa24-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa24-007s1", "_type": "span", "marks": [], "text": "A common misconception is that SEBI's rules on algorithmic trading only apply to large institutional or high-frequency desks. They don't. Any strategy where orders are generated and placed based on pre-defined logic, including a retail trader running the exact kind of z-score-driven entry and exit rules built in Chapter 4 through a broker's API, falls within the general scope of India's algorithmic trading regulation. In broad terms, this framework requires algo-generated orders to be identifiable and traceable, typically through some form of order tagging, and for the strategies generating them to go through some form of registration or empanelment with the exchange, arranged through your broker, before being used for live trading." }
+              ]
+            },
+            {
+              "_key": "sa24-008",
+              "_type": "callout",
+              "type": "warning",
+              "text": "This is an actively evolving area of regulation. The exact registration process, thresholds, and documentation required have changed more than once in recent years and will likely change again. Nothing in this lesson should be treated as final compliance guidance. Before running any automated strategy with real capital, check your broker's current algo trading policy directly and review SEBI's latest applicable circulars, or consult a compliance professional."
+            },
+            {
+              "_key": "sa24-009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa24-009s1", "_type": "span", "marks": [], "text": "Margin: Why a Pairs Trade Needs More Capital Than It Looks Like" }
+              ]
+            },
+            {
+              "_key": "sa24-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "sa24-010m1", "_type": "glossaryTerm", "definition": "The standardized, portfolio-risk-based margin methodology used for F&O positions on Indian exchanges, generally required per leg unless the position matches a specific, exchange-recognized hedge structure." }
+              ],
+              "children": [
+                { "_key": "sa24-010s1", "_type": "span", "marks": [], "text": "A subtlety that trips up newer stat arb traders: exchange margin for F&O positions, " },
+                { "_key": "sa24-010s2", "_type": "span", "marks": ["sa24-010m1"], "text": "SPAN margin" },
+                { "_key": "sa24-010s3", "_type": "span", "marks": [], "text": " plus exposure margin, is generally required on each leg of a pairs trade independently. A same-stock calendar spread or certain exchange-recognized hedge combinations can get a reduced, netted margin benefit. A pair built from two different underlying stocks, like every example in this course, generally does not get this benefit automatically; the exchange does not treat \"long Bajaj Auto futures, short Hero MotoCorp futures\" as an automatically recognized hedge the way it recognizes some same-stock structures. In practice, this means the capital actually locked up as margin can be meaningfully more than the notional position value alone might suggest." }
+              ]
+            },
+            {
+              "_key": "sa24-011",
+              "_type": "keyFact",
+              "label": "Typical illustrative margin requirement per F&O leg",
+              "value": "≈ 15% to 20% of notional value",
+              "context": "Varies by stock, volatility, and exchange rules on any given day. Always check your broker's live margin calculator before sizing a position, not a rule of thumb from a course."
+            },
+            {
+              "_key": "sa24-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa24-012s1", "_type": "span", "marks": [], "text": "Basic Operational Risk Controls" }
+              ]
+            },
+            {
+              "_key": "sa24-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa24-013s1", "_type": "span", "marks": [], "text": "A live automated strategy needs safeguards beyond the trading logic itself: a maximum position size and a maximum number of open pairs at once, a manual kill switch to halt all trading immediately if something looks wrong, monitoring and alerts if the code stops running or a connection drops, and a clear process for what happens to open positions if the strategy itself needs to be shut down unexpectedly. None of this is exciting, and all of it matters the first time something breaks." }
+              ]
+            },
+            {
+              "_key": "sa24-014",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa24-014s1", "_type": "span", "marks": [], "text": "A Practical Setup Checklist" }
+              ]
+            },
+            {
+              "_key": "sa24-015",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Before Going Live",
+              "steps": [
+                "Confirm your broker offers API access and complete any required subscription and setup",
+                "Arrange reliable historical and live data access for screening, testing, and live signal generation",
+                "Check your broker's current algo trading policy and any applicable SEBI registration requirements directly, not from a course",
+                "Use your broker's live margin calculator to size positions, accounting for full, unnetted margin on each leg",
+                "Set up basic operational risk controls: position limits, a kill switch, and monitoring for the strategy itself",
+                "Paper trade or run on a small position size first, before deploying full intended capital"
+              ]
+            },
+            {
+              "_key": "sa24-016",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Does the margin netting apply here?",
+              "question": "A trader holds long Bajaj Auto futures and short Hero MotoCorp futures as a pairs trade, similar to Lesson 16's case study. What should they generally expect regarding margin?",
+              "options": [
+                "The exchange automatically nets the two legs into one small combined margin, since it is a hedged position",
+                "Margin is generally required on each leg independently, since the exchange does not automatically treat two different underlying stocks as a recognized hedge combination",
+                "No margin is required at all for stock futures",
+                "Margin only applies to the short leg, not the long leg"
+              ],
+              "correctIndex": 1,
+              "explanation": "Automatic margin netting typically applies to specific, exchange-recognized structures, most often same-stock or same-index combinations, not an arbitrary pair of two different underlying stocks. A cross-stock pairs trade like this one generally requires full margin on each leg independently, which is why the capital actually needed can be more than the notional position value alone suggests."
+            },
+            {
+              "_key": "sa24-017",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Ready to go live?",
+              "scenario": "A trader has a cointegrated pair, a working Kalman-filtered hedge ratio, and entry, exit, and stop-loss rules coded and backtested honestly, with walk-forward estimation and a point-in-time universe. They are ready to point the code at their broker's live order API and start trading with their full intended capital tomorrow morning.",
+              "prompt": "What would you want them to check first?",
+              "modelAnswer": "The strategy logic being sound is necessary but not sufficient. Before going live with full capital, they should confirm their broker's algo trading registration requirements are actually met, not assumed, check the real margin required on both legs using the broker's live calculator rather than an estimate, set up basic operational risk controls like a kill switch and position limits, and consider starting with a smaller position size or a short paper-trading period first, since a strategy that is statistically sound can still fail operationally if the infrastructure and compliance side were never actually tested."
+            },
+            {
+              "_key": "sa24-018",
+              "_type": "flashcardSet",
+              "title": "Going Live: Core Terms",
+              "cards": [
+                { "_key": "sa24-018f1", "term": "API access", "definition": "Programmatic access to a broker's trading and data systems, allowing code to place orders and retrieve prices directly, typically a separate paid subscription from a regular trading account." },
+                { "_key": "sa24-018f2", "term": "Algo order tagging", "definition": "The general requirement, under SEBI's evolving algorithmic trading framework, for orders generated by predefined logic to be identifiable and traceable back to a registered strategy." },
+                { "_key": "sa24-018f3", "term": "SPAN margin", "definition": "The standardized, portfolio-risk-based margin methodology used for F&O positions on Indian exchanges, generally required per leg unless the position matches a specific, exchange-recognized hedge structure." }
+              ]
+            },
+            {
+              "_key": "sa24-019",
+              "_type": "keyTakeaways",
+              "points": [
+                "Running a stat arb strategy in India requires broker API access, reliable historical and live data, and, for anything beyond intraday, F&O-eligible stocks traded through futures rather than cash equity with SLB.",
+                "Even a retail trader running systematic entry and exit rules through a broker API falls within the general scope of SEBI's algorithmic trading framework, which is an actively evolving area; always verify current requirements directly rather than relying on any single source, including this course.",
+                "A cross-stock pairs trade generally requires full exchange margin on each leg independently. The exchange does not automatically net two different underlying stocks into one hedged position the way it might a same-stock structure.",
+                "A live automated strategy needs basic operational risk controls, position limits, a kill switch, and monitoring, on top of the trading logic itself.",
+                "A statistically sound strategy, built and backtested honestly across every earlier lesson in this course, can still fail operationally if the broker, margin, compliance, and risk-control setup were never properly worked through before going live."
+              ]
+            },
+            {
+              "_key": "sa24-020",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment, legal, or compliance advice. Regulatory requirements, broker policies, subscription costs, and margin figures described here are general and illustrative, subject to change, and may not reflect current rules. Consult your broker directly, review current SEBI circulars, and consult a compliance professional and a SEBI-registered investment adviser before deploying any automated trading strategy with real capital."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,303 @@
+{
+  "courseSlug": "advanced-options-strategies-volatility-arbitrage-and-skew-trading",
+  "chapters": [
+    {
+      "title": "Chapter 1: The Implied Volatility Surface",
+      "lessons": [
+        {
+          "title": "Implied Volatility vs Realized Volatility: An Advanced Recap",
+          "slug": "implied-volatility-vs-realized-volatility-an-advanced-recap",
+          "body": [
+            {
+              "_key": "c1l1-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l1-001s1", "_type": "span", "text": "A prop desk in Mumbai runs a simple book: every week, it sells Nifty strangles and delta-hedges them. The strategy has nothing to do with predicting whether Nifty goes up or down. It is a bet on a single number: that the volatility priced into the options, the volatility the market is willing to pay for, will turn out to be higher than the volatility Nifty actually delivers. That gap between what the market prices in and what actually happens is the entire engine of volatility trading, and this lesson puts precise, computable definitions on both sides of it.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c1l1-002",
+              "_type": "bigIdea",
+              "text": "Realized volatility measures what an underlying actually did, computed after the fact from historical price moves. Implied volatility measures what the options market is pricing it to do, backed out from today's option prices. They are rarely equal, and that persistent gap is called the volatility risk premium."
+            },
+            {
+              "_key": "c1l1-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l1-003s1", "_type": "span", "text": "Realized Volatility: What Actually Happened", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c1l1-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "c1l1-004m1", "_type": "glossaryTerm", "definition": "The natural logarithm of the ratio of two consecutive prices, ln(P_t / P_t-1). Quant desks use log returns instead of simple percentage returns because log returns are additive across time and compound correctly, which makes them the standard input for volatility calculations." }
+              ],
+              "children": [
+                { "_key": "c1l1-004s1", "_type": "span", "text": "Realized volatility, or historical volatility, is a backward-looking statistic. You take a series of ", "marks": [] },
+                { "_key": "c1l1-004s2", "_type": "span", "text": "log returns", "marks": ["c1l1-004m1"] },
+                { "_key": "c1l1-004s3", "_type": "span", "text": ", compute their standard deviation over some lookback window, such as 10, 20 or 30 trading days, and annualize it. There is no ambiguity in the number once you fix the lookback and the annualization convention. The only judgment call is which window to use, and that choice itself is a live debate on any vol desk.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c1l1-005",
+              "_type": "mathBlock",
+              "latex": "\\sigma_{RV} = \\sqrt{\\frac{252}{n-1} \\sum_{t=1}^{n} \\left( r_t - \\bar{r} \\right)^2}, \\quad r_t = \\ln\\left(\\frac{P_t}{P_{t-1}}\\right)",
+              "caption": "Annualized realized volatility from n daily log returns, using the standard 252 trading-day convention for Indian equity markets"
+            },
+            {
+              "_key": "c1l1-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l1-006s1", "_type": "span", "text": "Work through it on an illustrative 10-day sample of Nifty closes. This is not live market data, it is a clean teaching set so the arithmetic is easy to follow and check.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c1l1-007",
+              "_type": "table",
+              "caption": "Illustrative 10-day Nifty sample: daily log returns",
+              "headers": ["Day", "Log return (%)"],
+              "rows": [
+                { "_key": "c1l1-007r1", "_type": "tableRow", "cells": ["1", "+0.75"] },
+                { "_key": "c1l1-007r2", "_type": "tableRow", "cells": ["2", "−1.09"] },
+                { "_key": "c1l1-007r3", "_type": "tableRow", "cells": ["3", "+1.48"] },
+                { "_key": "c1l1-007r4", "_type": "tableRow", "cells": ["4", "−0.51"] },
+                { "_key": "c1l1-007r5", "_type": "tableRow", "cells": ["5", "+0.36"] },
+                { "_key": "c1l1-007r6", "_type": "tableRow", "cells": ["6", "−1.35"] },
+                { "_key": "c1l1-007r7", "_type": "tableRow", "cells": ["7", "+1.00"] },
+                { "_key": "c1l1-007r8", "_type": "tableRow", "cells": ["8", "−0.26"] },
+                { "_key": "c1l1-007r9", "_type": "tableRow", "cells": ["9", "+0.60"] },
+                { "_key": "c1l1-007r10", "_type": "tableRow", "cells": ["10", "−0.86"] }
+              ]
+            },
+            {
+              "_key": "c1l1-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l1-008s1", "_type": "span", "text": "The mean daily return here is close to zero, about 0.01%. The sample standard deviation of these ten returns works out to roughly 0.96% per day. Multiply by the square root of 252, about 15.87, and you get an annualized realized volatility of approximately 15.3%. That single number, 15.3%, is what Nifty actually delivered over this window. It says nothing about what happens next.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c1l1-009",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Annualizing daily volatility",
+              "prompt": "A stock's daily log returns have a sample standard deviation of 0.96%. Using the 252 trading-day convention, what is the annualized realized volatility, in percent, to one decimal place?",
+              "correctValue": 15.3,
+              "tolerance": 0.4,
+              "unit": "%",
+              "explanation": "Annualized RV = daily stdev × √252 = 0.96% × 15.87 ≈ 15.2–15.3%. This square-root-of-time scaling assumes returns are independent and identically distributed day to day, an assumption that breaks down around events, which is exactly why term structure trading in Chapter 3 exists."
+            },
+            {
+              "_key": "c1l1-010",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l1-010s1", "_type": "span", "text": "Implied Volatility: What the Market Is Pricing In", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c1l1-011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "c1l1-011m1", "_type": "glossaryTerm", "definition": "The options pricing model published by Black, Scholes and Merton in 1973. It computes a theoretical option price from five inputs: spot price, strike, time to expiry, the risk-free rate, and volatility." }
+              ],
+              "children": [
+                { "_key": "c1l1-011s1", "_type": "span", "text": "Implied volatility runs the problem backwards. You already know the option's market price, quoted live on the NSE options chain. You know the spot, the strike, the time to expiry and the risk-free rate. The only unknown left in the ", "marks": [] },
+                { "_key": "c1l1-011s2", "_type": "span", "text": "Black-Scholes", "marks": ["c1l1-011m1"] },
+                { "_key": "c1l1-011s3", "_type": "span", "text": " formula is volatility itself, so you solve for the value of sigma that makes the model's price match the market's price. There is no closed-form inverse for this. You solve it numerically, typically with Newton-Raphson or a bracketing method like Brent's, since the call price is monotonically increasing in volatility and a unique solution is guaranteed to exist.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c1l1-012",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "from scipy.optimize import brentq\nfrom scipy.stats import norm\nimport numpy as np\n\ndef bs_call_price(S, K, T, r, sigma):\n    d1 = (np.log(S / K) + (r + 0.5 * sigma ** 2) * T) / (sigma * np.sqrt(T))\n    d2 = d1 - sigma * np.sqrt(T)\n    return S * norm.cdf(d1) - K * np.exp(-r * T) * norm.cdf(d2)\n\ndef implied_vol(market_price, S, K, T, r):\n    # brentq needs a bracket where the objective changes sign;\n    # 0.01% and 500% comfortably cover any real option quote\n    objective = lambda sigma: bs_call_price(S, K, T, r, sigma) - market_price\n    return brentq(objective, 1e-4, 5.0)\n\n# Illustrative near-the-money Nifty call, 30 days to expiry\nS, K, T, r = 26500, 26500, 30 / 365, 0.065\nmarket_price = 385.0\n\niv = implied_vol(market_price, S, K, T, r)\nprint(f\"Implied volatility: {iv * 100:.2f}%\")",
+              "caption": "Solving for implied volatility by inverting Black-Scholes with a bracketing root-finder"
+            },
+            {
+              "_key": "c1l1-013",
+              "_type": "keyFact",
+              "label": "India VIX is not one option's implied volatility",
+              "value": "It is a model-free, expiry-weighted estimate built from the entire OTM Nifty options chain",
+              "context": "India VIX, computed by NSE using a methodology licensed from Cboe, aggregates out-of-the-money call and put prices across strikes to estimate the market's expected annualized volatility over the next 30 days. The single-option inversion above is the building block. Chapter 2 uses exactly this per-strike IV to construct the full volatility surface that VIX-style measures summarize into one number."
+            },
+            {
+              "_key": "c1l1-014",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l1-014s1", "_type": "span", "text": "The Volatility Risk Premium", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c1l1-015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "c1l1-015m1", "_type": "glossaryTerm", "definition": "The tendency for implied volatility to trade above the realized volatility that subsequently materializes, on average and over time. It is the return earned by sellers of options for bearing the risk of large, sudden moves." }
+              ],
+              "children": [
+                { "_key": "c1l1-015s1", "_type": "span", "text": "Take the 15.3% realized volatility computed above and compare it against a hypothetical India VIX reading of 17.5% on the same day. The 2.2 percentage point gap is the ", "marks": [] },
+                { "_key": "c1l1-015s2", "_type": "span", "text": "volatility risk premium", "marks": ["c1l1-015m1"] },
+                { "_key": "c1l1-015s3", "_type": "span", "text": ", or VRP. Across most liquid index options markets, including Nifty, implied volatility tends to sit above subsequently realized volatility more often than not. This is not an accident of Indian markets specifically, it shows up in the S&P 500's VIX-versus-realized spread too, and it is the single most studied stylized fact in the volatility trading literature.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c1l1-016",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "c1l1-016s1", "label": "10-day realized vol (this example)", "value": "15.3%", "context": "Backward-looking, from actual returns" },
+                { "_key": "c1l1-016s2", "label": "India VIX (illustrative)", "value": "17.5%", "context": "Forward-looking, 30-day, from option prices" },
+                { "_key": "c1l1-016s3", "label": "Volatility risk premium", "value": "+2.2 pts", "context": "Implied minus realized, this example" },
+                { "_key": "c1l1-016s4", "label": "Annualization factor", "value": "√252 ≈ 15.87", "context": "Trading days per year, Indian convention" }
+              ]
+            },
+            {
+              "_key": "c1l1-017",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Illustrative pattern: implied vol vs trailing realized vol (not actual historical data)",
+              "xAxisLabel": "Month",
+              "yAxisLabel": "Annualized volatility (%)",
+              "series": [
+                {
+                  "_key": "c1l1-017se1",
+                  "label": "India VIX (implied)",
+                  "values": [14.2, 13.5, 15.8, 22.5, 16.0, 17.5]
+                },
+                {
+                  "_key": "c1l1-017se2",
+                  "label": "Trailing 20-day realized vol",
+                  "values": [12.8, 11.9, 13.1, 19.7, 14.8, 15.3]
+                }
+              ],
+              "data": [
+                { "_key": "c1l1-017d1", "label": "Apr", "value": 14.2 },
+                { "_key": "c1l1-017d2", "label": "May", "value": 13.5 },
+                { "_key": "c1l1-017d3", "label": "Jun", "value": 15.8 },
+                { "_key": "c1l1-017d4", "label": "Jul", "value": 22.5 },
+                { "_key": "c1l1-017d5", "label": "Aug", "value": 16.0 },
+                { "_key": "c1l1-017d6", "label": "Sep", "value": 17.5 }
+              ]
+            },
+            {
+              "_key": "c1l1-018",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Notice the July spike where both lines jump together, then implied volatility stays elevated a little longer than realized volatility as it fades. That lag is the market pricing in event risk, such as a Budget, an RBI policy decision or a large-cap earnings cluster, ahead of time and only slowly letting that premium decay once the event passes without a large move. Chapter 3 covers this term structure behavior in detail."
+            },
+            {
+              "_key": "c1l1-019",
+              "_type": "comparison",
+              "title": "Realized volatility vs implied volatility",
+              "columns": [
+                {
+                  "_key": "c1l1-019c1",
+                  "label": "Realized volatility",
+                  "points": [
+                    "Computed from historical price data",
+                    "Backward-looking, always a fact once computed",
+                    "Depends on your choice of lookback window",
+                    "One well-defined number, no model required",
+                    "Used to judge whether options were fairly priced, after the fact"
+                  ]
+                },
+                {
+                  "_key": "c1l1-019c2",
+                  "label": "Implied volatility",
+                  "points": [
+                    "Backed out from live option prices using a pricing model",
+                    "Forward-looking, the market's current expectation",
+                    "Depends on strike and expiry, giving a full surface, not one number",
+                    "Model-dependent, changes if you change the pricing model",
+                    "Used to decide whether an option looks cheap or expensive, right now"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c1l1-020",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "The desk's weekly strangle",
+              "scenario": "It is Monday morning. The India VIX is at 17.5%, implying a 30-day annualized volatility for Nifty. Your trailing 20-day realized volatility, updated this morning, is 14.8%. Your desk's mandate is to sell a weekly Nifty strangle and delta-hedge it daily until expiry, provided the implied-minus-realized gap is at least 2 volatility points and there is no major scheduled event, such as an RBI policy day or Union Budget, inside the holding period.",
+              "prompt": "Would you put the trade on this week? What would make you skip it even if the volatility gap looks attractive?",
+              "modelAnswer": "1. The gap here is 17.5% − 14.8% = 2.7 points, which clears the desk's 2-point threshold, so on the volatility numbers alone this looks like a sell candidate.\n2. Before sizing the trade, check the calendar. If an RBI policy announcement or a Budget-style event falls inside this week's expiry window, the 17.5% implied reading may simply be correctly pricing genuine event risk rather than being 'rich'. Selling into that is not harvesting a premium, it is underpricing a real risk.\n3. Also check whether the 14.8% realized figure is itself unusually low, for instance because the last 20 days were unusually quiet. A quiet recent past does not guarantee a quiet next week, and mean reversion in volatility can work against a short-vol position fast.\n4. If the calendar is clean and realized vol looks representative rather than artificially depressed, the trade is sized within margin and risk limits, with the delta-hedging discipline in place from day one, since an unhedged strangle is a directional bet dressed up as a volatility trade.\n5. Selling volatility is a repeated, small, positive-expectancy bet with occasional large losses. The decision to trade is not just 'is the gap positive', it is 'is the gap positive for a reason that will not blow up the position'."
+            },
+            {
+              "_key": "c1l1-021",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why the premium exists",
+              "question": "Implied volatility tends to trade above subsequently realized volatility, on average, across most equity index options markets. What is the primary economic reason for this?",
+              "options": [
+                "SEBI mandates a minimum markup on all option premiums",
+                "Option sellers demand compensation for bearing the risk of large, sudden, hard-to-hedge moves",
+                "Implied volatility is always computed over a shorter lookback than realized volatility",
+                "Retail traders buy far more options than they sell, mechanically pushing up prices"
+              ],
+              "correctIndex": 1,
+              "explanation": "The volatility risk premium exists because option sellers are underwriting tail risk, sudden gap moves, liquidity dry-ups, crash scenarios, that are costly and hard to hedge continuously. Buyers are willing to pay, and sellers demand, a premium above expected realized volatility as compensation, similar in spirit to an insurance premium. It is not a regulatory markup, and it has nothing to do with lookback window choice."
+            },
+            {
+              "_key": "c1l1-022",
+              "_type": "callout",
+              "type": "warning",
+              "text": "A positive volatility risk premium does not mean short volatility is free money. It means short volatility wins on most days and loses big on a few. India VIX hit an all-time closing high near 86 on 24 March 2020, as the Covid-19 crash unfolded. A systematically short-vol book without strict position limits, margin buffers and defined-risk structures does not survive a move like that. Every strategy in this course that sells volatility comes with an explicit risk-management section for exactly this reason."
+            },
+            {
+              "_key": "c1l1-023",
+              "_type": "toolLink",
+              "label": "NSE India VIX: Live Data and Methodology",
+              "url": "https://www.nseindia.com/market-data/india-vix",
+              "description": "Check the live India VIX level and read NSE's published methodology for how it is calculated from the Nifty options chain."
+            },
+            {
+              "_key": "c1l1-024",
+              "_type": "flashcardSet",
+              "title": "Volatility Fundamentals",
+              "cards": [
+                { "_key": "c1l1-024f1", "term": "Realized volatility (RV)", "definition": "The annualized standard deviation of an underlying's historical log returns over a chosen lookback window. Backward-looking." },
+                { "_key": "c1l1-024f2", "term": "Implied volatility (IV)", "definition": "The volatility input that, when plugged into an options pricing model, reproduces the option's observed market price. Forward-looking." },
+                { "_key": "c1l1-024f3", "term": "Volatility risk premium (VRP)", "definition": "The tendency of implied volatility to exceed subsequently realized volatility, on average, compensating option sellers for tail risk." },
+                { "_key": "c1l1-024f4", "term": "India VIX", "definition": "NSE's model-free, 30-day forward-looking volatility index, built from the full out-of-the-money Nifty options chain, not from a single option's IV." },
+                { "_key": "c1l1-024f5", "term": "Annualization convention", "definition": "Multiplying a daily volatility figure by √252 to express it on the same annual scale that IV and VIX-style measures are quoted in." }
+              ]
+            },
+            {
+              "_key": "c1l1-025",
+              "_type": "keyTakeaways",
+              "points": [
+                "Realized volatility is computed from historical log returns and is annualized by multiplying the daily standard deviation by √252.",
+                "Implied volatility is solved numerically by inverting an options pricing model such as Black-Scholes against an observed market price, since no closed-form inverse exists.",
+                "India VIX is a model-free aggregate across the full options chain, not the Black-Scholes implied volatility of any single option.",
+                "Implied volatility tends to sit above subsequently realized volatility on average, a pattern called the volatility risk premium, which compensates sellers for tail risk.",
+                "A positive volatility risk premium is a long-run statistical edge, not a guarantee on any single trade. India VIX has spiked past 80 in real crashes, and short-vol positions must be sized and hedged with that in mind.",
+                "Everything in the rest of this course, the surface, skew, term structure and the Greeks that price them, is built on top of this RV-versus-IV distinction."
+              ]
+            },
+            {
+              "_key": "c1l1-026",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment or trading advice. The Nifty return sample, India VIX levels and chart in this lesson are illustrative teaching data, not actual historical market data, unless explicitly stated otherwise. Options trading involves substantial risk, including the risk of loss exceeding the premium received on short volatility positions. Verify current market levels on NSE before trading, and consult a SEBI-registered adviser."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

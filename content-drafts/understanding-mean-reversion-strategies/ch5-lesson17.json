@@ -1,0 +1,181 @@
+{
+  "courseSlug": "understanding-mean-reversion-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 5: Valuation and Fundamental Mean Reversion",
+      "lessons": [
+        {
+          "title": "Sector Rotation as Mean Reversion: Out-of-Favor Sectors on the NSE",
+          "slug": "sector-rotation-as-mean-reversion-out-of-favor-sectors-on-the-nse",
+          "body": [
+            {
+              "_key": "mr5l17-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr5l17-001s1", "_type": "span", "marks": [], "text": "Zoom out from a single stock's P/E to an entire sector's, and the same statistical machinery from Lesson 1 still applies, just aggregated across dozens of NSE-listed companies instead of one. Sectors fall in and out of favor. PSU banks spent years trading at a steep valuation discount to the broader market before a broad re-rating took hold, the subject of Lesson 3's dedicated case study. This lesson builds the general framework that case study sits inside: when is a beaten-down, out-of-favor sector a genuine rotation candidate, and when is being cheap the correct, permanent price?" }
+              ]
+            },
+            {
+              "_key": "mr5l17-002",
+              "_type": "bigIdea",
+              "text": "Sector rotation is mean reversion applied to relative valuation: how cheap or expensive a sector is compared to the broader market, relative to its own history. A sector trading unusually far below its normal relative valuation is a rotation candidate only if the discount reflects a temporary, cyclical phase rather than a genuine, structural shrinking of its addressable market."
+            },
+            {
+              "_key": "mr5l17-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr5l17-003s1", "_type": "span", "marks": [], "text": "Measuring Relative Valuation" }
+              ]
+            },
+            {
+              "_key": "mr5l17-004",
+              "_type": "mathBlock",
+              "latex": "\\text{Relative valuation}_t = \\dfrac{\\text{Sector P/E}_t}{\\text{Market P/E}_t}, \\qquad z = \\dfrac{\\text{Relative valuation}_t - \\overline{\\text{Relative valuation}}}{\\sigma}",
+              "caption": "The sector's P/E expressed as a ratio to the broader market's P/E, standardized against its own historical average and standard deviation using the same z-score from Chapter 2."
+            },
+            {
+              "_key": "mr5l17-005",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr5l17-005s1", "_type": "span", "marks": [], "text": "Expressing valuation relative to the broader market, rather than as an absolute P/E, matters because the entire market's valuation level drifts over time with interest rates, growth expectations, and sentiment. A sector's P/E of 15 means something different when the Nifty itself is trading at 18 than when the Nifty is trading at 28. The ratio strips that market-wide drift out, leaving a cleaner read on whether this specific sector, relative to everything else, is unusually in or out of favor." }
+              ]
+            },
+            {
+              "_key": "mr5l17-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr5l17-006s1", "_type": "span", "marks": [], "text": "Suppose a sector's relative valuation, sector P/E divided by market P/E, has averaged 0.75 over the last several years, with a standard deviation of 0.08. Today it sits at 0.55. Its valuation z-score is (0.55 minus 0.75) divided by 0.08, which is -2.5, a sector trading unusually cheap relative to its own normal standing against the broader market." }
+              ]
+            },
+            {
+              "_key": "mr5l17-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr5l17-007s1", "_type": "span", "marks": [], "text": "Cyclical Rotation vs Structural Discount" }
+              ]
+            },
+            {
+              "_key": "mr5l17-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr5l17-008s1", "_type": "span", "marks": [], "text": "India's metals and commodity producers are a classic case of genuine cyclicality. Their earnings swing hard with global commodity prices, so their P/E can look deceptively cheap right before a downcycle hits earnings, and look expensive right when a recovering cycle is about to lift them, the value-trap risk covered in Chapter 1 applied here in its purest form. What makes a cyclical sector different from a structurally declining one is that the underlying driver, the commodity or credit cycle, is known to turn, repeatedly, across decades of history. Capacity utilization improving, demand indicators picking up, and past cycles having round-tripped through similar troughs before are all evidence the current discount is cyclical, not permanent. A sector whose core product is being structurally displaced, with revenue and market share shrinking for consecutive years and no sign of stabilizing, is a different animal entirely. Its addressable market itself is contracting, so a low relative valuation there is not a coiled spring, it is the market correctly pricing in a shrinking future." }
+              ]
+            },
+            {
+              "_key": "mr5l17-009",
+              "_type": "table",
+              "caption": "Two very different reasons a sector can be trading cheap relative to the market",
+              "headers": ["", "Cyclical Discount", "Structural Discount"],
+              "rows": [
+                { "_key": "mr5l17-009r1", "cells": ["Underlying driver", "A commodity, credit, or demand cycle that has historically turned before", "A shrinking addressable market or permanent competitive disruption"] },
+                { "_key": "mr5l17-009r2", "cells": ["Historical pattern", "Sector has round-tripped through similar troughs across multiple past cycles", "Sector's relative valuation has drifted lower for years with no round trips"] },
+                { "_key": "mr5l17-009r3", "cells": ["What to watch for", "Turning demand indicators, improving capacity utilization, credit cost normalization", "Continued market share loss, shrinking industry revenue, no stabilization in sight"] },
+                { "_key": "mr5l17-009r4", "cells": ["Reversion candidate?", "Yes, a genuine rotation candidate", "No, a value trap at the sector level"] }
+              ]
+            },
+            {
+              "_key": "mr5l17-010",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "A cyclically rotating sector vs a structurally discounted sector, relative valuation over 8 years (illustrative)",
+              "xAxisLabel": "Year",
+              "yAxisLabel": "Sector P/E ÷ Market P/E",
+              "data": [
+                { "_key": "mr5l17-010d1", "label": "1" },
+                { "_key": "mr5l17-010d2", "label": "2" },
+                { "_key": "mr5l17-010d3", "label": "3" },
+                { "_key": "mr5l17-010d4", "label": "4" },
+                { "_key": "mr5l17-010d5", "label": "5" },
+                { "_key": "mr5l17-010d6", "label": "6" },
+                { "_key": "mr5l17-010d7", "label": "7" },
+                { "_key": "mr5l17-010d8", "label": "8" }
+              ],
+              "series": [
+                { "_key": "mr5l17-010se1", "label": "Cyclical sector (rotates between 0.55 and 0.90)", "values": [0.80, 0.60, 0.58, 0.75, 0.88, 0.65, 0.56, 0.78] },
+                { "_key": "mr5l17-010se2", "label": "Structurally discounted sector (drifts lower, no round trip)", "values": [0.70, 0.62, 0.55, 0.48, 0.41, 0.36, 0.30, 0.26] }
+              ]
+            },
+            {
+              "_key": "mr5l17-011",
+              "_type": "callout",
+              "type": "warning",
+              "text": "On the day you measure it, both sectors in the chart above can show an identical, deeply negative valuation z-score. Only the shape of the full history, does it oscillate or does it drift, tells you which one you are actually looking at. This is the same lesson as Lesson 3's random walk versus stationary series, now applied to a relative valuation ratio instead of a raw price."
+            },
+            {
+              "_key": "mr5l17-012",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "import pandas as pd\n\n# 'sector_pe' and 'market_pe' are pandas Series of quarterly P/E readings\nrel_valuation = sector_pe / market_pe\n\nwindow = 20  # 20 quarters = 5 years\nrolling_mean = rel_valuation.rolling(window).mean()\nrolling_std = rel_valuation.rolling(window).std()\n\nvaluation_zscore = (rel_valuation - rolling_mean) / rolling_std\n\nprint(valuation_zscore.tail())",
+              "caption": "Computing a rolling relative-valuation z-score for a sector against the broader market."
+            },
+            {
+              "_key": "mr5l17-013",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Compute a sector's relative valuation z-score",
+              "prompt": "A sector's relative valuation (sector P/E ÷ market P/E) has averaged 0.80 historically, with a standard deviation of 0.06. It currently trades at 0.62. What is its valuation z-score?",
+              "correctValue": -3.0,
+              "tolerance": 0.1,
+              "explanation": "(0.62 - 0.80) / 0.06 = -0.18 / 0.06 = -3.0. A z-score this negative flags the sector as unusually out of favor relative to its own history, worth investigating further using the cyclical-vs-structural framework from this lesson before treating it as a rotation candidate."
+            },
+            {
+              "_key": "mr5l17-014",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Rotation candidate or structural discount?",
+              "question": "Sector A and Sector B are both trading at a similarly steep discount to their historical relative valuation. Sector A is a commodity-linked sector where global demand indicators and capacity utilization are both improving, and the sector has round-tripped through several similar downcycles in past decades. Sector B's core product is being structurally displaced by newer technology, and its revenue and market share have shrunk for several consecutive years with no sign of stabilizing. Which sector is the better mean-reversion candidate?",
+              "options": [
+                "Sector B, because a steeper, longer discount always implies more room to rotate back up",
+                "Sector A, because its discount reflects a cyclical phase with a documented history of turning, unlike Sector B's ongoing structural decline",
+                "Both are equally good candidates, since they show an identical valuation z-score today",
+                "Neither, because sector-level valuation z-scores are not meaningful"
+              ],
+              "correctIndex": 1,
+              "explanation": "Sector A's discount is tied to a cycle that has historically turned before, with improving demand and capacity utilization as supporting evidence of an approaching turn. Sector B's discount reflects an ongoing structural displacement with no evidence of stabilizing, the sector-level version of a value trap. An identical valuation z-score on a single day tells you nothing about which of these two very different situations you are in."
+            },
+            {
+              "_key": "mr5l17-015",
+              "_type": "flashcardSet",
+              "title": "Sector Rotation: Core Terms",
+              "cards": [
+                { "_key": "mr5l17-015f1", "term": "Sector rotation", "definition": "The movement of investor capital between sectors as their relative attractiveness shifts, often tied to the economic or commodity cycle, industrials and cyclicals gaining favor in an expansion, defensives gaining favor in a downturn." },
+                { "_key": "mr5l17-015f2", "term": "Relative valuation", "definition": "A sector's valuation multiple expressed as a ratio to the broader market's multiple, which strips out market-wide valuation drift and isolates whether the sector specifically is in or out of favor." },
+                { "_key": "mr5l17-015f3", "term": "Cyclical sector", "definition": "A sector whose earnings and valuation swing with a recurring economic, credit, or commodity cycle that has historically turned multiple times, making a valuation discount a more credible rotation candidate." },
+                { "_key": "mr5l17-015f4", "term": "Value trap (sector level)", "definition": "A sector that appears statistically cheap relative to its own history but whose addressable market is genuinely, structurally shrinking, making the discount permanent rather than a rotation opportunity." }
+              ]
+            },
+            {
+              "_key": "mr5l17-016",
+              "_type": "keyTakeaways",
+              "points": [
+                "Sector rotation is Chapter 2's z-score toolkit applied to a sector's valuation relative to the broader market, rather than to a single stock's price.",
+                "Expressing valuation as a ratio to the market's own P/E strips out market-wide valuation drift, isolating whether a specific sector is genuinely out of favor.",
+                "A steep valuation discount is a rotation candidate only when it reflects a cyclical phase with a history of turning, not a genuine, structural shrinking of the sector's addressable market.",
+                "Two sectors can show an identical valuation z-score on a given day for completely different reasons. The shape of the full historical series, oscillating versus steadily drifting, is what actually distinguishes a rotation candidate from a value trap.",
+                "Lesson 3 closes this chapter with a real, multi-year case study of exactly this pattern playing out in Indian PSU banks."
+              ]
+            },
+            {
+              "_key": "mr5l17-017",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice or a recommendation to buy, sell, or hold any security or sector. All relative valuation figures, the chart, and the code sample in this lesson use hypothetical, illustrative data and do not represent actual historical sector valuations. Sector rotation strategies carry real risk of loss and do not guarantee future outcomes. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

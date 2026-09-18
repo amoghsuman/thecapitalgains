@@ -1,0 +1,211 @@
+{
+  "courseSlug": "understanding-market-making-and-liquidity-provision-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 6: Evaluating a Market Making Business",
+      "lessons": [
+        {
+          "title": "Inventory Turnover and Holding Time as Risk Metrics",
+          "slug": "inventory-turnover-and-holding-time-as-risk-metrics",
+          "body": [
+            {
+              "_key": "mmc6l2b01",
+              "_type": "bigIdea",
+              "text": "Two desks can report the exact same average inventory size on a risk report and carry wildly different risk, because one clears that inventory in six minutes and the other sits on it for half an hour. Position size alone hides the number that actually matters."
+            },
+            {
+              "_key": "mmc6l2b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc6l2b02s1",
+                  "_type": "span",
+                  "text": "Holding Time: Putting a Number on Duration Risk",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc6l2b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "mmc6l2m01",
+                  "_type": "glossaryTerm",
+                  "definition": "A queueing theory result stating that, in steady state, the average number of items in a system equals the average arrival rate multiplied by the average time each item spends in the system: L = λW. Applied to a market maker's book, it turns average inventory and trading throughput into a direct measure of how long a position typically sits before being offloaded."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "mmc6l2b03s1",
+                  "_type": "span",
+                  "text": "Chapter 3 introduced duration risk qualitatively, the danger of a position sitting exposed for longer rather than being offloaded quickly. ",
+                  "marks": []
+                },
+                {
+                  "_key": "mmc6l2b03s2",
+                  "_type": "span",
+                  "text": "Little's Law",
+                  "marks": ["mmc6l2m01"]
+                },
+                {
+                  "_key": "mmc6l2b03s3",
+                  "_type": "span",
+                  "text": ", a general result from queueing theory, turns this into an actual number. Rearranged for a market maker's book, average holding time W equals average inventory L divided by throughput λ, the rate at which volume is traded through the book. Two numbers a desk already tracks, its average inventory and its trading volume, combine into a direct estimate of how long a typical unit of inventory actually sits before it clears.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc6l2b04",
+              "_type": "mathBlock",
+              "latex": "W = \\frac{L}{\\lambda}",
+              "caption": "Little's Law rearranged: average holding time W equals average inventory L divided by throughput λ (volume traded per unit time)."
+            },
+            {
+              "_key": "mmc6l2b05",
+              "_type": "table",
+              "caption": "Two desks with identical average inventory, very different holding time",
+              "headers": ["Desk", "Average Inventory (L)", "Throughput (λ, units/hour)", "Holding Time (W)"],
+              "rows": [
+                { "_key": "mmc6l2b05r1", "_type": "tableRow", "cells": ["Desk A", "40 units", "400", "0.1 hours (6 minutes)"] },
+                { "_key": "mmc6l2b05r2", "_type": "tableRow", "cells": ["Desk B", "40 units", "80", "0.5 hours (30 minutes)"] }
+              ]
+            },
+            {
+              "_key": "mmc6l2b06",
+              "_type": "callout",
+              "type": "insight",
+              "text": "A risk report showing only average inventory would list both desks identically, at 40 units. Little's Law shows Desk B is actually carrying five times the duration risk of Desk A for the exact same reported position size, purely because its trading throughput is five times slower, giving the market five times as long to move against it before the position clears."
+            },
+            {
+              "_key": "mmc6l2b07",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Applying Little's Law",
+              "prompt": "A third desk holds an average inventory of 60 units, with a throughput of 240 units per hour. Using Little's Law, what is its average holding time, in minutes?",
+              "correctValue": 15,
+              "tolerance": 1,
+              "unit": "min",
+              "explanation": "W = L ÷ λ = 60 ÷ 240 = 0.25 hours = 15 minutes. This desk sits between the two examples in the table above, both in throughput and in resulting holding time, which is exactly the relationship Little's Law predicts: holding time falls as throughput rises, for the same average inventory."
+            },
+            {
+              "_key": "mmc6l2b08",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc6l2b08s1",
+                  "_type": "span",
+                  "text": "Inventory Turnover: The Same Relationship, Read the Other Way",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc6l2b09",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc6l2b09s1",
+                  "_type": "span",
+                  "text": "Inventory turnover asks essentially the same question from the opposite direction: over a full trading session, how many times does the equivalent of the average inventory get cycled through the book? If T is the length of the session, turnover works out to T divided by holding time W, which follows directly from Little's Law itself. A higher turnover number means the same conclusion as a shorter holding time: positions are clearing quickly rather than sitting exposed.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc6l2b10",
+              "_type": "mathBlock",
+              "latex": "\\text{Turnover} = \\frac{T}{W}",
+              "caption": "Over a session of length T, turnover is simply the session length divided by average holding time, a direct consequence of Little's Law."
+            },
+            {
+              "_key": "mmc6l2b11",
+              "_type": "keyFact",
+              "label": "Turnover for a 6-Hour Session",
+              "value": "Desk A: 60x, Desk B: 12x",
+              "context": "Desk A's 6-minute holding time gives a turnover of 6 hours ÷ 0.1 hours = 60 times per session. Desk B's 30-minute holding time gives 6 ÷ 0.5 = 12 times per session. The same 5x gap between the two desks shows up here too, just expressed as a rate rather than a duration."
+            },
+            {
+              "_key": "mmc6l2b12",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc6l2b12s1",
+                  "_type": "span",
+                  "text": "Why This Matters More on Some Instruments Than Others",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc6l2b13",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc6l2b13s1",
+                  "_type": "span",
+                  "text": "This is the exact mechanism behind Chapter 2's observation that Nifty options trade tighter than a small-cap stock's options. A liquid Nifty option desk naturally runs high throughput, so Little's Law gives it a short holding time and high turnover even without any special effort. An illiquid stock option desk, with far lower throughput for a similar average inventory, is stuck with a longer holding time and lower turnover purely as a structural feature of that instrument, not because the desk is managing risk any less carefully. Comparing raw position sizes across the two desks without accounting for this would badly understate how much more duration risk the illiquid book carries for the same reported inventory.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc6l2b14",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Comparing Two Books on a Risk Report",
+              "scenario": "A firm's daily risk report shows two options books each averaging 50 units of inventory over the session: one on a Nifty weekly option with typical throughput of 500 units per hour, and one on a thinly traded small-cap stock option with typical throughput of only 25 units per hour.",
+              "prompt": "Using Little's Law, what does the risk report's identical position-size figure fail to capture about these two books, and which one is actually carrying more duration risk?",
+              "modelAnswer": "The Nifty book has a holding time of 50 ÷ 500 = 0.1 hours, or 6 minutes, while the small-cap book has a holding time of 50 ÷ 25 = 2 hours, twenty times longer for the identical reported position size. The risk report's raw inventory figure treats both books as equally risky, but the small-cap book is actually carrying far more duration risk, since its positions sit exposed to adverse price moves for twenty times as long before clearing, purely due to its much lower natural throughput."
+            },
+            {
+              "_key": "mmc6l2b15",
+              "_type": "callout",
+              "type": "warning",
+              "text": "A risk limit set purely in terms of position size, with no reference to the instrument's typical throughput, will systematically understate risk on illiquid names and overstate it on liquid ones. The same 50-unit limit means a very different amount of real exposure time depending on what is being traded."
+            },
+            {
+              "_key": "mmc6l2b16",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "What Rising Throughput Does to Holding Time",
+              "question": "If a desk's average inventory stays exactly the same but its trading throughput doubles, what happens to its holding time under Little's Law?",
+              "options": [
+                "It doubles",
+                "It halves",
+                "It stays the same, since inventory is unchanged",
+                "It becomes impossible to calculate"
+              ],
+              "correctIndex": 1,
+              "explanation": "Since W = L ÷ λ, doubling throughput λ while holding inventory L constant halves the holding time W. This is the same relationship shown in the Desk A versus Desk B comparison earlier in this lesson, just expressed as a direct doubling rather than the 5x gap used there."
+            },
+            {
+              "_key": "mmc6l2b17",
+              "_type": "keyTakeaways",
+              "points": [
+                "Little's Law, W = L ÷ λ, turns average inventory and trading throughput into a direct estimate of average holding time",
+                "Two desks can report identical average inventory and still carry very different duration risk if their throughput differs",
+                "Inventory turnover, T ÷ W, is the same relationship read as a rate: how many times the equivalent of average inventory cycles through in a session",
+                "This is the structural reason illiquid instruments carry more duration risk than liquid ones for the same position size, echoing Chapter 2's spread comparison",
+                "A risk limit expressed purely in position size, without reference to typical throughput, misrepresents real exposure time across instruments with different liquidity",
+                "The next lesson applies standard portfolio metrics, Sharpe ratio and drawdown, specifically to a market making book's P&L, building on both this lesson and the previous one"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

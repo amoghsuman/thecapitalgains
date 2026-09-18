@@ -1,0 +1,237 @@
+{
+  "courseSlug": "understanding-position-sizing-and-the-kelly-criterion",
+  "chapters": [
+    {
+      "title": "Chapter 4: Kelly Sizing in Indian F&O and Multi-Asset Portfolios",
+      "lessons": [
+        {
+          "title": "Sizing Futures Positions: Leverage, Margin, and the Kelly Fraction",
+          "slug": "sizing-futures-positions-leverage-margin-and-the-kelly-fraction",
+          "body": [
+            {
+              "_key": "c4l2-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l2-001s1", "_type": "span", "marks": [], "text": "A credit spread has a fixed strike-defined loss, which is why the previous lesson used the discrete, R-multiple version of Kelly. A futures position has no such built-in floor: it is a continuous, roughly linear exposure to the underlying, marked to market every day. That is exactly the setting Lesson 2.3 built the continuous Kelly formula for, and this lesson finally puts real lots and real margin numbers against it." }
+              ]
+            },
+            {
+              "_key": "c4l2-002",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l2-002s1", "_type": "span", "marks": [], "text": "Futures Sizing Uses a Different Kind of f*" }
+              ]
+            },
+            {
+              "_key": "c4l2-003",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l2-003s1", "_type": "span", "marks": [], "text": "In Lesson 4.1's spread, f* was a risk fraction: the share of capital you stand to lose if the trade goes wrong, converted into lots by dividing by the max loss per lot. In the continuous model from Lesson 2.3, f* means something different: it is the fraction of your capital's worth of notional exposure to hold, in other words, the leverage ratio itself. There is no stop-loss built into this number at all; it describes ongoing exposure, not a bounded bet." }
+              ]
+            },
+            {
+              "_key": "c4l2-004",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This distinction matters in practice: options and spreads with a stop or a hard strike use the discrete Kelly formula and risk-based lot sizing from Chapters 1, 2 and 4.1. Continuously-marked exposures like futures, or an unhedged stock position without a firm stop, use the continuous formula f* = μ/σ² from Lesson 2.3, where f* itself is the leverage ratio."
+            },
+            {
+              "_key": "c4l2-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l2-005s1", "_type": "span", "marks": [], "text": "Reusing Lesson 2.3's Numbers" }
+              ]
+            },
+            {
+              "_key": "c4l2-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l2-006s1", "_type": "span", "marks": [], "text": "Lesson 2.3 assumed a Nifty 50 expected excess return of 8% a year and volatility of 16%, giving f* = 312.5%. That number described leverage in the abstract. This lesson turns it into an actual number of Nifty futures lots." }
+              ]
+            },
+            {
+              "_key": "c4l2-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l2-007s1", "_type": "span", "marks": [], "text": "From Leverage Ratio to Number of Lots" }
+              ]
+            },
+            {
+              "_key": "c4l2-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l2-008s1", "_type": "span", "marks": [], "text": "With Nifty futures near 24,000 and an illustrative lot size of 75, always confirm the current NSE-specified lot size before sizing a real position, since these are revised periodically." }
+              ]
+            },
+            {
+              "_key": "c4l2-009",
+              "_type": "mathBlock",
+              "latex": "\\text{Lots} = \\dfrac{f^{*} \\times \\text{Bankroll}}{\\text{Notional value per lot}}",
+              "caption": "Rounded down to a whole number of lots"
+            },
+            {
+              "_key": "c4l2-010",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "c4l2-010s1", "label": "Bankroll", "value": "₹15,00,000", "context": "Trading capital" },
+                { "_key": "c4l2-010s2", "label": "Target notional (f* × bankroll)", "value": "₹46,87,500", "context": "312.5% of bankroll" },
+                { "_key": "c4l2-010s3", "label": "Notional per lot", "value": "₹18,00,000", "context": "24,000 × 75" },
+                { "_key": "c4l2-010s4", "label": "Lots, rounded down", "value": "2", "context": "4,687,500 ÷ 1,800,000 ≈ 2.60" }
+              ]
+            },
+            {
+              "_key": "c4l2-011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l2-011s1", "_type": "span", "marks": [], "text": "Two lots carry ₹36,00,000 of notional exposure against ₹15,00,000 of capital: 2.4x leverage. This is already below full Kelly's 3.125x, purely because a single lot's notional is large enough that rounding down from 2.60 lots gives up a meaningful chunk of the target exposure. Futures lot sizes are considerably more coarse relative to a typical account than option premiums, so this rounding effect tends to matter more here than it did in Lesson 4.1." }
+              ]
+            },
+            {
+              "_key": "c4l2-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l2-012s1", "_type": "span", "marks": [], "text": "Margin Looks Deceptively Comfortable" }
+              ]
+            },
+            {
+              "_key": "c4l2-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l2-013s1", "_type": "span", "marks": [], "text": "Exchange margin requirements for index futures, combining SPAN and exposure margin, run roughly in the low double digits as a percentage of notional value, and move with volatility. Using an illustrative 12% for this example:" }
+              ]
+            },
+            {
+              "_key": "c4l2-014",
+              "_type": "keyFact",
+              "label": "Margin blocked for 2 lots at full Kelly",
+              "value": "≈ ₹4,32,000 (28.8% of capital)",
+              "context": "12% of ₹36,00,000 notional. The broker will readily allow this position; margin availability says nothing about whether the size is prudent."
+            },
+            {
+              "_key": "c4l2-015",
+              "_type": "callout",
+              "type": "warning",
+              "text": "This is the same trap Lesson 1.1 warned about. With only 28.8% of capital tied up as margin, the account looks like it has plenty of room to spare. What that figure hides is 2.4x leverage on the entire account's worth of Nifty exposure. Available margin measures what the exchange will let you hold, never what your sizing discipline says you should hold."
+            },
+            {
+              "_key": "c4l2-016",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l2-016s1", "_type": "span", "marks": [], "text": "Discounting μ Is Mathematically the Same as Fractional Kelly" }
+              ]
+            },
+            {
+              "_key": "c4l2-017",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l2-017s1", "_type": "span", "marks": [], "text": "Lesson 2.3 flagged μ as the harder input to estimate reliably. Because f* = μ/σ² is linear in μ, applying a conservative haircut to μ produces exactly the same result as fractional Kelly." }
+              ]
+            },
+            {
+              "_key": "c4l2-018",
+              "_type": "mathBlock",
+              "latex": "f^{*}(0.5\\mu) = \\dfrac{0.5\\mu}{\\sigma^2} = 0.5 \\times \\dfrac{\\mu}{\\sigma^2} = 0.5f^{*}",
+              "caption": "Halving μ and applying half-Kelly are the same operation for the continuous formula"
+            },
+            {
+              "_key": "c4l2-019",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l2-019s1", "_type": "span", "marks": [], "text": "Whether framed as \"I don't fully trust my 8% return estimate, so I'll use 4%\" or \"I'll trade half-Kelly to be safe,\" the two land on the identical 156.25% leverage target. Recompute the lot count with this more conservative figure." }
+              ]
+            },
+            {
+              "_key": "c4l2-020",
+              "_type": "comparison",
+              "title": "Full-μ vs conservative-μ (equivalently, full vs half-Kelly)",
+              "columns": [
+                {
+                  "_key": "c4l2-020c1",
+                  "label": "μ = 8%, f* = 312.5%",
+                  "points": [
+                    "Target notional: ₹46,87,500",
+                    "Lots held: 2 (₹36,00,000 notional)",
+                    "Realized leverage: 2.4x",
+                    "Margin used: ≈28.8% of capital"
+                  ]
+                },
+                {
+                  "_key": "c4l2-020c2",
+                  "label": "μ = 4%, f* = 156.25%",
+                  "points": [
+                    "Target notional: ₹23,43,750",
+                    "Lots held: 1 (₹18,00,000 notional)",
+                    "Realized leverage: 1.2x",
+                    "Margin used: ≈14.4% of capital"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-021",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Confirm the conservative lot count",
+              "prompt": "With target notional of ₹23,43,750 and ₹18,00,000 notional per lot, how many whole lots can this position hold?",
+              "correctValue": 1,
+              "tolerance": 0,
+              "explanation": "₹23,43,750 ÷ ₹18,00,000 ≈ 1.30. Rounded down, this account can hold 1 lot, carrying 1.2x leverage rather than the 2.4x the fuller estimate implied."
+            },
+            {
+              "_key": "c4l2-022",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Decide whether to add a stop-loss",
+              "scenario": "A trader has sized a 1-lot Nifty futures position using the conservative μ approach above. A friend suggests also placing a hard stop-loss on the futures position, \"just in case,\" at 3% below entry.",
+              "prompt": "Does adding a stop-loss change which Kelly formula actually describes this position? What would need to be recalculated?",
+              "modelAnswer": "Yes. Once a hard stop defines a maximum loss, the position stops being an open-ended continuous exposure and starts to resemble the discrete, bounded bet from Chapters 1 and 2, where f* is a risk fraction tied to that stop distance rather than a leverage ratio. Recalculating properly would mean estimating a win probability and payoff ratio for this specific stop-and-target setup, exactly as Lesson 2.4 did for the cash equity swing trade, rather than continuing to apply f* = μ/σ² as if the position were unbounded. Mixing the two frameworks, sizing with the continuous formula while also trading with a hard stop, understates how the stop changes the actual risk being taken."
+            },
+            {
+              "_key": "c4l2-023",
+              "_type": "keyTakeaways",
+              "points": [
+                "Futures positions, having no built-in stop, are sized with the continuous formula f* = μ/σ² from Lesson 2.3, where f* is a leverage ratio, not a risk fraction tied to a stop.",
+                "Lots = (f* × bankroll) ÷ notional value per lot, rounded down. Futures lot sizes are coarse enough relative to typical accounts that rounding meaningfully affects realized leverage.",
+                "Margin required for a position is usually a small fraction of the notional exposure it represents; low margin usage does not mean the position is conservatively sized.",
+                "Because f* = μ/σ² is linear in μ, discounting the expected-return estimate and applying fractional Kelly are mathematically the same adjustment in this framework.",
+                "Adding a hard stop-loss to a futures position converts it back into a bounded bet, which should be sized with the discrete Kelly formula instead, not the continuous one."
+              ]
+            },
+            {
+              "_key": "c4l2-024",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "The lot size, margin percentage, price levels, and return and volatility assumptions in this lesson are illustrative and simplified for teaching purposes. Always confirm current NSE lot sizes and actual SPAN and exposure margin requirements before trading. This lesson is for education only and is not investment or trading advice. Trading futures involves substantial risk of loss due to leverage. Consult a SEBI-registered investment adviser before trading derivatives."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

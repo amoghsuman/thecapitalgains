@@ -1,0 +1,274 @@
+{
+  "courseSlug": "understanding-multi-asset-systematic-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 4: Trend-Following Across Asset Classes",
+      "lessons": [
+        {
+          "title": "Combining Trend Signals: Voting, Averaging, and Signal Aggregation",
+          "slug": "combining-trend-signals-voting-averaging-and-signal-aggregation",
+          "body": [
+            {
+              "_key": "mac4l4b01",
+              "_type": "bigIdea",
+              "text": "Lesson 3 combined trend across different assets. This lesson combines trend within a single asset, across different look-back windows and different signal types, for exactly the same reason: no single choice of window or method is obviously correct, and betting everything on one arbitrary parameter is a fragile way to build a signal you plan to trust with real capital."
+            },
+            {
+              "_key": "mac4l4b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac4l4b02s1",
+                  "_type": "span",
+                  "text": "Lesson 2 flagged the look-back window trade-off and promised this lesson would address it properly. This is that lesson: how to combine multiple trend signals on the same asset into one more robust view, using voting, averaging, and weighted aggregation, and where genuinely different signal types can add more than just another window length would.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac4l4b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac4l4b03s1", "_type": "span", "text": "Why One Look-Back Window Is a Fragile Choice", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac4l4b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac4l4b04s1",
+                  "_type": "span",
+                  "text": "A single look-back window is a single parameter choice, and any single parameter chosen by testing it against historical data carries real risk that it simply happened to fit that particular sample well, a form of the same overfitting concern Chapter 2 raised about survivorship bias, applied to parameter selection instead of data selection. The window that best explained 2018 to 2023 is not guaranteed to be the window that works best going forward, and different windows genuinely do capture different things: a 1-month window catches short bursts, a 12-month window catches sustained macro moves, and there is no principled reason to trust one over the other completely.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac4l4b05",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac4l4b05s1", "_type": "span", "text": "Voting: Combining Signals by Majority Rule", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac4l4b06",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac4l4b06s1",
+                  "_type": "span",
+                  "text": "The simplest aggregation method computes a signal at several look-back windows, then takes a majority vote: go long if most windows agree on long, go short if most agree on short, and reduce or flatten the position if the windows disagree. This naturally does something useful on its own: it reduces exposure exactly during the choppy, transitional periods where short-term and long-term trend disagree, which is precisely when a single-window signal is most prone to whipsaw.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac4l4b07",
+              "_type": "table",
+              "caption": "Illustrative Voting Example, One Asset, Four Look-Back Windows",
+              "headers": ["Window", "Signal", "Vote"],
+              "rows": [
+                { "_key": "mac4l4b07r1", "_type": "tableRow", "cells": ["1-Month", "+1 (Long)", "Long"] },
+                { "_key": "mac4l4b07r2", "_type": "tableRow", "cells": ["3-Month", "+1 (Long)", "Long"] },
+                { "_key": "mac4l4b07r3", "_type": "tableRow", "cells": ["6-Month", "-1 (Short)", "Short"] },
+                { "_key": "mac4l4b07r4", "_type": "tableRow", "cells": ["12-Month", "+1 (Long)", "Long"] }
+              ]
+            },
+            {
+              "_key": "mac4l4b08",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac4l4b08s1",
+                  "_type": "span",
+                  "text": "Three of four windows here agree on long, so a majority-vote system would take a long position, likely at reduced size given the 6-month window's disagreement, rather than the full-conviction size it would take if all four windows agreed.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac4l4b09",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac4l4b09s1", "_type": "span", "text": "Averaging: A Smoother Alternative to Hard Voting", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac4l4b10",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac4l4b10s1",
+                  "_type": "span",
+                  "text": "Rather than a discrete vote, averaging the individual window signals produces a continuous combined signal strength between -1 and +1, scaling the position with how strongly the windows agree rather than forcing a binary in-or-out decision. This tends to size positions more naturally: strong, unanimous agreement across windows produces a large position, mixed signals produce a small one, without a hard threshold that flips the position size discontinuously.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac4l4b11",
+              "_type": "mathBlock",
+              "latex": "combined_t = \\frac{1}{K}\\sum_{k=1}^{K} signal_{k,\\,t}",
+              "caption": "Simple averaging across K look-back windows. Using the voting table above, K=4 and the sum of signals is +1+1-1+1=2, giving a combined signal strength of 0.5, moderate long conviction rather than a full or zero position."
+            },
+            {
+              "_key": "mac4l4b12",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac4l4b12s1", "_type": "span", "text": "Weighted Aggregation: Not All Signals Deserve Equal Say", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac4l4b13",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac4l4b13s1",
+                  "_type": "span",
+                  "text": "Simple averaging treats every window as equally reliable, which is rarely true. A more principled approach weights each window's contribution by its own historical information coefficient, the same IC from Lesson 1's Fundamental Law of Active Management, so windows with a demonstrated stronger edge contribute more to the combined signal than windows that have historically been closer to noise. This is a genuinely more defensible use of historical data than simply picking the single best-performing window, since it blends every window's information rather than discarding all but one.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac4l4b14",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Weighting by IC rather than picking the single best-backtested window is a subtle but important distinction. Picking one winning window risks selecting for luck in that specific sample. Weighting all windows by their measured reliability uses every window's information without betting everything on whichever one happened to look best historically."
+            },
+            {
+              "_key": "mac4l4b15",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac4l4b15s1", "_type": "span", "text": "Ensemble of Signal Types: Beyond Just Different Windows", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac4l4b16",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac4l4b16s1",
+                  "_type": "span",
+                  "text": "Varying the look-back window is one axis of diversification. Varying the signal methodology entirely is another, genuinely additive one, since different signal types can be wrong in different ways at different times, rather than all sharing the same blind spot a single methodology has.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac4l4b17",
+              "_type": "table",
+              "caption": "Three Genuinely Different Trend Signal Types",
+              "headers": ["Signal Type", "How It Measures Trend"],
+              "rows": [
+                { "_key": "mac4l4b17r1", "_type": "tableRow", "cells": ["Time-Series Momentum", "Sign of the trailing N-period return, this chapter's core signal from Lesson 2"] },
+                { "_key": "mac4l4b17r2", "_type": "tableRow", "cells": ["Moving Average Crossover", "Whether a shorter moving average sits above or below a longer one, Chapter 1's original example"] },
+                { "_key": "mac4l4b17r3", "_type": "tableRow", "cells": ["Breakout", "Whether price has recently broken above its N-day high or below its N-day low"] }
+              ]
+            },
+            {
+              "_key": "mac4l4b18",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac4l4b18s1", "_type": "span", "text": "The Cost of Aggregation: More Complexity, More Parameters to Overfit", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac4l4b19",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac4l4b19s1",
+                  "_type": "span",
+                  "text": "None of this is free. Every window added, every signal type combined, every weighting scheme chosen is itself a new parameter, and a desk that searches through hundreds of window and weight combinations to find whichever combination maximizes historical Sharpe ratio has simply moved the overfitting problem up a level, from picking one lucky window to picking one lucky ensemble configuration. The honest version of this lesson's advice is to use a small number of conventional, defensible windows and signal types, chosen for economic or statistical reasoning rather than backtest-maximizing search, and to weight them using out-of-sample or theoretically motivated logic rather than whatever combination happened to produce the best-looking historical curve.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac4l4b20",
+              "_type": "callout",
+              "type": "warning",
+              "text": "A grid search over hundreds of window lengths and weighting schemes, keeping only whichever combination produced the best historical Sharpe ratio, is not signal aggregation. It is data snooping with extra steps, and the resulting \"combined signal\" is likely to be no more robust going forward than the single overfit window it was meant to replace."
+            },
+            {
+              "_key": "mac4l4b21",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "The Ensemble That Was Just Overfitting in Disguise",
+              "scenario": "A systematic desk, aware that a single look-back window is a fragile choice, decides to combine multiple windows for robustness. To choose the specific windows and weights, they run a search across 500 different window and weighting combinations on their full historical dataset, keeping the combination that produces the highest backtested Sharpe ratio, and present this as a properly diversified ensemble signal.",
+              "prompt": "Does this process actually deliver the robustness benefit this lesson describes? What would a more defensible version of the same idea look like?",
+              "modelAnswer": "No, this process does not deliver genuine robustness, it recreates the exact overfitting problem this lesson warns against, just one level higher up. Instead of picking one lucky window by testing many windows against history, the desk picked one lucky combination of windows and weights by testing many combinations against the same history, which is functionally the same data-snooping mistake with more moving parts to hide it. A more defensible version would choose a small number of conventional windows, such as 1, 3, 6, and 12 months, and signal types, such as time-series momentum and moving average crossover, based on economic reasoning or prior published research, weight them using a principled method like historical information coefficient measured out of sample, and avoid searching across hundreds of combinations purely to maximize an in-sample backtest number."
+            },
+            {
+              "_key": "mac4l4b22",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Computing a Combined Signal by Simple Averaging",
+              "prompt": "A trend system computes signals at four look-back windows: 1-month (+1), 3-month (+1), 6-month (-1), and 12-month (+1). Using simple averaging, what is the combined signal strength (between -1 and +1)?",
+              "correctValue": 0.5,
+              "tolerance": 0.05,
+              "explanation": "(+1 + 1 - 1 + 1) / 4 = 2 / 4 = 0.5. Three of four windows agree on long, producing a moderately strong, but not maximal, long conviction, rather than the binary full-position-or-nothing outcome a single-window signal would produce."
+            },
+            {
+              "_key": "mac4l4b23",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why Combine Windows and Signal Types At All",
+              "question": "What is the main risk that combining multiple look-back windows and signal types, done carefully, is meant to reduce?",
+              "options": [
+                "The risk that trend-following stops working in every market simultaneously",
+                "The risk that a single arbitrarily chosen window or signal type happened to fit the historical backtest sample well without reflecting a genuinely robust edge",
+                "The risk of paying brokerage fees on multiple positions",
+                "The risk that SEBI will not approve a strategy using only one signal type"
+              ],
+              "correctIndex": 1,
+              "explanation": "A single window or signal type, selected by testing it against historical data, carries real risk that it simply fit that particular sample well rather than reflecting a genuinely robust trend-following edge. Careful aggregation, using a modest number of conventional windows and signal types rather than an exhaustively searched combination, spreads that risk rather than betting everything on one parameter choice."
+            },
+            {
+              "_key": "mac4l4b24",
+              "_type": "keyTakeaways",
+              "points": [
+                "A single look-back window is a single parameter choice, carrying real risk of having simply fit the historical backtest sample rather than reflecting a robust edge",
+                "Voting across multiple windows naturally reduces exposure during choppy periods where short-term and long-term trend disagree",
+                "Averaging produces a continuous combined signal strength that scales position size with how strongly windows agree, rather than a hard binary threshold",
+                "Weighting windows by their own historical information coefficient is more defensible than simply picking the single best-performing window",
+                "Combining genuinely different signal types, time-series momentum, moving average crossover, breakout, adds diversification a single methodology's varying windows alone cannot",
+                "Aggregation itself introduces new parameters; searching hundreds of window and weighting combinations for the best backtest simply relocates the overfitting problem rather than solving it"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,193 @@
+{
+  "courseSlug": "understanding-pairs-trading-concepts-and-cointegration",
+  "chapters": [
+    {
+      "title": "Chapter 1: The Idea of Pairs Trading",
+      "lessons": [
+        {
+          "title": "Case Study: A Classic Pair on the NSE and Why It Made Sense",
+          "slug": "case-study-a-classic-pair-on-the-nse-and-why-it-made-sense",
+          "body": [
+            {
+              "_key": "p4-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p4-001s1", "_type": "span", "marks": [], "text": "You have now covered three ideas separately: why two stocks move together, how to measure that relationship, and how to size a position so it is genuinely market neutral. This case study puts all three to work on the pair used throughout this chapter, HDFC Bank and ICICI Bank, and walks through it the way a systematizing trader actually would, from noticing the pair to sizing the trade, before any of the formal statistical testing that Chapter 3 introduces." }
+              ]
+            },
+            {
+              "_key": "p4-002",
+              "_type": "bigIdea",
+              "text": "A candidate pair earns its place through a chain of reasoning: an explainable shared exposure, a correlation number that confirms it, and a rupee-neutral position that actually expresses the bet. Skip any one link and you are no longer running a pairs trade, you are running a hope."
+            },
+            {
+              "_key": "p4-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p4-003s1", "_type": "span", "marks": [], "text": "Step 1: Why This Pair Was on the Radar" }
+              ]
+            },
+            {
+              "_key": "p4-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p4-004s1", "_type": "span", "marks": [], "text": "HDFC Bank and ICICI Bank were not picked at random from the Nifty 50. Both are private sector banks competing for the same urban retail deposit and credit card customer, both reprice a large share of their loan book against the same RBI repo rate, and both sit as heavyweight constituents in the Nifty Bank index, bought and sold together by every index fund tracking it. That is a shared exposure story across all three sources covered in Lesson 2: business, macro risk factor, and flow. A trader screening on screener.in for large private banks with similar deposit franchises would land on exactly this pair within minutes." }
+              ]
+            },
+            {
+              "_key": "p4-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p4-005s1", "_type": "span", "marks": [], "text": "Step 2: Checking the Correlation" }
+              ]
+            },
+            {
+              "_key": "p4-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p4-006s1", "_type": "span", "marks": [], "text": "Before committing any capital, the trader pulls 180 days of closing prices for both stocks from NSE's historical data, converts them to daily returns, and computes the correlation coefficient: roughly 0.70 (illustrative), comfortably inside the 0.5 to 0.85 range typical of same-sector NSE pairs. That number alone is not permission to trade. It confirms the pair is worth taking to the next step, formal cointegration testing in Chapter 3, rather than being dropped at the screening stage the way a near-zero correlation pair would be." }
+              ]
+            },
+            {
+              "_key": "p4-007",
+              "_type": "timeline",
+              "title": "How the trade idea developed (illustrative)",
+              "events": [
+                { "_key": "p4-007e1", "date": "Week 1", "title": "Pair identified", "description": "Screening on screener.in for large private banks with similar deposit franchises and Nifty Bank membership surfaces HDFC Bank and ICICI Bank as a natural candidate pair." },
+                { "_key": "p4-007e2", "date": "Week 1", "title": "Correlation checked", "description": "180-day return correlation computed at roughly 0.70, consistent with other same-sector NSE pairs. The pair is added to a watchlist, not traded yet." },
+                { "_key": "p4-007e3", "date": "Week 3", "title": "Gap opens", "description": "HDFC Bank guides cautiously on near-term deposit cost pressure while ICICI Bank's commentary is more upbeat. HDFC Bank underperforms ICICI Bank by several percent over the following days despite no change in the shared sector story." },
+                { "_key": "p4-007e4", "date": "Week 5", "title": "Position sized and entered", "description": "The trader sizes a rupee-neutral position: long HDFC Bank, short ICICI Bank via stock futures, using the hedge ratio from Lesson 3, betting the gap closes rather than reflecting a permanent change." },
+                { "_key": "p4-007e5", "date": "Week 8", "title": "Gap narrows, position closed", "description": "As the market digests both banks' quarterly results without finding a lasting difference between them, HDFC Bank recovers relative to ICICI Bank and the position is closed near its original relationship." }
+              ]
+            },
+            {
+              "_key": "p4-008",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p4-008s1", "_type": "span", "marks": [], "text": "Step 3: Sizing the Position" }
+              ]
+            },
+            {
+              "_key": "p4-009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p4-009s1", "_type": "span", "marks": [], "text": "With HDFC Bank at ₹1,650 and ICICI Bank at ₹1,200 (illustrative), the trader uses the price-ratio hedge ratio from Lesson 3: 1,650 divided by 1,200, or 1.375. Deploying ₹5 lakh on each leg gives roughly 303 shares of HDFC Bank held long and 417 shares of ICICI Bank sold short, using stock futures rather than the cash market since the position is meant to be held for weeks, not squared off the same day. Total capital committed is about ₹10 lakh, split evenly enough that a broad Nifty move affects both legs by a similar rupee amount." }
+              ]
+            },
+            {
+              "_key": "p4-010",
+              "_type": "donutChart",
+              "title": "Capital allocation across the two legs (illustrative)",
+              "data": [
+                { "_key": "p4-010d1", "label": "Long: HDFC Bank", "value": 500000 },
+                { "_key": "p4-010d2", "label": "Short: ICICI Bank", "value": 500400 }
+              ]
+            },
+            {
+              "_key": "p4-011",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "p4-011s1", "label": "Correlation at screening", "value": "≈ 0.70", "context": "180-day daily return correlation, comfortably inside the typical same-sector range" },
+                { "_key": "p4-011s2", "label": "Hedge ratio used", "value": "1.375", "context": "HDFC Bank price ÷ ICICI Bank price, the naive price-ratio hedge ratio from Lesson 3" },
+                { "_key": "p4-011s3", "label": "Capital deployed", "value": "≈ ₹10 lakh", "context": "Split close to evenly, ₹5 lakh long HDFC Bank, ₹5 lakh short ICICI Bank via futures" },
+                { "_key": "p4-011s4", "label": "Holding period", "value": "≈ 5 weeks", "context": "From entry after the gap opened to exit once the relationship reverted" }
+              ]
+            },
+            {
+              "_key": "p4-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p4-012s1", "_type": "span", "marks": [], "text": "Step 4: What This Case Study Deliberately Left Out" }
+              ]
+            },
+            {
+              "_key": "p4-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p4-013s1", "_type": "span", "marks": [], "text": "Notice what did not happen here. The trader never formally tested whether HDFC Bank and ICICI Bank are cointegrated, meaning whether their price relationship, not just their daily returns, is statistically stable enough to trade with real confidence. She also never built an actual spread series or a z-score to decide precisely when to enter and exit, she simply eyeballed a gap opening and closing. That was good enough for a chapter built around intuition and mechanics, but it is not good enough to risk real capital on. A relationship that looks correlated and reasonable can still be a coincidence, or can break down permanently exactly when you have a position on." }
+              ]
+            },
+            {
+              "_key": "p4-014",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Eyeballing a chart and a correlation number is not a trading process, it is a hypothesis. Chapter 2 turns the gap between two stocks into a precise, calculable spread and z-score. Chapter 3 replaces \"the gap looks wide\" with a formal cointegration test that tells you whether the relationship is statistically strong enough to trade at all."
+            },
+            {
+              "_key": "p4-015",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Apply the framework to a new pair",
+              "scenario": "You are screening for a new candidate pair and land on Asian Paints and Berger Paints, both NSE-listed paint manufacturers with overlapping retail dealer networks, similar exposure to crude-oil-linked raw material costs, and a 90-day return correlation of roughly 0.58.",
+              "prompt": "Walk through Steps 1 and 2 of the framework for this pair: what is the shared exposure story, and does the correlation number support moving forward to the next stage?",
+              "modelAnswer": "Step 1: the shared exposure story combines business exposure (both sell decorative and industrial paints through overlapping dealer networks to the same construction and renovation demand) and macro risk-factor exposure (both are sensitive to crude-oil-linked raw material costs like titanium dioxide and solvents). Step 2: a correlation of 0.58 sits within the typical 0.5 to 0.85 range for same-sector NSE pairs, so it supports treating this as a valid candidate worth taking to formal cointegration testing, rather than dropping it as a coincidence. It does not yet confirm the pair is tradeable, only that it has passed the initial screen."
+            },
+            {
+              "_key": "p4-016",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "What this case study did not establish",
+              "question": "In the HDFC Bank / ICICI Bank case study, which of the following was NOT done before entering the trade?",
+              "options": [
+                "Identifying a shared business, macro, and flow-based exposure between the two stocks",
+                "Computing a correlation coefficient on daily returns",
+                "Formally testing whether the price relationship is cointegrated",
+                "Sizing the position using a rupee-neutral hedge ratio"
+              ],
+              "correctIndex": 2,
+              "explanation": "The case study deliberately stopped short of formal cointegration testing, relying instead on an explainable shared exposure, a supportive correlation number, and careful rupee-neutral sizing. Cointegration testing, the statistically rigorous check for whether the price relationship itself is stable enough to trade, is introduced in Chapter 3."
+            },
+            {
+              "_key": "p4-017",
+              "_type": "flashcardSet",
+              "title": "Chapter 1 Recap: Core Terms",
+              "cards": [
+                { "_key": "p4-017f1", "term": "Pairs trade", "definition": "A market-neutral trade that goes long one stock and short a related stock, profiting when a temporarily stretched relationship converges back to normal." },
+                { "_key": "p4-017f2", "term": "Correlation coefficient", "definition": "A number from -1 to +1 measuring how closely two return series move together, typically computed on daily returns over a lookback window." },
+                { "_key": "p4-017f3", "term": "Hedge ratio", "definition": "The ratio used to convert between two stocks' prices so the long and short legs of a pairs trade carry roughly equal rupee exposure." },
+                { "_key": "p4-017f4", "term": "Rupee-neutral", "definition": "A position sized so the long and short legs have roughly equal rupee value, rather than an equal number of shares." },
+                { "_key": "p4-017f5", "term": "Candidate pair", "definition": "Two stocks with an explainable shared exposure and a supportive correlation number, ready to be taken to formal cointegration testing before being traded." }
+              ]
+            },
+            {
+              "_key": "p4-018",
+              "_type": "keyTakeaways",
+              "points": [
+                "A strong candidate pair is built through a chain of reasoning: explainable shared exposure, a supportive correlation number, and a carefully sized rupee-neutral position.",
+                "HDFC Bank and ICICI Bank qualified on all three sources of co-movement from Lesson 2 at once: shared business, shared macro risk factor, and shared index flows.",
+                "A correlation check is a screening step, not a green light. It tells you whether a pair is worth testing further, not whether it is safe to trade with real capital.",
+                "Rupee-neutral sizing, using a hedge ratio rather than matching share counts, is what turns a reasonable-looking pair into an actual market-neutral position.",
+                "This case study deliberately stopped before formal cointegration testing and before building a real spread and z-score signal, both of which are essential before trading a pair for real, and are covered in Chapters 2 and 3.",
+                "Eyeballing a chart is a hypothesis, not a trading process. The next two chapters replace intuition with precise, testable tools."
+              ]
+            },
+            {
+              "_key": "p4-019",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This case study is for educational purposes only and is not investment advice or a recommendation to buy, sell, or short any security named here. All prices, correlation figures, dates, and the sequence of events described are illustrative and do not represent actual historical data or a real trade. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

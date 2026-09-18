@@ -1,0 +1,185 @@
+{
+  "courseSlug": "advanced-machine-learning-techniques-for-trading-ensembles-and-deep-learning",
+  "chapters": [
+    {
+      "title": "Chapter 3: Ensemble Methods II: Stacking and Blending",
+      "lessons": [
+        {
+          "title": "Why Ensemble Members Must Disagree: Diversity, Correlation, and Model Decorrelation",
+          "slug": "why-ensemble-members-must-disagree-diversity-correlation-and-model-decorrelation",
+          "body": [
+            {
+              "_key": "amlc3l3b01",
+              "_type": "bigIdea",
+              "text": "Two models that always agree are not an ensemble. They are one model with extra electricity bills. Every benefit this chapter has claimed for stacking comes specifically from where base models disagree, and this lesson replaces the eyeballed coefficients from the previous lesson with the actual math for measuring that disagreement."
+            },
+            {
+              "_key": "amlc3l3b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc3l3b02s1", "_type": "span", "text": "Why Agreement Is Worthless and Disagreement Is the Whole Point", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc3l3b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc3l3b03s1",
+                  "_type": "span",
+                  "text": "If two models were perfectly correlated, always right together and always wrong together, averaging them gives back exactly what either one alone would have given, at twice the computational cost. The entire benefit of combining models comes from the opposite case: when one model is wrong, the odds the other is also wrong, and wrong in the same direction, are lower. Chapter 2's bagging variance formula, Var equals ρσ² plus (1 minus ρ)σ² over B, already said this precisely for bagged trees: correlation, ρ, sets the floor on how much an ensemble can help. This lesson generalizes that idea to any ensemble of models, not just bootstrap-resampled trees of the same type.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc3l3b04",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc3l3b04s1", "_type": "span", "text": "Measuring Diversity Directly: Error Correlation", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc3l3b05",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc3l3b05s1",
+                  "_type": "span",
+                  "text": "Instead of guessing at diversity from a meta-learner's coefficients, measure it directly: compute each base model's error, true label minus predicted probability, on the same out-of-fold rows from the previous lesson, then correlate those error series across base models. Low or negative correlation between two models' errors means they tend to be wrong on different rows, for different reasons, exactly the property that makes combining them worthwhile. High correlation means one of the two is close to redundant, whatever it adds to the stack, the other model was probably already providing.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc3l3b06",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "import pandas as pd\n\n# oof_preds: the out-of-fold predicted-probability DataFrame from the\n# previous lesson; y_train: true labels aligned to the same rows\n\nerrors = pd.DataFrame({\n    name: y_train.loc[oof_preds.index] - oof_preds[name]\n    for name in oof_preds.columns\n})\n\nerror_corr = errors.corr()\nprint(error_corr.round(2))",
+              "caption": "This correlates the models' mistakes, not their raw predictions. Two models can produce very differently-scaled probabilities and still make highly correlated mistakes, or the reverse; it is the error correlation that matters for ensembling."
+            },
+            {
+              "_key": "amlc3l3b07",
+              "_type": "table",
+              "caption": "Illustrative error correlation matrix for this chapter's three base models",
+              "headers": ["", "Random Forest", "XGBoost", "Logistic Regression"],
+              "rows": [
+                { "_key": "amlc3l3b07r1", "_type": "tableRow", "cells": ["Random Forest", "1.00", "0.76", "0.33"] },
+                { "_key": "amlc3l3b07r2", "_type": "tableRow", "cells": ["XGBoost", "0.76", "1.00", "0.29"] },
+                { "_key": "amlc3l3b07r3", "_type": "tableRow", "cells": ["Logistic Regression", "0.33", "0.29", "1.00"] }
+              ]
+            },
+            {
+              "_key": "amlc3l3b08",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This confirms, with an actual number, what the previous lesson's meta-learner coefficients only implied: the random forest and XGBoost errors are highly correlated at 0.76, both are tree-based models trained on the same features, so a lot of their disagreement potential is already used up. The logistic regression's errors sit around 0.3 with both, meaningfully lower, which is exactly why it earned a real meta-learner weight despite weaker standalone accuracy. Low individual skill and low error correlation with the rest of the stack is a genuinely different profile from low individual skill alone."
+            },
+            {
+              "_key": "amlc3l3b09",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc3l3b09s1", "_type": "span", "text": "Disagreement Alone Isn't Enough Either", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc3l3b10",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc3l3b10s1",
+                  "_type": "span",
+                  "text": "Do not chase low error correlation for its own sake. A model trained on shuffled, meaningless features will have errors close to pure noise, almost uncorrelated with everything, and it will still make your ensemble worse, because it has no genuine individual skill to contribute in the first place. The formal version of this trade-off, most rigorously proven for squared-error ensembles but useful conceptually here too, is the ambiguity decomposition.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc3l3b11",
+              "_type": "mathBlock",
+              "latex": "E_{ens} = \\frac{1}{M}\\sum_{i=1}^{M} E_i \\; - \\; \\frac{1}{M}\\sum_{i=1}^{M}\\left(f_i - \\bar{f}\\right)^2",
+              "caption": "Krogh and Vedelsby's ambiguity decomposition (1995): ensemble error equals the average of the M individual models' errors, minus how much they disagree with each other and with the ensemble average f̄, the ambiguity term. Holding average individual error fixed, more disagreement directly lowers ensemble error. But the two terms move together in practice: a model added purely to raise ambiguity usually raises the average error term by even more, which is exactly why a shuffled-feature model still makes the ensemble worse despite being maximally 'diverse.'"
+            },
+            {
+              "_key": "amlc3l3b12",
+              "_type": "callout",
+              "type": "warning",
+              "text": "A useful ensemble member needs both properties at once: some real, individually verifiable skill, checked with the same walk-forward standard as every other model in this course, and errors that are meaningfully uncorrelated with the rest of the stack. Either one without the other is not enough, and diversity manufactured from a model with no genuine skill is the ensembling equivalent of the data-snooping trap from Chapter 1: it looks like progress on a metric while adding nothing real."
+            },
+            {
+              "_key": "amlc3l3b13",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc3l3b13s1", "_type": "span", "text": "What's Next", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc3l3b14",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc3l3b14s1",
+                  "_type": "span",
+                  "text": "This chapter's closing case study puts the full stack, three base models, error correlation diagnostics, and a linear meta-learner, to work on a genuinely different kind of trading problem: a Bank Nifty sector rotation strategy, walk-forward tested the same way Chapter 2's momentum signal was.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc3l3b15",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "The Ambiguity Decomposition, in One Line",
+              "textWithBlank": "Ensemble error equals the average individual model error minus a term that grows with how much the models ___ from each other and from the ensemble average.",
+              "correctAnswers": ["disagree", "differ", "diverge"],
+              "explanation": "This is the ambiguity decomposition (Krogh and Vedelsby, 1995): ensemble error equals average individual error minus ambiguity, where ambiguity measures how much individual models' predictions disagree with the ensemble average. Holding average individual accuracy fixed, more disagreement between models directly lowers ensemble error, the formal version of the correlation intuition this lesson opened with."
+            },
+            {
+              "_key": "amlc3l3b16",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Diversity for Its Own Sake",
+              "question": "A team adds a fourth base model to their stack, a decision tree trained on randomly shuffled features. Its predictions are, as expected, almost completely uncorrelated with the other three base models' errors. Should this model be added to the stack purely because it is 'diverse'?",
+              "options": [
+                "Yes, since low error correlation is the only requirement for a useful ensemble member",
+                "No, because a model with no genuine individual skill mostly adds noise to the average and typically raises overall ensemble error despite its low correlation with the others",
+                "Yes, since more base models always improve a stacked ensemble",
+                "No, because stacking requires an even number of base models"
+              ],
+              "correctIndex": 1,
+              "explanation": "The ambiguity decomposition needs both a low average individual error and genuine diversity to help; a model that is diverse only because it is close to random noise typically raises the average individual error term by more than its ambiguity contribution can offset. Diversity is necessary but not sufficient. A useful ensemble member needs some real, individually verifiable skill, checked with the same walk-forward standard as every other model in this course, and errors that are meaningfully uncorrelated with the rest of the stack."
+            },
+            {
+              "_key": "amlc3l3b17",
+              "_type": "keyTakeaways",
+              "points": [
+                "An ensemble's value comes entirely from where its members disagree; perfectly correlated models add cost without adding benefit",
+                "Chapter 2's bagging variance formula (ρσ² + (1-ρ)σ²/B) already formalized this for bagged trees; this lesson extends the same idea to any ensemble",
+                "Measure diversity directly by correlating base models' out-of-fold errors, not their raw predictions, and not by eyeballing meta-learner coefficients",
+                "Low error correlation combined with weak standalone accuracy, like the logistic regression base model in this chapter, is a genuinely useful profile, not a contradiction",
+                "The ambiguity decomposition formalizes the trade-off: ensemble error is average individual error minus a disagreement term, but a model that is diverse purely because it is unskilled usually raises the first term by more than it helps the second",
+                "This chapter's case study next applies all of it, base models, error correlation, and a linear meta-learner, to a Bank Nifty rotation strategy"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

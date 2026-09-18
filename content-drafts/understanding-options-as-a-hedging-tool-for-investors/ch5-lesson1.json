@@ -1,0 +1,528 @@
+{
+  "courseSlug": "understanding-options-as-a-hedging-tool-for-investors",
+  "chapters": [
+    {
+      "title": "Chapter 5: Costs, Margins, and Taxes of Hedging in India",
+      "lessons": [
+        {
+          "title": "The Real Cost of a Hedge: Time Decay, Rolling, and Transaction Charges",
+          "slug": "the-real-cost-of-a-hedge-time-decay-rolling-and-transaction-charges",
+          "body": [
+            {
+              "_key": "c5l1-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l1-001s1",
+                  "_type": "span",
+                  "text": "Ask most investors what a hedge costs and they will point at the premium. That is the visible part. The full bill has four lines: the premium that decays away, the cost of buying a new put every time the old one expires, the gap between the buying and selling price, and the charges and taxes on every order. This lesson adds them all up for a real hedging programme, so you can budget for protection the way you budget for insurance. The good news is that in Indian index options, the explicit charges are small. The bad news is that the invisible cost, time decay, is very large.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l1-002",
+              "_type": "bigIdea",
+              "text": "Almost the entire cost of hedging is the premium melting away. Brokerage and taxes on a Nifty options hedge are rounding errors by comparison. Budget for the decay, and the rest takes care of itself."
+            },
+            {
+              "_key": "c5l1-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l1-003s1",
+                  "_type": "span",
+                  "text": "Time Decay: Watching the Premium Melt",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l1-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c5l1-004m1",
+                  "_type": "glossaryTerm",
+                  "definition": "The amount an option's price falls each day purely because there is less time left to expiry, if nothing else changes. Usually written as a negative number for option buyers."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c5l1-004s1",
+                  "_type": "span",
+                  "text": "Hold a put and do nothing, and it still loses value every day. That drip is called ",
+                  "marks": []
+                },
+                {
+                  "_key": "c5l1-004s2",
+                  "_type": "span",
+                  "text": "theta",
+                  "marks": ["c5l1-004m1"]
+                },
+                {
+                  "_key": "c5l1-004s3",
+                  "_type": "span",
+                  "text": ", or time decay. Here is the three-month 24,000 put from earlier lessons, priced at ₹250, assuming the Nifty sits perfectly still at 25,000 and volatility does not change.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l1-005",
+              "_type": "table",
+              "caption": "Value of the 24,000 put as expiry approaches, with the Nifty unchanged at 25,000 (illustrative model values)",
+              "headers": ["Days to expiry", "Put value per unit", "Value of 2 lots (130 units)", "Share of original premium left"],
+              "rows": [
+                { "_key": "c5l1-005r1", "_type": "tableRow", "cells": ["91", "₹250", "₹32,500", "100%"] },
+                { "_key": "c5l1-005r2", "_type": "tableRow", "cells": ["75", "₹214", "₹27,820", "86%"] },
+                { "_key": "c5l1-005r3", "_type": "tableRow", "cells": ["60", "₹175", "₹22,750", "70%"] },
+                { "_key": "c5l1-005r4", "_type": "tableRow", "cells": ["45", "₹131", "₹17,030", "52%"] },
+                { "_key": "c5l1-005r5", "_type": "tableRow", "cells": ["30", "₹82", "₹10,660", "33%"] },
+                { "_key": "c5l1-005r6", "_type": "tableRow", "cells": ["21", "₹49", "₹6,370", "20%"] },
+                { "_key": "c5l1-005r7", "_type": "tableRow", "cells": ["14", "₹24", "₹3,120", "10%"] },
+                { "_key": "c5l1-005r8", "_type": "tableRow", "cells": ["7", "₹4", "₹520", "2%"] },
+                { "_key": "c5l1-005r9", "_type": "tableRow", "cells": ["0", "₹0", "₹0", "0%"] }
+              ]
+            },
+            {
+              "_key": "c5l1-006",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Time decay of an out-of-the-money put, Nifty unchanged",
+              "xAxisLabel": "Days to expiry",
+              "yAxisLabel": "Put value per unit (₹)",
+              "data": [
+                { "_key": "c5l1-006d1", "label": "91", "value": 250 },
+                { "_key": "c5l1-006d2", "label": "75", "value": 214 },
+                { "_key": "c5l1-006d3", "label": "60", "value": 175 },
+                { "_key": "c5l1-006d4", "label": "45", "value": 131 },
+                { "_key": "c5l1-006d5", "label": "30", "value": 82 },
+                { "_key": "c5l1-006d6", "label": "21", "value": 49 },
+                { "_key": "c5l1-006d7", "label": "14", "value": 24 },
+                { "_key": "c5l1-006d8", "label": "7", "value": 4 },
+                { "_key": "c5l1-006d9", "label": "0", "value": 0 }
+              ]
+            },
+            {
+              "_key": "c5l1-007",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Read the last column carefully. A third of the premium is gone in the first month, two thirds by the second, and the final stretch takes the rest. For an out-of-the-money put this is not only a cost, it is also a warning: in the last two weeks the put is worth very little precisely because it can no longer do much. A put trading at ₹4 is not protecting a portfolio. It is a lottery ticket."
+            },
+            {
+              "_key": "c5l1-008",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "The first month's decay",
+              "prompt": "Using the table, how much value do 2 lots (130 units) of the 24,000 put lose in the first 31 days, from 91 days to 60 days to expiry, if the Nifty does not move? Enter the loss as a positive number in rupees.",
+              "correctValue": 9750,
+              "tolerance": 0,
+              "unit": "₹",
+              "explanation": "₹32,500 − ₹22,750 = ₹9,750, or ₹75 per unit. That is about ₹315 a day of protection cost in a completely quiet market, which is what you are paying for the right to a floor if the market suddenly is not quiet."
+            },
+            {
+              "_key": "c5l1-009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l1-009s1",
+                  "_type": "span",
+                  "text": "Rolling: The Cost That Repeats",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l1-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c5l1-010m1",
+                  "_type": "glossaryTerm",
+                  "definition": "Closing an option position that is near expiry and opening a similar one on a later expiry, so that protection continues without a gap."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c5l1-010s1",
+                  "_type": "span",
+                  "text": "A hedge that must last a year cannot be bought once. You ",
+                  "marks": []
+                },
+                {
+                  "_key": "c5l1-010s2",
+                  "_type": "span",
+                  "text": "roll",
+                  "marks": ["c5l1-010m1"]
+                },
+                {
+                  "_key": "c5l1-010s3",
+                  "_type": "span",
+                  "text": " it: sell whatever value is left in the old put and buy a new one further out. Each roll pays for a fresh block of time value, which is why a rolling hedge is a recurring expense, not a one-time purchase.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l1-011",
+              "_type": "table",
+              "caption": "Annual cost of keeping 2 lots of Nifty puts in place, ₹32,50,000 portfolio (illustrative)",
+              "headers": ["Roll frequency", "Premium per roll", "Rolls per year", "Annual premium", "As % of portfolio"],
+              "rows": [
+                { "_key": "c5l1-011r1", "_type": "tableRow", "cells": ["Monthly (₹90 put)", "₹11,700", "12", "₹1,40,400", "4.32%"] },
+                { "_key": "c5l1-011r2", "_type": "tableRow", "cells": ["Quarterly (₹250 put)", "₹32,500", "4", "₹1,30,000", "4.00%"] },
+                { "_key": "c5l1-011r3", "_type": "tableRow", "cells": ["Half-yearly (₹375 put)", "₹48,750", "2", "₹97,500", "3.00%"] },
+                { "_key": "c5l1-011r4", "_type": "tableRow", "cells": ["Yearly (₹510 put)", "₹66,300", "1", "₹66,300", "2.04%"] }
+              ]
+            },
+            {
+              "_key": "c5l1-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l1-012s1",
+                  "_type": "span",
+                  "text": "There is one refinement worth knowing. If you roll a three-month put when it still has about a month left, you recover roughly ₹82 per unit, a third of what you paid, instead of letting it decay to nothing. Your net outlay per roll falls to about ₹168 per unit, and you roll six times a year instead of four. The annual cost works out similar, but you are never left holding a nearly worthless put in the final weeks, when it protects almost nothing.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l1-013",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "The daily drip",
+              "textWithBlank": "The Greek that measures how much an option loses each day purely because time is passing is called ___.",
+              "correctAnswers": ["theta"],
+              "explanation": "Theta works against option buyers and in favour of sellers. For a hedger, it is the daily rent paid for the floor under the portfolio."
+            },
+            {
+              "_key": "c5l1-014",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l1-014s1",
+                  "_type": "span",
+                  "text": "The Bill: Brokerage, STT, and the Rest",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l1-015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l1-015s1",
+                  "_type": "span",
+                  "text": "Now the explicit charges. Take the same hedge: buy 2 lots of the 24,000 put at ₹250, a premium turnover of ₹32,500, then sell it later at ₹400, a turnover of ₹52,000. Using a discount broker such as Zerodha with flat brokerage per order, the charges look like this.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l1-016",
+              "_type": "table",
+              "caption": "Charges on one complete hedge cycle (illustrative rates, check current rates with your broker)",
+              "headers": ["Charge", "Rate", "On the buy (₹32,500)", "On the sell (₹52,000)"],
+              "rows": [
+                { "_key": "c5l1-016r1", "_type": "tableRow", "cells": ["Brokerage", "Flat ₹20 per executed order", "₹20", "₹20"] },
+                { "_key": "c5l1-016r2", "_type": "tableRow", "cells": ["Securities Transaction Tax", "0.1% of premium, on the sell side only", "₹0", "₹52"] },
+                { "_key": "c5l1-016r3", "_type": "tableRow", "cells": ["Exchange transaction charge", "About 0.035% of premium", "₹11", "₹18"] },
+                { "_key": "c5l1-016r4", "_type": "tableRow", "cells": ["SEBI turnover fee", "₹10 per crore of premium", "Negligible", "Negligible"] },
+                { "_key": "c5l1-016r5", "_type": "tableRow", "cells": ["Stamp duty", "0.003% of premium, on the buy side only", "₹1", "₹0"] },
+                { "_key": "c5l1-016r6", "_type": "tableRow", "cells": ["GST", "18% on brokerage, transaction and SEBI charges", "₹6", "₹7"] },
+                { "_key": "c5l1-016r7", "_type": "tableRow", "cells": ["Total", "", "About ₹38", "About ₹97"] }
+              ]
+            },
+            {
+              "_key": "c5l1-017",
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "c5l1-017a",
+                  "label": "Charges for the full cycle",
+                  "value": "About ₹135",
+                  "context": "Buy and sell together, on a ₹32,500 premium"
+                },
+                {
+                  "_key": "c5l1-017b",
+                  "label": "As a share of the premium",
+                  "value": "About 0.4%",
+                  "context": "The premium itself is the real cost"
+                },
+                {
+                  "_key": "c5l1-017c",
+                  "label": "As a share of the portfolio",
+                  "value": "About 0.004%",
+                  "context": "₹135 on ₹32,50,000"
+                }
+              ]
+            },
+            {
+              "_key": "c5l1-018",
+              "_type": "keyFact",
+              "label": "Square off rather than let an in-the-money index put expire",
+              "value": "STT is 0.125% of intrinsic value on exercise, against 0.1% of premium on a sale",
+              "context": "On a put that is 2,000 points in the money across 130 units, exercise STT is about ₹325 against about ₹261 if you sell it in the market. The gap is small for index options but much larger for physically settled stock options, where delivery brings its own charges."
+            },
+            {
+              "_key": "c5l1-019",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l1-019s1",
+                  "_type": "span",
+                  "text": "The Cost Nobody Prints: The Bid-Ask Spread",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l1-020",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c5l1-020m1",
+                  "_type": "glossaryTerm",
+                  "definition": "The difference between the highest price buyers are bidding and the lowest price sellers are asking. You usually buy at the ask and sell at the bid, so the gap is a real cost."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c5l1-020s1",
+                  "_type": "span",
+                  "text": "The ",
+                  "marks": []
+                },
+                {
+                  "_key": "c5l1-020s2",
+                  "_type": "span",
+                  "text": "bid-ask spread",
+                  "marks": ["c5l1-020m1"]
+                },
+                {
+                  "_key": "c5l1-020s3",
+                  "_type": "span",
+                  "text": " never appears on a contract note, but it is often larger than every listed charge combined. On liquid Nifty monthly strikes the spread might be ₹1 per unit, which costs ₹130 per lot on a round trip. On a thinly traded strike, a far expiry or a midcap index contract, it can be ₹5 or more, which is ₹650 per lot. On a ₹250 premium, that is up to 2.5% of what you paid, lost the moment you transact.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l1-021",
+              "_type": "table",
+              "caption": "Full annual cost of a quarterly-rolled hedge, ₹32,50,000 portfolio, 2 lots of the 24,000 put",
+              "headers": ["Cost", "Per year", "As % of portfolio", "Share of total cost"],
+              "rows": [
+                { "_key": "c5l1-021r1", "_type": "tableRow", "cells": ["Premium (4 rolls × ₹32,500)", "₹1,30,000", "4.00%", "About 98.8%"] },
+                { "_key": "c5l1-021r2", "_type": "tableRow", "cells": ["Bid-ask spread (₹1 per unit, 4 round trips)", "₹1,040", "0.03%", "About 0.8%"] },
+                { "_key": "c5l1-021r3", "_type": "tableRow", "cells": ["Brokerage, taxes and charges (4 cycles)", "₹540", "0.02%", "About 0.4%"] },
+                { "_key": "c5l1-021r4", "_type": "tableRow", "cells": ["Total", "₹1,31,580", "About 4.05%", "100%"] }
+              ]
+            },
+            {
+              "_key": "c5l1-022",
+              "_type": "callout",
+              "type": "warning",
+              "text": "A 4% annual drag is enormous against a long-term equity return of perhaps 11% to 12%. Running a permanent near-the-money hedge would surrender roughly a third of your expected return. This is the single strongest argument in this course against hedging all the time. Protection is for specific risks and specific periods, or for cheap far out-of-the-money cover, not as a permanent feature of a long-term portfolio."
+            },
+            {
+              "_key": "c5l1-023",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Where does the money actually go?",
+              "question": "For an investor rolling Nifty puts on a ₹32.5 lakh portfolio every quarter, which cost is by far the largest?",
+              "options": [
+                "Brokerage on each order",
+                "Securities Transaction Tax",
+                "The premium lost to time decay",
+                "GST on transaction charges"
+              ],
+              "correctIndex": 2,
+              "explanation": "Premium accounts for roughly 99% of the total cost. All the explicit charges together come to well under ₹600 a year on this portfolio, against ₹1,30,000 of premium. Optimising brokerage while ignoring strike and expiry choices is fixing the wrong problem."
+            },
+            {
+              "_key": "c5l1-024",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Vinod's monthly hedging habit",
+              "scenario": "Vinod, 54, a logistics business owner in Surat, has ₹32.5 lakh in Nifty index funds and has hedged continuously for the past year by buying 2 lots of a one-month put about 4% below the market, every month, at around ₹90 per unit. His funds returned about 11% before the hedge. He tells you hedging \"barely costs anything, just ₹11,700 a month\", but his portfolio has underperformed the index badly and he cannot understand why.",
+              "prompt": "Work out what Vinod's hedging actually cost over the year, and what you would suggest he change.",
+              "modelAnswer": "1. Premium: ₹11,700 × 12 = ₹1,40,400, which is 4.32% of ₹32.5 lakh.\n2. Spread and charges: roughly ₹260 of spread and about ₹100 of charges per cycle, so around ₹4,300 more, taking the total to roughly ₹1,44,700, or about 4.45%.\n3. Against an 11% gross return, his hedging consumed about 40% of his gains. The monthly figure sounded small because he never annualised it.\n4. Changes to consider: roll quarterly or half-yearly instead of monthly, which cuts the annual premium from 4.32% to 4.00% or 3.00% for the same strike distance; or move to a strike further out of the money, where three-month cover can cost well under 1% a year; or hedge only the part of the portfolio tied to a real goal.\n5. The deeper question is whether he needs a permanent hedge at all. If he has no near-term goal, the honest answer is probably not.\nThe lesson: always state hedging cost as a percentage of the portfolio per year. Monthly rupee figures hide the damage."
+            },
+            {
+              "_key": "c5l1-025",
+              "_type": "collapsible",
+              "title": "A closer look at each charge",
+              "content": [
+                {
+                  "_key": "c5l1-025a",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c5l1-025as1",
+                      "_type": "span",
+                      "text": "Brokerage: discount brokers typically charge a flat fee per executed order for options, so a larger hedge costs the same as a small one. Full-service brokers may charge a percentage of premium, which can be far more expensive.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c5l1-025b",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c5l1-025bs1",
+                      "_type": "span",
+                      "text": "Securities Transaction Tax: charged on the sell side of an options trade as a percentage of premium, and on exercise as a percentage of intrinsic value. The rate on option sales was raised with effect from October 2024, so older articles may quote lower figures.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c5l1-025c",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c5l1-025cs1",
+                      "_type": "span",
+                      "text": "Exchange transaction charges: levied by NSE on premium turnover, at a uniform rate for all members since late 2024.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c5l1-025d",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c5l1-025ds1",
+                      "_type": "span",
+                      "text": "SEBI turnover fee and stamp duty: tiny for a hedger. Stamp duty applies only to the buy side.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c5l1-025e",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c5l1-025es1",
+                      "_type": "span",
+                      "text": "GST: charged on brokerage and the exchange and SEBI charges, not on STT or on the premium itself.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c5l1-025f",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c5l1-025fs1",
+                      "_type": "span",
+                      "text": "Rates change with budgets and exchange circulars. Before you size a hedge, run your exact trade through your broker's charges calculator rather than relying on any figure printed here.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c5l1-026",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Budget your hedging cost before you start",
+              "steps": [
+                "Write down the premium for one full hedge cycle, in rupees and as a percentage of the portfolio.",
+                "Multiply by the number of rolls you expect in a year to get the annual premium cost.",
+                "Add an estimate for the bid-ask spread: the current spread per unit multiplied by units and by the number of round trips.",
+                "Run one buy order and one sell order through your broker's charges calculator and add that to the total.",
+                "Compare the annual total with your expected return. If it exceeds about a fifth of that return, revisit the strike, the frequency or whether to hedge at all."
+              ]
+            },
+            {
+              "_key": "c5l1-027",
+              "_type": "toolLink",
+              "label": "Zerodha Brokerage Calculator",
+              "url": "https://zerodha.com/brokerage-calculator",
+              "description": "Enter your buy and sell premiums and quantity to see brokerage, STT, exchange charges, stamp duty and GST for an exact options trade."
+            },
+            {
+              "_key": "c5l1-028",
+              "_type": "flashcardSet",
+              "title": "The Cost of Hedging",
+              "cards": [
+                { "_key": "c5l1-028f1", "term": "Theta", "definition": "The daily loss in an option's value caused purely by time passing." },
+                { "_key": "c5l1-028f2", "term": "Rolling", "definition": "Selling a near-expiry option and buying a later-dated one to keep protection running." },
+                { "_key": "c5l1-028f3", "term": "Bid-ask spread", "definition": "The gap between buying and selling prices. Often the largest transaction cost, and invisible on the contract note." },
+                { "_key": "c5l1-028f4", "term": "STT on options", "definition": "Charged on the sell side as a percentage of premium, and at a higher rate on intrinsic value if an in-the-money option is exercised at expiry." },
+                { "_key": "c5l1-028f5", "term": "Annual hedging drag", "definition": "Total yearly hedging cost as a percentage of the portfolio. The only figure that makes hedging decisions comparable." }
+              ]
+            },
+            {
+              "_key": "c5l1-029",
+              "_type": "keyTakeaways",
+              "points": [
+                "Time decay is the real cost of hedging. An out-of-the-money put loses about a third of its value in the first month with the market unchanged.",
+                "Rolling repeats that cost. The same protection costs about 4% a year rolled quarterly and about 2% rolled yearly.",
+                "Explicit charges on Nifty options are small: roughly ₹135 on a ₹32,500 premium round trip, about 0.4% of the premium.",
+                "The bid-ask spread is usually the largest transaction cost, and it is worst in illiquid strikes and far expiries.",
+                "Selling an in-the-money option before expiry is usually cheaper than letting it be exercised.",
+                "Always express hedging cost as a percentage of the portfolio per year, then compare it with your expected return."
+              ]
+            },
+            {
+              "_key": "c5l1-030",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice. Charge rates, STT rates and brokerage plans change with budgets, exchange circulars and broker policies, and the figures here are illustrative examples rounded for clarity. Verify current rates with your broker before trading. Consult a SEBI-registered investment adviser and a tax professional for your own situation."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

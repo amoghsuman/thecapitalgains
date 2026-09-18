@@ -1,0 +1,173 @@
+{
+  "courseSlug": "understanding-numerical-methods-in-quantitative-finance-binomial-trees-and-finite-difference-methods",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Numerical Methods? Foundations of Option Pricing Beyond Closed-Form",
+      "lessons": [
+        {
+          "title": "A Map of Numerical Methods: Trees, Finite Differences, and Monte Carlo Compared",
+          "slug": "a-map-of-numerical-methods-trees-finite-differences-and-monte-carlo-compared",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "e1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "e1s1", "text": "Four lessons in, the case has been made for numerical methods in general. Before Chapter 2 starts building the binomial tree in full, it is worth zooming out one more time and looking at the whole landscape. There are three major numerical approaches to option pricing in practical use, and this course deliberately builds two of them. Knowing why, and knowing where the third one fits, is what turns this course from a set of techniques into a working toolkit.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "e2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "e2s1", "text": "What Makes a Numerical Method 'Good'?", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "e3",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "e3s1", "text": "Every numerical pricing method gets judged on the same four axes: how accurate it is for a given amount of computation, how fast it runs, how naturally it handles early exercise, and how well it copes with exotic payoffs, path dependence, and multiple underlying assets. No method wins on all four at once. That trade-off, not any single method being objectively best, is the real subject of this lesson.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "e4",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "e4s1", "text": "Binomial Trees: The Recap", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "e5",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "e5s1", "text": "A tree builds out every possible discrete price path the stock could take, then works backward from expiry, checking at every single node whether holding or exercising is worth more, exactly what the Hind Metals case study in Lesson 4 did by hand. That node-by-node check is what makes trees a natural home for American options. Their weak spot shows up with path-dependent payoffs, an Asian option's average-price payoff does not sit neatly at any one node, and with more than one or two underlying assets, where the number of nodes explodes combinatorially.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "e6",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "e6s1", "text": "Finite Difference Methods: The Recap", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "e7",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "e7s1", "text": "A finite difference method takes the Black-Scholes pricing equation directly and solves it on a grid spanning a whole range of stock prices and time steps at once, rather than following one branching lattice. Like a tree, it checks for early exercise at every grid point, so American options fit just as naturally. Its distinctive advantage is that one solve hands back the option's price across an entire range of spot prices simultaneously, which is exactly the neighbouring information needed to read off Greeks like delta and gamma almost for free. It shares the tree's weakness against high dimensionality, a grid for two underlying assets is a surface, for three it is a cube, and it only gets heavier from there.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "e8",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "e8s1", "text": "Monte Carlo Simulation: A Preview", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "e9",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "e9s1", "text": "Monte Carlo takes a different route entirely. Instead of building one lattice or one grid, it simulates thousands of random price paths forward under the same risk-neutral logic from Lesson 2, then averages the discounted payoff across all of them. Because each simulated path is generated independently, adding more underlying assets just means drawing more random numbers per path, not building an exponentially larger structure, which is exactly why Monte Carlo is the standard choice for path-dependent and multi-asset payoffs. Its natural weakness is American exercise, there is no simple backward-induction step along a forward-simulated path, so pricing American options with Monte Carlo needs extra machinery, most commonly a regression-based technique called Longstaff-Schwartz. This platform's dedicated Monte Carlo simulation course builds the method in full, including that machinery. Here, the point is only to see where it fits on the map.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "e10",
+              "caption": "The three methods, side by side",
+              "headers": ["Dimension", "Binomial Tree", "Finite Difference", "Monte Carlo"],
+              "rows": [
+                { "cells": ["Handles American exercise", "Naturally, at every node", "Naturally, at every grid point", "Only with extra techniques like Longstaff-Schwartz"] },
+                { "cells": ["Handles path-dependent payoffs", "Awkward, needs modification", "Awkward, needs modification", "Naturally, the whole path is already simulated"] },
+                { "cells": ["Scales to many underlying assets", "Poorly, nodes grow combinatorially", "Poorly, the grid grows combinatorially", "Well, cost grows roughly linearly with assets"] },
+                { "cells": ["Typical desk use", "Fast American-style vanilla quoting", "Vanilla books needing Greeks across many strikes at once", "Exotic, multi-asset, and path-dependent structured products"] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "e11",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "e11s1", "text": "How Real Desks Actually Choose", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "e12",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "e12s1", "text": "A market maker quoting American-style options on global names thousands of times a second reaches for a fast tree, or a closed-form approximation of one, because speed and early exercise both matter and the payoff is plain vanilla. A risk desk marking a large vanilla options book overnight often prefers finite difference, since one grid solve yields prices and Greeks across a whole range of strikes and spots in a single pass. A structured products desk building a 3-year autocallable note linked to the worst performer among five different Nifty stocks, the kind of product sold through Indian private banking channels, has no real alternative to Monte Carlo, the payoff is both multi-asset and path-dependent, exactly where trees and finite difference grids buckle under their own combinatorial weight.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "e13",
+              "variant": "quiz",
+              "title": "Quick Check",
+              "question": "A structured products desk needs to price a 3-year note whose payoff depends on the average of five different Nifty stocks' prices observed monthly, with a knock-out barrier if any single stock ever closes below 60% of its starting value. Which method is the natural fit?",
+              "options": [
+                "A binomial tree, since it handles American exercise well",
+                "A finite difference grid, since it computes Greeks efficiently",
+                "Monte Carlo simulation, since the payoff is both multi-asset and path-dependent",
+                "Black-Scholes, since a closed-form price always exists"
+              ],
+              "correctIndex": 2,
+              "explanation": "This payoff has two features that specifically favour Monte Carlo: it depends on multiple underlying assets, five stocks, and it depends on the path each one takes, both the monthly averaging and the knock-out barrier care about more than just the terminal price. Trees and finite difference grids scale poorly once more than a couple of underlying assets are involved, while Monte Carlo's cost grows only roughly linearly with the number of assets simulated."
+            },
+            {
+              "_type": "exercise",
+              "_key": "e14",
+              "variant": "scenario",
+              "title": "Picking a Method Under Time Pressure",
+              "scenario": "A prop trading desk needs live, continuously updating quotes for American-style equity options on a handful of large-cap global names, refreshed many times per second throughout the trading day.",
+              "prompt": "Which of the three methods would you reach for first, and what about this specific requirement rules out the other two?",
+              "modelAnswer": "A binomial tree, or a fast closed-form approximation built on the same idea, is the natural fit. The requirement is speed under a tight refresh cycle, on a plain vanilla, single-asset, American-exercise payoff, exactly what trees are built for and computationally cheap at. Monte Carlo is a poor fit here, since simulating thousands of paths per quote, refreshed many times a second, is far too slow, and its natural strengths, path dependence and many assets, aren't needed for this payoff at all. Finite difference would work correctly but is typically more computational overhead than necessary for a single-asset, single-strike quote refreshed this often, its real advantage, getting a whole range of strikes and Greeks from one solve, isn't being used here either."
+            },
+            {
+              "_type": "callout",
+              "_key": "e15",
+              "type": "insight",
+              "text": "This is also exactly why this course builds trees and finite difference methods first, and why it leaves Monte Carlo to its own dedicated course rather than folding it in here. American exercise is the one weakness Monte Carlo cannot handle without extra machinery, and it is the exact weakness Black-Scholes has in Lesson 1. Trees and finite difference methods are the most direct, most PDE-grounded way to close that specific gap, and PDE-based thinking, solving the Black-Scholes equation on a grid, is also the foundation most other advanced option pricing models in quantitative finance build on next."
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "e16",
+              "text": "No numerical method wins on every axis at once. Trees and finite difference methods win on American exercise and PDE-grounded thinking, the two things this course is built to teach. Monte Carlo wins on path dependence and multiple assets, which is exactly why it gets a course of its own."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "e17",
+              "points": [
+                "Every numerical method trades off accuracy, speed, ease of handling early exercise, and ease of handling exotic or multi-asset payoffs. None wins on all four.",
+                "Binomial trees and finite difference methods both check for early exercise naturally, at every node or grid point, but both scale poorly as the number of underlying assets grows.",
+                "Monte Carlo simulation handles path-dependent and multi-asset payoffs naturally and scales far better with more underlying assets, but needs extra machinery like Longstaff-Schwartz to handle American exercise at all.",
+                "Real desks pick a method to match the payoff: fast trees for vanilla American-style quoting, finite difference for vanilla books needing Greeks across many strikes, Monte Carlo for exotic, path-dependent, multi-asset structured products.",
+                "This course builds trees and finite difference methods because they close Black-Scholes's exact gap, American exercise, and because PDE-based thinking underlies most other advanced pricing models. Monte Carlo's own strengths are covered in this platform's dedicated course."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

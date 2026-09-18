@@ -1,0 +1,228 @@
+{
+  "courseSlug": "understanding-alternative-data-in-quantitative-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 8: Alternative Data in Practice: Indian Market Case Studies",
+      "lessons": [
+        {
+          "title": "Case Study: Satellite Data for Tracking Cement Demand and Retail Footfall in India",
+          "slug": "case-study-satellite-data-for-tracking-cement-demand-and-retail-footfall-in-india",
+          "body": [
+            {
+              "_key": "c8l1k001",
+              "_type": "bigIdea",
+              "text": "The famous parking lot story from Chapter 1 was built for a market of standalone big-box stores. India's retail geography is different, and this case study is about what breaks when you import a technique without checking the assumption underneath it."
+            },
+            {
+              "_key": "c8l1k002",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c8l1k002s1",
+                  "_type": "span",
+                  "text": "This chapter moves from pipeline mechanics into domain depth: real sectors, real format questions, and real limits on what a technique can and cannot see. This first case study covers two satellite applications from Chapter 2, cement plant monitoring and retail footfall, and shows why one translates cleanly to India while the other needs real adaptation.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c8l1k003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c8l1k003s1",
+                  "_type": "span",
+                  "text": "Cement: Reading Kiln Activity and Stockpiles From Orbit",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c8l1k004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c8l1k004s1",
+                  "_type": "span",
+                  "text": "India's listed cement sector, UltraTech Cement, Ambuja Cements, ACC, Shree Cement, and Dalmia Bharat among the larger names, runs energy-intensive kilns that operate at very high temperatures, hot enough to be clearly detectable using thermal or infrared satellite bands. A kiln running at full temperature looks distinctly different from an idle one, giving a physical, hard-to-fake read on whether a specific plant is actively producing, independent of anything the company chooses to disclose.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c8l1k005",
+              "_type": "table",
+              "caption": "Two distinct satellite signals for the same sector, needing different image types",
+              "headers": ["Signal", "What It Proxies", "Data Type Needed"],
+              "rows": [
+                {
+                  "_key": "c8l1k005r1",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Kiln thermal signature",
+                    "Whether a specific plant is actively operating or idle, a direct read on utilization",
+                    "Thermal or infrared imagery, since it detects heat rather than visible light"
+                  ]
+                },
+                {
+                  "_key": "c8l1k005r2",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Stockpile volume estimation",
+                    "Clinker and raw material inventory levels, via measuring pile height and footprint",
+                    "Optical imagery, processed using photogrammetry to estimate volume from pile shape"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c8l1k006",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Keeping the Signal Alive Through Monsoon",
+              "question": "Your desk wants continuous cement plant activity monitoring through India's June to September monsoon window, covered in Chapter 2. Optical stockpile imagery alone is a poor fit for this stretch. What is the correct adaptation?",
+              "options": [
+                "Simply stop monitoring during the monsoon and resume once it ends",
+                "Rely on SAR imagery, which sees through cloud cover, for continuous plant activity monitoring, since thermal detection through cloud has its own real limitations and may still need SAR-based supplementation",
+                "Switch entirely to social media sentiment about cement prices instead",
+                "Assume stockpile levels stay constant during monsoon and skip verification"
+              ],
+              "correctIndex": 1,
+              "explanation": "This is the exact SAR use case from Chapter 2: optical imagery loses reliability under monsoon cloud cover for weeks at a time, and a serious monitoring program needs a cloud-penetrating alternative to maintain continuous coverage through exactly the months when visibility matters most for tracking construction-linked demand."
+            },
+            {
+              "_key": "c8l1k007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c8l1k007s1",
+                  "_type": "span",
+                  "text": "Retail Footfall: Why the US Parking Lot Trick Doesn't Translate Directly",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c8l1k008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c8l1k008s1",
+                  "_type": "span",
+                  "text": "The famous parking lot counting technique from Chapter 1 works well precisely because a US big-box retailer typically occupies a standalone building with its own dedicated parking lot, so counting cars gives you a reasonably clean read on that one retailer's footfall. Much of Indian organized retail does not look like this. A large share of retail floor space sits inside multi-tenant shopping malls, where dozens of brands share one parking structure, and high-street stores often have no dedicated parking lot to observe at all.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c8l1k009",
+              "_type": "table",
+              "caption": "Format determines whether satellite footfall counting is even the right tool",
+              "headers": ["Indian Retail Format", "Satellite Footfall Applicability", "Why"],
+              "rows": [
+                {
+                  "_key": "c8l1k009r1",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Standalone hypermarket or supermarket",
+                    "Works reasonably well",
+                    "A dedicated parking lot, similar in structure to the US retailers the original technique was built around"
+                  ]
+                },
+                {
+                  "_key": "c8l1k009r2",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Mall-based store, such as many Trent or Shoppers Stop locations",
+                    "Confounded, needs real adaptation",
+                    "The parking lot serves every tenant in the mall, so raw car counts cannot be attributed to any single retailer without additional data"
+                  ]
+                },
+                {
+                  "_key": "c8l1k009r3",
+                  "_type": "tableRow",
+                  "cells": [
+                    "High-street store",
+                    "Essentially unusable",
+                    "No dedicated parking lot exists to observe, footfall arrives on foot, by two-wheeler, or via public transport with no equivalent countable proxy"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c8l1k010",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Deciding Whether Satellite Footfall Fits This Retailer",
+              "scenario": "A researcher proposes building a satellite parking lot signal for a fashion retail chain whose stores are split roughly evenly between standalone large-format outlets in newer suburban developments and mall-based locations in older, denser city centres.",
+              "prompt": "How would you scope this project so it produces a usable signal rather than a noisy, misleading one?",
+              "modelAnswer": "The project should be scoped only to the standalone large-format locations, treating the mall-based half of the chain as out of scope for this specific technique rather than forcing one signal across a mixed format base. Mixing confounded mall parking counts, which reflect every tenant's footfall, together with clean standalone counts would dilute and distort the resulting feature, likely producing a weaker, noisier signal than either dropping the mall locations entirely or, if mall footfall genuinely matters to the thesis, sourcing a separate signal for those specific stores, such as an anonymized geolocation panel from Chapter 2 rather than satellite parking counts. This is the six-dimension framework's breadth question in practice, a technique that cleanly covers half a company's footprint is not automatically wrong to use, but it must be sized and interpreted as a partial-coverage signal, not treated as if it represents the whole business."
+            },
+            {
+              "_key": "c8l1k011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c8l1k011s1",
+                  "_type": "span",
+                  "text": "Combining Both: A Sector Nowcasting Framework",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c8l1k012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c8l1k012s1",
+                  "_type": "span",
+                  "text": "Cement kiln activity and retail footfall answer different economic questions, industrial and construction-linked demand versus discretionary consumption, and desks often use both as macro nowcasting inputs across a portfolio rather than as single-stock signals. Neither one alone tells the whole growth story, but together they offer an early, physically grounded read on two very different parts of the Indian economy, well ahead of the official releases both ultimately feed into.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c8l1k013",
+              "_type": "callout",
+              "type": "insight",
+              "text": "A technique that worked brilliantly in one market is not a template to copy, it is a hypothesis to re-test against the specific structure of the market you are actually in. India's mixed retail formats are exactly the kind of local structural detail a purely imported playbook misses."
+            },
+            {
+              "_key": "c8l1k014",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "Companies named in this lesson illustrate sector examples only, and the scenario is a constructed teaching example, not analysis of any real company's actual store footprint. Nothing here is a recommendation to trade any security."
+            },
+            {
+              "_key": "c8l1k015",
+              "_type": "keyTakeaways",
+              "points": [
+                "Thermal or infrared satellite imagery can detect whether a cement kiln is actively operating, while optical imagery processed with photogrammetry estimates stockpile volumes, two distinct signals needing two distinct image types",
+                "Continuous cement plant monitoring through India's June to September monsoon needs SAR imagery, since optical coverage loses reliability under sustained cloud cover exactly when visibility matters most",
+                "The classic US parking lot footfall technique assumes standalone, single-tenant retail buildings, an assumption that does not hold for much of Indian organized retail",
+                "Mall-based Indian retail confounds satellite parking counts across every tenant sharing the lot, and high-street retail has no parking lot to observe at all",
+                "A mixed-format retailer's satellite footfall signal should be explicitly scoped to only the formats it actually covers well, treated as a partial-coverage signal rather than assumed to represent the whole business",
+                "Cement kiln activity and retail footfall serve as complementary macro nowcasting inputs, industrial demand and discretionary consumption, rather than a single unified signal"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

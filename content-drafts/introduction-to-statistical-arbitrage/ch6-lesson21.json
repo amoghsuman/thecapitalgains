@@ -1,0 +1,185 @@
+{
+  "courseSlug": "introduction-to-statistical-arbitrage",
+  "chapters": [
+    {
+      "title": "Chapter 6: Risk, Costs, and Why Backtests Lie",
+      "lessons": [
+        {
+          "title": "Stop-Losses and Structural Breaks: When a Pair Stops Working",
+          "slug": "stop-losses-and-structural-breaks-when-a-pair-stops-working",
+          "body": [
+            {
+              "_key": "sa21-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa21-001s1", "_type": "span", "marks": [], "text": "Lesson 14 gave you a precise, mechanical rule for when to cut a losing trade: exit if |z| crosses a stop-loss threshold like 3.5. That rule tells you when to get out. It says nothing about what to do next. A triggered stop-loss leaves exactly one open question: has this pair's relationship genuinely broken, or did it just have an unusually rough stretch that still reverts eventually? Getting that question wrong in either direction costs money." }
+              ]
+            },
+            {
+              "_key": "sa21-002",
+              "_type": "bigIdea",
+              "text": "A triggered stop-loss is a question, not an answer. It tells you the spread moved further than your rules expected. Only economic reasoning and a freshly re-run statistical test tell you whether that move reflects a permanent structural break or an unusually large, still-temporary stretch."
+            },
+            {
+              "_key": "sa21-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa21-003s1", "_type": "span", "marks": [], "text": "Five Ways a Relationship Actually Breaks" }
+              ]
+            },
+            {
+              "_key": "sa21-004",
+              "_type": "table",
+              "caption": "Common causes of a genuine, lasting structural break",
+              "headers": ["Cause", "Example from this course"],
+              "rows": [
+                { "_key": "sa21-004r1", "_type": "tableRow", "cells": ["Ownership change or M&A", "Lesson 12 flagged this directly: a future merger between ACC and Ambuja Cements would end that pair entirely, regardless of how the spread was behaving statistically"] },
+                { "_key": "sa21-004r2", "_type": "tableRow", "cells": ["Competitive disruption", "A new entrant taking structural market share from one company but not the other, the Birla Opus scenario Lesson 4 discussed for Asian Paints and Berger Paints"] },
+                { "_key": "sa21-004r3", "_type": "tableRow", "cells": ["Regulatory or policy divergence", "A rule change, tax treatment, or licensing shift that affects one company meaningfully more than its peer"] },
+                { "_key": "sa21-004r4", "_type": "tableRow", "cells": ["Business model divergence", "One company pivoting into a materially different business mix while its peer does not"] },
+                { "_key": "sa21-004r5", "_type": "tableRow", "cells": ["Persistent fundamental re-rating", "One company's growth or margin profile structurally improving relative to the other, the correlated-but-not-cointegrated scenario Lesson 9 used for two large IT majors"] }
+              ]
+            },
+            {
+              "_key": "sa21-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa21-005s1", "_type": "span", "marks": [], "text": "Signs a Move Is Probably Temporary, Not Permanent" }
+              ]
+            },
+            {
+              "_key": "sa21-006",
+              "_type": "comparison",
+              "title": "Reading a Large Deviation",
+              "columns": [
+                {
+                  "_key": "sa21-006c1",
+                  "label": "Leans Temporary",
+                  "points": [
+                    "A single, dateable news event with no lasting change to either business (Lesson 8's channel destocking commentary)",
+                    "The shared economic story connecting the two companies is still intact",
+                    "Peers and analysts are treating it as a one-off, not a re-rating",
+                    "The move is large but roughly proportionate to past one-off shocks this pair has absorbed before"
+                  ]
+                },
+                {
+                  "_key": "sa21-006c2",
+                  "label": "Leans Permanent",
+                  "points": [
+                    "A named structural change: a merger, a new entrant, a regulatory shift, a strategy pivot",
+                    "The reason for the move, if true, would also explain why it should NOT be expected to reverse",
+                    "The move is materially larger than any past one-off shock in the pair's history",
+                    "Multiple quarters of consistent divergence, not one isolated data point"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "sa21-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa21-007s1", "_type": "span", "marks": [], "text": "The Right Next Step: Re-Test, Don't Guess" }
+              ]
+            },
+            {
+              "_key": "sa21-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa21-008s1", "_type": "span", "marks": [], "text": "The honest way to resolve the question is to extend the price history to include the period around the stop-loss, and re-run the Engle-Granger cointegration test from Lesson 11 on that updated data. If the pair still tests as cointegrated, including the stretch that triggered the stop-loss, that is real evidence the move was a temporary, if unusually large, deviation within a relationship that is still intact. If the test now fails where it previously passed, that is evidence the relationship itself has changed, not just the spread's current value." }
+              ]
+            },
+            {
+              "_key": "sa21-009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa21-009s1", "_type": "span", "marks": [], "text": "The Cost of Being Wrong Either Way" }
+              ]
+            },
+            {
+              "_key": "sa21-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa21-010s1", "_type": "span", "marks": [], "text": "Treating a genuine structural break as temporary and re-entering compounds a loss that was never going to revert. Treating a temporary stretch as permanent and abandoning a sound pair gives up a legitimate reversion that would have paid off. Neither mistake is free, which is why the default, given real capital is at risk, should lean cautious: require the re-tested statistical evidence and a clear economic story before re-entering, rather than re-entering on the hope that the old pattern simply resumes." }
+              ]
+            },
+            {
+              "_key": "sa21-011",
+              "_type": "table",
+              "caption": "Two ways to get this wrong",
+              "headers": ["Mistake", "Consequence"],
+              "rows": [
+                { "_key": "sa21-011r1", "_type": "tableRow", "cells": ["Treating a real break as temporary", "Re-entering (or holding) a position that has no real reason to revert, compounding the original loss"] },
+                { "_key": "sa21-011r2", "_type": "tableRow", "cells": ["Treating a temporary stretch as a real break", "Abandoning a genuinely sound pair, giving up a legitimate future reversion"] }
+              ]
+            },
+            {
+              "_key": "sa21-012",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Genuine break, or an unusually large stretch?",
+              "scenario": "A pairs trade on two large private banks stops out when their spread's z-score hits 3.8. Digging in, you find the trigger was a single quarter where one bank's provisions spiked due to a one-off, disclosed exposure to a specific stressed corporate account, with no change to its underlying retail franchise, funding cost, or competitive position.",
+              "prompt": "Based on this lesson's framework, would you lean toward calling this temporary or permanent, and what would you check before deciding either way?",
+              "modelAnswer": "This leans temporary: a single, dateable, disclosed one-off provisioning event, with no change to the bank's actual competitive position or business mix, is exactly the kind of shock that tends to fade rather than compound. Before deciding, you would still want to extend the data through this event and re-run the Engle-Granger test to confirm the relationship still tests as cointegrated, rather than relying on the economic story alone."
+            },
+            {
+              "_key": "sa21-013",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Break or stretch?",
+              "question": "A pairs trade's spread stops out after one company announces it is being fully acquired and delisted by its larger competitor, the other leg of the pair. What should happen to this pair going forward?",
+              "options": [
+                "Wait for the z-score to revert and re-enter as usual",
+                "Treat this as a permanent structural break; one leg of the pair is ceasing to exist as an independently traded security, so there is no pair left to trade",
+                "Widen the stop-loss threshold and hold the position",
+                "Re-run the correlation calculation and ignore the cointegration test"
+              ],
+              "correctIndex": 1,
+              "explanation": "A full acquisition and delisting of one leg is about as unambiguous a structural break as exists. There is no future price series for that stock to revert against, so the pair itself has ended, regardless of what any spread or z-score calculation might otherwise suggest."
+            },
+            {
+              "_key": "sa21-014",
+              "_type": "flashcardSet",
+              "title": "Structural Breaks: Core Terms",
+              "cards": [
+                { "_key": "sa21-014f1", "term": "Structural break", "definition": "A genuine, lasting change in the relationship between two securities, after which their historical relationship no longer applies." },
+                { "_key": "sa21-014f2", "term": "One-off shock", "definition": "A dateable, temporary event affecting one company's results or price without changing its underlying business, competitive position, or relationship to its pair." },
+                { "_key": "sa21-014f3", "term": "Re-test, don't guess", "definition": "The practice of re-running a formal cointegration test on extended data after a suspected structural break, rather than deciding based on economic reasoning or a chart alone." }
+              ]
+            },
+            {
+              "_key": "sa21-015",
+              "_type": "keyTakeaways",
+              "points": [
+                "A triggered stop-loss (Lesson 14) tells you the spread moved further than expected. It does not tell you whether the relationship has genuinely broken or just had an unusually large, temporary stretch.",
+                "Real structural breaks tend to have a name: an ownership change or merger, a competitive disruption, a regulatory shift, a business model pivot, or a persistent fundamental re-rating.",
+                "Signs favoring \"temporary\" include a single dateable event, an intact shared economic story, and a move proportionate to past one-off shocks. Signs favoring \"permanent\" include a named structural cause and a move well beyond anything the pair has absorbed before.",
+                "The right next step is to extend the data and re-run the Engle-Granger cointegration test from Lesson 11, rather than deciding from economic reasoning or a chart alone.",
+                "Given real capital is at risk, the sensible default after a stop-loss is caution: require fresh statistical confirmation and a clear economic story before re-entering a pair that has just stopped out."
+              ]
+            },
+            {
+              "_key": "sa21-016",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice. All scenarios referencing specific securities in this lesson are illustrative or hypothetical, as noted where they first appear in earlier lessons. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

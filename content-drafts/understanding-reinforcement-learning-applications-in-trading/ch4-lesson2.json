@@ -1,0 +1,237 @@
+{
+  "courseSlug": "understanding-reinforcement-learning-applications-in-trading",
+  "chapters": [
+    {
+      "title": "Chapter 4: Training the Agent",
+      "lessons": [
+        {
+          "title": "Reading Training Curves: Loss, Reward, and Knowing When a Policy Has Actually Learned Something",
+          "slug": "reading-training-curves-loss-reward-and-knowing-when-a-policy-has-actually-learned-something",
+          "body": [
+            {
+              "_key": "rl4l2b01",
+              "_type": "bigIdea",
+              "text": "A training run that finishes without crashing has told you nothing yet. The curves it produced along the way are the only honest record of whether the agent learned something real, and reading them correctly means knowing which curve to trust and which patterns are normal noise versus a genuine warning sign."
+            },
+            {
+              "_key": "rl4l2b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl4l2b02s1", "_type": "span", "text": "What SB3 Actually Logs During Training", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl4l2b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl4l2b03s1",
+                  "_type": "span",
+                  "text": "Stable-Baselines3 logs training progress in a format TensorBoard, a standard visualization tool from the PyTorch and TensorFlow ecosystem, can read directly. Passing a tensorboard_log path when constructing the model, and later pointing TensorBoard at that path, gives a live view of exactly what training is doing, moment to moment, rather than waiting for model.learn() to finish before finding out whether anything useful happened.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl4l2b04",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "model = DQN(\n    \"MlpPolicy\",\n    env,\n    tensorboard_log=\"./tb_logs/\",\n    verbose=1,\n)\nmodel.learn(total_timesteps=200_000)\n\n# In a separate terminal, while training runs or afterward:\n# tensorboard --logdir ./tb_logs/",
+              "caption": "TensorBoard opens a local dashboard in the browser showing every metric SB3 logs, updated live if launched while training is still running."
+            },
+            {
+              "_key": "rl4l2b05",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl4l2b05s1", "_type": "span", "text": "Reading the Episode Reward Curve", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl4l2b06",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl4l2b06s1",
+                  "_type": "span",
+                  "text": "The single most important curve to watch is rollout/ep_rew_mean, the average total reward per episode over a recent window of episodes. A genuinely learning agent shows a reward curve that is noisy, since markets and epsilon-driven exploration are both noisy, but trends upward over the course of training and eventually plateaus, rather than continuing to climb without bound or staying flat from the very first episode.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl4l2b07",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Episode Reward Mean Over Training (Illustrative)",
+              "xAxisLabel": "Training Steps (thousands)",
+              "yAxisLabel": "Mean Episode Reward (₹)",
+              "data": [
+                { "_key": "rl4l2b07d1", "label": "0", "value": -1800 },
+                { "_key": "rl4l2b07d2", "label": "25", "value": -1200 },
+                { "_key": "rl4l2b07d3", "label": "50", "value": -400 },
+                { "_key": "rl4l2b07d4", "label": "75", "value": 100 },
+                { "_key": "rl4l2b07d5", "label": "100", "value": 350 },
+                { "_key": "rl4l2b07d6", "label": "125", "value": 500 },
+                { "_key": "rl4l2b07d7", "label": "150", "value": 580 },
+                { "_key": "rl4l2b07d8", "label": "175", "value": 610 },
+                { "_key": "rl4l2b07d9", "label": "200", "value": 600 }
+              ]
+            },
+            {
+              "_key": "rl4l2b08",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl4l2b08s1",
+                  "_type": "span",
+                  "text": "A flat curve from the very first episode onward, never rising above whatever a random policy achieves, usually means something upstream is broken, a reward scale so large or small the network struggles to learn from it, a learning rate set far too low, or a bug in how the state is constructed, rather than a strategy that genuinely has no learnable edge. An ever-climbing curve that never plateaus is its own warning sign, worth treating with the same suspicion Chapter 1 applied to a backtest with no stress period in it: it may reflect the agent exploiting some quirk of this specific training data rather than learning something that generalizes.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl4l2b09",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl4l2b09s1", "_type": "span", "text": "Reading the Loss Curve, and Why It Behaves Differently From Supervised Learning", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl4l2b10",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl4l2b10s1",
+                  "_type": "span",
+                  "text": "The loss curve, train/loss in SB3's logs, behaves differently from what supervised learning experience teaches. In supervised learning, a falling loss is the success signal. In DQN, the loss is the squared distance between the network's current Q-value estimate and a target that itself depends on the same network, the θ⁻ target from the previous lesson's loss formula, which only updates periodically. Because the target keeps shifting as the network and the target network change, DQN's loss does not need to trend cleanly toward zero the way a supervised loss does, and treating a noisy or flat loss curve as automatic failure is a common, avoidable misread.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl4l2b11",
+              "_type": "callout",
+              "type": "insight",
+              "text": "In supervised learning, loss decreasing is the success signal. In RL, reward increasing is the success signal, and loss is more of a diagnostic than a target. Don't panic if DQN's loss curve looks noisy or fails to trend cleanly downward, that alone does not mean training has failed. Investigate if the reward curve stays flat."
+            },
+            {
+              "_key": "rl4l2b12",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl4l2b12s1", "_type": "span", "text": "Catastrophic Forgetting and Reward Collapse Mid-Training", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl4l2b13",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl4l2b13s1",
+                  "_type": "span",
+                  "text": "A reward curve that looks healthy for a long stretch and then collapses mid-training points at a different problem than anything Chapter 1 covered. Chapter 1 warned about markets being non-stationary, the statistical relationships an agent learns can stop holding as the market's regime changes. There is a second, unrelated kind of non-stationarity specific to training itself: as the agent's policy improves, the distribution of states and actions it generates changes too, since a better policy visits different situations than a worse one did. A network that overfit to the states an earlier, weaker policy visited can see performance collapse once its own improved behavior starts generating a meaningfully different distribution of experience, a phenomenon usually called catastrophic forgetting.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl4l2b14",
+              "_type": "table",
+              "caption": "Two Different Things That Are Both Called \"Non-Stationarity\"",
+              "headers": ["", "Market Non-Stationarity (Chapter 1)", "Training-Time Non-Stationarity (This Lesson)"],
+              "rows": [
+                { "_key": "rl4l2b14r1", "_type": "tableRow", "cells": ["What changes", "The market's own statistical regime, independent of the agent", "The distribution of states the agent's own improving policy generates"] },
+                { "_key": "rl4l2b14r2", "_type": "tableRow", "cells": ["When it bites", "Live deployment, or any backtest period spanning multiple regimes", "During training itself, sometimes visible as a sudden reward collapse"] },
+                { "_key": "rl4l2b14r3", "_type": "tableRow", "cells": ["What it looks like", "A policy that worked in backtesting degrades once deployed into a new regime", "A reward curve that rises promisingly, then drops sharply mid-training"] },
+                { "_key": "rl4l2b14r4", "_type": "tableRow", "cells": ["Primary defense", "Regime-diverse training data, out-of-distribution monitoring (Chapter 1)", "Target networks, replay buffers, and monitoring the reward curve for sudden collapse rather than assuming it only ever goes up"] }
+              ]
+            },
+            {
+              "_key": "rl4l2b15",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl4l2b15s1", "_type": "span", "text": "Deciding When to Stop Training", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl4l2b16",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl4l2b16s1",
+                  "_type": "span",
+                  "text": "A reward curve that has plateaued is a hint training may be done, but plateauing on the same environment instance the agent trained on says nothing about whether that plateau reflects a genuinely good policy or a well-memorized training set, the exact concern the previous lesson's closing warning raised. Stable-Baselines3's EvalCallback addresses this directly, by periodically pausing training to evaluate the current policy on a separate environment instance and saving whichever version scored best there, rather than simply keeping whatever the final training step happened to produce.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl4l2b17",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "from stable_baselines3.common.callbacks import EvalCallback\n\neval_env = NiftyFuturesEnv(a_different_days_minute_bars)  # not the training data\n\neval_callback = EvalCallback(\n    eval_env,\n    best_model_save_path=\"./best_model/\",\n    eval_freq=10_000,\n    n_eval_episodes=5,\n    deterministic=True,\n)\n\nmodel.learn(total_timesteps=200_000, callback=eval_callback)",
+              "caption": "eval_env is built from different data than the training environment, a deliberate first step toward the held-out evaluation the next lesson develops in full. eval_freq controls how often, in training steps, this held-out check runs; best_model_save_path keeps the checkpoint that performed best there, not necessarily the last one produced."
+            },
+            {
+              "_key": "rl4l2b18",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Interpreting a Mid-Training Reward Collapse",
+              "scenario": "A researcher's DQN training run shows a reward curve that climbs steadily for the first 100,000 timesteps, plateaus around a healthy-looking level for another 20,000, then drops sharply and never recovers for the remaining 80,000 timesteps of a planned 200,000-timestep run.",
+              "prompt": "Name two plausible explanations for this pattern, one related to training dynamics and one related to the training data itself, and how you would start to distinguish between them.",
+              "modelAnswer": "One plausible explanation is training-time non-stationarity, catastrophic forgetting: as the policy improved and began visiting a different distribution of states than it did early in training, the network's earlier learning was disrupted by this shift, a dynamic internal to the training process itself. A second, unrelated explanation is that the training data spans a genuine regime change, for example if the training period happens to include a shift from a calm to a volatile stretch partway through, and the reward collapse reflects the agent's policy genuinely no longer fitting the new regime, closer to the market non-stationarity Chapter 1 described than to a training artifact. A first step to distinguish between them is checking whether the collapse timing lines up with any actual change in the underlying training data's volatility or trend; if it does, regime change in the data is the more likely explanation, and if the collapse happens with no such change in the data itself, training-time instability is the more likely cause, and lowering the learning rate or adjusting the target network update frequency would be the more relevant fix."
+            },
+            {
+              "_key": "rl4l2b19",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Reading Loss vs Reward",
+              "question": "A DQN training run shows a reward curve rising steadily and plateauing at a healthy level, while the loss curve stays noisy throughout and never trends cleanly toward zero. What is the most accurate read of this training run?",
+              "options": [
+                "Training has failed, since a healthy training run should show loss decreasing toward zero",
+                "The results are contradictory and cannot be interpreted without more information",
+                "This is a plausible sign of successful training; in DQN, the loss target itself shifts as the network and target network change, so a noisy loss alongside a rising, plateauing reward curve is consistent with the agent genuinely learning",
+                "The reward curve should be ignored entirely; only the loss curve matters for judging RL training"
+              ],
+              "correctIndex": 2,
+              "explanation": "Reward, not loss, is RL's primary success signal, and DQN's loss is calculated against a target that shifts as training progresses, so it is not expected to behave like a supervised learning loss converging toward zero. A rising, plateauing reward curve alongside a noisy loss curve is a normal, even expected pattern for successful DQN training, not a contradiction."
+            },
+            {
+              "_key": "rl4l2b20",
+              "_type": "keyTakeaways",
+              "points": [
+                "TensorBoard, enabled via tensorboard_log, gives a live view of training metrics rather than waiting for model.learn() to finish to find out whether anything useful happened",
+                "The episode reward curve (rollout/ep_rew_mean) is RL's primary success signal: it should be noisy but trend upward and plateau, not stay flat from the start or climb without bound",
+                "DQN's loss curve behaves differently from supervised learning; because the training target itself shifts as the network and target network change, a noisy or non-monotonic loss does not by itself indicate failed training",
+                "Training-time non-stationarity, the distribution of states an improving policy visits changing as it improves, is a distinct phenomenon from the market non-stationarity Chapter 1 covered, and can produce a mid-training reward collapse with no market regime change involved at all",
+                "EvalCallback periodically evaluates the current policy on a separate environment instance and saves the best-scoring checkpoint there, a first step toward the held-out evaluation the next lesson develops in full",
+                "A plateaued reward curve on the training environment alone says nothing about whether the underlying policy generalizes; that question is exactly what held-out evaluation, covered next, is built to answer"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

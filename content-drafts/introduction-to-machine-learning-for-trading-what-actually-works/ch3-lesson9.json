@@ -1,0 +1,194 @@
+{
+  "courseSlug": "introduction-to-machine-learning-for-trading-what-actually-works",
+  "chapters": [
+    {
+      "title": "Chapter 3: Models That Are Actually Used in Practice",
+      "lessons": [
+        {
+          "title": "Linear Models and Why They Are Still Competitive",
+          "slug": "linear-models-and-why-they-are-still-competitive",
+          "body": [
+            {
+              "_key": "mlt9-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt9-001s1", "_type": "span", "marks": [], "text": "When quant analyst aspirants picture 'machine learning for trading,' they picture gradient boosting or deep neural networks. Few picture linear regression, the technique taught in a first-year statistics course. Yet on real desks, especially for return-magnitude and direction models on noisy daily data, a well-regularized linear model is often the first thing tried, and often genuinely hard to beat with anything fancier. This has nothing to do with laziness. It has everything to do with how noisy financial data actually is, the point Lesson 7 made about out-of-sample R-squared sitting in the low single digits even for a genuinely useful model." }
+              ]
+            },
+            {
+              "_key": "mlt9-002",
+              "_type": "bigIdea",
+              "text": "In a low signal-to-noise environment like daily market returns, a linear model's limited flexibility is a feature, not a limitation. It cannot bend itself around the noise nearly as easily as a more flexible model can, which is exactly why linear models remain genuinely competitive in trading, decades after they stopped being the newest technique available."
+            },
+            {
+              "_key": "mlt9-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt9-003s1", "_type": "span", "marks": [], "text": "What a Linear Model Actually Does Here" }
+              ]
+            },
+            {
+              "_key": "mlt9-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt9-004s1", "_type": "span", "marks": [], "text": "For a return-magnitude target, from Lesson 7, linear regression predicts the forward return as a weighted sum of features, each feature gets a coefficient describing how much it moves the prediction. For a direction target, logistic regression wraps that same weighted sum in a sigmoid function, turning it into a probability between 0 and 1 that the move will be 'up' rather than 'down'. Both are still, structurally, linear models: everything happens through one weighted combination of the input features, with no hidden layers and no branching decision rules." }
+              ]
+            },
+            {
+              "_key": "mlt9-005",
+              "_type": "mathBlock",
+              "caption": "Linear regression for a return-magnitude target",
+              "latex": "\\hat{r}_{t+1} = \\beta_0 + \\beta_1 x_{1,t} + \\beta_2 x_{2,t} + \\dots + \\beta_n x_{n,t}"
+            },
+            {
+              "_key": "mlt9-006",
+              "_type": "mathBlock",
+              "caption": "Logistic regression for a direction target: the same weighted sum, passed through a sigmoid",
+              "latex": "P(\\text{up}_{t+1} = 1) = \\frac{1}{1 + e^{-(\\beta_0 + \\beta_1 x_{1,t} + \\dots + \\beta_n x_{n,t})}}"
+            },
+            {
+              "_key": "mlt9-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt9-007s1", "_type": "span", "marks": [], "text": "Regularization: Ridge and Lasso" }
+              ]
+            },
+            {
+              "_key": "mlt9-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "mlt9-008m1", "_type": "glossaryTerm", "definition": "A technique that shrinks a model's coefficients to reduce overfitting, penalizing large coefficient values during training instead of leaving the model free to fit them however it wants." }
+              ],
+              "children": [
+                { "_key": "mlt9-008s1", "_type": "span", "marks": [], "text": "Plain linear regression, fit with no constraints, tends to struggle once your feature set from Lesson 6 grows, momentum over 5, 10, and 20 days is highly correlated feature to feature, and plain regression can respond to that correlation with wildly unstable coefficients that swing between refits without any real change in the underlying pattern. " },
+                { "_key": "mlt9-008s2", "_type": "span", "marks": ["mlt9-008m1"], "text": "Regularization" },
+                { "_key": "mlt9-008s3", "_type": "span", "marks": [], "text": " fixes this by penalizing large coefficients during fitting. Ridge regression, also called L2 regularization, shrinks every coefficient toward zero without usually setting any of them exactly to zero, useful when you believe most of your features carry at least some real signal. Lasso regression, L1 regularization, can shrink some coefficients to exactly zero, effectively removing those features from the model entirely, which acts as automatic feature selection when you suspect several of your candidate features are actually irrelevant." }
+              ]
+            },
+            {
+              "_key": "mlt9-009",
+              "_type": "table",
+              "caption": "Ridge vs Lasso",
+              "headers": ["Regularization", "What It Does", "Best When"],
+              "rows": [
+                { "_key": "mlt9-009r1", "cells": ["Ridge (L2)", "Shrinks all coefficients toward zero, rarely to exactly zero", "You believe most features carry some real signal, and features are correlated"] },
+                { "_key": "mlt9-009r2", "cells": ["Lasso (L1)", "Can shrink some coefficients to exactly zero", "You suspect several candidate features are irrelevant and want automatic selection"] }
+              ]
+            },
+            {
+              "_key": "mlt9-010",
+              "_type": "codeBlock",
+              "language": "python",
+              "caption": "Fitting Ridge and Lasso on the Chapter 2 feature set",
+              "code": "from sklearn.linear_model import RidgeCV, LassoCV\n\n# alphas control how strongly coefficients are shrunk; CV picks the best one\n# using only the training data, never the test set (the Lesson 6 scaler discipline applies here too)\nridge = RidgeCV(alphas=[0.01, 0.1, 1.0, 10.0])\nridge.fit(X_train_scaled, y_train)\n\nlasso = LassoCV(alphas=[0.001, 0.01, 0.1, 1.0])\nlasso.fit(X_train_scaled, y_train)\n\n# Lasso often zeroes out several coefficients entirely\nprint(dict(zip(feature_names, lasso.coef_)))"
+            },
+            {
+              "_key": "mlt9-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt9-011s1", "_type": "span", "marks": [], "text": "Interpretability: Knowing Why, Not Just What" }
+              ]
+            },
+            {
+              "_key": "mlt9-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt9-012s1", "_type": "span", "marks": [], "text": "If a Ridge model assigns a coefficient of -0.006 to dist_from_ma20, that has a plain-English meaning: holding the other features constant, being one standard deviation further above the 20-day moving average is associated with roughly a 0.6 percentage point lower predicted next-day return, a mean-reversion pattern you can state out loud and sanity check against what you already know about a stock. A gradient boosting or neural network model, covered in the next two lessons, rarely offers this directly. Interpretability is not just a nice-to-have for a report; a coefficient that flips sign wildly between refits is itself a warning sign that a 'pattern' is actually noise, exactly the kind of signal a black-box model would hide from you." }
+              ]
+            },
+            {
+              "_key": "mlt9-013",
+              "_type": "callout",
+              "type": "insight",
+              "text": "A linear model on noisy daily return data will not deliver a high R-squared, Lesson 7 already set that expectation. What it can deliver is a stable, explainable coefficient that behaves consistently across different time windows, which is often more useful evidence of a genuine, tradeable pattern than a marginally higher accuracy number from a model you cannot interrogate."
+            },
+            {
+              "_key": "mlt9-014",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt9-014s1", "_type": "span", "marks": [], "text": "Where Linear Models Fall Short" }
+              ]
+            },
+            {
+              "_key": "mlt9-015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt9-015s1", "_type": "span", "marks": [], "text": "A plain linear model cannot capture an interaction it was not explicitly given. Suppose momentum genuinely predicts returns more reliably during calm, low-volatility periods and far less reliably during turbulent ones, a real and plausible pattern. A linear model with momentum and volatility as separate features cannot represent this interaction at all unless you manually construct a momentum-times-volatility feature and add it yourself. Tree-based models, the subject of the next lesson, can discover interactions like this automatically, without you needing to guess which combinations of features might matter together in advance." }
+              ]
+            },
+            {
+              "_key": "mlt9-016",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Ridge or Lasso?",
+              "question": "A researcher has 40 candidate features, many of them variations on the same idea, momentum measured over 3, 5, 10, 15, and 20 day windows, and strongly suspects that only a handful of genuinely distinct ideas are driving any real signal. Which regularization approach directly supports automatically narrowing down to those features?",
+              "options": [
+                "Ridge (L2), because it removes correlated features entirely",
+                "Lasso (L1), because it can shrink irrelevant or redundant coefficients exactly to zero, acting as automatic feature selection",
+                "Neither, regularization cannot help with feature selection",
+                "Both are identical in how they handle this situation"
+              ],
+              "correctIndex": 1,
+              "explanation": "Lasso's defining property is that it can push some coefficients exactly to zero, effectively dropping those features from the model. This matches a situation where the researcher suspects many candidate features are redundant or irrelevant. Ridge shrinks coefficients too, but rarely all the way to zero, so it keeps every feature in the model in some reduced form."
+            },
+            {
+              "_key": "mlt9-017",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "A coefficient that keeps flipping sign",
+              "scenario": "A trader refits a Ridge regression model on Nifty 50 stock data every month using a rolling 2-year training window. The coefficient on a relative-volume feature is positive in some months and negative in others, with no obvious pattern to when it flips.",
+              "prompt": "What does this instability most likely tell the trader about the relative-volume feature, and how should it change the trader's confidence in using it?",
+              "modelAnswer": "A coefficient that flips sign across refits, with no obvious underlying pattern, is a strong signal that the model is not capturing a genuine, stable relationship for that feature, it is more likely fitting noise that happens to look like a pattern within each individual training window. This should lower the trader's confidence in relying on relative volume as a standalone predictive feature, and would be a good candidate to investigate further, perhaps by checking whether it only matters in combination with another feature, or by treating it cautiously until it shows a consistent sign across many refits."
+            },
+            {
+              "_key": "mlt9-018",
+              "_type": "flashcardSet",
+              "title": "Linear Models: Core Terms",
+              "cards": [
+                { "_key": "mlt9-018f1", "term": "Linear regression", "definition": "A model that predicts a continuous target as a weighted sum of input features, used here for return-magnitude targets." },
+                { "_key": "mlt9-018f2", "term": "Logistic regression", "definition": "A linear model that passes a weighted sum of features through a sigmoid function to output a probability, used here for direction targets." },
+                { "_key": "mlt9-018f3", "term": "Regularization", "definition": "A technique that shrinks a model's coefficients to reduce overfitting, penalizing large coefficient values during training." },
+                { "_key": "mlt9-018f4", "term": "Ridge regression (L2)", "definition": "A regularized linear model that shrinks all coefficients toward zero, rarely setting any exactly to zero." },
+                { "_key": "mlt9-018f5", "term": "Lasso regression (L1)", "definition": "A regularized linear model that can shrink some coefficients exactly to zero, acting as automatic feature selection." }
+              ]
+            },
+            {
+              "_key": "mlt9-019",
+              "_type": "keyTakeaways",
+              "points": [
+                "In a low signal-to-noise environment like daily market returns, a linear model's limited flexibility helps it avoid overfitting to noise, which is why linear models remain genuinely competitive in trading.",
+                "Linear regression predicts a return-magnitude target directly; logistic regression wraps the same weighted sum in a sigmoid to predict a probability for a direction target.",
+                "Ridge (L2) shrinks all coefficients toward zero and handles correlated features well. Lasso (L1) can shrink some coefficients to exactly zero, acting as automatic feature selection.",
+                "A linear model's coefficients are directly interpretable, and a coefficient that flips sign unpredictably across refits is itself a useful warning sign that a feature may be capturing noise rather than a real pattern.",
+                "A plain linear model cannot capture an interaction between features unless it is explicitly engineered in, which motivates tree-based models, covered next, for automatically discovering such interactions."
+              ]
+            },
+            {
+              "_key": "mlt9-020",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice. Code and formulas are simplified for illustration and are not production-ready. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

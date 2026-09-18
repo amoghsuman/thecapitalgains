@@ -1,0 +1,270 @@
+{
+  "courseSlug": "understanding-multi-asset-systematic-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 2: Understanding the Asset Classes You're Trading",
+      "lessons": [
+        {
+          "title": "Commodities on MCX: Gold, Silver, Crude, and the Economics of Storage and Carry",
+          "slug": "commodities-on-mcx-gold-silver-crude-and-the-economics-of-storage-and-carry",
+          "body": [
+            {
+              "_key": "mac2l3b01",
+              "_type": "bigIdea",
+              "text": "A share entitles you to a claim on future profits. A bond entitles you to a coupon and your principal back. A commodity futures contract entitles you to nothing but a barrel of crude or a bar of gold someone has to physically store somewhere in the meantime, and that physical fact, not a discounted cash flow, is what actually prices it."
+            },
+            {
+              "_key": "mac2l3b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac2l3b02s1",
+                  "_type": "span",
+                  "text": "Commodities are the first asset class in this course with no cash flows to discount. Gold pays no dividend, crude pays no coupon, and their futures prices are set instead by the economics of holding a physical good over time: storage cost, financing cost, and how badly someone needs the physical item right now versus later. This lesson covers gold, silver, and crude on MCX specifically, and introduces the cost-of-carry framework that Chapter 5 will build directly into a carry trading strategy.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac2l3b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac2l3b03s1", "_type": "span", "text": "The Cost of Carry Model: Why Futures Prices Aren't Just \"Expected Future Spot\"", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac2l3b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "mac2l3m01",
+                  "_type": "glossaryTerm",
+                  "definition": "An implicit benefit of holding the physical commodity itself rather than a futures contract on it, such as being able to use it immediately in production or avoid a shortage. High convenience yield pulls futures prices below spot; it does not apply to purely financial assets."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "mac2l3b04s1",
+                  "_type": "span",
+                  "text": "A commodity futures price is approximately the spot price, plus the cost of financing and storing the physical good until delivery, minus any ",
+                  "marks": []
+                },
+                { "_key": "mac2l3b04s2", "_type": "span", "text": "convenience yield", "marks": ["mac2l3m01"] },
+                {
+                  "_key": "mac2l3b04s3",
+                  "_type": "span",
+                  "text": " from holding the physical item itself rather than a paper claim on it. When storage and financing costs dominate, futures trade above spot, a state called contango. When convenience yield dominates, usually because the physical good is scarce right now, futures trade below spot, a state called backwardation.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac2l3b05",
+              "_type": "mathBlock",
+              "latex": "F \\approx S \\times (1 + r + u - y)",
+              "caption": "Simplified cost-of-carry relationship. S is spot price, r is the financing rate, u is storage cost as a fraction of value, y is convenience yield. Contango when r + u > y, backwardation when y > r + u."
+            },
+            {
+              "_key": "mac2l3b06",
+              "_type": "table",
+              "caption": "Gold, Silver, and Crude, Compared on Storage and Curve Behavior",
+              "headers": ["Commodity", "Storage Cost (as % of value)", "Typical Curve Shape", "Primary Demand Driver"],
+              "rows": [
+                { "_key": "mac2l3b06r1", "_type": "tableRow", "cells": ["Gold", "Low, well under 1% annually (vaulting, insurance)", "Usually contango", "Monetary and store-of-value demand"] },
+                { "_key": "mac2l3b06r2", "_type": "tableRow", "cells": ["Silver", "Low to moderate", "Usually contango, more variable than gold", "Split between investment and industrial demand"] },
+                { "_key": "mac2l3b06r3", "_type": "tableRow", "cells": ["Crude Oil", "High, several percent annually (tankage, insurance, boil-off)", "Can flip between contango and backwardation with supply conditions", "Global industrial and transport demand, OPEC+ supply decisions"] }
+              ]
+            },
+            {
+              "_key": "mac2l3b07",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "Storage cost figures above are broad, illustrative ranges to show relative ordering across these three commodities, not precise current figures for any specific MCX contract or storage facility."
+            },
+            {
+              "_key": "mac2l3b08",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac2l3b08s1", "_type": "span", "text": "Gold: Low Storage Cost, High Monetary Sensitivity", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac2l3b09",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac2l3b09s1",
+                  "_type": "span",
+                  "text": "Gold is close to indestructible and rarely consumed the way an industrial commodity is, almost all gold ever mined still exists somewhere in a vault, a bar, or jewellery. Its storage cost relative to its value is low, so its futures curve tends to sit in a mild, fairly stable contango driven mostly by financing cost rather than physical scarcity. Its price is driven less by industrial supply and demand than by real interest rates, currency debasement fears, and central bank buying, which is exactly why gold showed up as a stress-period diversifier in Lesson 1 of Chapter 1.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac2l3b10",
+              "_type": "callout",
+              "type": "insight",
+              "text": "India's import duty on gold, which has been revised several times in recent years, creates a structural gap between MCX's domestic gold price and international benchmarks like COMEX or London spot. A systematic strategy trading MCX gold is trading a domestically priced instrument, not a direct proxy for the global gold price, and that duty-driven gap needs to be understood, not assumed away."
+            },
+            {
+              "_key": "mac2l3b11",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac2l3b11s1", "_type": "span", "text": "Silver: Half Monetary, Half Industrial, and More Volatile for It", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac2l3b12",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac2l3b12s1",
+                  "_type": "span",
+                  "text": "Silver shares gold's role as an investment and store-of-value asset, but a meaningful share of demand is genuinely industrial: electronics, solar panel manufacturing, and various chemical uses actually consume silver rather than just holding it. This split personality is why silver tends to move with gold in stress periods but with noticeably higher volatility, since it also has to price in industrial demand cycles that gold is largely indifferent to. A systematic desk treating silver as \"gold with more leverage\" is roughly right directionally but should expect a meaningfully choppier ride.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac2l3b13",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac2l3b13s1", "_type": "span", "text": "Crude: The Commodity India Cannot Ignore", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac2l3b14",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac2l3b14s1",
+                  "_type": "span",
+                  "text": "India imports the large majority of the crude oil it consumes, which makes crude a double-duty asset class for an Indian systematic desk: it is a commodity price to trade, and it is simultaneously a macro variable that worsens India's current account, pressures the rupee, and feeds through to domestic inflation whenever it spikes. Crude's futures curve is the least stable of the three covered here, since it can flip between contango, when the market is oversupplied and storage is scarce and expensive, and backwardation, when supply is tight and refiners need oil now rather than later, sometimes within the same year.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac2l3b15",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "mac2l3b15st1", "label": "India's Crude Oil Import Dependence", "value": ">85%", "context": "The large majority of India's crude consumption is imported" },
+                { "_key": "mac2l3b15st2", "label": "Crude Storage Cost vs Gold", "value": "Several times higher", "context": "Tankage, insurance, and handling make crude far costlier to store than gold, illustrative comparison" },
+                { "_key": "mac2l3b15st3", "label": "Curve Regime Stability", "value": "Gold: Stable | Crude: Unstable", "context": "Gold's curve shape is far more persistent than crude's, which can flip between contango and backwardation" }
+              ]
+            },
+            {
+              "_key": "mac2l3b16",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac2l3b16s1", "_type": "span", "text": "Reading the MCX Futures Curve: Contango and Backwardation in Practice", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac2l3b17",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac2l3b17s1",
+                  "_type": "span",
+                  "text": "MCX lists multiple expiries for gold, silver, and crude at any given time, and simply comparing the near-month price to the next few months' prices tells you the curve's current shape. This matters directly for a systematic position that has to be rolled forward before its contract expires, rather than taking delivery. Rolling a long position from an expiring contract into the next one means selling the cheaper near-month contract and buying the more expensive far-month contract in a contango market, a real, recurring cost that shows up nowhere in a naive backtest built purely on spot price. In backwardation, that roll works the other way and becomes a source of return instead of a cost.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac2l3b18",
+              "_type": "chart",
+              "chartType": "bar",
+              "title": "Illustrative MCX Futures Curves: Gold (Contango) vs Crude (Backwardation)",
+              "xAxisLabel": "Expiry",
+              "yAxisLabel": "Price (indexed to near-month = 100)",
+              "data": [
+                { "_key": "mac2l3b18d1", "label": "Near Month" },
+                { "_key": "mac2l3b18d2", "label": "+1 Month" },
+                { "_key": "mac2l3b18d3", "label": "+2 Months" },
+                { "_key": "mac2l3b18d4", "label": "+3 Months" }
+              ],
+              "series": [
+                { "_key": "mac2l3b18s1", "label": "Gold (illustrative contango)", "values": [100, 100.4, 100.8, 101.2] },
+                { "_key": "mac2l3b18s2", "label": "Crude (illustrative backwardation)", "values": [100, 99.3, 98.7, 98.2] }
+              ]
+            },
+            {
+              "_key": "mac2l3b19",
+              "_type": "callout",
+              "type": "warning",
+              "text": "A trend-following strategy that only tracks spot price and ignores which way the curve is sloped can look profitable in a backtest while actually bleeding a steady, invisible cost every time it rolls a position in a contango market. Chapter 5 builds carry signals specifically to capture this, but even a pure trend strategy needs to account for roll cost to be realistic."
+            },
+            {
+              "_key": "mac2l3b20",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "The Flat Spot Price That Still Lost Money",
+              "scenario": "A systematic desk holds a long position in MCX crude oil futures for three months, rolling the contract forward each month as it approaches expiry. Crude's spot price is almost unchanged over the period, moving from roughly the same level it started at. Despite this, the position shows a modest but consistent loss over the three months.",
+              "prompt": "Given what this lesson covered about the futures curve, what is the most likely explanation for a loss despite a flat spot price?",
+              "modelAnswer": "The most likely explanation is a negative roll yield from a contango curve. If crude was trading in contango over this period, each monthly roll meant selling the cheaper, expiring near-month contract and buying a more expensive far-month contract, a real cost paid every roll regardless of what spot did. Over three rolls, this cost compounds into a modest but real drag, even though the spot price itself round-tripped back to roughly where it started. This is exactly why a systematic desk needs to track the futures curve shape, not just spot price, when evaluating a commodity position's true return."
+            },
+            {
+              "_key": "mac2l3b21",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Contango or Backwardation?",
+              "question": "A commodity's near-month futures contract trades at a lower price than its far-month contract. What is this curve shape called, and what does it typically imply?",
+              "options": [
+                "Backwardation; the market is pricing high near-term scarcity of the physical commodity",
+                "Contango; storage and financing costs are outweighing any convenience yield from holding the physical commodity",
+                "Inversion; the commodity has stopped being storable",
+                "Flattening; the commodity's spot price is about to fall sharply"
+              ],
+              "correctIndex": 1,
+              "explanation": "When far-month futures trade above near-month futures, the market is in contango, meaning the cost of financing and storing the physical commodity over time exceeds any convenience yield from holding it right now. This is the normal state for gold most of the time, and a frequent, though not permanent, state for crude and silver."
+            },
+            {
+              "_key": "mac2l3b22",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "Naming the Curve State",
+              "textWithBlank": "When a commodity's futures price trades below its spot price because holding the physical good right now carries a real, immediate benefit that outweighs storage and financing costs, this curve state is called ___.",
+              "correctAnswers": ["backwardation"],
+              "explanation": "Backwardation reflects a convenience yield strong enough to outweigh the cost of carry, typically seen when a commodity is physically scarce in the near term, such as crude during a supply squeeze."
+            },
+            {
+              "_key": "mac2l3b23",
+              "_type": "keyTakeaways",
+              "points": [
+                "Commodities have no cash flows to discount; their futures prices are set by the economics of holding the physical good, storage cost, financing cost, and convenience yield",
+                "Contango is futures above spot, driven by storage and financing costs; backwardation is futures below spot, driven by a strong convenience yield from physical scarcity",
+                "Gold's low storage cost and monetary demand give it a stable, usually mild contango curve; crude's high storage cost and volatile supply-demand balance make its curve shape genuinely unstable",
+                "India's gold import duty creates a structural gap between MCX's domestic gold price and international benchmarks",
+                "India's heavy crude import dependence makes crude simultaneously a commodity trade and a macro variable, feeding into the rupee and domestic inflation",
+                "Rolling a futures position in a contango market is a real, recurring cost invisible to a spot-price-only backtest; Chapter 5 turns this roll yield into a deliberate carry strategy input"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

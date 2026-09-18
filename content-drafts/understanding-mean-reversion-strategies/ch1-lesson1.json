@@ -1,0 +1,238 @@
+{
+  "courseSlug": "understanding-mean-reversion-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 1: The Logic of Mean Reversion",
+      "lessons": [
+        {
+          "title": "What Mean Reversion Means: Prices, Spreads, and the Pull Back to Normal",
+          "slug": "what-mean-reversion-means-prices-spreads-and-the-pull-back-to-normal",
+          "body": [
+            {
+              "_key": "mr1l1-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr1l1-001s1", "_type": "span", "marks": [], "text": "On 4 June 2024, the day Lok Sabha election results were declared, the Nifty 50 closed down close to 6 percent, its sharpest single-session fall since the pandemic crash of March 2020. Exit polls in the days before had priced in a landslide for the ruling coalition, and the index had rallied hard on that expectation. When the actual trends showed a narrower mandate than the market had bet on, that rally reversed in a single session. What happened next is the more interesting part. Within two weeks the Nifty had recovered most of that fall, and within two months it was trading at fresh record highs, well above where it stood the day before the crash. The index did not know it had \"overreacted\". But the price action looked exactly like something that had moved too far from where it belonged, and then pulled back toward it. That pull back is mean reversion, and it is one of the oldest, most reliable-looking patterns in markets, right up until the moment it is not." }
+              ]
+            },
+            {
+              "_key": "mr1l1-002",
+              "_type": "bigIdea",
+              "text": "Mean reversion is the tendency of a price, a spread, a valuation multiple, or a level of volatility to move back toward its own statistical average after moving unusually far away from it. It is not a law of physics and it does not know why it works. It is an observed pattern that holds often enough, in specific conditions, to be tradeable, and it breaks down often enough that treating it as a certainty is how traders lose money."
+            },
+            {
+              "_key": "mr1l1-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr1l1-003s1", "_type": "span", "marks": [], "text": "Reverting to What? Defining \"Normal\"" }
+              ]
+            },
+            {
+              "_key": "mr1l1-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr1l1-004s1", "_type": "span", "marks": [], "text": "The word \"mean\" in mean reversion is doing real work. Before you can trade a reversion, you need to define exactly what the price or spread is supposed to be reverting to, and over what time frame. \"Normal\" is never obvious in the moment. A stock trading at 25 times earnings might be reverting toward its own five-year average P/E of 20, or it might be re-rating permanently toward a new, higher multiple because its business has genuinely changed. Nobody rings a bell to tell you which one is happening. This course treats \"the mean\" as a specific, calculable reference point, a moving average, a historical volatility level, a long-run valuation multiple, a historical price ratio between two stocks, rather than a vague sense that something \"looks cheap\" or \"looks expensive\"." }
+              ]
+            },
+            {
+              "_key": "mr1l1-005",
+              "_type": "table",
+              "caption": "Four places to look for a mean, and where each is covered in this course",
+              "headers": ["Domain", "What Reverts", "Typical Reference Point", "Covered In"],
+              "rows": [
+                { "_key": "mr1l1-005r1", "cells": ["Price (single stock or index)", "Short-term price deviation from trend", "20/50/200-day moving average", "Chapters 2 and 3"] },
+                { "_key": "mr1l1-005r2", "cells": ["Volatility", "India VIX, average true range", "Long-run average volatility level", "Chapter 4"] },
+                { "_key": "mr1l1-005r3", "cells": ["Valuation", "P/E, P/B, EV/EBITDA", "Stock's own history or sector average", "Chapter 5"] },
+                { "_key": "mr1l1-005r4", "cells": ["Relationship between two assets", "Price ratio or spread", "Historical spread level", "Chapter 6"] }
+              ]
+            },
+            {
+              "_key": "mr1l1-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr1l1-006s1", "_type": "span", "marks": [], "text": "Why Prices Overshoot in the First Place" }
+              ]
+            },
+            {
+              "_key": "mr1l1-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "mr1l1-007m1", "_type": "glossaryTerm", "definition": "Futures and options market participants. Their leveraged, short-term positioning can amplify a single-day price reaction to a headline number well beyond what calm analysis would justify." }
+              ],
+              "children": [
+                { "_key": "mr1l1-007s1", "_type": "span", "marks": [], "text": "If markets priced every piece of information calmly and correctly the first time, there would be nothing to revert from. They don't, for reasons that are structural as much as psychological. Retail order flow on apps like Zerodha and Groww tends to chase whatever has just moved, buying strength and selling weakness, which pushes prices further in whatever direction they were already going. Results-day moves are magnified by algorithmic and " },
+                { "_key": "mr1l1-007s2", "_type": "span", "marks": ["mr1l1-007m1"], "text": "F&O traders" },
+                { "_key": "mr1l1-007s3", "_type": "span", "marks": [], "text": " reacting to a single headline number, like revenue or margin, before the fuller picture in the management commentary has been read. Forced selling, a mutual fund meeting redemptions, a promoter's pledged shares being sold off, or a leveraged trader hitting a margin call, can push a price well past where calm analysis would put it, with no new information at all. SEBI's circuit breakers and price bands exist precisely because this overshoot can spiral within a single session if left unchecked. None of these forces care about a company's fundamentals. They just move price away from it. Mean reversion is the bet that once the forced selling ends, the algorithmic overreaction fades, and the herd calms down, the price drifts back toward whatever level the underlying fundamentals actually support." }
+              ]
+            },
+            {
+              "_key": "mr1l1-008",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Mean reversion is not a bet that the market is wrong forever. It is a bet that the market is temporarily wrong, for reasons that have nothing to do with long-term value, and that this specific kind of wrongness tends to correct faster than the fundamentals themselves change."
+            },
+            {
+              "_key": "mr1l1-009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr1l1-009s1", "_type": "span", "marks": [], "text": "A Numeric Walkthrough: Watching a Stock Revert" }
+              ]
+            },
+            {
+              "_key": "mr1l1-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr1l1-010s1", "_type": "span", "marks": [], "text": "Take a hypothetical example to make this concrete. Suppose an NSE-listed mid-cap company, call it Alpha Industries, has traded in a fairly tight range around its 20-day moving average of ₹840 for months. On results day, the company reports a one-off, non-cash write-down that dents reported profit, even though revenue and operating margin both beat expectations. The stock opens sharply lower and closes the session at ₹710, a fall of over 15 percent, as F&O traders and momentum algorithms react to the headline profit miss. Over the next three weeks, as brokerages publish notes explaining that the write-down was non-recurring and does not affect the company's cash flows, the stock recovers steadily, closing week three at ₹825, back within striking distance of its pre-results moving average." }
+              ]
+            },
+            {
+              "_key": "mr1l1-011",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Alpha Industries: price vs 20-day moving average (illustrative)",
+              "xAxisLabel": "Trading day",
+              "yAxisLabel": "Price (₹)",
+              "data": [
+                { "_key": "mr1l1-011d1", "label": "-10" },
+                { "_key": "mr1l1-011d2", "label": "-5" },
+                { "_key": "mr1l1-011d3", "label": "Results day" },
+                { "_key": "mr1l1-011d4", "label": "+3" },
+                { "_key": "mr1l1-011d5", "label": "+6" },
+                { "_key": "mr1l1-011d6", "label": "+9" },
+                { "_key": "mr1l1-011d7", "label": "+12" },
+                { "_key": "mr1l1-011d8", "label": "+15" },
+                { "_key": "mr1l1-011d9", "label": "+18" },
+                { "_key": "mr1l1-011d10", "label": "+21" }
+              ],
+              "series": [
+                { "_key": "mr1l1-011se1", "label": "Alpha Industries price", "values": [845, 838, 710, 735, 760, 780, 795, 810, 820, 825] },
+                { "_key": "mr1l1-011se2", "label": "20-day moving average", "values": [840, 839, 825, 815, 808, 803, 800, 799, 800, 802] }
+              ]
+            },
+            {
+              "_key": "mr1l1-012",
+              "_type": "keyFact",
+              "label": "Peak gap from the mean",
+              "value": "-15.5%",
+              "context": "Alpha Industries closed 15.5% below its 20-day moving average on results day, the kind of stretch mean reversion strategies are built to spot"
+            },
+            {
+              "_key": "mr1l1-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr1l1-013s1", "_type": "span", "marks": [], "text": "Notice what closed the gap. It was not a single dramatic event. It was three weeks of unremarkable trading days where the stock drifted up because the reason for the crash, a one-off accounting item, stopped mattering once the market re-read the results properly. This is what a mean reversion trade is actually underwriting: not a prediction about where the company is headed in five years, but a bet that a specific, identifiable overreaction fades within a specific, tradeable window." }
+              ]
+            },
+            {
+              "_key": "mr1l1-014",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Alpha Industries recovered because its underlying business had not actually changed. Compare this to a company where a results miss reveals a genuine, permanent problem, a client concentration risk becoming a client loss, a lender pulling a credit line, a promoter pledge being invoked. In those cases, the price does not revert to the old mean. It finds a new, lower one, or it keeps falling. Chapter 8 covers exactly how to tell the difference before it costs you money."
+            },
+            {
+              "_key": "mr1l1-015",
+              "_type": "toolLink",
+              "label": "Check a stock's price against its historical range on screener.in",
+              "url": "https://www.screener.in",
+              "description": "Use the price chart and moving average overlays on screener.in to see how far a stock's current price sits from its own recent history before assuming it has to revert."
+            },
+            {
+              "_key": "mr1l1-016",
+              "_type": "comparison",
+              "title": "What Tends to Revert, and What Often Doesn't",
+              "columns": [
+                {
+                  "_key": "mr1l1-016c1",
+                  "label": "Tends to revert",
+                  "points": [
+                    "A single-day overreaction to a results headline that ignores fuller context",
+                    "A volatility spike after a scheduled event like a budget or an RBI policy decision",
+                    "A valuation multiple that has moved away from a stock's own multi-year average without a change in its business",
+                    "A short-term gap between two historically correlated stocks in the same sector"
+                  ]
+                },
+                {
+                  "_key": "mr1l1-016c2",
+                  "label": "Often doesn't revert",
+                  "points": [
+                    "A price fall driven by a genuine, permanent deterioration in the business (lost client, lost license, fraud)",
+                    "A stock re-rating to a structurally higher or lower multiple because its growth story or capital structure has actually changed",
+                    "A company sliding toward insolvency, where the \"reversion\" target itself is moving toward zero",
+                    "A relationship between two stocks that has broken because one company's fundamentals diverged from the other's for good"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "mr1l1-017",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Spotting the reversion candidate",
+              "question": "Which of the following is the best candidate for a mean reversion trade?",
+              "options": [
+                "A stock that has fallen 40% over 18 months as its core product loses market share every quarter",
+                "A stock that fell 12% in one session on a headline profit miss, while revenue and margins both beat estimates and cash flows are unaffected",
+                "A stock that has rallied steadily for two years as its business has genuinely and durably improved",
+                "A stock halted for a suspected accounting fraud investigation"
+              ],
+              "correctIndex": 1,
+              "explanation": "Option B describes a short-term overreaction to a headline number that does not reflect a genuine change in the business, exactly the kind of temporary mispricing mean reversion strategies are built to capture. The others describe durable, fundamental changes (A, C) or unresolved uncertainty about a total loss of value (D), none of which have a reliable \"normal\" to revert to."
+            },
+            {
+              "_key": "mr1l1-018",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Reverting, or something else entirely?",
+              "scenario": "A friend messages you excitedly: \"This stock is down 60% from its 52-week high, it has to bounce back, that's basic mean reversion.\" The stock in question has just had its promoter's pledged shares invoked by a lender, and two independent directors have resigned in the same week.",
+              "prompt": "Is your friend right to call this a mean reversion opportunity? What is missing from his reasoning?",
+              "modelAnswer": "No. A large price fall alone is not evidence of mean reversion, it is evidence that something moved. Pledge invocation and director resignations are classic signals of a genuine deterioration in governance or solvency, not a temporary overreaction. Mean reversion requires a reason to believe the fundamental picture has not actually changed and that the fall is a liquidity or sentiment effect that will fade. Here, the fall may reflect real, permanent information about the company's health, in which case there is no reliable \"mean\" left to revert to. This is exactly the trap covered in Chapter 8."
+            },
+            {
+              "_key": "mr1l1-019",
+              "_type": "flashcardSet",
+              "title": "Mean Reversion: Foundational Terms",
+              "cards": [
+                { "_key": "mr1l1-019f1", "term": "Mean reversion", "definition": "The tendency of a price, spread, valuation multiple, or volatility level to move back toward its own statistical average after moving unusually far away from it." },
+                { "_key": "mr1l1-019f2", "term": "The mean (or reversion target)", "definition": "The specific, calculable reference point a price is expected to revert to, such as a moving average, a historical valuation multiple, or a long-run volatility level. It must be defined explicitly, never assumed." },
+                { "_key": "mr1l1-019f3", "term": "Overreaction", "definition": "A price move larger than what the new information actually justifies, typically driven by forced selling, algorithmic reaction to headline numbers, or herd behavior rather than a change in fundamentals." },
+                { "_key": "mr1l1-019f4", "term": "Structural break", "definition": "A permanent change in a company's fundamentals or in the relationship between two assets that invalidates the old mean, so the price does not revert to its former average. Covered in depth in Chapter 8." }
+              ]
+            },
+            {
+              "_key": "mr1l1-020",
+              "_type": "keyTakeaways",
+              "points": [
+                "Mean reversion is the tendency of a price, spread, valuation multiple, or volatility level to move back toward its own statistical average after an unusual deviation. It is a tendency, not a guarantee.",
+                "You must define the specific mean a price is reverting to, a moving average, a historical multiple, a volatility level, a spread, before you can trade a reversion. \"It looks cheap\" is not a reference point.",
+                "Overshoots are driven by forced selling, algorithmic and F&O reactions to headline numbers, and herd behavior, none of which reflect a genuine change in fundamentals.",
+                "The same fall can either revert, like Alpha Industries' one-off write-down, or become a new, lower normal, like a genuine deterioration in the business. Telling the two apart before you trade is the actual skill, covered fully in Chapter 8.",
+                "This course covers four domains where mean reversion shows up: single-asset prices (Chapters 2 and 3), volatility (Chapter 4), valuation (Chapter 5), and the relationship between two assets (Chapter 6)."
+              ]
+            },
+            {
+              "_key": "mr1l1-021",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice or a recommendation to buy, sell, or hold any security. Alpha Industries is a hypothetical company and all associated figures and the accompanying chart are illustrative, not real historical data. The Nifty 50 figures for 4 June 2024 are presented as general, rounded market history and should be independently verified before being relied upon. Mean reversion strategies carry real risk of loss. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,153 @@
+{
+  "courseSlug": "understanding-capacity-constraints-and-strategy-scaling",
+  "chapters": [
+    {
+      "title": "Chapter 5: Scaling Playbook: Growing AUM Without Killing the Edge",
+      "lessons": [
+        {
+          "title": "Case Study: How a Systematic Trader Scales From Nifty 50 Into Midcap and Bank Nifty",
+          "slug": "case-study-how-a-systematic-trader-scales-from-nifty-50-into-midcap-and-bank-nifty",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "c1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c1s1", "text": "This composite, illustrative case study brings the last two lessons together, and adds a twist: not every scaling lever works equally well for every strategy. Diagnosing why a strategy is capacity constrained in the first place should decide which lever you reach for, and this trader learns that the hard way before getting it right.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c2s1", "text": "Starting Point: One Fast Strategy, One Ceiling", "marks": [] }
+              ]
+            },
+            {
+              "_type": "statGrid",
+              "_key": "c3",
+              "stats": [
+                { "label": "Strategy", "value": "Nifty 50 mean reversion", "context": "10-day hold, ~25x annual turnover, from Chapter 4" },
+                { "label": "Current AUM", "value": "Rs 10 Cr", "context": "Already close to the ceiling" },
+                { "label": "Operating capacity", "value": "~Rs 11.3 Cr", "context": "After a 65% safety margin on the Rs 17.4 Cr theoretical estimate" }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c4",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c4s1", "text": "First Attempt: Stratify Into Midcap, Same Strategy, New Segment", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c5",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c5s1", "text": "Following the market-cap stratification lever, the trader applies the identical 10-day mean-reversion logic to Nifty Midcap 150 stocks, typical ADV Rs 30 crore, running around 10 positions. The result is disappointing: per-stock capacity comes out to roughly Rs 8.5 lakh, and total capacity for the sleeve to only about Rs 0.85 crore.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "c6",
+              "type": "warning",
+              "text": "The segment-stratification lever, so effective for a low-turnover strategy in the previous lesson, does almost nothing here. Turnover, not universe, was what constrained this particular strategy in the first place, per Chapter 4's finding that capacity falls with the square of turnover. Moving the same high-turnover logic onto a thinner-liquidity segment only makes the underlying problem worse, since a smaller ADV base gets divided by the same brutal turnover penalty."
+            },
+            {
+              "_type": "block",
+              "_key": "c7",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c7s1", "text": "Second Attempt: A Genuinely Different Instrument, Bank Nifty Futures", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c8",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c8s1", "text": "Instead, the trader adds a separate, monthly-rebalanced strategy trading Bank Nifty index futures, one of the most liquid instruments on the NSE. It is a single index-level position rather than fifty separate stocks, its own turnover is much lower at around 12 times a year, and its liquidity is exceptional. Using illustrative inputs, ADV around Rs 30,000 crore, daily volatility of 1.2%, and a favorable calibration constant of 0.6, reflecting how orderly deep index futures markets tend to be, the same capacity formula returns a theoretical ceiling of over Rs 1,500 crore, a number so far beyond the fund's current scale that this sleeve is effectively not the binding constraint at all.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "c9",
+              "caption": "Three sleeves, side by side",
+              "headers": ["Sleeve", "Instrument", "Turnover", "Theoretical Capacity"],
+              "rows": [
+                { "cells": ["Nifty 50 mean reversion", "50 large-cap stocks", "~25x per year", "~Rs 17.4 Cr"] },
+                { "cells": ["Midcap mean reversion (same logic)", "Nifty Midcap 150 stocks", "~25x per year", "~Rs 0.85 Cr"] },
+                { "cells": ["Bank Nifty futures overlay", "Single index future", "~12x per year", ">Rs 1,500 Cr (illustrative)"] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c10",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c10s1", "text": "The Diagnostic Lesson: Match the Lever to the Actual Constraint", "marks": [] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "c11",
+              "type": "insight",
+              "text": "Because capacity depends on ADV divided by turnover squared, the right fix depends entirely on which side of that ratio is actually broken. If turnover is the dominant constraint, cloning the same fast logic onto a lower-ADV segment only compounds the problem. The real fix is either to slow the strategy down, extending holding period as covered in Chapter 4, or to add a genuinely different instrument with much deeper liquidity and its own, independently reasonable turnover, exactly what the Bank Nifty futures sleeve provided here."
+            },
+            {
+              "_type": "block",
+              "_key": "c12",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c12s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "c13",
+              "variant": "scenario",
+              "title": "Diagnose the Right Lever",
+              "scenario": "A systematic trader runs a slow, quarterly-rebalanced quality-and-value strategy on Nifty Midcap 150 stocks, already near its estimated capacity. They are considering two options to grow further: (a) apply the identical quality-and-value logic to Nifty Smallcap 250 stocks, or (b) apply the identical logic to Nifty 50 stocks instead.",
+              "prompt": "Which option is more likely to meaningfully add usable capacity, and why?",
+              "modelAnswer": "Option (b), extending into Nifty 50, is more likely to add meaningful capacity. This strategy is already low turnover, so its constraint is mainly about the ADV available per position, not turnover crushing a large ADV base. Nifty 50 stocks have far deeper liquidity than Nifty Smallcap 250 stocks, so the same low-turnover logic run on Nifty 50 names can support a much larger position size per stock. Extending into smallcap instead would add positions in an even thinner segment, likely adding little capacity while increasing both liquidity risk from Chapter 2 and crowding risk from Chapter 3."
+            },
+            {
+              "_type": "block",
+              "_key": "c14",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c14s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "c15",
+              "text": "Every scaling lever is a bet on a specific diagnosis. Cloning a fast strategy onto a thinner segment bets that universe was the problem. Adding a deep, differently-behaved instrument bets that turnover was the problem. Get the diagnosis wrong and the lever does almost nothing, exactly as the midcap attempt in this case study found out."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "c16",
+              "points": [
+                "Applying a high-turnover strategy's identical logic to a lower-ADV segment tends to shrink capacity further, not expand it, since a smaller liquidity base gets divided by the same turnover penalty.",
+                "A genuinely different, deep-liquidity instrument, such as an index future, can add capacity far beyond what stratifying the same fast strategy into new stock segments ever could.",
+                "The right scaling lever depends on correctly diagnosing whether turnover or liquidity is the dominant constraint on a given strategy, not on applying the same fix to every strategy indiscriminately.",
+                "For a low-turnover strategy, the diagnosis flips: extending into a deeper-liquidity segment tends to help meaningfully, while extending into an even thinner one adds little capacity and more risk."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,241 @@
+{
+  "courseSlug": "advanced-options-strategies-volatility-arbitrage-and-skew-trading",
+  "chapters": [
+    {
+      "title": "Chapter 4: Second-Order Greeks for Volatility Trading",
+      "lessons": [
+        {
+          "title": "Vanna and Volga: What They Measure and Why They Matter",
+          "slug": "vanna-and-volga-what-they-measure-and-why-they-matter",
+          "body": [
+            {
+              "_key": "c4l1-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l1-001s1", "_type": "span", "text": "Back in Chapter 1, when a falling spot pushed a strike closer to the money and its IV rose purely from where it now sat on the skew, the lesson promised that this spot-driven change in IV was 'precisely what the second-order Greek Vanna measures and prices.' This lesson delivers on that promise, gives Vanna a formula and a worked number, and introduces its partner, Volga, which does for the smile's curvature what Vanna does for its tilt.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l1-002",
+              "_type": "bigIdea",
+              "text": "Vanna measures how Delta changes when volatility moves, exactly equal to how Vega changes when spot moves. Volga measures how Vega changes when volatility itself moves, the convexity of an option's price with respect to IV. Together they price the two structures you already know from Chapter 2: Vanna is the Greek a risk reversal trades, Volga is the Greek a vol butterfly trades."
+            },
+            {
+              "_key": "c4l1-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l1-003s1", "_type": "span", "text": "From First-Order to Second-Order", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l1-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l1-004s1", "_type": "span", "text": "Delta and Vega are first-order sensitivities, how price moves when spot or volatility moves, each held one at a time. The Greeks in this chapter are second-order, they measure how those first-order sensitivities themselves change as spot, volatility, and time move.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l1-005",
+              "_type": "table",
+              "caption": "The second-order Greeks map",
+              "headers": ["Greek", "Definition", "Covered in"],
+              "rows": [
+                { "_key": "c4l1-005r1", "_type": "tableRow", "cells": ["Gamma", "∂Delta/∂S = ∂²V/∂S²", "Prerequisite course material"] },
+                { "_key": "c4l1-005r2", "_type": "tableRow", "cells": ["Vanna", "∂Delta/∂σ = ∂Vega/∂S = ∂²V/∂S∂σ", "This lesson"] },
+                { "_key": "c4l1-005r3", "_type": "tableRow", "cells": ["Volga (Vomma)", "∂Vega/∂σ = ∂²V/∂σ²", "This lesson"] },
+                { "_key": "c4l1-005r4", "_type": "tableRow", "cells": ["Charm", "∂Delta/∂T = ∂Theta/∂S = ∂²V/∂S∂T", "Next lesson"] }
+              ]
+            },
+            {
+              "_key": "c4l1-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l1-006s1", "_type": "span", "text": "Vanna: Where Spot and Vol Meet", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l1-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "c4l1-007m1", "_type": "glossaryTerm", "definition": "The mixed second derivative of option price with respect to spot and volatility. Equal whether you compute it as the change in Delta per unit change in IV, or as the change in Vega per unit change in spot." }
+              ],
+              "children": [
+                { "_key": "c4l1-007s1", "_type": "span", "text": "Under Black-Scholes, ", "marks": [] },
+                { "_key": "c4l1-007s2", "_type": "span", "text": "Vanna", "marks": ["c4l1-007m1"] },
+                { "_key": "c4l1-007s3", "_type": "span", "text": " has a clean closed form in terms of the same d1 and d2 you have been computing since Chapter 1.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l1-008",
+              "_type": "mathBlock",
+              "latex": "\\text{Vanna} = \\frac{\\partial \\Delta}{\\partial \\sigma} = -\\phi(d_1)\\,\\frac{d_2}{\\sigma}",
+              "caption": "φ(d1) is the standard normal density at d1. This value is identical for a call and a put at the same strike, since C − P = S − Ke^(−rT) contains no σ, so their second derivatives with respect to S and σ must match."
+            },
+            {
+              "_key": "c4l1-009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l1-009s1", "_type": "span", "text": "Apply it to Chapter 1's 25,700 strike: S = 26,500, K = 25,700, IV = 16.8%, T = 30/365, r = 6.5%, where d1 ≈ 0.7714 and d2 ≈ 0.7232 were already established.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l1-010",
+              "_type": "keyFact",
+              "label": "Vanna at the 25,700 strike",
+              "value": "≈ −0.0128 per 1-point rise in IV",
+              "context": "φ(0.7714) ≈ 0.2963. Vanna = −0.2963 × 0.7232 / 0.168 ≈ −1.276 per unit (decimal) volatility, or −0.0128 per 1 percentage point of IV. This applies to both the call and the put at this strike."
+            },
+            {
+              "_key": "c4l1-011",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Read the put side of that number. The 25,700 put's delta was about −0.220. A 1-point rise in IV moves it to roughly −0.233, more negative, meaning the put becomes more sensitive to a further decline in spot exactly as IV, typically a proxy for fear, is rising. This is the compounding mechanism behind sharp selloffs: a short OTM put position does not just lose money from spot falling, gamma's job, and does not just lose money from IV rising, vega's job, it also picks up extra negative delta from Vanna precisely when spot is falling and IV is rising together, which is the normal, negatively-correlated pattern from Chapter 2's leverage effect and crash risk discussion."
+            },
+            {
+              "_key": "c4l1-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l1-012s1", "_type": "span", "text": "Volga: The Convexity of Vega", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l1-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "c4l1-013m1", "_type": "glossaryTerm", "definition": "The second derivative of option price with respect to volatility, equal to the change in Vega per unit change in IV. Also called Vomma. Positive for standard options, meaning Vega itself grows as IV rises." }
+              ],
+              "children": [
+                { "_key": "c4l1-013s2", "_type": "span", "text": "Volga", "marks": ["c4l1-013m1"] },
+                { "_key": "c4l1-013s3", "_type": "span", "text": " answers a different question: if IV itself is volatile, how much does that matter? An option with high Volga gains vega as IV rises and loses vega as IV falls, which means its price is convex in volatility, it benefits disproportionately from large moves in IV in either direction.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l1-014",
+              "_type": "mathBlock",
+              "latex": "\\text{Volga} = \\frac{\\partial \\text{Vega}}{\\partial \\sigma} = \\text{Vega} \\times \\frac{d_1 d_2}{\\sigma}",
+              "caption": "Volga (Vomma): how an option's Vega itself changes as IV moves"
+            },
+            {
+              "_key": "c4l1-015",
+              "_type": "keyFact",
+              "label": "Volga at the same 25,700 strike",
+              "value": "Vega ≈ ₹22.51, Volga ≈ ₹0.75 of extra vega per 1-point rise in IV",
+              "context": "Vega = S × φ(d1) × √T ≈ ₹22.51 per 1-point IV move. Volga = Vega × d1 × d2 / σ ≈ ₹0.75 per additional point. After a 1-point IV rise, this predicts a new vega of about ₹22.51 + ₹0.75 ≈ ₹23.26, close to the ₹23.21 you get by directly repricing the option at 17.8% IV, a useful hand cross-check."
+            },
+            {
+              "_key": "c4l1-016",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "from scipy.stats import norm\nimport numpy as np\n\ndef d1_d2(S, K, T, r, sigma):\n    d1 = (np.log(S / K) + (r + 0.5 * sigma ** 2) * T) / (sigma * np.sqrt(T))\n    return d1, d1 - sigma * np.sqrt(T)\n\ndef vega(S, K, T, r, sigma):\n    d1, _ = d1_d2(S, K, T, r, sigma)\n    return S * norm.pdf(d1) * np.sqrt(T)\n\ndef vanna_analytic(S, K, T, r, sigma):\n    d1, d2 = d1_d2(S, K, T, r, sigma)\n    return -norm.pdf(d1) * d2 / sigma\n\ndef volga_analytic(S, K, T, r, sigma):\n    d1, d2 = d1_d2(S, K, T, r, sigma)\n    return vega(S, K, T, r, sigma) * d1 * d2 / sigma\n\ndef bs_call(S, K, T, r, sigma):\n    d1, d2 = d1_d2(S, K, T, r, sigma)\n    return S * norm.cdf(d1) - K * np.exp(-r * T) * norm.cdf(d2)\n\n# Finite-difference check: bump sigma by 0.0001 and re-difference the call price\nS, K, T, r, sigma = 26500, 25700, 30 / 365, 0.065, 0.168\nh = 1e-4\n\ndelta_up = (bs_call(S, K, T, r, sigma + h) - bs_call(S, K, T, r, sigma - h)) / (2 * h)  # cross check vs vega\nvanna_fd = (vega(S, K, T, r, sigma + h) - vega(S, K, T, r, sigma - h)) / (2 * h)\nvolga_fd = (vega(S, K, T, r, sigma + h) - 2 * vega(S, K, T, r, sigma) + vega(S, K, T, r, sigma - h)) / h ** 2\n\nprint(f\"Vanna: analytic {vanna_analytic(S, K, T, r, sigma):.4f}, finite-diff {vanna_fd:.4f}\")\nprint(f\"Volga: analytic {volga_analytic(S, K, T, r, sigma):.4f}, finite-diff {volga_fd:.4f}\")",
+              "caption": "Analytic Vanna and Volga formulas checked against a finite-difference bump-and-reprice, the same verification discipline used throughout this course"
+            },
+            {
+              "_key": "c4l1-017",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l1-017s1", "_type": "span", "text": "The Chapter 2 Connection", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l1-018",
+              "_type": "table",
+              "caption": "Which Chapter 2 structure trades which Chapter 4 Greek",
+              "headers": ["Chapter 2 metric", "Chapter 2 trade", "Chapter 4 Greek it expresses a view on"],
+              "rows": [
+                { "_key": "c4l1-018r1", "_type": "tableRow", "cells": ["Risk reversal (RR)", "Long OTM call, short equal-delta OTM put", "Vanna: a view on skew tilt, priced through spot-vol co-movement"] },
+                { "_key": "c4l1-018r2", "_type": "tableRow", "cells": ["Butterfly (BF)", "Long OTM strangle, short ATM straddle", "Volga: a view on smile curvature, priced through vol-of-vol"] }
+              ]
+            },
+            {
+              "_key": "c4l1-019",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This is not a loose analogy, it is the literal mechanism behind why those two structures were built the way they were. A risk reversal is long a call and short a put at equal delta, a combination whose net Vanna is large precisely because a symmetric long-call-short-put position isolates the spot-vol cross term. A vol butterfly, long strangle against short straddle, is built to be close to Vega-neutral in level while remaining long the convexity that Volga measures. Lesson 3 of this chapter builds directly on this pairing to construct a full smile-consistent pricing adjustment from just these two Greeks, the technique known as Vanna-Volga pricing in FX options markets."
+            },
+            {
+              "_key": "c4l1-020",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Two ways to compute the same number",
+              "question": "For a plain vanilla European option, which pair of quantities are guaranteed to be numerically identical?",
+              "options": [
+                "Delta and Vega",
+                "∂Delta/∂σ and ∂Vega/∂S",
+                "Gamma and Volga",
+                "Vanna for a call and Volga for a put at the same strike"
+              ],
+              "correctIndex": 1,
+              "explanation": "Vanna is a mixed second partial derivative, ∂²V/∂S∂σ. By the equality of mixed partials, computing it as the change in Delta per unit change in σ or as the change in Vega per unit change in S gives exactly the same result. Delta and Vega measure different things entirely, Gamma and Volga are different second derivatives, and Vanna and Volga are themselves different Greeks."
+            },
+            {
+              "_key": "c4l1-021",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Projecting delta from Vanna",
+              "prompt": "The 25,700 strike put has a delta of −0.220 and a Vanna of −0.0128 per 1-point IV move. If IV rises by 2 points, what is the projected new put delta, to three decimal places? (Use a linear approximation: new delta ≈ old delta + Vanna × change in IV points)",
+              "correctValue": -0.246,
+              "tolerance": 0.002,
+              "unit": "",
+              "explanation": "−0.220 + (−0.0128 × 2) = −0.220 − 0.0256 = −0.246. This linear approximation using Vanna alone ignores any change from Volga-driven vega convexity or from spot itself moving, but it is exactly the kind of fast, first-pass estimate a desk uses to anticipate how much extra delta a book will pick up if IV jumps."
+            },
+            {
+              "_key": "c4l1-022",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "The short-vol book into a selloff",
+              "scenario": "Your book is short a large notional of OTM Nifty puts, collected as premium from a systematic put-selling strategy, and is also short a vol butterfly structure put on a few weeks ago when BF looked rich. Global risk sentiment sours overnight and Nifty gaps down 2%, with India VIX jumping sharply.",
+              "prompt": "Using Vanna and Volga, explain the two distinct ways this move hurts the book beyond the direct loss from being short puts that are now closer to the money.",
+              "modelAnswer": "1. The short OTM puts are directly hurt by spot falling, ordinary delta and gamma exposure, that much does not require Vanna or Volga to explain.\n2. Layered on top, Vanna hurts further: as IV jumps alongside the spot decline, the short puts' deltas become more negative, exactly as this lesson's worked example showed, so the book's effective short exposure to further declines grows automatically, without any new trade being placed. This is Vanna converting a vol shock into extra directional risk.\n3. Separately, the short vol butterfly, short Volga by construction, is directly and independently hurt by IV itself moving sharply, regardless of direction. A short-Volga position was betting the wings would not richen much further relative to ATM; a sharp overnight vol spike is close to the worst-case move for exactly that position.\n4. These are two distinct loss channels from the same overnight move, one from Vanna amplifying the existing directional short-put exposure, one from Volga directly punishing a curvature bet that went the wrong way, and a risk report that only tracks delta and vega would understate the book's true sensitivity to a fast, correlated spot-and-vol shock.\n5. The practical lesson is that short-premium strategies, whether selling puts or selling butterflies, are implicitly short Vanna and Volga as well as short vega, and sizing them only against a calm-market vega number misses exactly the tail scenario where all three amplify losses together."
+            },
+            {
+              "_key": "c4l1-023",
+              "_type": "flashcardSet",
+              "title": "Vanna and Volga",
+              "cards": [
+                { "_key": "c4l1-023f1", "term": "Vanna", "definition": "∂Delta/∂σ = ∂Vega/∂S. Measures the cross-sensitivity between spot and volatility. Identical for a call and put at the same strike." },
+                { "_key": "c4l1-023f2", "term": "Volga (Vomma)", "definition": "∂Vega/∂σ. Measures the convexity of an option's price with respect to volatility itself, how much Vega changes as IV moves." },
+                { "_key": "c4l1-023f3", "term": "Vanna and risk reversals", "definition": "A risk reversal, long call and short put at equal delta, is structurally the position that isolates and trades a view on Vanna, i.e. on skew tilt." },
+                { "_key": "c4l1-023f4", "term": "Volga and vol butterflies", "definition": "A vol butterfly, long strangle against short straddle, is structurally the position that isolates and trades a view on Volga, i.e. on smile curvature." },
+                { "_key": "c4l1-023f5", "term": "Vanna-driven compounding", "definition": "During a selloff, rising IV alongside falling spot increases the magnitude of OTM put deltas through Vanna, adding directional risk on top of ordinary gamma losses." }
+              ]
+            },
+            {
+              "_key": "c4l1-024",
+              "_type": "keyTakeaways",
+              "points": [
+                "Vanna, ∂Delta/∂σ = ∂Vega/∂S, is identical for a call and put at the same strike and measures the cross-sensitivity between spot and volatility.",
+                "Volga, ∂Vega/∂σ, also called Vomma, measures the convexity of an option's price with respect to volatility, how much Vega itself grows as IV rises.",
+                "At Chapter 1's worked 25,700 strike, Vanna ≈ −0.0128 per IV point and Volga ≈ ₹0.75 of extra vega per IV point, both hand-verified against a finite-difference cross-check.",
+                "Rising IV during a selloff makes OTM put deltas more negative through Vanna, compounding directional risk on top of ordinary gamma losses, exactly the mechanism Chapter 1 previewed.",
+                "The risk reversal from Chapter 2 structurally trades Vanna; the vol butterfly from Chapter 2 structurally trades Volga. These are not separate ideas, they are the same trades viewed through a second-order Greek lens.",
+                "A short-premium book, short puts, short butterflies, or both, is implicitly short Vanna and Volga as well as short vega, and a risk view built only on delta and vega will understate its exposure to a fast, correlated spot-and-vol shock."
+              ]
+            },
+            {
+              "_key": "c4l1-025",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment or trading advice. All figures are hand-computed illustrative examples building on earlier chapters' worked data, not live NSE quotes. Options Greeks are model outputs, sensitive to the assumptions of the pricing model used, and are not a guarantee of actual position behavior. Consult a SEBI-registered adviser before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

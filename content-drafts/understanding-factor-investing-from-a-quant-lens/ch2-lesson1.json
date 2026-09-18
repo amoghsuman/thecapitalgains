@@ -1,0 +1,260 @@
+{
+  "courseSlug": "understanding-factor-investing-from-a-quant-lens",
+  "chapters": [
+    {
+      "title": "Chapter 2: The Core Factor Zoo",
+      "lessons": [
+        {
+          "title": "The Value Factor: Measuring Cheapness Beyond Price-to-Earnings",
+          "slug": "the-value-factor-measuring-cheapness-beyond-price-to-earnings",
+          "body": [
+            {
+              "_key": "f2l1b01",
+              "_type": "bigIdea",
+              "text": "Cheap is not the same as undervalued. A single P/E number cannot tell the difference between a stock the market has wrongly punished and a stock the market has correctly given up on, and confusing the two is the single most common way a value strategy loses money."
+            },
+            {
+              "_key": "f2l1b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "f2l1b02s1", "_type": "span", "text": "Chapter 1 established value as one of the oldest documented factors, from Basu's 1977 P/E anomaly through Fama and French's HML. This lesson goes inside the value factor itself: why P/E alone is a weak signal, the fuller toolbox of value metrics quants actually use, why composite scores exist, and the specific trap, cheap stocks that stay cheap forever, that every value strategy has to guard against, with the Indian PSU and cyclicals space as the clearest live laboratory for the problem.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f2l1b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "f2l1b03s1", "_type": "span", "text": "Why P/E Alone Is a Weak Value Signal", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f2l1b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "f2l1b04s1", "_type": "span", "text": "Price-to-earnings is the first ratio most investors learn on screener.in, and the first one a serious quant learns to distrust when used alone. Three problems show up constantly in Indian markets. A company with negative or near-zero earnings produces a meaningless or undefined P/E, silently dropping real businesses out of a naive value screen. A one-off item, an asset sale, an insurance claim, a tax refund, can inflate or deflate a single year's earnings and swing the P/E without any change in the underlying business. And most importantly for a market with heavy commodity, banking, and industrial weight like India's, earnings for cyclical businesses swing far more than their share prices do, which distorts P/E in a way that actively misleads a mechanical screen.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f2l1b05",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "f2l1b05s1", "_type": "span", "text": "The Cyclical P/E Trap: Buying High Multiples on Low Earnings", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f2l1b06",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "f2l1b06s1", "_type": "span", "text": "For cyclical sectors, metals, PSU banks, commodity chemicals, capital goods, the naive rule 'buy low P/E, sell high P/E' can point exactly backwards. Earnings for these businesses swing hard across the cycle while the share price, anticipating the swing, moves far less. That means P/E looks lowest right at the peak of the earnings cycle, precisely when the business is about to turn down, and looks highest at the trough, precisely when it may be about to recover. A screen that mechanically buys the lowest P/E metals stock at the top of a commodity up-cycle is, in effect, buying the single worst-timed entry in the sector.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f2l1b07",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Hypothetical Cyclical Co.: Earnings vs P/E Across a Cycle (illustrative, not a real NSE stock)",
+              "xAxisLabel": "Year",
+              "yAxisLabel": "Value",
+              "data": [
+                { "_key": "f2l1b07d1", "label": "Year 1 (Trough)", "value": 0 },
+                { "_key": "f2l1b07d2", "label": "Year 2 (Recovery)", "value": 0 },
+                { "_key": "f2l1b07d3", "label": "Year 3 (Peak)", "value": 0 },
+                { "_key": "f2l1b07d4", "label": "Year 4 (Slowdown)", "value": 0 },
+                { "_key": "f2l1b07d5", "label": "Year 5 (Trough again)", "value": 0 }
+              ],
+              "series": [
+                { "_key": "f2l1b07s1", "label": "Earnings (Rs crore, illustrative)", "values": [20, 40, 80, 45, 22] },
+                { "_key": "f2l1b07s2", "label": "P/E Ratio (x)", "values": [10, 7, 4, 6, 9.5] }
+              ]
+            },
+            {
+              "_key": "f2l1b08",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "f2l1b08s1", "_type": "span", "text": "Notice the pattern in the chart: P/E is lowest (4x) exactly at peak earnings in Year 3, and highest (10x and 9.5x) at the two earnings troughs in Years 1 and 5, even though the share price itself moved much less than earnings did. A screen reading P/E in isolation would flag Year 3 as 'cheapest' and Years 1 and 5 as 'expensive', which is the opposite of how an experienced cyclicals analyst would read the same numbers. This is precisely why serious value strategies normalise earnings across a cycle, or blend P/E with less earnings-sensitive metrics, rather than trusting a single year's P/E on its own.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f2l1b09",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "f2l1b09s1", "_type": "span", "text": "Beyond P/E: The Value Metric Toolbox", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f2l1b10",
+              "_type": "table",
+              "caption": "The main value metrics used beyond a simple trailing P/E",
+              "headers": ["Metric", "What It Captures", "Main Weakness"],
+              "rows": [
+                { "_key": "f2l1b10r1", "_type": "tableRow", "cells": ["Price-to-Book (P/B)", "Price relative to accounting net worth; useful for asset-heavy businesses like banks and capital goods", "Book value can be stale or distorted by accounting choices, and means little for asset-light businesses like software or FMCG brands"] },
+                { "_key": "f2l1b10r2", "_type": "tableRow", "cells": ["EV/EBITDA", "Enterprise value relative to operating cash earnings, before interest, tax, depreciation, and amortisation", "Ignores capital intensity and debt-servicing burden, can flag a heavily indebted, capital-hungry company as 'cheap'"] },
+                { "_key": "f2l1b10r3", "_type": "tableRow", "cells": ["Dividend Yield", "Cash returned to shareholders relative to price", "A high yield can simply mean the market expects a dividend cut, not that the stock is undervalued"] },
+                { "_key": "f2l1b10r4", "_type": "tableRow", "cells": ["Free Cash Flow Yield", "Actual cash generated after capital expenditure, relative to price or enterprise value", "Can be lumpy year to year for capital-intensive businesses with irregular capex cycles"] }
+              ]
+            },
+            {
+              "_key": "f2l1b11",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "f2l1b11s1", "_type": "span", "text": "Composite Value Scores: Why Quants Blend Metrics", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f2l1b12",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "f2l1b12s1", "_type": "span", "text": "Every metric in that table has its own weak spot, but the weak spots rarely align. A company that looks artificially cheap on EV/EBITDA because of heavy debt usually will not also look artificially cheap on dividend yield, since a highly leveraged company is often paying little or no dividend. This is why NSE's Nifty50 Value 20, and most serious quant desks, blend several metrics into a single composite score rather than screening on any one alone.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f2l1b13",
+              "_type": "mathBlock",
+              "latex": "z_{metric} = \\frac{x_{metric} - \\mu_{metric}}{\\sigma_{metric}} \\quad\\quad \\text{Composite Score} = \\frac{1}{n}\\sum_{i=1}^{n} z_i",
+              "caption": "Standardise each metric into a z-score against the universe, then average the z-scores into one composite value score"
+            },
+            {
+              "_key": "f2l1b14",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "f2l1b14s1", "_type": "span", "text": "Standardising each metric into a z-score, how many standard deviations a stock sits from the universe average on that metric, before averaging them, matters because raw metrics live on completely different scales. A P/E of 8 and an EV/EBITDA of 5 cannot be averaged directly; their z-scores can be. A stock that scores as cheap on three metrics out of four, with the fourth distorted by a one-off accounting item, will still show up as a strong composite candidate, which is exactly the robustness a single-metric screen cannot offer.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f2l1b15",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "f2l1b15s1", "_type": "span", "text": "Value Traps: When Cheap Stays Cheap", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f2l1b16",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "f2l1m01",
+                  "_type": "glossaryTerm",
+                  "definition": "A stock that appears statistically cheap on standard value metrics but stays cheap, or gets cheaper, because the underlying business is in genuine structural decline rather than temporary, cyclical distress."
+                }
+              ],
+              "children": [
+                { "_key": "f2l1b16s1", "_type": "span", "text": "A ", "marks": [] },
+                { "_key": "f2l1b16s2", "_type": "span", "text": "value trap", "marks": ["f2l1m01"] },
+                { "_key": "f2l1b16s3", "_type": "span", "text": " is the failure mode every value investor eventually meets: a stock that looks cheap, gets cheaper, and never mean-reverts, because the reason for its cheapness was never temporary in the first place. India's public sector space has produced some of the most persistent examples. Certain PSU stocks have traded at low P/B and high dividend yield for years, screening as statistically attractive on every standard value metric, while structurally weak capital allocation, government-directed lending or pricing decisions, and limited management autonomy kept genuine business value from ever catching up to the market's low price. The stock was not mispriced. The market had, largely, priced the structural problem correctly.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f2l1b17",
+              "_type": "comparison",
+              "title": "Cyclical Cheapness vs a Genuine Value Trap",
+              "columns": [
+                {
+                  "_key": "f2l1b17c1",
+                  "label": "Temporarily Cheap (Cyclical)",
+                  "points": [
+                    "Earnings depressed by an industry-wide, historically recurring down-cycle",
+                    "Balance sheet strong enough to survive the downturn without permanent damage",
+                    "Market share, competitive position, and asset base intact through the cycle",
+                    "Management capital allocation has historically been reasonable"
+                  ]
+                },
+                {
+                  "_key": "f2l1b17c2",
+                  "label": "Structurally Cheap (Value Trap)",
+                  "points": [
+                    "Cheapness tied to a permanent shift, technology disruption, loss of competitive edge, secular demand decline",
+                    "Weak or deteriorating balance sheet with limited room to wait out any recovery",
+                    "History of poor capital allocation, related-party issues, or governance concerns",
+                    "No credible catalyst on the horizon for the market to revalue the business"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "f2l1b18",
+              "_type": "callout",
+              "type": "insight",
+              "text": "A composite value score can tell you a stock is statistically cheap. It cannot tell you whether that cheapness is cyclical or structural, because both look identical on a spreadsheet of ratios. That distinction requires either a genuinely orthogonal quantitative signal, such as quality or momentum, layered on top, or human judgment applied after the screen, which is exactly why Chapter 3 spends real time on combining factors rather than trusting value in isolation."
+            },
+            {
+              "_key": "f2l1b19",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Cyclical Dip or Value Trap?",
+              "scenario": "Two NSE-listed stocks both screen in the cheapest decile on a composite value score this quarter. Stock A is a steel producer whose earnings have fallen sharply because global steel prices are at a multi-year low, a pattern that has repeated roughly every few years for decades, while its balance sheet remains conservatively leveraged. Stock B is a legacy telecom equipment maker whose revenue has declined every year for five years as its core product category is steadily replaced by newer technology, and it has taken on increasing debt to stay afloat.",
+              "prompt": "Which stock is more likely to be a genuine value opportunity, and which is more likely to be a value trap? What specific evidence in the scenario supports your answer?",
+              "modelAnswer": "Stock A, the steel producer, looks like temporary cyclical cheapness rather than a value trap: its earnings weakness is tied to a historically recurring, industry-wide price cycle rather than a permanent shift, and its conservative balance sheet gives it the staying power to survive the downturn and participate in the next up-cycle. Stock B shows the classic signature of a value trap: a multi-year, one-directional revenue decline caused by structural technological substitution, not a cycle, combined with rising leverage, which reduces its ability to wait out any recovery and increases the odds that its 'cheapness' reflects a permanently impaired business rather than a temporarily depressed one."
+            },
+            {
+              "_key": "f2l1b20",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Test Yourself: Reading a Cyclical P/E",
+              "question": "For a classic cyclical business, at what point in the earnings cycle does P/E typically look lowest, and why does this matter for a naive value screen?",
+              "options": [
+                "At the earnings trough, because low earnings mechanically inflate the P/E ratio",
+                "At the earnings peak, because the share price rises less than earnings do, mechanically deflating the P/E ratio",
+                "P/E stays constant across the cycle for cyclical businesses",
+                "At the earnings peak, because the market always overpays for cyclicals at the top"
+              ],
+              "correctIndex": 1,
+              "explanation": "Because the share price anticipates and moves less than the earnings swing itself, P/E is typically lowest at peak earnings and highest at trough earnings for cyclical businesses. A naive value screen buying the lowest P/E can end up buying right at the top of the earnings cycle, exactly the opposite of good timing."
+            },
+            {
+              "_key": "f2l1b21",
+              "_type": "flashcardSet",
+              "title": "Vocabulary Check: Terms From This Lesson",
+              "cards": [
+                { "_key": "f2l1b21c1", "term": "Value trap", "definition": "A stock that appears cheap on standard value metrics but stays cheap because its low price reflects genuine, structural business decline rather than temporary, cyclical distress." },
+                { "_key": "f2l1b21c2", "term": "EV/EBITDA", "definition": "Enterprise value divided by earnings before interest, tax, depreciation, and amortisation; a value metric that ignores capital structure but can mask heavy debt burdens." },
+                { "_key": "f2l1b21c3", "term": "Free cash flow yield", "definition": "Free cash flow (after capital expenditure) divided by price or enterprise value; captures actual distributable cash rather than accounting earnings." },
+                { "_key": "f2l1b21c4", "term": "Composite value score", "definition": "A blended signal formed by averaging the standardised z-scores of several value metrics, reducing the risk that any single distorted metric drives the ranking." }
+              ]
+            },
+            {
+              "_key": "f2l1b22",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "Sector and stock examples in this lesson, including references to PSU stocks and cyclical sectors, are used only to illustrate general concepts and are not a recommendation to buy or avoid any specific company or sector. The chart in this lesson uses an entirely hypothetical company for illustration and does not represent any real NSE-listed stock's actual earnings or price history."
+            },
+            {
+              "_key": "f2l1b23",
+              "_type": "keyTakeaways",
+              "points": [
+                "P/E alone is a weak value signal: it is undefined for loss-making companies, distorted by one-off items, and structurally misleading for cyclical businesses",
+                "For cyclical stocks, P/E is often lowest at peak earnings and highest at trough earnings, the opposite of good timing for a naive low-P/E screen",
+                "A fuller value toolbox includes P/B, EV/EBITDA, dividend yield, and free cash flow yield, each with its own distinct weakness",
+                "Composite value scores, built by averaging standardised z-scores across several metrics, are more robust than any single ratio, which is why NSE's own value indices use this approach",
+                "A value trap is a stock that stays cheap because its cheapness reflects genuine structural decline, not temporary cyclicality, a pattern seen repeatedly in parts of India's PSU space",
+                "Distinguishing cyclical cheapness from a genuine value trap generally requires layering in another signal, such as balance sheet strength, quality, or momentum, rather than trusting value in isolation"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

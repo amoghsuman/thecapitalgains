@@ -1,0 +1,223 @@
+{
+  "courseSlug": "advanced-machine-learning-techniques-for-trading-ensembles-and-deep-learning",
+  "chapters": [
+    {
+      "title": "Chapter 3: Ensemble Methods II: Stacking and Blending",
+      "lessons": [
+        {
+          "title": "Building a Stacked Ensemble: Tree Models Under a Linear Meta-Learner",
+          "slug": "building-a-stacked-ensemble-tree-models-under-a-linear-meta-learner",
+          "body": [
+            {
+              "_key": "amlc3l2b01",
+              "_type": "bigIdea",
+              "text": "The most common mistake in a first stacking attempt is reaching for another complex model as the meta-learner. Your base models already carry all the nonlinear firepower this ensemble needs. The meta-learner's job is narrow, decide how much to trust each one, and a plain logistic regression is usually not a compromise, it is the correct tool."
+            },
+            {
+              "_key": "amlc3l2b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc3l2b02s1", "_type": "span", "text": "Why the Meta-Learner Should Usually Be Simple", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc3l2b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc3l2b03s1",
+                  "_type": "span",
+                  "text": "A meta-learner combining three base models has exactly three inputs, one predicted probability per base model, and rarely more than a few thousand out-of-fold rows to learn from. That is a tiny, low-dimensional problem. Putting a second gradient booster on top of it does not add useful flexibility, it adds a second layer of variance stacked directly on top of the first, on data that is already thin. A simple, regularized logistic regression, or ridge regression for a continuous target, has more than enough capacity for a three- or four-input combination problem, and it fails in a far more forgiving way when it does overfit.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc3l2b04",
+              "_type": "callout",
+              "type": "insight",
+              "text": "A complex meta-learner on top of complex base models is stacking overfitting risk, not stacking skill. This course defaults to a linear meta-learner for exactly the same reason Chapter 2 insisted on shallow trees inside a boosted ensemble: constrain the part of the system with the least data to learn from."
+            },
+            {
+              "_key": "amlc3l2b05",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc3l2b05s1", "_type": "span", "text": "The Base Models: Choosing for Diversity, Not Just Individual Quality", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc3l2b06",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc3l2b06s1",
+                  "_type": "span",
+                  "text": "This lesson stacks three base models built for genuinely different reasons: the random forest from Chapter 2's first lesson, the XGBoost model from Chapter 2's second lesson, and a plain L2-regularized logistic regression trained on the same factor set. The first two already differ in how they build trees; the logistic regression differs in kind entirely, with no tree structure at all.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc3l2b07",
+              "_type": "table",
+              "caption": "Three base models, three different blind spots",
+              "headers": ["Base Model", "Captures Well", "Likely Blind Spot"],
+              "rows": [
+                { "_key": "amlc3l2b07r1", "_type": "tableRow", "cells": ["Random forest (bagging)", "Nonlinear feature interactions, e.g. value crossed with quality trend", "Smooth, globally linear relationships; wastes splits approximating them"] },
+                { "_key": "amlc3l2b07r2", "_type": "tableRow", "cells": ["XGBoost (boosting)", "Sharper, sequentially refined nonlinear structure", "More prone to overfitting thin signal if under-regularized"] },
+                { "_key": "amlc3l2b07r3", "_type": "tableRow", "cells": ["Logistic regression", "Smooth, monotonic linear relationships; stable, low variance", "Cannot represent interactions between features at all"] }
+              ]
+            },
+            {
+              "_key": "amlc3l2b08",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc3l2b08s1", "_type": "span", "text": "Building the Stack, Step by Step", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc3l2b09",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "from sklearn.ensemble import RandomForestClassifier\nfrom xgboost import XGBClassifier\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.model_selection import TimeSeriesSplit\nimport numpy as np, pandas as pd\n\nbase_models = {\n    \"rf\": RandomForestClassifier(n_estimators=500, max_depth=5, min_samples_leaf=50, max_features=\"sqrt\", random_state=42),\n    \"xgb\": XGBClassifier(n_estimators=800, learning_rate=0.02, max_depth=3, subsample=0.8, colsample_bytree=0.8, reg_lambda=1.5),\n    \"logit\": LogisticRegression(C=0.5, max_iter=1000),\n}\n\ntscv = TimeSeriesSplit(n_splits=5)\noof = {name: np.full(len(X_train), np.nan) for name in base_models}\n\nfor train_idx, val_idx in tscv.split(X_train):\n    for name, model in base_models.items():\n        model.fit(X_train.iloc[train_idx], y_train.iloc[train_idx])\n        oof[name][val_idx] = model.predict_proba(X_train.iloc[val_idx])[:, 1]\n\nmeta_X = pd.DataFrame(oof).dropna()\nmeta_y = y_train.loc[meta_X.index]\n\nmeta_learner = LogisticRegression()\nmeta_learner.fit(meta_X, meta_y)\n\nprint(dict(zip(meta_X.columns, meta_learner.coef_[0])))",
+              "caption": "Three base models, one TimeSeriesSplit loop generating out-of-fold predictions for all of them, one logistic regression meta-learner. Nothing here is more exotic than the pieces built in Chapter 2 and this chapter's first lesson."
+            },
+            {
+              "_key": "amlc3l2b10",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc3l2b10s1", "_type": "span", "text": "Reading the Meta-Learner's Weights", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc3l2b11",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc3l2b11s1",
+                  "_type": "span",
+                  "text": "With a linear meta-learner, the coefficients printed at the end of the code above are directly interpretable: they are literally how much the stack trusts each base model. The genuinely interesting case is not the base model with the highest coefficient, it is a base model with weak standalone accuracy that still earns a meaningful, non-trivial coefficient. That combination means the meta-learner has found real complementary value in a model that looks unimpressive on its own, exactly the decorrelation payoff this chapter's first lesson predicted.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc3l2b12",
+              "_type": "table",
+              "caption": "Illustrative example: standalone accuracy is not the same question as meta-learner weight",
+              "headers": ["Base Model", "Standalone Walk-Forward Accuracy", "Meta-Learner Coefficient"],
+              "rows": [
+                { "_key": "amlc3l2b12r1", "_type": "tableRow", "cells": ["Random forest", "54%", "0.3, small; largely redundant with XGBoost"] },
+                { "_key": "amlc3l2b12r2", "_type": "tableRow", "cells": ["XGBoost", "56%", "1.8, the primary driver"] },
+                { "_key": "amlc3l2b12r3", "_type": "tableRow", "cells": ["Logistic regression", "51%, barely above chance alone", "0.9, weak alone, but genuinely complementary"] }
+              ]
+            },
+            {
+              "_key": "amlc3l2b13",
+              "_type": "callout",
+              "type": "insight",
+              "text": "The logistic regression's 51% standalone accuracy would make most people drop it from the ensemble. Its 0.9 meta-learner coefficient says the opposite: whatever it gets right, it gets right in a way the two tree models collectively miss, and the stack is measurably worse without it. Individual accuracy and ensemble contribution are different questions, and only the second one should decide whether a base model stays in."
+            },
+            {
+              "_key": "amlc3l2b14",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc3l2b14s1", "_type": "span", "text": "Validating the Stack Honestly", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc3l2b15",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc3l2b15s1",
+                  "_type": "span",
+                  "text": "A stacked ensemble needs two separate layers of held-out data, not one. The out-of-fold predictions inside the training window are what keep the meta-learner honest about each base model. But the whole stack, base models and meta-learner together, still needs to be evaluated on a further, final walk-forward period that none of them, base or meta, ever touched during either training or out-of-fold generation. Skipping this and reporting the meta-learner's cross-validated performance as if it were the final answer quietly reuses the same data twice, once to build the stack and once to grade it.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc3l2b16",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Out-of-fold predictions make the meta-learner honest about the base models. They do not make the meta-learner itself honest about its own fit. Reserve a genuinely separate final walk-forward test period for the complete stack, the same discipline this course has applied to every single model so far, not a smaller version of it for the one step that combines everything else."
+            },
+            {
+              "_key": "amlc3l2b17",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc3l2b17s1", "_type": "span", "text": "What's Next", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc3l2b18",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc3l2b18s1",
+                  "_type": "span",
+                  "text": "The logistic regression's surprising usefulness in this lesson's table was asserted, not measured. The next lesson makes that measurement precise: how to quantify diversity between base models directly, using error correlation, rather than eyeballing a coefficient and hoping it reflects something real.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc3l2b19",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Combining Base Model Predictions With Meta-Learner Weights",
+              "prompt": "A logistic regression meta-learner has an intercept of -0.10, a coefficient of 1.8 on the XGBoost base model's predicted probability, and a coefficient of 0.9 on the logistic regression base model's predicted probability (random forest's coefficient is negligible and is dropped from this calculation). For a stock where XGBoost predicts a probability of 0.60 and the base logistic model predicts 0.55, what is the meta-learner's raw linear score, intercept plus the weighted sum, before the sigmoid is applied?",
+              "correctValue": 1.475,
+              "tolerance": 0.01,
+              "explanation": "Raw score = -0.10 + (1.8 × 0.60) + (0.9 × 0.55) = -0.10 + 1.08 + 0.495 = 1.475. Passing this through the logistic sigmoid, 1 / (1 + e^-1.475) ≈ 0.81, gives the stacked ensemble's final predicted probability, noticeably more confident than either base model alone, exactly the value a well-fit meta-learner is supposed to add."
+            },
+            {
+              "_key": "amlc3l2b20",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "A Base Model With Weak Standalone Accuracy but a Real Meta-Learner Weight",
+              "scenario": "In your stacked ensemble, the logistic regression base model has the lowest standalone walk-forward accuracy of the three base models, barely better than chance on its own. Despite this, the meta-learner assigns it a meaningful positive coefficient, and removing it from the stack entirely measurably lowers the stack's overall walk-forward accuracy.",
+              "prompt": "How do you explain this to a colleague who wants to drop the logistic regression base model because it 'barely predicts anything on its own'?",
+              "modelAnswer": "Standalone accuracy is not the right test for whether a base model belongs in a stack. What matters is whether its errors are sufficiently uncorrelated with the other base models' errors, the decorrelation thread running through this chapter. A base model that is individually weak but wrong in a different way than the tree models can still add real value to the combination, because the meta-learner can lean on it precisely in the situations where the tree models are collectively wrong. The correct test is not the base model's own accuracy, it is whether the stack's walk-forward accuracy with the base model included beats the stack's accuracy with it removed, which the scenario says it does."
+            },
+            {
+              "_key": "amlc3l2b21",
+              "_type": "keyTakeaways",
+              "points": [
+                "A meta-learner combining a handful of base model predictions is a small, low-dimensional problem; a simple, regularized linear or logistic model is usually the right tool, not a compromise",
+                "Choose base models for genuinely different blind spots, not just individually high accuracy; this lesson paired a random forest, an XGBoost model, and a logistic regression for exactly that reason",
+                "A linear meta-learner's coefficients are directly interpretable as how much the stack trusts each base model",
+                "A base model with weak standalone accuracy can still earn a meaningful meta-learner weight if its errors are sufficiently uncorrelated with the other base models, a genuine complementary contribution, not a fluke",
+                "Stacking needs two layers of held-out data: out-of-fold predictions to train the meta-learner honestly, and a separate final walk-forward period to evaluate the complete stack",
+                "The next lesson turns 'genuinely uncorrelated errors' from an assumption into a measured quantity"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,284 @@
+{
+  "courseSlug": "understanding-stochastic-calculus-brownian-motion-itos-lemma-and-the-path-to-black-scholes",
+  "chapters": [
+    {
+      "title": "Chapter 1: The Wiener Process: From Random Walks to Brownian Motion",
+      "lessons": [
+        {
+          "title": "Random Walks Revisited: The Discrete Building Block of Randomness",
+          "slug": "random-walks-revisited-the-discrete-building-block-of-randomness",
+          "body": [
+            {
+              "_key": "c1l1-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l1-001s1", "_type": "span", "marks": [], "text": "Rohan is prepping for a prop trading desk interview in Mumbai. The interviewer's first question sounds deceptively simple: model the price of a single Bank Nifty futures contract as a sequence of ticks, where each tick moves the price up or down by one unit with equal probability, independent of every tick before it. After 100 ticks, what do you actually know about where the price probably ended up? Rohan freezes. He has traded options on Zerodha for two years, but he has never had to describe randomness with real math. This lesson gives him, and you, exactly that language. Every stochastic process this course builds toward, Brownian motion, Ito's lemma, and eventually the Black-Scholes formula, starts from the object in this lesson: the humble random walk." }
+              ]
+            },
+            {
+              "_key": "c1l1-002",
+              "_type": "bigIdea",
+              "text": "A random walk is what you get when you add up a long sequence of independent, identically distributed coin flips. It looks trivial. It is not. Shrink each step's size and make the steps arrive faster and faster, and this discrete object becomes Brownian motion, the continuous-time randomness that every formula in this course is built on."
+            },
+            {
+              "_key": "c1l1-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l1-003s1", "_type": "span", "marks": [], "text": "What a Symmetric Random Walk Actually Is" }
+              ]
+            },
+            {
+              "_key": "c1l1-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l1-004s1", "_type": "span", "marks": [], "text": "Take a sequence of steps, each one a coin flip: up one unit with probability one half, down one unit with probability one half. Every flip is independent of every flip before it, and every flip is drawn from the exact same distribution. Add up the first n flips and you get the position of the walk after n steps. That running sum is a symmetric simple random walk. Nothing more exotic is happening underneath it, and that is precisely why it is the right place to start a course on stochastic calculus. Every later object, the Wiener process, Ito's lemma, geometric Brownian motion, is a more sophisticated cousin of this same running sum." }
+              ]
+            },
+            {
+              "_key": "c1l1-005",
+              "_type": "mathBlock",
+              "latex": "S_n = X_1 + X_2 + \\cdots + X_n, \\qquad X_i \\in \\{+1, -1\\}, \\qquad P(X_i = +1) = P(X_i = -1) = \\tfrac{1}{2}",
+              "caption": "The symmetric simple random walk after n steps"
+            },
+            {
+              "_key": "c1l1-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "c1l1-006m1", "_type": "glossaryTerm", "definition": "Short for independent and identically distributed. Each step is drawn from the same probability distribution as every other step, and knowing the outcome of one step tells you nothing about any other step." }
+              ],
+              "children": [
+                { "_key": "c1l1-006s1", "_type": "span", "marks": [], "text": "The two words doing all the work in that definition are " },
+                { "_key": "c1l1-006s2", "_type": "span", "marks": ["c1l1-006m1"], "text": "i.i.d." },
+                { "_key": "c1l1-006s3", "_type": "span", "marks": [], "text": ": independent and identically distributed. Independent means the walk has no memory. Whether step 47 was up tells you absolutely nothing about step 48. Identically distributed means every single step comes from the same coin, not a coin that gets biased or reshaped as the walk progresses. Hold onto both properties. When this course defines the Wiener process formally in the next lesson, it inherits exactly these two properties, just stretched across continuous time instead of discrete steps." }
+              ]
+            },
+            {
+              "_key": "c1l1-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l1-007s1", "_type": "span", "marks": [], "text": "The Two Numbers That Describe Where It Ends Up" }
+              ]
+            },
+            {
+              "_key": "c1l1-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l1-008s1", "_type": "span", "marks": [], "text": "You cannot say exactly where a random walk will be after n steps, only how it is likely to be spread out. Two numbers capture that spread completely for a symmetric simple random walk: the expected value, and the variance. Because each step is equally likely to be up or down, the expected value of any single step is zero, and expectations add, so the expected value of the entire walk is zero no matter how many steps you take." }
+              ]
+            },
+            {
+              "_key": "c1l1-009",
+              "_type": "mathBlock",
+              "latex": "E[X_i] = 0 \\ \\ \\Rightarrow\\ \\ E[S_n] = E[X_1] + E[X_2] + \\cdots + E[X_n] = 0",
+              "caption": "Expected position after n steps"
+            },
+            {
+              "_key": "c1l1-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l1-010s1", "_type": "span", "marks": [], "text": "Variance behaves differently, and this difference is the single most important fact in this lesson. Each step has variance 1, since X_i is either +1 or -1 with equal probability, and its mean is 0. Because the steps are independent, variances add directly, with no cross terms to worry about. That gives a variance of exactly n after n steps, not n squared, and not the square root of n. The standard deviation, which is what you actually feel as \"how spread out\" the walk is, is the square root of n." }
+              ]
+            },
+            {
+              "_key": "c1l1-011",
+              "_type": "mathBlock",
+              "latex": "\\text{Var}(S_n) = \\sum_{i=1}^{n} \\text{Var}(X_i) = n, \\qquad \\text{SD}(S_n) = \\sqrt{n}",
+              "caption": "Variance and standard deviation after n steps"
+            },
+            {
+              "_key": "c1l1-012",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "c1l1-012s1", "label": "Expected position after n steps", "value": "0", "context": "True for any n, by symmetry" },
+                { "_key": "c1l1-012s2", "label": "Variance after n steps", "value": "n", "context": "Variances of independent steps simply add" },
+                { "_key": "c1l1-012s3", "label": "Standard deviation after n steps", "value": "√n", "context": "Spread grows with the square root of steps, not steps themselves" },
+                { "_key": "c1l1-012s4", "label": "Steps needed to double the spread", "value": "4x", "context": "Since √4 = 2, you need four times as many steps to double the standard deviation" }
+              ]
+            },
+            {
+              "_key": "c1l1-013",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This square-root-of-n scaling is not a curiosity, it is a rule you have almost certainly already used. When you annualize a stock's daily volatility on a tool like screener.in or an NSE fact sheet, you multiply the daily standard deviation by the square root of 252 (roughly the number of trading days in a year), not by 252 itself. That rule, and the entire idea of \"volatility scales with the square root of time\" that sits underneath the Black-Scholes formula, is the exact same variance-adds-linearly logic you just derived for a coin-flip random walk."
+            },
+            {
+              "_key": "c1l1-014",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l1-014s1", "_type": "span", "marks": [], "text": "A Concrete Random Walk: Bank Nifty Futures, Tick by Tick" }
+              ]
+            },
+            {
+              "_key": "c1l1-015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l1-015s1", "_type": "span", "marks": [], "text": "Suppose Bank Nifty futures is trading at 48,000 and, purely as a simplified model to build intuition, every tick moves the price up or down by exactly 0.05 (the standard NSE tick size for this contract), with equal probability, independent of the previous tick. Here is one specific, randomly generated sample path over the first 10 ticks, with +1 meaning an up-tick and -1 meaning a down-tick in the underlying random walk S_n." }
+              ]
+            },
+            {
+              "_key": "c1l1-016",
+              "_type": "table",
+              "caption": "One sample path of a 10-step symmetric random walk",
+              "headers": ["Tick number", "Step (Xi)", "Position (Sn)"],
+              "rows": [
+                { "_key": "c1l1-016r1", "_type": "tableRow", "cells": ["1", "+1", "1"] },
+                { "_key": "c1l1-016r2", "_type": "tableRow", "cells": ["2", "-1", "0"] },
+                { "_key": "c1l1-016r3", "_type": "tableRow", "cells": ["3", "+1", "1"] },
+                { "_key": "c1l1-016r4", "_type": "tableRow", "cells": ["4", "+1", "2"] },
+                { "_key": "c1l1-016r5", "_type": "tableRow", "cells": ["5", "-1", "1"] },
+                { "_key": "c1l1-016r6", "_type": "tableRow", "cells": ["6", "-1", "0"] },
+                { "_key": "c1l1-016r7", "_type": "tableRow", "cells": ["7", "-1", "-1"] },
+                { "_key": "c1l1-016r8", "_type": "tableRow", "cells": ["8", "+1", "0"] },
+                { "_key": "c1l1-016r9", "_type": "tableRow", "cells": ["9", "+1", "1"] },
+                { "_key": "c1l1-016r10", "_type": "tableRow", "cells": ["10", "-1", "0"] }
+              ]
+            },
+            {
+              "_key": "c1l1-017",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l1-017s1", "_type": "span", "marks": [], "text": "Notice this particular path happens to end exactly where it started, at 0. That is one possible outcome, not the guaranteed one. Run the same process again and you will get a completely different path. This is exactly what \"sample path\" means: one realized trajectory out of the enormous number of trajectories the random process could have produced. The code below generates many such paths so you can see the family of possibilities, not just one member of it." }
+              ]
+            },
+            {
+              "_key": "c1l1-018",
+              "_type": "codeBlock",
+              "language": "python",
+              "caption": "Simulating symmetric random walk paths",
+              "code": "import random\n\ndef simulate_walk(n_steps=30):\n    position = 0\n    path = [position]\n    for _ in range(n_steps):\n        step = 1 if random.random() < 0.5 else -1\n        position += step\n        path.append(position)\n    return path\n\nn_paths = 3\nn_steps = 30\npaths = [simulate_walk(n_steps) for _ in range(n_paths)]\n\nfor i, path in enumerate(paths, start=1):\n    print(f\"Path {i}: ends at S_{n_steps} = {path[-1]}\")\n\n# Sample output (yours will differ, since this is random each run):\n# Path 1: ends at S_30 = 2\n# Path 2: ends at S_30 = -6\n# Path 3: ends at S_30 = 10"
+            },
+            {
+              "_key": "c1l1-019",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Three simulated random walk paths, 30 steps each",
+              "xAxisLabel": "Step number",
+              "yAxisLabel": "Position (Sn)",
+              "data": [
+                { "_key": "c1l1-019d1", "label": "0" },
+                { "_key": "c1l1-019d2", "label": "5" },
+                { "_key": "c1l1-019d3", "label": "10" },
+                { "_key": "c1l1-019d4", "label": "15" },
+                { "_key": "c1l1-019d5", "label": "20" },
+                { "_key": "c1l1-019d6", "label": "25" },
+                { "_key": "c1l1-019d7", "label": "30" }
+              ],
+              "series": [
+                { "_key": "c1l1-019se1", "label": "Path A", "values": [0, 1, -2, 3, 0, 5, 2] },
+                { "_key": "c1l1-019se2", "label": "Path B", "values": [0, -3, 0, -1, -4, -3, -6] },
+                { "_key": "c1l1-019se3", "label": "Path C", "values": [0, 1, 4, 5, 8, 7, 10] }
+              ]
+            },
+            {
+              "_key": "c1l1-020",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l1-020s1", "_type": "span", "marks": [], "text": "Look at how the three paths fan out as the step count rises. At step 5 they sit close together, between -3 and 1. By step 30 they have spread from -6 to 10. That widening fan is the square-root-of-n rule showing up visually. The standard deviation at step 5 is roughly 2.2 (the square root of 5); at step 30 it is roughly 5.5 (the square root of 30). The paths are not spreading out proportionally to time, they are spreading out proportionally to the square root of time, and every option pricing formula in this course inherits that exact shape." }
+              ]
+            },
+            {
+              "_key": "c1l1-021",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l1-021s1", "_type": "span", "marks": [], "text": "From Discrete Steps to a Continuous Path: The Preview" }
+              ]
+            },
+            {
+              "_key": "c1l1-022",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l1-022s1", "_type": "span", "marks": [], "text": "Here is the idea this entire chapter is building toward, stated informally before the next lesson makes it precise. Take the random walk above and speed it up: instead of one tick per second, take a thousand ticks per second, then a million, then more, while shrinking the size of each individual tick so that the total variance over a fixed stretch of time, say one second, stays exactly the same. As the number of steps per second goes to infinity and the step size shrinks correspondingly, this discrete, jagged random walk converges to a continuous, unbroken random path. That limiting object is Brownian motion, also called the Wiener process, and it is the subject of the very next lesson. Nothing new is being invented there. It is this lesson's random walk, taken to its natural limit." }
+              ]
+            },
+            {
+              "_key": "c1l1-023",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Do not mistake this lesson's model for a description of how real stock prices move. Real prices drift upward or downward over time, and up-moves and down-moves are not exactly equally likely or equally sized the way a fair coin flip is. The symmetric random walk here is a stripped-down teaching device, chosen because it is the simplest possible object with independent, identically distributed steps. Chapter 3 replaces it with geometric Brownian motion, which adds drift and a realistic volatility calibrated from actual Nifty or Bank Nifty data. Everything you learn from this bare-bones version, especially the square-root-of-time scaling, carries over unchanged."
+            },
+            {
+              "_key": "c1l1-024",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Test the square-root scaling rule",
+              "question": "A symmetric random walk has a standard deviation of 10 ticks after 100 steps. Roughly what will its standard deviation be after 400 steps, four times as many steps?",
+              "options": [
+                "40 ticks, since standard deviation scales linearly with the number of steps",
+                "20 ticks, since standard deviation scales with the square root of the number of steps",
+                "10 ticks, since standard deviation does not depend on the number of steps",
+                "100 ticks, since standard deviation scales with the square of the number of steps"
+              ],
+              "correctIndex": 1,
+              "explanation": "Variance scales linearly with the number of steps: Var(S_n) = n. Standard deviation is the square root of variance, so it scales with the square root of n. Going from 100 steps to 400 steps is a 4x increase in steps, and the square root of 4 is 2, so the standard deviation doubles, from 10 ticks to 20 ticks, not 40."
+            },
+            {
+              "_key": "c1l1-025",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Standard deviation of a Bank Nifty futures random walk",
+              "prompt": "Bank Nifty futures is at 48,000. Model each tick as a move of ±0.05 with equal probability, independent of previous ticks. After 100 ticks, what is the standard deviation of the futures price, in rupees? (Use SD(Sn) = √n, then convert ticks to rupees using the 0.05 tick size.)",
+              "correctValue": 0.5,
+              "tolerance": 0.02,
+              "unit": "₹",
+              "explanation": "SD(S_100) in ticks is √100 = 10 ticks. Converting to rupees: 10 ticks × ₹0.05 per tick = ₹0.50. Note how small this number is; it is small because this toy model has no drift and a tiny, constant tick size. Once volatility is calibrated from real Bank Nifty data in Chapter 3, this same square-root-of-n machinery produces the realistic price ranges you see quoted as implied volatility on an options chain."
+            },
+            {
+              "_key": "c1l1-026",
+              "_type": "flashcardSet",
+              "title": "Core Terms From This Lesson",
+              "cards": [
+                { "_key": "c1l1-026f1", "term": "Symmetric simple random walk", "definition": "The running sum of a sequence of independent +1/-1 steps, each equally likely, used to build the simplest possible discrete random process." },
+                { "_key": "c1l1-026f2", "term": "i.i.d. (independent and identically distributed)", "definition": "A property of a sequence of random variables where each one has the same distribution as the others, and knowing any one of them gives no information about the rest." },
+                { "_key": "c1l1-026f3", "term": "Sample path", "definition": "One specific, fully realized trajectory produced by a random process, as opposed to the full range of trajectories the process could have produced." },
+                { "_key": "c1l1-026f4", "term": "Square-root-of-time scaling", "definition": "The rule that the standard deviation of a sum of independent, identically distributed steps grows with the square root of the number of steps (or elapsed time), not proportionally to the number of steps itself." }
+              ]
+            },
+            {
+              "_key": "c1l1-027",
+              "_type": "keyTakeaways",
+              "points": [
+                "A symmetric simple random walk is the running sum of i.i.d. +1/-1 steps, each equally likely and independent of every other step.",
+                "Its expected value after n steps is always 0, by symmetry; its variance after n steps is exactly n, because variances of independent steps add.",
+                "Standard deviation therefore scales with the square root of n, not n itself, the same square-root-of-time rule used to annualize volatility in real markets.",
+                "A sample path is one realized outcome of the random walk; simulating many paths reveals how they fan out as steps accumulate, widening proportionally to √n.",
+                "This discrete random walk is a stepping stone: shrinking the step size while speeding up the steps, holding total variance fixed, produces Brownian motion in the limit, formally defined in the next lesson.",
+                "Real stock prices are not a fair-coin random walk; they carry drift and realistic volatility, which Chapter 3's geometric Brownian motion model adds back in."
+              ]
+            },
+            {
+              "_key": "c1l1-028",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to buy, sell, or hold any security or contract named here. Bank Nifty futures price levels and tick behavior used above are simplified illustrative numbers, not live market data. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

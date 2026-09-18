@@ -1,0 +1,210 @@
+{
+  "courseSlug": "understanding-factor-investing-from-a-quant-lens",
+  "chapters": [
+    {
+      "title": "Chapter 5: Capstone - Building and Presenting Your Own Factor Strategy",
+      "lessons": [
+        {
+          "title": "Common Interview Questions on Factor Investing, and How to Answer Them",
+          "slug": "common-interview-questions-on-factor-investing-and-how-to-answer-them",
+          "body": [
+            {
+              "_key": "f5l3b01",
+              "_type": "bigIdea",
+              "text": "An interviewer asking about factor investing is rarely testing whether you memorised a definition. They are testing whether you can reason your way through the question live, out loud, the way you would need to on a real desk. This final lesson drills the questions this course's material tends to generate, and the reasoning patterns behind strong answers, not scripts to recite."
+            },
+            {
+              "_key": "f5l3b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "f5l3b02s1", "_type": "span", "text": "This is the last lesson of the course, and it is built almost entirely as a drill. Work through each question before reading the explanation, the same way you would in a real interview, thinking out loud rather than jumping to the answer.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f5l3b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "f5l3b03s1", "_type": "span", "text": "Category 1: Foundations and Theory", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f5l3b04",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Interview Question: CAPM vs Multi-Factor Models",
+              "question": "An interviewer asks: 'What's the key limitation of CAPM that the Fama-French three-factor model addresses?' Which answer best demonstrates real understanding rather than memorised terminology?",
+              "options": [
+                "CAPM is too complicated, and the three-factor model simplified it",
+                "CAPM assumes beta is the only priced risk, but empirical anomalies like the P/E effect and the size effect showed returns beta alone couldn't explain, which the three-factor model addressed by adding size and value",
+                "CAPM only works for bonds, and the three-factor model extended it to equities",
+                "The three-factor model replaced beta entirely with size and value"
+              ],
+              "correctIndex": 1,
+              "explanation": "The strongest answer names the specific empirical anomalies (Basu's P/E effect, Banz's size effect) that beta alone couldn't explain, and correctly describes the three-factor model as adding size and value alongside beta, not replacing it. This shows you understand the historical and empirical motivation, not just the model's name."
+            },
+            {
+              "_key": "f5l3b05",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Interview Question: Is a Market-Cap Index Factor-Neutral?",
+              "question": "An interviewer asks: 'Is a plain Nifty 50 index fund a factor-neutral baseline?' What is the strongest answer?",
+              "options": [
+                "Yes, because it holds every stock in the index with no active decisions made",
+                "No, because market-cap weighting mechanically overweights larger, recently stronger, often more expensive stocks, which is itself an implicit size and anti-value tilt, even though it is never disclosed as one",
+                "No, because SEBI requires all index funds to carry a mandated momentum tilt",
+                "Yes, because the Nifty 50 is rebalanced periodically to remove any bias"
+              ],
+              "correctIndex": 1,
+              "explanation": "The strongest answer identifies the specific mechanism, market-cap weighting mathematically overweights larger, recently appreciated stocks, and names the resulting implicit tilt, rather than simply asserting an index fund is 'neutral' because it feels passive."
+            },
+            {
+              "_key": "f5l3b06",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "f5l3b06s1", "_type": "span", "text": "Category 2: The Factor Zoo", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f5l3b07",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Interview Question: The Cyclical P/E Trap",
+              "question": "An interviewer asks: 'Why might a very low P/E stock actually be a bad buy?' Which answer shows the deepest understanding?",
+              "options": [
+                "Low P/E stocks are always bad buys, full stop",
+                "For a cyclical business, P/E is often lowest right at peak earnings, precisely when the business may be about to turn down, so a naive low-P/E screen can buy at the worst point in the cycle; alternatively, it may be a genuine value trap where the low price reflects real structural decline",
+                "P/E is a meaningless ratio and should never be used",
+                "Low P/E always signals fraud or accounting manipulation"
+              ],
+              "correctIndex": 1,
+              "explanation": "The strongest answer offers two distinct, correct mechanisms, the cyclical P/E trap and the structural value trap, rather than a blanket dismissal of the metric, showing you understand both when a low P/E is a real opportunity and when it is a warning sign."
+            },
+            {
+              "_key": "f5l3b08",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Interview Question: Momentum Crashes",
+              "question": "An interviewer asks: 'Why are momentum strategies prone to sharp crashes?' What is the strongest answer?",
+              "options": [
+                "Momentum strategies are simply too risky to run and should be avoided entirely",
+                "Momentum mechanically rotates into defensive, low-beta names during a downturn as a side effect of ranking on recent returns, so when a sharp rebound follows, led by the previously battered high-beta names the strategy no longer holds, it can underperform sharply",
+                "Momentum crashes happen randomly and cannot be explained or anticipated",
+                "Momentum strategies crash because SEBI restricts momentum trading during volatile periods"
+              ],
+              "correctIndex": 1,
+              "explanation": "The strongest answer describes the precise mechanism, mechanical rotation into defensive names during a downturn followed by underperformance during a rebound led by previously battered names, referencing Daniel and Moskowitz's structural explanation rather than calling it unpredictable bad luck."
+            },
+            {
+              "_key": "f5l3b09",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "f5l3b09s1", "_type": "span", "text": "Category 3: Construction and Backtesting", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f5l3b10",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Interview Question: Look-Ahead vs Survivorship Bias",
+              "question": "An interviewer asks: 'What's the difference between look-ahead bias and survivorship bias in a backtest?' What is the strongest answer?",
+              "options": [
+                "They are two names for the same problem",
+                "Look-ahead bias uses information before it would actually have been public, such as tagging results to the period-end date instead of the real disclosure date; survivorship bias builds the universe only from companies still listed today, silently excluding delisted or bankrupt ones",
+                "Look-ahead bias only affects momentum strategies, survivorship bias only affects value strategies",
+                "Survivorship bias is only a concern for bond portfolios, not equities"
+              ],
+              "correctIndex": 1,
+              "explanation": "The strongest answer clearly distinguishes the two mechanisms with a concrete example for each, showing they are related (both stem from using 'today's knowledge' on historical data) but distinct errors, rather than conflating them."
+            },
+            {
+              "_key": "f5l3b11",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Interview Question: Walk Me Through a Backtest, Start to Finish",
+              "scenario": "This is one of the most common open-ended questions in a quant interview: 'Walk me through, step by step, how you would backtest a new factor idea, from raw data to a final performance report.' There is no single correct script, but a strong answer touches on every major stage this course covered, in a coherent order.",
+              "prompt": "Structure your own answer to this question, covering data, construction, testing, and reporting.",
+              "modelAnswer": "A strong answer moves through roughly this sequence: first, define the universe and handle outliers, filtering for minimum liquidity and winsorising extreme values before any scoring happens. Second, build or source point-in-time data, respecting real disclosure timing, for instance SEBI's 45-day and 60-day windows for Indian companies, and include stocks that were later delisted or merged to avoid survivorship bias. Third, standardise each raw metric into a z-score, correct the direction so higher always means more attractive, and decide deliberately whether to sector-neutralise. Fourth, combine the standardised metrics into a composite score, generally with simple, equal weighting to avoid overfitting. Fifth, choose breakpoints and a rebalancing frequency matched to how fast the signal decays, faster for momentum, slower for value or quality, and decide on long-only versus long-short construction given real-world constraints like India's F&O eligibility rules. Sixth, apply realistic transaction costs, brokerage, STT, and market impact, rather than assuming frictionless execution. Seventh, test robustness across a few reasonable parameter variations rather than reporting only the best-looking result. Eighth, report risk-adjusted metrics and performance broken out by sub-period or regime, not just a single aggregate return. Finally, before committing real capital, paper trade the process through several rebalance cycles, deploy capital in phases, and monitor live factor exposure, Effective N, and crowding risk on an ongoing basis, with a predefined kill switch. An answer that touches most of these stages, in roughly this order, demonstrates the full research-to-implementation discipline this course was built around."
+            },
+            {
+              "_key": "f5l3b12",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "f5l3b12s1", "_type": "span", "text": "Category 4: Risk and Implementation", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f5l3b13",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Interview Question: The August 2007 Quant Quake",
+              "question": "An interviewer asks: 'Why did well-run, disciplined quant funds suffer just as badly as poorly-run ones during the August 2007 quant quake?' What is the strongest answer?",
+              "options": [
+                "Well-run funds actually performed fine; only poorly-run funds suffered losses",
+                "Crowding risk is not about strategy quality; it emerges when many independently well-researched strategies converge on similar positions, so a large fund's forced deleveraging pushed prices against everyone else holding highly overlapping positions, regardless of how rigorous each individual fund's own research was",
+                "The event was caused entirely by a regulatory change that banned quantitative trading",
+                "It was pure coincidence with no identifiable mechanism"
+              ],
+              "correctIndex": 1,
+              "explanation": "The strongest answer explains why crowding is systemic rather than a quality signal, disciplined research and crowding risk are separate dimensions entirely, and a fund can be excellent at the former while still fully exposed to the latter."
+            },
+            {
+              "_key": "f5l3b14",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Interview Question: When Would You Shut Down a Live Strategy?",
+              "scenario": "An interviewer asks: 'Your live factor strategy has underperformed for six months. How do you decide whether to shut it down or stay the course?'",
+              "prompt": "What reasoning process would a strong answer describe, and what specific course concepts would it reference?",
+              "modelAnswer": "A strong answer references a predefined kill switch, written and agreed before the strategy went live, specifying the exact conditions, such as a live drawdown exceeding a set multiple of the backtest's worst historical drawdown, that trigger a formal review rather than an emotional, in-the-moment decision. It would also reference Chapter 2's lesson on factor cyclicality and performance chasing: six months of underperformance alone is not automatically evidence the strategy is broken, since every factor in this course has gone through real, multi-year stretches of underperformance without being permanently impaired, and capitulating right after a long drawdown has historically been closer to the point of maximum pain than proof of failure. The strongest answers demonstrate they would check the predefined kill switch criteria objectively, rather than deciding in the moment based on how the six months of losses feel."
+            },
+            {
+              "_key": "f5l3b15",
+              "_type": "flashcardSet",
+              "title": "Rapid-Fire Recall: Six Ideas From Across This Course",
+              "cards": [
+                { "_key": "f5l3b15c1", "term": "CAPM's core limitation", "definition": "It assumes beta is the only priced risk factor, which empirical anomalies like the P/E effect and size effect showed to be incomplete." },
+                { "_key": "f5l3b15c2", "term": "The cyclical P/E trap", "definition": "P/E is often lowest at peak earnings and highest at trough earnings for cyclical stocks, the opposite of good timing for a naive low-P/E screen." },
+                { "_key": "f5l3b15c3", "term": "Look-ahead vs survivorship bias", "definition": "Look-ahead bias uses information before it was public; survivorship bias excludes companies that failed or were delisted from the historical universe." },
+                { "_key": "f5l3b15c4", "term": "Momentum crash mechanism", "definition": "Mechanical rotation into defensive, low-beta names during a downturn, followed by underperformance when previously battered, high-beta names lead the rebound." },
+                { "_key": "f5l3b15c5", "term": "Crowding vs strategy quality", "definition": "Crowding risk is systemic and can hurt well-researched strategies just as badly as poor ones, since it depends on how many others hold similar positions, not on research quality." },
+                { "_key": "f5l3b15c6", "term": "The kill switch principle", "definition": "Exit criteria decided in advance, while unemotional, protect against performance-chasing capitulation at exactly the point of maximum pain." }
+              ]
+            },
+            {
+              "_key": "f5l3b16",
+              "_type": "callout",
+              "type": "insight",
+              "text": "None of these model answers are scripts to memorise word for word, and a real interviewer will notice a recited answer instantly. What transfers is the reasoning pattern underneath each one: name the specific mechanism, not just the label; distinguish related but different concepts clearly; and always be ready to say what you don't know or haven't tested yet. That pattern, more than any single fact from this course, is what a quant research role is actually testing for."
+            },
+            {
+              "_key": "f5l3b17",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "These practice questions and model answers are illustrative study aids based on this course's content, not a guarantee of interview outcomes, which depend on the specific firm, role, and interviewer. This lesson is educational content, not investment, career, or legal advice."
+            },
+            {
+              "_key": "f5l3b18",
+              "_type": "keyTakeaways",
+              "points": [
+                "This course moved from a single-factor CAPM world in 1964 through the Fama-French revolution, the individual value, momentum, size, quality, and low-volatility factors, rigorous construction and backtesting, risk and crowding management, and finally to presenting original research",
+                "Strong interview answers name specific mechanisms and cite the underlying reasoning, not just terminology or a memorised definition",
+                "The 'walk me through a backtest' question rewards a coherent, ordered synthesis: universe and outliers, point-in-time data, standardisation and direction, combination, construction and cost, robustness, honest reporting, and phased live implementation with a kill switch",
+                "Crowding risk and factor cyclicality are both reasons a good strategy can underperform without being broken, and a strong candidate can explain the difference between the two",
+                "The single habit worth carrying forward from this entire course is intellectual honesty: stating hypotheses before results, disclosing data limitations, testing robustness, and being precise about what you know versus what you are still testing"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

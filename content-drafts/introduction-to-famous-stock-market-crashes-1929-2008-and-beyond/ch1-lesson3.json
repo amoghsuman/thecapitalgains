@@ -1,0 +1,945 @@
+{
+  "courseSlug": "introduction-to-famous-stock-market-crashes-1929-2008-and-beyond",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Markets Crash",
+      "lessons": [
+        {
+          "title": "Leverage, Panic, and the Selling Spiral",
+          "slug": "leverage-panic-and-the-selling-spiral",
+          "body": [
+            {
+              "_key": "c1l3-001",
+              "_type": "bigIdea",
+              "text": "Markets rarely crash because investors calmly change their minds. They crash because investors are forced to sell, whatever the price."
+            },
+            {
+              "_key": "c1l3-002",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-002s1",
+                  "_type": "span",
+                  "text": "In the last lesson you saw how bubbles inflate. This lesson explains why they burst so violently. The answer comes down to two forces that feed each other: borrowed money, which turns ordinary falls into wipeouts, and panic, which turns individual selling into a stampede. Put them together and you get a selling spiral, the engine inside every major crash from 1929 to March 2020.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-003",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-003s1",
+                  "_type": "span",
+                  "text": "Leverage: The Amplifier",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c1l3-004m1",
+                  "_type": "glossaryTerm",
+                  "definition": "Using borrowed money to take a position larger than your own capital. With 3x leverage, ₹1 lakh of your money controls a ₹3 lakh position."
+                },
+                {
+                  "_key": "c1l3-004m2",
+                  "_type": "glossaryTerm",
+                  "definition": "A broker-provided facility, regulated by SEBI, where the broker funds part of your share purchase and charges interest on the borrowed amount. The shares bought act as collateral."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c1l3-004s1",
+                  "_type": "span",
+                  "text": "Leverage",
+                  "marks": [
+                    "c1l3-004m1"
+                  ]
+                },
+                {
+                  "_key": "c1l3-004s2",
+                  "_type": "span",
+                  "text": " means controlling a bigger position than your own money could buy. In Indian markets, retail investors use it through a broker's ",
+                  "marks": []
+                },
+                {
+                  "_key": "c1l3-004s3",
+                  "_type": "span",
+                  "text": "Margin Trading Facility (MTF)",
+                  "marks": [
+                    "c1l3-004m2"
+                  ]
+                },
+                {
+                  "_key": "c1l3-004s4",
+                  "_type": "span",
+                  "text": ", through futures and options, or indirectly by borrowing against shares they already own. Leverage multiplies gains, and that is why it is popular. It multiplies losses by exactly the same factor, and that is why it is dangerous.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-005",
+              "_type": "mathBlock",
+              "latex": "\\text{Change in Your Capital (\\%)} = \\text{Change in Price (\\%)} \\times \\text{Leverage}",
+              "caption": "Ignoring interest and charges. At 5x leverage, a 20% fall in price becomes a 100% loss of your own money."
+            },
+            {
+              "_key": "c1l3-006",
+              "_type": "table",
+              "caption": "₹1 Lakh of Your Own Money, Stock Falls 20% (interest and charges ignored)",
+              "headers": [
+                "Leverage",
+                "Position Size",
+                "Borrowed",
+                "Loss on 20% Fall",
+                "Your Capital Left",
+                "Share of Your Capital Lost"
+              ],
+              "rows": [
+                {
+                  "_key": "c1l3-x1-1",
+                  "cells": [
+                    "1x",
+                    "₹1,00,000",
+                    "₹0",
+                    "₹20,000",
+                    "₹80,000",
+                    "20%"
+                  ]
+                },
+                {
+                  "_key": "c1l3-x1-2",
+                  "cells": [
+                    "2x",
+                    "₹2,00,000",
+                    "₹1,00,000",
+                    "₹40,000",
+                    "₹60,000",
+                    "40%"
+                  ]
+                },
+                {
+                  "_key": "c1l3-x1-3",
+                  "cells": [
+                    "5x",
+                    "₹5,00,000",
+                    "₹4,00,000",
+                    "₹1,00,000",
+                    "₹0",
+                    "100%"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-007",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "How Much of Your Capital Survives a Fall?",
+              "xAxisLabel": "Fall in share price (%)",
+              "yAxisLabel": "Your capital remaining (%)",
+              "data": [
+                {
+                  "_key": "c1l3-x2-1",
+                  "label": "0%"
+                },
+                {
+                  "_key": "c1l3-x2-2",
+                  "label": "10%"
+                },
+                {
+                  "_key": "c1l3-x2-3",
+                  "label": "20%"
+                },
+                {
+                  "_key": "c1l3-x2-4",
+                  "label": "30%"
+                },
+                {
+                  "_key": "c1l3-x2-5",
+                  "label": "40%"
+                },
+                {
+                  "_key": "c1l3-x2-6",
+                  "label": "50%"
+                }
+              ],
+              "series": [
+                {
+                  "_key": "c1l3-x3-1",
+                  "label": "No leverage (1x)",
+                  "values": [
+                    100,
+                    90,
+                    80,
+                    70,
+                    60,
+                    50
+                  ]
+                },
+                {
+                  "_key": "c1l3-x3-2",
+                  "label": "2x leverage",
+                  "values": [
+                    100,
+                    80,
+                    60,
+                    40,
+                    20,
+                    0
+                  ]
+                },
+                {
+                  "_key": "c1l3-x3-3",
+                  "label": "5x leverage",
+                  "values": [
+                    100,
+                    50,
+                    0,
+                    0,
+                    0,
+                    0
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-008",
+              "_type": "keyFact",
+              "label": "The Leverage Trap",
+              "value": "At 5x, a 20% fall wipes out 100% of your capital",
+              "context": "The unleveraged investor is down 20% and can wait for a recovery. The 5x trader has nothing left to wait with."
+            },
+            {
+              "_key": "c1l3-009",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Your Turn: Rahul's MTF Position",
+              "prompt": "Rahul has ₹2 lakh of his own money. He uses MTF to buy ₹6 lakh worth of a mid-cap stock, borrowing ₹4 lakh from his broker. The stock then falls 25%. Ignoring interest and charges, what percentage of Rahul's own ₹2 lakh has he lost?",
+              "correctValue": 75,
+              "tolerance": 0,
+              "unit": "%",
+              "explanation": "The position is 3x his capital. A 25% fall on ₹6 lakh is a loss of ₹1.5 lakh, which is 75% of his ₹2 lakh (25% × 3 = 75%). The real picture is worse: at 0.04% a day, interest on the ₹4 lakh borrowed is ₹160 a day, or ₹4,800 over 30 days, and it keeps running on weekends. An unleveraged investor in the same stock would be down just 25%."
+            },
+            {
+              "_key": "c1l3-010",
+              "_type": "collapsible",
+              "title": "How Margin and MTF Actually Work at an Indian Broker",
+              "content": [
+                {
+                  "_key": "c1l3-011",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c1l3-011s1",
+                      "_type": "span",
+                      "text": "The details vary by broker and change over time, but the structure is similar everywhere. Using Zerodha as an example, based on its published MTF terms:",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c1l3-012",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c1l3-012s1",
+                      "_type": "span",
+                      "text": "Leverage:",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_key": "c1l3-012s2",
+                      "_type": "span",
+                      "text": " up to 5x on eligible stocks, which means the broker can fund up to 80% of the trade value.",
+                      "marks": []
+                    }
+                  ],
+                  "listItem": "bullet",
+                  "level": 1
+                },
+                {
+                  "_key": "c1l3-013",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c1l3-013s1",
+                      "_type": "span",
+                      "text": "Interest:",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_key": "c1l3-013s2",
+                      "_type": "span",
+                      "text": " 0.04% a day on the borrowed amount, charged every calendar day including weekends and holidays. That works out to about 14.6% a year on simple terms.",
+                      "marks": []
+                    }
+                  ],
+                  "listItem": "bullet",
+                  "level": 1
+                },
+                {
+                  "_key": "c1l3-014",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c1l3-014s1",
+                      "_type": "span",
+                      "text": "Collateral:",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_key": "c1l3-014s2",
+                      "_type": "span",
+                      "text": " the shares you buy are pledged to the broker as security for the loan.",
+                      "marks": []
+                    }
+                  ],
+                  "listItem": "bullet",
+                  "level": 1
+                },
+                {
+                  "_key": "c1l3-015",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c1l3-015s1",
+                      "_type": "span",
+                      "text": "Shortfall:",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_key": "c1l3-015s2",
+                      "_type": "span",
+                      "text": " if the value of your position falls and your margin drops below the required level, you must add funds, or the broker can sell your shares to recover its money.",
+                      "marks": []
+                    }
+                  ],
+                  "listItem": "bullet",
+                  "level": 1
+                },
+                {
+                  "_key": "c1l3-016",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c1l3-016s1",
+                      "_type": "span",
+                      "text": "SEBI's peak margin rules, fully in force from 1 September 2021, capped the intraday leverage brokers could offer at about 5x. Before these rules, some traders were getting leverage of 40 to 50 times, which meant a move of about 2% could wipe out their capital.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-017",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-017s1",
+                  "_type": "span",
+                  "text": "The Margin Call and the Forced Seller",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-018",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c1l3-018m1",
+                  "_type": "glossaryTerm",
+                  "definition": "A demand from a broker or lender for more money or collateral, triggered when a leveraged position falls below the required margin level. If the investor cannot pay, the position is sold."
+                },
+                {
+                  "_key": "c1l3-018m2",
+                  "_type": "glossaryTerm",
+                  "definition": "A sale made not because the seller thinks the price is right, but because they have no choice, usually due to a margin call, a loan covenant or redemption requests."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c1l3-018s1",
+                  "_type": "span",
+                  "text": "When a leveraged position falls, the lender does not wait politely for a recovery. It issues a ",
+                  "marks": []
+                },
+                {
+                  "_key": "c1l3-018s2",
+                  "_type": "span",
+                  "text": "margin call",
+                  "marks": [
+                    "c1l3-018m1"
+                  ]
+                },
+                {
+                  "_key": "c1l3-018s3",
+                  "_type": "span",
+                  "text": ". The investor must add money immediately or have the position sold. That sale is a ",
+                  "marks": []
+                },
+                {
+                  "_key": "c1l3-018s4",
+                  "_type": "span",
+                  "text": "forced sale",
+                  "marks": [
+                    "c1l3-018m2"
+                  ]
+                },
+                {
+                  "_key": "c1l3-018s5",
+                  "_type": "span",
+                  "text": ", and forced sellers have one thing in common: they do not care what price they get. Here is how one forced sale becomes a spiral:",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-019",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-019s1",
+                  "_type": "span",
+                  "text": "Prices fall on bad news, and leveraged positions lose value fastest.",
+                  "marks": []
+                }
+              ],
+              "listItem": "number",
+              "level": 1
+            },
+            {
+              "_key": "c1l3-020",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-020s1",
+                  "_type": "span",
+                  "text": "Brokers and lenders issue margin calls as collateral values drop below required levels.",
+                  "marks": []
+                }
+              ],
+              "listItem": "number",
+              "level": 1
+            },
+            {
+              "_key": "c1l3-021",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-021s1",
+                  "_type": "span",
+                  "text": "Investors who cannot add cash are sold out automatically, at whatever price the market offers.",
+                  "marks": []
+                }
+              ],
+              "listItem": "number",
+              "level": 1
+            },
+            {
+              "_key": "c1l3-022",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-022s1",
+                  "_type": "span",
+                  "text": "That forced selling pushes prices lower still, triggering margin calls for the next group of leveraged investors.",
+                  "marks": []
+                }
+              ],
+              "listItem": "number",
+              "level": 1
+            },
+            {
+              "_key": "c1l3-023",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-023s1",
+                  "_type": "span",
+                  "text": "Unleveraged investors see the falls, panic and sell too. Mutual fund investors redeem, so funds must sell holdings to pay them.",
+                  "marks": []
+                }
+              ],
+              "listItem": "number",
+              "level": 1
+            },
+            {
+              "_key": "c1l3-024",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-024s1",
+                  "_type": "span",
+                  "text": "Buyers step back and liquidity dries up, so every new sale moves the price further. The loop repeats.",
+                  "marks": []
+                }
+              ],
+              "listItem": "number",
+              "level": 1
+            },
+            {
+              "_key": "c1l3-025",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This is why crashes often overshoot fair value. At the bottom, prices are not set by investors weighing what a business is worth. They are set by whoever is being forced to sell that day, and by the few buyers brave enough to take the other side."
+            },
+            {
+              "_key": "c1l3-026",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why the Fall Speeds Up",
+              "question": "A market falls 8% in a week, and then the fall suddenly accelerates, with the next 8% coming in just two days. Which explanation best fits the selling spiral?",
+              "options": [
+                "Company earnings suddenly collapsed by a further 8% in two days",
+                "Early falls triggered margin calls, and the resulting forced sales pushed prices down faster, triggering more margin calls",
+                "The stock exchange raised transaction charges",
+                "Long-term investors decided the market was overvalued at exactly the same moment"
+              ],
+              "correctIndex": 1,
+              "explanation": "Business fundamentals rarely change that much in two days. What changes is the mechanics: once prices fall past the level where leveraged investors breach their margin requirements, forced selling begins, and each wave of forced sales pushes prices into the next wave of margin calls. Speed is a classic signature of leverage unwinding."
+            },
+            {
+              "_key": "c1l3-027",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-027s1",
+                  "_type": "span",
+                  "text": "Promoter Pledging: Leverage Hidden Inside a Stock",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-028",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c1l3-028m1",
+                  "_type": "glossaryTerm",
+                  "definition": "An asset offered as security for a loan. If the borrower cannot repay, or the asset's value falls too far, the lender can sell it."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c1l3-028s1",
+                  "_type": "span",
+                  "text": "Leverage is not just something traders use. Sometimes it sits quietly inside a company's shareholding. When promoters borrow money and pledge their own shares as ",
+                  "marks": []
+                },
+                {
+                  "_key": "c1l3-028s2",
+                  "_type": "span",
+                  "text": "collateral",
+                  "marks": [
+                    "c1l3-028m1"
+                  ]
+                },
+                {
+                  "_key": "c1l3-028s3",
+                  "_type": "span",
+                  "text": ", the stock inherits a selling spiral risk that ordinary shareholders often never notice.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-029",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-029s1",
+                  "_type": "span",
+                  "text": "Zee Entertainment is the textbook Indian case. The Essel Group's promoters had pledged Zee shares to raise loans. In January 2019, as the group's liquidity problems became public, the stock came under intense pressure. On 25 January 2019, after a media report linked the group to an ongoing investigation, Zee shares crashed by more than a quarter in a single session, and group company Dish TV fell by about a third. The fear was simple: if lenders sold pledged shares to protect themselves, the price would fall further, prompting more lenders to sell.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-030",
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "c1l3-x4-1",
+                  "label": "Zee Entertainment, 25 Jan 2019",
+                  "value": "Over 25% fall",
+                  "context": "In a single session, amid fears over pledged promoter shares"
+                },
+                {
+                  "_key": "c1l3-x4-2",
+                  "label": "Dish TV, same day",
+                  "value": "About a third",
+                  "context": "Another Essel Group company hit by the same fear"
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-031",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "The Pledged Promoter",
+              "scenario": "You own shares in a mid-cap infrastructure company. On Screener.in you notice that promoters hold 55% of the company, and that 70% of the promoter holding is pledged. The stock has fallen 22% over the last month after a weak quarter. A market commentator on television says the fall is \"overdone, a buying opportunity\".",
+              "prompt": "Explain the specific risk that promoter pledging adds here, and list what you would check before deciding whether the commentator could be right.",
+              "modelAnswer": "The pledging turns an ordinary fall into a potential selling spiral. Promoters have borrowed against most of their shares, and those loans have margin requirements. A 22% fall has already eroded the collateral, so lenders may be asking promoters for more security. If promoters cannot provide it, lenders can sell the pledged shares in the market. Since the pledged stake here is about 38.5% of the entire company (70% of 55%), that is a large block of potential forced supply hanging over the stock, whatever the business is worth. Before accepting \"overdone\" at face value, check: whether the pledge percentage has been rising over recent quarters, which suggests financial stress; whether the company or promoters have made any disclosures about pledge invocation on NSE or BSE; the debt levels of the promoter group, not just the company; whether the weak quarter was a one-off or part of a trend; and the stock's trading volumes, since thin volumes make forced sales hit the price harder. A stock can look cheap on valuation and still fall much further if pledged shares are being sold."
+            },
+            {
+              "_key": "c1l3-032",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-032s1",
+                  "_type": "span",
+                  "text": "Panic: When Everyone Needs Cash at Once",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-033",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c1l3-033m1",
+                  "_type": "glossaryTerm",
+                  "definition": "The tendency to feel the pain of a loss roughly twice as strongly as the pleasure of an equal gain. It pushes investors to sell in panic to make the pain stop."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c1l3-033s1",
+                  "_type": "span",
+                  "text": "Leverage creates forced sellers. Psychology recruits voluntary ones. Behavioural finance research, starting with Daniel Kahneman and Amos Tversky, shows that people feel losses far more intensely than equivalent gains, a bias known as ",
+                  "marks": []
+                },
+                {
+                  "_key": "c1l3-033s2",
+                  "_type": "span",
+                  "text": "loss aversion",
+                  "marks": [
+                    "c1l3-033m1"
+                  ]
+                },
+                {
+                  "_key": "c1l3-033s3",
+                  "_type": "span",
+                  "text": ". Add herd behaviour, where people copy what others are doing, and a falling market recruits sellers on its own.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-034",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-034s1",
+                  "_type": "span",
+                  "text": "In 2008, foreign institutional investors pulled about ₹52,987 crore out of Indian equities over the calendar year, while the Sensex fell more than 50%. Many of those FIIs were not selling because they had turned negative on Indian companies. They were selling because their home markets were in crisis and they needed cash, so they sold what they could sell, including liquid Indian large caps.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-035",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c1l3-035m1",
+                  "_type": "glossaryTerm",
+                  "definition": "A situation where redemptions or margin calls force selling, selling pushes prices down and makes assets harder to sell, and falling prices trigger even more redemptions."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c1l3-035s1",
+                  "_type": "span",
+                  "text": "Panic can also hit markets that are not about shares at all. On 23 April 2020, during the COVID crash, Franklin Templeton decided to wind up six of its Indian debt mutual fund schemes, with about ₹25,215 crore of investor money. The funds held lower rated corporate bonds that had become almost impossible to sell as panicking investors rushed to redeem. It was a ",
+                  "marks": []
+                },
+                {
+                  "_key": "c1l3-035s2",
+                  "_type": "span",
+                  "text": "liquidity spiral",
+                  "marks": [
+                    "c1l3-035m1"
+                  ]
+                },
+                {
+                  "_key": "c1l3-035s3",
+                  "_type": "span",
+                  "text": ": redemptions forced sales, and there were no buyers for the bonds.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-036",
+              "_type": "keyFact",
+              "label": "Franklin Templeton Wind-Up, Final Outcome",
+              "value": "109.25% of April 2020 AUM paid back",
+              "context": "Investors eventually received about ₹27,548 crore through the winding-up process, more than the ₹25,215 crore frozen in April 2020. The problem was liquidity and panic, not that the underlying bonds were all worthless. Investors, however, lost access to their money for a long period."
+            },
+            {
+              "_key": "c1l3-037",
+              "_type": "comparison",
+              "title": "The Same 30% Crash, Two Different Investors",
+              "columns": [
+                {
+                  "_key": "c1l3-x5-1",
+                  "label": "Unleveraged Investor",
+                  "points": [
+                    "₹5 lakh invested, all own money",
+                    "Portfolio falls to ₹3.5 lakh, down 30%",
+                    "No margin call, no interest bill",
+                    "Can choose to hold, add or sell, on their own timeline",
+                    "Needs a 42.9% rise to fully recover, but has the time to wait for it"
+                  ]
+                },
+                {
+                  "_key": "c1l3-x5-2",
+                  "label": "Investor at 3x Leverage",
+                  "points": [
+                    "₹5 lakh own money controlling a ₹15 lakh position",
+                    "Position falls to ₹10.5 lakh, a ₹4.5 lakh loss",
+                    "Own capital down 90%, to ₹50,000, with interest still running",
+                    "Margin calls force sales long before the bottom",
+                    "Even if the market fully recovers, the position may already have been sold"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-038",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-038s1",
+                  "_type": "span",
+                  "text": "Leverage in Retail Hands Today",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-039",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-039s1",
+                  "_type": "span",
+                  "text": "Futures and options are leveraged by design: a small margin controls a large contract. That is why SEBI's studies of individual F&O traders are a sobering read for anyone who thinks leverage is a shortcut to wealth.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-040",
+              "_type": "donutChart",
+              "title": "Individual Equity F&O Traders, FY22 to FY24 (SEBI study)",
+              "data": [
+                {
+                  "_key": "c1l3-x6-1",
+                  "label": "Made a net loss",
+                  "value": 92.8
+                },
+                {
+                  "_key": "c1l3-x6-2",
+                  "label": "Made a net profit",
+                  "value": 7.2
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-041",
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "c1l3-x7-1",
+                  "label": "Aggregate Losses",
+                  "value": "Over ₹1.8 lakh crore",
+                  "context": "Individual traders, FY22 to FY24 combined"
+                },
+                {
+                  "_key": "c1l3-x7-2",
+                  "label": "Traders Studied",
+                  "value": "Over 1 crore",
+                  "context": "Individual traders in equity F&O"
+                },
+                {
+                  "_key": "c1l3-x7-3",
+                  "label": "Average Loss",
+                  "value": "About ₹2 lakh",
+                  "context": "Per loss-making trader, over three years"
+                },
+                {
+                  "_key": "c1l3-x7-4",
+                  "label": "Kept Trading",
+                  "value": "Over 75%",
+                  "context": "Of loss-makers continued despite consecutive years of losses"
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-042",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "Quick Check",
+              "textWithBlank": "When a leveraged position falls and the broker demands more money or collateral from the investor, it is called a ___.",
+              "correctAnswers": [
+                "margin call",
+                "margin calls"
+              ],
+              "explanation": "A margin call is the trigger that turns a paper loss into a forced sale. If the investor cannot add funds, the broker sells the position, and in a crash thousands of these forced sales hit the market at once."
+            },
+            {
+              "_key": "c1l3-043",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Audit the Leverage in Your Own Portfolio",
+              "steps": [
+                "Open Zerodha Console, or your own broker's dashboard, and check whether any holdings are bought through MTF or pledged for margin",
+                "Add up the total borrowed amount and divide your total position value by your own capital to find your effective leverage",
+                "Calculate what a 30% market fall would do to your own capital at that leverage",
+                "Check your open F&O positions, if any, and note the maximum loss on each",
+                "For each stock you hold, look up the promoter pledge percentage on Screener.in",
+                "Flag any stock where more than a quarter of the promoter holding is pledged, and read the latest pledge disclosures",
+                "Ask yourself honestly: if the market fell 30% next month, would you be forced to sell anything?"
+              ]
+            },
+            {
+              "_key": "c1l3-044",
+              "_type": "toolLink",
+              "label": "Zerodha MTF Calculator",
+              "url": "https://zerodha.com/calculators/mtf-calculator/",
+              "description": "Enter a stock and position size to see how much of the trade is funded, the margin you need and the interest cost. Then work out what a 20% or 30% fall would do to your own money."
+            },
+            {
+              "_key": "c1l3-045",
+              "_type": "flashcardSet",
+              "title": "Terms From This Lesson",
+              "cards": [
+                {
+                  "_key": "c1l3-x8-1",
+                  "term": "Leverage",
+                  "definition": "Using borrowed money to control a position larger than your own capital. It multiplies both gains and losses by the same factor."
+                },
+                {
+                  "_key": "c1l3-x8-2",
+                  "term": "Margin Trading Facility (MTF)",
+                  "definition": "A SEBI-regulated broker facility that funds part of a share purchase, charges interest on the borrowed amount and holds the shares as collateral."
+                },
+                {
+                  "_key": "c1l3-x8-3",
+                  "term": "Margin Call",
+                  "definition": "A demand for more money or collateral when a leveraged position falls below the required margin. If unmet, the position is sold."
+                },
+                {
+                  "_key": "c1l3-x8-4",
+                  "term": "Forced Sale",
+                  "definition": "A sale made because the seller has no choice, due to a margin call, loan terms or redemptions, regardless of price."
+                },
+                {
+                  "_key": "c1l3-x8-5",
+                  "term": "Promoter Pledge",
+                  "definition": "When promoters borrow against their own shares. A sharp price fall can lead lenders to sell those shares, adding to the fall."
+                },
+                {
+                  "_key": "c1l3-x8-6",
+                  "term": "Loss Aversion",
+                  "definition": "The tendency to feel losses roughly twice as strongly as equal gains, which drives panic selling."
+                },
+                {
+                  "_key": "c1l3-x8-7",
+                  "term": "Liquidity Spiral",
+                  "definition": "A loop in which forced selling lowers prices and makes assets harder to sell, which triggers even more forced selling."
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-046",
+              "_type": "keyTakeaways",
+              "points": [
+                "Leverage multiplies losses exactly as it multiplies gains: at 5x, a 20% price fall wipes out 100% of your capital",
+                "Margin calls create forced sellers who sell at any price, and their selling triggers margin calls for others, creating a selling spiral",
+                "Promoter pledging hides leverage inside a stock, as Zee Entertainment's crash of more than a quarter in one session in January 2019 showed",
+                "Loss aversion and herd behaviour recruit voluntary sellers, while events like the 2008 FII exodus and the 2020 Franklin Templeton wind-up show how a scramble for cash spreads",
+                "SEBI found that about 93% of individual equity F&O traders lost money between FY22 and FY24, with aggregate losses over ₹1.8 lakh crore",
+                "The investor who is never forced to sell is the investor who gets to see the recovery"
+              ]
+            },
+            {
+              "_key": "c1l3-047",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and does not constitute investment advice or a recommendation to use, or avoid, any product or broker. Broker terms such as MTF leverage and interest rates are illustrative, based on publicly available terms at the time of writing, and can change. Company names are used only as historical illustrations."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,312 @@
+{
+  "courseSlug": "introduction-to-portfolio-optimization-markowitz-and-beyond",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Portfolio Thinking Beats Stock Picking",
+      "lessons": [
+        {
+          "title": "Expected Return and Risk of a Single Asset: A Quick Refresher",
+          "slug": "expected-return-and-risk-of-a-single-asset-a-quick-refresher",
+          "body": [
+            {
+              "_key": "poc1l2-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc1l2-001s1", "_type": "span", "marks": [], "text": "Before you can decide whether two stocks diversify each other, you need to be precise about two numbers for each stock on its own: what return you expect from it, and how much that outcome could vary. Most people who have traded on Zerodha or Groww for a year have a rough feel for both. This lesson makes that feel exact, since the entire Markowitz framework in Chapter 3 is built directly on top of these two numbers." }
+              ]
+            },
+            {
+              "_key": "poc1l2-002",
+              "_type": "bigIdea",
+              "text": "Expected return is where you think an asset's return is centered. Risk, measured as standard deviation, is how far it typically strays from that center. Every later formula in this course is just these two ideas applied to a group of assets instead of one."
+            },
+            {
+              "_key": "poc1l2-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc1l2-003s1", "_type": "span", "marks": [], "text": "Expected Return: Two Ways to Get There" }
+              ]
+            },
+            {
+              "_key": "poc1l2-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "poc1l2-004m1", "_type": "glossaryTerm", "definition": "The return an investor anticipates from an asset, either as a probability-weighted average across possible future scenarios, or as the average of realized returns over a historical period used as a proxy for the future." }
+              ],
+              "children": [
+                { "_key": "poc1l2-004s1", "_type": "span", "marks": [], "text": "There are two standard ways to arrive at an " },
+                { "_key": "poc1l2-004s2", "_type": "span", "marks": ["poc1l2-004m1"], "text": "expected return" },
+                { "_key": "poc1l2-004s3", "_type": "span", "marks": [], "text": ". The first is scenario-based: you assign a probability to each possible outcome and take the weighted average. The second is historical: you take the plain average of actual past returns and treat it as a working estimate of the future. Quant desks use both, often together, and neither is automatically \"more correct.\" It depends on whether you trust your scenario probabilities or your historical sample more." }
+              ]
+            },
+            {
+              "_key": "poc1l2-005",
+              "_type": "mathBlock",
+              "latex": "E[R] = \\sum_{i=1}^{n} p_i R_i",
+              "caption": "Scenario-based expected return: probability of each outcome times the return in that outcome, summed."
+            },
+            {
+              "_key": "poc1l2-006",
+              "_type": "mathBlock",
+              "latex": "\\bar{R} = \\frac{1}{T}\\sum_{t=1}^{T} R_t",
+              "caption": "Historical average return: the simple mean of T observed period returns."
+            },
+            {
+              "_key": "poc1l2-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc1l2-007s1", "_type": "span", "marks": [], "text": "Worked Example: Tata Motors Under Three Scenarios" }
+              ]
+            },
+            {
+              "_key": "poc1l2-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc1l2-008s1", "_type": "span", "marks": [], "text": "Say you have a one-year view on Tata Motors built around three scenarios: a bull case where EV and JLR volumes surprise, a base case of steady execution, and a bear case where a global auto slowdown hits export demand." }
+              ]
+            },
+            {
+              "_key": "poc1l2-009",
+              "_type": "table",
+              "caption": "Tata Motors, one-year scenario view (illustrative)",
+              "headers": ["Scenario", "Probability", "Return"],
+              "rows": [
+                { "_key": "poc1l2-009r1", "_type": "tableRow", "cells": ["Bull", "30%", "+40%"] },
+                { "_key": "poc1l2-009r2", "_type": "tableRow", "cells": ["Base", "50%", "+12%"] },
+                { "_key": "poc1l2-009r3", "_type": "tableRow", "cells": ["Bear", "20%", "-25%"] }
+              ]
+            },
+            {
+              "_key": "poc1l2-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc1l2-010s1", "_type": "span", "marks": [], "text": "Expected return equals (0.30 x 40%) plus (0.50 x 12%) plus (0.20 x -25%), which is 12% plus 6% minus 5%, giving 13%. Notice this number sits between the bear and bull outcomes, but is closer to the base case because it carries the most probability weight. It is not the return in any single scenario. Nobody experiences the \"expected\" return directly, they experience one of the three." }
+              ]
+            },
+            {
+              "_key": "poc1l2-011",
+              "_type": "keyFact",
+              "label": "Tata Motors expected return (this scenario set)",
+              "value": "13%",
+              "context": "A probability-weighted average across three scenarios, not a forecast that any one outcome will happen."
+            },
+            {
+              "_key": "poc1l2-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc1l2-012s1", "_type": "span", "marks": [], "text": "Risk: Variance and Standard Deviation" }
+              ]
+            },
+            {
+              "_key": "poc1l2-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "poc1l2-013m1", "_type": "glossaryTerm", "definition": "The square root of variance. Expressed in the same units as the return itself (percent), which makes it the standard way risk is reported and compared across assets." }
+              ],
+              "children": [
+                { "_key": "poc1l2-013s1", "_type": "span", "marks": [], "text": "Expected return tells you the center. It says nothing about how far returns typically wander from that center, which is exactly what an investor deciding how much to bet actually needs to know. That is the job of variance, and its square root, " },
+                { "_key": "poc1l2-013s2", "_type": "span", "marks": ["poc1l2-013m1"], "text": "standard deviation" },
+                { "_key": "poc1l2-013s3", "_type": "span", "marks": [], "text": ". Both measure dispersion around the mean. Standard deviation is preferred for reporting because it is back in percent, the same unit as the return itself, while variance is in percent-squared and harder to interpret directly." }
+              ]
+            },
+            {
+              "_key": "poc1l2-014",
+              "_type": "mathBlock",
+              "latex": "\\sigma^2 = \\frac{1}{T}\\sum_{t=1}^{T} (R_t - \\bar{R})^2 \\qquad \\sigma = \\sqrt{\\sigma^2}",
+              "caption": "Variance is the average squared deviation from the mean. Standard deviation is its square root."
+            },
+            {
+              "_key": "poc1l2-015",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Deviations are squared, not just averaged directly, because a +5% month and a -5% month should both count as risk, and plain deviations would cancel each other to zero. Squaring also penalizes large swings more than small ones, which matches how most investors actually feel about a single brutal month versus several mild ones."
+            },
+            {
+              "_key": "poc1l2-016",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc1l2-016s1", "_type": "span", "marks": [], "text": "Worked Example: Reliance Industries, Six Months of Returns" }
+              ]
+            },
+            {
+              "_key": "poc1l2-017",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc1l2-017s1", "_type": "span", "marks": [], "text": "Now switch to the historical approach. Here are six illustrative monthly returns for Reliance Industries on NSE:" }
+              ]
+            },
+            {
+              "_key": "poc1l2-018",
+              "_type": "table",
+              "caption": "Reliance Industries, monthly returns (illustrative)",
+              "headers": ["Month", "Return", "Deviation from mean", "Squared deviation"],
+              "rows": [
+                { "_key": "poc1l2-018r1", "_type": "tableRow", "cells": ["1", "3.2%", "1.53", "2.35"] },
+                { "_key": "poc1l2-018r2", "_type": "tableRow", "cells": ["2", "-1.8%", "-3.47", "12.02"] },
+                { "_key": "poc1l2-018r3", "_type": "tableRow", "cells": ["3", "5.4%", "3.73", "13.94"] },
+                { "_key": "poc1l2-018r4", "_type": "tableRow", "cells": ["4", "-2.1%", "-3.77", "14.19"] },
+                { "_key": "poc1l2-018r5", "_type": "tableRow", "cells": ["5", "1.0%", "-0.67", "0.44"] },
+                { "_key": "poc1l2-018r6", "_type": "tableRow", "cells": ["6", "4.3%", "2.63", "6.93"] }
+              ]
+            },
+            {
+              "_key": "poc1l2-019",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc1l2-019s1", "_type": "span", "marks": [], "text": "The six returns sum to 10.0%, so the mean monthly return is 10.0% divided by 6, which is 1.67%. The squared deviations sum to roughly 49.87. Dividing by 6 gives a variance of about 8.31, and the square root of that, the monthly standard deviation, is approximately 2.88%." }
+              ]
+            },
+            {
+              "_key": "poc1l2-020",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "poc1l2-020s1", "label": "Mean monthly return", "value": "1.67%", "context": "Simple average of 6 months" },
+                { "_key": "poc1l2-020s2", "label": "Monthly standard deviation", "value": "~2.88%", "context": "Square root of variance" },
+                { "_key": "poc1l2-020s3", "label": "Months of data used", "value": "6", "context": "A short window, for illustration only" }
+              ]
+            },
+            {
+              "_key": "poc1l2-021",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "import numpy as np\n\n# Monthly returns for Reliance Industries, in percent (illustrative)\nreturns = np.array([3.2, -1.8, 5.4, -2.1, 1.0, 4.3])\n\nmean_return = returns.mean()\nvolatility = returns.std()  # population std (ddof=0), matches the formula above\n\nprint(f\"Mean monthly return: {mean_return:.2f}%\")\nprint(f\"Monthly volatility: {volatility:.2f}%\")\nprint(f\"Annualized volatility: {volatility * np.sqrt(12):.2f}%\")",
+              "caption": "numpy's .std() defaults to dividing by T, matching the formula used here. Pass ddof=1 if you want the sample (n-1) correction some tools use instead."
+            },
+            {
+              "_key": "poc1l2-022",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc1l2-022s1", "_type": "span", "marks": [], "text": "Scaling Volatility: From Monthly to Annual" }
+              ]
+            },
+            {
+              "_key": "poc1l2-023",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc1l2-023s1", "_type": "span", "marks": [], "text": "Returns reported at different frequencies are not directly comparable, so risk numbers get annualized before you use them to compare stocks or set position sizes. The standard shortcut multiplies volatility by the square root of the number of periods in a year, not by the number of periods itself." }
+              ]
+            },
+            {
+              "_key": "poc1l2-024",
+              "_type": "mathBlock",
+              "latex": "\\sigma_{annual} = \\sigma_{monthly} \\times \\sqrt{12} \\qquad \\sigma_{annual} = \\sigma_{daily} \\times \\sqrt{252}",
+              "caption": "The square-root-of-time rule for scaling volatility."
+            },
+            {
+              "_key": "poc1l2-025",
+              "_type": "keyFact",
+              "label": "NSE trading days used for daily annualization",
+              "value": "~250 to 252",
+              "context": "The approximate number of trading sessions on NSE in a calendar year, after excluding weekends and market holidays."
+            },
+            {
+              "_key": "poc1l2-026",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc1l2-026s1", "_type": "span", "marks": [], "text": "Applying this to Reliance: 2.88% monthly volatility, multiplied by the square root of 12, which is about 3.46, gives an annualized volatility close to 10.0%. Return scales differently. Since expected return is additive across periods, you annualize it by multiplying by 12 directly, not by the square root of 12, so 1.67% a month becomes roughly 20.0% a year." }
+              ]
+            },
+            {
+              "_key": "poc1l2-027",
+              "_type": "callout",
+              "type": "warning",
+              "text": "The square-root-of-time rule assumes returns from one period to the next are independent of each other. If returns are correlated over time, momentum in a trending market or mean reversion after a sharp move, this shortcut over- or understates true annual risk. Treat it as a useful approximation, not an exact law."
+            },
+            {
+              "_key": "poc1l2-028",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Expected return under three scenarios",
+              "prompt": "Infosys is expected to return +22% in a bull scenario (probability 25%), +10% in a base scenario (probability 55%), and -15% in a bear scenario (probability 20%). What is its expected return?",
+              "correctValue": 8,
+              "tolerance": 0.5,
+              "unit": "%",
+              "explanation": "(0.25 x 22%) + (0.55 x 10%) + (0.20 x -15%) = 5.5% + 5.5% - 3.0% = 8.0%."
+            },
+            {
+              "_key": "poc1l2-029",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Standard deviation from four quarters",
+              "prompt": "Nifty Bank posted quarterly returns of 6%, -3%, 9%, and 4%. What is the standard deviation of these four returns, using the population formula from this lesson (divide by T, not T-1)?",
+              "correctValue": 4.42,
+              "tolerance": 0.3,
+              "unit": "%",
+              "explanation": "Mean = (6 - 3 + 9 + 4) / 4 = 4%. Squared deviations: (2)^2=4, (-7)^2=49, (5)^2=25, (0)^2=0, summing to 78. Variance = 78 / 4 = 19.5. Standard deviation = sqrt(19.5) is approximately 4.42%."
+            },
+            {
+              "_key": "poc1l2-030",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why standard deviation, not variance, gets quoted",
+              "question": "A stock has a return variance of 400 (in percent-squared). Why do analysts usually quote its standard deviation of 20% instead of the variance of 400?",
+              "options": [
+                "Standard deviation is always a smaller, more reassuring number",
+                "Standard deviation is in the same units as the return itself, so it can be compared to return directly",
+                "Variance cannot be calculated for stocks with negative returns",
+                "Standard deviation and variance always give different rankings of risk across stocks"
+              ],
+              "correctIndex": 1,
+              "explanation": "Variance is in percent-squared, a unit with no intuitive meaning. Taking its square root converts it back to percent, the same unit as return, which is why standard deviation, not variance, is the number quoted and compared in practice. Ranking by either gives identical order, since square root is a strictly increasing function."
+            },
+            {
+              "_key": "poc1l2-031",
+              "_type": "flashcardSet",
+              "title": "Return and Risk: Core Terms",
+              "cards": [
+                { "_key": "poc1l2-031f1", "term": "Expected return", "definition": "The probability-weighted average return across scenarios, or the historical average return used as a forward-looking estimate." },
+                { "_key": "poc1l2-031f2", "term": "Variance", "definition": "The average squared deviation of returns from their mean. Measured in percent-squared." },
+                { "_key": "poc1l2-031f3", "term": "Standard deviation", "definition": "The square root of variance, expressed in percent. The standard measure of an asset's risk." },
+                { "_key": "poc1l2-031f4", "term": "Square-root-of-time rule", "definition": "The shortcut for annualizing volatility: multiply by the square root of the number of periods per year, assuming returns are independent across periods." }
+              ]
+            },
+            {
+              "_key": "poc1l2-032",
+              "_type": "keyTakeaways",
+              "points": [
+                "Expected return can come from probability-weighted scenarios or from a historical average. Neither is automatically correct; it depends on which inputs you trust more.",
+                "Variance measures dispersion using squared deviations, so gains and losses do not cancel each other out and large swings are penalized more heavily.",
+                "Standard deviation is variance's square root, reported in percent, which is why it is the number actually quoted as \"risk.\"",
+                "Volatility scales with the square root of time: monthly volatility times the square root of 12 gives annualized volatility.",
+                "Expected return scales linearly with time, not by a square root, since returns (unlike variance) are additive across periods.",
+                "The square-root-of-time rule assumes returns are independent across periods, an assumption that can break down and overstate or understate real risk."
+              ]
+            },
+            {
+              "_key": "poc1l2-033",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to buy or sell any security named here. All return, probability, and volatility figures used in the examples and exercises are illustrative, not live or historical market data. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

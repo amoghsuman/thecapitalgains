@@ -1,0 +1,261 @@
+{
+  "courseSlug": "understanding-momentum-and-trend-following-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 3: Momentum Indicators - RSI, ROC, and Combining Signals",
+      "lessons": [
+        {
+          "title": "The Relative Strength Index (RSI): Construction and Interpretation",
+          "slug": "the-relative-strength-index-rsi-construction-and-interpretation",
+          "body": [
+            {
+              "_key": "m10-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m10-001s1", "_type": "span", "marks": [], "text": "If there is one indicator that shows up on more broker apps, more business news tickers, and more trading calls than any other in India, it is probably the Relative Strength Index, RSI. Developed by J. Welles Wilder in 1978, RSI measures how strong recent buying pressure has been relative to recent selling pressure, scaled onto a simple 0 to 100 reading. This lesson covers exactly how it is built, works through a full calculation by hand, and covers a nuance most casual explanations get wrong, what RSI actually means during a genuine, sustained momentum move." }
+              ]
+            },
+            {
+              "_key": "m10-002",
+              "_type": "bigIdea",
+              "text": "RSI measures the size of recent gains relative to the size of recent losses over a fixed look-back window, typically 14 periods, and compresses that relationship onto a 0 to 100 scale. A high reading means gains have dominated losses recently, a low reading means the opposite."
+            },
+            {
+              "_key": "m10-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m10-003s1", "_type": "span", "marks": [], "text": "How RSI Is Calculated" }
+              ]
+            },
+            {
+              "_key": "m10-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m10-004s1", "_type": "span", "marks": [], "text": "Start with the day-to-day price changes over the look-back window. Every up day's change is a gain, every down day's change, made positive, is a loss. Average the gains, average the losses, and divide one by the other to get the relative strength, RS." }
+              ]
+            },
+            {
+              "_key": "m10-005",
+              "_type": "mathBlock",
+              "latex": "RS = \\frac{\\text{Average Gain over } n \\text{ periods}}{\\text{Average Loss over } n \\text{ periods}}, \\qquad RSI = 100 - \\frac{100}{1 + RS}",
+              "caption": "RSI in two steps: first the ratio of average gain to average loss, then a fixed transformation that compresses that ratio onto a 0-100 scale."
+            },
+            {
+              "_key": "m10-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m10-006s1", "_type": "span", "marks": [], "text": "Wilder's Smoothing: Why RSI Isn't Just a Simple Average" }
+              ]
+            },
+            {
+              "_key": "m10-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m10-007s1", "_type": "span", "marks": [], "text": "Wilder's original method computes the first average gain and average loss as a plain simple average of the first 14 periods, exactly as done in the worked example below, but every value after that uses a smoothed running average that gives roughly 1/14th weight to the newest gain or loss and carries the rest forward, similar in spirit to the EMA from Chapter 2 but with its own specific smoothing constant. Some charting platforms and libraries instead use a plain simple moving average throughout, sometimes called Cutler's RSI, which produces slightly different readings on the same data. If your RSI reading doesn't exactly match another platform's, a different smoothing convention is the most likely reason, not a calculation error." }
+              ]
+            },
+            {
+              "_key": "m10-008",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m10-008s1", "_type": "span", "marks": [], "text": "Worked Example: A 14-Day RSI by Hand" }
+              ]
+            },
+            {
+              "_key": "m10-009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m10-009s1", "_type": "span", "marks": [], "text": "Take 15 illustrative daily closes: 100, 102, 101, 103, 105, 104, 106, 108, 107, 109, 111, 110, 112, 114, 113. That gives 14 daily changes, the minimum needed for a first 14-day RSI reading using Wilder's simple-average seed." }
+              ]
+            },
+            {
+              "_key": "m10-010",
+              "_type": "table",
+              "caption": "Daily changes, gains, and losses (illustrative prices)",
+              "headers": ["Day", "Close", "Change", "Gain", "Loss"],
+              "rows": [
+                { "_key": "m10-010r1", "_type": "tableRow", "cells": ["1", "102", "+2", "2", "0"] },
+                { "_key": "m10-010r2", "_type": "tableRow", "cells": ["2", "101", "-1", "0", "1"] },
+                { "_key": "m10-010r3", "_type": "tableRow", "cells": ["3", "103", "+2", "2", "0"] },
+                { "_key": "m10-010r4", "_type": "tableRow", "cells": ["4", "105", "+2", "2", "0"] },
+                { "_key": "m10-010r5", "_type": "tableRow", "cells": ["5", "104", "-1", "0", "1"] },
+                { "_key": "m10-010r6", "_type": "tableRow", "cells": ["6", "106", "+2", "2", "0"] },
+                { "_key": "m10-010r7", "_type": "tableRow", "cells": ["7", "108", "+2", "2", "0"] },
+                { "_key": "m10-010r8", "_type": "tableRow", "cells": ["8", "107", "-1", "0", "1"] },
+                { "_key": "m10-010r9", "_type": "tableRow", "cells": ["9", "109", "+2", "2", "0"] },
+                { "_key": "m10-010r10", "_type": "tableRow", "cells": ["10", "111", "+2", "2", "0"] },
+                { "_key": "m10-010r11", "_type": "tableRow", "cells": ["11", "110", "-1", "0", "1"] },
+                { "_key": "m10-010r12", "_type": "tableRow", "cells": ["12", "112", "+2", "2", "0"] },
+                { "_key": "m10-010r13", "_type": "tableRow", "cells": ["13", "114", "+2", "2", "0"] },
+                { "_key": "m10-010r14", "_type": "tableRow", "cells": ["14", "113", "-1", "0", "1"] }
+              ]
+            },
+            {
+              "_key": "m10-011",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "m10-011s1", "label": "Sum of gains, 14 days", "value": "18", "context": "9 up days of +2 each" },
+                { "_key": "m10-011s2", "label": "Sum of losses, 14 days", "value": "5", "context": "5 down days of -1 each" },
+                { "_key": "m10-011s3", "label": "Average gain", "value": "18 / 14 = 1.29", "context": "Simple average, Wilder's initial seed" },
+                { "_key": "m10-011s4", "label": "Average loss", "value": "5 / 14 = 0.36", "context": "Simple average, Wilder's initial seed" }
+              ]
+            },
+            {
+              "_key": "m10-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m10-012s1", "_type": "span", "marks": [], "text": "RS = (18/14) / (5/14) = 18 / 5 = 3.60. RSI = 100 - 100 / (1 + 3.60) = 100 - 100/4.60 = 100 - 21.74 = 78.26." }
+              ]
+            },
+            {
+              "_key": "m10-013",
+              "_type": "keyFact",
+              "label": "14-day RSI on this series",
+              "value": "78.26",
+              "context": "A steady, consistent uptrend, 9 up days versus 5 down days with no large single move, produces a firmly elevated RSI reading, well above the conventional overbought line"
+            },
+            {
+              "_key": "m10-014",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m10-014s1", "_type": "span", "marks": [], "text": "Interpreting RSI: Overbought, Oversold, and the Trap in a Strong Trend" }
+              ]
+            },
+            {
+              "_key": "m10-015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m10-015s1", "_type": "span", "marks": [], "text": "The conventional reading treats RSI above 70 as overbought, a warning that a reversal is due, and RSI below 30 as oversold, a warning of the opposite. This works reasonably well in a range-bound, mean-reverting market. It works poorly, and can be actively misleading, in exactly the kind of sustained momentum move this course is about. A stock in a genuine, strong uptrend can hold an RSI above 70 for weeks at a time, printing higher high after higher high while a naive trader keeps selling every time the indicator crosses 70, exiting a winning trend again and again, far too early each time. Suzlon Energy's 2023-2024 run, covered in Chapter 1, almost certainly spent extended stretches with RSI pinned well above 70. Treating that as a sell signal on its own would have meant repeatedly exiting one of the period's strongest trends." }
+              ]
+            },
+            {
+              "_key": "m10-016",
+              "_type": "callout",
+              "type": "warning",
+              "text": "This is one of the most common mistakes traders make with RSI: applying a mean-reversion rule, sell when overbought, to a momentum context, where being overbought for a sustained period is often exactly what a strong trend looks like. The fix is not to ignore RSI, it is to use it for what it is good at, covered next."
+            },
+            {
+              "_key": "m10-017",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m10-017s1", "_type": "span", "marks": [], "text": "RSI Divergence: A Preview" }
+              ]
+            },
+            {
+              "_key": "m10-018",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m10-018s1", "_type": "span", "marks": [], "text": "A more useful signal than a raw overbought or oversold reading is divergence, when price makes a new high but RSI fails to make a correspondingly higher high, or price makes a new low but RSI fails to make a correspondingly lower low. This pattern suggests the underlying momentum behind a move is fading even while price is still extending, often ahead of an eventual reversal. Divergence is covered in full, with a real worked case study on a Nifty Bank stock, in the last lesson of this chapter." }
+              ]
+            },
+            {
+              "_key": "m10-019",
+              "_type": "codeBlock",
+              "language": "python",
+              "caption": "Computing RSI in pandas",
+              "code": "import pandas as pd\n\nclose = pd.Series([100, 102, 101, 103, 105, 104, 106, 108, 107, 109, 111, 110, 112, 114, 113])\n\ndelta = close.diff()\ngain = delta.clip(lower=0)\nloss = -delta.clip(upper=0)\n\navg_gain = gain.ewm(alpha=1/14, adjust=False, min_periods=14).mean()\navg_loss = loss.ewm(alpha=1/14, adjust=False, min_periods=14).mean()\n\nrs = avg_gain / avg_loss\nrsi = 100 - (100 / (1 + rs))\nprint(rsi.round(2))"
+            },
+            {
+              "_key": "m10-020",
+              "_type": "callout",
+              "type": "insight",
+              "text": "As with the EMA in Chapter 2, pandas' ewm(adjust=False) seeds its very first smoothed value differently from Wilder's original convention of seeding with a plain simple average of the first 14 changes. The two approaches converge over time but can differ slightly in the first several readings, the same caveat worth carrying into every indicator built on exponential-style smoothing."
+            },
+            {
+              "_key": "m10-021",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "RSI in a strong uptrend",
+              "question": "A stock has been trending strongly upward for six weeks, with its RSI sitting at 76 for most of that time. Based on this lesson, what is the most accurate read of this situation?",
+              "options": [
+                "RSI is definitely wrong or broken, since it cannot stay above 70 this long",
+                "This is a reliable sell signal, since RSI above 70 always means an imminent reversal",
+                "This can be normal behaviour during a genuine sustained momentum move, and selling purely because RSI is elevated risks exiting the trend too early",
+                "RSI cannot be calculated on stocks in a strong uptrend"
+              ],
+              "correctIndex": 2,
+              "explanation": "A sustained momentum move can legitimately hold RSI above 70 for extended periods. Treating every overbought reading as an automatic sell signal, a mean-reversion assumption, is a common mistake when applied to a genuine trending market."
+            },
+            {
+              "_key": "m10-022",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "Complete the convention",
+              "textWithBlank": "In the conventional RSI reading, a value above ___ is typically considered overbought.",
+              "correctAnswers": ["70"],
+              "explanation": "70 is the standard conventional threshold for an overbought RSI reading, with 30 as the standard oversold threshold on the other end of the scale."
+            },
+            {
+              "_key": "m10-023",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Should she have sold?",
+              "scenario": "A trader bought a stock at the start of a strong rally. Three weeks in, with the stock up 40%, she notices RSI has been above 75 for several days and sells the entire position, worried it is \"overbought.\" The stock continues climbing another 25% over the following month.",
+              "prompt": "Based on this lesson, what likely went wrong with her decision, and what would you suggest she consider differently next time?",
+              "modelAnswer": "She applied a mean-reversion interpretation of RSI, treating an elevated reading as an automatic sell signal, to a situation that was actually a genuine, sustained momentum move. An elevated RSI in a strong uptrend often just reflects the trend itself, not an imminent reversal. Rather than selling on the raw overbought level alone, she could look for confirming evidence that momentum is genuinely fading, such as the bearish divergence covered in the next lesson, or combine RSI with the trend tools from Chapter 2 to check whether the broader trend is still intact before treating a high RSI reading as a reason to exit."
+            },
+            {
+              "_key": "m10-024",
+              "_type": "toolLink",
+              "label": "Overlay RSI on any NSE or BSE stock chart on Zerodha Kite",
+              "url": "https://kite.zerodha.com",
+              "description": "Kite's charting tool includes RSI as a standard built-in indicator, letting you compare live overbought and oversold readings against the price action discussed in this lesson."
+            },
+            {
+              "_key": "m10-025",
+              "_type": "flashcardSet",
+              "title": "RSI: Core Terms",
+              "cards": [
+                { "_key": "m10-025f1", "term": "Relative Strength Index (RSI)", "definition": "A momentum oscillator, developed by J. Welles Wilder, that measures the ratio of average gains to average losses over a fixed look-back window and scales it onto a 0-100 reading." },
+                { "_key": "m10-025f2", "term": "Relative strength (RS)", "definition": "The ratio of average gain to average loss over the RSI look-back window, before it is transformed onto the final 0-100 RSI scale." },
+                { "_key": "m10-025f3", "term": "Overbought / oversold", "definition": "Conventional RSI zones, typically above 70 and below 30, historically used to flag a potential reversal, though less reliable during a genuine sustained trend." },
+                { "_key": "m10-025f4", "term": "RSI divergence", "definition": "A pattern where price makes a new high or low that RSI fails to confirm, suggesting fading underlying momentum ahead of a possible reversal." }
+              ]
+            },
+            {
+              "_key": "m10-026",
+              "_type": "keyTakeaways",
+              "points": [
+                "RSI measures the ratio of average gains to average losses over a fixed look-back window, typically 14 periods, scaled onto a 0-100 reading.",
+                "Wilder's original method seeds the first average with a simple average, then smooths subsequent values, a different convention from a plain rolling average, which is why RSI readings can differ slightly across platforms.",
+                "The conventional overbought (above 70) and oversold (below 30) zones work best in range-bound markets. In a genuine sustained momentum move, RSI can stay elevated for extended periods without the trend reversing.",
+                "Treating every overbought RSI reading as an automatic sell signal is one of the most common RSI mistakes, especially when trading a momentum or trend-following strategy.",
+                "RSI divergence, where price and RSI stop confirming each other, is a more reliable warning sign of fading momentum than the raw overbought or oversold level alone, covered in full in the next lesson's case study."
+              ]
+            },
+            {
+              "_key": "m10-027",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice or a recommendation to buy, sell, or hold Suzlon Energy or any other security. The price series used in the worked example is entirely illustrative and does not represent any real security. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

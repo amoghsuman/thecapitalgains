@@ -1,0 +1,183 @@
+{
+  "courseSlug": "understanding-capacity-constraints-and-strategy-scaling",
+  "chapters": [
+    {
+      "title": "Chapter 4: Estimating How Much Capital a Strategy Can Actually Absorb",
+      "lessons": [
+        {
+          "title": "Turnover, Holding Period, and the Capacity Tradeoff",
+          "slug": "turnover-holding-period-and-the-capacity-tradeoff",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "c1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c1s1", "text": "The last lesson sized a single trade. Real strategies rebalance again and again, and how often they do that turns out to be one of the biggest hidden levers on capacity, often bigger than the liquidity of the instruments themselves.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c2s1", "text": "Turnover and Holding Period: Two Sides of the Same Coin", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c3",
+              "style": "normal",
+              "markDefs": [
+                { "_type": "glossaryTerm", "_key": "gt1", "definition": "How many times a strategy's book effectively gets rebuilt in a year. A portfolio turnover of 4 means the whole book is traded through roughly four times a year, once per quarter." }
+              ],
+              "children": [
+                { "_type": "span", "_key": "c3s1", "text": "A quick disambiguation before going further: this is ", "marks": [] },
+                { "_type": "span", "_key": "c3s2", "text": "portfolio turnover", "marks": ["gt1"] },
+                { "_type": "span", "_key": "c3s3", "text": ", how often a strategy rebuilds its own book, not the stock-level turnover ratio from Chapter 2, which measured a single stock's ADV against its own market cap. Same word, two different meanings. Portfolio turnover T and average holding period are reciprocals: a turnover of 1 implies an average holding period around 12 months, a turnover of 4 implies about 3 months, a turnover of 12 implies about 1 month.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c4",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c4s1", "text": "Why Turnover Compounds Capacity Cost", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c5",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c5s1", "text": "Every time a strategy rebuilds its book, it pays impact cost again, roughly a fresh application of the square-root law from Chapter 2. A strategy that turns over once a year pays that cost once. A strategy that turns over 12 times a year pays it 12 times, once per rebalance. If you want to hold total annual impact cost to some fixed budget, a higher turnover strategy has to divide that budget across more trades, which forces a smaller position size per trade, which, because cost scales with the square root of size, shrinks the maximum AUM the strategy can support far faster than turnover itself grows.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "mathBlock",
+              "_key": "c6",
+              "latex": "AUM_{max} \\approx ADV \\cdot \\left(\\frac{C}{T \\cdot Y \\cdot \\sigma}\\right)^2",
+              "caption": "Approximate capacity given an annual impact cost budget C (as a fraction of AUM), portfolio turnover T (times per year), and the same Y and sigma from the square-root model. This treats each rebalance as trading the full book, a simplification, but the direction of the result holds generally."
+            },
+            {
+              "_type": "block",
+              "_key": "c7",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c7s1", "text": "Worked Example: The Same Cost Budget, Three Turnovers", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c8",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c8s1", "text": "Take the Chapter 2 case study stock, ADV Rs 25 crore, daily volatility 2%, Y of 0.75, and set an annual impact cost budget of 2% of AUM. Here is what capacity looks like at three different turnovers.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "c9",
+              "caption": "Same stock, same cost budget, three portfolio turnovers",
+              "headers": ["Portfolio Turnover", "Avg Holding Period", "Implied Capacity"],
+              "rows": [
+                { "cells": ["1x per year", "~12 months", "Rs 44.4 Cr"] },
+                { "cells": ["2x per year", "~6 months", "Rs 11.1 Cr"] },
+                { "cells": ["4x per year", "~3 months", "Rs 2.8 Cr"] },
+                { "cells": ["12x per year", "~1 month", "Rs 0.31 Cr"] }
+              ]
+            },
+            {
+              "_type": "chart",
+              "_key": "c10",
+              "chartType": "bar",
+              "title": "Implied Capacity by Portfolio Turnover",
+              "xAxisLabel": "Portfolio Turnover (times per year)",
+              "yAxisLabel": "Capacity (Rs Cr)",
+              "data": [
+                { "label": "1x/yr", "value": 44.4 },
+                { "label": "2x/yr", "value": 11.1 },
+                { "label": "4x/yr", "value": 2.8 },
+                { "label": "12x/yr", "value": 0.31 }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "c11",
+              "type": "insight",
+              "text": "Capacity falls with the square of turnover, not in proportion to it. Going from once-a-year to twelve-times-a-year turnover is a 12x increase in trading frequency, but roughly a 140x collapse in implied capacity. This is the real reason high-frequency and very short-holding-period strategies, even brilliant ones, tend to run on modest amounts of capital, while patient, low-turnover factor strategies can run vastly larger books on similar or even less liquid instruments."
+            },
+            {
+              "_type": "block",
+              "_key": "c12",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c12s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "c13",
+              "variant": "numericInput",
+              "title": "Compute Capacity at a New Turnover",
+              "prompt": "Using the same stock (ADV Rs 25 Cr, sigma 2%, Y 0.75) and the same annual cost budget of 2%, what is the implied capacity, in Rs Cr, at a portfolio turnover of 6 times per year? Round to two decimals.",
+              "correctValue": 1.23,
+              "tolerance": 0.05,
+              "unit": "Rs Cr",
+              "explanation": "AUM_max = ADV x (C / (T x Y x sigma))^2 = 25 x (0.02 / (6 x 0.75 x 0.02))^2 = 25 x (0.02 / 0.09)^2 = 25 x 0.2222^2 = 25 x 0.0494 = Rs 1.23 Cr."
+            },
+            {
+              "_type": "block",
+              "_key": "c14",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c14s1", "text": "Turnover Is a Capacity Decision, Not Just a Trading Style Choice", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c15",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c15s1", "text": "It is tempting to think of turnover as purely a signal design choice, how fresh your information is, how often you want to act on it. It is also, unavoidably, a capacity decision. A high-turnover strategy with an excellent raw signal may simply never be able to run more than a small amount of capital, no matter how good the numbers looked in a backtest at small size, the exact trap the Chapter 1 case study fell into.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c16",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c16s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "c17",
+              "text": "Two strategies can trade the exact same stocks and still have wildly different capacity, because one rebuilds its book once a year and the other rebuilds it every month. Turnover is not a footnote to capacity. It is one of the two or three biggest levers on it."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "c18",
+              "points": [
+                "Portfolio turnover, how often a strategy rebuilds its book, is distinct from the stock-level turnover ratio from Chapter 2, and holding period is simply its reciprocal.",
+                "Every rebalance pays impact cost again, so a fixed annual cost budget must be divided across more trades as turnover rises, shrinking the position size each trade can afford.",
+                "Because cost scales with the square root of position size, capacity falls with the square of turnover, a small increase in trading frequency can collapse implied capacity dramatically.",
+                "Turnover should be treated as a capacity decision at the design stage, not just a signal-freshness choice, since a high-turnover strategy may be structurally unable to scale regardless of how strong its edge looks at small size."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

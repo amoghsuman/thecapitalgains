@@ -1,0 +1,208 @@
+{
+  "courseSlug": "understanding-numerical-methods-in-quantitative-finance-binomial-trees-and-finite-difference-methods",
+  "chapters": [
+    {
+      "title": "Chapter 3: American Options, Convergence, and Tree Limitations",
+      "lessons": [
+        {
+          "title": "Case Study: Valuing an American Put on Reliance Industries Using a Binomial Tree",
+          "slug": "case-study-valuing-an-american-put-on-reliance-industries-using-a-binomial-tree",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "l1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "l1s1", "text": "Chapter 1, Lesson 1 opened this entire course with a 6-month American put on a Nifty-listed stock, back when none of the machinery to actually price one existed yet. Every piece has since been built: risk-neutral pricing, CRR calibration, the recombining lattice, backward induction, and Lesson 1's exercise check. This lesson finally delivers on that opening promise, in full, on a real, named stock, Reliance Industries.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "l2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "l2s1", "text": "Setting Up the Case", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "l3",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "l3s1", "text": "Reliance Industries has pulled back from its recent highs, a generic setup rather than a reference to any specific event, and now trades at ₹1,500, illustrative for this case study, not a live quote. A desk is valuing an American put struck at ₹1,550, already moderately in the money, with 6 months left to expiry. This case study uses 26% annualized volatility, deliberately higher than Chapter 2's 14% for the Nifty index, because a single stock carries idiosyncratic, company-specific risk that a 50-stock index diversifies away. The tree runs 8 steps.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "l4",
+              "caption": "Case setup",
+              "headers": ["Input", "Value"],
+              "rows": [
+                { "cells": ["Reliance Industries spot, S0", "₹1,500"] },
+                { "cells": ["Strike, K", "₹1,550 (put, already in the money)"] },
+                { "cells": ["Time to expiry, T", "6 months (0.5 years)"] },
+                { "cells": ["Number of steps, N", "8"] },
+                { "cells": ["Step length, delta-t", "T / 8 = 0.0625 years, about 3 weeks per step"] },
+                { "cells": ["Annualized volatility, sigma", "26%"] },
+                { "cells": ["Risk-free rate, r", "6.5% (continuous)"] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "l5",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "l5s1", "text": "Calibrating u, d, and p", "marks": [] }
+              ]
+            },
+            {
+              "_type": "statGrid",
+              "_key": "l6",
+              "stats": [
+                { "label": "u", "value": "1.06716", "context": "e^(0.26 × sqrt(0.0625)), a +6.72% move per step" },
+                { "label": "d", "value": "0.93707", "context": "1 / u, a −6.29% move per step" },
+                { "label": "p", "value": "0.5150", "context": "(e^(0.065 × 0.0625) − d) / (u − d)" }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "l7",
+              "type": "insight",
+              "text": "The risk-free growth factor over one step, about 1.00407, sits comfortably between d and u, no-arbitrage holds. Notice how much wider these moves are than Chapter 2's Nifty tree, +6.72% and −6.29% per step here versus roughly ±3% there, despite similarly sized steps. That gap is volatility doing exactly what it should, a single stock swings harder than the index built from fifty of them."
+            },
+            {
+              "_type": "block",
+              "_key": "l8",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "l8s1", "text": "Terminal Payoffs", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "l9",
+              "caption": "Terminal nodes after eight steps",
+              "headers": ["Up-Moves (j)", "Stock Price", "Put Payoff"],
+              "rows": [
+                { "cells": ["0", "₹891.78", "₹658.22"] },
+                { "cells": ["1", "₹1,015.59", "₹534.41"] },
+                { "cells": ["2", "₹1,156.58", "₹393.42"] },
+                { "cells": ["3", "₹1,317.14", "₹232.86"] },
+                { "cells": ["4", "₹1,500.00", "₹50.00"] },
+                { "cells": ["5", "₹1,708.24", "₹0.00"] },
+                { "cells": ["6", "₹1,945.40", "₹0.00"] },
+                { "cells": ["7", "₹2,215.47", "₹0.00"] },
+                { "cells": ["8", "₹2,523.04", "₹0.00"] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "l10",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "l10s1", "text": "Backward Induction With Early Exercise", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "l11",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "l11s1", "text": "Running Lesson 1's max(hold, intrinsic) rule through all 8 levels flags exercise at 12 of the tree's 44 non-terminal nodes, every one of them clustered at the lower stock prices, exactly where the put is deepest in the money.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "l12",
+              "caption": "Every node where early exercise is optimal",
+              "headers": ["Steps Remaining", "Stock Price", "Hold Value", "Intrinsic Value"],
+              "rows": [
+                { "cells": ["7", "₹951.67", "₹592.04", "₹598.33"] },
+                { "cells": ["7", "₹1,083.79", "₹459.92", "₹466.21"] },
+                { "cells": ["7", "₹1,234.25", "₹309.46", "₹315.75"] },
+                { "cells": ["7", "₹1,405.60", "₹138.11", "₹144.40"] },
+                { "cells": ["6", "₹1,015.59", "₹528.13", "₹534.41"] },
+                { "cells": ["6", "₹1,156.58", "₹387.14", "₹393.42"] },
+                { "cells": ["6", "₹1,317.14", "₹226.57", "₹232.86"] },
+                { "cells": ["5", "₹1,083.79", "₹459.92", "₹466.21"] },
+                { "cells": ["5", "₹1,234.25", "₹309.46", "₹315.75"] },
+                { "cells": ["4", "₹1,156.58", "₹387.14", "₹393.42"] },
+                { "cells": ["4", "₹1,317.14", "₹231.80", "₹232.86"] },
+                { "cells": ["3", "₹1,234.25", "₹309.46", "₹315.75"] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "l13",
+              "type": "warning",
+              "text": "Seven steps remaining is most of the option's remaining life, yet exercise already fires at the deepest nodes there. This is not a coincidence, it is the same mechanism from Chapter 1: once the stock has fallen far enough, the put's remaining downside is capped by zero, so the extra time value from waiting shrinks below what locking in the intrinsic value today and earning interest on it is worth, regardless of how many steps are technically still left on the clock."
+            },
+            {
+              "_type": "statGrid",
+              "_key": "l14",
+              "stats": [
+                { "label": "American put, today", "value": "₹118.76", "context": "Eight-step tree, exercise checked at every node" },
+                { "label": "European put, today", "value": "₹111.64", "context": "Identical lattice, hold value only" },
+                { "label": "Early-exercise premium", "value": "₹7.13, about 6.38% more", "context": "Coming entirely from the 12 flagged nodes above" }
+              ]
+            },
+            {
+              "_type": "codeBlock",
+              "_key": "l15",
+              "language": "python",
+              "code": "import numpy as np\n\nS0, K, sigma, T, N, r = 1500, 1550, 0.26, 0.5, 8, 0.065\ndt = T / N\nu = np.exp(sigma * np.sqrt(dt))\nd = 1 / u\np = (np.exp(r * dt) - d) / (u - d)\ndisc = np.exp(-r * dt)\n\nj = np.arange(N + 1)\nS_T = S0 * (u ** j) * (d ** (N - j))\nvalues = np.maximum(K - S_T, 0)  # put payoff at expiry\n\nfor step in range(N, 0, -1):\n    j = np.arange(step)\n    S = S0 * (u ** j) * (d ** (step - 1 - j))\n    hold = disc * (p * values[1:] + (1 - p) * values[:-1])\n    intrinsic = np.maximum(K - S, 0)\n    values = np.maximum(hold, intrinsic)  # the one line Chapter 3 added to Chapter 2's pipeline\n\nprint(f\"American put price: Rs {values[0]:.2f}\")",
+              "caption": "Chapter 2's European pricer from Lesson 5, with exactly one added line, np.maximum(hold, intrinsic), the same modification Lesson 1 introduced. Running this reproduces Rs 118.76."
+            },
+            {
+              "_type": "exercise",
+              "_key": "l16",
+              "variant": "quiz",
+              "title": "Quick Check",
+              "question": "All 12 early-exercise nodes in this case study are clustered at lower stock prices, even some with most of the option's life still remaining. What best explains this pattern?",
+              "options": [
+                "The risk-neutral probability p is different at those nodes",
+                "The put's downside is capped by zero, so once deep enough in the money, the remaining time value falls below the interest earned by exercising and holding cash instead",
+                "Those nodes have a calculation error, since more time remaining should always mean more value in waiting",
+                "Early exercise on a put is only possible with 7 or fewer steps remaining"
+              ],
+              "correctIndex": 1,
+              "explanation": "A stock cannot fall below zero, so once a put is deep enough in the money, its potential further gain from more downside is limited, while the cash from exercising now keeps earning risk-free interest for however many steps remain. That trade-off can favour exercise even with substantial time left, exactly what this case study's deepest nodes show. Time remaining changes the size of the effect, not whether the underlying mechanism exists at all."
+            },
+            {
+              "_type": "exercise",
+              "_key": "l17",
+              "variant": "scenario",
+              "title": "A Live Decision Mid-Tree",
+              "scenario": "Partway through the option's life, Reliance has fallen and the tree shows the position sitting exactly at the node with 6 steps remaining and a stock price of ₹1,015.59, hold value ₹528.13, intrinsic value ₹534.41.",
+              "prompt": "Based on the table above, what should a holder of this American put do at this exact point, and what would happen if they mistakenly treated it as a European put instead?",
+              "modelAnswer": "Exercise now. The table shows intrinsic value, 534.41, exceeding hold value, 528.13, at this exact node, meaning the model has already flagged this as one of the 12 points where waiting is worth less than cashing in. Treating it as European would mean ignoring the exercise option entirely and continuing to hold no matter what, which this case study's American price of 118.76 against the European price of 111.64 already shows costs real value, a 6.38% gap that comes from exactly these kinds of decisions being made correctly across the tree rather than ignored."
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "l18",
+              "text": "Chapter 1 promised this exact case, a 6-month American put on a real Nifty-listed stock, before the tools to solve it existed. Built properly, calibrated from Reliance's own volatility, checked for early exercise at every node, it prices at ₹118.76 against a European price of ₹111.64, a concrete, computed, 6.38% answer to a question that started this course as pure intuition."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "l19",
+              "points": [
+                "Individual stocks carry higher volatility than the index built from them, Reliance's 26% against Nifty's 14% in Chapter 2, because diversification averages away company-specific risk that a single stock still carries in full.",
+                "Running the full pipeline, CRR calibration, an eight-step recombining lattice, and Lesson 1's exercise check, prices this American put on Reliance at ₹118.76, against ₹111.64 for the identical lattice priced European, a 6.38% early-exercise premium.",
+                "All 12 nodes where early exercise fires are clustered at the lower stock prices, several of them with most of the option's 6-month life still remaining, confirming the deep-in-the-money mechanism from Chapter 1 rather than a mechanical artifact of the tree.",
+                "The Python implementation is Chapter 2, Lesson 5's European pricer with exactly one line added, the max of hold and intrinsic value, the same one-line change Lesson 1 described conceptually.",
+                "A trader following the tree's node-by-node exercise flags rather than a European assumption captures real value, this case study's 6.38% gap being the concrete, computed size of that difference."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

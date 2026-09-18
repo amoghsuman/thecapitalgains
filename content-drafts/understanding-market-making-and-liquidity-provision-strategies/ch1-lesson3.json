@@ -1,0 +1,224 @@
+{
+  "courseSlug": "understanding-market-making-and-liquidity-provision-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 1: Foundations of Market Making and Liquidity",
+      "lessons": [
+        {
+          "title": "Liquidity Takers vs Liquidity Providers: Who Pays the Spread and Why",
+          "slug": "liquidity-takers-vs-liquidity-providers-who-pays-the-spread-and-why",
+          "body": [
+            {
+              "_key": "mmc1l3b01",
+              "_type": "bigIdea",
+              "text": "Every single trade has exactly one side that waited and one side that could not wait. The side that waited gets paid the spread. The side that needed the trade done right now pays it. Nothing about this is arbitrary; it is the price of immediacy."
+            },
+            {
+              "_key": "mmc1l3b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc1l3b02s1",
+                  "_type": "span",
+                  "text": "Two Roles in Every Trade: Who Provides, Who Takes",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc1l3b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "mmc1l3m01",
+                  "_type": "glossaryTerm",
+                  "definition": "A trade is always matched between a resting order that was sitting in the book (the liquidity provider's side, also called the maker side) and an incoming order that matched against it (the liquidity taker's side). The provider supplied a price and waited; the taker accepted that price to trade immediately."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "mmc1l3b03s1",
+                  "_type": "span",
+                  "text": "Go back to the order book from the last lesson. Every single trade that happens on it involves a ",
+                  "marks": []
+                },
+                {
+                  "_key": "mmc1l3b03s2",
+                  "_type": "span",
+                  "text": "liquidity provider and a liquidity taker",
+                  "marks": ["mmc1l3m01"]
+                },
+                {
+                  "_key": "mmc1l3b03s3",
+                  "_type": "span",
+                  "text": ". A trader who places a limit order and lets it rest in the book, willing to wait for a counterparty to come to them, is providing liquidity. A trader who places a market order, or a limit order priced aggressively enough to cross the book immediately, is taking liquidity, because they need the trade to happen right now rather than wait for a better price to show up on its own. A market maker is, by definition, almost always on the providing side. Most retail traders trying to enter or exit a position quickly are, whether they think about it this way or not, almost always on the taking side.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc1l3b04",
+              "_type": "comparison",
+              "title": "Liquidity Provider vs Liquidity Taker",
+              "columns": [
+                {
+                  "_key": "mmc1l3b04c1",
+                  "label": "Liquidity Provider (Maker)",
+                  "points": [
+                    "Uses resting limit orders that sit in the book",
+                    "Execution is uncertain; the order may never get filled if price moves away",
+                    "Gets the price it asked for, exactly, if and when it fills",
+                    "Is compensated for this waiting and risk through the spread"
+                  ]
+                },
+                {
+                  "_key": "mmc1l3b04c2",
+                  "label": "Liquidity Taker",
+                  "points": [
+                    "Uses market orders, or limit orders priced to cross the book immediately",
+                    "Execution is certain, or close to it, at the moment the order is sent",
+                    "Pays the current ask (to buy) or receives the current bid (to sell), plus any slippage",
+                    "Pays for this certainty and speed through the spread and, on larger orders, through slippage"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "mmc1l3b05",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc1l3b05s1",
+                  "_type": "span",
+                  "text": "The Spread as the Price of Immediacy",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc1l3b06",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc1l3b06s1",
+                  "_type": "span",
+                  "text": "A liquidity provider takes on real risk the instant its order rests in the book: the market can move against it before anyone trades against that order, and once someone does trade against it, the provider is left holding a position it did not ask to hold at that exact moment. A liquidity taker takes on almost none of that risk, precisely because it is trading right now, at a known price, with no waiting involved. The spread is how the market prices that difference: the taker pays a small, known cost for certainty and speed, and the provider is paid that same small amount for accepting uncertainty and the risk of being left holding an unwanted position.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc1l3b07",
+              "_type": "keyFact",
+              "label": "Where the Spread From Lesson 1 Actually Ends Up",
+              "value": "Paid by the taker, received by the provider",
+              "context": "The ₹0.10 spread on the Nifty option from the first lesson in this chapter is not a fee charged by the exchange or the broker. It is a direct payment from whichever trader needed to buy or sell immediately, to whichever trader was already resting in the book willing to supply that immediacy."
+            },
+            {
+              "_key": "mmc1l3b08",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc1l3b08s1",
+                  "_type": "span",
+                  "text": "The Spread Is Only One Layer of the Real Cost of Trading",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc1l3b09",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc1l3b09s1",
+                  "_type": "span",
+                  "text": "A retail trader executing a market order on NSE is not only paying the spread. Every trade also carries brokerage, Securities Transaction Tax (STT), exchange transaction charges, and GST plus stamp duty on top of that. It matters, for this course, to be precise about which of these actually goes to a market maker and which does not: the spread is the only one of these costs that a liquidity provider earns. Every other layer goes to the broker, the exchange, or the government, regardless of who was on the providing or taking side of the trade.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc1l3b10",
+              "_type": "table",
+              "caption": "The layers of cost in a single NSE trade, and who actually receives each one",
+              "headers": ["Cost Component", "Who Receives It", "Why It Exists"],
+              "rows": [
+                { "_key": "mmc1l3b10r1", "_type": "tableRow", "cells": ["Bid-ask spread", "The liquidity provider (market maker or any resting order)", "Compensation for quoting continuously and bearing inventory and adverse-selection risk"] },
+                { "_key": "mmc1l3b10r2", "_type": "tableRow", "cells": ["Brokerage", "The broker", "Fee for order routing, execution, and the trading platform"] },
+                { "_key": "mmc1l3b10r3", "_type": "tableRow", "cells": ["Securities Transaction Tax (STT)", "The central government", "A statutory tax levied on specified securities transactions"] },
+                { "_key": "mmc1l3b10r4", "_type": "tableRow", "cells": ["Exchange transaction charges", "NSE / BSE", "Fee for operating the trading and clearing infrastructure"] },
+                { "_key": "mmc1l3b10r5", "_type": "tableRow", "cells": ["GST and stamp duty", "State and central government", "Tax on brokerage services and on the transaction instrument"] }
+              ]
+            },
+            {
+              "_key": "mmc1l3b11",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This table describes who each cost component flows to, not the current rates. STT rates, exchange charges, and GST/stamp duty rules are revised periodically through the Union Budget and SEBI or exchange circulars, so exact percentages are deliberately left out here; check the current NSE and Income Tax Department schedules before modelling total trading costs on real capital."
+            },
+            {
+              "_key": "mmc1l3b12",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Only the spread is a payment between two traders. Every other cost in the table is a payment to an intermediary or the state, which is why a market maker's entire commercial interest is in that one line item, and why understanding it well enough to price it correctly is the whole subject of the next chapter."
+            },
+            {
+              "_key": "mmc1l3b13",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Two Traders, Same Stock, Opposite Roles",
+              "scenario": "A trader holds a position that has moved against them and is worried it will get worse before the market closes, so they place a market sell order to exit immediately. At almost the same moment, another trader places a limit sell order priced two ticks above the current ask, willing to wait, planning to only sell if the price rises to meet it.",
+              "prompt": "Which trader is acting as a liquidity taker and which as a liquidity provider in this moment, and which one is paying for the certainty of an immediate exit?",
+              "modelAnswer": "The trader exiting a losing position with a market order is the liquidity taker: they need the trade done immediately, so they accept whatever price is currently on the bid side and pay the spread for that certainty. The trader with the limit order priced above the current ask is acting as a liquidity provider on the ask side, since their order simply rests in the book and only trades if someone else comes to meet that price; they are not paying for immediacy at all, and if their order eventually gets hit, they are the one being paid the spread."
+            },
+            {
+              "_key": "mmc1l3b14",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Identifying the Taker Order",
+              "question": "Which of the following is most clearly a liquidity-taking order?",
+              "options": [
+                "A limit order to buy placed one tick below the current best bid",
+                "A market order to sell, sent to close a position immediately",
+                "A limit order to sell placed above the current best ask, left resting",
+                "A limit order to buy placed exactly at the current best bid, joining the existing queue"
+              ],
+              "correctIndex": 1,
+              "explanation": "A market order has no price limit at all; it is sent specifically to trade immediately against whatever is resting in the book, which is the definition of taking liquidity. The other three options are all resting orders that wait for a counterparty to come to them, which makes them liquidity-providing orders, even the one joining the queue at the current best bid, since it still has to wait its turn under price-time priority rather than trading instantly."
+            },
+            {
+              "_key": "mmc1l3b15",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Do not assume every taker is simply an impatient retail trader who deserves to pay the spread. Some of the most dangerous order flow a market maker faces comes from takers who trade aggressively precisely because they know something the provider does not yet know. Whether that flow is toxic or benign, and how a provider tells the difference, is the entire subject of Chapter 4."
+            },
+            {
+              "_key": "mmc1l3b16",
+              "_type": "keyTakeaways",
+              "points": [
+                "Every trade pairs a liquidity provider, whose resting order supplied the price, with a liquidity taker, whose incoming order accepted it to trade immediately",
+                "The spread is the price of immediacy: takers pay it for certainty and speed, providers earn it for waiting and bearing risk",
+                "Brokerage, STT, exchange transaction charges, GST, and stamp duty are separate cost layers that go to the broker, the exchange, or the government, not to a liquidity provider",
+                "The bid-ask spread is the only cost component in a trade that is a direct payment between two traders rather than to an intermediary or the state",
+                "A market order is a clear taker order because it has no price limit and is designed to execute immediately",
+                "Not all taker flow is equally benign; some takers trade aggressively because they are informed, which is where adverse selection risk for a market maker begins"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

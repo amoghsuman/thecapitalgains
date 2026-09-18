@@ -1,0 +1,245 @@
+{
+  "courseSlug": "introduction-to-portfolio-optimization-markowitz-and-beyond",
+  "chapters": [
+    {
+      "title": "Chapter 6: Making It Work on a Real Portfolio",
+      "lessons": [
+        {
+          "title": "Rebalancing an Optimized Portfolio: How Often and Why It Matters",
+          "slug": "rebalancing-an-optimized-portfolio-how-often-and-why-it-matters",
+          "body": [
+            {
+              "_key": "poc6l2-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc6l2-001s1", "_type": "span", "marks": [], "text": "Chapter 1, Lesson 3 showed that weights drift on their own as prices move, with no trading required. Lesson 1 of this chapter showed that trading to fix that drift is not free. Rebalancing sits exactly between those two facts: not a single decision, but a policy for how much drift to tolerate before the cost of trading becomes worth paying." }
+              ]
+            },
+            {
+              "_key": "poc6l2-002",
+              "_type": "bigIdea",
+              "text": "A rebalancing policy is a trade-off, stated explicitly: how far a portfolio is allowed to drift from its target before you act, weighed against how much every corrective trade costs in taxes, brokerage, and transaction charges."
+            },
+            {
+              "_key": "poc6l2-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc6l2-003s1", "_type": "span", "marks": [], "text": "Two Rebalancing Policies" }
+              ]
+            },
+            {
+              "_key": "poc6l2-004",
+              "_type": "comparison",
+              "title": "Calendar-Based vs Threshold-Based Rebalancing",
+              "columns": [
+                {
+                  "_key": "poc6l2-004c1",
+                  "label": "Calendar-based",
+                  "points": [
+                    "Rebalance on a fixed schedule: monthly, quarterly, annually",
+                    "Simple and predictable, easy to automate",
+                    "May trade even when drift is tiny, or miss large drift between check-ins",
+                    "Trading frequency is fixed, regardless of how volatile the market has been"
+                  ]
+                },
+                {
+                  "_key": "poc6l2-004c2",
+                  "label": "Threshold-based (tolerance bands)",
+                  "points": [
+                    "Rebalance only when a position drifts past a set band, such as ±5 percentage points",
+                    "Trades only happen when genuinely needed",
+                    "Requires monitoring weights continuously, or at least frequently",
+                    "In a calm market, may go long stretches with no trades at all"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "poc6l2-005",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc6l2-005s1", "_type": "span", "marks": [], "text": "Most real portfolios use a hybrid: check on a fixed schedule, quarterly is common, but only actually trade if a position has breached its threshold band at that check-in. This lesson works through exactly that hybrid, using Chapter 4's tangency portfolio as the target." }
+              ]
+            },
+            {
+              "_key": "poc6l2-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc6l2-006s1", "_type": "span", "marks": [], "text": "Worked Example: a Year of Drift" }
+              ]
+            },
+            {
+              "_key": "poc6l2-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc6l2-007s1", "_type": "span", "marks": [], "text": "A ₹10,00,000 portfolio starts at Chapter 4's exact tangency weights. Over the following year, illustrative REALIZED returns, which never match expected returns exactly, as Chapter 1, Lesson 2 first distinguished, turn out to be: TCS +35%, Maruti Suzuki -15%, HDFC Bank +8%, HUL +3%, Reliance +20%." }
+              ]
+            },
+            {
+              "_key": "poc6l2-008",
+              "_type": "table",
+              "caption": "Target weights versus one year of drift",
+              "headers": ["Stock", "Target weight", "Realized return", "New weight", "Drift"],
+              "rows": [
+                { "_key": "poc6l2-008r1", "_type": "tableRow", "cells": ["TCS", "27.29%", "+35%", "33.44%", "+6.15 pts"] },
+                { "_key": "poc6l2-008r2", "_type": "tableRow", "cells": ["Maruti Suzuki", "25.32%", "-15%", "19.53%", "-5.79 pts"] },
+                { "_key": "poc6l2-008r3", "_type": "tableRow", "cells": ["HDFC Bank", "18.19%", "+8%", "17.83%", "-0.36 pts"] },
+                { "_key": "poc6l2-008r4", "_type": "tableRow", "cells": ["HUL", "16.88%", "+3%", "15.78%", "-1.10 pts"] },
+                { "_key": "poc6l2-008r5", "_type": "tableRow", "cells": ["Reliance", "12.32%", "+20%", "13.42%", "+1.10 pts"] }
+              ]
+            },
+            {
+              "_key": "poc6l2-009",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Against a ±5 percentage point tolerance band, TCS (+6.15 pts) and Maruti Suzuki (-5.79 pts) have both breached it. HDFC Bank, HUL, and Reliance have not. A threshold-based policy triggers a rebalance here, purely because of TCS and Maruti Suzuki, even though the portfolio's total value simply grew along the way."
+            },
+            {
+              "_key": "poc6l2-010",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc6l2-010s1", "_type": "span", "marks": [], "text": "Executing the Rebalance" }
+              ]
+            },
+            {
+              "_key": "poc6l2-011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc6l2-011s1", "_type": "span", "marks": [], "text": "In practice, once any single position triggers the band, the whole portfolio gets reset back to its target weights, not just the breaching names. On the portfolio's new total value of ₹11,01,791:" }
+              ]
+            },
+            {
+              "_key": "poc6l2-012",
+              "_type": "table",
+              "caption": "Trades needed to restore all five target weights",
+              "headers": ["Stock", "Action", "Amount"],
+              "rows": [
+                { "_key": "poc6l2-012r1", "_type": "tableRow", "cells": ["TCS", "SELL", "₹67,736"] },
+                { "_key": "poc6l2-012r2", "_type": "tableRow", "cells": ["Maruti Suzuki", "BUY", "₹63,753"] },
+                { "_key": "poc6l2-012r3", "_type": "tableRow", "cells": ["HDFC Bank", "BUY", "₹3,964"] },
+                { "_key": "poc6l2-012r4", "_type": "tableRow", "cells": ["HUL", "BUY", "₹12,118"] },
+                { "_key": "poc6l2-012r5", "_type": "tableRow", "cells": ["Reliance", "SELL", "₹12,099"] }
+              ]
+            },
+            {
+              "_key": "poc6l2-013",
+              "_type": "callout",
+              "type": "insight",
+              "text": "The five trades sum to exactly zero, since rebalancing only reallocates existing capital, it does not add or remove any. This is also, mechanically, a disciplined way of selling recent winners (TCS, Reliance) and buying recent laggards (Maruti Suzuki), which is exactly what a fixed target-weight policy forces you to do, whether or not it feels comfortable in the moment."
+            },
+            {
+              "_key": "poc6l2-014",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc6l2-014s1", "_type": "span", "marks": [], "text": "The Real Cost of Doing This" }
+              ]
+            },
+            {
+              "_key": "poc6l2-015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc6l2-015s1", "_type": "span", "marks": [], "text": "Every one of those five trades carries real costs in India: brokerage, the Securities Transaction Tax charged on delivery-based equity trades, and capital gains tax on the ₹67,736 TCS sale and the ₹12,099 Reliance sale, since both are profitable positions being trimmed. Whether that gain is taxed at the short-term or long-term rate depends on how long the shares have been held, short-term for equity held under 12 months, long-term beyond that, with long-term treatment historically taxed more favourably. Exact current rates and thresholds change with tax policy, so always verify them directly rather than relying on a fixed number here." }
+              ]
+            },
+            {
+              "_key": "poc6l2-016",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This is precisely why an investor whose TCS position is, say, eleven months old might deliberately wait one more month before executing this rebalance. Purely on tax timing, crossing into long-term treatment before selling a profitable position can be worth more than the cost of staying slightly further from target weight for a few extra weeks. A rebalancing policy is a guideline, not a rule that overrides every other consideration."
+            },
+            {
+              "_key": "poc6l2-017",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc6l2-017s1", "_type": "span", "marks": [], "text": "How to Choose a Policy" }
+              ]
+            },
+            {
+              "_key": "poc6l2-018",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc6l2-018s1", "_type": "span", "marks": [], "text": "A tighter band, say ±2 percentage points, or a more frequent calendar, tracks the theoretical target more closely, but generates more trades, more STT, more brokerage, and more realized capital gains along the way. A wider band, or a longer calendar, trades some of that precision away for meaningfully lower costs and fewer taxable events. There is no universally correct answer, but a quarterly check paired with a band in the region of 5 percentage points is a common, reasonable default many practitioners use as a starting point, to be adjusted for portfolio size, cost sensitivity, and how volatile the specific holdings tend to be." }
+              ]
+            },
+            {
+              "_key": "poc6l2-019",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Compute a new drift scenario",
+              "prompt": "A stock's target weight is 20% of a ₹25,00,000 portfolio (so ₹5,00,000 in that stock). Over the year, that position grows to ₹7,50,000, while the rest of the portfolio's value stays flat at ₹20,00,000. What is the stock's new weight?",
+              "correctValue": 27.27,
+              "tolerance": 0.2,
+              "unit": "%",
+              "explanation": "New total portfolio value = 7,50,000 + 20,00,000 = 27,50,000. New weight = 7,50,000 / 27,50,000 = 0.2727, or 27.27%, a drift of about 7.27 percentage points above the original 20% target."
+            },
+            {
+              "_key": "poc6l2-020",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "The tax-timing consideration",
+              "question": "An investor's position has drifted well past its rebalancing threshold after being held for 11 months. Purely from a tax-timing perspective, ignoring every other factor, what is one real reason they might wait one more month before selling?",
+              "options": [
+                "Waiting has no effect on taxation in India; only the profit amount matters",
+                "Crossing the 12-month holding mark may shift the sale from short-term to long-term capital gains treatment, which is typically taxed more favourably for equity",
+                "SEBI requires all rebalancing trades to happen after exactly 12 months",
+                "Brokerage charges are waived automatically after 12 months of holding a stock"
+              ],
+              "correctIndex": 1,
+              "explanation": "In India, equity holding periods generally split into short-term (under 12 months) and long-term (12 months or more) for capital gains tax purposes, with long-term treatment historically taxed more favourably. Waiting to cross that threshold before selling a profitable position is a real, common tax-timing consideration, separate from the portfolio-construction logic of this course."
+            },
+            {
+              "_key": "poc6l2-021",
+              "_type": "flashcardSet",
+              "title": "Rebalancing: Core Terms",
+              "cards": [
+                { "_key": "poc6l2-021f1", "term": "Calendar-based rebalancing", "definition": "Rebalancing a portfolio back to target weights on a fixed schedule, regardless of how much drift has actually occurred." },
+                { "_key": "poc6l2-021f2", "term": "Threshold (tolerance band) rebalancing", "definition": "Rebalancing only when a position's weight drifts beyond a set band from its target, such as ±5 percentage points." },
+                { "_key": "poc6l2-021f3", "term": "Short-term vs long-term capital gains (equity)", "definition": "In India, equity gains are generally classified as short-term if held under 12 months and long-term beyond that, with long-term treatment historically taxed more favourably. Exact rates change with tax policy." }
+              ]
+            },
+            {
+              "_key": "poc6l2-022",
+              "_type": "keyTakeaways",
+              "points": [
+                "Rebalancing is a policy choice, not a one-time decision: how much drift to tolerate before acting, balanced against the real cost of the resulting trades.",
+                "Calendar-based rebalancing is simple but can trade unnecessarily or miss large drift between check-ins. Threshold-based rebalancing trades only when genuinely needed, but requires more continuous monitoring.",
+                "In this lesson's worked example, a single year of differing realized returns pushed TCS and Maruti Suzuki past a ±5-point band, while three other holdings stayed within it.",
+                "Restoring target weights meant selling recent winners and buying recent laggards, a discipline the policy enforces mechanically, whether or not it feels comfortable at the time.",
+                "Every rebalancing trade in India carries real costs: brokerage, STT, and capital gains tax, with the short-term versus long-term holding period genuinely affecting how much tax a sale triggers.",
+                "A quarterly check with a band around 5 percentage points is a common starting default, but the right policy depends on portfolio size, cost sensitivity, and each holding's typical volatility."
+              ]
+            },
+            {
+              "_key": "poc6l2-023",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or tax advice. Tax rules, rates, and thresholds referenced in general terms may change; always verify current rules directly or consult a qualified tax professional. All portfolio values, returns, and trade amounts used in this lesson are illustrative, not live or historical market data. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

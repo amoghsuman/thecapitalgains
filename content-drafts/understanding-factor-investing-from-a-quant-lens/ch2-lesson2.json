@@ -1,0 +1,257 @@
+{
+  "courseSlug": "understanding-factor-investing-from-a-quant-lens",
+  "chapters": [
+    {
+      "title": "Chapter 2: The Core Factor Zoo",
+      "lessons": [
+        {
+          "title": "The Momentum Factor: Trends, the 12-1 Rule, and Reversal Risk",
+          "slug": "the-momentum-factor-trends-the-12-1-rule-and-reversal-risk",
+          "body": [
+            {
+              "_key": "f2l2b01",
+              "_type": "bigIdea",
+              "text": "Momentum is the factor with the strongest historical returns and the sharpest, most sudden drawdowns. Getting the lookback window right, skipping the most recent month, and respecting reversal risk is not academic fussiness, it is the difference between harvesting the premium and being the one who gets crashed."
+            },
+            {
+              "_key": "f2l2b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "f2l2b02s1", "_type": "span", "text": "Chapter 1 introduced momentum as Jegadeesh and Titman's 1993 discovery, Carhart's UMD factor, and briefly flagged momentum crashes when covering NSE's Nifty200 Momentum 30 index. This lesson goes under the hood: the precise construction rule academics and NSE index methodologies actually use, why the most recent month gets deliberately excluded, the different reversal effects lurking at different time horizons, and the mechanics of exactly how and why momentum strategies crash.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f2l2b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "f2l2b03s1", "_type": "span", "text": "The 12-1 Momentum Rule: Why Skip the Most Recent Month", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f2l2b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "f2l2b04s1", "_type": "span", "text": "The standard academic momentum signal is not simply 'the last 12 months' return.' It is the cumulative return from 12 months ago up to 1 month ago, deliberately skipping the most recent month. This is called 12-1 momentum, and the '-1' is doing real work, not just a technical footnote.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f2l2b05",
+              "_type": "mathBlock",
+              "latex": "R_{12\\text{-}1,\\,t} = \\left[ \\prod_{i=2}^{12} (1 + r_{t-i}) \\right] - 1",
+              "caption": "The 12-1 momentum signal: cumulative return from month t-12 through t-2, excluding the most recent month t-1"
+            },
+            {
+              "_key": "f2l2b06",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "f2l2m01",
+                  "_type": "glossaryTerm",
+                  "definition": "The tendency of a stock's very recent, one-month return to partially reverse, driven by short-term liquidity effects, bid-ask bounce, and overreaction to news, rather than genuine trend continuation."
+                }
+              ],
+              "children": [
+                { "_key": "f2l2b06s1", "_type": "span", "text": "The most recent month is skipped because of a separate, well-documented pattern called ", "marks": [] },
+                { "_key": "f2l2b06s2", "_type": "span", "text": "short-term reversal", "marks": ["f2l2m01"] },
+                { "_key": "f2l2b06s3", "_type": "span", "text": ": a stock's single most recent month of return tends to partially reverse over the following month, the opposite behaviour of the intermediate-term momentum effect the strategy is trying to capture. If you rank stocks on the full 12-month return without excluding the last month, you accidentally blend a genuine, persistent trend-following signal with a noisy, short-term reversal signal pulling in the opposite direction, which weakens the overall strategy. Skipping that final month isolates the intermediate-term drift and avoids buying into a stock purely because of a short-lived, about-to-reverse spike.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f2l2b07",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "f2l2b07s1", "_type": "span", "text": "Short-Term Reversal vs Long-Term Reversal: The Momentum Sandwich", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f2l2b08",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "f2l2b08s1", "_type": "span", "text": "Momentum sits sandwiched between two reversal effects at different time horizons, both discovered independently of Jegadeesh and Titman's work. At the very short end, the reversal already described operates over roughly a single month. At the very long end, Werner De Bondt and Richard Thaler showed in 1985 that stocks which had been the biggest losers over the prior three to five years went on to outperform the biggest prior winners over the following three to five years, an overreaction effect operating on a completely different, much longer time scale than momentum.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f2l2b09",
+              "_type": "table",
+              "caption": "Three different effects across three different horizons, easy to confuse if you are not careful about the lookback window",
+              "headers": ["Horizon", "Effect", "Direction", "Key Researchers"],
+              "rows": [
+                { "_key": "f2l2b09r1", "_type": "tableRow", "cells": ["About 1 month", "Short-term reversal", "Recent winners tend to partially give back gains; recent losers tend to partially recover", "Jegadeesh (1990)"] },
+                { "_key": "f2l2b09r2", "_type": "tableRow", "cells": ["3 to 12 months", "Momentum", "Recent winners keep winning; recent losers keep losing", "Jegadeesh and Titman (1993)"] },
+                { "_key": "f2l2b09r3", "_type": "tableRow", "cells": ["3 to 5 years", "Long-term reversal", "Prior big losers outperform prior big winners over the next several years", "De Bondt and Thaler (1985)"] }
+              ]
+            },
+            {
+              "_key": "f2l2b10",
+              "_type": "callout",
+              "type": "insight",
+              "text": "The same underlying stock return series can look like momentum or reversal depending purely on which window you measure it over. This is exactly why the lookback window is not a minor implementation detail in factor construction, it is the specification that decides which of three well-documented, opposite-signed effects your strategy is actually harvesting."
+            },
+            {
+              "_key": "f2l2b11",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "f2l2b11s1", "_type": "span", "text": "Constructing a Momentum Score in Practice", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f2l2b12",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "f2l2b12s1", "_type": "span", "text": "Raw 12-1 return ranks stocks purely on how much they moved, treating a smooth, steady climber identically to a stock that spiked violently on a single news day and then drifted. Most practical implementations, including the broad logic behind NSE's momentum and alpha indices covered in Chapter 1, adjust for this by scaling the return by the stock's own volatility over the same period, rewarding consistent trends over erratic ones.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f2l2b13",
+              "_type": "mathBlock",
+              "latex": "\\text{Risk-Adjusted Momentum} = \\frac{R_{12\\text{-}1}}{\\sigma_{\\text{daily returns, same window}}}",
+              "caption": "Scaling the 12-1 return by the stock's own return volatility rewards steady trends over volatile, spiky ones"
+            },
+            {
+              "_key": "f2l2b14",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "f2l2b14s1", "_type": "span", "text": "Reversal Risk and Momentum Crashes: The Mechanism", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f2l2b15",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "f2l2b15s1", "_type": "span", "text": "Chapter 1 flagged that momentum strategies are prone to sharp crashes, particularly around fast market rebounds after a steep sell-off. Here is exactly why that happens mechanically. A cross-sectional momentum strategy is, by construction, long the stocks that fell the least (or rose the most) recently and short, or underweight, the stocks that fell the hardest. During a sharp market downturn, the stocks that fall hardest tend to be high-beta, cyclical, and often more leveraged names. Momentum has therefore quietly rotated the portfolio into a defensive, low-beta tilt, without any explicit instruction to do so, purely as a side effect of ranking on recent returns.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f2l2b16",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "f2l2b16s1", "_type": "span", "text": "When the market then snaps into a sharp recovery, and history shows the steepest rebounds tend to follow the steepest sell-offs, it is usually those same high-beta, previously battered stocks that rally hardest, since a large part of their fall was driven by panic and liquidity stress rather than a permanent change in fundamentals. A momentum strategy sitting in defensive, low-beta winners from the downturn, and short or underweight the very stocks now leading the rebound, can underperform sharply and suddenly. Kent Daniel and Tobias Moskowitz formalised this pattern in a 2016 paper, showing these crashes cluster specifically around market rebounds rather than occurring randomly, which is what makes them a known, structural feature of the factor rather than bad luck.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f2l2b17",
+              "_type": "collapsible",
+              "title": "Show me more: cross-sectional momentum vs time-series momentum",
+              "content": [
+                {
+                  "_key": "f2l2b17b1",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    { "_key": "f2l2b17b1s1", "_type": "span", "text": "Everything covered so far in this lesson is cross-sectional momentum: ranking stocks against each other and going long the relative winners, short the relative losers. There is a second, related but distinct approach called time-series momentum, or trend following, which compares an asset's own recent return to itself, typically its own sign, positive or negative, rather than ranking it against other assets. A time-series momentum strategy on Nifty futures simply asks: has the index been trending up or down over the last N months? and takes a long or short position accordingly, with no reference to how any other asset has performed.", "marks": [] }
+                  ]
+                },
+                {
+                  "_key": "f2l2b17b2",
+                  "_type": "comparison",
+                  "title": "Cross-Sectional Momentum vs Time-Series Momentum",
+                  "columns": [
+                    {
+                      "_key": "f2l2b17b2c1",
+                      "label": "Cross-Sectional Momentum",
+                      "points": [
+                        "Ranks assets relative to each other within a universe, such as all Nifty 200 stocks",
+                        "Always has both a long leg (relative winners) and a short or underweight leg (relative losers)",
+                        "The basis for NSE's Nifty200 Momentum 30 and similar equity factor indices",
+                        "Can be fully invested even when every asset in the universe is falling, since it only compares relative performance"
+                      ]
+                    },
+                    {
+                      "_key": "f2l2b17b2c2",
+                      "label": "Time-Series Momentum (Trend Following)",
+                      "points": [
+                        "Compares each asset's own recent return to itself, typically to zero or its own historical average",
+                        "Can go net long or net short an entire asset, or exit to cash, independent of any other asset",
+                        "The basis for most CTA and systematic trend-following strategies trading Nifty, Bank Nifty, and MCX commodity futures",
+                        "Tends to do relatively better in strong, sustained directional markets, and can sit out or go short a broad downturn entirely"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "_key": "f2l2b17b3",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    { "_key": "f2l2b17b3s1", "_type": "span", "text": "Both approaches are momentum in the broad sense, exploiting the same underlying persistence in trends, but they behave very differently in a systemic downturn. Cross-sectional momentum stays invested and simply rotates its relative winners and losers, while time-series momentum can flip an entire asset to short or flat, which is one reason trend-following futures strategies on the NSE and MCX are often pitched as a portfolio diversifier during broad equity sell-offs.", "marks": [] }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "f2l2b18",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Diagnosing a Momentum Portfolio's Risk",
+              "scenario": "You manage a cross-sectional equity momentum strategy on the Nifty 200 universe. The market has just fallen 25 percent over six weeks on a macro shock, and your portfolio, which rebalances monthly, is now heavily weighted towards defensive FMCG and pharma names that fell the least, while it has rotated almost entirely out of the high-beta metals, realty, and PSU bank names that fell the hardest.",
+              "prompt": "Based on the mechanism described in this lesson, what specific risk does this portfolio now carry heading into the next rebalancing date, and why?",
+              "modelAnswer": "The portfolio is now exposed to exactly the setup that produces a momentum crash: it has rotated into low-beta, defensive winners and out of the high-beta, previously battered names, purely as a mechanical side effect of the recent price ranking. If the market stages a sharp, broad-based rebound before the next rebalance, and such rebounds are historically most likely right after steep sell-offs, the previously hardest-hit, high-beta names it no longer holds are the most probable leaders of that rebound. The strategy would then underperform sharply during the recovery it is not positioned for, which is the same dynamic Daniel and Moskowitz documented as the structural cause of momentum crashes."
+            },
+            {
+              "_key": "f2l2b19",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "Fill in the Blank: The 12-1 Convention",
+              "textWithBlank": "The standard '12-1' momentum signal uses the cumulative return from 12 months ago up to 1 month ago, deliberately ___ the most recent month to avoid the short-term reversal effect.",
+              "correctAnswers": ["excluding", "skipping"],
+              "explanation": "The most recent month is excluded (skipped) because it is dominated by short-term reversal, a separate effect where very recent returns tend to partially reverse, which would otherwise contaminate the intermediate-term momentum signal the strategy is trying to isolate."
+            },
+            {
+              "_key": "f2l2b20",
+              "_type": "flashcardSet",
+              "title": "Vocabulary Check: Terms From This Lesson",
+              "cards": [
+                { "_key": "f2l2b20c1", "term": "12-1 momentum", "definition": "The standard momentum signal: cumulative return from 12 months ago to 1 month ago, excluding the most recent month to avoid short-term reversal." },
+                { "_key": "f2l2b20c2", "term": "Short-term reversal", "definition": "The tendency of a stock's most recent single month of return to partially reverse, driven by liquidity effects and overreaction rather than trend continuation." },
+                { "_key": "f2l2b20c3", "term": "Long-term reversal", "definition": "The tendency of the biggest three-to-five-year losers to outperform the biggest three-to-five-year winners over the following several years (De Bondt and Thaler, 1985)." },
+                { "_key": "f2l2b20c4", "term": "Momentum crash", "definition": "A sharp reversal in momentum strategy returns, driven mechanically by the strategy's defensive positioning after a downturn colliding with a rebound led by the previously battered, high-beta stocks it no longer holds." },
+                { "_key": "f2l2b20c5", "term": "Time-series momentum (trend following)", "definition": "A momentum approach comparing an asset's own recent return to itself, allowing a strategy to go net long, net short, or flat on a single asset, distinct from cross-sectional momentum's relative ranking." }
+              ]
+            },
+            {
+              "_key": "f2l2b21",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson describes general academic and index-construction concepts for educational purposes only. It is not a recommendation to run any specific momentum or trend-following strategy on any security, index, or futures contract. Real implementations require careful backtesting, transaction cost analysis, and risk management well beyond what is summarised here."
+            },
+            {
+              "_key": "f2l2b22",
+              "_type": "keyTakeaways",
+              "points": [
+                "The standard 12-1 momentum signal uses returns from 12 months ago to 1 month ago, deliberately excluding the most recent month to avoid contaminating the signal with short-term reversal",
+                "Three distinct, opposite-signed effects operate at three different horizons: short-term reversal (about 1 month), momentum (3 to 12 months), and long-term reversal (3 to 5 years)",
+                "Risk-adjusted momentum scores, scaling return by the stock's own volatility, reward steady trends over volatile spikes, similar to the logic behind NSE's momentum and alpha indices",
+                "Momentum crashes happen because the strategy mechanically rotates into defensive, low-beta names during a downturn, then underperforms when the previously battered, high-beta names lead the rebound (Daniel and Moskowitz, 2016)",
+                "Cross-sectional momentum (ranking stocks against each other) and time-series momentum or trend following (comparing an asset to its own history) are related but distinct, with different behaviour during systemic downturns",
+                "Trend-following strategies on Nifty, Bank Nifty, and MCX commodity futures are typically built on time-series, not cross-sectional, momentum"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

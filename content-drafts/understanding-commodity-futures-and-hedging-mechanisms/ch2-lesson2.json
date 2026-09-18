@@ -1,0 +1,401 @@
+{
+  "courseSlug": "understanding-commodity-futures-and-hedging-mechanisms",
+  "chapters": [
+    {
+      "title": "Futures Contract Mechanics",
+      "lessons": [
+        {
+          "title": "Margins, Mark-to-Market, and the Clearing Corporation",
+          "slug": "margins-mark-to-market-and-the-clearing-corporation",
+          "body": [
+            {
+              "_key": "cfh-c2l2-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "cfh-c2l2-001s1",
+                  "_type": "span",
+                  "text": "Natural gas is one of the most volatile contracts on MCX, capable of moving 5 to 10% in a single session on a cold snap in the US or a supply disruption. A trader holding a short position overnight can wake up to a margin call, a message from his broker saying his account balance has fallen below what the exchange requires to keep that position open, with a deadline to add funds. Ignore it, and the broker will square off the position without asking again. None of this is arbitrary. It is margin and mark-to-market working exactly as designed, and understanding the mechanism in advance is the difference between a manageable loss and a forced, badly timed one.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c2l2-002",
+              "_type": "bigIdea",
+              "text": "Margin is the deposit you post before you can hold a futures position, sized to the worst loss the exchange thinks you could plausibly suffer in a day. Mark-to-market is the daily process that turns your paper gains and losses into actual cash, credited or debited every single trading day. Together, they are how the clearing corporation is able to guarantee every trade without needing to trust anyone's word."
+            },
+            {
+              "_key": "cfh-c2l2-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "cfh-c2l2-003s1",
+                  "_type": "span",
+                  "text": "The Layers of Margin",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c2l2-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "cfh-c2l2-004m1",
+                  "_type": "glossaryTerm",
+                  "definition": "Standard Portfolio Analysis of Risk. A risk model, used by MCXCCL and NCCL, that estimates the worst-case one-day loss on your position under a set of prescribed adverse price and volatility scenarios, and sets your initial margin to cover it."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "cfh-c2l2-004s1",
+                  "_type": "span",
+                  "text": "The margin you actually pay is not one number but a stack of them. The base layer is ",
+                  "marks": []
+                },
+                {
+                  "_key": "cfh-c2l2-004s2",
+                  "_type": "span",
+                  "text": "SPAN margin",
+                  "marks": ["cfh-c2l2-004m1"]
+                },
+                {
+                  "_key": "cfh-c2l2-004s3",
+                  "_type": "span",
+                  "text": ", which covers the modelled worst-case move. On top of that sit two more layers designed to catch what SPAN might miss.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c2l2-005",
+              "_type": "table",
+              "caption": "What makes up your total initial margin (illustrative structure; exact rates are set by the exchange and change with volatility)",
+              "headers": ["Layer", "What it covers", "Typical basis"],
+              "rows": [
+                {
+                  "_key": "cfh-c2l2-005r1",
+                  "_type": "tableRow",
+                  "cells": ["SPAN margin", "Modelled worst-case one-day loss under prescribed price and volatility scenarios", "Portfolio-based, varies by commodity and volatility"]
+                },
+                {
+                  "_key": "cfh-c2l2-005r2",
+                  "_type": "tableRow",
+                  "cells": ["Exposure margin", "An additional cushion over and above SPAN, for extra safety", "A percentage of contract value, set by the exchange"]
+                },
+                {
+                  "_key": "cfh-c2l2-005r3",
+                  "_type": "tableRow",
+                  "cells": ["Extreme Loss Margin (ELM)", "Tail-risk losses beyond what SPAN and exposure margin are designed to cover", "Roughly 1.25% of contract value on futures, 1% on options, as a floor"]
+                },
+                {
+                  "_key": "cfh-c2l2-005r4",
+                  "_type": "tableRow",
+                  "cells": ["Additional / special margin", "Extra protection during unusually volatile periods or as a contract nears its delivery period", "Imposed at the exchange's discretion, on top of the above"]
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c2l2-006",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Notice the pattern: every layer exists because the previous one has a known blind spot. SPAN is a model, models can be wrong, so exposure margin adds a buffer. Even a buffer can be exceeded in a genuine tail event, so ELM exists. And even ELM assumes normal-ish volatility, so the exchange keeps the discretion to bolt on additional margin when a commodity is behaving abnormally, which is common right before delivery periods."
+            },
+            {
+              "_key": "cfh-c2l2-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "cfh-c2l2-007s1",
+                  "_type": "span",
+                  "text": "Mark-to-Market: Settled Every Single Day",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c2l2-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "cfh-c2l2-008m1",
+                  "_type": "glossaryTerm",
+                  "definition": "The daily process of revaluing every open futures position at that day's official settlement price and immediately crediting or debiting the resulting gain or loss, in cash, to each trader's account."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "cfh-c2l2-008s1",
+                  "_type": "span",
+                  "text": "Unlike a stock you hold for years without touching your bank balance, a futures position is ",
+                  "marks": []
+                },
+                {
+                  "_key": "cfh-c2l2-008s2",
+                  "_type": "span",
+                  "text": "marked to market",
+                  "marks": ["cfh-c2l2-008m1"]
+                },
+                {
+                  "_key": "cfh-c2l2-008s3",
+                  "_type": "span",
+                  "text": " at the close of every trading day. Your gain or loss for that day is calculated against the exchange's official settlement price, and that amount actually moves, in cash, into or out of your trading account by the next business day. There is no such thing as an unrealised gain sitting quietly in a futures account; it is realised daily, whether you like it or not.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c2l2-009",
+              "_type": "mathBlock",
+              "latex": "\\text{Daily MTM} = (\\text{Today's Settlement Price} - \\text{Previous Settlement or Trade Price}) \\times \\text{Lot Size} \\times (\\pm 1 \\text{ for long/short})",
+              "caption": "Positive for a long position when price rises, negative when it falls; the reverse for a short position."
+            },
+            {
+              "_key": "cfh-c2l2-010",
+              "_type": "collapsible",
+              "title": "Show me the math: two days of mark-to-market on a crude oil trade",
+              "content": [
+                {
+                  "_key": "cfh-c2l2-011",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "cfh-c2l2-011s1",
+                      "_type": "span",
+                      "text": "Suresh buys 1 lot of MCX Crude Oil (100 barrels) at ₹6,000 per barrel. These are illustrative prices, not today's market.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "cfh-c2l2-012",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "cfh-c2l2-012s1",
+                      "_type": "span",
+                      "text": "Day 1 close: the settlement price is ₹5,950. MTM = (5,950 − 6,000) × 100 = −₹5,000. This loss is debited from Suresh's account.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "cfh-c2l2-013",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "cfh-c2l2-013s1",
+                      "_type": "span",
+                      "text": "Day 2 close: the settlement price rises to ₹6,020. MTM = (6,020 − 5,950) × 100 = +₹7,000. This gain is credited to Suresh's account.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "cfh-c2l2-014",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "cfh-c2l2-014s1",
+                      "_type": "span",
+                      "text": "Net over two days: −₹5,000 + ₹7,000 = +₹2,000, which matches (6,020 − 6,000) × 100. Each day's move is settled separately in cash, but the running total always ties back to the simple difference between his entry price and the latest settlement price.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c2l2-015",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Your turn: mark-to-market on a short position",
+              "prompt": "Meera sells (goes short) 1 lot of MCX Crude Oil at ₹6,000 per barrel. At the close of the day, the settlement price is ₹6,080. Remember, a short position gains when price falls and loses when price rises. What is Meera's mark-to-market for the day, in rupees? Use a negative number for a loss.",
+              "correctValue": -8000,
+              "tolerance": 0,
+              "unit": "₹",
+              "explanation": "Price rose by ₹80 (6,080 − 6,000), which is bad for a short position. Loss = 80 × 100 barrels = ₹8,000, debited from Meera's account. If she had been long, this would have been a ₹8,000 gain instead."
+            },
+            {
+              "_key": "cfh-c2l2-016",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "cfh-c2l2-016s1",
+                  "_type": "span",
+                  "text": "When Margin Runs Short: Margin Calls and Auto Square-off",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c2l2-017",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "cfh-c2l2-017m1",
+                  "_type": "glossaryTerm",
+                  "definition": "A demand from your broker to deposit additional funds because a mark-to-market loss has pushed your account balance below the margin required to keep your position open."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "cfh-c2l2-017s1",
+                  "_type": "span",
+                  "text": "A large adverse mark-to-market loss can push your account below the required margin. When that happens, your broker issues a ",
+                  "marks": []
+                },
+                {
+                  "_key": "cfh-c2l2-017s2",
+                  "_type": "span",
+                  "text": "margin call",
+                  "marks": ["cfh-c2l2-017m1"]
+                },
+                {
+                  "_key": "cfh-c2l2-017s3",
+                  "_type": "span",
+                  "text": ", asking you to add funds by a deadline, usually the next trading session. If you do not, the broker has the right, and in practice the obligation to the exchange, to square off enough of your position to bring your account back within margin, at whatever price the market offers at that moment, not a price of your choosing.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c2l2-018",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "How big is the shortfall?",
+              "prompt": "Karan's account has ₹28,000 available against a position that now requires ₹40,000 in total margin after an adverse move. How much does he need to deposit to meet the margin call?",
+              "correctValue": 12000,
+              "tolerance": 0,
+              "unit": "₹",
+              "explanation": "Shortfall = required margin − available margin = ₹40,000 − ₹28,000 = ₹12,000. If Karan does not deposit this before the deadline, his broker can square off part or all of his position."
+            },
+            {
+              "_key": "cfh-c2l2-019",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Auto square-off happens at market price, during market hours, with no regard for whether that price is favourable to you. This is the leverage risk from Chapter 1 showing up in practice: a position sized well beyond your comfort with sudden cash outflows can force an exit at the worst possible moment."
+            },
+            {
+              "_key": "cfh-c2l2-020",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "cfh-c2l2-020s1",
+                  "_type": "span",
+                  "text": "How This All Adds Up to a Guarantee",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c2l2-021",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "cfh-c2l2-021s1",
+                  "_type": "span",
+                  "text": "Recall from Chapter 1 that MCX trades clear through MCXCCL and NCDEX trades clear through NCCL, both SEBI-recognised clearing corporations that become the counterparty to every trade through novation. Margin and mark-to-market are the machinery that makes that guarantee credible rather than just a promise. Every participant posts margin sized to a plausible worst-case loss, and every day's gains and losses are settled in cash immediately, so losses can never quietly accumulate into a surprise default. If a participant still fails to pay, the clearing corporation has a further backstop, a Core Settlement Guarantee Fund built from contributions collected in advance, precisely so a single member's failure does not become anyone else's problem.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c2l2-022",
+              "_type": "keyFact",
+              "label": "The point of daily settlement",
+              "value": "Losses are paid in cash every day, not allowed to build up",
+              "context": "This is what lets the clearing corporation guarantee your trade with confidence: it never has to hope a defaulting member's unpaid losses haven't grown too large to cover."
+            },
+            {
+              "_key": "cfh-c2l2-023",
+              "_type": "flashcardSet",
+              "title": "Margins and Mark-to-Market: Core Terms",
+              "cards": [
+                {
+                  "_key": "cfh-c2l2-023f1",
+                  "term": "SPAN margin",
+                  "definition": "The core initial margin, modelled to cover a portfolio's worst-case one-day loss under prescribed scenarios."
+                },
+                {
+                  "_key": "cfh-c2l2-023f2",
+                  "term": "Exposure margin",
+                  "definition": "An additional margin cushion charged over and above SPAN margin."
+                },
+                {
+                  "_key": "cfh-c2l2-023f3",
+                  "term": "Extreme Loss Margin (ELM)",
+                  "definition": "A margin layer covering tail-risk losses beyond what SPAN and exposure margin are designed to cover."
+                },
+                {
+                  "_key": "cfh-c2l2-023f4",
+                  "term": "Mark-to-market (MTM)",
+                  "definition": "The daily revaluation of open positions at the official settlement price, with gains and losses settled in cash immediately."
+                },
+                {
+                  "_key": "cfh-c2l2-023f5",
+                  "term": "Margin call",
+                  "definition": "A broker's demand for additional funds after losses push an account below the required margin."
+                },
+                {
+                  "_key": "cfh-c2l2-023f6",
+                  "term": "Auto square-off",
+                  "definition": "The broker closing part or all of a position at prevailing market price when a margin call is not met in time."
+                },
+                {
+                  "_key": "cfh-c2l2-023f7",
+                  "term": "Core Settlement Guarantee Fund (SGF)",
+                  "definition": "A pre-funded reserve maintained by a clearing corporation as a backstop if a member defaults beyond what their own margin covers."
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c2l2-024",
+              "_type": "keyTakeaways",
+              "points": [
+                "Total initial margin is a stack: SPAN margin for the modelled worst case, exposure margin as an added cushion, Extreme Loss Margin for tail risk, and additional or special margin at the exchange's discretion during volatile or delivery-linked periods.",
+                "Mark-to-market settles your gain or loss in cash every single trading day, based on the official settlement price. Nothing about a futures position remains an unrealised, on-paper number overnight.",
+                "A margin call means your account has fallen below the required margin after losses. Miss the deadline to top up, and your broker can square off your position at whatever price the market offers.",
+                "MCXCCL and NCCL make their trade guarantee credible precisely because of this system: margin sized to plausible losses, daily cash settlement so losses cannot silently accumulate, and a Core Settlement Guarantee Fund as a final backstop."
+              ]
+            },
+            {
+              "_key": "cfh-c2l2-025",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice. Margin requirements change with volatility and exchange circulars; always check your broker's platform for the exact margin applicable to a position before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

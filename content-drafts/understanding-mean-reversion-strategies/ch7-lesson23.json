@@ -1,0 +1,184 @@
+{
+  "courseSlug": "understanding-mean-reversion-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 7: Building and Backtesting a Mean Reversion System",
+      "lessons": [
+        {
+          "title": "Position Sizing, Stop-Losses, and Holding Periods for Reversion Trades",
+          "slug": "position-sizing-stop-losses-and-holding-periods-for-reversion-trades",
+          "body": [
+            {
+              "_key": "mr7l23-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr7l23-001s1", "_type": "span", "marks": [], "text": "Chapter 3's backtest put a flat ₹1,00,000 into every single trade, regardless of the stock. That is the simplest possible position-sizing rule, and it quietly does something most new systematic traders never notice: it lets a more volatile stock's trades carry far more rupee risk than a calmer stock's trades, purely because the volatile stock needs a wider stop-loss to avoid being shaken out by ordinary noise. This lesson fixes that, and builds the portfolio-level discipline a real, multi-stock reversion system needs on top of the single-trade rules from Lesson 1." }
+              ]
+            },
+            {
+              "_key": "mr7l23-002",
+              "_type": "bigIdea",
+              "text": "Sizing every trade with the same notional amount means sizing every trade with a different amount of actual risk, since a more volatile stock needs a wider stop. Sizing every trade to risk the same number of rupees, by adjusting the number of shares to the stop-loss distance, is what actually equalizes risk across a portfolio of very different stocks."
+            },
+            {
+              "_key": "mr7l23-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr7l23-003s1", "_type": "span", "marks": [], "text": "How Fixed Notional Silently Distorts Risk" }
+              ]
+            },
+            {
+              "_key": "mr7l23-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr7l23-004s1", "_type": "span", "marks": [], "text": "Suppose two stocks are each bought using a flat ₹1,00,000 position. Stock A is fairly calm, so a 4% stop-loss is wide enough to avoid ordinary noise. Stock B is genuinely more volatile, and needs a wider 10% stop for the same reason. If both stop-losses are hit, Stock A's trade loses ₹4,000. Stock B's trade loses ₹10,000, two and a half times more, purely as a side effect of matching notional rather than matching risk. Nobody decided to risk more on Stock B. The flat sizing rule decided it for them." }
+              ]
+            },
+            {
+              "_key": "mr7l23-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr7l23-005s1", "_type": "span", "marks": [], "text": "Sizing to a Fixed Risk Instead" }
+              ]
+            },
+            {
+              "_key": "mr7l23-006",
+              "_type": "mathBlock",
+              "latex": "\\text{Shares} = \\dfrac{\\text{Risk per trade (₹)}}{\\text{Entry price} \\times \\text{Stop-loss \\%}}",
+              "caption": "Solving for the number of shares that limits the rupee loss on a stop-out to a fixed, chosen amount, regardless of how wide that particular stock's stop-loss percentage needs to be."
+            },
+            {
+              "_key": "mr7l23-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr7l23-007s1", "_type": "span", "marks": [], "text": "Set a fixed risk budget of ₹4,000 per trade and revisit both stocks. Stock A, entry ₹500 with a 4% stop, has a stop distance of ₹20 per share, so the position size is 4,000 divided by 20, which is 200 shares, a ₹1,00,000 position, identical to before, since its stop was already 4% on a flat-notional basis. Stock B, entry ₹300 with a 10% stop, has a stop distance of ₹30 per share, so the position size is 4,000 divided by 30, which is about 133 shares, a position of roughly ₹39,900, far smaller than the flat ₹1,00,000 it would have received otherwise. Both trades now risk the same ₹4,000 if stopped out, even though Stock B is inherently more volatile and gets a proportionally smaller position to compensate." }
+              ]
+            },
+            {
+              "_key": "mr7l23-008",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "def position_size(risk_per_trade, entry_price, stop_loss_pct):\n    stop_distance_per_share = entry_price * stop_loss_pct\n    shares = risk_per_trade / stop_distance_per_share\n    return int(shares)  # round down to a whole number of shares\n\n# Stock A: calmer, tighter stop\nprint(position_size(4000, 500, 0.04))   # 200 shares\n\n# Stock B: more volatile, wider stop\nprint(position_size(4000, 300, 0.10))   # 133 shares",
+              "caption": "A risk-based position sizing function: the stop-loss distance, not a flat notional amount, determines how many shares to buy."
+            },
+            {
+              "_key": "mr7l23-009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr7l23-009s1", "_type": "span", "marks": [], "text": "The Portfolio-Level Risk Budget" }
+              ]
+            },
+            {
+              "_key": "mr7l23-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr7l23-010s1", "_type": "span", "marks": [], "text": "Sizing each trade correctly does not automatically protect the whole portfolio. Chapter 1's Nifty case study is the reminder here: a broad, market-wide shock can hit several \"unrelated\" reversion candidates at the same time, since a genuine crash does not respect the fact that your stocks come from different sectors. A portfolio-level risk budget caps the total rupee risk across every open position simultaneously, not just each one individually." }
+              ]
+            },
+            {
+              "_key": "mr7l23-011",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "mr7l23-011s1", "label": "Total capital", "value": "₹10,00,000", "context": "The illustrative portfolio for this example" },
+                { "_key": "mr7l23-011s2", "label": "Risk per trade", "value": "0.5% (₹5,000)", "context": "The maximum rupee loss any single position is allowed to risk" },
+                { "_key": "mr7l23-011s3", "label": "Maximum concurrent positions", "value": "6", "context": "A cap on how many reversion trades can be open at once" },
+                { "_key": "mr7l23-011s4", "label": "Portfolio-level risk cap", "value": "3% (₹30,000)", "context": "0.5% x 6 positions. The maximum the portfolio can lose if every open position were stopped out on the same day" }
+              ]
+            },
+            {
+              "_key": "mr7l23-012",
+              "_type": "callout",
+              "type": "warning",
+              "text": "A 3% portfolio-level cap does not mean a 3% loss is impossible. It means 3% is the maximum loss if every stop-loss actually fires as designed. A severe, fast, market-wide event, exactly Chapter 1's March 2020 case, can gap prices straight through a stop-loss level without ever trading at it, especially for less liquid names. Position sizing manages expected risk. It does not eliminate tail risk."
+            },
+            {
+              "_key": "mr7l23-013",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr7l23-013s1", "_type": "span", "marks": [], "text": "Holding Period and Capital Turnover" }
+              ]
+            },
+            {
+              "_key": "mr7l23-014",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr7l23-014s1", "_type": "span", "marks": [], "text": "Chapter 3's backtest averaged a 6.5-day holding period across its trades, close to what Chapter 2's half-life examples would predict. That number matters beyond curiosity: a shorter average holding period means capital cycles through more trades per month, which means more transaction costs and more taxable events, the exact drag Chapter 3 flagged when a thin per-trade edge met real Securities Transaction Tax and slippage. A position-sizing and portfolio framework has to be built with that turnover, and its costs, in mind from the start, not discovered as a surprise once live trading begins." }
+              ]
+            },
+            {
+              "_key": "mr7l23-015",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Size a position to a fixed risk",
+              "prompt": "A trader wants to risk ₹3,000 on a trade. The stock's entry price is ₹450 and its stop-loss is set 6% below entry. How many shares should the trader buy, rounded down to the nearest whole share?",
+              "correctValue": 111,
+              "tolerance": 1,
+              "explanation": "Stop distance per share = 450 x 0.06 = ₹27. Shares = 3,000 / 27 = 111.1, rounded down to 111 shares, for a position of roughly ₹49,950 and a maximum loss of about ₹2,997 if the stop is hit."
+            },
+            {
+              "_key": "mr7l23-016",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "What does fixed-notional sizing actually do?",
+              "question": "Two stocks are each bought using a flat ₹1,00,000 notional position. Stock A has a stop-loss set 4% below entry. Stock B, a more volatile stock, has a wider stop-loss set 10% below entry. If both stop-losses are hit, which trade loses more rupees, and what does this reveal?",
+              "options": [
+                "Stock A loses more, since a tighter percentage stop always produces a bigger rupee loss",
+                "Both lose exactly the same amount, since the notional invested is identical",
+                "Stock B loses more (₹10,000 vs ₹4,000), showing that fixed-notional sizing silently lets more volatile stocks carry more risk per trade",
+                "Neither trade loses anything, since a stop-loss guarantees the position is fully protected"
+              ],
+              "correctIndex": 2,
+              "explanation": "Stock B's position loses 10% of ₹1,00,000, or ₹10,000, versus Stock A's 4%, or ₹4,000, purely because Stock B needed a wider stop for its higher volatility. Fixed-notional sizing does not control for this, which is exactly why risk-based sizing, adjusting share count to the stop-loss distance, is the more disciplined approach."
+            },
+            {
+              "_key": "mr7l23-017",
+              "_type": "flashcardSet",
+              "title": "Position Sizing and Portfolio Risk: Core Terms",
+              "cards": [
+                { "_key": "mr7l23-017f1", "term": "Fixed-notional sizing", "definition": "Investing the same rupee amount in every trade regardless of the stock, which lets more volatile stocks silently carry more rupee risk per trade due to their wider stop-losses." },
+                { "_key": "mr7l23-017f2", "term": "Risk-based (fixed-risk) sizing", "definition": "Choosing the number of shares so that a stop-loss hit always costs the same fixed rupee amount, adjusting position size to each stock's own stop-loss distance." },
+                { "_key": "mr7l23-017f3", "term": "Portfolio-level risk budget", "definition": "A cap on the total rupee risk across every open position simultaneously, protecting against a broad, market-wide shock hitting several positions at once." },
+                { "_key": "mr7l23-017f4", "term": "Capital turnover", "definition": "How quickly a strategy's capital cycles through new trades, driven by average holding period, which directly determines exposure to transaction costs and taxable events." }
+              ]
+            },
+            {
+              "_key": "mr7l23-018",
+              "_type": "keyTakeaways",
+              "points": [
+                "A flat notional amount per trade silently lets more volatile stocks carry more rupee risk, since they need wider stop-losses.",
+                "Sizing each position so a stop-loss hit costs the same fixed rupee amount, using the entry price and stop-loss percentage to solve for share count, is what actually equalizes risk across a portfolio of different stocks.",
+                "A portfolio-level risk budget caps total risk across all open positions at once, protecting against a broad market shock hitting several trades simultaneously, a risk individual position sizing alone cannot manage.",
+                "Position sizing manages expected risk, not tail risk. A severe, fast market event can gap through a stop-loss level entirely, especially in less liquid names.",
+                "Average holding period drives capital turnover, and turnover drives transaction costs and taxable events, both of which need to be built into the system's design from the start."
+              ]
+            },
+            {
+              "_key": "mr7l23-019",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice or a recommendation to buy, sell, or hold any security. All prices, risk figures, and the accompanying code sample in this lesson use hypothetical, illustrative data and do not represent actual historical prices of any stock. Position sizing and stop-losses reduce, but do not eliminate, the risk of loss, particularly during fast-moving or illiquid market conditions. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

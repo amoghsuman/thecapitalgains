@@ -1,0 +1,226 @@
+{
+  "courseSlug": "understanding-market-making-and-liquidity-provision-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 3: Inventory Risk and Quote Skewing",
+      "lessons": [
+        {
+          "title": "Inventory Risk: Why Market Makers Fear One-Sided Order Flow",
+          "slug": "inventory-risk-why-market-makers-fear-one-sided-order-flow",
+          "body": [
+            {
+              "_key": "mmc3l1b01",
+              "_type": "bigIdea",
+              "text": "A market maker is rarely destroyed by one bad trade. It is destroyed by fifty small trades that all go the same way, quietly building a position nobody sat down and decided to take."
+            },
+            {
+              "_key": "mmc3l1b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc3l1b02s1",
+                  "_type": "span",
+                  "text": "What One-Sided Order Flow Looks Like",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc3l1b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "mmc3l1m01",
+                  "_type": "glossaryTerm",
+                  "definition": "A pattern in which incoming trades hit mostly one side of a market maker's quote, buys or sells, for a stretch of time, rather than balancing out roughly evenly across both. It leaves the market maker holding a growing net position instead of the flat book its business model assumes."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "mmc3l1b03s1",
+                  "_type": "span",
+                  "text": "In an ordinary session, a market maker's bid and ask get hit roughly as often as each other, over enough trades, so its net inventory drifts near zero even though individual trades keep happening. ",
+                  "marks": []
+                },
+                {
+                  "_key": "mmc3l1b03s2",
+                  "_type": "span",
+                  "text": "One-sided order flow",
+                  "marks": ["mmc3l1m01"]
+                },
+                {
+                  "_key": "mmc3l1b03s3",
+                  "_type": "span",
+                  "text": " breaks that balance. Picture a stretch of a session where bad news hits a stock and its option's bid keeps getting sold into, trade after trade, with almost no one buying. Every one of those individual trades looks routine from the market maker's side, a normal fill at its posted bid, but the cumulative effect is a market maker accumulating a long position it never intended to hold, one small trade at a time.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc3l1b04",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc3l1b04s1",
+                  "_type": "span",
+                  "text": "Why Inventory Itself Is Risk, Not Just a Number",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc3l1b05",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc3l1b05s1",
+                  "_type": "span",
+                  "text": "The moment a market maker is sitting on unintended inventory, it has, whether it meant to or not, become a directional trader on that position, exactly the role Chapter 1 contrasted it against. The spread collected on each individual fill was only ever meant to compensate for holding a position briefly, until it could be offloaded to the next opposite-side order. When flow stays one-sided long enough that offloading never happens, the position keeps growing and keeps being exposed to further adverse price moves, and the tiny per-trade spread collected along the way is nowhere near enough to cover what a sustained move against a large accumulated position can cost.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc3l1b06",
+              "_type": "table",
+              "caption": "Illustrative: a market maker's bid getting hit five times in a row on a bad-news day",
+              "headers": ["Trade #", "Side", "Qty (units)", "Price (₹)", "Running Inventory (units)", "Running Avg Cost (₹)"],
+              "rows": [
+                { "_key": "mmc3l1b06r1", "_type": "tableRow", "cells": ["1", "MM buys", "50", "100.00", "+50", "100.00"] },
+                { "_key": "mmc3l1b06r2", "_type": "tableRow", "cells": ["2", "MM buys", "50", "98.00", "+100", "99.00"] },
+                { "_key": "mmc3l1b06r3", "_type": "tableRow", "cells": ["3", "MM buys", "50", "95.00", "+150", "97.67"] },
+                { "_key": "mmc3l1b06r4", "_type": "tableRow", "cells": ["4", "MM buys", "50", "92.00", "+200", "96.25"] },
+                { "_key": "mmc3l1b06r5", "_type": "tableRow", "cells": ["5", "MM buys", "50", "90.00", "+250", "95.00"] }
+              ]
+            },
+            {
+              "_key": "mmc3l1b07",
+              "_type": "mathBlock",
+              "latex": "\\text{Unrealised P\\&L} = \\text{Inventory} \\times (\\text{Current Price} - \\text{Average Cost Basis})",
+              "caption": "Mark-to-market exposure on accumulated inventory. Note this is unrealised: none of these 250 units in the table above have been sold back yet, so no spread has actually been collected on any of them."
+            },
+            {
+              "_key": "mmc3l1b08",
+              "_type": "keyFact",
+              "label": "Mark-to-Market Loss If the Session Closes at ₹88",
+              "value": "−₹1,750",
+              "context": "250 units × (₹88 − ₹95 average cost) = −₹1,750. That is the unrealised loss sitting on a position built entirely from five individually unremarkable fills at the market maker's own bid, none of which have generated any offsetting sale yet."
+            },
+            {
+              "_key": "mmc3l1b09",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Extending the Bad-News Day",
+              "prompt": "Using the table above, at the point the market maker's inventory has reached +200 units with an average cost basis of ₹96.25, the price falls further to ₹85 before any of the position can be offloaded. What is the unrealised P&L at that point, in rupees?",
+              "correctValue": -2250,
+              "tolerance": 5,
+              "unit": "₹",
+              "explanation": "200 × (85 − 96.25) = 200 × (−11.25) = −₹2,250. The loss keeps growing with both the size of the inventory and the size of the adverse move, which is exactly why one-sided flow is dangerous in a way that ordinary, balanced two-way trading is not."
+            },
+            {
+              "_key": "mmc3l1b10",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc3l1b10s1",
+                  "_type": "span",
+                  "text": "Two Types of Inventory Risk: Level and Duration",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc3l1b11",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc3l1b11s1",
+                  "_type": "span",
+                  "text": "It is worth separating two related but distinct drivers of inventory risk. Level risk is about how large the imbalance gets: 250 units of unwanted inventory is a bigger exposure than 50 units, all else equal. Duration risk, introduced back in Chapter 2 as a driver of inventory holding cost, is about how long that imbalance sits before it can be offloaded: the same 250 units held for ten minutes is a smaller risk than the same 250 units held for two hours, because more time simply means more opportunity for price to move further against it.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc3l1b12",
+              "_type": "comparison",
+              "title": "Level Risk vs Duration Risk",
+              "columns": [
+                {
+                  "_key": "mmc3l1b12c1",
+                  "label": "Level Risk",
+                  "points": [
+                    "Driven by how large the net inventory position has grown",
+                    "Rises directly with the size of the imbalance in the table above",
+                    "Managed by skewing quotes to slow further accumulation, covered in the next lesson",
+                    "A large position is dangerous even if it is offloaded soon"
+                  ]
+                },
+                {
+                  "_key": "mmc3l1b12c2",
+                  "label": "Duration Risk",
+                  "points": [
+                    "Driven by how long the position is expected to sit before it can be offloaded",
+                    "Rises with market volatility and with how thin the opposite-side flow is",
+                    "Managed by actively working to offload inventory, not just waiting",
+                    "A small position is still dangerous if it sits for a long time in a volatile market"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "mmc3l1b13",
+              "_type": "callout",
+              "type": "insight",
+              "text": "A market maker that only tracks how many trades it has done, or even how much spread it has collected so far, is missing the number that actually matters most: its running net inventory. That single number is what the next lesson's quoting model is built entirely around managing."
+            },
+            {
+              "_key": "mmc3l1b14",
+              "_type": "callout",
+              "type": "warning",
+              "text": "A busy day is not the same thing as a safe day. A market maker doing thousands of trades that roughly cancel out in direction is in a far safer position than one doing a handful of trades that all accumulate the same way. Volume alone tells you almost nothing about inventory risk; only the running net position does."
+            },
+            {
+              "_key": "mmc3l1b15",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Spotting the Dangerous Pattern",
+              "question": "Which of the following market makers is facing the most inventory risk right now?",
+              "options": [
+                "Market Maker A has done 2,000 trades today, roughly half buys and half sells, and is currently flat",
+                "Market Maker B has done 40 trades today, all sells into its own ask, and is currently short 1,000 units",
+                "Market Maker C has done 500 trades today, alternating buys and sells, and is currently long 20 units",
+                "Market Maker D has done 10 trades today, 5 buys and 5 sells of equal size, and is currently flat"
+              ],
+              "correctIndex": 1,
+              "explanation": "Market Maker B has the largest unhedged net position by far, 1,000 units short, built entirely from one-sided flow, regardless of how few trades it took to get there. Trade count and volume, as seen with Market Maker A's 2,000 trades, say nothing about risk on their own; what matters is the size of the net inventory left standing at the end."
+            },
+            {
+              "_key": "mmc3l1b16",
+              "_type": "keyTakeaways",
+              "points": [
+                "One-sided order flow means a market maker's bid or ask keeps getting hit on mostly one side, building a net position instead of staying near flat",
+                "Unintended inventory turns a market maker into an accidental directional trader, exposed to further adverse price moves on that position",
+                "Unrealised P&L on inventory equals the position size multiplied by the gap between current price and average cost basis, and can far exceed the spread collected getting there",
+                "Level risk is about how large the inventory has grown; duration risk is about how long it sits before it can be offloaded",
+                "Trade count and volume are not a measure of safety; a market maker's running net inventory is the number that actually determines its risk",
+                "Managing this risk by adjusting quotes as inventory builds is the subject of the next lesson"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,201 @@
+{
+  "courseSlug": "understanding-momentum-and-trend-following-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 3: Momentum Indicators - RSI, ROC, and Combining Signals",
+      "lessons": [
+        {
+          "title": "Combining Trend and Momentum Signals Into One System",
+          "slug": "combining-trend-and-momentum-signals-into-one-system",
+          "body": [
+            {
+              "_key": "m11-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m11-001s1", "_type": "span", "marks": [], "text": "Chapter 2 built tools that answer one question well: is this asset in an uptrend or a downtrend? Chapter 3 built tools that answer a different question: how strong is the recent buying or selling pressure right now? Each has a real blind spot used alone. A crossover confirms a trend only after a real lag. An oscillator like RSI can flash a misleading overbought signal in the middle of a genuine, healthy trend, as the last lesson showed directly. This lesson combines the two families into a single system where each one covers the other's weak spot." }
+              ]
+            },
+            {
+              "_key": "m11-002",
+              "_type": "bigIdea",
+              "text": "A trend filter answers whether to trade a direction at all. A momentum trigger answers when, within that direction, to actually act. Used together, the trend filter stops an oscillator's overbought or oversold reading from being misread as a reversal signal inside a healthy trend, and the momentum trigger gives an entry that doesn't require waiting for a full, lagging crossover."
+            },
+            {
+              "_key": "m11-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m11-003s1", "_type": "span", "marks": [], "text": "Why Combine at All? Each Tool's Blind Spot" }
+              ]
+            },
+            {
+              "_key": "m11-004",
+              "_type": "comparison",
+              "title": "What Each Family Gets Wrong Alone",
+              "columns": [
+                {
+                  "_key": "m11-004c1",
+                  "label": "Trend Tools Alone (Chapter 2)",
+                  "points": [
+                    "Confirm a trend only after real lag",
+                    "Miss the earlier part of every move",
+                    "Whipsaw in a sideways, range-bound market",
+                    "Say nothing about timing within a confirmed trend"
+                  ]
+                },
+                {
+                  "_key": "m11-004c2",
+                  "label": "Momentum Oscillators Alone (Chapter 3)",
+                  "points": [
+                    "Can flag 'overbought' deep inside a healthy uptrend",
+                    "React fast, which also means reacting to noise",
+                    "No sense of the broader trend regime",
+                    "Prone to false signals with no directional context"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "m11-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m11-005s1", "_type": "span", "marks": [], "text": "The Core Idea: Trend Filter Plus Momentum Trigger" }
+              ]
+            },
+            {
+              "_key": "m11-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m11-006s1", "_type": "span", "marks": [], "text": "Split the decision into two independent layers. The trend filter, built from Chapter 2's tools, asks a coarse question: is the broader regime bullish or bearish right now? The momentum trigger, built from Chapter 3's tools, asks a finer question: is momentum confirming strength at this specific moment, within whatever regime the filter has already established? Critically, an oscillator reading is only ever interpreted in the direction the trend filter allows. RSI sitting above 70 is not treated as a sell signal at all if the trend filter still says the regime is bullish, it is simply not something the system acts on in that direction. This single design choice directly fixes the overbought trap covered in the last lesson." }
+              ]
+            },
+            {
+              "_key": "m11-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m11-007s1", "_type": "span", "marks": [], "text": "A Concrete Rule: Trend-Filtered RSI Pullback Entries" }
+              ]
+            },
+            {
+              "_key": "m11-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m11-008s1", "_type": "span", "marks": [], "text": "One practical version: treat the market as bullish only when price is above a rising 200-day SMA, the trend filter from Chapter 2. Within that regime, do not chase strength by buying every new high. Instead, wait for a pullback, RSI dipping below 50, and enter only once RSI crosses back above 50, the momentum trigger, using weakness within an uptrend as the entry rather than treating it as a warning sign. Exit the entire position the moment the trend filter itself breaks, price closing back below the 200-day SMA, regardless of what RSI is doing at that moment." }
+              ]
+            },
+            {
+              "_key": "m11-009",
+              "_type": "table",
+              "caption": "Illustrative walkthrough of the combined rule (illustrative figures)",
+              "headers": ["Day", "Price", "200-day SMA", "RSI", "Trend filter", "Momentum trigger", "Action"],
+              "rows": [
+                { "_key": "m11-009r1", "_type": "tableRow", "cells": ["1", "₹500", "₹480 (rising)", "65", "Pass (bullish)", "No fresh trigger", "Flat, watching"] },
+                { "_key": "m11-009r2", "_type": "tableRow", "cells": ["2", "₹490", "₹482 (rising)", "38", "Pass (bullish)", "Below 50, waiting", "Flat, watching"] },
+                { "_key": "m11-009r3", "_type": "tableRow", "cells": ["3", "₹505", "₹483 (rising)", "53", "Pass (bullish)", "Crossed back above 50", "Enter long at ₹505"] },
+                { "_key": "m11-009r4", "_type": "tableRow", "cells": ["4", "₹560", "₹488 (rising)", "68", "Pass (bullish)", "Elevated, not a sell signal", "Hold"] },
+                { "_key": "m11-009r5", "_type": "tableRow", "cells": ["5", "₹440", "₹495", "31", "Fails, price below SMA", "n/a", "Exit at ₹440"] }
+              ]
+            },
+            {
+              "_key": "m11-010",
+              "_type": "callout",
+              "type": "insight",
+              "text": "On Day 4, a standalone RSI reading of 68 sitting near the overbought zone would tempt a mean-reversion trader to sell. The trend filter overrides that here, the regime is still bullish, so the position is held. This is the entire point of layering the two tools: the trend filter decides what the oscillator's reading is even allowed to mean."
+            },
+            {
+              "_key": "m11-011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m11-011s1", "_type": "span", "marks": [], "text": "This trade still loses money, exiting at ₹440 after entering at ₹505 is a loss of roughly 12.9%, and that is a deliberate, honest part of this example. No combination of indicators wins every trade. What the combined system is designed to do is fail less often, and less severely, than either tool would alone, entering earlier than a full crossover would have allowed, and avoiding the specific mistake of treating a healthy uptrend's elevated RSI as a reason to never enter in the first place." }
+              ]
+            },
+            {
+              "_key": "m11-012",
+              "_type": "codeBlock",
+              "language": "python",
+              "caption": "A trend-filtered RSI pullback rule",
+              "code": "import pandas as pd\n\ndef trend_filtered_rsi_signal(close, sma_window=200, slope_lookback=20, rsi_window=14):\n    sma_long = close.rolling(sma_window).mean()\n    long_sma_slope = sma_long.diff(slope_lookback)\n    trend_ok = (close > sma_long) & (long_sma_slope > 0)\n\n    delta = close.diff()\n    gain = delta.clip(lower=0)\n    loss = -delta.clip(upper=0)\n    avg_gain = gain.ewm(alpha=1 / rsi_window, adjust=False, min_periods=rsi_window).mean()\n    avg_loss = loss.ewm(alpha=1 / rsi_window, adjust=False, min_periods=rsi_window).mean()\n    rsi = 100 - (100 / (1 + avg_gain / avg_loss))\n\n    rsi_trigger = (rsi > 50) & (rsi.shift(1) <= 50)\n\n    position = pd.Series(0, index=close.index)\n    in_position = False\n    for t in close.index:\n        if not in_position and trend_ok.loc[t] and rsi_trigger.loc[t]:\n            in_position = True\n        elif in_position and not trend_ok.loc[t]:\n            in_position = False\n        position.loc[t] = 1 if in_position else 0\n    return position"
+            },
+            {
+              "_key": "m11-013",
+              "_type": "callout",
+              "type": "warning",
+              "text": "This system now has five tunable inputs: the SMA window, the slope lookback, the RSI window, the 50-level trigger, and the entry-versus-exit asymmetry itself. Every one of these can be adjusted to make a historical backtest look better, and every one adds curve-fitting risk on top of what Chapter 2 already warned about. More moving parts is not automatically a better system."
+            },
+            {
+              "_key": "m11-014",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Reading the combined rule correctly",
+              "question": "A stock is in a confirmed uptrend by the trend filter, and its RSI has just fallen to 45 after being above 70 for weeks. What does the combined system in this lesson do?",
+              "options": [
+                "Sell immediately, since RSI fell out of overbought territory",
+                "Nothing yet, wait for RSI to cross back above 50 before treating it as an entry trigger",
+                "Exit the trend filter itself, since RSI weakened",
+                "Automatically double the position size"
+              ],
+              "correctIndex": 1,
+              "explanation": "The momentum trigger in this system fires specifically when RSI crosses back above 50 after a pullback, not simply when it falls. A drop to 45 is the pullback the system is watching for, not yet the entry signal itself."
+            },
+            {
+              "_key": "m11-015",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Two traders, two outcomes",
+              "scenario": "Two traders watch the same stock in a confirmed uptrend. Trader A uses RSI alone and sells the moment it crosses above 70. Trader B uses the combined trend-filtered system from this lesson and holds through the same RSI reading, since the trend filter still says bullish.",
+              "prompt": "If the uptrend continues for another two months before finally reversing, which trader is likely better off, and what is the key structural reason why?",
+              "modelAnswer": "Trader B is likely better off in this scenario. Trader A's rule treats every overbought reading as a sell signal regardless of context, which, as the previous lesson showed, tends to exit a genuine trend far too early and repeatedly. Trader B's rule only reacts to the trend filter itself breaking, so it stays with the trend for as long as the broader regime remains intact, only exiting once price actually closes back below the 200-day SMA. The key structural reason is that Trader B's system separates the question of direction from the question of overbought or oversold, while Trader A's collapses them into one, more fragile signal."
+            },
+            {
+              "_key": "m11-016",
+              "_type": "toolLink",
+              "label": "Build and backtest combined indicator rules with the Kite Connect API",
+              "url": "https://kite.trade",
+              "description": "Once a combined rule like this one is defined, Kite Connect's historical data endpoints are a practical way to pull real NSE price series and test it beyond the illustrative example in this lesson."
+            },
+            {
+              "_key": "m11-017",
+              "_type": "flashcardSet",
+              "title": "Combined Systems: Core Terms",
+              "cards": [
+                { "_key": "m11-017f1", "term": "Trend filter", "definition": "A rule, typically built from moving averages, that establishes the broader market regime, bullish or bearish, before any other signal is acted on." },
+                { "_key": "m11-017f2", "term": "Momentum trigger", "definition": "A rule, typically built from an oscillator like RSI or ROC, that determines the specific timing of an entry or exit within a regime already established by a trend filter." },
+                { "_key": "m11-017f3", "term": "Pullback entry", "definition": "Entering a position during a temporary dip within an established trend, rather than at a new high, often timed using a momentum oscillator's recovery." }
+              ]
+            },
+            {
+              "_key": "m11-018",
+              "_type": "keyTakeaways",
+              "points": [
+                "Trend tools and momentum oscillators each have a real blind spot used alone: trend tools lag, oscillators can misread a healthy trend as overbought.",
+                "A combined system splits the decision into a coarse trend filter, which decides direction, and a finer momentum trigger, which decides timing within that direction.",
+                "An oscillator reading is only interpreted in the direction the trend filter allows, which directly fixes the overbought-in-a-real-trend trap from the last lesson.",
+                "A trend-filtered RSI pullback rule enters on weakness within a confirmed uptrend rather than chasing strength, and exits the moment the trend filter itself breaks.",
+                "Combining tools does not eliminate losing trades, and it adds more tunable parameters, which means more curve-fitting risk on top of what a single-indicator system already carries."
+              ]
+            },
+            {
+              "_key": "m11-019",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice. All prices, indicator values, and the illustrated trade outcome are rounded, hypothetical figures constructed for teaching purposes, not real historical or backtested results. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

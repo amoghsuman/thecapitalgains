@@ -1,0 +1,247 @@
+{
+  "courseSlug": "understanding-market-making-and-liquidity-provision-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 5: Market Microstructure and Execution Mechanics",
+      "lessons": [
+        {
+          "title": "SEBI's Algorithmic Trading Framework: Obligations for Market Makers in India",
+          "slug": "sebis-algorithmic-trading-framework-obligations-for-market-makers-in-india",
+          "body": [
+            {
+              "_key": "mmc5l3b01",
+              "_type": "bigIdea",
+              "text": "A market maker's quoting system, sending thousands of cancel-and-replace messages a session, is not occasionally algorithmic. It is definitionally algorithmic, which is exactly why SEBI's algorithmic trading framework applies to it in full, not as an edge case."
+            },
+            {
+              "_key": "mmc5l3b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc5l3b02s1",
+                  "_type": "span",
+                  "text": "Why Every Market Maker Is, By Definition, an Algo Trader",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc5l3b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc5l3b03s1",
+                  "_type": "span",
+                  "text": "Chapter 5's first lesson made a point of showing that a market maker's apparently stable quote is really a constant stream of cancel-and-replace messages, sent by software, reacting to reservation price and spread calculations that happen far faster than any human could click a mouse. That is not an implementation detail; it means market making, by its very nature, is algorithmic trading in the fullest sense the term is used in Indian regulation. SEBI's algorithmic trading framework is not a niche rulebook that occasionally brushes up against a market maker's business; it is the rulebook that directly governs how that business is allowed to touch the exchange at all.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc5l3b04",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc5l3b04s1",
+                  "_type": "span",
+                  "text": "Registering an Algorithm: Unique Algo IDs",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc5l3b05",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "mmc5l3m01",
+                  "_type": "glossaryTerm",
+                  "definition": "An identifier assigned by the exchange to a specific approved trading algorithm, which must be tagged on every order that algorithm generates, so the exchange and SEBI can trace any given order back to the exact strategy that produced it."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "mmc5l3b05s1",
+                  "_type": "span",
+                  "text": "Under SEBI's framework, an algorithm intended to generate orders, whether a trading member's own proprietary market making strategy or one a broker offers to clients through an API, has to be registered with and approved by the exchange before it goes live, and every order it sends must be tagged with a ",
+                  "marks": []
+                },
+                {
+                  "_key": "mmc5l3b05s2",
+                  "_type": "span",
+                  "text": "unique algo ID",
+                  "marks": ["mmc5l3m01"]
+                },
+                {
+                  "_key": "mmc5l3b05s3",
+                  "_type": "span",
+                  "text": ". This requirement was significantly widened in the early 2020s to explicitly cover broker-provided API-based trading more broadly, not only large proprietary or high-frequency operations, reflecting how much retail and semi-institutional algorithmic order flow had grown through broker APIs by that point. For a market maker, this means every strategy variant it runs, including different parameter sets for different instruments, needs to be identifiable and traceable back to a specific, exchange-approved algorithm rather than trading anonymously behind a generic trading member code.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc5l3b06",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc5l3b06s1",
+                  "_type": "span",
+                  "text": "Order-to-Trade Ratio: Why Message Traffic Isn't Free",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc5l3b07",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "mmc5l3m02",
+                  "_type": "glossaryTerm",
+                  "definition": "The ratio of a trading member's total order messages, including new orders, modifications, and cancellations, to the number of trades those orders actually resulted in. Exchanges monitor this ratio and can levy penalties on members whose ratio exceeds defined thresholds, to discourage excessive message traffic that adds system load without adding genuine trading."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "mmc5l3b07s1",
+                  "_type": "span",
+                  "text": "Chapter 2's lesson on tick size raised message traffic as one side of an exchange's own trade-off in setting tick rules, and this is where that trade-off becomes a direct obligation on a market maker. NSE monitors each trading member's ",
+                  "marks": []
+                },
+                {
+                  "_key": "mmc5l3b07s2",
+                  "_type": "span",
+                  "text": "order-to-trade ratio (OTR)",
+                  "marks": ["mmc5l3m02"]
+                },
+                {
+                  "_key": "mmc5l3b07s3",
+                  "_type": "span",
+                  "text": ", and members whose ratio of messages to actual trades runs too high can face financial penalties, since a very high ratio can indicate the kind of excessive quote stuffing that adds load to the exchange's systems without adding real liquidity or trading. This puts a genuine market maker in an interesting position: continuously requoting thousands of times a session, exactly as Chapter 5's first lesson described, inherently produces a far higher OTR than an ordinary directional trader placing occasional orders, purely because the business model is built around constant, small adjustments rather than infrequent large trades.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc5l3b08",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "Exchanges typically calibrate order-to-trade ratio treatment differently for registered market makers, such as those appointed under the Liquidity Enhancement Scheme from Chapter 1, in recognition of their continuous quoting obligation. The exact thresholds, penalty slabs, and any differentiated treatment for market makers are technical, revised periodically by exchange circular, and should be checked directly against current NSE rules rather than assumed from this lesson."
+            },
+            {
+              "_key": "mmc5l3b09",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc5l3b09s1",
+                  "_type": "span",
+                  "text": "Risk Controls: Pre-Trade Checks and Kill Switches",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc5l3b10",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "mmc5l3m03",
+                  "_type": "glossaryTerm",
+                  "definition": "A mandated safety mechanism that, when triggered, instantly cancels all of a trading member's pending orders and blocks any new order entry, used to contain the damage from a malfunctioning algorithm before it can send a large volume of unintended orders into the market."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "mmc5l3b10s1",
+                  "_type": "span",
+                  "text": "SEBI's framework also requires pre-trade risk checks, automated limits on price and quantity applied before an order ever leaves the trading member's own system, catching an obviously erroneous order before it reaches the exchange at all. On top of this sits the requirement for a ",
+                  "marks": []
+                },
+                {
+                  "_key": "mmc5l3b10s2",
+                  "_type": "span",
+                  "text": "kill switch",
+                  "marks": ["mmc5l3m03"]
+                },
+                {
+                  "_key": "mmc5l3b10s3",
+                  "_type": "span",
+                  "text": ": the ability to instantly cancel every pending order and halt all new order entry the moment a serious risk breach is detected. For a market maker specifically, this is not an abstract compliance requirement. A pricing model with a bug, feeding it a corrupted market data update, or reacting to a bad input with wildly mispriced quotes, could otherwise flood the book with erroneous orders in a fraction of a second, exactly because the whole business is built to react and requote as fast as possible. The kill switch is the one control specifically designed to contain that failure mode before it turns into a genuinely large loss.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc5l3b11",
+              "_type": "table",
+              "caption": "SEBI's core obligations for an algorithmic trading operation like a market maker",
+              "headers": ["Obligation", "Purpose"],
+              "rows": [
+                { "_key": "mmc5l3b11r1", "_type": "tableRow", "cells": ["Exchange-approved unique algo ID", "Makes every order traceable to the specific strategy that generated it, supporting surveillance and accountability"] },
+                { "_key": "mmc5l3b11r2", "_type": "tableRow", "cells": ["Order-to-trade ratio compliance", "Discourages excessive message traffic that loads exchange systems without genuine trading intent"] },
+                { "_key": "mmc5l3b11r3", "_type": "tableRow", "cells": ["Pre-trade risk checks", "Catches obviously erroneous orders, such as absurd prices or quantities, before they ever reach the exchange"] },
+                { "_key": "mmc5l3b11r4", "_type": "tableRow", "cells": ["Kill switch capability", "Instantly cancels all pending orders and blocks new ones the moment a serious risk breach is detected"] }
+              ]
+            },
+            {
+              "_key": "mmc5l3b12",
+              "_type": "callout",
+              "type": "warning",
+              "text": "It is a mistake to treat these obligations as pure regulatory overhead sitting on top of the real business. A kill switch that a market maker builds only because a circular requires it, and never actually tests, is exactly the control that fails to work the one time a pricing bug genuinely runs away, which is a self-inflicted risk far larger than any compliance penalty for not having one."
+            },
+            {
+              "_key": "mmc5l3b13",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "A Pricing Model Goes Wrong",
+              "scenario": "A market maker's automated system receives a corrupted market data feed for a few seconds, causing its pricing model to compute a wildly incorrect reservation price and begin sending a rapid sequence of badly mispriced quotes across several contracts.",
+              "prompt": "Which two SEBI-mandated controls from this lesson are specifically designed to limit the damage in this situation, and at what point in the process does each one act?",
+              "modelAnswer": "Pre-trade risk checks act first, at the moment each order is about to leave the market maker's own system, and should catch and block the most obviously erroneous prices or quantities before they ever reach the exchange. The kill switch acts as the second line of defence, at the moment the risk breach becomes clear, whether that is triggered automatically by a risk monitoring system or manually by a human overseeing the desk, instantly cancelling every pending order and stopping any further order entry so the corrupted pricing model cannot keep sending bad quotes into the market while the underlying data issue is fixed."
+            },
+            {
+              "_key": "mmc5l3b14",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why Market Makers Have Unusually High OTR",
+              "question": "Why does a genuine market maker's business model naturally tend to produce a higher order-to-trade ratio than an ordinary directional trader's?",
+              "options": [
+                "Because market makers are legally required to send more messages than other traders",
+                "Because continuous requoting, cancelling and replacing quotes constantly to track fair value and inventory, generates far more messages relative to the number of trades that actually result",
+                "Because market makers always trade at a loss and need to submit extra orders to break even",
+                "Because market makers are exempt from order-to-trade ratio monitoring entirely"
+              ],
+              "correctIndex": 1,
+              "explanation": "A market maker's core activity, from Chapter 5's first lesson, is constantly cancelling and replacing its quote as fair value and inventory shift, which produces a large volume of order messages relative to how many of those quotes actually result in a trade. This is a structural feature of the business model, not a legal requirement or an exemption, which is exactly why exchanges typically need to calibrate order-to-trade ratio treatment differently for registered market makers."
+            },
+            {
+              "_key": "mmc5l3b15",
+              "_type": "keyTakeaways",
+              "points": [
+                "Market making is definitionally algorithmic trading, since continuous, high-frequency requoting cannot practically be done by hand, so SEBI's algorithmic trading framework applies to it in full",
+                "Every trading algorithm, whether proprietary or offered to clients through a broker API, needs exchange approval and a unique algo ID tagged on every order it generates",
+                "Order-to-trade ratio monitoring penalises excessive message traffic relative to actual trades, which creates tension with a market maker's naturally high message volume, typically requiring differentiated treatment for registered market makers",
+                "Pre-trade risk checks catch obviously erroneous orders before they reach the exchange, while a kill switch instantly halts all activity once a serious risk breach is detected",
+                "These controls are not just compliance requirements; a kill switch that is never genuinely tested is the exact control most likely to fail the one time a pricing model actually malfunctions",
+                "The final lesson in this chapter turns to circuit filters and price bands, the exchange-side safeguards that constrain how far prices can move in a session regardless of any individual trading member's own controls"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

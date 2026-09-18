@@ -1,0 +1,953 @@
+{
+  "courseSlug": "introduction-to-commodity-trading-gold-silver-crude-and-agri-commodities",
+  "chapters": [
+    {
+      "title": "Chapter 6: Risk, Tax and Getting Started",
+      "lessons": [
+        {
+          "title": "Leverage and Risk Management in Commodity Trading",
+          "slug": "leverage-and-risk-management-in-commodity-trading",
+          "body": [
+            {
+              "_key": "c6l1-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l1-001s1",
+                  "_type": "span",
+                  "text": "Arvind and Bhavna, two traders in Mumbai, follow the same system. It wins half the time, and each win makes 1.5 times what each loss costs. Over their next 12 trades, both get the same unlucky sequence: six losses in a row, then six wins. The only difference is size. Arvind risks 20% of his capital on each trade. Bhavna risks 2%. By trade six, Arvind has lost about 74% of his account and is facing margin calls. Bhavna is down about 11% and calmly placing her next trade. In theory, both end up ahead. In practice, only one of them is still trading. This lesson is about making sure you are Bhavna: how leverage really works against you, why drawdowns are so hard to recover from, how to size positions by volatility, and the personal rules that keep a commodity trader in the game.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l1-002",
+              "_type": "bigIdea",
+              "text": "In leveraged commodity trading, your first job is not to make money. It is to survive long enough for a sound approach to work. Position size, not entry price, decides whether you survive."
+            },
+            {
+              "_key": "c6l1-003",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Same trades, different size: capital after 6 losses then 6 wins (starting capital = 100)",
+              "xAxisLabel": "Trade number",
+              "yAxisLabel": "Capital",
+              "data": [
+                {
+                  "_key": "c6l1-003d1",
+                  "label": "Start"
+                },
+                {
+                  "_key": "c6l1-003d2",
+                  "label": "1"
+                },
+                {
+                  "_key": "c6l1-003d3",
+                  "label": "2"
+                },
+                {
+                  "_key": "c6l1-003d4",
+                  "label": "3"
+                },
+                {
+                  "_key": "c6l1-003d5",
+                  "label": "4"
+                },
+                {
+                  "_key": "c6l1-003d6",
+                  "label": "5"
+                },
+                {
+                  "_key": "c6l1-003d7",
+                  "label": "6"
+                },
+                {
+                  "_key": "c6l1-003d8",
+                  "label": "7"
+                },
+                {
+                  "_key": "c6l1-003d9",
+                  "label": "8"
+                },
+                {
+                  "_key": "c6l1-003d10",
+                  "label": "9"
+                },
+                {
+                  "_key": "c6l1-003d11",
+                  "label": "10"
+                },
+                {
+                  "_key": "c6l1-003d12",
+                  "label": "11"
+                },
+                {
+                  "_key": "c6l1-003d13",
+                  "label": "12"
+                }
+              ],
+              "series": [
+                {
+                  "_key": "c6l1-003x1",
+                  "label": "Arvind: 20% risk per trade",
+                  "values": [
+                    100,
+                    80,
+                    64,
+                    51.2,
+                    41,
+                    32.8,
+                    26.2,
+                    34.1,
+                    44.3,
+                    57.6,
+                    74.9,
+                    97.3,
+                    126.5
+                  ]
+                },
+                {
+                  "_key": "c6l1-003x2",
+                  "label": "Bhavna: 2% risk per trade",
+                  "values": [
+                    100,
+                    98,
+                    96,
+                    94.1,
+                    92.2,
+                    90.4,
+                    88.6,
+                    91.2,
+                    94,
+                    96.8,
+                    99.7,
+                    102.7,
+                    105.8
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c6l1-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l1-004s1",
+                  "_type": "span",
+                  "text": "Arvind's account falls to about 26 before the wins start, and in real life a 74% drawdown on a leveraged account usually means margin calls, forced square-offs or simply giving up. Bhavna's worst point is about 88.6, a setback she can absorb.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l1-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l1-005s1",
+                  "_type": "span",
+                  "text": "The Brutal Maths of Drawdowns",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l1-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c6l1-006m1",
+                  "_type": "glossaryTerm",
+                  "definition": "The fall in account value from a peak to a subsequent low, usually expressed as a percentage of the peak."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c6l1-006s1",
+                  "_type": "span",
+                  "text": "A ",
+                  "marks": []
+                },
+                {
+                  "_key": "c6l1-006s2",
+                  "_type": "span",
+                  "text": "drawdown",
+                  "marks": [
+                    "c6l1-006m1"
+                  ]
+                },
+                {
+                  "_key": "c6l1-006s3",
+                  "_type": "span",
+                  "text": " is the fall from your account's peak to a later low. The problem is that losses and gains are not symmetrical. After a loss, you are working with a smaller base, so you need a bigger percentage gain just to get back to where you were.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l1-007",
+              "_type": "mathBlock",
+              "latex": "\\text{Gain needed to recover} = \\frac{1}{1 - \\text{Drawdown}} - 1",
+              "caption": "With drawdown expressed as a decimal. A 50% drawdown needs 1 ÷ 0.5 minus 1 = 100% to recover."
+            },
+            {
+              "_key": "c6l1-008",
+              "_type": "table",
+              "caption": "Drawdown vs gain needed to break even",
+              "headers": [
+                "Drawdown",
+                "Gain needed to recover"
+              ],
+              "rows": [
+                {
+                  "_key": "c6l1-008r1",
+                  "_type": "tableRow",
+                  "cells": [
+                    "10%",
+                    "11.1%"
+                  ]
+                },
+                {
+                  "_key": "c6l1-008r2",
+                  "_type": "tableRow",
+                  "cells": [
+                    "20%",
+                    "25.0%"
+                  ]
+                },
+                {
+                  "_key": "c6l1-008r3",
+                  "_type": "tableRow",
+                  "cells": [
+                    "30%",
+                    "42.9%"
+                  ]
+                },
+                {
+                  "_key": "c6l1-008r4",
+                  "_type": "tableRow",
+                  "cells": [
+                    "50%",
+                    "100%"
+                  ]
+                },
+                {
+                  "_key": "c6l1-008r5",
+                  "_type": "tableRow",
+                  "cells": [
+                    "75%",
+                    "300%"
+                  ]
+                },
+                {
+                  "_key": "c6l1-008r6",
+                  "_type": "tableRow",
+                  "cells": [
+                    "90%",
+                    "900%"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c6l1-009",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Climbing back",
+              "prompt": "A trader's account falls from ₹5,00,000 to ₹3,00,000. What percentage gain does the account now need to get back to ₹5,00,000? Round to one decimal place.",
+              "correctValue": 66.7,
+              "tolerance": 0.1,
+              "unit": "%",
+              "explanation": "The drawdown is 40%. Gain needed = 1 ÷ 0.60 minus 1 = 0.667, or 66.7%. In rupees: ₹2,00,000 of gain on a ₹3,00,000 base."
+            },
+            {
+              "_key": "c6l1-010",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l1-010s1",
+                  "_type": "span",
+                  "text": "Losing Streaks Are Normal",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l1-011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l1-011s1",
+                  "_type": "span",
+                  "text": "Even a genuinely good approach produces long losing streaks. The chance of several losses in a row on any given run of trades is small, but across hundreds of trades, streaks are close to certain.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l1-012",
+              "_type": "mathBlock",
+              "latex": "P(n \\text{ losses in a row}) = q^n",
+              "caption": "q is the probability of a loss on each trade, assuming trades are independent. This gives the chance for a specific run of n trades, not over a whole trading career."
+            },
+            {
+              "_key": "c6l1-013",
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "c6l1-013s1",
+                  "label": "5 losses in a row, 50% win rate",
+                  "value": "3.1%",
+                  "context": "On any specific run of 5 trades"
+                },
+                {
+                  "_key": "c6l1-013s2",
+                  "label": "5 losses in a row, 40% win rate",
+                  "value": "7.8%",
+                  "context": "On any specific run of 5 trades"
+                },
+                {
+                  "_key": "c6l1-013s3",
+                  "label": "At least one 5-loss streak in 100 trades",
+                  "value": "Roughly 80%",
+                  "context": "Approximate, with a 50% win rate"
+                },
+                {
+                  "_key": "c6l1-013s4",
+                  "label": "Capital left after 10 losses at 2% risk",
+                  "value": "About 82%",
+                  "context": "0.98 to the power 10"
+                }
+              ]
+            },
+            {
+              "_key": "c6l1-014",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "The cost of a streak",
+              "prompt": "A trader risks 5% of current capital on each trade and suffers 8 losses in a row. What percentage of the starting capital remains? Round to one decimal place.",
+              "correctValue": 66.3,
+              "tolerance": 0.1,
+              "unit": "%",
+              "explanation": "0.95 to the power 8 = 0.663, so 66.3% remains, a 33.7% drawdown. At 2% risk, the same streak would leave 0.98 to the power 8 = 85.1%."
+            },
+            {
+              "_key": "c6l1-015",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "The danger to avoid",
+              "textWithBlank": "The probability that a trader loses so much capital that they can no longer continue trading is called the risk of ___.",
+              "correctAnswers": [
+                "ruin"
+              ],
+              "explanation": "Risk of ruin rises sharply with position size. Keeping risk per trade small makes it very unlikely that a normal losing streak can end your trading."
+            },
+            {
+              "_key": "c6l1-016",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l1-016s1",
+                  "_type": "span",
+                  "text": "Edge: Win Rate and Reward-to-Risk Together",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l1-017",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l1-017s1",
+                  "_type": "span",
+                  "text": "Whether an approach makes money depends on two numbers together: how often you win, and how much you make on winners compared with losers.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l1-018",
+              "_type": "mathBlock",
+              "latex": "\\text{Expected value per trade} = (p \\times \\text{Average win}) - ((1 - p) \\times \\text{Average loss}) - \\text{Costs}",
+              "caption": "p is the win rate. A positive expected value is necessary but not sufficient; you must also survive the streaks."
+            },
+            {
+              "_key": "c6l1-019",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l1-019s1",
+                  "_type": "span",
+                  "text": "Say you win 40% of the time, your average win is ₹6,000 and your average loss is ₹3,000. Expected value = (0.40 × ₹6,000) minus (0.60 × ₹3,000) = ₹2,400 minus ₹1,800 = ₹600 per trade. Subtract ₹150 of brokerage, exchange charges and taxes per trade and you keep ₹450. Notice that you lose more often than you win, yet the approach is profitable.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l1-020",
+              "_type": "mathBlock",
+              "latex": "\\text{Breakeven win rate} = \\frac{1}{1 + R}",
+              "caption": "R is the ratio of average win to average loss, before costs."
+            },
+            {
+              "_key": "c6l1-021",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "How often must you win?",
+              "question": "Your average winning trade makes twice what your average losing trade costs. Ignoring costs, what is the minimum win rate needed to break even?",
+              "options": [
+                "50%",
+                "40%",
+                "33.3%",
+                "25%"
+              ],
+              "correctIndex": 2,
+              "explanation": "Breakeven win rate = 1 ÷ (1 + 2) = 33.3%. With R = 2, winning one trade in three covers two losses. After costs, you need a little more than that."
+            },
+            {
+              "_key": "c6l1-022",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l1-022s1",
+                  "_type": "span",
+                  "text": "Sizing by Volatility, Not by Margin",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l1-023",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c6l1-023m1",
+                  "_type": "glossaryTerm",
+                  "definition": "A volatility measure (ATR) showing the average size of a commodity's daily price range over a period such as 14 days, including gaps from the previous close."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c6l1-023s1",
+                  "_type": "span",
+                  "text": "Different commodities, and the same commodity at different times, move very different amounts. A fixed stop of ₹50 might be generous in a quiet gold week and hopelessly tight in a volatile silver week. Traders often use the ",
+                  "marks": []
+                },
+                {
+                  "_key": "c6l1-023s2",
+                  "_type": "span",
+                  "text": "average true range",
+                  "marks": [
+                    "c6l1-023m1"
+                  ]
+                },
+                {
+                  "_key": "c6l1-023s3",
+                  "_type": "span",
+                  "text": " (ATR) to set stops that reflect how much a contract normally moves.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l1-024",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "number",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l1-024s1",
+                  "_type": "span",
+                  "text": "Measure volatility. ",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_key": "c6l1-024s2",
+                  "_type": "span",
+                  "text": "Find the contract's recent ATR, for example over 14 days.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l1-025",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "number",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l1-025s1",
+                  "_type": "span",
+                  "text": "Set the stop in ATR terms. ",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_key": "c6l1-025s2",
+                  "_type": "span",
+                  "text": "For example, 1.5 times ATR away from entry, so normal noise does not knock you out.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l1-026",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "number",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l1-026s1",
+                  "_type": "span",
+                  "text": "Calculate rupee risk per lot. ",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_key": "c6l1-026s2",
+                  "_type": "span",
+                  "text": "Stop distance × lot size ÷ quotation unit.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l1-027",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "number",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l1-027s1",
+                  "_type": "span",
+                  "text": "Divide your risk budget by it. ",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_key": "c6l1-027s2",
+                  "_type": "span",
+                  "text": "Round down to whole lots. If the answer is below one, use a smaller contract or skip the trade.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l1-033",
+              "_type": "collapsible",
+              "title": "Show me the math: sizing silver by ATR",
+              "content": [
+                {
+                  "_key": "c6l1-028",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c6l1-028s1",
+                      "_type": "span",
+                      "text": "Kiran has ₹10,00,000 of trading capital and risks 1% per trade, which is ₹10,000. Silver's 14-day ATR is ₹2,400 per kg, and she places her stop 1.5 × ATR away, which is ₹3,600 per kg.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c6l1-029",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c6l1-029s1",
+                      "_type": "span",
+                      "text": "Silver (30 kg): ₹3,600 × 30 = ₹1,08,000 risk per lot. Far above her ₹10,000 budget.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c6l1-030",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c6l1-030s1",
+                      "_type": "span",
+                      "text": "Silver Mini (5 kg): ₹3,600 × 5 = ₹18,000 per lot. Still above budget.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c6l1-031",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c6l1-031s1",
+                      "_type": "span",
+                      "text": "Silver Micro (1 kg): ₹3,600 × 1 = ₹3,600 per lot. ₹10,000 ÷ ₹3,600 = 2.78, so 2 lots, risking ₹7,200.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c6l1-032",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c6l1-032s1",
+                      "_type": "span",
+                      "text": "Her broker would happily let her take a full Silver lot if she has the margin. Her risk rules say Silver Micro is the right size. Margin tells you what you can do; risk tells you what you should do.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c6l1-034",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Size a crude trade by ATR",
+              "prompt": "Your capital is ₹8,00,000 and you risk 1% per trade. MCX crude oil has a 14-day ATR of ₹160 per barrel, and you set your stop at 1.5 × ATR. How many whole lots of Crude Oil Mini (10 barrels) can you trade?",
+              "correctValue": 3,
+              "tolerance": 0,
+              "unit": "lots",
+              "explanation": "Risk budget = ₹8,000. Stop = 1.5 × ₹160 = ₹240 per barrel. Risk per Mini lot = ₹240 × 10 = ₹2,400. ₹8,000 ÷ ₹2,400 = 3.33, so 3 lots, risking ₹7,200."
+            },
+            {
+              "_key": "c6l1-035",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l1-035s1",
+                  "_type": "span",
+                  "text": "Effective Leverage and Hidden Concentration",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l1-036",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c6l1-036m1",
+                  "_type": "glossaryTerm",
+                  "definition": "The total notional value of all open positions divided by your trading capital. It measures how much exposure you carry relative to your money, regardless of margin."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c6l1-036s1",
+                  "_type": "span",
+                  "text": "Margin percentages hide your real exposure. What matters is your ",
+                  "marks": []
+                },
+                {
+                  "_key": "c6l1-036s2",
+                  "_type": "span",
+                  "text": "effective leverage",
+                  "marks": [
+                    "c6l1-036m1"
+                  ]
+                },
+                {
+                  "_key": "c6l1-036s3",
+                  "_type": "span",
+                  "text": ": the total notional value of everything you hold compared with your capital.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l1-037",
+              "_type": "mathBlock",
+              "latex": "\\text{Effective leverage} = \\frac{\\text{Total notional value of open positions}}{\\text{Trading capital}}",
+              "caption": "Include every position, long and short, at current prices."
+            },
+            {
+              "_key": "c6l1-038",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l1-038s1",
+                  "_type": "span",
+                  "text": "With ₹5,00,000 of capital, one Gold Mini lot worth ₹10,00,000 and one Crude Oil lot worth ₹6,50,000 add up to ₹16,50,000 of exposure: effective leverage of 3.3 times. A 5% move against both would cost ₹82,500, over 16% of capital.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l1-039",
+              "_type": "comparison",
+              "title": "Looks diversified vs actually diversified",
+              "columns": [
+                {
+                  "_key": "c6l1-039c1",
+                  "label": "Looks diversified, but is one bet",
+                  "points": [
+                    "Long gold and long silver: both precious metals, often moving together",
+                    "Long MCX crude oil and long ONGC shares: both are bets on higher oil prices",
+                    "Long copper, long aluminium and long zinc: all bets on Chinese and global growth",
+                    "Several commodities all bought because \"the rupee will weaken\""
+                  ]
+                },
+                {
+                  "_key": "c6l1-039c2",
+                  "label": "More genuinely spread",
+                  "points": [
+                    "Positions driven by different factors, such as a gold view and an agri seasonal view",
+                    "Total risk across all open trades capped, for example at 4% to 6% of capital",
+                    "Correlated positions sized as one combined position",
+                    "Some positions designed to offset others"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c6l1-040",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Never add to a losing leveraged position to \"average down\" without a plan made before the trade. In commodities, a price that looks cheap can keep falling, as MCX crude showed in April 2020. Averaging down turns one bad trade into an account-ending one."
+            },
+            {
+              "_key": "c6l1-041",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l1-041s1",
+                  "_type": "span",
+                  "text": "Personal Risk Rules That Keep You in the Game",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l1-042",
+              "_type": "table",
+              "caption": "A sample set of personal risk rules (adapt to your own situation)",
+              "headers": [
+                "Rule",
+                "Example setting",
+                "Why it helps"
+              ],
+              "rows": [
+                {
+                  "_key": "c6l1-042r1",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Maximum risk per trade",
+                    "1% to 2% of capital",
+                    "Survives long losing streaks"
+                  ]
+                },
+                {
+                  "_key": "c6l1-042r2",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Maximum total open risk",
+                    "5% of capital across all trades",
+                    "Stops correlated losses piling up"
+                  ]
+                },
+                {
+                  "_key": "c6l1-042r3",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Daily loss limit",
+                    "Stop trading for the day after losing 3%",
+                    "Prevents revenge trading after a bad morning"
+                  ]
+                },
+                {
+                  "_key": "c6l1-042r4",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Maximum effective leverage",
+                    "For example, 3 times capital",
+                    "Limits damage from gaps and limit moves"
+                  ]
+                },
+                {
+                  "_key": "c6l1-042r5",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Cash buffer",
+                    "Free cash at least equal to blocked margin",
+                    "Absorbs MTM losses and margin hikes without forced exits"
+                  ]
+                },
+                {
+                  "_key": "c6l1-042r6",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Event rule",
+                    "Reduce or close before major data releases and weekends",
+                    "Avoids gap losses that stops cannot prevent"
+                  ]
+                },
+                {
+                  "_key": "c6l1-042r7",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Review routine",
+                    "Log every trade with reason, size and outcome",
+                    "Turns mistakes into lessons instead of habits"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c6l1-043",
+              "_type": "keyFact",
+              "label": "Options as a risk tool",
+              "value": "Buying an option caps the maximum loss at the premium",
+              "context": "When gap risk, limit moves or event risk are high, a bought option can express a view with a known worst case, which a futures position cannot. The trade-off is paying premium and time decay, as covered in Chapter 2."
+            },
+            {
+              "_key": "c6l1-044",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "The revenge trade",
+              "scenario": "Tanvi, a 32-year-old trader in Kolkata with ₹6,00,000 of capital, normally trades 2 lots of Gold Mini. After three losing trades in one week cost her ₹45,000, she feels she must \"win it back\" before the weekend. On Friday evening she buys 6 lots of Gold Mini just before US jobs data, reasoning that gold \"has fallen enough and is due a bounce\".",
+              "prompt": "Identify the risk management mistakes Tanvi is making and describe what a disciplined response to her losing week would look like.",
+              "modelAnswer": "Mistakes:\n1. Revenge sizing. Tripling her size after losses is driven by emotion, not by any change in her edge. Six Gold Mini lots at around ₹1,00,000 per 10 grams is about ₹60,00,000 of gold, effective leverage of about 10 times her capital.\n2. Event risk. US non-farm payrolls can move gold sharply at 6:00 pm IST, and a stop may not protect against a fast move.\n3. Weekend risk. If she holds into the weekend, she adds gap risk.\n4. \"Due a bounce\" is not a reason. A falling price is not a signal on its own.\n5. No risk budget. A ₹1,500 fall per 10 grams would cost ₹1,500 × 10 × 6 = ₹90,000, doubling her weekly loss in one move.\n\nA disciplined response:\n1. Accept that a ₹45,000 loss, 7.5% of capital, is a normal drawdown within a sound plan, and that trying to recover it quickly usually makes it worse.\n2. Apply a weekly or daily loss limit and step away.\n3. Review the three losing trades: were they within her rules, or did she break them?\n4. Resume only at normal size, or smaller, sized from her risk per trade."
+            },
+            {
+              "_key": "c6l1-045",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Pre-trade risk check",
+              "steps": [
+                "I know the rupee loss if my stop is hit, and it is within my risk per trade.",
+                "I have sized the position using volatility, not the margin available.",
+                "My total open risk and effective leverage stay within my limits after this trade.",
+                "This trade is not the same bet as a position I already hold.",
+                "I have checked for major data releases, weekends and expiry dates during the holding period.",
+                "I have enough free cash to absorb MTM losses and a margin increase."
+              ]
+            },
+            {
+              "_key": "c6l1-046",
+              "_type": "flashcardSet",
+              "title": "Leverage and Risk Management",
+              "cards": [
+                {
+                  "_key": "c6l1-046f1",
+                  "term": "Drawdown",
+                  "definition": "The fall in account value from a peak to a later low."
+                },
+                {
+                  "_key": "c6l1-046f2",
+                  "term": "Recovery gain",
+                  "definition": "1 ÷ (1 minus drawdown) minus 1; a 50% drawdown needs a 100% gain."
+                },
+                {
+                  "_key": "c6l1-046f3",
+                  "term": "Risk of ruin",
+                  "definition": "The probability of losing so much capital that you cannot continue trading."
+                },
+                {
+                  "_key": "c6l1-046f4",
+                  "term": "Expected value",
+                  "definition": "Win rate × average win minus loss rate × average loss, minus costs."
+                },
+                {
+                  "_key": "c6l1-046f5",
+                  "term": "Breakeven win rate",
+                  "definition": "1 ÷ (1 + R), where R is average win ÷ average loss."
+                },
+                {
+                  "_key": "c6l1-046f6",
+                  "term": "Average true range (ATR)",
+                  "definition": "The average daily price range over a period, used to set volatility-based stops."
+                },
+                {
+                  "_key": "c6l1-046f7",
+                  "term": "Effective leverage",
+                  "definition": "Total notional value of open positions ÷ trading capital."
+                },
+                {
+                  "_key": "c6l1-046f8",
+                  "term": "Daily loss limit",
+                  "definition": "A personal rule to stop trading for the day after a set loss."
+                }
+              ]
+            },
+            {
+              "_key": "c6l1-047",
+              "_type": "keyTakeaways",
+              "points": [
+                "Survival comes first: with the same trades, risking 20% per trade can wipe out an account that risking 2% barely dents.",
+                "Drawdowns are asymmetric: a 50% loss needs a 100% gain to recover.",
+                "Losing streaks are normal over hundreds of trades, so size positions to survive them.",
+                "Profitability depends on win rate and reward-to-risk together; breakeven win rate = 1 ÷ (1 + R).",
+                "Size by volatility and a fixed risk budget, not by available margin; choose Mini or Micro contracts when needed.",
+                "Watch effective leverage and hidden concentration, and follow written personal rules on risk, losses, events and cash buffers."
+              ]
+            },
+            {
+              "_key": "c6l1-048",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice. The risk rules and percentages shown are illustrative examples, not recommendations for any individual. Commodity derivatives are leveraged and can cause losses larger than your initial margin. Consult a SEBI-registered investment adviser before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

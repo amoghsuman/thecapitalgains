@@ -1,0 +1,201 @@
+{
+  "courseSlug": "introduction-to-options-pricing-models-black-scholes-explained",
+  "chapters": [
+    {
+      "title": "Chapter 4: The Greeks: Reading an Option's Sensitivities",
+      "lessons": [
+        {
+          "title": "Theta and Vega: Time Decay and Volatility Sensitivity",
+          "slug": "theta-and-vega-time-decay-and-volatility-sensitivity",
+          "body": [
+            {
+              "_key": "k1",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k1s",
+                  "_type": "span",
+                  "text": "Theta: The Rent You Pay for Time",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k2",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k2s1",
+                  "_type": "span",
+                  "text": "Theta measures how much an option's price changes as one day passes, with the underlying and volatility held perfectly still. It is the exact daily cost of the time value Lesson 1.1 first split out of the premium: for a bought call or put, theta is almost always negative, because a calendar simply advancing, with nothing else moving, always leaves less time for uncertainty to work in your favour.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "mathBlock",
+              "latex": "\\Theta_{\\text{call}} = -\\frac{S_0\\, \\varphi(d_1)\\, \\sigma}{2\\sqrt{T}} - r K e^{-rT} N(d_2)",
+              "caption": "Both terms are negative for a typical call: the first is the pure cost of shrinking uncertainty, the second reflects the discounted strike's value drifting as time passes. Together they give theta per year; divide by 365 for a per-day figure.",
+              "_key": "k3"
+            },
+            {
+              "_key": "k4",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k4s1",
+                  "_type": "span",
+                  "text": "For Lesson 3.3's exact ATM call: the first term works out to about −2,198.31 per year, and the second to about −881.81 per year, for a total of roughly −3,080 per year. Divide by 365 calendar days: this option's theta is approximately −₹8.44 per day. Holding this call for one more day, with Nifty and implied volatility both unchanged, costs roughly ₹8.44 in pure time decay.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "callout",
+              "type": "warning",
+              "text": "Do not turn this into \"₹440.72 of time value ÷ 30 days left = ₹14.69 a day, so today's theta should be similar\". Theta is not constant across an option's life; it accelerates as expiry approaches, most sharply for at-the-money options. Today's −₹8.44 is the marginal rate right now, with a full month still left, not the average rate the option will experience all the way to expiry.",
+              "_key": "k5"
+            },
+            {
+              "_key": "k6",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k6s",
+                  "_type": "span",
+                  "text": "Vega: Sensitivity to the Market's Own Volatility Estimate",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k7",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k7s1",
+                  "_type": "span",
+                  "text": "Vega measures how much the option's price changes for a 1 percentage point change in implied volatility, holding spot and time fixed. Lesson 2.3 spent a whole lesson on the fact that σ is the one input you have to estimate, and that the market's own implied volatility can swing hard around events. Vega puts a rupee figure directly on how much money is riding on that one estimate.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "mathBlock",
+              "latex": "\\text{Vega} = S_0\\, \\varphi(d_1)\\, \\sqrt{T}",
+              "caption": "Identical for a call and a put at the same strike and expiry. Like gamma, it is built on φ(d1), so it shares the same hump shape, highest near the money.",
+              "_key": "k8"
+            },
+            {
+              "_key": "k9",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k9s1",
+                  "_type": "span",
+                  "text": "For the same ATM call: S0 φ(d1) √T ≈ 24,800 × 0.3937 × 0.28868 ≈ 2,818.35, per full 100 percentage points of volatility. Scaled to the standard \"per 1 percentage point\" convention, divide by 100: vega ≈ ₹28.18. If implied volatility rose from 13% to 14%, this option's price would rise by roughly ₹28.18, with Nifty and time to expiry unchanged.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "comparison",
+              "title": "Theta vs vega",
+              "columns": [
+                {
+                  "_key": "k10",
+                  "label": "Theta",
+                  "points": [
+                    "Sensitivity to time passing, one calendar day at a time",
+                    "Almost always negative for a bought option",
+                    "Accelerates as expiry approaches, sharpest for ATM options",
+                    "The exact daily price of the time value from Lesson 1.1"
+                  ]
+                },
+                {
+                  "_key": "k11",
+                  "label": "Vega",
+                  "points": [
+                    "Sensitivity to a 1 percentage point change in implied volatility",
+                    "Always positive for a bought call or put",
+                    "Also peaks near the money, like gamma, via the shared φ(d1) term",
+                    "The exact rupee cost of Lesson 2.3's implied-volatility swings"
+                  ]
+                }
+              ],
+              "_key": "k12"
+            },
+            {
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Quantifying Ananya's IV crush",
+              "scenario": "Lesson 2.3 described Ananya buying a straddle right before the Budget, when India VIX had jumped to 24, and watching implied volatility crush back down afterward. Assume her long call alone has a vega of ₹28.18 per 1 percentage point, matching this lesson's ATM example, and implied volatility falls by 8 percentage points immediately after the event, with Nifty's spot level and time to expiry essentially unchanged in the very short window right after the announcement.",
+              "prompt": "Using vega alone, estimate the rupee impact on Ananya's call from the IV crush.",
+              "modelAnswer": "Price impact ≈ vega × change in implied volatility (in percentage points) = ₹28.18 × 8 ≈ ₹225.44 loss on this leg alone, purely from the drop in implied volatility, before accounting for whatever Nifty's actual move did to delta and gamma, or the extra day of theta decay. This is why Lesson 2.3 called buying volatility ahead of a well-flagged event \"buying it at its most expensive\": vega alone can erase a large chunk of the premium the moment uncertainty resolves, even if the underlying's actual move was exactly what the buyer expected.",
+              "_key": "k13"
+            },
+            {
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Which Greek explains the loss",
+              "question": "Overnight, Nifty does not move at all and implied volatility is completely unchanged the next morning, yet a trader's long option is worth measurably less. Which Greek is responsible?",
+              "options": [
+                "Vega, since volatility usually drives most of the change",
+                "Delta, since it measures sensitivity to the underlying",
+                "Theta, since time passed while nothing else moved",
+                "Gamma, since it measures the rate of change of delta"
+              ],
+              "correctIndex": 2,
+              "explanation": "With spot unchanged, delta and gamma have nothing to act on. With implied volatility unchanged, vega has nothing to act on either. The only input that moved was time itself, which is exactly theta's job to measure.",
+              "_key": "k14"
+            },
+            {
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Convert annual theta to daily",
+              "prompt": "A different option's Black-Scholes theta works out to −₹5,475 per year. Using 365 calendar days, what is its approximate daily theta, in rupees?",
+              "correctValue": -15.0,
+              "tolerance": 0.2,
+              "explanation": "−5,475 ÷ 365 = −₹15.00 per day, the same annual-to-daily conversion used for this lesson's ATM example.",
+              "_key": "k15"
+            },
+            {
+              "_type": "bigIdea",
+              "text": "Theta charges you for the passage of time itself. Vega charges or pays you for the market changing its mind about how uncertain the future is. Both are the same time value from Lesson 1.1, just sliced along two different axes.",
+              "_key": "k16"
+            },
+            {
+              "_type": "keyTakeaways",
+              "points": [
+                "Theta measures the daily cost of time value; for the ATM Lesson 3.3 example, it works out to roughly −₹8.44 per day.",
+                "Theta is not constant across an option's life; it accelerates as expiry nears, most sharply for at-the-money options, so today's theta should never be multiplied by the days remaining.",
+                "Vega measures the price change per 1 percentage point move in implied volatility; for the same ATM example, it is roughly ₹28.18.",
+                "Vega and gamma share the same underlying shape, both built on φ(d1), peaking near the money and fading toward deep ITM or OTM.",
+                "Vega puts an exact rupee figure on Lesson 2.3's implied-volatility swings, including how much an IV crush can cost a position even when the underlying moves as expected."
+              ],
+              "_key": "k17"
+            },
+            {
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice. All theta and vega figures are illustrative, computed from the same hypothetical inputs as Lesson 3.3, not live market Greeks.",
+              "_key": "k18"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

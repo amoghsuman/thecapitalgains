@@ -1,0 +1,200 @@
+{
+  "courseSlug": "understanding-reinforcement-learning-applications-in-trading",
+  "chapters": [
+    {
+      "title": "Chapter 4: Training the Agent",
+      "lessons": [
+        {
+          "title": "Training an Actor-Critic Agent: PPO on the Continuous Action Space",
+          "slug": "training-an-actor-critic-agent-ppo-on-the-continuous-action-space",
+          "body": [
+            {
+              "_key": "rl4l4b01",
+              "_type": "bigIdea",
+              "text": "DQN has no way to take a max over infinitely many possible actions, which is exactly the problem the continuous position-sizing environment from Chapter 3 creates. PPO exists to solve precisely this, and understanding its clipped objective is understanding why actor-critic training is stable enough to actually use."
+            },
+            {
+              "_key": "rl4l4b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl4l4b02s1", "_type": "span", "text": "Why DQN Doesn't Work for the Continuous Environment", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl4l4b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl4l4b03s1",
+                  "_type": "span",
+                  "text": "Chapter 3's exercise on matching action space to algorithm flagged this directly: Q-learning and DQN both rely on computing max_a' Q(s',a') over the next state's possible actions, at both prediction and training time. With a small, enumerable discrete action space, this max is a simple comparison across a handful of numbers. With the continuous Box action space from the previous chapter, there are infinitely many possible actions, and no closed-form way to search all of them for the maximum. DQN simply has no operation to plug into for a continuous action space without further modification, which is exactly why continuous control calls for a different family of algorithm.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl4l4b04",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl4l4b04s1", "_type": "span", "text": "PPO: How Actor-Critic Training Actually Works", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl4l4b05",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl4l4b05s1",
+                  "_type": "span",
+                  "text": "Proximal Policy Optimization, PPO, is the most widely used actor-critic algorithm in practice, and the natural choice here. An actor network outputs the policy directly, in the continuous case a mean and standard deviation the action is sampled from, rather than a table or network of per-action values to take a max over. A separate critic network estimates V(s), the state-value function from Chapter 2, used to judge how much better or worse an action turned out to be than what the critic expected, rather than to choose actions directly.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl4l4b06",
+              "_type": "mathBlock",
+              "latex": "L^{\\text{CLIP}}(\\theta) = \\hat{\\mathbb{E}}_t \\Big[ \\min\\big( r_t(\\theta)\\, \\hat{A}_t,\\; \\text{clip}(r_t(\\theta), 1-\\epsilon, 1+\\epsilon)\\, \\hat{A}_t \\big) \\Big]",
+              "caption": "PPO's clipped surrogate objective (Schulman et al., 2017). r_t(θ) = π_θ(a_t|s_t) / π_θ_old(a_t|s_t) is how much more, or less, likely the new policy makes the action that was actually taken, compared to the policy that generated the data. The clip term caps how far this ratio is allowed to push the update, so a single batch of experience cannot swing the policy drastically in one step, the instability actor-critic methods are otherwise prone to."
+            },
+            {
+              "_key": "rl4l4b07",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl4l4b07s1",
+                  "_type": "span",
+                  "text": "In practice, this clipping is what makes PPO usable without the heavier machinery of some of the actor-critic methods that came before it: instead of a hard mathematical constraint on how much the policy is allowed to change, PPO simply discards the incentive to change it too much within a single update, which is simpler to implement and tune while achieving similar stability.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl4l4b08",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl4l4b08s1", "_type": "span", "text": "Training PPO on the Continuous-Action Environment", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl4l4b09",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "from stable_baselines3 import PPO\n\nmodel = PPO(\n    \"MlpPolicy\",\n    continuous_env,\n    learning_rate=3e-4,\n    n_steps=2048,\n    batch_size=64,\n    gamma=0.99,\n    clip_range=0.2,     # this is ε from the clipped objective above\n    verbose=1,\n)\n\nmodel.learn(total_timesteps=200_000)",
+              "caption": "continuous_env is the Box action space environment from the previous chapter's continuous action space lesson. clip_range is literally ε from the formula above; n_steps controls how much experience PPO collects before each policy update, distinct from DQN's replay buffer, since PPO is on-policy and does not reuse old experience the way DQN's buffer does."
+            },
+            {
+              "_key": "rl4l4b10",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl4l4b10s1", "_type": "span", "text": "The Advantage Function: Why the Critic Matters", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl4l4b11",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl4l4b11s1",
+                  "_type": "span",
+                  "text": "The critic exists to compute the advantage estimate Â_t used in the objective above. The advantage of an action measures how much better, or worse, it was than what the critic already expected from that state.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl4l4b12",
+              "_type": "mathBlock",
+              "latex": "A(s,a) = Q(s,a) - V(s)",
+              "caption": "The advantage function: positive when an action outperformed the critic's expectation for that state, negative when it underperformed. PPO, and actor-critic methods generally, use an advantage estimate rather than the raw return to reduce the variance that made pure policy-gradient methods like REINFORCE, from Chapter 2's comparison, noisy and slow to train in practice. Stable-Baselines3's PPO computes this using Generalized Advantage Estimation (Schulman et al., 2016) internally, a refinement of the simple formula above that this course does not need to derive in full to use correctly."
+            },
+            {
+              "_key": "rl4l4b13",
+              "_type": "table",
+              "caption": "DQN vs PPO, Practically",
+              "headers": ["", "DQN", "PPO"],
+              "rows": [
+                { "_key": "rl4l4b13r1", "_type": "tableRow", "cells": ["Action space", "Discrete only, out of the box (Chapter 3's 5-level or delta action environments)", "Continuous (Chapter 3's Box environment), and discrete too if needed"] },
+                { "_key": "rl4l4b13r2", "_type": "tableRow", "cells": ["Policy type", "Off-policy; reuses old experience from a replay buffer", "On-policy; trains only on experience collected under the current policy, discarded after use"] },
+                { "_key": "rl4l4b13r3", "_type": "tableRow", "cells": ["Sample efficiency", "Generally more sample-efficient, since old experience is reused", "Generally less sample-efficient per environment step, since experience isn't reused"] },
+                { "_key": "rl4l4b13r4", "_type": "tableRow", "cells": ["Training stability", "Can be unstable without a target network and careful tuning", "Clipped objective gives it a reputation as one of the more stable, forgiving algorithms to tune"] }
+              ]
+            },
+            {
+              "_key": "rl4l4b14",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl4l4b14s1",
+                  "_type": "span",
+                  "text": "For this course's Nifty 50 environment, the practical decision comes down to the action space choice made back in Chapter 3: DQN if the discrete or delta action design was chosen, PPO if the continuous position-sizing design was chosen. Neither is a strictly better algorithm in general; each fits a different action space by construction.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl4l4b15",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This closes the training chapter. A trained agent, whichever algorithm produced it, still means nothing until it survives honest, held-out evaluation across more than one market regime, exactly the discipline the previous lesson's three-way split and walk-forward validation exist to enforce, and exactly what the strategy still needs before any of it touches real capital."
+            },
+            {
+              "_key": "rl4l4b16",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Choosing Between DQN and PPO for a New Strategy",
+              "scenario": "A researcher is designing an RL agent for a Bank Nifty options-selling strategy where position size needs to scale smoothly with signal confidence, rather than jumping between a small number of fixed lot sizes.",
+              "prompt": "Based on this lesson and Chapter 3's action space design, which algorithm is the better starting point, and why?",
+              "modelAnswer": "PPO is the better starting point. A strategy that needs to scale position size smoothly with confidence is precisely the continuous action space case Chapter 3 described, a Box action space outputting a position size directly rather than choosing among a small number of discrete levels. DQN's core operation, taking the max over Q(s,a) across all possible actions, has no natural way to handle an action space with infinitely many possible values, and would need to be paired with a discretized, fixed set of position sizes to work at all, undermining the smooth scaling the strategy actually needs. PPO's actor network can output a continuous action directly, making it the natural fit for this specific design requirement, independent of any other consideration like sample efficiency or training stability."
+            },
+            {
+              "_key": "rl4l4b17",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "What the Clipped Objective Actually Prevents",
+              "question": "In PPO's clipped surrogate objective, what does the clipping of the probability ratio r_t(θ) primarily prevent?",
+              "options": [
+                "It prevents the critic network from ever making an incorrect value estimate",
+                "It prevents a single batch of experience from pushing the policy to change too drastically in one update, which would otherwise risk destabilizing training",
+                "It prevents the agent from ever exploring actions other than the current greedy choice",
+                "It has no functional effect; it exists only to make the objective function differentiable"
+              ],
+              "correctIndex": 1,
+              "explanation": "The clip term caps how much r_t(θ), the ratio between the new and old policy's probability of the action actually taken, is allowed to influence the objective. This stops a single batch of experience from swinging the policy drastically in one update, the core instability actor-critic methods are prone to without some form of constraint on how much the policy is allowed to change per step. It is PPO's central innovation relative to earlier, more complex constrained policy-update methods."
+            },
+            {
+              "_key": "rl4l4b18",
+              "_type": "keyTakeaways",
+              "points": [
+                "DQN's core operation, taking a max over Q(s,a) across all possible actions, has no natural way to handle a continuous action space, which is why the continuous position-sizing environment from Chapter 3 needs a different algorithm family",
+                "PPO uses an actor network to output the policy directly and a critic network to estimate V(s), using the critic's estimate to compute an advantage that reduces the variance pure policy-gradient methods suffer from",
+                "PPO's clipped surrogate objective caps how much a single update is allowed to change the policy, which is what gives it a reputation as a stable, forgiving algorithm to tune relative to earlier actor-critic methods",
+                "DQN is off-policy and reuses old experience through a replay buffer; PPO is on-policy and trains only on freshly collected experience, discarded after each update, which trades sample efficiency for training stability",
+                "The choice between DQN and PPO for this course's environment follows directly from the action space design decided in Chapter 3: discrete or delta actions favor DQN, continuous position sizing favors PPO",
+                "A trained agent, from either algorithm, still means nothing until it survives the honest, held-out evaluation the previous lesson's three-way split and walk-forward validation are built to enforce, the discipline that governs whatever comes next in this course"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

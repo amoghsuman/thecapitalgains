@@ -1,0 +1,296 @@
+{
+  "courseSlug": "understanding-technical-analysis-applied-to-forex-markets",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Forex Charts Read Differently From Stock Charts",
+      "lessons": [
+        {
+          "title": "The 24-Hour Market: Sessions, Liquidity Windows and What \"Close\" Even Means",
+          "slug": "the-24-hour-market-sessions-liquidity-windows-and-what-close-even-means",
+          "body": [
+            {
+              "_key": "t1-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "t1-001s1", "_type": "span", "text": "Kunal trades USD/INR futures on NSE through Zerodha's Kite. At 4:45 pm, five minutes before the session ends, he watches the daily candle close above a resistance level he has been tracking for a week. Clean breakout, textbook setup. He opens his laptop to check the same idea on EUR/USD using a global charting site, and the daily candle there looks nothing like what he expected. It has not closed yet. It will not close for another nine hours. Kunal assumed every forex chart works the same way his USD/INR chart does. It does not, and that single assumption is where a lot of technical analysis on currency pairs goes wrong before it even starts.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "t1-002",
+              "_type": "bigIdea",
+              "text": "There is no single \"close\" in forex. USD/INR futures on NSE have one official daily close because they trade on an exchange with fixed hours. Global spot pairs like EUR/USD trade nearly 24 hours on weekdays, so their \"daily candle\" is a convention set by your broker's clock, not an exchange event."
+            },
+            {
+              "_key": "t1-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "t1-003s1", "_type": "span", "text": "Sessions: Trading Follows the Sun", "marks": [] }
+              ]
+            },
+            {
+              "_key": "t1-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "t1-004m1", "_type": "glossaryTerm", "definition": "A block of hours in which a particular financial centre, such as Tokyo or London, is the main source of trading activity in a currency." },
+                { "_key": "t1-004m2", "_type": "glossaryTerm", "definition": "How easily an asset can be bought or sold without moving its price. High liquidity means tight spreads and orderly price moves. Low liquidity means wider spreads and erratic moves on small orders." }
+              ],
+              "children": [
+                { "_key": "t1-004s1", "_type": "span", "text": "You already know from the basics of forex that the market runs close to 24 hours on weekdays, handed off between four major ", "marks": [] },
+                { "_key": "t1-004s2", "_type": "span", "text": "sessions", "marks": ["t1-004m1"] },
+                { "_key": "t1-004s3", "_type": "span", "text": ": Sydney, Tokyo, London and New York. What matters for reading a chart is not just that these sessions exist, but that ", "marks": [] },
+                { "_key": "t1-004s4", "_type": "span", "text": "liquidity", "marks": ["t1-004m2"] },
+                { "_key": "t1-004s5", "_type": "span", "text": " is not the same throughout the day. A candle formed when two major sessions overlap carries very different weight from a candle formed when only one sleepy desk is quoting prices.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "t1-005",
+              "_type": "table",
+              "caption": "Major forex sessions in IST (approximate, shifts by about an hour when the UK and US change clocks for daylight saving)",
+              "headers": ["Session", "Approx. hours (IST)", "Overlaps with"],
+              "rows": [
+                { "_key": "t1-005r1", "_type": "tableRow", "cells": ["Sydney", "2:30 am to 11:30 am", "Tokyo, from 5:30 am"] },
+                { "_key": "t1-005r2", "_type": "tableRow", "cells": ["Tokyo", "5:30 am to 2:30 pm", "Sydney, then London from 12:30 pm"] },
+                { "_key": "t1-005r3", "_type": "tableRow", "cells": ["London", "12:30 pm to 9:30 pm", "Tokyo, then New York from 5:30 pm"] },
+                { "_key": "t1-005r4", "_type": "tableRow", "cells": ["New York", "5:30 pm to 2:30 am", "London, until 9:30 pm"] }
+              ]
+            },
+            {
+              "_key": "t1-006",
+              "_type": "timeline",
+              "title": "One Forex Trading Day, Handed Off Across Time Zones (IST)",
+              "events": [
+                { "_key": "t1-006e1", "date": "2:30 am", "title": "Sydney opens alone", "description": "The thinnest window of the day. Only Sydney desks are active until Tokyo joins, so spreads are wider and small orders can move price more than they should." },
+                { "_key": "t1-006e2", "date": "5:30 am", "title": "Tokyo joins", "description": "Asian currency pairs pick up volume. Liquidity improves but is still well below the day's peak." },
+                { "_key": "t1-006e3", "date": "9:00 am", "title": "NSE currency segment opens", "description": "India's onshore USD/INR and EUR/INR futures start trading on a fixed exchange session, unlike the continuous global spot market." },
+                { "_key": "t1-006e4", "date": "12:30 pm", "title": "London opens, Tokyo still active", "description": "The Asia-Europe handoff. Volume rises as European desks start pricing alongside Asian ones." },
+                { "_key": "t1-006e5", "date": "5:00 pm", "title": "NSE currency segment closes", "description": "USD/INR and EUR/INR futures print one official daily close, the same way a stock does on NSE." },
+                { "_key": "t1-006e6", "date": "5:30 pm", "title": "New York opens, London still active", "description": "The busiest window of the day. London and New York, which together account for more than half of global forex turnover, are both fully open at once." },
+                { "_key": "t1-006e7", "date": "9:30 pm", "title": "London closes", "description": "New York trades alone for the rest of its session. Liquidity starts thinning again." },
+                { "_key": "t1-006e8", "date": "2:30 am (next day)", "title": "New York closes, rollover", "description": "Global brokers apply overnight interest and roll open positions to the next day. This is the moment most retail platforms treat as the \"daily close\" on pairs like EUR/USD." }
+              ]
+            },
+            {
+              "_key": "t1-007",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "Naming the moment",
+              "textWithBlank": "The moment global forex brokers apply overnight interest and shift open positions to the next trading day, roughly 2:30 am IST, is called ___.",
+              "correctAnswers": ["rollover", "rollover time", "the rollover"],
+              "explanation": "Rollover is a broker convention, not an exchange event. It is why most global forex \"daily candles\" close at this hour rather than at midnight."
+            },
+            {
+              "_key": "t1-008",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "t1-008s1", "_type": "span", "text": "Why Overlaps Matter More Than the Clock", "marks": [] }
+              ]
+            },
+            {
+              "_key": "t1-009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "t1-009s1", "_type": "span", "text": "In equities, every candle on the Nifty or on a Reliance chart is built from the same continuous, single-exchange order book. In forex, two candles that look identical on your screen can represent completely different amounts of real trading behind them, depending on which session or overlap produced them.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "t1-010",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "t1-010s1", "label": "London-New York overlap", "value": "4 hours", "context": "5:30 pm to 9:30 pm IST, the busiest window of the trading day" },
+                { "_key": "t1-010s2", "label": "London share of global turnover", "value": "38%", "context": "BIS Triennial Survey, April 2025" },
+                { "_key": "t1-010s3", "label": "New York share of global turnover", "value": "19%", "context": "BIS Triennial Survey, April 2025" },
+                { "_key": "t1-010s4", "label": "Sydney-only window", "value": "3 hours", "context": "2:30 am to 5:30 am IST, before Tokyo joins" }
+              ]
+            },
+            {
+              "_key": "t1-011",
+              "_type": "callout",
+              "type": "insight",
+              "text": "London and New York between them are venues for more than half of all forex trading by location, and for four hours a day both are fully open together. A breakout that completes during that window has real size behind it. The same-looking breakout at 3 am IST, when only Sydney desks are pricing the pair, is far more likely to be a thin-liquidity move that reverses the moment London wakes up."
+            },
+            {
+              "_key": "t1-012",
+              "_type": "candlestickChart",
+              "title": "Illustrative EUR/USD: Same-Looking Breakout, Two Different Sessions",
+              "data": [
+                { "_key": "t1-012c1", "date": "2:30 am IST", "open": 1.0848, "high": 1.0852, "low": 1.0844, "close": 1.0850 },
+                { "_key": "t1-012c2", "date": "3:30 am IST", "open": 1.0850, "high": 1.0856, "low": 1.0847, "close": 1.0854 },
+                { "_key": "t1-012c3", "date": "4:30 am IST", "open": 1.0854, "high": 1.0858, "low": 1.0846, "close": 1.0848 },
+                { "_key": "t1-012c4", "date": "5:30 pm IST", "open": 1.0855, "high": 1.0862, "low": 1.0853, "close": 1.0860 },
+                { "_key": "t1-012c5", "date": "6:30 pm IST", "open": 1.0860, "high": 1.0878, "low": 1.0859, "close": 1.0875 },
+                { "_key": "t1-012c6", "date": "7:30 pm IST", "open": 1.0875, "high": 1.0895, "low": 1.0873, "close": 1.0890 },
+                { "_key": "t1-012c7", "date": "8:30 pm IST", "open": 1.0890, "high": 1.0902, "low": 1.0887, "close": 1.0898 }
+              ]
+            },
+            {
+              "_key": "t1-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "t1-013s1", "_type": "span", "text": "This is an illustrative pattern, not a live quote, but the shape is realistic. The 2:30 am to 4:30 am candles wobble inside an 11-pip range and go nowhere. The 5:30 pm to 8:30 pm candles push through the same kind of resistance and keep extending, because London and New York volume is actually behind the move. If you back-test a breakout strategy on EUR/USD without checking what time each breakout happened, you will mix these two very different situations into one number.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "t1-014",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Where would you trust a breakout more?",
+              "question": "A EUR/USD chart shows price breaking above a three-day resistance level. At which time is that breakout most likely to hold rather than fade?",
+              "options": [
+                "3:00 am IST, during the Sydney-only window",
+                "7:00 pm IST, during the London-New York overlap",
+                "11:00 am IST, just before London opens",
+                "It makes no difference, forex liquidity is constant all day"
+              ],
+              "correctIndex": 1,
+              "explanation": "7 pm IST falls inside the London-New York overlap, the four-hour window when the two largest trading centres are both fully active. Breakouts here have genuine volume behind them. A 3 am breakout, with only Sydney open, is far more prone to reversing once bigger players return."
+            },
+            {
+              "_key": "t1-015",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "t1-015s1", "_type": "span", "text": "What \"Close\" Actually Means on Each Kind of Chart", "marks": [] }
+              ]
+            },
+            {
+              "_key": "t1-016",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "t1-016s1", "_type": "span", "text": "This is where Kunal's confusion started, and it is worth separating clearly before you rely on daily candles for support, resistance or pattern signals.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "t1-017",
+              "_type": "comparison",
+              "title": "NSE currency futures vs global spot EUR/USD",
+              "columns": [
+                {
+                  "_key": "t1-017c1",
+                  "label": "NSE USD/INR or EUR/INR futures",
+                  "points": [
+                    "One fixed exchange session: 9:00 am to 5:00 pm IST",
+                    "The 5:00 pm close is an official exchange event, exactly like a stock",
+                    "Every trader on NSE sees the identical daily candle",
+                    "Weekend and overnight gaps are real, since the exchange is shut outside these hours"
+                  ]
+                },
+                {
+                  "_key": "t1-017c2",
+                  "label": "Global spot EUR/USD",
+                  "points": [
+                    "Trades nearly continuously, Monday morning Sydney to Friday New York close",
+                    "The \"daily close\" is set by rollover time, a broker convention, not an exchange rule",
+                    "Different brokers and platforms can show slightly different daily candles",
+                    "True gaps happen mainly over the weekend, rarely mid-week"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "t1-018",
+              "_type": "keyFact",
+              "label": "NSE currency derivatives segment trading hours",
+              "value": "9:00 am to 5:00 pm IST",
+              "context": "This applies to USD/INR, EUR/INR, GBP/INR and JPY/INR futures and options. It is the one part of forex technical analysis in India with a genuinely exchange-defined daily candle."
+            },
+            {
+              "_key": "t1-019",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Many retail charting platforms and MetaTrader brokers run their server clock on GMT+2 or GMT+3, not IST. If you read \"price closed above resistance on the daily candle\" without checking your platform's timezone setting, you may be reading a candle that closed three or four hours earlier or later than you assumed, which silently changes what actually counts as a breakout."
+            },
+            {
+              "_key": "t1-020",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Two charts, two closes",
+              "scenario": "Priya trades USD/INR futures on Zerodha's Kite during NSE hours. To gauge overall dollar strength, she also watches EUR/USD on a global charting website. One evening, her USD/INR daily candle closes at 5:00 pm IST, clearly above resistance. Her EUR/USD chart on the same website shows the daily candle closing several hours later, and by her reading, it closes below its own resistance level. She is confused about which signal to trust and messages a friend asking if one of the charts is \"wrong.\"",
+              "prompt": "Explain to Priya why the two daily candles are not directly comparable, and what she should check before trusting a \"close above resistance\" signal on her EUR/USD chart.",
+              "modelAnswer": "1. Neither chart is wrong, they measure different things. USD/INR futures on NSE have one official exchange close at 5:00 pm IST, so every trader sees the same candle.\n2. EUR/USD has no exchange close. Its \"daily candle\" ends whenever her charting platform's server applies rollover, commonly around 2:30 am to 3:30 am IST, a convention the platform chooses, not a market event.\n3. She should check her charting platform's timezone and session settings, since brokers on GMT+2 or GMT+3 servers will show a different daily candle shape than one aligned to IST rollover.\n4. Once she confirms the setting and keeps it fixed every day, her EUR/USD \"close above resistance\" reading becomes consistent day to day, even if it is not directly comparable to her NSE USD/INR candle.\n5. She should treat the NSE USD/INR close as the harder, exchange-verified reference, and treat EUR/USD daily-close signals as approximate and platform-dependent."
+            },
+            {
+              "_key": "t1-021",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "t1-021s1", "_type": "span", "text": "The Weekend Boundary", "marks": [] }
+              ]
+            },
+            {
+              "_key": "t1-022",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "t1-022s1", "_type": "span", "text": "Even a pair that trades nearly 24 hours a day has to stop somewhere. Global spot forex opens with Sydney on Monday morning IST and runs without a break until New York closes late Friday night US time, early Saturday morning IST. NSE's currency segment simply closes at 5:00 pm IST every Friday and reopens at 9:00 am IST on Monday. Both create a real gap between Friday's last price and the next open, which is exactly the kind of gap Chapter 3 covers in depth when you look at chart patterns.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "t1-023",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "How long does the forex week actually run?",
+              "prompt": "Using the session table above, the global forex week opens with Sydney at 2:30 am IST on Monday and closes with New York's rollover at 2:30 am IST on Saturday. How many total hours does the market trade in that week?",
+              "correctValue": 120,
+              "tolerance": 0,
+              "unit": "hours",
+              "explanation": "From 2:30 am IST Monday to 2:30 am IST Saturday is exactly 5 full days, and 5 x 24 = 120 hours. NSE's currency segment, by contrast, trades only 8 hours a day, 5 days a week, or 40 hours, a much smaller and cleaner slice of the week."
+            },
+            {
+              "_key": "t1-024",
+              "_type": "flashcardSet",
+              "title": "Sessions and Liquidity: Key Terms",
+              "cards": [
+                { "_key": "t1-024f1", "term": "Session", "definition": "A block of hours in which one financial centre, such as Tokyo, London or New York, drives most of the trading activity in a currency." },
+                { "_key": "t1-024f2", "term": "Overlap", "definition": "The hours when two sessions are simultaneously active, such as London and New York from 5:30 pm to 9:30 pm IST. Liquidity and volume peak during overlaps." },
+                { "_key": "t1-024f3", "term": "Liquidity", "definition": "How easily a pair can be bought or sold without moving its price. High liquidity means tight spreads and reliable price moves. Low liquidity means wider spreads and erratic moves." },
+                { "_key": "t1-024f4", "term": "Rollover", "definition": "The moment, roughly 2:30 am IST, when global forex brokers apply overnight interest and shift positions to the next trading day. Most global \"daily candles\" close here." },
+                { "_key": "t1-024f5", "term": "NSE currency segment close", "definition": "The 5:00 pm IST daily close on USD/INR, EUR/INR and other rupee-pair futures, an actual exchange event rather than a broker convention." }
+              ]
+            },
+            {
+              "_key": "t1-025",
+              "_type": "keyTakeaways",
+              "points": [
+                "Forex has four main sessions, Sydney, Tokyo, London and New York, and liquidity is far higher when two sessions overlap than when only one is active.",
+                "The London-New York overlap, roughly 5:30 pm to 9:30 pm IST, is the busiest window of the day. The Sydney-only window, roughly 2:30 am to 5:30 am IST, is the thinnest.",
+                "A breakout or pattern completing during an overlap carries real volume behind it. The same pattern during a thin-liquidity window is far more likely to fail.",
+                "NSE currency futures have one official exchange close at 5:00 pm IST, exactly like a stock. Global spot pairs like EUR/USD have no exchange close, only a broker-set rollover convention around 2:30 am IST.",
+                "Always check your charting platform's timezone setting. A server clock on GMT+2 or GMT+3 will show a different daily candle than one aligned to IST, which changes what counts as a close above resistance.",
+                "The forex week runs about 120 continuous hours from Monday's Sydney open to Saturday's New York rollover, compared with NSE's currency segment at 40 hours a week."
+              ]
+            },
+            {
+              "_key": "t1-026",
+              "_type": "toolLink",
+              "label": "NSE: Currency Derivatives Segment",
+              "url": "https://www.nseindia.com/",
+              "description": "Check NSE's currency derivatives section for current trading hours, holidays and circulars before relying on any daily close for USD/INR or EUR/INR futures."
+            },
+            {
+              "_key": "t1-027",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not trading advice. Session times shift by about an hour around US and UK daylight saving changes, roughly March and November. The candlestick example is illustrative and not a live or historical quote. Confirm current NSE trading hours and your own broker's timezone settings before making any trading decision."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,197 @@
+{
+  "courseSlug": "advanced-regime-switching-models-for-strategy-allocation",
+  "chapters": [
+    {
+      "title": "Chapter 7: Backtesting Regime-Switching Systems Rigorously",
+      "lessons": [
+        {
+          "title": "In-Sample Overfitting: How Many Regimes Is Too Many?",
+          "slug": "in-sample-overfitting-how-many-regimes-is-too-many",
+          "body": [
+            {
+              "_key": "rswc7l4b01",
+              "_type": "bigIdea",
+              "text": "Chapter 3 taught you to pick the number of regimes using AIC and BIC on a single fit. This lesson asks a harder, more dangerous question: what happens when you also let every hyperparameter vary based on whichever combination produces the best backtested Sharpe ratio?"
+            },
+            {
+              "_key": "rswc7l4b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc7l4b02s1",
+                  "_type": "span",
+                  "text": "Chapter 3's Lesson 5 addressed choosing K on purely statistical grounds, for one fit, using AIC and BIC. That discipline protects against one kind of overfitting. It does nothing at all to protect against a different, larger kind: searching across many combinations of K, refit frequency, self-transition priors, and confirmation windows, then reporting whichever combination happened to produce the best backtested performance on the one historical sample you have.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l4b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc7l4b03s1",
+                  "_type": "span",
+                  "text": "The Multiple Testing Trap: How Many Combinations Is 'A Lot'?",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l4b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc7l4b04s1",
+                  "_type": "span",
+                  "text": "Test K across 4 values, refit frequency across 4 values, self-transition prior across 3 values, and a confirmation window across 3 values, and that is already 4 x 4 x 3 x 3 = 144 pipeline variants, each run against the exact same historical data. Even if none of these 144 variants has any genuine predictive edge whatsoever, basic probability guarantees that some of them will look great purely by chance.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l4b05",
+              "_type": "mathBlock",
+              "latex": "P(\\text{at least one false positive}) = 1 - (1 - \\alpha)^{n}",
+              "caption": "The probability of at least one apparently significant result across n independent trials, each with a false-positive rate alpha"
+            },
+            {
+              "_key": "rswc7l4b06",
+              "_type": "keyFact",
+              "label": "144 combinations, each with a 5% chance of looking significant by pure chance",
+              "value": "~99.94% chance at least one looks significant",
+              "context": "1 - (0.95)^144 ≈ 99.94%. With that many variants tested against one dataset, finding at least one that looks great is close to guaranteed, regardless of whether any of them have real predictive power."
+            },
+            {
+              "_key": "rswc7l4b07",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc7l4b07s1",
+                  "_type": "span",
+                  "text": "Why This Is Worse Than Ordinary In-Sample Overfitting",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l4b08",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc7l4b08s1",
+                  "_type": "span",
+                  "text": "Chapter 3's AIC/BIC discipline protects a single model's statistical fit from chasing noise within its own likelihood. It says nothing about whether the eventual backtested Sharpe ratio, after trying many different pipeline configurations against the same data, is genuine. These are two separate failure modes, and passing the first check gives you no protection against the second. A model can have a perfectly defensible, AIC-and-BIC-chosen number of states and still be the product of a hyperparameter search that quietly overfit every other setting to this one dataset's noise.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l4b09",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc7l4b09s1",
+                  "_type": "span",
+                  "text": "The Fix: A True Out-of-Sample Holdout",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l4b10",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc7l4b10s1",
+                  "_type": "span",
+                  "text": "Reserve a genuinely untouched period, commonly the most recent one to two years, before any hyperparameter search begins. Search, tune, and compare pipeline variants only on the data before that holdout. Once a final configuration is chosen, run it exactly once against the holdout, and treat that single result as the honest estimate of performance, not the best number seen during the search. A large gap between search-period performance and holdout performance is strong evidence that the search overfit the search period's noise rather than finding genuine structure. For a more rigorous version of this same idea, look into combinatorial purged cross-validation, a technique developed specifically for financial time series by Marcos López de Prado, which reduces the leakage that ordinary cross-validation methods introduce when applied naively to sequential market data.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l4b11",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc7l4b11s1",
+                  "_type": "span",
+                  "text": "The Deflated Sharpe Ratio: Adjusting for How Many Tries You Took",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l4b12",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc7l4b12s1",
+                  "_type": "span",
+                  "text": "Bailey and López de Prado's deflated Sharpe ratio formalizes exactly this problem: it takes a reported Sharpe ratio and the number of independent trials that were run to find it, and produces an adjusted estimate of the probability the result reflects genuine skill rather than the best of many noisy draws. This course does not derive the full formula, but the concept is worth carrying forward on its own: any Sharpe ratio reported after a hyperparameter search is only meaningful alongside a record of how many combinations were tried to find it. A Sharpe ratio of 2.0 found on the first and only configuration tested means something very different from the same 2.0 found as the best of 200 configurations tried.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l4b13",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Reporting the single best Sharpe ratio found across a hyperparameter search, without disclosing how many combinations were tried or validating the final choice on an untouched holdout, is one of the most common and most damaging mistakes in systematic trading. It is a close cousin of Lesson 1's look-ahead bias, both let information the pipeline should not have had quietly leak into a reported performance number, but it operates through selection across many variants rather than through time."
+            },
+            {
+              "_key": "rswc7l4b14",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "The Cost of a Smaller Search",
+              "prompt": "If you test 50 independent hyperparameter combinations, each with a 5% chance of appearing significant purely by chance, what is the probability that at least one appears significant? Use P = 1 - (1 - alpha)^n.",
+              "correctValue": 92.3,
+              "tolerance": 0.5,
+              "unit": "%",
+              "explanation": "P = 1 - (0.95)^50 ≈ 1 - 0.0769 ≈ 92.3%. Even a search a fraction the size of the 144-combination example in this lesson still leaves you more likely than not to find at least one falsely 'significant' result by pure chance."
+            },
+            {
+              "_key": "rswc7l4b15",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Reviewing a Reported Backtest",
+              "scenario": "A quant researcher reports: 'Our regime-switching strategy achieves a Sharpe ratio of 1.9 on 2015 to 2023 data.' When asked about methodology, they mention testing several values of K, several refit frequencies, and several confirmation windows, and reporting the best-performing combination. No separate holdout period was mentioned.",
+              "prompt": "What is missing from this report, and what would you ask for before treating the 1.9 Sharpe ratio as credible?",
+              "modelAnswer": "The report is missing exactly the two things this lesson identifies as essential: a disclosed count of how many hyperparameter combinations were tried, and a genuinely untouched holdout period used only once to validate the final choice. Without knowing how many combinations were searched, there is no way to judge whether 1.9 reflects real skill or is simply the best of many noisy draws, the same multiple testing problem this lesson's 144-combination example demonstrated. The right request is for the researcher to report the total number of combinations tested, ideally alongside a deflated Sharpe ratio adjusted for that count, and to show the same strategy's performance on a holdout period that was never touched during the search. If the holdout performance is substantially weaker than 1.9, that is strong evidence the reported number reflects overfitting to the search period rather than a durable edge."
+            },
+            {
+              "_key": "rswc7l4b16",
+              "_type": "keyTakeaways",
+              "points": [
+                "Choosing the number of regimes with AIC and BIC protects against overfitting within a single statistical fit, but says nothing about overfitting a hyperparameter search's backtested performance metric",
+                "Testing many pipeline variants against the same historical data, even with no genuine edge anywhere, makes finding at least one that looks great by pure chance close to guaranteed as the number of combinations grows",
+                "A genuinely untouched out-of-sample holdout, used only once after all tuning is finished, is the minimum discipline needed to catch this kind of overfitting",
+                "The deflated Sharpe ratio adjusts a reported Sharpe ratio for how many independent trials were run to find it, and reporting a Sharpe ratio without that context is an incomplete, potentially misleading result",
+                "Reporting the single best result from a hyperparameter search without a holdout or a trial count is one of the most common mistakes in systematic trading, closely related to but distinct from Lesson 1's look-ahead bias"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

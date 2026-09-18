@@ -1,0 +1,248 @@
+{
+  "courseSlug": "understanding-technical-analysis-applied-to-forex-markets",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Forex Charts Read Differently From Stock Charts",
+      "lessons": [
+        {
+          "title": "Volume Without a Volume: Tick Volume, Liquidity Proxies and What You Can Trust on a Forex Chart",
+          "slug": "volume-without-a-volume-tick-volume-liquidity-proxies-and-what-you-can-trust-on-a-forex-chart",
+          "body": [
+            {
+              "_key": "t2-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "t2-001s1", "_type": "span", "text": "Ananya has traded Nifty stocks for three years. Before buying, she checks the volume bar on screener.in or her broker's chart, because a breakout on heavy volume means real buyers stepped in, and a breakout on thin volume is usually noise. She switches to watching EUR/USD on a global charting app, sees a tall volume bar under a breakout candle, and buys with the same confidence. Three hours later the move has completely reversed. The volume bar was not lying to her exactly, but it was not measuring what she thought it was measuring.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "t2-002",
+              "_type": "bigIdea",
+              "text": "A stock's volume is an exact, exchange-reported count of shares traded. Global spot forex has no central exchange to count trades against, so what most charts label \"volume\" is tick volume, a count of price updates, not currency traded. NSE currency futures are the exception: they carry real, exchange-reported volume and open interest, just like a stock."
+            },
+            {
+              "_key": "t2-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "t2-003s1", "_type": "span", "text": "What Volume Means When It Is Real", "marks": [] }
+              ]
+            },
+            {
+              "_key": "t2-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "t2-004s1", "_type": "span", "text": "When you see 2.3 crore shares traded in Tata Motors on a given day, that number comes from one place, NSE's own order book, and it is exact. Every buy is matched to a sell on the same exchange, so the exchange can simply add up the matched quantity. That is why volume-based tools such as On-Balance Volume, Volume Profile or a simple \"breakout on high volume\" rule work reasonably well on Nifty stocks. The number behind the bar genuinely represents how much stock changed hands.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "t2-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "t2-005s1", "_type": "span", "text": "Why Global Spot Forex Cannot Give You That Number", "marks": [] }
+              ]
+            },
+            {
+              "_key": "t2-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "t2-006m1", "_type": "glossaryTerm", "definition": "Over-the-counter. Trades negotiated directly between two parties, usually banks, rather than matched on a central exchange." },
+                { "_key": "t2-006m2", "_type": "glossaryTerm", "definition": "A count of how many times a price quote changed during a period. Used by most retail forex charts as a stand-in for real traded volume, since no single number for actual currency traded exists." }
+              ],
+              "children": [
+                { "_key": "t2-006s1", "_type": "span", "text": "Global spot EUR/USD is mostly ", "marks": [] },
+                { "_key": "t2-006s2", "_type": "span", "text": "OTC", "marks": ["t2-006m1"] },
+                { "_key": "t2-006s3", "_type": "span", "text": ": dozens of banks and brokers quote prices to their own clients, and no single exchange sees every trade. There is no tape to add up. So when your charting platform shows a volume bar under a EUR/USD candle, it is almost always showing ", "marks": [] },
+                { "_key": "t2-006s4", "_type": "span", "text": "tick volume", "marks": ["t2-006m2"] },
+                { "_key": "t2-006s5", "_type": "span", "text": ", the number of times the price updated in that period, not the amount of currency that changed hands.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "t2-007",
+              "_type": "table",
+              "caption": "Illustrative example: what a tick volume bar actually hides",
+              "headers": ["Scenario", "Ticks in the hour", "What might really be behind it"],
+              "rows": [
+                { "_key": "t2-007r1", "_type": "tableRow", "cells": ["A", "3,200", "Could be $200 million in real trades, or far less, spread across many small quote updates"] },
+                { "_key": "t2-007r2", "_type": "tableRow", "cells": ["B", "3,200", "Could also be a handful of large institutional orders that each moved the price several times"] }
+              ]
+            },
+            {
+              "_key": "t2-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "t2-008s1", "_type": "span", "text": "Both rows show the identical tick volume bar on your chart. The actual size of money behind them could be completely different. That is the core limitation: tick volume tells you how often price moved, which is a reasonable proxy for how active the market was, but it cannot tell you how much currency actually traded, the way a stock's volume figure can.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "t2-009",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "t2-009s1", "label": "Illustrative tick count, Sydney-only window", "value": "~800 per hour", "context": "2:30 am to 5:30 am IST, thinnest liquidity of the day" },
+                { "_key": "t2-009s2", "label": "Illustrative tick count, London-New York overlap", "value": "~4,200 per hour", "context": "5:30 pm to 9:30 pm IST, busiest window of the day" },
+                { "_key": "t2-009s3", "label": "NSE currency futures volume", "value": "Exact, exchange-reported", "context": "Same reliability as stock or index futures volume" }
+              ]
+            },
+            {
+              "_key": "t2-010",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Tick volume is still useful, just not for the reason beginners think. A rising tick count tells you the market is getting more active, which usually lines up with the session overlaps you learned about in the last lesson. Use it to gauge whether a period was busy or quiet, not to measure the true size of a move."
+            },
+            {
+              "_key": "t2-011",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Reading a EUR/USD volume bar correctly",
+              "question": "A tall volume bar appears under a breakout candle on a global EUR/USD chart. What does that bar most reliably tell you?",
+              "options": [
+                "The exact amount of currency, in dollars, that traded during that candle",
+                "The number of times the price quote changed during that candle, a proxy for activity",
+                "The number of retail traders who placed an order in that candle",
+                "Nothing, tick volume should always be ignored"
+              ],
+              "correctIndex": 1,
+              "explanation": "Global spot forex has no central exchange to count actual currency traded, so charting platforms show tick volume, how often the price updated. It is a reasonable activity proxy, but it is not a count of money or shares traded the way stock volume is."
+            },
+            {
+              "_key": "t2-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "t2-012s1", "_type": "span", "text": "The Exception: NSE Currency Futures Have Real Volume", "marks": [] }
+              ]
+            },
+            {
+              "_key": "t2-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "t2-013s1", "_type": "span", "text": "This is genuinely good news if you trade USD/INR, EUR/INR, GBP/INR or JPY/INR futures and options on NSE. These contracts trade on a centralised exchange, exactly like stock and index futures, so NSE reports real traded volume and real open interest for every contract. Volume-based reasoning that works on Nifty futures works the same way here, because the underlying mechanics are identical.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "t2-014",
+              "_type": "keyFact",
+              "label": "What NSE reports for currency futures",
+              "value": "Exact traded volume and open interest, per contract, per day",
+              "context": "This is exchange-verified data, unlike the tick volume shown on most global spot forex charts."
+            },
+            {
+              "_key": "t2-015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "t2-015s1", "_type": "span", "text": "Open interest, the number of contracts still open and not yet closed out, combined with price direction, gives you a genuine read on conviction. The logic is the same one used for Nifty futures:", "marks": [] }
+              ]
+            },
+            {
+              "_key": "t2-016",
+              "_type": "comparison",
+              "title": "Reading price with open interest on USD/INR futures",
+              "columns": [
+                {
+                  "_key": "t2-016c1",
+                  "label": "Price up, open interest up",
+                  "points": [
+                    "Fresh long positions are being built",
+                    "New money is backing the move, generally the strongest signal"
+                  ]
+                },
+                {
+                  "_key": "t2-016c2",
+                  "label": "Price up, open interest down",
+                  "points": [
+                    "Existing short positions are being closed, short covering",
+                    "The rally can run out of steam once covering is done"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "t2-017",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Reading the open interest change",
+              "prompt": "On Monday, NSE's USD/INR October futures close with open interest of 42,000 contracts. By Tuesday's close, price has risen further and open interest is now 47,000 contracts. How many net new contracts were added?",
+              "correctValue": 5000,
+              "tolerance": 0,
+              "unit": "contracts",
+              "explanation": "47,000 minus 42,000 equals 5,000 net new contracts. Combined with rising price, this points to fresh long buildup rather than short covering, since short covering would reduce open interest, not increase it."
+            },
+            {
+              "_key": "t2-018",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Same chart, wrong tool",
+              "scenario": "Vikram has built a trading rule on Nifty stocks: only trust a breakout if it comes with volume at least 1.5 times the 20-day average. He now applies the identical rule, unchanged, to EUR/USD on a global charting platform, using the tick volume bars shown there.",
+              "prompt": "What is wrong with Vikram copying his stock volume rule directly onto EUR/USD's tick volume, and what should he do instead if he wants a similar check on that pair?",
+              "modelAnswer": "1. His Nifty rule assumes volume measures real shares traded, which is true on NSE, but EUR/USD's volume bars are tick counts, a proxy for how often price updated, not for how much currency traded.\n2. A tick volume spike can happen from a burst of small quote updates just as easily as from genuine large orders, so \"1.5 times average tick volume\" does not carry the same meaning as \"1.5 times average share volume.\"\n3. He can still use tick volume directionally, to confirm that a breakout happened during an active period rather than a dead one, which is useful information.\n4. If he specifically wants NSE-grade volume reliability on a currency instrument, he should look at USD/INR or EUR/INR futures on NSE instead of global spot EUR/USD, since those carry real exchange-reported volume and open interest."
+            },
+            {
+              "_key": "t2-019",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Do not carry a volume-based indicator such as On-Balance Volume or Volume Profile from stocks onto global spot forex and treat its output with the same confidence. The underlying input, tick volume, is a rough activity proxy, not a traded-size count, so these indicators should be read as sentiment signals on forex, never as precise institutional footprints."
+            },
+            {
+              "_key": "t2-020",
+              "_type": "callout",
+              "type": "insight",
+              "text": "When you have no reliable volume number at all, the bid-ask spread itself becomes a liquidity signal. Spreads widen when few participants are quoting, typically in the Sydney-only window, and tighten when many are, typically during the London-New York overlap. A widening spread is often your best clue that liquidity, not just price, is thinning out."
+            },
+            {
+              "_key": "t2-021",
+              "_type": "flashcardSet",
+              "title": "Volume and Liquidity: Key Terms",
+              "cards": [
+                { "_key": "t2-021f1", "term": "Real volume", "definition": "An exact, exchange-reported count of units traded, available for stocks and for NSE currency futures, but not for global spot forex." },
+                { "_key": "t2-021f2", "term": "Tick volume", "definition": "A count of how many times a price quote changed during a period. The default \"volume\" shown on most global spot forex charts, used as an activity proxy." },
+                { "_key": "t2-021f3", "term": "Open interest", "definition": "The number of derivative contracts, such as USD/INR futures, that remain open and have not been closed out." },
+                { "_key": "t2-021f4", "term": "Short covering", "definition": "Traders buying back a currency they had sold short, closing their position. Shows up as price rising while open interest falls." },
+                { "_key": "t2-021f5", "term": "Bid-ask spread", "definition": "The gap between the price you can sell at and the price you can buy at. Widens when liquidity is thin and narrows when it is deep." }
+              ]
+            },
+            {
+              "_key": "t2-022",
+              "_type": "keyTakeaways",
+              "points": [
+                "Stock volume and NSE currency futures volume are exact, exchange-reported counts. Global spot forex volume is not real volume at all, it is tick volume, a count of price updates.",
+                "Tick volume is a fair proxy for how active a market was, but it cannot tell you how much currency actually traded, since the same tick count can hide very different amounts of real trading.",
+                "USD/INR, EUR/INR, GBP/INR and JPY/INR futures on NSE carry genuine exchange-reported volume and open interest, so stock-style volume and open interest reasoning applies directly to them.",
+                "Price up with open interest up signals fresh long buildup. Price up with open interest down signals short covering, a weaker basis for a rally.",
+                "Do not carry stock-style volume indicators onto global spot forex charts with the same confidence. Read tick volume directionally, as an activity signal, not as a precise traded-size count.",
+                "When volume data is unreliable, a widening bid-ask spread is a useful alternative signal that liquidity is thinning out."
+              ]
+            },
+            {
+              "_key": "t2-023",
+              "_type": "toolLink",
+              "label": "NSE: Currency Derivatives Market Data",
+              "url": "https://www.nseindia.com/",
+              "description": "Check NSE's currency derivatives section for exact daily volume and open interest on USD/INR, EUR/INR, GBP/INR and JPY/INR futures and options."
+            },
+            {
+              "_key": "t2-024",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not trading advice. Tick volume figures in the statistics grid are illustrative and not live or historical data. Open interest and volume interpretation is a general guide, not a standalone trading signal, and should be combined with price action, risk management and your own analysis before any trade."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

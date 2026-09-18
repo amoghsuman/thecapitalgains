@@ -1,0 +1,243 @@
+{
+  "courseSlug": "understanding-optimization-theory-convex-optimization-and-lagrange-multipliers-for-portfolio-construction",
+  "chapters": [
+    {
+      "title": "Chapter 4: Lagrange Multipliers: Optimization Under Equality Constraints",
+      "lessons": [
+        {
+          "title": "The Lagrangian: Turning a Constrained Problem into an Unconstrained One",
+          "slug": "the-lagrangian-turning-a-constrained-problem-into-an-unconstrained-one",
+          "body": [
+            {
+              "_key": "oc4l1-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc4l1-001s1", "_type": "span", "marks": [], "text": "Two assets solved by substitution. The interviewer's next question has fifty. Substitution means solving the budget constraint for one weight in terms of the other 49, an equation that gets uglier with every additional constraint stacked on top. Chapter 3 closed by promising a better way. This lesson delivers it: the Lagrangian, a single new function that folds the objective and every constraint together, so that ordinary unconstrained calculus, exactly what Chapter 3 already built, solves the constrained problem directly." }
+              ]
+            },
+            {
+              "_key": "oc4l1-002",
+              "_type": "bigIdea",
+              "text": "The Lagrangian combines the objective and every constraint into one new function, with one extra variable per constraint. Solving that new function's ordinary, unconstrained first-order conditions solves the original constrained problem exactly, no substitution required."
+            },
+            {
+              "_key": "oc4l1-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc4l1-003s1", "_type": "span", "marks": [], "text": "Building the Lagrangian" }
+              ]
+            },
+            {
+              "_key": "oc4l1-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "oc4l1-004m1", "_type": "glossaryTerm", "definition": "An extra variable, one per equality constraint, introduced when building a Lagrangian. Its value at the solution turns out to carry a precise economic meaning, covered in a later lesson." }
+              ],
+              "children": [
+                { "_key": "oc4l1-004s1", "_type": "span", "marks": [], "text": "For a problem of the form minimize f(x) subject to g(x) = c, define a new function of x plus one extra variable, lambda, called a " },
+                { "_key": "oc4l1-004s2", "_type": "span", "marks": ["oc4l1-004m1"], "text": "Lagrange multiplier" },
+                { "_key": "oc4l1-004s3", "_type": "span", "marks": [], "text": "." }
+              ]
+            },
+            {
+              "_key": "oc4l1-005",
+              "_type": "mathBlock",
+              "latex": "\\mathcal{L}(\\mathbf{x}, \\lambda) = f(\\mathbf{x}) - \\lambda\\big(g(\\mathbf{x}) - c\\big)",
+              "caption": "The Lagrangian. Objective, minus the multiplier times how far the constraint is from being satisfied."
+            },
+            {
+              "_key": "oc4l1-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc4l1-006s1", "_type": "span", "marks": [], "text": "The First-Order Conditions of the Lagrangian" }
+              ]
+            },
+            {
+              "_key": "oc4l1-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc4l1-007s1", "_type": "span", "marks": [], "text": "Treat the Lagrangian as an ordinary unconstrained function of every original variable plus lambda, and set every partial derivative to zero, exactly the first-order condition method from Chapter 3, just with one more variable added to the list." }
+              ]
+            },
+            {
+              "_key": "oc4l1-008",
+              "_type": "mathBlock",
+              "latex": "\\frac{\\partial \\mathcal{L}}{\\partial x_i} = 0 \\quad \\text{for every } i",
+              "caption": "One equation per original decision variable."
+            },
+            {
+              "_key": "oc4l1-009",
+              "_type": "mathBlock",
+              "latex": "\\frac{\\partial \\mathcal{L}}{\\partial \\lambda} = -\\big(g(\\mathbf{x}) - c\\big) = 0 \\quad \\Longleftrightarrow \\quad g(\\mathbf{x}) = c",
+              "caption": "The equation for lambda always just hands back the original constraint, unchanged."
+            },
+            {
+              "_key": "oc4l1-010",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This is the trick that makes the whole construction work. Differentiating the Lagrangian with respect to lambda can never do anything except reproduce the original constraint, since lambda only ever multiplies that one term. So the full set of first-order conditions, one per xi plus one for lambda, is guaranteed to include the constraint itself as one of its equations. Solve all of them together and you get a point that is both a critical point of the Lagrangian and, automatically, feasible."
+            },
+            {
+              "_key": "oc4l1-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc4l1-011s1", "_type": "span", "marks": [], "text": "Worked Example: The Minimum Variance Problem via the Lagrangian" }
+              ]
+            },
+            {
+              "_key": "oc4l1-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc4l1-012s1", "_type": "span", "marks": [], "text": "Rebuild the exact Reliance-TCS problem from Chapter 3's case study, but this time with the Lagrangian instead of substitution, to check the two methods agree." }
+              ]
+            },
+            {
+              "_key": "oc4l1-013",
+              "_type": "mathBlock",
+              "latex": "\\mathcal{L}(w_1, w_2, \\lambda) = w_1^2\\sigma_1^2 + w_2^2\\sigma_2^2 + 2w_1w_2\\sigma_{12} - \\lambda(w_1 + w_2 - 1)",
+              "caption": "Objective (portfolio variance) minus lambda times (the budget constraint minus 1)."
+            },
+            {
+              "_key": "oc4l1-014",
+              "_type": "mathBlock",
+              "latex": "\\frac{\\partial \\mathcal{L}}{\\partial w_1} = 2w_1\\sigma_1^2 + 2w_2\\sigma_{12} - \\lambda = 0, \\quad \\frac{\\partial \\mathcal{L}}{\\partial w_2} = 2w_2\\sigma_2^2 + 2w_1\\sigma_{12} - \\lambda = 0, \\quad \\frac{\\partial \\mathcal{L}}{\\partial \\lambda} = -(w_1+w_2-1) = 0",
+              "caption": "Three equations, three unknowns: w1, w2, and lambda."
+            },
+            {
+              "_key": "oc4l1-015",
+              "_type": "collapsible",
+              "title": "Show me the algebra",
+              "content": [
+                {
+                  "_key": "oc4l1-015a",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    { "_key": "oc4l1-015as1", "_type": "span", "marks": [], "text": "Both weight equations equal lambda, so set them equal to each other." }
+                  ]
+                },
+                {
+                  "_key": "oc4l1-015b",
+                  "_type": "mathBlock",
+                  "latex": "2w_1\\sigma_1^2 + 2w_2\\sigma_{12} = 2w_2\\sigma_2^2 + 2w_1\\sigma_{12}",
+                  "caption": ""
+                },
+                {
+                  "_key": "oc4l1-015c",
+                  "_type": "mathBlock",
+                  "latex": "w_1(\\sigma_1^2 - \\sigma_{12}) = w_2(\\sigma_2^2 - \\sigma_{12})",
+                  "caption": "Rearranged and divided by 2."
+                },
+                {
+                  "_key": "oc4l1-015d",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    { "_key": "oc4l1-015ds1", "_type": "span", "marks": [], "text": "Substitute w2 = 1 - w1 from the third equation, the constraint itself." }
+                  ]
+                },
+                {
+                  "_key": "oc4l1-015e",
+                  "_type": "mathBlock",
+                  "latex": "w_1(\\sigma_1^2 - \\sigma_{12}) = (1-w_1)(\\sigma_2^2 - \\sigma_{12})",
+                  "caption": ""
+                },
+                {
+                  "_key": "oc4l1-015f",
+                  "_type": "mathBlock",
+                  "latex": "w_1(\\sigma_1^2 + \\sigma_2^2 - 2\\sigma_{12}) = \\sigma_2^2 - \\sigma_{12}",
+                  "caption": "Collecting every w1 term on the left."
+                }
+              ]
+            },
+            {
+              "_key": "oc4l1-016",
+              "_type": "mathBlock",
+              "latex": "w_1^* = \\frac{\\sigma_2^2 - \\sigma_{12}}{\\sigma_1^2 + \\sigma_2^2 - 2\\sigma_{12}} = \\frac{0.0576 - 0.0168}{0.0784 + 0.0576 - 2(0.0168)} = \\frac{0.0408}{0.1024} \\approx 0.3984",
+              "caption": "The exact same formula, and the exact same number, as Chapter 3's substitution-based derivation."
+            },
+            {
+              "_key": "oc4l1-017",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This is not a coincidence. Whenever substitution is possible, the Lagrangian always agrees with it, both methods are solving the same problem correctly. The difference is that the Lagrangian never had to solve the constraint for one variable in terms of the other 48. It treated w1 and w2 completely symmetrically the whole way through. That symmetry is exactly what lets this method scale to 50 stocks, or 5 constraints, without the algebra getting any more conceptually complicated, only longer."
+            },
+            {
+              "_key": "oc4l1-018",
+              "_type": "mathBlock",
+              "latex": "\\lambda = 2w_1^*\\sigma_1^2 + 2w_2^*\\sigma_{12} \\approx 2(0.3984)(0.0784) + 2(0.6016)(0.0168) \\approx 0.0827",
+              "caption": "Lambda's numeric value at the solution, computed from either weight equation. What this number actually represents is the subject of a later lesson in this chapter."
+            },
+            {
+              "_key": "oc4l1-019",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Construct the Lagrangian",
+              "question": "You want to minimize f(x, y) = x² + y² subject to the constraint x + 2y = 10. What is the correctly constructed Lagrangian?",
+              "options": [
+                "L(x, y, λ) = x² + y² - λ(x + 2y - 10)",
+                "L(x, y, λ) = x² + y² + λ(x + 2y)",
+                "L(x, y, λ) = x² + y² - λ(x + 2y + 10)",
+                "L(x, y, λ) = (x² + y²)(x + 2y - 10)"
+              ],
+              "correctIndex": 0,
+              "explanation": "The Lagrangian is the objective minus lambda times (the constraint expression minus its target value): L = f(x, y) - λ(g(x, y) - c). Here g(x, y) = x + 2y and c = 10, so the correct form is x² + y² - λ(x + 2y - 10)."
+            },
+            {
+              "_key": "oc4l1-020",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Solve a Lagrangian from scratch",
+              "scenario": "You have built the Lagrangian for minimizing x² + 3y² subject to x + y = 4: L(x, y, λ) = x² + 3y² - λ(x + y - 4).",
+              "prompt": "Write out all three first-order conditions (with respect to x, y, and λ), then solve them for x, y, and λ.",
+              "modelAnswer": "∂L/∂x = 2x - λ = 0. ∂L/∂y = 6y - λ = 0. ∂L/∂λ = -(x + y - 4) = 0, which recovers the original constraint x + y = 4. From the first two equations, λ = 2x = 6y, so x = 3y. Substituting into the constraint: 3y + y = 4, giving y = 1 and x = 3. Then λ = 2(3) = 6."
+            },
+            {
+              "_key": "oc4l1-021",
+              "_type": "flashcardSet",
+              "title": "The Lagrangian: Core Terms",
+              "cards": [
+                { "_key": "oc4l1-021f1", "term": "Lagrangian", "definition": "A new function, L(x, λ) = f(x) - λ(g(x) - c), combining the objective and a constraint. Its unconstrained first-order conditions solve the original constrained problem." },
+                { "_key": "oc4l1-021f2", "term": "Lagrange multiplier (λ)", "definition": "The extra variable introduced per equality constraint when building the Lagrangian." },
+                { "_key": "oc4l1-021f3", "term": "∂L/∂λ = 0", "definition": "Always reproduces the original constraint exactly. This guarantees any solution to the Lagrangian's first-order conditions is automatically feasible." },
+                { "_key": "oc4l1-021f4", "term": "Stationarity conditions", "definition": "The full set of first-order conditions of the Lagrangian, one per original variable plus one per multiplier, solved simultaneously." }
+              ]
+            },
+            {
+              "_key": "oc4l1-022",
+              "_type": "keyTakeaways",
+              "points": [
+                "The Lagrangian, L(x, λ) = f(x) - λ(g(x) - c), folds a constrained problem into a single unconstrained one by adding one multiplier variable per equality constraint.",
+                "Setting every partial derivative of the Lagrangian to zero, including the derivative with respect to λ, gives a system of equations that always includes the original constraint.",
+                "Applied to the Reliance-TCS minimum variance problem, the Lagrangian reproduces the exact same closed-form answer Chapter 3 found by substitution, confirming both methods solve the same problem correctly.",
+                "Unlike substitution, the Lagrangian never requires solving a constraint for one variable in terms of the others, which is exactly why it scales to any number of variables and constraints.",
+                "The multiplier's numeric value at the solution is not arbitrary; it carries a precise meaning, covered in a later lesson in this chapter."
+              ]
+            },
+            {
+              "_key": "oc4l1-023",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to buy or sell any security named here. Covariance figures used in the worked example are illustrative, not live or historical market data. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

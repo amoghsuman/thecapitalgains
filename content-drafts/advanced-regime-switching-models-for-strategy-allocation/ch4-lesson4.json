@@ -1,0 +1,253 @@
+{
+  "courseSlug": "advanced-regime-switching-models-for-strategy-allocation",
+  "chapters": [
+    {
+      "title": "Chapter 4: Markov Switching Regression Models",
+      "lessons": [
+        {
+          "title": "Case Study: Regime-Switching Volatility in Bank Nifty",
+          "slug": "case-study-regime-switching-volatility-in-bank-nifty",
+          "body": [
+            {
+              "_key": "rswc4l4b01",
+              "_type": "bigIdea",
+              "text": "Bank Nifty runs hotter than Nifty on every axis that matters here: higher volatility, sharper regime transitions, and a sector concentration that makes it exactly the kind of series where regime-switching volatility modeling earns its keep."
+            },
+            {
+              "_key": "rswc4l4b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc4l4b02s1",
+                  "_type": "span",
+                  "text": "Every example so far in this chapter has used Nifty 50. This lesson runs the complete pipeline, from Chapter 2's volatility proxy through Chapter 3's fitting discipline to this chapter's Markov switching autoregression, end to end on Bank Nifty instead, and treats the differences in the results as data, not as noise to explain away.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc4l4b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc4l4b03s1",
+                  "_type": "span",
+                  "text": "Why Bank Nifty Is a Good Test Case",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc4l4b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc4l4b04s1",
+                  "_type": "span",
+                  "text": "Bank Nifty tracks the most liquid, large-cap banking and financial stocks on NSE. Unlike Nifty 50, which spreads exposure across IT, pharma, FMCG, autos, and financials, Bank Nifty is entirely one sector, which means it carries no cross-sector diversification against anything that hits banking specifically: interest rate cycles, RBI policy moves, and credit quality concerns. Bank Nifty options have also long been among the most actively traded index derivatives on NSE, which means real capital is directly exposed to exactly the volatility dynamics this lesson models.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc4l4b05",
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "rswc4l4b05st1",
+                  "label": "Nifty 50, Illustrative Calm-Regime Annualized Vol",
+                  "value": "~12%",
+                  "context": "From Chapter 3's illustrative fit"
+                },
+                {
+                  "_key": "rswc4l4b05st2",
+                  "label": "Bank Nifty, Illustrative Calm-Regime Annualized Vol",
+                  "value": "~18%",
+                  "context": "Meaningfully higher even in its calm state, reflecting sector concentration"
+                },
+                {
+                  "_key": "rswc4l4b05st3",
+                  "label": "Bank Nifty Beta to Nifty 50 (illustrative)",
+                  "value": "~1.2 to 1.4x",
+                  "context": "A rough, commonly cited order of magnitude, not a precise current estimate"
+                }
+              ]
+            },
+            {
+              "_key": "rswc4l4b06",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc4l4b06s1",
+                  "_type": "span",
+                  "text": "Running the Full Pipeline on Bank Nifty",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc4l4b07",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "import numpy as np\nfrom statsmodels.tsa.regime_switching.markov_autoregression import MarkovAutoregression\n\n# banknifty_df built the same way as nifty_df in Chapter 2:\n# daily_return, realized_vol_20d, etc.\nlog_rv_bn = np.log(banknifty_df['realized_vol_20d']).dropna()\n\nms_model_bn = MarkovAutoregression(\n    log_rv_bn,\n    k_regimes=2,\n    order=1,\n    switching_ar=True,\n    switching_variance=True,\n)\n\nms_result_bn = ms_model_bn.fit(search_reps=20)\nprint(ms_result_bn.summary())\nprint(ms_result_bn.expected_durations)",
+              "caption": "The identical Lesson 3 pipeline, applied to Bank Nifty instead of Nifty 50"
+            },
+            {
+              "_key": "rswc4l4b08",
+              "_type": "table",
+              "caption": "Illustrative fitted results, Nifty 50 vs Bank Nifty",
+              "headers": ["Metric", "Nifty 50 (Chapter 3)", "Bank Nifty (This Lesson)"],
+              "rows": [
+                {
+                  "_key": "rswc4l4b08r1",
+                  "_type": "tableRow",
+                  "cells": ["Calm state annualized vol", "~12%", "~18%"]
+                },
+                {
+                  "_key": "rswc4l4b08r2",
+                  "_type": "tableRow",
+                  "cells": ["Stressed state annualized vol", "~35%", "~51%"]
+                },
+                {
+                  "_key": "rswc4l4b08r3",
+                  "_type": "tableRow",
+                  "cells": ["Calm state expected duration", "~33 trading days", "~20 trading days"]
+                },
+                {
+                  "_key": "rswc4l4b08r4",
+                  "_type": "tableRow",
+                  "cells": ["Stressed state expected duration", "~8 trading days", "~10 trading days"]
+                }
+              ]
+            },
+            {
+              "_key": "rswc4l4b09",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "These figures are illustrative, built to be directionally consistent with Bank Nifty's well-known higher volatility relative to Nifty 50, not sourced from an actual fitted run. Fit the pipeline on real data to get real numbers for your own analysis."
+            },
+            {
+              "_key": "rswc4l4b10",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc4l4b10s1",
+                  "_type": "span",
+                  "text": "Two things stand out. Bank Nifty's stressed state is more extreme in level, roughly 51% annualized volatility against Nifty's 35%, consistent with a single-sector index amplifying whatever the broader market experiences. Bank Nifty's calm state is also less stable, an expected duration of about 20 trading days versus Nifty's 33, suggesting banking-sector calm is more fragile and more easily disrupted, plausibly because a single rate decision, a single large bank's results, or a single credit event can end it.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc4l4b11",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc4l4b11s1",
+                  "_type": "span",
+                  "text": "Where the Case Study Confirms the Theory, and Where It Doesn't",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc4l4b12",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc4l4b12s1",
+                  "_type": "span",
+                  "text": "A well-fit Bank Nifty model should decode as Stressed during the same broad market episodes from Chapter 1, 2020 and the 2022 rate-hike cycle, since both hit banking directly through credit stress and net interest margin pressure respectively. That much the theory predicts and a validation check, exactly as in Chapter 3's Lesson 4, should confirm.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc4l4b13",
+              "_type": "callout",
+              "type": "warning",
+              "text": "What the theory does not predict, and what a 2 or 3-state HMM cannot distinguish, is a genuinely idiosyncratic, single-bank event: one institution's specific governance failure, license issue, or credit event moving the entire index in a way that has nothing to do with the broader market regime. A sector-concentrated index carries this risk by construction, and a regime model trained on price and volatility data alone will label a sharp, single-name-driven move as 'Stressed' using the same statistical machinery as a genuine market-wide panic, even though the underlying cause and its implications for the rest of the market are completely different."
+            },
+            {
+              "_key": "rswc4l4b14",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc4l4b14s1",
+                  "_type": "span",
+                  "text": "What This Means for Regime-Aware Strategy Design",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc4l4b15",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc4l4b15s1",
+                  "_type": "span",
+                  "text": "Because Bank Nifty options are so heavily traded, this difference has an immediate, practical use. A strangle-selling strategy on Bank Nifty that sizes its positions off Nifty-wide volatility alone will systematically undersize its risk, since Bank Nifty's own stressed state runs meaningfully hotter and its calm state is shorter-lived than Nifty's. Chapter 5 builds exactly this kind of regime-conditional strategy logic properly, starting from the observation this lesson has just demonstrated: the same modeling pipeline, applied to two different Indian indices, can produce meaningfully different regime behavior that a one-size-fits-all volatility assumption would miss entirely.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc4l4b16",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Sizing a Bank Nifty Strangle Using the Right Volatility",
+              "scenario": "A trader sizes their Bank Nifty short-strangle positions using Nifty 50's fitted stressed-state volatility, about 35% annualized, as their risk assumption, reasoning that 'volatility is volatility' and it saves maintaining a second model.",
+              "prompt": "Using this lesson's fitted comparison, what is wrong with this shortcut, and what could go wrong if Bank Nifty enters its own stressed regime while Nifty looks comparatively calm?",
+              "modelAnswer": "The shortcut ignores that Bank Nifty's stressed-state volatility, around 51% annualized in this lesson's illustrative fit, runs well above Nifty's 35%, and that Bank Nifty's stressed regime can be triggered by banking-specific events, a rate decision, a large bank's results, a credit event, that may not move Nifty by nearly as much. If Bank Nifty enters its own stressed regime while the trader is still sizing risk off Nifty's more modest stressed-state number, the strangle is undersized for the volatility it is actually exposed to, and losses on a sharp Bank Nifty move could be considerably larger than the risk budget assumed. The correct approach is to fit and monitor Bank Nifty's own regime model directly, exactly as this lesson does, rather than borrowing a volatility assumption from a different, more diversified index."
+            },
+            {
+              "_key": "rswc4l4b17",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "The Limitation This Case Study Exposes",
+              "question": "What is the key limitation a 2 or 3-state HMM has when applied to a sector-concentrated index like Bank Nifty, compared to a broad market index like Nifty 50?",
+              "options": [
+                "It cannot be fitted on sector indices at all",
+                "It cannot distinguish a genuinely idiosyncratic, single-institution event from a broad, market-wide stress regime; both can decode as 'Stressed' using the same statistical signature",
+                "It always overestimates Bank Nifty's volatility relative to Nifty's",
+                "It requires a different Python library entirely for sector indices"
+              ],
+              "correctIndex": 1,
+              "explanation": "The model only sees returns and volatility; it has no way to know whether a spike came from a systemic, market-wide shock or from one bank's specific problem. Both can produce the same statistical signature and decode identically as 'Stressed,' even though their implications for the rest of the market, and for how long the elevated volatility should be expected to last, can be very different."
+            },
+            {
+              "_key": "rswc4l4b18",
+              "_type": "keyTakeaways",
+              "points": [
+                "Bank Nifty's sector concentration in banking and financials means it carries higher volatility and less diversification than Nifty 50 across both calm and stressed regimes",
+                "Applying the identical fitting pipeline to Bank Nifty instead of Nifty 50 in this lesson's illustrative comparison produces a hotter stressed state (~51% vs ~35% annualized vol) and a shorter-lived calm state (~20 vs ~33 expected trading days)",
+                "A sector-concentrated index's regime model cannot distinguish a genuine market-wide panic from an idiosyncratic, single-institution event; both can decode identically as 'Stressed'",
+                "Sizing a Bank Nifty strategy's risk using a Nifty-wide volatility assumption risks systematic undersizing, since Bank Nifty's own stressed regime runs meaningfully hotter",
+                "The right approach is to fit and monitor each traded index's own regime model directly, not to assume regime behavior transfers cleanly from a more diversified index"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

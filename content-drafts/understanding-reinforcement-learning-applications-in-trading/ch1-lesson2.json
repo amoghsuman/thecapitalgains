@@ -1,0 +1,362 @@
+{
+  "courseSlug": "understanding-reinforcement-learning-applications-in-trading",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Reinforcement Learning for Trading",
+      "lessons": [
+        {
+          "title": "States, Actions, and Rewards: Framing a Trading Strategy as an RL Agent",
+          "slug": "states-actions-and-rewards-framing-a-trading-strategy-as-an-rl-agent",
+          "body": [
+            {
+              "_key": "rl1l2b01",
+              "_type": "bigIdea",
+              "text": "Every RL trading project lives or dies on three design choices made before any training run: what the agent sees, what it is allowed to do, and what it is rewarded for. Get these wrong and no amount of clever algorithm selection will save the result."
+            },
+            {
+              "_key": "rl1l2b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl1l2b02s1", "_type": "span", "text": "From Vocabulary to a Working Example", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl1l2b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl1l2b03s1",
+                  "_type": "span",
+                  "text": "The previous lesson introduced state, action, and reward as informal ideas mapped onto a trader's own vocabulary. This lesson makes them concrete, by building two worked examples: a Nifty 50 futures momentum strategy and a Bank Nifty options-selling strategy. Neither is meant to be traded as-is. Both are meant to show exactly what goes into framing a real strategy as an RL problem, and where careless framing quietly creates a broken agent.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl1l2b04",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl1l2b04s1", "_type": "span", "text": "State: What the Agent Actually Sees", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl1l2b05",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl1l2b05s1",
+                  "_type": "span",
+                  "text": "Start with raw price data, five sessions of a hypothetical Nifty 50 futures contract, rebased to 100 so the pattern reads clearly regardless of the index's actual level.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl1l2b06",
+              "_type": "candlestickChart",
+              "title": "Illustrative Nifty 50 Futures, 5 Sessions (Synthetic, Rebased to 100)",
+              "data": [
+                { "_key": "rl1l2b06d1", "date": "Day 1", "open": 100.0, "high": 101.2, "low": 99.5, "close": 101.0 },
+                { "_key": "rl1l2b06d2", "date": "Day 2", "open": 101.0, "high": 102.5, "low": 100.8, "close": 102.2 },
+                { "_key": "rl1l2b06d3", "date": "Day 3", "open": 102.2, "high": 103.4, "low": 101.9, "close": 102.0 },
+                { "_key": "rl1l2b06d4", "date": "Day 4", "open": 102.0, "high": 102.6, "low": 100.9, "close": 101.3 },
+                { "_key": "rl1l2b06d5", "date": "Day 5", "open": 101.3, "high": 102.0, "low": 100.5, "close": 101.8 }
+              ]
+            },
+            {
+              "_key": "rl1l2b07",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl1l2b07s1",
+                  "_type": "span",
+                  "text": "Feeding those five raw closing prices into the agent as-is would be a mistake, and it is worth understanding why before moving on. Raw price levels are not stationary: a state built from absolute values learned around one price level does not generalize once the index has moved meaningfully higher or lower over the years the strategy trades. The fix is to convert price action into features that stay meaningful regardless of the level Nifty happens to be trading at: percentage returns over a window, a momentum oscillator like RSI, a volume anomaly measure, and a market-wide volatility read such as India VIX. Position and unrealized P&L round out the picture, since an agent deciding what to do next needs to know what it is already holding.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl1l2b08",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "state = {\n    \"return_5d\": 0.018,       # 5-session price momentum\n    \"rsi_14\": 58.0,           # momentum oscillator, 0-100\n    \"volume_zscore\": 0.4,     # today's volume vs its recent average\n    \"india_vix\": 13.4,        # market-wide volatility regime\n    \"position_lots\": 0,       # current inventory: negative = short, positive = long\n    \"unrealized_pnl\": 0.0,    # mark-to-market P&L on the open position, in INR\n}",
+              "caption": "A minimal state vector for a Nifty 50 futures agent, built from the candles above. Real systems add many more features, but every one of them answers the same question: what does the agent need to know right now to act well?"
+            },
+            {
+              "_key": "rl1l2b09",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "rl1l2b09st1", "label": "5-Session Price Momentum", "value": "+1.8%", "context": "Rebased close vs 5 sessions ago" },
+                { "_key": "rl1l2b09st2", "label": "India VIX (Volatility State)", "value": "13.4", "context": "A relatively low-volatility regime" },
+                { "_key": "rl1l2b09st3", "label": "Current Position (Inventory)", "value": "0 lots", "context": "Agent is flat heading into today's decision" },
+                { "_key": "rl1l2b09st4", "label": "Unrealized P&L", "value": "₹0", "context": "No open exposure yet this episode" }
+              ]
+            },
+            {
+              "_key": "rl1l2b10",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl1l2b10s1", "_type": "span", "text": "Action: Discrete Choices vs Continuous Position Sizing", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl1l2b11",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl1l2b11s1",
+                  "_type": "span",
+                  "text": "Given that state, what can the agent actually do? The simplest design is a discrete action space: buy, sell, or hold. It maps naturally to how most retail traders already think, and it keeps every downstream algorithm choice simpler. The alternative is a continuous action space, where the agent outputs a position size, say anywhere from -100% to +100% of allocated capital, letting it express a 90%-confident signal differently from a 51%-confident one instead of collapsing both into the same flat buy.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl1l2b12",
+              "_type": "table",
+              "caption": "Discrete vs Continuous Action Spaces for a Trading Agent",
+              "headers": ["", "Discrete Action Space", "Continuous Action Space"],
+              "rows": [
+                { "_key": "rl1l2b12r1", "_type": "tableRow", "cells": ["Example actions", "Buy, Sell, Hold (3 choices)", "Position size from -100% to +100% of allocated capital"] },
+                { "_key": "rl1l2b12r2", "_type": "tableRow", "cells": ["Typical algorithms", "Q-learning, DQN", "DDPG, PPO, SAC"] },
+                { "_key": "rl1l2b12r3", "_type": "tableRow", "cells": ["Easier to", "Interpret and audit; matches how most traders already think", "Express conviction as size, rather than an all-or-nothing flip"] },
+                { "_key": "rl1l2b12r4", "_type": "tableRow", "cells": ["Harder to", "Size conviction; a barely-confident signal gets the same action as a highly confident one", "Train reliably; a larger search space creates more ways to overfit"] }
+              ]
+            },
+            {
+              "_key": "rl1l2b13",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl1l2b13s1", "_type": "span", "text": "Reward: The Design Choice That Decides Everything", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl1l2b14",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl1l2b14s1",
+                  "_type": "span",
+                  "text": "Reward is the one design choice this course keeps returning to, because it is also the easiest one to get quietly wrong. The obvious first attempt is to reward the agent with the change in mark-to-market P&L at each step and penalize it for nothing else. That reward function does exactly what it was asked to do: maximize P&L, by any means available. An agent trained on raw P&L alone has no built-in reason to avoid a strategy that wins small and often, then occasionally takes a large loss, as long as the average reward across training still comes out positive. That is precisely the shape of return distribution that has hurt a lot of real option sellers.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl1l2b15",
+              "_type": "keyFact",
+              "label": "Retail F&O Traders Who Lost Money, FY22",
+              "value": "Roughly 9 out of 10",
+              "context": "SEBI's January 2023 study of individual traders in the equity derivatives segment found average losses running into six figures in rupee terms for the loss-making majority, over the period studied."
+            },
+            {
+              "_key": "rl1l2b16",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl1l2b16s1",
+                  "_type": "span",
+                  "text": "Selling options for premium, without sizing adequately for the tail, produces exactly that return shape: frequent small wins from time decay, and occasional large losses when volatility spikes against the position. An RL agent trained purely to maximize average P&L can converge on the same behavior an overconfident premium seller falls into, because nothing in a raw P&L reward distinguishes a steady small win from a return stream that is one bad week away from giving back months of gains. Chapter 3 spends a full lesson on reward functions that penalize drawdown and variance directly, specifically because of this failure mode.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl1l2b17",
+              "_type": "callout",
+              "type": "warning",
+              "text": "A reward function is not a detail to fill in after the real modeling work is done. It has more power over what the agent actually learns to do than the choice of algorithm, network size, or training duration. Design it last in your coding workflow if you must, but think about it first."
+            },
+            {
+              "_key": "rl1l2b18",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl1l2b18s1", "_type": "span", "text": "A Second Example: Framing an Options-Selling Strategy", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl1l2b19",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl1l2b19s1",
+                  "_type": "span",
+                  "text": "Take a different example: a trader running a Bank Nifty short strangle, selling both a call and a put away from current spot to collect premium and profit if Bank Nifty stays within a range through expiry. Framing this as an RL problem uses the same three pieces, state, action, reward, but the specifics look nothing like the futures example above.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl1l2b20",
+              "_type": "payoffDiagram",
+              "instrumentType": "put",
+              "position": "short",
+              "strikePrice": 51000,
+              "premium": 250,
+              "spotPriceRange": { "min": 49000, "max": 53000 },
+              "caption": "One leg of an illustrative Bank Nifty short strangle: a short put sold for a premium of ₹250, strike below current spot. The full strangle adds a short call above spot; a single leg is shown here to keep the payoff readable."
+            },
+            {
+              "_key": "rl1l2b21",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl1l2b21s1",
+                  "_type": "span",
+                  "text": "State here would include implied volatility and where it sits relative to its own recent range, days to expiry, the position's current delta exposure, and how far spot has drifted from the strikes sold. Action might stay discrete: hold, roll the threatened side to a further strike, or close early. Reward is still built from P&L, but a naive version, premium collected minus any loss realized at expiry, again rewards exactly the behavior that has hurt so many retail option sellers: sell more premium, closer to spot, more often, because it raises expected reward right up until a volatility spike makes the tail loss land.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl1l2b22",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl1l2b22s1", "_type": "span", "text": "Episodes and the Credit Assignment Problem", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl1l2b23",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "rl1l2m01",
+                  "_type": "glossaryTerm",
+                  "definition": "A complete sequence of states, actions, and rewards from a defined start to a defined end, after which the environment resets. Trading has no natural episode boundary the way a chess game does, so the boundary has to be chosen deliberately: a single trading day, a fixed holding horizon, or something else entirely."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "rl1l2b23s1",
+                  "_type": "span",
+                  "text": "One more piece of framing matters before Chapter 2 formalizes all of this: what counts as an ",
+                  "marks": []
+                },
+                { "_key": "rl1l2b23s2", "_type": "span", "text": "episode", "marks": ["rl1l2m01"] },
+                {
+                  "_key": "rl1l2b23s3",
+                  "_type": "span",
+                  "text": ". In chess, an episode is unambiguous: one game, start to checkmate. In trading, there is no natural finish line unless one is imposed, most commonly a single trading day for an intraday strategy required to square off before close under MIS margin rules, or a fixed holding horizon of N sessions for a positional strategy run under NRML margin. How an episode is defined determines what the agent is even trying to optimize; get it wrong and you can train an agent that manages risk for a horizon it will never actually be given in production.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl1l2b24",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "rl1l2m02",
+                  "_type": "glossaryTerm",
+                  "definition": "The difficulty of working out which of several past actions is actually responsible for a reward received later, when effects are delayed. A position opened on Monday and closed profitably on Thursday makes it hard to say how much credit belongs to Monday's entry versus decisions made on Tuesday and Wednesday."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "rl1l2b24s1",
+                  "_type": "span",
+                  "text": "A second problem worth naming here is the ",
+                  "marks": []
+                },
+                { "_key": "rl1l2b24s2", "_type": "span", "text": "credit assignment problem", "marks": ["rl1l2m02"] },
+                {
+                  "_key": "rl1l2b24s3",
+                  "_type": "span",
+                  "text": ". A position opened on Monday and closed profitably on Thursday raises a real question: was Monday's entry the good decision, or was it a mediocre entry rescued by a market that happened to move favorably on Wednesday? A human trader can rationalize an answer after the fact. An RL agent has to resolve this mathematically, through the discounting and value estimation machinery Chapter 2 introduces, in order to reinforce the specific decisions that actually deserve it.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl1l2b25",
+              "_type": "collapsible",
+              "title": "A Quick Preview: Episodic vs Continuing Tasks",
+              "content": [
+                {
+                  "_key": "rl1l2b25c1",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "rl1l2b25c1s1",
+                      "_type": "span",
+                      "text": "Formally, RL problems are either episodic, with a defined end after which the environment resets, like the single-trading-day framing above, or continuing, running indefinitely with no natural reset, with future rewards shrunk by a discount factor the further out they sit. Most trading formulations in this course use an episodic setup for tractability, one trading day or one fixed holding window per episode, since it keeps training and evaluation easier to reason about. Chapter 2's lesson on value functions and the discount factor picks this up in full.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "rl1l2b26",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Choosing a State Representation",
+              "scenario": "You are framing a Nifty 50 intraday momentum strategy as an RL problem. A colleague suggests including the exact closing prices of the last 30 sessions, in rupees, as thirty separate state features.",
+              "prompt": "Is this a good state design? What would you change, and why?",
+              "modelAnswer": "Raw closing prices in rupees are a poor state design for two connected reasons. First, they are not stationary: a state built from absolute price levels learned around one price level does not generalize once the index has moved meaningfully higher or lower over the years, since the agent has never seen those raw values before. Second, absolute price alone throws away exactly what a momentum strategy needs, which is the relative pattern of movement, not the level itself. A better design converts the raw prices into features that stay meaningful across price levels and time: returns or percentage changes over various windows, a normalized momentum oscillator like RSI, and volatility measures such as rolling return standard deviation or India VIX, none of which depend on what absolute level Nifty happens to be trading at."
+            },
+            {
+              "_key": "rl1l2b27",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Naive vs Risk-Aware Reward",
+              "question": "An RL agent for a Bank Nifty options-selling strategy is trained with a reward equal to premium collected minus any realized loss at expiry, with no other penalty. Based on this lesson, what is the most likely behavior this reward function encourages?",
+              "options": [
+                "The agent learns to sell fewer options and hold more cash, since cash has zero variance",
+                "The agent learns to sell options closer to spot and more frequently, since this maximizes expected reward with no penalty for tail risk",
+                "The agent automatically learns to hedge its tail risk, since the reward function already includes realized losses",
+                "The reward function has no effect on strategy behavior, only on training speed"
+              ],
+              "correctIndex": 1,
+              "explanation": "A reward built only from realized P&L, with no explicit penalty for variance, drawdown, or tail exposure, pushes the agent toward exactly the behavior that has hurt many real premium sellers: sell more, closer to spot, more often, because doing so raises expected reward right up until a volatility spike realizes a large loss. The reward already includes losses when they happen, but only after the fact; it does nothing to discourage the agent from taking on tail risk in the first place. That is precisely why Chapter 3 dedicates a full lesson to reward functions that price in risk directly, rather than relying on realized outcomes alone."
+            },
+            {
+              "_key": "rl1l2b28",
+              "_type": "keyTakeaways",
+              "points": [
+                "A state vector should be built from relative, stationary features (returns, oscillators like RSI, volatility measures) rather than absolute price levels, so it generalizes across time",
+                "Action spaces can be discrete (buy, sell, hold) or continuous (position size as a percentage of capital); discrete is easier to audit, continuous can express conviction but is harder to train reliably",
+                "A naive reward built purely from realized P&L rewards exactly the frequent-small-win, occasional-large-loss shape that has hurt many real retail F&O sellers, per SEBI's own data on the segment",
+                "Reward design deserves at least as much attention as the choice of algorithm, since it defines what 'good' even means to the agent",
+                "An episode needs a deliberately chosen boundary in trading, such as one trading day for an intraday strategy or a fixed holding horizon for a positional one, since markets offer no natural stopping point the way a game does",
+                "The credit assignment problem, working out which past action actually earned a later reward, is a real modeling challenge whenever positions are held across multiple sessions"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

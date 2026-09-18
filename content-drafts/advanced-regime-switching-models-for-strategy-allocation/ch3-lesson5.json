@@ -1,0 +1,280 @@
+{
+  "courseSlug": "advanced-regime-switching-models-for-strategy-allocation",
+  "chapters": [
+    {
+      "title": "Chapter 3: Hidden Markov Models for Regime Identification",
+      "lessons": [
+        {
+          "title": "Choosing the Number of Regimes: AIC, BIC, and Economic Sense",
+          "slug": "choosing-the-number-of-regimes-aic-bic-and-economic-sense",
+          "body": [
+            {
+              "_key": "rswc3l5b01",
+              "_type": "bigIdea",
+              "text": "More states always fit the training data better. That is not the same as more states being right, and the gap between those two ideas is where this lesson lives."
+            },
+            {
+              "_key": "rswc3l5b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc3l5b02s1",
+                  "_type": "span",
+                  "text": "Every model fitted so far in this chapter used 2 or 3 states, chosen purely for illustration. This lesson formalizes that choice, and closes Chapter 3 by returning to the same discipline the whole chapter has been building toward: replace a number picked by hand with one justified by a defensible procedure.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc3l5b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc3l5b03s1",
+                  "_type": "span",
+                  "text": "Why You Can't Just Pick the K With the Best Likelihood",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc3l5b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc3l5b04s1",
+                  "_type": "span",
+                  "text": "model.score() reports the fitted model's log-likelihood, and adding another state can never make that number worse. More states means more free parameters, which means more flexibility to bend the model around whatever is in the training data, including pure noise. This is the exact same overfitting problem as adding more predictors to a regression: R-squared never falls when you add a variable, useful or not. Raw likelihood alone will always vote for more states, right up to the point of nonsense.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc3l5b05",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc3l5b05s1",
+                  "_type": "span",
+                  "text": "AIC and BIC: Penalizing Complexity",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc3l5b06",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc3l5b06s1",
+                  "_type": "span",
+                  "text": "The standard fix is to score each candidate K on likelihood minus a complexity penalty, not on likelihood alone. Two widely used criteria do this differently.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc3l5b07",
+              "_type": "mathBlock",
+              "latex": "\\text{AIC} = 2k - 2\\ln(L)",
+              "caption": "Akaike Information Criterion: penalizes each free parameter by a flat 2"
+            },
+            {
+              "_key": "rswc3l5b08",
+              "_type": "mathBlock",
+              "latex": "\\text{BIC} = k\\ln(n) - 2\\ln(L)",
+              "caption": "Bayesian Information Criterion: penalizes each free parameter by ln(n), which grows with sample size"
+            },
+            {
+              "_key": "rswc3l5b09",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc3l5b09s1",
+                  "_type": "span",
+                  "text": "Lower is better for both. L is the fitted model's likelihood, n is the number of observations, and k is the number of free parameters, which grows with K roughly as follows for a Gaussian HMM with diagonal covariance over d observed features.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc3l5b10",
+              "_type": "mathBlock",
+              "latex": "k \\approx K^2 + 2Kd - 1",
+              "caption": "Approximate parameter count: the transition matrix, per-state means and variances, and the initial distribution (exact accounting can vary slightly by convention)"
+            },
+            {
+              "_key": "rswc3l5b11",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "def hmm_aic_bic(model, X):\n    log_likelihood = model.score(X)\n    n_params = model.n_components ** 2 + 2 * model.n_components * X.shape[1] - 1\n    n_obs = X.shape[0]\n\n    aic = 2 * n_params - 2 * log_likelihood\n    bic = n_params * np.log(n_obs) - 2 * log_likelihood\n    return aic, bic",
+              "caption": "Computing AIC and BIC for a fitted hmmlearn model"
+            },
+            {
+              "_key": "rswc3l5b12",
+              "_type": "table",
+              "caption": "Illustrative AIC and BIC across candidate values of K, n = 1000 observations",
+              "headers": ["K", "Log-Likelihood", "AIC", "BIC"],
+              "rows": [
+                {
+                  "_key": "rswc3l5b12r1",
+                  "_type": "tableRow",
+                  "cells": ["2", "-2100", "4214", "4248"]
+                },
+                {
+                  "_key": "rswc3l5b12r2",
+                  "_type": "tableRow",
+                  "cells": ["3", "-2040", "4108", "4177"]
+                },
+                {
+                  "_key": "rswc3l5b12r3",
+                  "_type": "tableRow",
+                  "cells": ["4", "-2010", "4066", "4179"]
+                },
+                {
+                  "_key": "rswc3l5b12r4",
+                  "_type": "tableRow",
+                  "cells": ["5", "-2000", "4068", "4235"]
+                },
+                {
+                  "_key": "rswc3l5b12r5",
+                  "_type": "tableRow",
+                  "cells": ["6", "-1996", "4086", "4317"]
+                }
+              ]
+            },
+            {
+              "_key": "rswc3l5b13",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This table is illustrative, built to show realistic shapes, log-likelihood improving with diminishing returns as K rises, not sourced from an actual fit. Run the code above on your own data to get real numbers."
+            },
+            {
+              "_key": "rswc3l5b14",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc3l5b14s1",
+                  "_type": "span",
+                  "text": "Notice that log-likelihood improves at every step from K=2 to K=6, exactly as the earlier warning predicted. AIC bottoms out at K=4 (4066) before rising again. BIC bottoms out at K=3 (4177), lower even than K=4's BIC of 4179. The two criteria disagree, and that is completely normal, not a sign either one is broken.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc3l5b15",
+              "_type": "callout",
+              "type": "insight",
+              "text": "BIC's penalty, k × ln(n), grows with sample size; AIC's penalty, a flat 2k, does not. With n = 1000, ln(1000) ≈ 6.91, so BIC charges roughly 6.9 points per parameter against AIC's flat 2. That is exactly why BIC prefers the smaller model here. In practice, with years of daily market data behind most HMM fits, n is usually large enough that BIC's extra caution is the more defensible default, which is why most published work on regime-switching models leans on BIC over AIC for choosing K."
+            },
+            {
+              "_key": "rswc3l5b16",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc3l5b16s1",
+                  "_type": "span",
+                  "text": "Economic Sense: The Check No Information Criterion Can Replace",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc3l5b17",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc3l5b17s1",
+                  "_type": "span",
+                  "text": "AIC and BIC are purely statistical. Neither one knows or cares whether the resulting states are economically distinct, whether they persist for a sensible number of days, or whether they line up with anything you already understand from Chapter 1. A model can post the best BIC in your table and still produce two states with nearly identical emission means and standard deviations that the decoder flips between constantly with no connection to any real event, effectively splitting one true regime into two statistical near-twins.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc3l5b18",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc3l5b18s1",
+                  "_type": "span",
+                  "text": "When that happens, the right move is to collapse those two states into one, even if the information criterion narrowly preferred keeping them separate. Statistical criteria propose a shortlist of reasonable K values. The final choice within that shortlist belongs to the same validation habit from the previous lesson: does each fitted state mean something you can name, defend, and act on.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc3l5b19",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "When BIC and Economic Sense Disagree",
+              "scenario": "BIC selects a 5-state model for a Nifty HMM. After sorting and labeling the states by volatility, you notice State 3 and State 4 have almost identical fitted means (both near 0.00%) and standard deviations (1.28% versus 1.31%), and the decoder switches between them dozens of times over the sample with no discernible pattern tied to any known market event.",
+              "prompt": "Should you keep the 5-state model because BIC selected it, or take a different action? What would you check before deciding?",
+              "modelAnswer": "BIC selecting 5 states is evidence the extra state improves the statistical fit, not proof it represents a distinct, economically meaningful regime. Two states with nearly identical means and standard deviations, switching back and forth without tracking any real event, is a strong sign the model is splitting one true regime into two indistinguishable statistical variants. Before deciding, check whether collapsing the two states to one noticeably worsens BIC, a small worsening is an acceptable price for a more interpretable model, check whether the switches between them correspond to anything in the correlation or drawdown signals from Chapters 1 and 2, and rerun the March 2020 and 2021 validation checks from the previous lesson on the collapsed model. If nothing economically distinguishes the two states, use 4 states, even though BIC narrowly preferred 5."
+            },
+            {
+              "_key": "rswc3l5b20",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why AIC and BIC Disagreed",
+              "question": "In this lesson's table, AIC is minimized at K=4 (4066) while BIC is minimized at K=3 (4177). What is the most accurate explanation for the disagreement?",
+              "options": [
+                "One of the two calculations must contain an arithmetic error",
+                "BIC's penalty grows with sample size, ln(n) per parameter, while AIC's penalty is a flat 2 per parameter, so BIC tends to favor fewer states than AIC, especially with large samples",
+                "AIC is only valid for 2-state models and should be disregarded here",
+                "The disagreement means neither criterion should be trusted, and K should be chosen by eye instead"
+              ],
+              "correctIndex": 1,
+              "explanation": "With n = 1000, BIC's penalty per parameter is ln(1000) ≈ 6.91, versus AIC's flat 2. That heavier, sample-size-dependent penalty is exactly why BIC favors the more parsimonious K=3 model here while AIC still finds K=4 worth the extra parameters."
+            },
+            {
+              "_key": "rswc3l5b21",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc3l5b21s1",
+                  "_type": "span",
+                  "text": "That closes Chapter 3. You can now define an HMM precisely, fit one on real Nifty data with a defensible number of states, decode its full regime history, and validate the result against what you already know. Chapter 4 shifts from identifying the regime to letting it drive a model's parameters directly, starting with Markov switching regression for volatility.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc3l5b22",
+              "_type": "keyTakeaways",
+              "points": [
+                "Raw log-likelihood always improves as you add more states, so it cannot be used alone to choose K; this is the same overfitting problem as adding predictors to a regression",
+                "AIC and BIC both score models on likelihood minus a complexity penalty; AIC penalizes each parameter by a flat 2, BIC by ln(n), which grows with sample size",
+                "AIC and BIC can genuinely disagree on the best K, and that disagreement is expected, not a sign of a broken calculation",
+                "With the large sample sizes typical of daily market data, BIC's heavier, size-aware penalty makes it the more common default for choosing the number of regimes",
+                "Statistical criteria only shortlist reasonable values of K; the final check is whether each fitted state is economically distinct, persistent, and interpretable, and states that fail that check should be collapsed even if an information criterion preferred keeping them"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

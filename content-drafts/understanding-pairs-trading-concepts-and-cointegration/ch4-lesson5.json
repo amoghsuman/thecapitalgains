@@ -1,0 +1,242 @@
+{
+  "courseSlug": "understanding-pairs-trading-concepts-and-cointegration",
+  "chapters": [
+    {
+      "title": "Chapter 4: Screening, Trading, and Managing a Pair",
+      "lessons": [
+        {
+          "title": "Case Study: A Full Pairs Trade Walkthrough From Screening to Exit",
+          "slug": "case-study-a-full-pairs-trade-walkthrough-from-screening-to-exit",
+          "body": [
+            {
+              "_key": "p18-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p18-001s1", "_type": "span", "marks": [], "text": "This lesson runs the entire course, start to finish, as one trade. Chapter 1 sized HDFC Bank and ICICI Bank on intuition and a naive hedge ratio, deliberately unfinished. Chapter 3 finally tested the pair formally and confirmed it. Chapter 4 has screened it against alternatives, sized it properly, and priced in the real costs of trading it. This case study puts every one of those pieces together, in order, exactly as a systematizing trader actually would." }
+              ]
+            },
+            {
+              "_key": "p18-002",
+              "_type": "bigIdea",
+              "text": "A real pairs trade is a sequence, not a single decision: screen a sensible universe, validate the survivors on fresh data, size the position using the validated hedge ratio and real lot constraints, trigger the entry only on a pre-committed z-score rule, monitor with both a mechanical stop-loss and rolling retesting, and account for costs honestly at the end. Skipping any one step is how a statistically sound idea turns into a losing trade."
+            },
+            {
+              "_key": "p18-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p18-003s1", "_type": "span", "marks": [], "text": "Screening and Validation" }
+              ]
+            },
+            {
+              "_key": "p18-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p18-004s1", "_type": "span", "marks": [], "text": "The Nifty Bank screen from Chapter 4, Lesson 1 tested 66 economically sensible pairs and shortlisted three: HDFC Bank / ICICI Bank, correlation 0.70, Engle-Granger t-statistic negative 3.85, p-value 0.021; Axis Bank / Kotak Mahindra Bank; and a borderline State Bank of India / Bank of Baroda result. HDFC Bank / ICICI Bank was the strongest of the three, rejecting the unit root null at the 5 percent level with a comfortable margin, and it held up on a separate validation window before being sized for real capital." }
+              ]
+            },
+            {
+              "_key": "p18-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p18-005s1", "_type": "span", "marks": [], "text": "Sizing the Position" }
+              ]
+            },
+            {
+              "_key": "p18-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p18-006s1", "_type": "span", "marks": [], "text": "Using the validated regression hedge ratio of 1.28, and scaling up to fit a full ICICI Bank futures lot as worked through in Chapter 4, Lesson 2, the position is 547 shares of HDFC Bank held long in the cash market, about ₹9,02,550, against one futures lot of 700 shares of ICICI Bank sold short, about ₹8,40,000, with an illustrative SPAN plus exposure margin of roughly ₹1,68,000 on the short leg. This allocation reflects HDFC Bank / ICICI Bank being the strongest result on the shortlist, as discussed in Lesson 2's capital allocation example." }
+              ]
+            },
+            {
+              "_key": "p18-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p18-007s1", "_type": "span", "marks": [], "text": "The Entry Trigger" }
+              ]
+            },
+            {
+              "_key": "p18-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p18-008s1", "_type": "span", "marks": [], "text": "The spread, built from the same 1.28 hedge ratio, has a historical mean of about ₹107.6 and a standard deviation of about ₹14.3, the series from Chapter 2. The position is not entered the moment the pair is screened, it waits for the pre-committed signal: the z-score crossing negative 2, using Chapter 2, Lesson 3's classic threshold system. A negative z-score means the spread is unusually low, HDFC Bank cheap relative to ICICI Bank, so the trade is long HDFC Bank, short ICICI Bank, betting the gap closes." }
+              ]
+            },
+            {
+              "_key": "p18-009",
+              "_type": "timeline",
+              "title": "The full trade, screening to exit (illustrative)",
+              "events": [
+                { "_key": "p18-009e1", "date": "Week 0", "title": "Screen and validate", "description": "Nifty Bank screen shortlists HDFC Bank / ICICI Bank as the strongest cointegration result. Confirmed again on a separate validation window." },
+                { "_key": "p18-009e2", "date": "Week 0", "title": "Size the position", "description": "547 shares HDFC Bank long (cash), 700 shares ICICI Bank short (1 futures lot), using the validated 1.28 hedge ratio." },
+                { "_key": "p18-009e3", "date": "Week 5", "title": "Entry triggered", "description": "Z-score crosses -2 as the spread drops to roughly ₹79 (mean of ₹107.6 minus 2 standard deviations of ₹14.3). Position entered exactly as pre-committed, no discretionary override." },
+                { "_key": "p18-009e4", "date": "Week 6–13", "title": "Monitored monthly", "description": "Rolling Engle-Granger retests continue to reject the unit root null each month. No corporate action or index change on either leg. Position held, unchanged." },
+                { "_key": "p18-009e5", "date": "Week 14", "title": "Exit triggered", "description": "Z-score reverts back through roughly 0 as the spread returns to its historical mean near ₹107.6. Position closed as planned." }
+              ]
+            },
+            {
+              "_key": "p18-010",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p18-010s1", "_type": "span", "marks": [], "text": "Monitoring: Nothing Broke This Time" }
+              ]
+            },
+            {
+              "_key": "p18-011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p18-011s1", "_type": "span", "marks": [], "text": "Chapter 4, Lesson 3 walked through a hypothetical version of this same checklist where a retest failed and the position was exited early, before the stop-loss ever triggered. In this case study, every monthly retest through the nine-week holding period continued to confirm cointegration, and neither leg had a merger, index change, or ratings action during the trade. The mechanical stop-loss at z equal to negative 3.5 was never approached. This is what a well-behaved pairs trade actually looks like: unremarkable monitoring, week after week, right up until the pre-planned exit." }
+              ]
+            },
+            {
+              "_key": "p18-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p18-012s1", "_type": "span", "marks": [], "text": "Exit and Final Accounting" }
+              ]
+            },
+            {
+              "_key": "p18-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p18-013s1", "_type": "span", "marks": [], "text": "The spread reverting roughly 2 standard deviations, about ₹28.6, on the 547-share position gives an illustrative gross profit of about ₹15,644, the same figure worked through in Chapter 4, Lesson 4. Applying that lesson's illustrative round-trip cost estimate, about ₹5,228 across statutory charges and slippage on all four legs, leaves a net profit of about ₹10,416." }
+              ]
+            },
+            {
+              "_key": "p18-014",
+              "_type": "table",
+              "caption": "Final P&L accounting for the trade (illustrative)",
+              "headers": ["Item", "Amount"],
+              "rows": [
+                { "_key": "p18-014r1", "cells": ["Gross profit (spread reversion)", "≈ ₹15,644"] },
+                { "_key": "p18-014r2", "cells": ["Round-trip costs (statutory + slippage)", "≈ -₹5,228"] },
+                { "_key": "p18-014r3", "cells": ["Net profit", "≈ ₹10,416"] }
+              ]
+            },
+            {
+              "_key": "p18-015",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "p18-015s1", "label": "Correlation at screening", "value": "≈ 0.70", "context": "Chapter 1's initial screen, confirmed at scale in Chapter 4, Lesson 1" },
+                { "_key": "p18-015s2", "label": "Cointegration verdict", "value": "Rejects H₀ at 5%", "context": "Engle-Granger t = -3.85, p = 0.021, from Chapter 3" },
+                { "_key": "p18-015s3", "label": "Position", "value": "547 HDFC long, 700 ICICI short", "context": "Beta-neutral at 1.28, lot-adjusted, from Chapter 4, Lesson 2" },
+                { "_key": "p18-015s4", "label": "Net profit after costs", "value": "≈ ₹10,416", "context": "About 67% of the gross reversion profit survived costs" }
+              ]
+            },
+            {
+              "_key": "p18-016",
+              "_type": "comparison",
+              "title": "Chapter 1's version of this trade vs this case study",
+              "columns": [
+                {
+                  "_key": "p18-016c1",
+                  "label": "Chapter 1: intuition only",
+                  "points": [
+                    "Correlation checked informally, no formal cointegration test",
+                    "Sized with a naive price-ratio hedge ratio, 1.375",
+                    "No explicit entry, exit, or stop-loss rule",
+                    "No cost accounting, no screening against alternative pairs",
+                    "A reasonable-looking idea, not yet a tradeable system"
+                  ]
+                },
+                {
+                  "_key": "p18-016c2",
+                  "label": "This case study: the full system",
+                  "points": [
+                    "Selected from a screened, validated shortlist of alternatives",
+                    "Sized with the validated regression hedge ratio, 1.28, lot-adjusted",
+                    "Entered and exited on pre-committed z-score rules, with a hard stop-loss",
+                    "Monitored monthly with rolling retesting, not just price action",
+                    "Reported net of realistic costs, not just a gross theoretical number"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "p18-017",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Every number in this case study, the correlation, the hedge ratio, the spread's mean and standard deviation, the test statistic, the position size, and the cost estimate, was built in an earlier lesson and carried forward unchanged. That consistency is the entire point: a real pairs trade is not a single clever insight, it is the same disciplined pipeline, applied the same way, every time a candidate pair is found."
+            },
+            {
+              "_key": "p18-018",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "What made this trade tradeable",
+              "question": "Which single step in this case study is most responsible for turning Chapter 1's intuitive HDFC Bank / ICICI Bank idea into an actually tradeable position?",
+              "options": [
+                "Noticing that both stocks are large, well-known private banks",
+                "The formal Engle-Granger cointegration test confirming the spread is statistically mean-reverting",
+                "Choosing to use stock futures instead of the cash market for the short leg",
+                "The fact that both stocks are constituents of the Nifty 50"
+              ],
+              "correctIndex": 1,
+              "explanation": "Shared exposure and index membership were useful for screening, and futures were a practical execution choice, but neither confirms the spread actually mean-reverts. The Engle-Granger test is what gave the z-score-based entry and exit rules real statistical grounding, exactly the step Chapter 1 deliberately left out."
+            },
+            {
+              "_key": "p18-019",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Applying the full pipeline to a new pair",
+              "scenario": "You want to evaluate a new candidate pair from the Nifty FMCG index that you have not studied before.",
+              "prompt": "List the sequence of steps, in order, you would take from this course before considering placing real capital on this pair.",
+              "modelAnswer": "First, confirm an explainable shared exposure between the two stocks, business, macro, or flow-based, before doing any math. Second, check the return correlation over a sensible lookback window as an initial screen. Third, run an OLS regression to get a hedge ratio and build the spread, rather than relying on a naive price ratio. Fourth, run the Engle-Granger test on the spread using the correct, stricter critical values, and only proceed if it rejects the unit root null. Fifth, validate that result on a separate, later window of data. Sixth, size the position using the validated hedge ratio, adjusted for lot sizes and capped as part of a diversified allocation across any other validated pairs. Seventh, enter only on a pre-committed z-score threshold, with entry, exit, and stop-loss levels fixed in advance. Eighth, monitor with both the mechanical stop-loss and rolling retesting, watching for corporate actions on either leg. Finally, evaluate any result net of realistic statutory costs and slippage, not the gross theoretical profit alone."
+            },
+            {
+              "_key": "p18-020",
+              "_type": "flashcardSet",
+              "title": "Whole Course Recap: Core Terms",
+              "cards": [
+                { "_key": "p18-020f1", "term": "Pairs trade", "definition": "A market-neutral trade, long one stock and short a related stock, that profits when a temporarily stretched, statistically validated relationship reverts to normal." },
+                { "_key": "p18-020f2", "term": "Hedge ratio (beta)", "definition": "The regression-based ratio, estimated from historical prices, used to size a beta-neutral position and construct the spread." },
+                { "_key": "p18-020f3", "term": "Z-score", "definition": "The number of standard deviations the current spread sits from its historical mean, the basis for entry, exit, and stop-loss rules." },
+                { "_key": "p18-020f4", "term": "Cointegration", "definition": "The property, confirmed with the Engle-Granger test, that a spread between two stocks is stationary and genuinely mean-reverting, not just correlated." },
+                { "_key": "p18-020f5", "term": "Round-trip cost", "definition": "The total statutory charges and slippage across all four legs of a pairs trade, which must be smaller than the expected profit for the trade to be worthwhile." }
+              ]
+            },
+            {
+              "_key": "p18-021",
+              "_type": "keyTakeaways",
+              "points": [
+                "A real pairs trade is the full pipeline from this course applied in sequence: shared-exposure screening, correlation, regression hedge ratio, Engle-Granger cointegration testing, validation, beta-neutral sizing, pre-committed z-score rules, layered risk monitoring, and honest cost accounting.",
+                "HDFC Bank and ICICI Bank, the pair this course opened with on intuition alone in Chapter 1, closes the course as a fully specified, statistically validated, cost-aware trade.",
+                "None of the individual pieces, correlation, a regression fit, a z-score, a stop-loss, is sufficient on its own. Chapter 3 exists precisely because correlation and a good-looking spread are not proof of tradeability.",
+                "Costs are not an afterthought. In this case study, they consumed roughly a third of the gross theoretical profit, and a weaker or less liquid pair could easily be cost-negative.",
+                "Monitoring did not stop at entry. Rolling retesting and stop-loss discipline ran throughout the holding period, even though, in this case, nothing actually broke.",
+                "The discipline is the strategy. The same sequence of steps, applied consistently to any new candidate pair, is what separates a systematic pairs trader from someone who got lucky once."
+              ]
+            },
+            {
+              "_key": "p18-022",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This case study is for educational purposes only and is not investment advice or a recommendation to buy, sell, or short any security named here. All prices, statistics, test results, position sizes, costs, and outcomes are illustrative and do not represent an actual trade or real market data. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

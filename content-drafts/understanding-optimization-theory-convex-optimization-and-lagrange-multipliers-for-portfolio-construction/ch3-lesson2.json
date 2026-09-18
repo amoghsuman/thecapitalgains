@@ -1,0 +1,219 @@
+{
+  "courseSlug": "understanding-optimization-theory-convex-optimization-and-lagrange-multipliers-for-portfolio-construction",
+  "chapters": [
+    {
+      "title": "Chapter 3: Unconstrained Optimization: Gradients, Hessians, and Critical Points",
+      "lessons": [
+        {
+          "title": "First-Order Conditions: Setting the Gradient to Zero",
+          "slug": "first-order-conditions-setting-the-gradient-to-zero",
+          "body": [
+            {
+              "_key": "oc3l2-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc3l2-001s1", "_type": "span", "marks": [], "text": "Ananya now knows the gradient points uphill and its negative points downhill. The next question is mechanical: how do you actually use that to land exactly on the bottom of the bowl, instead of just knowing which way to step? The answer turns calculus into algebra. Set the gradient to zero, write out one equation per variable, and solve the system directly." }
+              ]
+            },
+            {
+              "_key": "oc3l2-002",
+              "_type": "bigIdea",
+              "text": "Setting the gradient to zero converts a search problem into an algebra problem: instead of hunting downhill step by step, you write down n equations, one per variable, and solve them simultaneously for the exact bottom of the bowl."
+            },
+            {
+              "_key": "oc3l2-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc3l2-003s1", "_type": "span", "marks": [], "text": "The First-Order Condition, Stated Precisely" }
+              ]
+            },
+            {
+              "_key": "oc3l2-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "oc3l2-004m1", "_type": "glossaryTerm", "definition": "A point where the gradient of a function is exactly the zero vector, every partial derivative equal to zero at once. Also called a stationary point. It could be a minimum, a maximum, or neither." }
+              ],
+              "children": [
+                { "_key": "oc3l2-004s1", "_type": "span", "marks": [], "text": "Any point where the gradient vanishes is called a " },
+                { "_key": "oc3l2-004s2", "_type": "span", "marks": ["oc3l2-004m1"], "text": "critical point" },
+                { "_key": "oc3l2-004s3", "_type": "span", "marks": [], "text": ". Finding one means solving the following system." }
+              ]
+            },
+            {
+              "_key": "oc3l2-005",
+              "_type": "mathBlock",
+              "latex": "\\nabla f(\\mathbf{x}^*) = \\mathbf{0} \\quad \\Longleftrightarrow \\quad \\frac{\\partial f}{\\partial x_1} = 0, \\; \\frac{\\partial f}{\\partial x_2} = 0, \\; \\ldots, \\; \\frac{\\partial f}{\\partial x_n} = 0",
+              "caption": "One equation per variable. n unknowns, n equations, usually solvable directly."
+            },
+            {
+              "_key": "oc3l2-006",
+              "_type": "callout",
+              "type": "warning",
+              "text": "A critical point is only a candidate. On its own, the condition ∇f(x*) = 0 is necessary for a minimum but not sufficient: it is equally satisfied by a maximum, or by neither, a shape called a saddle point, covered later in this lesson. Chapter 2's convexity guarantee is what upgrades a critical point into a provable global minimum. Without convexity, finding ∇f = 0 only tells you the search is flat here, not what kind of flat."
+            },
+            {
+              "_key": "oc3l2-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc3l2-007s1", "_type": "span", "marks": [], "text": "Worked Example: Solving a System of First-Order Conditions" }
+              ]
+            },
+            {
+              "_key": "oc3l2-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc3l2-008s1", "_type": "span", "marks": [], "text": "Take an unconstrained risk-adjusted objective for a two-stock research exercise, no budget rule attached, purely to practice the mechanics: minimize risk while rewarding weight on each stock in proportion to its return edge." }
+              ]
+            },
+            {
+              "_key": "oc3l2-009",
+              "_type": "mathBlock",
+              "latex": "f(w_1, w_2) = w_1^2 + w_2^2 - 0.1w_1 - 0.2w_2",
+              "caption": "A toy unconstrained objective. The squared terms behave like risk, the linear terms like a return reward."
+            },
+            {
+              "_key": "oc3l2-010",
+              "_type": "mathBlock",
+              "latex": "\\frac{\\partial f}{\\partial w_1} = 2w_1 - 0.1 = 0 \\;\\Rightarrow\\; w_1 = 0.05, \\qquad \\frac{\\partial f}{\\partial w_2} = 2w_2 - 0.2 = 0 \\;\\Rightarrow\\; w_2 = 0.1",
+              "caption": "Two equations, two unknowns, solved independently since neither equation involves the other variable here."
+            },
+            {
+              "_key": "oc3l2-011",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "oc3l2-011s1", "label": "Critical point", "value": "(w1, w2) = (0.05, 0.1)", "context": "Where the gradient vanishes" },
+                { "_key": "oc3l2-011s2", "label": "Objective value there", "value": "-0.0125", "context": "f(0.05, 0.1) = 0.0025 + 0.01 - 0.005 - 0.02" }
+              ]
+            },
+            {
+              "_key": "oc3l2-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc3l2-012s1", "_type": "span", "marks": [], "text": "Confirming It's Actually a Minimum" }
+              ]
+            },
+            {
+              "_key": "oc3l2-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc3l2-013s1", "_type": "span", "marks": [], "text": "This is where Chapter 2 earns its keep. Compute the Hessian of this objective, exactly as done for portfolio variance." }
+              ]
+            },
+            {
+              "_key": "oc3l2-014",
+              "_type": "mathBlock",
+              "latex": "H_f = \\begin{bmatrix} 2 & 0 \\\\ 0 & 2 \\end{bmatrix}",
+              "caption": "Constant, diagonal, both entries positive."
+            },
+            {
+              "_key": "oc3l2-015",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This Hessian is positive definite (for any non-zero x, xᵀHx = 2x1² + 2x2² > 0), so f is convex everywhere. By Chapter 2's central theorem, a critical point of a convex function is automatically the global minimum. There is no need to check anywhere else in the search space. (0.05, 0.1) is not just a flat point, it is provably the best point there is."
+            },
+            {
+              "_key": "oc3l2-016",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc3l2-016s1", "_type": "span", "marks": [], "text": "What Happens Without Convexity: Saddle Points" }
+              ]
+            },
+            {
+              "_key": "oc3l2-017",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "oc3l2-017m1", "_type": "glossaryTerm", "definition": "A critical point that is neither a minimum nor a maximum: the function curves upward along some directions and downward along others, like the middle of a horse saddle." }
+              ],
+              "children": [
+                { "_key": "oc3l2-017s1", "_type": "span", "marks": [], "text": "Not every function is this well-behaved. Take f(x1, x2) = x1² - x2². Its gradient also vanishes at the origin, but the origin is a " },
+                { "_key": "oc3l2-017s2", "_type": "span", "marks": ["oc3l2-017m1"], "text": "saddle point" },
+                { "_key": "oc3l2-017s3", "_type": "span", "marks": [], "text": ", not a minimum." }
+              ]
+            },
+            {
+              "_key": "oc3l2-018",
+              "_type": "mathBlock",
+              "latex": "\\nabla f(x_1, x_2) = (2x_1, \\; -2x_2) = \\mathbf{0} \\quad \\text{at} \\quad (x_1, x_2) = (0, 0)",
+              "caption": "The first-order condition is satisfied. So far this looks identical to the earlier example."
+            },
+            {
+              "_key": "oc3l2-019",
+              "_type": "mathBlock",
+              "latex": "H_f = \\begin{bmatrix} 2 & 0 \\\\ 0 & -2 \\end{bmatrix} \\qquad \\text{not PSD, since } \\mathbf{x}^T H_f \\mathbf{x} = 2x_1^2 - 2x_2^2 < 0 \\text{ for } \\mathbf{x} = (0, 1)",
+              "caption": "The Hessian has a negative entry along one direction. This function is not convex, and Chapter 2's guarantee does not apply here."
+            },
+            {
+              "_key": "oc3l2-020",
+              "_type": "callout",
+              "type": "warning",
+              "text": "At the origin, f curves upward as x1 moves (a minimum along that slice) and downward as x2 moves (a maximum along that slice) at the very same point. The gradient alone cannot tell these two situations apart, both give ∇f = 0. Distinguishing a true minimum from a saddle needs a sharper tool than the gradient: the sign pattern of the Hessian itself, the subject of the next lesson."
+            },
+            {
+              "_key": "oc3l2-021",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Solve the first-order conditions",
+              "question": "Find the critical point of f(x1, x2) = 3x1² + 2x2² - 6x1 - 8x2 using the first-order conditions.",
+              "options": ["(1, 2)", "(2, 1)", "(0, 0)", "(3, 4)"],
+              "correctIndex": 0,
+              "explanation": "Setting each partial derivative to zero: ∂f/∂x1 = 6x1 - 6 = 0 gives x1 = 1. ∂f/∂x2 = 4x2 - 8 = 0 gives x2 = 2. The critical point is (1, 2). Since the Hessian here is diag(6, 4), positive definite, this critical point is also the global minimum."
+            },
+            {
+              "_key": "oc3l2-022",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Solve a three-variable research objective",
+              "scenario": "A risk model used only for research, with no budget constraint attached, has the unconstrained objective f(w1, w2, w3) = w1² + w2² + w3² - 0.05w1 - 0.1w2 - 0.15w3.",
+              "prompt": "Write out the first-order conditions and solve for the critical point.",
+              "modelAnswer": "Each partial derivative follows the same pattern as the two-variable example: ∂f/∂w1 = 2w1 - 0.05 = 0 gives w1 = 0.025. ∂f/∂w2 = 2w2 - 0.1 = 0 gives w2 = 0.05. ∂f/∂w3 = 2w3 - 0.15 = 0 gives w3 = 0.075. The critical point is (0.025, 0.05, 0.075). Since the Hessian is 2 times the identity matrix here, positive definite, this is also the global minimum by Chapter 2's guarantee."
+            },
+            {
+              "_key": "oc3l2-023",
+              "_type": "flashcardSet",
+              "title": "First-Order Conditions: Core Terms",
+              "cards": [
+                { "_key": "oc3l2-023f1", "term": "Critical point (stationary point)", "definition": "A point where the gradient is the zero vector. Could be a minimum, a maximum, or a saddle point." },
+                { "_key": "oc3l2-023f2", "term": "First-order condition", "definition": "The requirement ∇f(x*) = 0, necessary for an unconstrained minimum or maximum, but not sufficient on its own." },
+                { "_key": "oc3l2-023f3", "term": "Saddle point", "definition": "A critical point that curves upward in some directions and downward in others, neither a minimum nor a maximum." },
+                { "_key": "oc3l2-023f4", "term": "Sufficiency via convexity", "definition": "For a convex function, any critical point is automatically the global minimum. Convexity is what turns 'necessary' into 'sufficient'." }
+              ]
+            },
+            {
+              "_key": "oc3l2-024",
+              "_type": "keyTakeaways",
+              "points": [
+                "Setting ∇f(x) = 0 produces n equations for n unknowns, one per variable, solvable directly by algebra.",
+                "A critical point satisfies the first-order condition, but on its own that only means the point is flat, not that it is a minimum.",
+                "For a convex function (verified via a positive semi-definite Hessian, as Chapter 2 established), any critical point is automatically the global minimum.",
+                "Without convexity, a critical point can be a saddle point, curving upward in some directions and downward in others at the very same location, as x1² - x2² shows at the origin.",
+                "The gradient alone cannot distinguish a minimum from a saddle. The next lesson introduces the Hessian's sign pattern as the tool that resolves this precisely."
+              ]
+            },
+            {
+              "_key": "oc3l2-025",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to buy or sell any security. The objectives used in the worked examples are simplified mathematical illustrations for practicing the first-order condition method, not real portfolio models. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

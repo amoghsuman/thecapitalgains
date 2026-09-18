@@ -1,0 +1,235 @@
+{
+  "courseSlug": "understanding-stochastic-calculus-brownian-motion-itos-lemma-and-the-path-to-black-scholes",
+  "chapters": [
+    {
+      "title": "Chapter 3: The Path to Black-Scholes",
+      "lessons": [
+        {
+          "title": "Modeling Stock Prices as Geometric Brownian Motion, Rigorously",
+          "slug": "modeling-stock-prices-as-geometric-brownian-motion-rigorously",
+          "body": [
+            {
+              "_key": "c3l1-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l1-001s1", "_type": "span", "marks": [], "text": "Final round. \"Let's build the actual pricing model,\" the interviewer says. \"But first, state your assumptions precisely, like an actuary, not like someone waving at a chart.\" Rohan already has the hard part, geometric Brownian motion's exact, derived solution from Chapter 2. What he's missing is the rest of the scaffolding: a formal list of assumptions, a model for the riskless side of the trade, and a precise statement of what the stock price's distribution looks like at any future date. This lesson builds exactly that scaffolding, the foundation the next three lessons build the Black-Scholes formula on top of." }
+              ]
+            },
+            {
+              "_key": "c3l1-002",
+              "_type": "bigIdea",
+              "text": "The classical Black-Scholes derivation rests on a short, explicit list of assumptions about two assets: a risky stock following geometric Brownian motion, and a riskless money-market account growing at a constant rate. This lesson states both models precisely, derives the exact distribution of the stock price at any future date, and lists every assumption openly, so the next three lessons can build on solid ground rather than hidden hand-waving."
+            },
+            {
+              "_key": "c3l1-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l1-003s1", "_type": "span", "marks": [], "text": "The Black-Scholes Market Model: Two Assets, Precisely Specified" }
+              ]
+            },
+            {
+              "_key": "c3l1-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l1-004s1", "_type": "span", "marks": [], "text": "Every classical option-pricing derivation needs exactly two tradable assets. The first is the risky stock, S(t), already derived in full in the previous chapter. The second, introduced here for the first time, is a riskless asset, B(t), a money-market account or a government bond, that grows deterministically at a constant, continuously compounded rate r, with zero randomness. It is the degenerate case of an SDE where the diffusion coefficient is exactly zero, an ordinary differential equation wearing an SDE's notation." }
+              ]
+            },
+            {
+              "_key": "c3l1-005",
+              "_type": "mathBlock",
+              "latex": "dB(t) = r\\,B(t)\\, dt \\qquad \\Longrightarrow \\qquad B(t) = B(0)\\, e^{rt}",
+              "caption": "The riskless asset: a deterministic ODE, solved directly"
+            },
+            {
+              "_key": "c3l1-006",
+              "_type": "table",
+              "caption": "The two-asset Black-Scholes market model",
+              "headers": ["Asset", "SDE", "Solution", "Role in the derivation"],
+              "rows": [
+                { "_key": "c3l1-006r1", "_type": "tableRow", "cells": ["Stock, S(t)", "dS = μS dt + σS dW", "S(t) = S(0)·exp[(μ-σ²/2)t + σW(t)]", "The risky asset; its randomness is what the hedge exists to cancel"] },
+                { "_key": "c3l1-006r2", "_type": "tableRow", "cells": ["Riskless asset, B(t)", "dB = rB dt", "B(t) = B(0)·e^(rt)", "Funds the hedge and sets the discount rate for future payoffs"] }
+              ]
+            },
+            {
+              "_key": "c3l1-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l1-007s1", "_type": "span", "marks": [], "text": "The Full List of Assumptions" }
+              ]
+            },
+            {
+              "_key": "c3l1-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l1-008s1", "_type": "span", "marks": [], "text": "\"Rigorously\" means stating every assumption the derivation leans on, out loud, before using it. These seven are the classical Black-Scholes assumptions, and several of them are exactly the simplifications this course has already flagged with a warning callout." }
+              ]
+            },
+            {
+              "_key": "c3l1-009",
+              "_type": "table",
+              "caption": "The seven classical Black-Scholes assumptions",
+              "headers": ["Assumption", "Statement", "Where reality departs from it"],
+              "rows": [
+                { "_key": "c3l1-009r1", "_type": "tableRow", "cells": ["Constant volatility and drift", "S(t) follows GBM with fixed μ and σ for the entire life of the option", "India VIX and Bank Nifty implied volatility move constantly; σ is never truly fixed"] },
+                { "_key": "c3l1-009r2", "_type": "tableRow", "cells": ["Constant, known risk-free rate", "r is fixed and identical for both borrowing and lending", "Actual borrowing and lending rates diverge, and the risk-free rate itself moves with RBI policy"] },
+                { "_key": "c3l1-009r3", "_type": "tableRow", "cells": ["No dividends", "The stock pays no dividends during the option's life", "Real dividend payouts require adjusting the formula, a standard extension not covered in this course"] },
+                { "_key": "c3l1-009r4", "_type": "tableRow", "cells": ["No transaction costs or taxes", "Buying, selling, and rebalancing the hedge is completely frictionless", "Brokerage, STT, and bid-ask spreads all make continuous rebalancing costly in practice"] },
+                { "_key": "c3l1-009r5", "_type": "tableRow", "cells": ["Continuous trading", "The hedge can be rebalanced at every instant, in any fractional quantity", "Real trading happens in discrete lot sizes at discrete times, never truly continuously"] },
+                { "_key": "c3l1-009r6", "_type": "tableRow", "cells": ["Unrestricted short selling", "Short positions can be taken freely, with full use of the proceeds", "Real markets impose margin requirements and short-selling restrictions"] },
+                { "_key": "c3l1-009r7", "_type": "tableRow", "cells": ["No arbitrage", "There is no way to construct a riskless portfolio that earns more than the risk-free rate", "The foundational assumption the entire derivation is built on; the next lesson uses it directly"] }
+              ]
+            },
+            {
+              "_key": "c3l1-010",
+              "_type": "callout",
+              "type": "warning",
+              "text": "None of these seven assumptions are literally true of the NSE or any real market. That is not a flaw unique to Black-Scholes, it is true of every tractable model in quantitative finance. The formula's enduring value is as a benchmark and a common language, not a literal description of reality; every trading desk that quotes an option price knows exactly which of these seven assumptions is bending on any given day, and adjusts by eye or with a more advanced model."
+            },
+            {
+              "_key": "c3l1-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l1-011s1", "_type": "span", "marks": [], "text": "The Exact Distribution of S(T): What the Next Three Lessons Actually Need" }
+              ]
+            },
+            {
+              "_key": "c3l1-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l1-012s1", "_type": "span", "marks": [], "text": "Pricing an option that expires at time T, given today is time t, means computing an expectation involving S(T). It helps to restate Chapter 2's closed-form solution using the time-to-maturity, τ = T - t, and a single standardized normal variable, Z, instead of W(T) directly, exactly the form the rest of this chapter will use." }
+              ]
+            },
+            {
+              "_key": "c3l1-013",
+              "_type": "mathBlock",
+              "latex": "\\ln S(T) \\,\\big|\\, S(t) \\ \\sim \\ N\\!\\Big(\\ln S(t) + \\big(\\mu - \\tfrac{1}{2}\\sigma^2\\big)\\tau,\\ \\ \\sigma^2 \\tau\\Big), \\qquad \\tau = T - t",
+              "caption": "The exact distribution of ln S(T), given today's price S(t)"
+            },
+            {
+              "_key": "c3l1-014",
+              "_type": "mathBlock",
+              "latex": "S(T) = S(t)\\, \\exp\\!\\Big[\\big(\\mu - \\tfrac{1}{2}\\sigma^2\\big)\\tau + \\sigma\\sqrt{\\tau}\\, Z\\Big], \\qquad Z \\sim N(0,1)",
+              "caption": "The same result, written for direct simulation: one standard normal draw, no path needed"
+            },
+            {
+              "_key": "c3l1-015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l1-015s1", "_type": "span", "marks": [], "text": "This is a genuine simplification worth noticing: because W(T) - W(t) is itself normally distributed with variance τ, it can be written as √τ · Z for a single standard normal draw Z, with no need to simulate an entire path step by step. Pricing an option, which only cares about S at one future date, T, never needs the whole path in between, only this one-shot draw. Chapter 3's second lesson revisits why, even so, hedging still requires watching the path continuously." }
+              ]
+            },
+            {
+              "_key": "c3l1-016",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l1-016s1", "_type": "span", "marks": [], "text": "Calibrating to a Real Option's Time Horizon: TCS, 3 Months Out" }
+              ]
+            },
+            {
+              "_key": "c3l1-017",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l1-017s1", "_type": "span", "marks": [], "text": "Reuse the previous lesson's TCS calibration, S(0) = ₹3,900, μ = 15%, σ = 24%, but now for a horizon that matches a real monthly NSE options expiry cycle: τ = 0.25 years, roughly 3 months out." }
+              ]
+            },
+            {
+              "_key": "c3l1-018",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "c3l1-018s1", "label": "Log-drift over τ = 0.25 years", "value": "0.0303", "context": "(μ - σ²/2) × τ = 0.1212 × 0.25" },
+                { "_key": "c3l1-018s2", "label": "Variance of ln S(T)", "value": "0.0144", "context": "σ² × τ = 0.0576 × 0.25" },
+                { "_key": "c3l1-018s3", "label": "Standard deviation of ln S(T)", "value": "12%", "context": "σ × √τ = 0.24 × 0.5" }
+              ]
+            },
+            {
+              "_key": "c3l1-019",
+              "_type": "codeBlock",
+              "language": "python",
+              "caption": "Sampling S(T) directly, with no path simulation needed",
+              "code": "import numpy as np\n\nS0 = 3900\nmu = 0.15\nsigma = 0.24\ntau = 0.25\n\nn_sims = 100_000\nZ = np.random.normal(0, 1, n_sims)\nS_T = S0 * np.exp((mu - 0.5 * sigma**2) * tau + sigma * np.sqrt(tau) * Z)\n\nlog_S_T = np.log(S_T)\nprint(f\"Simulated mean of ln S(T):     {np.mean(log_S_T):.4f}\")\nprint(f\"Theoretical mean of ln S(T):   {np.log(S0) + (mu - 0.5*sigma**2)*tau:.4f}\")\nprint(f\"Simulated variance of ln S(T): {np.var(log_S_T):.4f}\")\nprint(f\"Theoretical variance:          {sigma**2 * tau:.4f}\")"
+            },
+            {
+              "_key": "c3l1-020",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Notice this code never loops over time steps. Because the exact distribution of ln S(T) is fully known in closed form, generating a valid sample of S(T) takes exactly one random draw per simulation, not 63 (a quarter-year's worth of trading days). This efficiency is precisely why the Black-Scholes formula, once derived, is so much faster to evaluate than a full Monte Carlo simulation for a plain vanilla option."
+            },
+            {
+              "_key": "c3l1-021",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Identify the assumption at risk",
+              "question": "India VIX, the NSE's volatility index, moves noticeably almost every trading day, sometimes sharply around events like a Union Budget announcement or an RBI monetary policy decision. Which classical Black-Scholes assumption does this real-world behavior most directly strain?",
+              "options": [
+                "No dividends",
+                "Constant volatility and drift",
+                "Unrestricted short selling",
+                "No transaction costs or taxes"
+              ],
+              "correctIndex": 1,
+              "explanation": "A constantly moving India VIX is direct market evidence that implied volatility is not fixed the way the classical model assumes. This is exactly why practitioners often treat Black-Scholes as a quoting convention, translating between price and implied volatility, rather than a literal description of how volatility behaves over an option's life."
+            },
+            {
+              "_key": "c3l1-022",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Compute the standard deviation at a different horizon",
+              "prompt": "Using σ = 24%, what is the standard deviation of ln S(T) for an option expiring in 1 month (τ = 1/12 years ≈ 0.0833)? Express your answer as a percentage. (Use σ√τ.)",
+              "correctValue": 6.93,
+              "tolerance": 0.1,
+              "unit": "%",
+              "explanation": "SD = σ√τ = 0.24 × √0.0833 = 0.24 × 0.2887 ≈ 0.0693, or 6.93%. Compare this to the 12% figure for a 3-month option: this shorter, roughly one-third horizon scales the standard deviation down by the square root of that ratio, the same √t rule that has run through this entire course since Chapter 1."
+            },
+            {
+              "_key": "c3l1-023",
+              "_type": "flashcardSet",
+              "title": "Core Terms From This Lesson",
+              "cards": [
+                { "_key": "c3l1-023f1", "term": "Riskless asset / money-market account, B(t)", "definition": "A deterministic asset following dB = rB dt, solved as B(t) = B(0)e^(rt); the non-random counterpart to the stock in the Black-Scholes model." },
+                { "_key": "c3l1-023f2", "term": "Time to maturity, τ", "definition": "The remaining time until an option expires, τ = T - t, where t is today and T is the expiry date." },
+                { "_key": "c3l1-023f3", "term": "No-arbitrage assumption", "definition": "The assumption that no riskless portfolio can be constructed that earns more than the risk-free rate; the foundational assumption the Black-Scholes derivation relies on most directly." }
+              ]
+            },
+            {
+              "_key": "c3l1-024",
+              "_type": "keyTakeaways",
+              "points": [
+                "The Black-Scholes model needs two precisely specified assets: a risky stock following GBM, already derived, and a riskless asset B(t) = B(0)e^(rt), introduced in this lesson.",
+                "The classical derivation rests on seven explicit assumptions, constant volatility, constant risk-free rate, no dividends, no transaction costs, continuous trading, unrestricted short selling, and no arbitrage, none of which hold exactly in real markets like the NSE.",
+                "Chapter 2's closed-form GBM solution restates cleanly as S(T) = S(t)·exp[(μ-σ²/2)τ + σ√τ·Z], letting S(T) be sampled with a single standard normal draw rather than a simulated path.",
+                "This one-shot sampling is possible only because a plain vanilla option's payoff depends solely on S(T), not on the path taken to get there, a simplification the next lesson's hedging argument does not get to make.",
+                "With both assets and the exact distribution of S(T) now precisely specified, the next lesson uses the no-arbitrage assumption and Ito's product rule from Chapter 2 to build a riskless hedged portfolio, the first real step toward the Black-Scholes PDE."
+              ]
+            },
+            {
+              "_key": "c3l1-025",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to buy, sell, or hold any security named here. The TCS price level, expected return, and volatility figures are simplified illustrative numbers, not live market data. India VIX and RBI policy references describe general market behavior, not current conditions. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1045 @@
+{
+  "courseSlug": "introduction-to-commodity-trading-gold-silver-crude-and-agri-commodities",
+  "chapters": [
+    {
+      "title": "Chapter 2: How Commodity Derivatives Work",
+      "lessons": [
+        {
+          "title": "Mark-to-Market, Rollovers and Physical vs Cash Settlement",
+          "slug": "mark-to-market-rollovers-and-physical-vs-cash-settlement",
+          "body": [
+            {
+              "_key": "c2l2-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2-001s1",
+                  "_type": "span",
+                  "text": "When you buy a share and it falls 5%, nothing happens to your bank balance until you sell. Futures do not work that way. Every single evening, the exchange marks your position to the day's settlement price and moves real money into or out of your account. And because every futures contract expires, you also have to decide what happens at the end: roll it forward, close it, or let it settle in cash or by delivery of actual gold, silver or jeera. By the end of this lesson you will be able to track a position through daily mark-to-market, calculate a rollover, and know which settlement route your contract will take.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-002",
+              "_type": "bigIdea",
+              "text": "In futures, profits and losses are settled in cash every day, not at the end. Your account balance on any evening is the truth about your position, and if losses eat through your margin, you must add money or the position will be closed for you."
+            },
+            {
+              "_key": "c2l2-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2-003s1",
+                  "_type": "span",
+                  "text": "Mark-to-Market: Settling Up Every Evening",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c2l2-004m1",
+                  "_type": "glossaryTerm",
+                  "definition": "The price the exchange sets at the end of each trading day, based on trading near the close, used to calculate that day's mark-to-market profit or loss on every open position."
+                },
+                {
+                  "_key": "c2l2-004m2",
+                  "_type": "glossaryTerm",
+                  "definition": "Revalued at the day's settlement price, with the difference from the previous day's price paid to or collected from the trader in cash."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c2l2-004s1",
+                  "_type": "span",
+                  "text": "At the end of each trading day, the clearing corporation fixes a ",
+                  "marks": []
+                },
+                {
+                  "_key": "c2l2-004s2",
+                  "_type": "span",
+                  "text": "daily settlement price",
+                  "marks": [
+                    "c2l2-004m1"
+                  ]
+                },
+                {
+                  "_key": "c2l2-004s3",
+                  "_type": "span",
+                  "text": " for each contract. Every open position is then ",
+                  "marks": []
+                },
+                {
+                  "_key": "c2l2-004s4",
+                  "_type": "span",
+                  "text": "marked to market",
+                  "marks": [
+                    "c2l2-004m2"
+                  ]
+                },
+                {
+                  "_key": "c2l2-004s5",
+                  "_type": "span",
+                  "text": ": the change from yesterday's price is credited to winners and debited from losers, in cash.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-005",
+              "_type": "mathBlock",
+              "latex": "\\text{Daily MTM} = (\\text{Today's settlement} - \\text{Previous settlement}) \\times \\frac{\\text{Lot size}}{\\text{Quotation unit}} \\times \\text{Lots}",
+              "caption": "On the first day, use your entry price instead of the previous settlement. Reverse the sign for a short position."
+            },
+            {
+              "_key": "c2l2-006",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2-006s1",
+                  "_type": "span",
+                  "text": "A Worked Example: Five Days in Silver Mini",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2-007s1",
+                  "_type": "span",
+                  "text": "Farhan, a 36-year-old architect in Bhopal, has ₹1,00,000 in his trading account. He buys one lot of MCX Silver Mini (5 kg, quoted per kg) at ₹1,20,000 per kg. Contract value is ₹6,00,000, and at an illustrative margin of 10% he must keep ₹60,000 blocked. Every ₹1 move in silver is worth ₹5 to him.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-008",
+              "_type": "table",
+              "caption": "Farhan's Silver Mini position, marked to market daily (illustrative prices)",
+              "headers": [
+                "Day",
+                "Settlement price (₹/kg)",
+                "Change",
+                "Daily MTM",
+                "Account balance"
+              ],
+              "rows": [
+                {
+                  "_key": "c2l2-008r1",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Entry",
+                    "1,20,000",
+                    "n/a",
+                    "n/a",
+                    "₹1,00,000"
+                  ]
+                },
+                {
+                  "_key": "c2l2-008r2",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Day 1",
+                    "1,20,800",
+                    "Plus ₹800",
+                    "Plus ₹4,000",
+                    "₹1,04,000"
+                  ]
+                },
+                {
+                  "_key": "c2l2-008r3",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Day 2",
+                    "1,19,600",
+                    "Minus ₹1,200",
+                    "Minus ₹6,000",
+                    "₹98,000"
+                  ]
+                },
+                {
+                  "_key": "c2l2-008r4",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Day 3",
+                    "1,17,900",
+                    "Minus ₹1,700",
+                    "Minus ₹8,500",
+                    "₹89,500"
+                  ]
+                },
+                {
+                  "_key": "c2l2-008r5",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Day 4",
+                    "1,18,400",
+                    "Plus ₹500",
+                    "Plus ₹2,500",
+                    "₹92,000"
+                  ]
+                },
+                {
+                  "_key": "c2l2-008r6",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Day 5 (exits)",
+                    "1,21,000",
+                    "Plus ₹2,600",
+                    "Plus ₹13,000",
+                    "₹1,05,000"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-009",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Farhan's account balance through daily MTM",
+              "xAxisLabel": "Day",
+              "yAxisLabel": "₹",
+              "data": [
+                {
+                  "_key": "c2l2-009d1",
+                  "label": "Entry",
+                  "value": 100000
+                },
+                {
+                  "_key": "c2l2-009d2",
+                  "label": "Day 1",
+                  "value": 104000
+                },
+                {
+                  "_key": "c2l2-009d3",
+                  "label": "Day 2",
+                  "value": 98000
+                },
+                {
+                  "_key": "c2l2-009d4",
+                  "label": "Day 3",
+                  "value": 89500
+                },
+                {
+                  "_key": "c2l2-009d5",
+                  "label": "Day 4",
+                  "value": 92000
+                },
+                {
+                  "_key": "c2l2-009d6",
+                  "label": "Day 5",
+                  "value": 105000
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2-010s1",
+                  "_type": "span",
+                  "text": "Add up the daily MTM: plus ₹4,000, minus ₹6,000, minus ₹8,500, plus ₹2,500, plus ₹13,000 = plus ₹5,000. That is exactly (₹1,21,000 minus ₹1,20,000) × 5 kg. Mark-to-market does not change your final profit. It changes when the cash moves, and it forces you to fund losses as they happen.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-011",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "The worst point",
+              "prompt": "Using Farhan's table, what was his cumulative MTM at the end of Day 3, in rupees? Enter a loss as a negative number.",
+              "correctValue": -10500,
+              "tolerance": 0,
+              "unit": "₹",
+              "explanation": "Plus ₹4,000 minus ₹6,000 minus ₹8,500 = minus ₹10,500. Check: (₹1,17,900 minus ₹1,20,000) × 5 = minus ₹2,100 × 5 = minus ₹10,500. At that point, his balance of ₹89,500 was still comfortably above the ₹60,000 margin, but the buffer had shrunk from ₹40,000 to ₹29,500."
+            },
+            {
+              "_key": "c2l2-012",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2-012s1",
+                  "_type": "span",
+                  "text": "When Losses Eat Into Margin",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2-013s1",
+                  "_type": "span",
+                  "text": "Now imagine silver had fallen to ₹1,12,000 on Day 3 instead. Day 3 MTM would have been (₹1,12,000 minus ₹1,19,600) × 5 = minus ₹38,000, leaving Farhan with ₹98,000 minus ₹38,000 = ₹60,000, exactly the margin requirement with zero buffer. One more bad tick and he would be short of margin.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-014",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "number",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2-014s1",
+                  "_type": "span",
+                  "text": "Margin shortfall. ",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_key": "c2l2-014s2",
+                  "_type": "span",
+                  "text": "Your account balance falls below the margin required for your open positions.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-015",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "number",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2-015s1",
+                  "_type": "span",
+                  "text": "The broker asks for funds. ",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_key": "c2l2-015s2",
+                  "_type": "span",
+                  "text": "You are expected to add money immediately, often the same day.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-016",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "number",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2-016s1",
+                  "_type": "span",
+                  "text": "Square-off risk. ",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_key": "c2l2-016s2",
+                  "_type": "span",
+                  "text": "If you do not, the broker's risk team can close your position at the market price, whenever they choose, which is often near the worst point.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-017",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "number",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2-017s1",
+                  "_type": "span",
+                  "text": "Penalties. ",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_key": "c2l2-017s2",
+                  "_type": "span",
+                  "text": "Exchanges levy penalties for margin shortfalls, and brokers usually pass these on to the client.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-018",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Margins are not fixed. When volatility jumps, the exchange can raise margins overnight, and a position that was comfortably funded yesterday can be short of margin this morning without the price moving against you at all. Always keep a cash buffer well above the minimum."
+            },
+            {
+              "_key": "c2l2-019",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "What does MTM actually do?",
+              "question": "Which statement about daily mark-to-market is correct?",
+              "options": [
+                "It adds an extra cost on top of your final profit or loss",
+                "It only applies on the day you close the position",
+                "It settles gains and losses in cash every day, but does not change your total profit or loss",
+                "It applies only to short positions"
+              ],
+              "correctIndex": 2,
+              "explanation": "MTM moves cash daily between winners and losers based on settlement prices. The sum of all daily MTM amounts equals your total profit or loss from entry to exit. What it changes is the timing, and the need to fund losses as they occur."
+            },
+            {
+              "_key": "c2l2-020",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2-020s1",
+                  "_type": "span",
+                  "text": "Rollovers: Keeping a View Beyond Expiry",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-021",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c2l2-021m1",
+                  "_type": "glossaryTerm",
+                  "definition": "Closing a position in the expiring futures contract and opening the same position in a later-expiring contract, to keep exposure beyond expiry."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c2l2-021s1",
+                  "_type": "span",
+                  "text": "Suppose you are bullish on crude oil for three months, but the contract you hold expires in two weeks. You cannot extend a futures contract. Instead you ",
+                  "marks": []
+                },
+                {
+                  "_key": "c2l2-021s2",
+                  "_type": "span",
+                  "text": "roll over",
+                  "marks": [
+                    "c2l2-021m1"
+                  ]
+                },
+                {
+                  "_key": "c2l2-021s3",
+                  "_type": "span",
+                  "text": ": close the near-month contract and open the same position in the next month.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-022",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c2l2-022m1",
+                  "_type": "glossaryTerm",
+                  "definition": "The price difference between two futures contracts on the same commodity with different expiry months."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c2l2-022s1",
+                  "_type": "span",
+                  "text": "The two contracts rarely trade at the same price. The difference between them is the ",
+                  "marks": []
+                },
+                {
+                  "_key": "c2l2-022s2",
+                  "_type": "span",
+                  "text": "calendar spread",
+                  "marks": [
+                    "c2l2-022m1"
+                  ]
+                },
+                {
+                  "_key": "c2l2-022s3",
+                  "_type": "span",
+                  "text": ", and it matters.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-023",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2-023s1",
+                  "_type": "span",
+                  "text": "A Worked Rollover in Crude Oil Mini",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-024",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2-024s1",
+                  "_type": "span",
+                  "text": "Lakshmi, a trader in Chennai, bought 3 lots of Crude Oil Mini (10 barrels each) in the October contract at ₹6,480 per barrel. A few days before expiry, she rolls:",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-025",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "number",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2-025s1",
+                  "_type": "span",
+                  "text": "Sell 3 lots of October at ₹6,520. ",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_key": "c2l2-025s2",
+                  "_type": "span",
+                  "text": "Realised profit: (₹6,520 minus ₹6,480) × 10 × 3 = ₹1,200.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-026",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "number",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2-026s1",
+                  "_type": "span",
+                  "text": "Buy 3 lots of November at ₹6,565. ",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_key": "c2l2-026s2",
+                  "_type": "span",
+                  "text": "Her new entry price is ₹6,565, which is ₹45 above the October price she just sold at.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-027",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2-027s1",
+                  "_type": "span",
+                  "text": "She still holds a long position on 30 barrels. But her new contract starts ₹45 per barrel higher. If spot crude simply stays flat until November expiry, the November contract will drift down towards spot, and she will give up that ₹45 × 30 barrels = ₹1,350. The next lesson explains why later contracts often trade higher, and when they trade lower.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-028",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Roll a gold position",
+              "prompt": "Rahul is long 2 lots of Gold Mini (₹10 per ₹1 move) in the October contract, bought at ₹99,400 per 10 grams. He rolls by selling October at ₹1,00,150 and buying December at ₹1,01,050. What is his realised profit on the October contract, in rupees?",
+              "correctValue": 15000,
+              "tolerance": 0,
+              "unit": "₹",
+              "explanation": "(₹1,00,150 minus ₹99,400) × 10 × 2 lots = ₹750 × 20 = ₹15,000. His new December position starts at ₹1,01,050, ₹900 per 10 grams above the October price he sold at. That spread is worth ₹900 × 20 = ₹18,000 on 2 lots, which is the amount he gives up if gold is flat until December expiry."
+            },
+            {
+              "_key": "c2l2-029",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2-029s1",
+                  "_type": "span",
+                  "text": "Roll costs are real. ",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_key": "c2l2-029s2",
+                  "_type": "span",
+                  "text": "You pay brokerage and charges on two legs, plus the bid-ask spread on each.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-030",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2-030s1",
+                  "_type": "span",
+                  "text": "Roll before the rush. ",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_key": "c2l2-030s2",
+                  "_type": "span",
+                  "text": "Liquidity shifts to the next month in the days before expiry. Rolling too late can mean worse prices, and for physically settled contracts, higher delivery margins.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-031",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2-031s1",
+                  "_type": "span",
+                  "text": "Many platforms let you place both legs together. ",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_key": "c2l2-031s2",
+                  "_type": "span",
+                  "text": "Some brokers offer spread orders, but always check both prices you actually get.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-032",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2-032s1",
+                  "_type": "span",
+                  "text": "Settlement at Expiry: Cash or Delivery",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-033",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2-033s1",
+                  "_type": "span",
+                  "text": "Positions you still hold at expiry are settled in one of two ways.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-034",
+              "_type": "comparison",
+              "title": "Cash settlement vs physical delivery",
+              "columns": [
+                {
+                  "_key": "c2l2-034c1",
+                  "label": "Cash settlement",
+                  "points": [
+                    "No goods change hands",
+                    "Final settlement price is usually linked to an international benchmark or a spot price polled by the exchange",
+                    "The final MTM difference is paid or collected in cash",
+                    "Common for energy contracts such as crude oil and natural gas on MCX",
+                    "Simple for speculators, but you can still be caught by a sharp final settlement price"
+                  ]
+                },
+                {
+                  "_key": "c2l2-034c2",
+                  "label": "Physical delivery",
+                  "points": [
+                    "The seller delivers the actual commodity and the buyer pays the full contract value",
+                    "Delivery happens through exchange-accredited vaults or warehouses at specified centres",
+                    "Quality must meet the contract specification, and it is tested",
+                    "Used for bullion, base metals on MCX and most agri contracts on NCDEX",
+                    "Brings extra margins, taxes such as GST and logistics before and at expiry"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-035",
+              "_type": "table",
+              "caption": "How major contracts typically settle (confirm the current specification for each contract)",
+              "headers": [
+                "Contract",
+                "Exchange",
+                "Settlement type",
+                "What that means for you"
+              ],
+              "rows": [
+                {
+                  "_key": "c2l2-035r1",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Crude Oil, Natural Gas",
+                    "MCX",
+                    "Cash",
+                    "Final settlement linked to the related NYMEX price, converted to rupees"
+                  ]
+                },
+                {
+                  "_key": "c2l2-035r2",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Gold, Silver and their smaller variants",
+                    "MCX",
+                    "Physical delivery",
+                    "Open positions after the tender period lead to delivery through MCX-accredited vaults"
+                  ]
+                },
+                {
+                  "_key": "c2l2-035r3",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Copper, Zinc, Aluminium, Lead",
+                    "MCX",
+                    "Physical delivery",
+                    "Delivery through exchange-approved warehouses"
+                  ]
+                },
+                {
+                  "_key": "c2l2-035r4",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Jeera, Guar seed, Turmeric, Coriander",
+                    "NCDEX",
+                    "Physical delivery",
+                    "Delivery of graded produce at accredited warehouses near producing centres"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-036",
+              "_type": "keyFact",
+              "label": "Cash settlement can still shock you",
+              "value": "MCX crude settled at minus ₹2,884 per barrel in April 2020",
+              "context": "When the NYMEX WTI May 2020 contract settled below zero, MCX's cash-settled crude contract followed it, because its final settlement was linked to that benchmark. Longs holding to expiry had to pay. Chapter 4 covers this case in full."
+            },
+            {
+              "_key": "c2l2-037",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2-037s1",
+                  "_type": "span",
+                  "text": "The Life of a Physically Settled Contract",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-038",
+              "_type": "timeline",
+              "title": "From launch to delivery (generic sequence; dates differ by contract)",
+              "events": [
+                {
+                  "_key": "c2l2-038e1",
+                  "date": "Launch",
+                  "title": "Contract is listed",
+                  "description": "Trading is thin while it is a far-month contract."
+                },
+                {
+                  "_key": "c2l2-038e2",
+                  "date": "Active months",
+                  "title": "It becomes the near month",
+                  "description": "Most speculative trading and liquidity is concentrated here."
+                },
+                {
+                  "_key": "c2l2-038e3",
+                  "date": "Roll window",
+                  "title": "Traders move to the next month",
+                  "description": "Liquidity shifts to the next contract; speculators roll or close."
+                },
+                {
+                  "_key": "c2l2-038e4",
+                  "date": "Tender period",
+                  "title": "Delivery intentions begin",
+                  "description": "Open positions start turning into delivery obligations, and delivery margins rise sharply, often up to the full contract value."
+                },
+                {
+                  "_key": "c2l2-038e5",
+                  "date": "Expiry",
+                  "title": "Trading ends",
+                  "description": "Any remaining open positions go to delivery settlement."
+                },
+                {
+                  "_key": "c2l2-038e6",
+                  "date": "Delivery settlement",
+                  "title": "Goods and money change hands",
+                  "description": "Sellers deliver into accredited vaults or warehouses; buyers pay the full value plus applicable taxes and charges."
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-039",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Most retail traders are speculators who have no use for 100 grams of gold in a vault, let alone 10 tonnes of jeera in Unjha. Many retail brokers do not support physical delivery at all, and ask clients to close or roll positions before the tender or delivery period begins, or square them off automatically. Put the tender period start date in your calendar the day you open a position."
+            },
+            {
+              "_key": "c2l2-046",
+              "_type": "collapsible",
+              "title": "What actually happens if you take delivery of Gold Mini",
+              "content": [
+                {
+                  "_key": "c2l2-040",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c2l2-040s1",
+                      "_type": "span",
+                      "text": "Suppose you hold one long Gold Mini lot into delivery at a final price of ₹1,00,000 per 10 grams, with a broker that supports delivery.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c2l2-041",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c2l2-041s1",
+                      "_type": "span",
+                      "text": "You pay the full contract value: ₹1,00,000 × 10 = ₹10,00,000.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c2l2-042",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c2l2-042s1",
+                      "_type": "span",
+                      "text": "GST applies on the gold delivered, which on its own adds ₹30,000 at the 3% rate for gold.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c2l2-043",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c2l2-043s1",
+                      "_type": "span",
+                      "text": "You receive 100 grams of 995 purity gold held in an MCX-accredited vault, typically credited to your commodity demat account.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c2l2-044",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c2l2-044s1",
+                      "_type": "span",
+                      "text": "Withdrawing the physical bar involves further charges, logistics and a trip to the vault location.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c2l2-045",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c2l2-045s1",
+                      "_type": "span",
+                      "text": "For a speculator who only wanted exposure to price movements, this is a lot of cash, tax and hassle. That is why the practical rule for most traders is simple: close or roll before the tender period.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-047",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "Name the move",
+              "textWithBlank": "Closing a position in an expiring futures contract and opening the same position in a later contract is called rolling ___.",
+              "correctAnswers": [
+                "over"
+              ],
+              "explanation": "Rolling over keeps your exposure alive past expiry. The price difference between the two months, the calendar spread, is effectively the cost or benefit of the roll."
+            },
+            {
+              "_key": "c2l2-048",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "The forgotten expiry",
+              "scenario": "Vivek, a 42-year-old bank manager in Nagpur, bought 2 lots of MCX Gold Mini in the October contract as a medium-term bet on gold. He did not check the expiry calendar. One morning, his broker's app shows that the margin blocked on his position has jumped several times over, his free balance is negative, and there is a message saying the position will be squared off by 2:00 pm unless he closes it or adds funds.",
+              "prompt": "What has most likely happened, and what should Vivek do now and next time?",
+              "modelAnswer": "What happened: the October contract has entered its tender or delivery period. Because gold contracts on MCX settle by physical delivery, margins rise sharply as expiry approaches so that open positions are fully backed. His broker, like many retail brokers, does not want clients drifting into delivery and is asking him to close.\n\nWhat to do now: if he still wants gold exposure, roll over by selling his October lots and buying the same number of lots in the next available contract, checking the calendar spread he pays. If he no longer wants the trade, simply close it. Either way, act before the broker squares him off at a price he does not control.\n\nNext time: check the expiry date and tender period start date before entering, set a reminder a few days earlier, and plan the roll in advance. If he wants multi-month gold exposure without rollovers at all, a gold ETF may suit him better than futures."
+            },
+            {
+              "_key": "c2l2-049",
+              "_type": "flashcardSet",
+              "title": "MTM, Rollovers and Settlement",
+              "cards": [
+                {
+                  "_key": "c2l2-049f1",
+                  "term": "Daily settlement price",
+                  "definition": "The end-of-day price set by the exchange, used to calculate MTM on all open positions."
+                },
+                {
+                  "_key": "c2l2-049f2",
+                  "term": "Mark-to-market (MTM)",
+                  "definition": "Daily cash settlement of gains and losses based on the change in settlement price."
+                },
+                {
+                  "_key": "c2l2-049f3",
+                  "term": "Margin shortfall",
+                  "definition": "When your account balance falls below the margin required for open positions."
+                },
+                {
+                  "_key": "c2l2-049f4",
+                  "term": "Rollover",
+                  "definition": "Closing the near-month contract and opening the same position in a later month."
+                },
+                {
+                  "_key": "c2l2-049f5",
+                  "term": "Calendar spread",
+                  "definition": "The price difference between two futures contracts on the same commodity with different expiries."
+                },
+                {
+                  "_key": "c2l2-049f6",
+                  "term": "Cash settlement",
+                  "definition": "Settlement at expiry by paying the final price difference in cash, with no delivery."
+                },
+                {
+                  "_key": "c2l2-049f7",
+                  "term": "Physical delivery",
+                  "definition": "Settlement at expiry by delivering the commodity through accredited vaults or warehouses."
+                },
+                {
+                  "_key": "c2l2-049f8",
+                  "term": "Tender period",
+                  "definition": "The days before expiry of a physically settled contract when positions start becoming delivery obligations and margins rise."
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-050",
+              "_type": "keyTakeaways",
+              "points": [
+                "Futures are marked to market daily: the change in settlement price is credited or debited in cash every evening.",
+                "The sum of daily MTM equals your total profit or loss. MTM changes the timing of cash, not the final result.",
+                "If losses push your balance below required margin, you must add funds or face square-off and penalties. Margins can also rise overnight.",
+                "Rolling over means closing the near month and opening the next. The calendar spread is a real cost or benefit of the roll.",
+                "MCX energy contracts are cash settled; bullion, base metals and most NCDEX agri contracts settle by physical delivery.",
+                "Speculators should close or roll physically settled contracts before the tender or delivery period begins."
+              ]
+            },
+            {
+              "_key": "c2l2-051",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice. Settlement types, tender periods, margins and delivery rules differ by contract and change over time; always confirm current specifications on the exchange website and your broker's policies. All prices and margins used are illustrative. Commodity derivatives are leveraged and can cause losses larger than your initial margin."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

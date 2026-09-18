@@ -1,0 +1,360 @@
+{
+  "courseSlug": "sectoral-analysis-understanding-how-different-industries-behave",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Sectors Matter More Than You Think",
+      "lessons": [
+        {
+          "title": "Sector Weights in the Nifty 50 and What They Tell You About Index Risk",
+          "slug": "sector-weights-in-the-nifty-50-and-what-they-tell-you-about-index-risk",
+          "body": [
+            {
+              "_key": "c1l3-001",
+              "_type": "bigIdea",
+              "text": "Buying a Nifty 50 index fund feels like buying 'the Indian market'. In reality, you are making a large, concentrated bet on financial services, with a few smaller bets on IT, energy, and consumer companies on the side. The index is only as diversified as its sector weights."
+            },
+            {
+              "_key": "c1l3-002",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-002s1",
+                  "_type": "span",
+                  "text": "Millions of SIP investors own the Nifty 50 through index funds, ETFs, and large cap funds that track it closely. Most never look at what is inside. This lesson shows you how to read the index by sector, how to calculate which sectors actually moved it, and how to spot hidden concentration when you stack an index fund on top of your other holdings.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-003",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-003s1",
+                  "_type": "span",
+                  "text": "How the Nifty 50 Decides Who Gets How Much",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c1l3-004m1",
+                  "_type": "glossaryTerm",
+                  "definition": "Market capitalisation counting only shares available for public trading. Shares held by promoters, the government as promoter, and other locked-in holders are excluded."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c1l3-004s1",
+                  "_type": "span",
+                  "text": "The Nifty 50 is weighted by ",
+                  "marks": []
+                },
+                {
+                  "_key": "c1l3-004s2",
+                  "_type": "span",
+                  "text": "free-float market capitalisation",
+                  "marks": ["c1l3-004m1"]
+                },
+                {
+                  "_key": "c1l3-004s3",
+                  "_type": "span",
+                  "text": ". A company's weight is its free-float market cap divided by the combined free-float market cap of all 50 constituents. Nobody at NSE decides that banks deserve a third of the index. That outcome is simply the result of how large and widely held India's listed banks and financial companies have become. NSE reviews the constituents twice a year, but between reviews the weights drift every day with prices.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-005",
+              "_type": "mathBlock",
+              "latex": "w_i = \\frac{\\text{Free-float market cap}_i}{\\sum_{j=1}^{50} \\text{Free-float market cap}_j} \\qquad W_{\\text{sector}} = \\sum_{i \\in \\text{sector}} w_i",
+              "caption": "A stock's index weight, and a sector's weight as the sum of its constituents' weights"
+            },
+            {
+              "_key": "c1l3-006",
+              "_type": "donutChart",
+              "title": "Approximate Nifty 50 Sector Weights (%)",
+              "data": [
+                { "_key": "c1l3-006d1", "_type": "donutSlice", "label": "Financial Services", "value": 37 },
+                { "_key": "c1l3-006d2", "_type": "donutSlice", "label": "Information Technology", "value": 11 },
+                { "_key": "c1l3-006d3", "_type": "donutSlice", "label": "Oil, Gas & Consumable Fuels", "value": 10 },
+                { "_key": "c1l3-006d4", "_type": "donutSlice", "label": "Automobile", "value": 7 },
+                { "_key": "c1l3-006d5", "_type": "donutSlice", "label": "FMCG", "value": 7 },
+                { "_key": "c1l3-006d6", "_type": "donutSlice", "label": "Telecom", "value": 5 },
+                { "_key": "c1l3-006d7", "_type": "donutSlice", "label": "Healthcare", "value": 4 },
+                { "_key": "c1l3-006d8", "_type": "donutSlice", "label": "Construction", "value": 4 },
+                { "_key": "c1l3-006d9", "_type": "donutSlice", "label": "Metals & Mining", "value": 4 },
+                { "_key": "c1l3-006d10", "_type": "donutSlice", "label": "Power", "value": 3 },
+                { "_key": "c1l3-006d11", "_type": "donutSlice", "label": "Others", "value": 8 }
+              ]
+            },
+            {
+              "_key": "c1l3-007",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "c1l3-007s1", "_type": "stat", "label": "Largest sector", "value": "~37%", "context": "Financial Services, more than the next three sectors combined" },
+                { "_key": "c1l3-007s2", "_type": "stat", "label": "Top 3 sectors", "value": "~58%", "context": "Financials, IT, and Oil & Gas" },
+                { "_key": "c1l3-007s3", "_type": "stat", "label": "Equal weight per stock", "value": "2%", "context": "What each stock would get if all 50 were weighted equally" }
+              ]
+            },
+            {
+              "_key": "c1l3-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-008s1",
+                  "_type": "span",
+                  "text": "Look at what is small or missing too. Healthcare is around 4% of the index even though India is one of the world's largest generic drug producers. Real estate, media, and most of the chemicals industry barely register. If you own only a Nifty 50 fund, you have almost no exposure to large parts of the Indian economy that are listed on NSE.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-009",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-009s1",
+                  "_type": "span",
+                  "text": "Which Sectors Actually Moved the Index?",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-010s1",
+                  "_type": "span",
+                  "text": "Here is the single most useful formula in this lesson. A sector's contribution to the index return is its weight multiplied by its own return. Add up every sector's contribution and you get the index return. This is how analysts explain a market move in one sentence: 'the Nifty fell mostly because of banks'.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-011",
+              "_type": "mathBlock",
+              "latex": "\\text{Contribution}_{\\text{sector}} = W_{\\text{sector}} \\times R_{\\text{sector}} \\qquad R_{\\text{index}} = \\sum_{\\text{sectors}} W_{\\text{sector}} \\times R_{\\text{sector}}",
+              "caption": "Contribution to return: weight times return, summed across sectors"
+            },
+            {
+              "_key": "c1l3-012",
+              "_type": "table",
+              "caption": "Illustrative Month: Why a Strong IT Rally Could Not Save the Index",
+              "headers": ["Sector", "Weight", "Sector Return", "Contribution to Nifty 50"],
+              "rows": [
+                { "_key": "c1l3-012r1", "_type": "tableRow", "cells": ["Financial Services", "37%", "-8%", "-2.96%"] },
+                { "_key": "c1l3-012r2", "_type": "tableRow", "cells": ["Information Technology", "11%", "+6%", "+0.66%"] },
+                { "_key": "c1l3-012r3", "_type": "tableRow", "cells": ["Oil, Gas & Consumable Fuels", "10%", "+2%", "+0.20%"] },
+                { "_key": "c1l3-012r4", "_type": "tableRow", "cells": ["All other sectors", "42%", "0%", "0.00%"] },
+                { "_key": "c1l3-012r5", "_type": "tableRow", "cells": ["Nifty 50", "100%", "", "-2.10%"] }
+              ]
+            },
+            {
+              "_key": "c1l3-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-013s1",
+                  "_type": "span",
+                  "text": "IT rallied 6% and oil and gas rose 2%, yet the index still fell 2.1%. An 8% drop in a sector weighing 37% simply overwhelms gains in smaller sectors. The practical lesson: when you read that the Nifty was down, your first question should be which heavyweight sector caused it, because that tells you whether your own portfolio was likely hit.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-014",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Calculate the Index Move",
+              "prompt": "Using the approximate weights above, suppose Financial Services rises 5% and Information Technology falls 15% in a quarter, while every other sector is flat. What is the Nifty 50's approximate return for the quarter, in percent? (Use a minus sign if negative.)",
+              "correctValue": 0.2,
+              "tolerance": 0.05,
+              "unit": "%",
+              "explanation": "Financials: 37% × 5% = +1.85%. IT: 11% × -15% = -1.65%. Everything else contributes zero. Total: 1.85% - 1.65% = +0.20%. A 15% crash in IT, bad enough to make headlines, left the index slightly positive because the much larger financials weight offset it."
+            },
+            {
+              "_key": "c1l3-015",
+              "_type": "collapsible",
+              "title": "Why weights drift between index reviews",
+              "content": [
+                {
+                  "_key": "c1l3-015b1",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c1l3-015b1s1",
+                      "_type": "span",
+                      "text": "Because weights are based on market value, a sector that outperforms automatically grows its weight, and one that underperforms shrinks. Take a simple case. If financials start at 37% of the index, rise 20%, and the rest of the index stays flat, financials are now worth 37 × 1.20 = 44.4 out of a total of 44.4 + 63 = 107.4. Their new weight is 44.4 ÷ 107.4, or about 41.3%. No one bought more bank stocks. The index simply became more concentrated on its own.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c1l3-015b2",
+                  "_type": "callout",
+                  "type": "insight",
+                  "text": "This is why market cap weighted indices tend to become most concentrated in whatever sector has had the best run, which is often the point at which that sector is most expensive."
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-016",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-016s1",
+                  "_type": "span",
+                  "text": "The Index's Character Changes Over Time",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-017",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-017s1",
+                  "_type": "span",
+                  "text": "The Nifty 50 of today is not the Nifty 50 of 2000 or 2008. Around the dot-com peak, IT stocks carried far more weight. In the 2007 to 2008 boom, energy, capital goods, and real estate names such as DLF were prominent. Over the following decade, as private banks and NBFCs grew their loan books and market value, financials rose to their current dominant position. Owning the index means accepting whatever sector mix the market has rewarded most recently. That is neither good nor bad, but you should know it.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-018",
+              "_type": "comparison",
+              "title": "Market Cap Weighted vs Equal Weighted Nifty 50",
+              "columns": [
+                {
+                  "_key": "c1l3-018a",
+                  "_type": "comparisonColumn",
+                  "label": "Nifty 50 (market cap weighted)",
+                  "points": [
+                    "Largest companies and sectors get the most weight",
+                    "Financials dominate, and a handful of stocks drive most of the move",
+                    "Low turnover and low tracking cost for index funds"
+                  ]
+                },
+                {
+                  "_key": "c1l3-018b",
+                  "_type": "comparisonColumn",
+                  "label": "Nifty50 Equal Weight",
+                  "points": [
+                    "Every stock gets the same weight, reset at each rebalance",
+                    "Sector weight depends on how many stocks a sector has, not how big they are",
+                    "Less concentrated in the largest names, but needs more frequent rebalancing and carries higher costs"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-019",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Spot the Real Diversifier",
+              "question": "Arjun already holds a Nifty 50 index fund. He wants to add a second fund that genuinely reduces his sector concentration. Which option does that best?",
+              "options": [
+                "A banking and financial services sectoral fund",
+                "A second Nifty 50 index fund from a different AMC",
+                "A large cap active fund benchmarked to the Nifty 100",
+                "A pharma and healthcare sectoral fund"
+              ],
+              "correctIndex": 3,
+              "explanation": "Healthcare is only around 4% of the Nifty 50, so a pharma fund adds exposure Arjun barely has. A banking fund doubles down on his largest existing sector. A second Nifty 50 fund is the same portfolio. A large cap fund benchmarked to the Nifty 100 will usually hold many of the same heavyweight stocks. Note that a sectoral fund carries its own concentration risk; the point here is only which option adds a different sector."
+            },
+            {
+              "_key": "c1l3-020",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "The Salaried Professional's Hidden Bank Bet",
+              "scenario": "Neha works at a large private bank in Mumbai. Her equity holdings are: a Nifty 50 index fund SIP worth ₹6,00,000, a banking and financial services fund worth ₹2,00,000, and her employer's shares received through ESOPs worth ₹2,00,000. She believes she is well diversified because she owns 'the whole index plus two other things'.",
+              "prompt": "Roughly what share of her ₹10,00,000 equity portfolio is exposed to financial services? What risk is she not seeing?",
+              "modelAnswer": "Using an approximate 37% financials weight for the Nifty 50: ₹6,00,000 × 37% = ₹2,22,000. If her banking fund holds, say, 90% in financials, that adds ₹1,80,000. Her ESOP shares are 100% financials: ₹2,00,000. Total is about ₹6,02,000, or roughly 60% of her equity money in one sector. On top of that, her salary, bonus, and job security also depend on the banking sector. A sector downturn could hit her portfolio and her income at the same time. She should consider trimming the sectoral fund, gradually diversifying ESOP proceeds after any lock-in, and deliberately adding sectors that the Nifty 50 underweights."
+            },
+            {
+              "_key": "c1l3-021",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Sector concentration hides in overlap. An index fund, a large cap fund, a flexi cap fund, and a sectoral fund can all hold HDFC Bank and ICICI Bank. Four funds do not mean four different exposures. Check each fund's factsheet sector breakdown and add them up, weighted by how much you hold in each."
+            },
+            {
+              "_key": "c1l3-022",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "Fill in the Blank",
+              "textWithBlank": "A sector's contribution to the index return equals its index weight multiplied by its own ___.",
+              "correctAnswers": ["return", "returns", "performance", "price change"],
+              "explanation": "Contribution = weight × return. A large sector with a moderate move can contribute more to the index than a small sector with a huge move."
+            },
+            {
+              "_key": "c1l3-023",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Check Your True Sector Exposure",
+              "steps": [
+                "Download the latest Nifty 50 factsheet from NSE Indices and note the current sector weights",
+                "For each equity mutual fund you hold, open its latest monthly factsheet and note its sector breakdown",
+                "Multiply each fund's sector weights by the rupee value you hold in that fund",
+                "Add direct stocks and ESOPs to the sector they belong to",
+                "Add up the rupee exposure per sector and convert it into a percentage of your total equity portfolio",
+                "If any sector exceeds your comfort level, especially the one your salary depends on, decide whether that concentration is deliberate"
+              ]
+            },
+            {
+              "_key": "c1l3-024",
+              "_type": "toolLink",
+              "label": "NSE Indices: Nifty 50 Factsheet",
+              "url": "https://www.niftyindices.com/",
+              "description": "Search for the Nifty 50 index and open its monthly factsheet to see current sector weights, top constituents, and historical returns."
+            },
+            {
+              "_key": "c1l3-025",
+              "_type": "keyTakeaways",
+              "points": [
+                "The Nifty 50 is free-float market cap weighted, so sector weights reflect market value, not a deliberate decision about the economy",
+                "Financial services is by far the largest sector at roughly a third or more of the index, making a Nifty 50 fund a heavy bet on banks and financials",
+                "A sector's contribution to index return is its weight times its return; a large sector's modest move can outweigh a small sector's big move",
+                "Weights drift toward whichever sector has recently outperformed, so the index becomes most concentrated in its recent winners",
+                "Healthcare, real estate, and many other industries are barely represented in the Nifty 50",
+                "Stacking an index fund, large cap funds, sectoral funds, and employer stock can create sector concentration that you only see when you add it up"
+              ]
+            },
+            {
+              "_key": "c1l3-026",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "Sector weights shown are approximate and change daily with prices and at each index review. Refer to the latest Nifty 50 factsheet on NSE Indices for current figures. Examples and scenarios are for educational illustration only and are not investment recommendations."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

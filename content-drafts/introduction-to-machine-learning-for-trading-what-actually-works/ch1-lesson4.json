@@ -1,0 +1,202 @@
+{
+  "courseSlug": "introduction-to-machine-learning-for-trading-what-actually-works",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Most \"ML for Trading\" Content Gets It Wrong",
+      "lessons": [
+        {
+          "title": "Case Study: How an 87% Accurate Model Lost Money on the Nifty",
+          "slug": "case-study-how-an-87-accurate-model-lost-money-on-the-nifty",
+          "body": [
+            {
+              "_key": "mlt4-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt4-001s1", "_type": "span", "marks": [], "text": "Back in Lesson 1 of this chapter, a callout mentioned a model that predicted Nifty's next-day direction correctly 87% of the time and still lost money. This lesson builds that exact scenario from the ground up, purely illustrative numbers, not a real backtest, and walks through precisely how it happens. Every idea used here, prediction accuracy, signal thresholds, and execution costs, was introduced in Lessons 2 and 3. This case study is where they come together." }
+              ]
+            },
+            {
+              "_key": "mlt4-002",
+              "_type": "bigIdea",
+              "text": "Accuracy measures how often a model is right. It says nothing about how much money is won when it is right, or lost when it is wrong. A model can be correct the vast majority of the time and still lose money overall, if its rare mistakes are far larger than its frequent small wins."
+            },
+            {
+              "_key": "mlt4-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt4-003s1", "_type": "span", "marks": [], "text": "The Setup: An 87% Accurate Nifty Direction Model" }
+              ]
+            },
+            {
+              "_key": "mlt4-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt4-004s1", "_type": "span", "marks": [], "text": "Suppose a classifier predicts whether the Nifty 50 closes higher or lower the next trading day, tested on 200 trading days it never saw during training. It is correct on 174 of them, 87 percent accuracy, a genuinely strong out-of-sample result by the standards of Lesson 1. Following it exactly, without a confidence threshold from Lesson 2, the trader takes one fixed-size long or short Nifty futures position every single day the model produces a prediction, all 200 days, regardless of how confident the model actually was on any given day." }
+              ]
+            },
+            {
+              "_key": "mlt4-005",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "mlt4-005s1", "label": "Test days (illustrative)", "value": "200", "context": "All out-of-sample, none used in training" },
+                { "_key": "mlt4-005s2", "label": "Correct predictions", "value": "174 (87%)", "context": "A strong headline accuracy number" },
+                { "_key": "mlt4-005s3", "label": "Incorrect predictions", "value": "26 (13%)", "context": "Looks negligible next to 87% accuracy" },
+                { "_key": "mlt4-005s4", "label": "Position sizing rule used", "value": "Fixed, every single day", "context": "No confidence threshold, no volatility adjustment, the exact Layer 2 gap from Lesson 2" }
+              ]
+            },
+            {
+              "_key": "mlt4-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt4-006s1", "_type": "span", "marks": [], "text": "Why 87% Accuracy Didn't Mean a Profitable Strategy" }
+              ]
+            },
+            {
+              "_key": "mlt4-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt4-007s1", "_type": "span", "marks": [], "text": "Most of the 174 correct predictions happened on calm, unremarkable days, the kind that make up the bulk of any trading calendar, where the Nifty's move was modest and each correct trade earned a small, fairly consistent amount. But among the 26 incorrect predictions, a handful landed on the highest-volatility days in the test set: sharp single-day drops driven by global risk-off sentiment, an unexpected RBI policy surprise, or a geopolitical shock. These are exactly the days a model is least likely to get right, since they break the calmer patterns most of its training data was built from, and exactly the days the Nifty tends to move several times its typical daily range. Because the trader used the same fixed position size on every single day, those rare large losses were sized identically to the frequent small wins." }
+              ]
+            },
+            {
+              "_key": "mlt4-008",
+              "_type": "table",
+              "caption": "Illustrative P&L breakdown across the 200-day test set",
+              "headers": ["Group", "Number of Trades", "Avg P&L per Trade", "Total P&L"],
+              "rows": [
+                { "_key": "mlt4-008r1", "cells": ["Correct predictions (calm, typical days)", "174", "+₹900", "+₹1,56,600"] },
+                { "_key": "mlt4-008r2", "cells": ["Incorrect predictions (typical days)", "20", "-₹1,200", "-₹24,000"] },
+                { "_key": "mlt4-008r3", "cells": ["Incorrect predictions (tail/shock days)", "6", "-₹28,000", "-₹1,68,000"] }
+              ]
+            },
+            {
+              "_key": "mlt4-009",
+              "_type": "keyFact",
+              "label": "Net P&L before execution costs (illustrative)",
+              "value": "-₹35,400",
+              "context": "Despite being right 87% of the time. Six bad days, landing on the model's worst possible days to be wrong, outweighed 174 good ones."
+            },
+            {
+              "_key": "mlt4-010",
+              "_type": "callout",
+              "type": "warning",
+              "text": "This is before Layer 3 from Lesson 2. Add realistic execution costs, brokerage, Securities Transaction Tax, exchange charges, GST, and slippage, across 200 trades, and using the same Zerodha-style cost assumptions from Lesson 2's worked example, the illustrative total worsens further, to roughly -₹95,400. An 87% accurate model, traded without a signal threshold or sizing discipline, produced a clear loss."
+            },
+            {
+              "_key": "mlt4-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt4-011s1", "_type": "span", "marks": [], "text": "What Would Have Actually Fixed This" }
+              ]
+            },
+            {
+              "_key": "mlt4-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "mlt4-012m1", "_type": "glossaryTerm", "definition": "A risk control that caps how much a single trade can lose, regardless of how large the underlying market move turns out to be." }
+              ],
+              "children": [
+                { "_key": "mlt4-012s1", "_type": "span", "marks": [], "text": "None of the fixes here require a better model. A confidence threshold, from Lesson 2, would have filtered out the model's lower-conviction predictions, and predictions made with low conviction are often disproportionately likely to land on exactly the hardest-to-predict, most volatile days. Volatility-based position sizing would have automatically shrunk the bet on days when the market was already moving in an unusually wide range, directly reducing the size of a loss on the kind of day the tail losses came from. And a " },
+                { "_key": "mlt4-012s2", "_type": "span", "marks": ["mlt4-012m1"], "text": "max-loss-per-trade rule" },
+                { "_key": "mlt4-012s3", "_type": "span", "marks": [], "text": " would have capped how much any single wrong prediction could cost, no matter how large the actual move turned out to be. Chapter 4 of this course builds each of these controls properly." }
+              ]
+            },
+            {
+              "_key": "mlt4-013",
+              "_type": "comparison",
+              "title": "What Actually Happened vs a Better Approach",
+              "columns": [
+                {
+                  "_key": "mlt4-013c1",
+                  "label": "What Actually Happened",
+                  "points": [
+                    "Same fixed position size on every single trade, all 200 days",
+                    "No confidence threshold, every prediction was traded",
+                    "No cap on loss per trade",
+                    "6 tail-day losses outweighed 174 correct predictions"
+                  ]
+                },
+                {
+                  "_key": "mlt4-013c2",
+                  "label": "A Better Approach",
+                  "points": [
+                    "Position size scaled down on lower-confidence predictions",
+                    "A minimum confidence threshold filters out the weakest signals",
+                    "A max-loss-per-trade rule caps the damage from any single wrong prediction",
+                    "Chapter 4 of this course builds exactly this kind of risk control"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "mlt4-014",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "The accuracy paradox",
+              "question": "A model correctly predicts Nifty's next-day direction 87% of the time, but loses money overall when traded with a fixed position size on every signal. What is the most likely explanation?",
+              "options": [
+                "87% accuracy is not actually possible for a real trading model, the number must be a coding error",
+                "The rare incorrect predictions likely occurred on the highest-volatility days, where losses were far larger than the typical gains from correct, calm-day predictions",
+                "The Nifty cannot be predicted using machine learning under any circumstances",
+                "The model should have used a higher accuracy threshold, such as 95%, before being deployed"
+              ],
+              "correctIndex": 1,
+              "explanation": "Accuracy counts how often a model is right, but says nothing about the size of each win or loss. When a model's rare mistakes cluster on the market's highest-volatility days while its correct calls cluster on calm days, a handful of large losses can outweigh many small wins, exactly what happened in this case study."
+            },
+            {
+              "_key": "mlt4-015",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Redesigning the sizing rule",
+              "scenario": "Using the same 87% accurate model from this case study, imagine you also have access to the model's predicted confidence (its output probability) for each trade, and a separate, simple daily volatility estimate for the Nifty, such as a recent average true range.",
+              "prompt": "Describe one concrete rule using confidence, and one concrete rule using volatility, that would have reduced the size of the six tail-day losses in this case study.",
+              "modelAnswer": "A confidence-based rule could scale position size down whenever the model's predicted probability is close to 50%, since low-conviction predictions are both more likely to be wrong and, in this case study, disproportionately likely to land on the hardest-to-predict, most volatile days. A volatility-based rule could scale position size inversely to a recent measure of Nifty's realized volatility, such as average true range, so that on days when the market is already moving in an unusually wide range, the position taken is automatically smaller, directly shrinking the size of a loss on exactly the kind of day this case study's tail losses came from."
+            },
+            {
+              "_key": "mlt4-016",
+              "_type": "flashcardSet",
+              "title": "Chapter 1 Closing Vocabulary",
+              "cards": [
+                { "_key": "mlt4-016f1", "term": "Accuracy paradox", "definition": "A situation where a model with high prediction accuracy still loses money overall, because its rare mistakes are far larger in size than its frequent small correct predictions." },
+                { "_key": "mlt4-016f2", "term": "Tail risk", "definition": "The risk of rare, extreme moves in the market, such as sharp single-day drops driven by shocks, which are disproportionately hard for models to predict correctly." },
+                { "_key": "mlt4-016f3", "term": "Asymmetric payoff", "definition": "A situation where the average size of gains and losses from a strategy's trades are meaningfully different, so win rate alone cannot describe whether the strategy is profitable." },
+                { "_key": "mlt4-016f4", "term": "Volatility-based position sizing", "definition": "Scaling the size of a trade based on how much the market is currently moving, so positions are automatically smaller during unusually volatile conditions." },
+                { "_key": "mlt4-016f5", "term": "Max-loss-per-trade rule", "definition": "A risk control that caps how much a single trade can lose, regardless of how large the underlying market move turns out to be." }
+              ]
+            },
+            {
+              "_key": "mlt4-017",
+              "_type": "keyTakeaways",
+              "points": [
+                "Accuracy measures how often a model is right. It says nothing about how much is won or lost on each correct or incorrect prediction.",
+                "This case study's illustrative 87% accurate model still lost money because its correct predictions clustered on calm, low-volatility days with small typical moves, while several of its rare mistakes clustered on the market's highest-volatility, tail-risk days.",
+                "A fixed position size on every trade, with no confidence threshold and no volatility adjustment, meant rare large losses were sized identically to frequent small wins.",
+                "Confidence-based position sizing, volatility-based position sizing, and a max-loss-per-trade rule are all concrete fixes for exactly this failure mode, and Chapter 4 of this course builds them properly.",
+                "Before trusting any accuracy or win-rate number, ask about the size of the wins and losses behind it, not just how often the model is right. This closes the case for why the rest of this course treats prediction, signal, and execution as three separate, equally important problems."
+              ]
+            },
+            {
+              "_key": "mlt4-018",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice or a recommendation to trade any specific instrument named here. Every figure in this case study, including the 87% accuracy rate, the P&L breakdown, and the execution cost estimate, is illustrative and constructed for teaching purposes. It does not represent a real backtest or live trading result. Trading in equity derivatives carries a high risk of loss. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

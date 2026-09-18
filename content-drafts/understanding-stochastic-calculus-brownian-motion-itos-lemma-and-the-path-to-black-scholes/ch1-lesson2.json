@@ -1,0 +1,243 @@
+{
+  "courseSlug": "understanding-stochastic-calculus-brownian-motion-itos-lemma-and-the-path-to-black-scholes",
+  "chapters": [
+    {
+      "title": "Chapter 1: The Wiener Process: From Random Walks to Brownian Motion",
+      "lessons": [
+        {
+          "title": "Defining Brownian Motion: The Four Properties of a Wiener Process",
+          "slug": "defining-brownian-motion-the-four-properties-of-a-wiener-process",
+          "body": [
+            {
+              "_key": "c1l2-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l2-001s1", "_type": "span", "marks": [], "text": "Rohan's interviewer follows up on his random walk answer from the previous round: \"You just described a walk that ticks once a second. Now tell me what happens if I speed that walk up to a thousand ticks a second, then a million, shrinking each step to keep the total wobble the same. What do you get in the limit?\" This lesson is the answer. What you get is Brownian motion, also called the Wiener process, and it comes with exactly four defining properties. Learn these four cold, because every later lesson, Ito's lemma, geometric Brownian motion, the Black-Scholes PDE, is built directly on top of them." }
+              ]
+            },
+            {
+              "_key": "c1l2-002",
+              "_type": "bigIdea",
+              "text": "A standard Wiener process starts at zero, has independent increments, has increments that are normally distributed with variance equal to the length of the time interval, and traces out a continuous path. Four properties, and together they pin down one specific, unique random process that this entire course is built around."
+            },
+            {
+              "_key": "c1l2-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l2-003s1", "_type": "span", "marks": [], "text": "The Four Defining Properties of a Wiener Process" }
+              ]
+            },
+            {
+              "_key": "c1l2-004",
+              "_type": "table",
+              "caption": "The four properties that define standard Brownian motion, W(t)",
+              "headers": ["Property", "Formal statement", "Intuition"],
+              "rows": [
+                { "_key": "c1l2-004r1", "_type": "tableRow", "cells": ["Starts at zero", "W(0) = 0, with probability 1", "Every path begins at the origin; it fixes where you start measuring from"] },
+                { "_key": "c1l2-004r2", "_type": "tableRow", "cells": ["Independent increments", "For 0 <= t1 < t2 <= t3 < t4, W(t2) - W(t1) and W(t4) - W(t3) are independent", "What happens in one time window tells you nothing about a separate, non-overlapping window"] },
+                { "_key": "c1l2-004r3", "_type": "tableRow", "cells": ["Stationary, normal increments", "W(t+s) - W(t) ~ N(0, s), for any t >= 0, s > 0", "The change over an interval is normal with mean 0 and variance equal to the interval's length, no matter where it starts"] },
+                { "_key": "c1l2-004r4", "_type": "tableRow", "cells": ["Continuous paths", "t -> W(t) is continuous, with probability 1", "No jumps or teleports, even though the next lesson shows the path is never smooth"] }
+              ]
+            },
+            {
+              "_key": "c1l2-005",
+              "_type": "mathBlock",
+              "latex": "W(0) = 0 \\quad \\text{(with probability 1)}",
+              "caption": "Property 1: starts at zero"
+            },
+            {
+              "_key": "c1l2-006",
+              "_type": "mathBlock",
+              "latex": "0 \\le t_1 < t_2 \\le t_3 < t_4 \\ \\ \\Rightarrow\\ \\ W(t_2)-W(t_1) \\ \\text{and} \\ W(t_4)-W(t_3) \\ \\text{are independent}",
+              "caption": "Property 2: independent increments over non-overlapping intervals"
+            },
+            {
+              "_key": "c1l2-007",
+              "_type": "mathBlock",
+              "latex": "W(t+s) - W(t) \\sim N(0, s), \\qquad \\forall\\, t \\ge 0,\\ s > 0",
+              "caption": "Property 3: stationary, normally distributed increments"
+            },
+            {
+              "_key": "c1l2-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "c1l2-008m1", "_type": "glossaryTerm", "definition": "A probabilistic way of saying \"true with probability 1.\" It leaves room for a mathematically possible but probability-zero set of exceptions, which never matters for any calculation or simulation you will run in this course." }
+              ],
+              "children": [
+                { "_key": "c1l2-008s1", "_type": "span", "marks": [], "text": "Property 4, continuity, says the map from time to position never jumps: the path is continuous " },
+                { "_key": "c1l2-008s2", "_type": "span", "marks": ["c1l2-008m1"], "text": "almost surely" },
+                { "_key": "c1l2-008s3", "_type": "span", "marks": [], "text": ". This matters for finance because it rules out sudden price gaps within the model itself, a stock modeled with plain Brownian motion cannot teleport from one price to another; it has to pass through every intermediate value on the way. Real markets do gap, badly, around events like a surprise RBI rate decision or a shock quarterly result, which is exactly why more advanced models bolt jump processes onto Brownian motion. This course sticks to the continuous case, since it is what the classical Black-Scholes framework assumes. Continuity is the easy half of this property to accept. The next lesson tackles the harder, stranger half: despite being continuous everywhere, a Wiener process path is smooth nowhere, meaning it has no derivative at any point." }
+              ]
+            },
+            {
+              "_key": "c1l2-009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l2-009s1", "_type": "span", "marks": [], "text": "Where the Random Walk's Square-Root Rule Reappears" }
+              ]
+            },
+            {
+              "_key": "c1l2-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "c1l2-010m1", "_type": "glossaryTerm", "definition": "A theorem stating that a properly rescaled random walk converges, as the number of steps goes to infinity, to Brownian motion. It is the rigorous justification for treating Brownian motion as the natural continuous-time limit of the discrete random walk from the previous lesson." }
+              ],
+              "children": [
+                { "_key": "c1l2-010s1", "_type": "span", "marks": [], "text": "Property 3 should look familiar. The previous lesson showed that a symmetric random walk has variance n after n steps, so its standard deviation grows with the square root of n. Property 3 says exactly the same thing for the continuous process: Var(W(t)) = t, so the standard deviation of W(t) grows with the square root of t. This is not a coincidence, it is the entire point. A rigorous result called " },
+                { "_key": "c1l2-010s2", "_type": "span", "marks": ["c1l2-010m1"], "text": "Donsker's invariance principle" },
+                { "_key": "c1l2-010s3", "_type": "span", "marks": [], "text": " proves that if you take the random walk from the previous lesson, shrink each step's size, speed up how often steps occur, and scale the two together correctly, the discrete walk converges to precisely this Wiener process. You do not need to reproduce that proof to use stochastic calculus. You do need to recognize that the √t scaling you are about to use in every formula for the rest of this course is the direct descendant of the √n scaling you already derived by hand." }
+              ]
+            },
+            {
+              "_key": "c1l2-011",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Independent increments is the mathematical backbone of the weak-form efficient market idea you will hear referenced around NSE and SEBI market-structure discussions: that today's price move carries no information about tomorrow's price move. Risk-neutral option pricing, built in Chapter 3, leans directly on this independence assumption. It is one of the reasons the Black-Scholes formula, for all its real-world flaws, remains the default starting point for pricing a Nifty or Bank Nifty option."
+            },
+            {
+              "_key": "c1l2-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l2-012s1", "_type": "span", "marks": [], "text": "Simulating a Wiener Process Path" }
+              ]
+            },
+            {
+              "_key": "c1l2-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l2-013s1", "_type": "span", "marks": [], "text": "You can simulate a Wiener process almost exactly the same way you simulated a random walk, with one change: instead of adding +1 or -1 at each step, you add a draw from a normal distribution with mean 0 and variance equal to the size of the time step, dt. This directly encodes Property 3, since summing independent N(0, dt) increments across n steps up to time T gives a total variance of n times dt, which equals T." }
+              ]
+            },
+            {
+              "_key": "c1l2-014",
+              "_type": "codeBlock",
+              "language": "python",
+              "caption": "Simulating a standard Wiener process path over one year",
+              "code": "import numpy as np\n\ndef simulate_brownian_motion(T=1.0, n_steps=252):\n    dt = T / n_steps\n    increments = np.random.normal(0, np.sqrt(dt), n_steps)\n    path = np.concatenate(([0.0], np.cumsum(increments)))\n    return path\n\nW = simulate_brownian_motion(T=1.0, n_steps=252)\nprint(f\"W(0) = {W[0]:.4f}\")\nprint(f\"W(1) = {W[-1]:.4f}\")\n# Each run gives a different W(1). Across many runs, W(1) always has the\n# distribution N(0, 1), since T = 1 here and Var(W(T)) = T."
+            },
+            {
+              "_key": "c1l2-015",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "One simulated Wiener process path over 1 year",
+              "xAxisLabel": "Time (years)",
+              "yAxisLabel": "W(t)",
+              "data": [
+                { "_key": "c1l2-015d1", "label": "0.0", "value": 0 },
+                { "_key": "c1l2-015d2", "label": "0.2", "value": 0.15 },
+                { "_key": "c1l2-015d3", "label": "0.4", "value": -0.05 },
+                { "_key": "c1l2-015d4", "label": "0.6", "value": 0.32 },
+                { "_key": "c1l2-015d5", "label": "0.8", "value": 0.10 },
+                { "_key": "c1l2-015d6", "label": "1.0", "value": 0.45 }
+              ]
+            },
+            {
+              "_key": "c1l2-016",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l2-016s1", "_type": "span", "marks": [], "text": "Using the Normal Distribution: A Worked Probability Calculation" }
+              ]
+            },
+            {
+              "_key": "c1l2-017",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l2-017s1", "_type": "span", "marks": [], "text": "Property 3 is not just a definition, it is a calculator. Suppose W(t) is a standard Wiener process and you want the probability that W(4) exceeds 2. Since W(4) ~ N(0, 4), its standard deviation is the square root of 4, which is 2. Standardizing turns this into an ordinary standard normal question." }
+              ]
+            },
+            {
+              "_key": "c1l2-018",
+              "_type": "mathBlock",
+              "latex": "Z = \\frac{W(4) - 0}{\\sqrt{4}} = \\frac{W(4)}{2} \\sim N(0,1) \\quad \\Rightarrow \\quad P(W(4) > 2) = P(Z > 1) \\approx 0.1587",
+              "caption": "Standardizing W(4) to compute a tail probability"
+            },
+            {
+              "_key": "c1l2-019",
+              "_type": "keyFact",
+              "label": "P(W(4) > 2)",
+              "value": "~15.87%",
+              "context": "The probability a standard Wiener process is more than one standard deviation above zero at time t = 4, read straight off the standard normal upper tail at z = 1"
+            },
+            {
+              "_key": "c1l2-020",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Independent increments does not mean real market prices are perfectly unpredictable in practice. Empirical studies of NSE and global equity data do find short-term momentum and longer-term mean-reversion effects that a pure Wiener process cannot capture. Treat standard Brownian motion as a clean, tractable idealization that the rest of this course builds on, not as a claim that real markets have zero exploitable structure. Chapter 3 already flags where geometric Brownian motion's assumptions break down; keep that same skepticism here."
+            },
+            {
+              "_key": "c1l2-021",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Spot the false statement",
+              "question": "Which of the following statements about a standard Wiener process W(t) is FALSE?",
+              "options": [
+                "W(0) = 0 with probability 1",
+                "Increments over non-overlapping time intervals are independent of each other",
+                "W(t) has variance equal to t, so its standard deviation grows linearly with t",
+                "Its sample paths are continuous everywhere, though (as the next lesson shows) nowhere differentiable"
+              ],
+              "correctIndex": 2,
+              "explanation": "Variance grows linearly with t (Var(W(t)) = t), but standard deviation is the square root of variance, so it grows with the square root of t, not linearly with t. This is the same √t scaling seen throughout this chapter, and the same distinction that trips people up when annualizing volatility."
+            },
+            {
+              "_key": "c1l2-022",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Compute another tail probability",
+              "prompt": "For the same standard Wiener process, what is P(W(9) < -6), expressed as a percentage? (Standardize using SD = √9 = 3, then use the standard normal distribution.)",
+              "correctValue": 2.28,
+              "tolerance": 0.3,
+              "unit": "%",
+              "explanation": "W(9) ~ N(0, 9), so its standard deviation is 3. Standardizing: Z = -6 / 3 = -2. P(W(9) < -6) = P(Z < -2), which is approximately 2.28%, read off the standard normal lower tail at z = -2."
+            },
+            {
+              "_key": "c1l2-023",
+              "_type": "flashcardSet",
+              "title": "Core Terms From This Lesson",
+              "cards": [
+                { "_key": "c1l2-023f1", "term": "Wiener process (standard Brownian motion)", "definition": "The unique continuous-time random process W(t) satisfying: W(0) = 0, independent increments, increments distributed as N(0, s) over any interval of length s, and continuous sample paths." },
+                { "_key": "c1l2-023f2", "term": "Independent increments", "definition": "The change in the process over one time interval is statistically independent of the change over any other non-overlapping time interval." },
+                { "_key": "c1l2-023f3", "term": "Stationary increments", "definition": "The distribution of W(t+s) - W(t) depends only on the length of the interval, s, not on where in time, t, that interval starts." },
+                { "_key": "c1l2-023f4", "term": "Donsker's invariance principle", "definition": "The theorem justifying that a rescaled random walk, with step size shrinking and step frequency rising in the correct proportion, converges to Brownian motion in the limit." }
+              ]
+            },
+            {
+              "_key": "c1l2-024",
+              "_type": "keyTakeaways",
+              "points": [
+                "A standard Wiener process W(t) is defined by four properties: it starts at 0, has independent increments, has stationary N(0, s) increments over any interval of length s, and has continuous sample paths.",
+                "Var(W(t)) = t is the continuous-time version of the random walk's Var(S_n) = n from the previous lesson; standard deviation always scales with the square root of time.",
+                "Donsker's invariance principle is the formal justification for treating Brownian motion as the natural continuous limit of a discrete random walk with shrinking, more frequent steps.",
+                "Because increments are normal, any probability question about W(t) reduces to a standard normal calculation after standardizing by the interval's standard deviation.",
+                "Independent increments underpins the weak-form efficiency assumption behind risk-neutral option pricing, but real markets show momentum and mean-reversion effects a pure Wiener process does not capture.",
+                "Continuity rules out jumps within the model, but the next lesson shows Brownian motion's paths are continuous everywhere and differentiable nowhere, the property that forces ordinary calculus to break down."
+              ]
+            },
+            {
+              "_key": "c1l2-025",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to buy, sell, or hold any security or contract named here. References to Nifty, Bank Nifty, and NSE market behavior are illustrative and simplified, not live market data or a claim about current market conditions. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,228 @@
+{
+  "courseSlug": "understanding-numerical-methods-in-quantitative-finance-binomial-trees-and-finite-difference-methods",
+  "chapters": [
+    {
+      "title": "Chapter 3: American Options, Convergence, and Tree Limitations",
+      "lessons": [
+        {
+          "title": "Computing the Greeks From a Binomial Tree",
+          "slug": "computing-the-greeks-from-a-binomial-tree",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "n1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "n1s1", "text": "Every tree built so far has been asked for exactly one number, the root price. The nodes sitting one and two steps away from that root, already computed along the way, quietly hold the answer to a different question: how does that price move if the stock moves? That question has a name, the Greeks, and three of them come essentially free from a tree already built for pricing. Two others need a small amount of extra work.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "n2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "n2s1", "text": "Delta: Hiding in Plain Sight Since Chapter 2", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "n3",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "n3s1", "text": "Chapter 2, Lesson 2 defined Delta as the number of shares in the replicating portfolio. That is not a coincidental use of the same letter, delta the hedge ratio and Delta the Greek, the rate of change of option value with respect to stock price, are the exact same number. The tree's own pricing formula computes it as a byproduct at every single node.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "mathBlock",
+              "_key": "n4",
+              "latex": "\\Delta \\approx \\frac{f_u - f_d}{S_u - S_d}",
+              "caption": "Read directly from the two nodes one step away from wherever Delta is wanted, using values already computed during ordinary backward induction."
+            },
+            {
+              "_type": "block",
+              "_key": "n5",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "n5s1", "text": "Reuse Chapter 2, Lesson 5's exact six-step Nifty call tree, no new computation, the level-1 nodes are already sitting there: Su = 24,695.75 valued at ₹1,229.75, Sd = 23,323.85 valued at ₹404.82.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "keyFact",
+              "_key": "n6",
+              "label": "Delta",
+              "value": "0.6013",
+              "context": "(1,229.75 − 404.82) / (24,695.75 − 23,323.85). A ₹1 rise in Nifty moves this call's value by roughly ₹0.60"
+            },
+            {
+              "_type": "block",
+              "_key": "n7",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "n7s1", "text": "Gamma: One Level Further Back", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "n8",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "n8s1", "text": "Gamma measures how Delta itself changes as the stock moves, the option's curvature. Estimating it needs one more level of the tree, the three nodes two steps from the root, computing an 'upper' Delta and a 'lower' Delta from them and comparing the two.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "mathBlock",
+              "_key": "n9",
+              "latex": "\\Gamma \\approx \\frac{\\frac{f_{uu}-f_{ud}}{S_{uu}-S_{ud}} - \\frac{f_{ud}-f_{dd}}{S_{ud}-S_{dd}}}{\\left(S_{uu}-S_{dd}\\right)/2}",
+              "caption": "A central-difference estimate of Delta's own rate of change, using the three level-2 nodes already computed for pricing."
+            },
+            {
+              "_type": "table",
+              "_key": "n10",
+              "caption": "Level-2 nodes, already computed",
+              "headers": ["Node", "Nifty Level", "Value"],
+              "rows": [
+                { "cells": ["dd", "22,666.75", "₹119.01"] },
+                { "cells": ["ud", "24,000.00", "₹650.02"] },
+                { "cells": ["uu", "25,411.67", "₹1,729.17"] }
+              ]
+            },
+            {
+              "_type": "keyFact",
+              "_key": "n11",
+              "label": "Gamma",
+              "value": "0.000267",
+              "context": "Deltas of 0.7644 (upper) and 0.3983 (lower), divided by the midpoint spread. A 240-point (1%) Nifty move would shift Delta by roughly 0.064, the small raw figure is purely a scale effect of Nifty trading in the tens of thousands"
+            },
+            {
+              "_type": "block",
+              "_key": "n12",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "n12s1", "text": "Theta: The Trick Hiding in Chapter 2's Reciprocal Choice", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "n13",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "n13s1", "text": "Theta measures how the option's value changes purely with the passage of time, stock price held fixed. That is exactly what Chapter 2, Lesson 4's decision to set d equal to 1 over u was quietly setting up: the 'ud' node, one up-move and one down-move, lands on precisely S0 again, two steps of time later. Comparing that node's value to the root gives an estimate of time decay alone, stock price unchanged.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "mathBlock",
+              "_key": "n14",
+              "latex": "\\Theta \\approx \\frac{f_{ud} - f_{\\text{root}}}{2\\,\\Delta t}",
+              "caption": "The ud node sits at the same stock price as today, S0, but two steps closer to expiry. This only lines up cleanly because d = 1 / u."
+            },
+            {
+              "_type": "keyFact",
+              "_key": "n15",
+              "label": "Theta",
+              "value": "−₹2,378.45 per year, about −₹6.52 per calendar day",
+              "context": "(650.02 − 848.23) / (2 × 0.0417 years). The option loses roughly ₹6.52 of value per day from time decay alone, Nifty unchanged"
+            },
+            {
+              "_type": "callout",
+              "_key": "n16",
+              "type": "warning",
+              "text": "This is the standard textbook tree-theta shortcut, useful and widely taught, but still an approximation, it blends pure time decay with a small amount of the tree's own discretization behaviour. Treat it as a solid working estimate, not a value with the same precision as the price itself."
+            },
+            {
+              "_type": "block",
+              "_key": "n17",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "n17s1", "text": "Vega and Rho: Bump and Reprice", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "n18",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "n18s1", "text": "Delta, Gamma, and Theta were free because volatility and the risk-free rate are baked into u, d, and p before the tree is built, so nearby nodes within one tree never actually vary sigma or r. Vega, sensitivity to volatility, and Rho, sensitivity to the rate, need a second tree entirely, rebuilt with one input nudged, compared against the original at the root.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "mathBlock",
+              "_key": "n19",
+              "latex": "\\text{Vega} \\approx \\frac{f(\\sigma + \\Delta\\sigma) - f(\\sigma)}{\\Delta\\sigma}, \\qquad \\text{Rho} \\approx \\frac{f(r + \\Delta r) - f(r)}{\\Delta r}",
+              "caption": "Both require a full second tree build, recalibrating u, d, and p from scratch with the bumped input."
+            },
+            {
+              "_type": "table",
+              "_key": "n20",
+              "caption": "Bump-and-reprice results, one percentage point bumps",
+              "headers": ["Scenario", "Root Price", "Greek"],
+              "rows": [
+                { "cells": ["Base case (sigma = 14%, r = 6.5%)", "₹848.23", "n/a"] },
+                { "cells": ["Sigma bumped to 15%, same tree otherwise", "₹892.62", "Vega ≈ ₹44.39 per 1 percentage point of volatility"] },
+                { "cells": ["r bumped to 7.5%, same tree otherwise", "₹882.54", "Rho ≈ ₹34.31 per 1 percentage point of rate"] }
+              ]
+            },
+            {
+              "_type": "statGrid",
+              "_key": "n21",
+              "stats": [
+                { "label": "Delta", "value": "0.6013", "context": "Free, from level-1 nodes" },
+                { "label": "Gamma", "value": "0.000267", "context": "Free, from level-2 nodes" },
+                { "label": "Theta", "value": "−₹6.52 / day", "context": "Free, using the ud node's return to S0" }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "n22",
+              "variant": "quiz",
+              "title": "Quick Check",
+              "question": "Which of these Greeks requires building an entirely separate tree, rather than reading values off the tree already built for pricing?",
+              "options": [
+                "Delta, from level-1 nodes",
+                "Gamma, from level-2 nodes",
+                "Vega, since volatility is fixed inside u and d before the tree is even built",
+                "Theta, using the ud node"
+              ],
+              "correctIndex": 2,
+              "explanation": "Delta, Gamma, and Theta all come from nodes within a single tree, because stock price and time naturally vary across that tree's own nodes. Volatility does not, it is baked into u and d during calibration, fixed for every node in that one tree, so measuring sensitivity to it means rebuilding a second tree with a different sigma and comparing root prices."
+            },
+            {
+              "_type": "exercise",
+              "_key": "n23",
+              "variant": "scenario",
+              "title": "Pricing a Full Book, Fast",
+              "scenario": "A risk desk needs Delta, Gamma, and Vega for 500 different options in its book, refreshed every few minutes throughout the trading day.",
+              "prompt": "Given what this lesson showed about how each Greek is computed, which of the three is effectively free once the desk is already pricing the book, and which one meaningfully adds to the computational load? Why?",
+              "modelAnswer": "Delta and Gamma are effectively free. The desk already builds a full tree to price each of the 500 options in the first place, and the level-1 and level-2 nodes needed for Delta and Gamma are sitting inside that same tree, already computed, no extra tree-building required. Vega is different, it needs a second, independently calibrated tree per option, with volatility bumped, meaning roughly double the tree-building work just to add Vega to the refresh cycle. On a 500-option book refreshed every few minutes, that doubling is the one line item worth actually budgeting compute for, not Delta or Gamma."
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "n24",
+              "text": "A binomial tree built once for pricing already contains Delta, Gamma, and a working Theta, sitting in nodes computed along the way at no extra cost. Vega and Rho are the only two Greeks that ask the tree to be built again, because volatility and the rate are choices made before the lattice exists, not something the lattice itself varies across."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "n25",
+              "points": [
+                "Delta is the same number as the replicating portfolio's hedge ratio from Chapter 2, Lesson 2, read directly from the two nodes one step from the root.",
+                "Gamma comes from comparing an 'upper' and 'lower' Delta computed at the three nodes two steps from the root, a central-difference estimate of curvature.",
+                "Theta exploits CRR's d = 1/u choice from Chapter 2, Lesson 4 directly, the ud node lands on today's exact stock price two steps later, isolating pure time decay.",
+                "Vega and Rho need a full second tree, recalibrated with volatility or the rate bumped, because those inputs are fixed inside u, d, and p before any node exists, not something that varies within one tree.",
+                "On the Chapter 2, Lesson 5 Nifty call: Delta 0.6013, Gamma 0.000267, Theta about −₹6.52 a day, Vega about ₹44.39 per volatility point, Rho about ₹34.31 per rate point."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,222 @@
+{
+  "courseSlug": "understanding-position-sizing-and-the-kelly-criterion",
+  "chapters": [
+    {
+      "title": "Chapter 4: Kelly Sizing in Indian F&O and Multi-Asset Portfolios",
+      "lessons": [
+        {
+          "title": "Sizing Nifty and Bank Nifty Options Positions Using Defined-Risk Kelly",
+          "slug": "sizing-nifty-and-bank-nifty-options-positions-using-defined-risk-kelly",
+          "body": [
+            {
+              "_key": "c4l1-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l1-001s1", "_type": "span", "marks": [], "text": "Karthik's blowup in Lesson 1.3 happened because a naked short strangle's real worst-case loss was much larger than its planned stop-loss, and a fast market meant the stop never filled at the intended price. This lesson sizes a structurally different trade, a defined-risk credit spread, where that specific failure mode is engineered away, and runs it through the full pipeline built across Chapters 2 and 3: raw Kelly, the estimation-error discount, fractional Kelly, and finally an actual number of lots." }
+              ]
+            },
+            {
+              "_key": "c4l1-002",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l1-002s1", "_type": "span", "marks": [], "text": "Why Defined-Risk Changes Everything" }
+              ]
+            },
+            {
+              "_key": "c4l1-003",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l1-003s1", "_type": "span", "marks": [], "text": "A naked short option's loss is capped only by the underlying reaching zero, which in practice means the loss is capped by nothing useful. A credit spread buys a further-out option against the one sold, which contractually caps the maximum loss at the difference between the two strikes, minus the credit collected, no matter how violently Nifty moves. There is still execution risk if a position is closed early before expiry, and spread liquidity can be thinner than a single leg, but the worst case at expiry is a known, fixed number rather than an estimate that can be blown through by slippage." }
+              ]
+            },
+            {
+              "_key": "c4l1-004",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This does not make defined-risk trades risk-free, and it does not remove the need for careful sizing. What it removes is exactly the failure mode from Lesson 1.3: a stop-loss that turns out to be a wish rather than a guarantee. The maximum loss on a credit spread is a fact, known before the trade is placed, which is precisely the kind of number the Kelly formula needs."
+            },
+            {
+              "_key": "c4l1-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l1-005s1", "_type": "span", "marks": [], "text": "The Trade: A Nifty Weekly Bull Put Spread" }
+              ]
+            },
+            {
+              "_key": "c4l1-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l1-006s1", "_type": "span", "marks": [], "text": "With Nifty near 24,000: sell the 23,800 put, buy the 23,700 put, both expiring the same week, for a net credit of 35 points. This example uses an illustrative lot size of 75; always check the current NSE-specified lot size before sizing a real position, since exchange contract sizes are revised periodically." }
+              ]
+            },
+            {
+              "_key": "c4l1-007",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "c4l1-007s1", "label": "Spread width", "value": "100 points", "context": "23,800 − 23,700" },
+                { "_key": "c4l1-007s2", "label": "Net credit", "value": "35 points", "context": "₹2,625 per spread (× 75)" },
+                { "_key": "c4l1-007s3", "label": "Max loss per spread", "value": "65 points", "context": "₹4,875 per spread (× 75)" },
+                { "_key": "c4l1-007s4", "label": "Payoff ratio (b)", "value": "0.538", "context": "35 ÷ 65" }
+              ]
+            },
+            {
+              "_key": "c4l1-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l1-008s1", "_type": "span", "marks": [], "text": "Backtested across 250 similarly-structured weekly spreads over roughly five years, this setup expired with Nifty above the short strike, the profitable outcome, 72% of the time." }
+              ]
+            },
+            {
+              "_key": "c4l1-009",
+              "_type": "table",
+              "caption": "From backtest to raw Kelly fraction",
+              "headers": ["Quantity", "Value", "Formula"],
+              "rows": [
+                { "_key": "c4l1-009r1", "_type": "tableRow", "cells": ["Win rate (p)", "72.0%", "From 250 backtested spreads"] },
+                { "_key": "c4l1-009r2", "_type": "tableRow", "cells": ["Payoff ratio (b)", "0.538", "35 ÷ 65"] },
+                { "_key": "c4l1-009r3", "_type": "tableRow", "cells": ["Expectancy, E(R)", "0.108R", "(0.72 × 0.538) − 0.28"] },
+                { "_key": "c4l1-009r4", "_type": "tableRow", "cells": ["Raw Kelly fraction, f*", "20.0%", "0.108R ÷ 0.538"] }
+              ]
+            },
+            {
+              "_key": "c4l1-010",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l1-010s1", "_type": "span", "marks": [], "text": "Applying the Chapter 3 Discipline" }
+              ]
+            },
+            {
+              "_key": "c4l1-011",
+              "_type": "mathBlock",
+              "latex": "SE(p) = \\sqrt{\\dfrac{0.72 \\times 0.28}{250}} \\approx 2.84\\%",
+              "caption": "Lesson 1.2's formula, applied to this backtest's 250 trades"
+            },
+            {
+              "_key": "c4l1-012",
+              "_type": "table",
+              "caption": "Stacking the conservative estimate and fractional Kelly, as in Lesson 3.3",
+              "headers": ["Step", "p used", "f*"],
+              "rows": [
+                { "_key": "c4l1-012r1", "_type": "tableRow", "cells": ["Raw point estimate", "72.0%", "20.00%"] },
+                { "_key": "c4l1-012r2", "_type": "tableRow", "cells": ["Lower bound of 95% CI", "66.4%", "4.10%"] },
+                { "_key": "c4l1-012r3", "_type": "tableRow", "cells": ["Same, then half-Kelly", "66.4%", "2.05%"] }
+              ]
+            },
+            {
+              "_key": "c4l1-013",
+              "_type": "callout",
+              "type": "warning",
+              "text": "The same pattern as Lesson 3.3 shows up here: a headline 20% Kelly fraction shrinks to roughly 2%, a tenfold reduction, once estimation uncertainty and a fractional-Kelly safety margin are both applied honestly. This is not a special case; it is what happens whenever these two disciplines are taken seriously."
+            },
+            {
+              "_key": "c4l1-014",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l1-014s1", "_type": "span", "marks": [], "text": "Turning 2.05% Into an Actual Number of Spreads" }
+              ]
+            },
+            {
+              "_key": "c4l1-015",
+              "_type": "mathBlock",
+              "latex": "\\text{Spreads} = \\dfrac{f^{*} \\times \\text{Bankroll}}{\\text{Max loss per spread}}",
+              "caption": "Rounded down to a whole number of lots, never up"
+            },
+            {
+              "_key": "c4l1-016",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "c4l1-016s1", "label": "Bankroll", "value": "₹6,00,000", "context": "Trading capital" },
+                { "_key": "c4l1-016s2", "label": "Risk capital target", "value": "₹12,300", "context": "2.05% of bankroll" },
+                { "_key": "c4l1-016s3", "label": "Spreads, exact", "value": "2.52", "context": "₹12,300 ÷ ₹4,875" },
+                { "_key": "c4l1-016s4", "label": "Spreads, actually traded", "value": "2", "context": "Rounded down" }
+              ]
+            },
+            {
+              "_key": "c4l1-017",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Rounding 2.52 spreads down to 2 means the position's actual maximum loss is 2 × ₹4,875 = ₹9,750, or 1.625% of capital, slightly under the 2.05% target. Rounding down on a risk calculation is always the correct direction: an accidental extra 0.5 of a lot is not available to trade, but risking slightly less than the target costs nothing dangerous. Never round a risk-based position size up to reach a target more precisely."
+            },
+            {
+              "_key": "c4l1-018",
+              "_type": "keyFact",
+              "label": "This trade's numbers",
+              "value": "2 spreads, risking ₹9,750, for a potential ₹5,250",
+              "context": "1.625% of capital at risk if Nifty closes below 23,700; maximum gain if Nifty closes above 23,800"
+            },
+            {
+              "_key": "c4l1-019",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Check the spread count",
+              "prompt": "Using risk capital of ₹12,300 and a max loss of ₹4,875 per spread, how many whole spreads can this position actually hold?",
+              "correctValue": 2,
+              "tolerance": 0,
+              "explanation": "₹12,300 ÷ ₹4,875 ≈ 2.52. Since only whole lots can be traded and risk-based sizing always rounds down, the answer is 2 spreads, not 3."
+            },
+            {
+              "_key": "c4l1-020",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Sizing a smaller account",
+              "scenario": "A trader wants to run this exact same spread and sizing discipline, but their account holds only ₹1,50,000.",
+              "prompt": "Using the same 2.05% conservative, half-Kelly fraction and the same ₹4,875 max loss per spread, how many spreads can this account hold? What should the trader do with that result?",
+              "modelAnswer": "Risk capital target: 2.05% × ₹1,50,000 = ₹3,075. Spreads: ₹3,075 ÷ ₹4,875 ≈ 0.63, which rounds down to zero. The honest sizing answer is that this account cannot take this specific trade within its risk discipline at all. The right response is not to round up to one lot anyway, since that would risk ₹4,875, or 3.25% of capital, well above the intended 2.05%. Better options are to wait and grow the account, look for a narrower (cheaper) spread with a smaller max loss per lot, or accept that this particular strategy is not yet sized for an account this size."
+            },
+            {
+              "_key": "c4l1-021",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l1-021s1", "_type": "span", "marks": [], "text": "What This Lesson Didn't Cover Yet" }
+              ]
+            },
+            {
+              "_key": "c4l1-022",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l1-022s1", "_type": "span", "marks": [], "text": "This lesson sized one position in isolation. Real accounts often run this kind of spread most weeks, and hold other positions alongside it. The next lesson applies the same discipline to futures, where leverage and margin change the mechanics again, and the lesson after that extends everything to a portfolio of several positions held at once, where how they move together starts to matter as much as how each one is sized on its own." }
+              ]
+            },
+            {
+              "_key": "c4l1-023",
+              "_type": "keyTakeaways",
+              "points": [
+                "A defined-risk spread caps the maximum loss contractually at expiry, removing the stop-loss slippage risk that destroyed Karthik's account in Lesson 1.3.",
+                "The same Kelly pipeline applies: raw f* from p and b, a conservative lower-bound p, then fractional Kelly on top, exactly as in Lesson 3.3.",
+                "For this worked example, a raw 20% Kelly fraction became roughly 2% after both adjustments, a tenfold reduction.",
+                "Position size = (f* × bankroll) ÷ max loss per lot, always rounded down to a whole number of lots.",
+                "When rounding down produces zero lots, the correct response is not to trade, or to adjust the trade structure, never to round up and exceed the intended risk."
+              ]
+            },
+            {
+              "_key": "c4l1-024",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "The strikes, credit, backtest statistics, lot size, and account figures in this lesson are illustrative and constructed for teaching purposes, not a verified historical strategy or a recommendation to trade this or any specific option structure. Always confirm current NSE lot sizes and margin requirements before trading. This lesson is for education only and is not investment or trading advice. Consult a SEBI-registered investment adviser before trading derivatives."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

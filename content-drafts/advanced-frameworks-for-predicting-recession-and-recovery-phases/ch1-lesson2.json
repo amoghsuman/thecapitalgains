@@ -1,0 +1,346 @@
+{
+  "courseSlug": "advanced-frameworks-for-predicting-recession-and-recovery-phases",
+  "chapters": [
+    {
+      "title": "Chapter 1: The Business Cycle Framework",
+      "lessons": [
+        {
+          "title": "Leading, Lagging, and Coincident Indicators: Telling Them Apart",
+          "slug": "leading-lagging-and-coincident-indicators-telling-them-apart",
+          "body": [
+            {
+              "_key": "c1l2k001",
+              "_type": "bigIdea",
+              "text": "An indicator's value is not what it measures. It is when it moves relative to the cycle. Confuse a lagging indicator for a leading one, and you will always be calling the turn after it has already happened."
+            },
+            {
+              "_key": "c1l2k002",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l2k002s1",
+                  "_type": "span",
+                  "text": "The previous lesson previewed the split between leading and lagging indicators. This lesson makes that split precise, adds the coincident category most retail commentary skips entirely, and maps each category to the actual Indian data series you will use through the rest of this course: from RBI credit data to MOSPI's industrial production numbers to Nifty 500 earnings.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l2k003",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l2k003s1",
+                  "_type": "span",
+                  "text": "The Three Categories, Defined Precisely",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l2k004",
+              "_type": "table",
+              "caption": "Leading, coincident, and lagging indicators, defined",
+              "headers": ["Category", "Definition", "Typical Timing", "Indian Examples"],
+              "rows": [
+                {
+                  "_key": "c1l2k004r1",
+                  "_type": "tableRow",
+                  "cells": ["Leading", "Moves ahead of the cycle because it reflects forward expectations or commitments, not realised outcomes", "Several months to 1-2 quarters ahead of a turn", "Yield curve slope, credit spreads, PMI new orders, India VIX, bank credit growth momentum"]
+                },
+                {
+                  "_key": "c1l2k004r2",
+                  "_type": "tableRow",
+                  "cells": ["Coincident", "Moves roughly together with the cycle, reflecting current activity as it happens", "Little to no lag against the cycle itself", "IIP headline growth, core sector output, PMI headline level, GST e-way bill volumes"]
+                },
+                {
+                  "_key": "c1l2k004r3",
+                  "_type": "tableRow",
+                  "cells": ["Lagging", "Confirms a turn only after it has already happened, because it reflects outcomes that take time to show up in the data", "1-2 quarters or more after the actual turn", "Quarterly GDP growth, reported corporate earnings, EPFO payroll additions, the unemployment rate"]
+                }
+              ]
+            },
+            {
+              "_key": "c1l2k005",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l2k005s1",
+                  "_type": "span",
+                  "text": "Leading Indicators: What Actually Leads in India",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l2k006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c1l2k006md1",
+                  "_type": "glossaryTerm",
+                  "definition": "A survey-based index where a reading above 50 signals expansion versus the prior month and a reading below 50 signals contraction. The level itself, not just the direction, matters: 54 and 51 are both expansionary, but 54 reflects faster growth."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c1l2k006s1",
+                  "_type": "span",
+                  "text": "A leading indicator earns that label because it reflects a forward-looking decision, not a backward-looking outcome. The yield curve and credit spreads move on what bond markets expect rates and defaults to do next, not what has already happened. The Purchasing Managers' Index (PMI), a ",
+                  "marks": []
+                },
+                {
+                  "_key": "c1l2k006s2",
+                  "_type": "span",
+                  "text": "diffusion index",
+                  "marks": ["c1l2k006md1"]
+                },
+                {
+                  "_key": "c1l2k006s3",
+                  "_type": "span",
+                  "text": " built from surveys of purchasing managers, is particularly useful because its New Orders sub-index asks firms about orders already booked for future production, which tends to move before those orders actually show up as completed output in the IIP. Bank credit growth momentum works similarly: banks extend working capital and project loans based on their own forward read of demand, so a slowdown in credit growth often precedes, rather than follows, a slowdown in reported output.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l2k007",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Illustrative Pattern: PMI New Orders Leading an IIP Slowdown",
+              "xAxisLabel": "Quarters Before a Growth Trough",
+              "yAxisLabel": "Index Level / Growth %",
+              "data": [
+                { "_key": "c1l2k007d1", "label": "T-5", "value": 0 },
+                { "_key": "c1l2k007d2", "label": "T-4", "value": 0 },
+                { "_key": "c1l2k007d3", "label": "T-3", "value": 0 },
+                { "_key": "c1l2k007d4", "label": "T-2", "value": 0 },
+                { "_key": "c1l2k007d5", "label": "T-1", "value": 0 },
+                { "_key": "c1l2k007d6", "label": "T (Trough)", "value": 0 }
+              ],
+              "series": [
+                {
+                  "_key": "c1l2k007s1",
+                  "label": "PMI New Orders (Index Level)",
+                  "values": [58, 56, 53, 50, 48, 46]
+                },
+                {
+                  "_key": "c1l2k007s2",
+                  "label": "IIP Growth (% YoY)",
+                  "values": [6.5, 6.0, 5.8, 5.0, 3.2, 1.0]
+                }
+              ]
+            },
+            {
+              "_key": "c1l2k008",
+              "_type": "keyFact",
+              "label": "Typical PMI-to-IIP Lead (Stylised)",
+              "value": "1-2 quarters",
+              "context": "New-order momentum in PMI surveys has historically softened before industrial output growth follows; the chart above is an illustration of that pattern, not a printout of an actual historical episode. The exact lead time varies by cycle."
+            },
+            {
+              "_key": "c1l2k009",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l2k009s1",
+                  "_type": "span",
+                  "text": "Coincident Indicators: Reading Where You Are Right Now",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l2k010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l2k010s1",
+                  "_type": "span",
+                  "text": "Coincident indicators are useful for a different job: confirming what phase the economy is in right now, without necessarily telling you where it is headed next. IIP headline growth and core sector output both measure activity that is happening in roughly the same period they are reported for, once you account for MOSPI's data collection and processing lag. GST e-way bill volumes and GST collections are similarly close to real time, since they are generated by actual goods movement and transactions as they occur. The value of coincident data is precision about the present: when a leading indicator like PMI has been signalling a slowdown for two quarters, coincident data is what tells you whether that slowdown has actually started showing up in real output yet, or whether it is still ahead of you.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l2k011",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l2k011s1",
+                  "_type": "span",
+                  "text": "Lagging Indicators: Confirmation, Not Timing",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l2k012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l2k012s1",
+                  "_type": "span",
+                  "text": "Quarterly GDP growth, reported corporate earnings, EPFO net payroll additions, and the unemployment rate all share one feature: by the time they are published, the events driving them are already several weeks to a few months in the past. GDP growth for a quarter is released roughly two months after that quarter ends. Corporate earnings for the Nifty 500 are reported four to six weeks after each quarter closes, and are themselves a lagging reflection of demand and cost conditions from the quarter before that. This does not make lagging indicators useless, it makes them the wrong tool for one specific job: calling a turn early. They remain the right tool for a different job, confirming that a turn you suspected from leading data has actually happened, and for one thing leading and coincident data genuinely cannot do well: measuring the final, realised scale of a slowdown or recovery once it is over.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l2k013",
+              "_type": "callout",
+              "type": "insight",
+              "text": "A common mistake is treating lagging indicators as disqualifying evidence against a leading signal. If PMI new orders have been falling for two quarters but GDP growth is still healthy, that is not proof the PMI signal is wrong, it is exactly what a leading indicator is supposed to look like before a lagging one catches up. The right response is to watch for confirmation in coincident data next, not to dismiss the leading signal because GDP has not moved yet."
+            },
+            {
+              "_key": "c1l2k014",
+              "_type": "flashcardSet",
+              "title": "Indicator Vocabulary",
+              "cards": [
+                {
+                  "_key": "c1l2k014c1",
+                  "term": "Leading Indicator",
+                  "definition": "A data series that moves ahead of the business cycle because it reflects forward-looking decisions or expectations, such as bond yields, PMI new orders, or credit growth commitments."
+                },
+                {
+                  "_key": "c1l2k014c2",
+                  "term": "Coincident Indicator",
+                  "definition": "A data series that moves roughly in step with the current state of the economy, such as IIP growth or GST e-way bill volumes, useful for confirming the present rather than predicting the future."
+                },
+                {
+                  "_key": "c1l2k014c3",
+                  "term": "Lagging Indicator",
+                  "definition": "A data series that confirms a cyclical turn only after it has already occurred, such as quarterly GDP growth or reported corporate earnings, because it reflects realised outcomes rather than forward expectations."
+                },
+                {
+                  "_key": "c1l2k014c4",
+                  "term": "Diffusion Index",
+                  "definition": "A survey-based index, such as the PMI, where a reading above 50 signals expansion versus the prior period and below 50 signals contraction; the distance from 50 indicates the pace, not just the direction."
+                },
+                {
+                  "_key": "c1l2k014c5",
+                  "term": "Non-Food Bank Credit Growth",
+                  "definition": "Year-on-year growth in bank lending excluding food credit (loans for government food procurement), published fortnightly by the RBI; a widely used proxy for corporate and consumer demand for credit."
+                }
+              ]
+            },
+            {
+              "_key": "c1l2k015",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Check Your Understanding",
+              "question": "Which of the following is best classified as a lagging indicator rather than a leading one?",
+              "options": [
+                "India VIX",
+                "PMI new orders sub-index",
+                "Reported quarterly corporate earnings",
+                "Yield curve slope"
+              ],
+              "correctIndex": 2,
+              "explanation": "Corporate earnings are reported four to six weeks after a quarter closes and reflect demand and cost conditions that already played out during that quarter. India VIX, PMI new orders, and the yield curve slope are all forward-looking, priced or surveyed based on expectations, which is what makes them leading rather than lagging."
+            },
+            {
+              "_key": "c1l2k016",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Build a Better Dashboard",
+              "scenario": "A fund manager you are advising wants the earliest possible warning of a cyclical turn, not confirmation after the fact. She currently monitors only quarterly GDP growth and reported Nifty 500 earnings, updating her view once every three months when both are released.",
+              "prompt": "Which two or three indicators from this lesson would you add to her monitoring list, and why do they qualify as leading rather than coincident or lagging?",
+              "modelAnswer": "Add PMI new orders, non-food bank credit growth momentum, and the yield curve slope or credit spreads. All three are leading because they are built from forward-looking decisions rather than realised outcomes: PMI new orders reflect production firms have already committed to for the future, credit growth reflects banks' forward view of demand when they extend loans, and the yield curve and credit spreads reflect what bond markets expect rates and defaults to do next. Her current dashboard, GDP growth and reported earnings, is built entirely from lagging indicators, which means she is structurally guaranteed to learn about a turn only after it has already happened. Adding leading indicators does not replace GDP and earnings, which still matter for confirming the eventual scale of a move, it closes the multi-quarter blind spot she currently has at the point where a turn actually begins."
+            },
+            {
+              "_key": "c1l2k017",
+              "_type": "table",
+              "caption": "India indicator cheat sheet",
+              "headers": ["Indicator", "Category", "Primary Source", "Typical Release Lag"],
+              "rows": [
+                {
+                  "_key": "c1l2k017r1",
+                  "_type": "tableRow",
+                  "cells": ["Repo rate / G-Sec yield curve", "Leading", "RBI / bond market", "Real-time"]
+                },
+                {
+                  "_key": "c1l2k017r2",
+                  "_type": "tableRow",
+                  "cells": ["India VIX", "Leading", "NSE", "Real-time"]
+                },
+                {
+                  "_key": "c1l2k017r3",
+                  "_type": "tableRow",
+                  "cells": ["S&P Global India Manufacturing & Services PMI", "Leading", "S&P Global", "Published around the 1st business day of the following month"]
+                },
+                {
+                  "_key": "c1l2k017r4",
+                  "_type": "tableRow",
+                  "cells": ["Non-food bank credit growth", "Leading / Coincident", "RBI (Sectoral Deployment of Credit)", "Roughly 3-4 weeks"]
+                },
+                {
+                  "_key": "c1l2k017r5",
+                  "_type": "tableRow",
+                  "cells": ["Core sector output (8 core industries)", "Coincident", "Ministry of Commerce and Industry", "Roughly 4 weeks"]
+                },
+                {
+                  "_key": "c1l2k017r6",
+                  "_type": "tableRow",
+                  "cells": ["Index of Industrial Production (IIP)", "Coincident", "MOSPI", "Roughly 6 weeks"]
+                },
+                {
+                  "_key": "c1l2k017r7",
+                  "_type": "tableRow",
+                  "cells": ["GST e-way bills / GST collections", "Coincident", "GSTN", "A few days after month-end"]
+                },
+                {
+                  "_key": "c1l2k017r8",
+                  "_type": "tableRow",
+                  "cells": ["Quarterly GDP growth", "Lagging", "MOSPI / NSO", "Roughly 2 months after quarter-end"]
+                },
+                {
+                  "_key": "c1l2k017r9",
+                  "_type": "tableRow",
+                  "cells": ["Corporate earnings (Nifty 500 aggregate)", "Lagging", "Company filings", "4-6 weeks after quarter-end"]
+                },
+                {
+                  "_key": "c1l2k017r10",
+                  "_type": "tableRow",
+                  "cells": ["EPFO net payroll additions", "Lagging", "EPFO", "Roughly 1-2 months"]
+                }
+              ]
+            },
+            {
+              "_key": "c1l2k018",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson presents a general framework for classifying economic indicators, for educational purposes only. Release schedules and typical lags are presented as approximate and can shift; always confirm the current publication calendar on the relevant source, RBI, MOSPI, or GSTN, before relying on it professionally."
+            },
+            {
+              "_key": "c1l2k019",
+              "_type": "keyTakeaways",
+              "points": [
+                "Leading indicators move ahead of the cycle because they reflect forward expectations or commitments: yield curve, credit spreads, PMI new orders, credit growth momentum, India VIX",
+                "Coincident indicators move roughly with the cycle and are best used to confirm the present, not predict the future: IIP, core sector output, GST e-way bill volumes",
+                "Lagging indicators confirm a turn only after it has happened: GDP growth, reported earnings, EPFO payrolls, unemployment; they remain essential for measuring the final, realised scale of a move",
+                "A leading indicator moving while a lagging one has not yet moved is not a contradiction, it is exactly the sequence a real cyclical turn produces",
+                "The next lesson moves from this classification into the phase-by-phase anatomy of a cycle, mapping which category of indicator you should be watching hardest at each stage"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

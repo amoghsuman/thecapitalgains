@@ -1,0 +1,376 @@
+{
+  "courseSlug": "introduction-to-options-pricing-models-black-scholes-explained",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Options Need a Pricing Model",
+      "lessons": [
+        {
+          "title": "What Is Option Pricing, and Why Intuition Fails",
+          "slug": "what-is-option-pricing-and-why-intuition-fails",
+          "body": [
+            {
+              "_key": "k1",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k1s",
+                  "_type": "span",
+                  "text": "The Question Every New Options Trader Gets Wrong",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k2",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k2s1",
+                  "_type": "span",
+                  "text": "A trader opens Zerodha Kite, pulls up the Nifty option chain, and reasons like this: \"I think Nifty goes up this week, so I should buy a call.\" That single sentence feels complete. It is not. Buying a call is not a bet on direction alone. It is a bet on direction, on how much, on by when, and on whether the move is bigger than what the ",
+                  "marks": []
+                },
+                {
+                  "_key": "k2s2",
+                  "_type": "span",
+                  "text": "premium",
+                  "marks": ["gd1"]
+                },
+                {
+                  "_key": "k2s3",
+                  "_type": "span",
+                  "text": " you just paid already assumes. Miss any one of those and you can be right about Nifty and still lose money on the option.",
+                  "marks": []
+                }
+              ],
+              "markDefs": [
+                {
+                  "_key": "gd1",
+                  "_type": "glossaryTerm",
+                  "definition": "The price paid by the buyer of an option to the seller (writer), quoted per share and paid upfront. On NSE index options this is quoted per unit and multiplied by lot size to get the actual cash outlay."
+                }
+              ]
+            },
+            {
+              "_type": "keyFact",
+              "label": "Illustrative Nifty option chain snapshot",
+              "value": "24,700 CE trading at ₹165",
+              "context": "Nifty spot at 24,800, 7 calendar days to weekly expiry. Numbers are hypothetical for this lesson, not a live quote. Always check the real chain on NSE or your broker terminal before trading.",
+              "_key": "k3"
+            },
+            {
+              "_key": "k4",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k4s1",
+                  "_type": "span",
+                  "text": "Here is the naive logic in full. Nifty is at 24,800. The trader expects it to rise over the week, so a call struck at 24,700 for ₹165 looks attractive. But that ₹165 is not a random number a broker made up. It was set by every buyer and seller in that strike agreeing, in real time, on a price that already reflects the market's collective view of how likely Nifty is to move, and by how much, in the days left before expiry. You are not trading against a static number. You are trading against a price that has already absorbed the crowd's expectation of the exact move you are betting on.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "callout",
+              "type": "insight",
+              "text": "An option's premium is not the market's guess at where the stock will land. It is the market's estimate of the value of uncertainty itself, over a fixed window of time. That is the idea an option pricing model is built to capture, and it is why \"I think it goes up\" is necessary but nowhere near sufficient.",
+              "_key": "k5"
+            },
+            {
+              "_key": "k6",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k6s",
+                  "_type": "span",
+                  "text": "Splitting the Premium: Intrinsic Value and Time Value",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k7",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k7s1",
+                  "_type": "span",
+                  "text": "Every option premium splits cleanly into two pieces. ",
+                  "marks": []
+                },
+                {
+                  "_key": "k7s2",
+                  "_type": "span",
+                  "text": "Intrinsic value",
+                  "marks": ["strong"]
+                },
+                {
+                  "_key": "k7s3",
+                  "_type": "span",
+                  "text": " is what the option would be worth if expiry were right now: the payoff you would lock in by exercising immediately. ",
+                  "marks": []
+                },
+                {
+                  "_key": "k7s4",
+                  "_type": "span",
+                  "text": "Time value",
+                  "marks": ["strong"]
+                },
+                {
+                  "_key": "k7s5",
+                  "_type": "span",
+                  "text": " is everything else in the premium: the extra amount buyers are willing to pay for the chance that things improve before expiry actually arrives.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "mathBlock",
+              "latex": "\\text{Intrinsic value (call)} = \\max(S - K, 0)",
+              "caption": "S is the spot price of the underlying, K is the strike price. For a put, it flips to max(K - S, 0). This one line is the entire payoff at expiry. Everything else in the premium is time value.",
+              "_key": "k8"
+            },
+            {
+              "_key": "k9",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k9s1",
+                  "_type": "span",
+                  "text": "Back to the 24,700 call with Nifty at 24,800. Intrinsic value is 24,800 minus 24,700, which is ₹100. The option trades at ₹165, so the remaining ₹65 is pure time value: the price of seven more days of uncertainty. If Nifty stood at 24,600 instead, the same 24,700 call would have zero intrinsic value (it would be worthless to exercise right now) and its entire premium would be time value.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "payoffDiagram",
+              "instrumentType": "call",
+              "position": "long",
+              "strikePrice": 24700,
+              "premium": 165,
+              "spotPriceRange": {
+                "min": 24200,
+                "max": 25200
+              },
+              "caption": "The payoff of this 24,700 call AT EXPIRY. Below 24,700 the option is worthless; above it, payoff rises rupee for rupee with Nifty. Breakeven sits at 24,865 (strike plus premium paid).",
+              "_key": "k10"
+            },
+            {
+              "_key": "k11",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k11s1",
+                  "_type": "span",
+                  "text": "Look closely at that kinked line. It is flat, then straight. But the actual quoted premium today, with seven days still on the clock, does not sit exactly on that line. It sits above it, by the time value component, and the gap is largest when the option is near the money and shrinks to zero only at expiry itself. This is the first intuition failure: traders price options in their head using the expiry payoff line, then get confused when the live premium in the market does not match it. The line is where the option is going. The premium is priced for everywhere it might go on the way there.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Intrinsic value check",
+              "question": "Bank Nifty is at 54,200. A 54,500 put option trades at ₹410. What is its intrinsic value?",
+              "options": [
+                "₹0, because a put needs the strike below spot to have intrinsic value",
+                "₹300, because 54,500 minus 54,200 equals 300",
+                "₹410, the full premium is intrinsic value",
+                "₹110, because 410 minus 300 equals 110"
+              ],
+              "correctIndex": 1,
+              "explanation": "For a put, intrinsic value is max(K − S, 0) = max(54,500 − 54,200, 0) = ₹300. The remaining ₹110 of the ₹410 premium is time value.",
+              "_key": "k12"
+            },
+            {
+              "_key": "k13",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k13s",
+                  "_type": "span",
+                  "text": "What Actually Moves an Option's Price",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k14",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k14s1",
+                  "_type": "span",
+                  "text": "If time value is the price of uncertainty, then anything that changes the amount or shape of that uncertainty should move the premium. It turns out exactly six inputs do all the work, and every option pricing model, including Black-Scholes, is built entirely out of them.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "table",
+              "caption": "The six inputs behind every option price",
+              "headers": [
+                "Input",
+                "What it means",
+                "Effect on a call",
+                "Effect on a put"
+              ],
+              "rows": [
+                {
+                  "_key": "k15",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Spot price (S)",
+                    "Current price of the underlying, e.g. Nifty or Reliance",
+                    "Higher spot raises call value",
+                    "Higher spot lowers put value"
+                  ]
+                },
+                {
+                  "_key": "k16",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Strike price (K)",
+                    "The price at which the option can be exercised",
+                    "Higher strike lowers call value",
+                    "Higher strike raises put value"
+                  ]
+                },
+                {
+                  "_key": "k17",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Time to expiry (T)",
+                    "How many days or years remain",
+                    "More time raises value (more room to move)",
+                    "More time usually raises value too"
+                  ]
+                },
+                {
+                  "_key": "k18",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Volatility (σ)",
+                    "How much the underlying tends to swing, in either direction",
+                    "Higher volatility raises value",
+                    "Higher volatility raises value"
+                  ]
+                },
+                {
+                  "_key": "k19",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Risk-free rate (r)",
+                    "Return available on a safe asset, proxied in India by the T-bill or repo rate",
+                    "Higher rate slightly raises call value",
+                    "Higher rate slightly lowers put value"
+                  ]
+                },
+                {
+                  "_key": "k20",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Dividends",
+                    "Cash paid out by the underlying before expiry, which lowers its price",
+                    "Expected dividends slightly lower call value",
+                    "Expected dividends slightly raise put value"
+                  ]
+                }
+              ],
+              "_key": "k21"
+            },
+            {
+              "_key": "k22",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k22s1",
+                  "_type": "span",
+                  "text": "Notice what is missing from that list: nowhere does it say \"expected direction of the underlying\". Under the pricing models this course builds, the model does not need to know whether Nifty will go up or down. It only needs to know how uncertain the outcome is, over how much time, funded at what rate. That is the second and deeper intuition failure, and Chapter 3 shows exactly why direction drops out of the formula once you price options in a risk-neutral world.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "comparison",
+              "title": "Beginner intuition vs what the model actually prices",
+              "columns": [
+                {
+                  "_key": "k23",
+                  "label": "What beginners think sets the price",
+                  "points": [
+                    "My view on whether the stock goes up or down",
+                    "How badly I want the trade to work",
+                    "What the option \"should\" be worth based on the stock's story",
+                    "Round numbers and gut feel about strikes"
+                  ]
+                },
+                {
+                  "_key": "k24",
+                  "label": "What the model actually prices",
+                  "points": [
+                    "Spot price relative to strike, right now",
+                    "Time left until expiry, in years",
+                    "Volatility: how much the underlying swings, not which way",
+                    "The risk-free rate and any dividends expected before expiry"
+                  ]
+                }
+              ],
+              "_key": "k25"
+            },
+            {
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "\"But I was right about the direction\"",
+              "scenario": "Rhea buys a Nifty 25,000 call for ₹80 with 3 trading days to expiry, expecting a rally. Over the next two days Nifty grinds up slowly to 25,020. On the day before expiry she checks the option and finds it trading at ₹55, even though Nifty is now above her strike and she was right about the direction.",
+              "prompt": "Using intrinsic value and time value, explain why Rhea's option lost money even though Nifty rose and moved above her strike.",
+              "modelAnswer": "Intrinsic value did rise: at 25,020 the option now has ₹20 of intrinsic value versus ₹0 when Nifty was below 25,000. But the move was small and slow, and two of her three days to expiry are now gone. Time value collapses fast in the final days before expiry (this is theta decay, covered in Chapter 4), and a 20-point rally over two days was not enough to convince the market that a bigger move was still likely. The ₹25 drop in premium (from ₹80 to ₹55) is time value decaying faster than intrinsic value grew. Rhea was right about direction and still lost money, because the option was never just a bet on direction. It was a bet that the move would be large enough, and fast enough, to outrun time decay.",
+              "_key": "k26"
+            },
+            {
+              "_type": "bigIdea",
+              "text": "An option's price is not a bet on direction. It is the price of uncertainty over a fixed window of time, and every pricing model in this course is just a disciplined way of putting a number on that uncertainty.",
+              "_key": "k27"
+            },
+            {
+              "_type": "keyTakeaways",
+              "points": [
+                "An option premium splits into intrinsic value (max(S−K,0) for a call, max(K−S,0) for a put) and time value (everything else).",
+                "The expiry payoff line only tells you the option's value at expiry. Before that, the live premium sits above it by the time value component.",
+                "Exactly six inputs drive every option price: spot, strike, time to expiry, volatility, the risk-free rate, and dividends. Expected direction is not one of them.",
+                "Being right about direction is not the same as making money on an option. The move also has to be large enough and fast enough to beat time decay.",
+                "This is the gap every pricing model, including Black-Scholes, exists to close: turning uncertainty about the future into one defensible number today."
+              ],
+              "_key": "k28"
+            },
+            {
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice. The Nifty and Bank Nifty prices, premiums, and the Rhea scenario are hypothetical, built to illustrate the mechanics of option pricing, not to represent live market quotes. Always check the live option chain on NSE or your broker's terminal before trading, and consult a SEBI-registered advisor for personalised advice.",
+              "_key": "k29"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

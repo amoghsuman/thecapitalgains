@@ -1,0 +1,178 @@
+{
+  "courseSlug": "understanding-optimization-theory-convex-optimization-and-lagrange-multipliers-for-portfolio-construction",
+  "chapters": [
+    {
+      "title": "Chapter 6: Duality and Practical Solvers",
+      "lessons": [
+        {
+          "title": "From Theory to Code: How Quadratic Programming Solvers Use These Conditions",
+          "slug": "from-theory-to-code-how-quadratic-programming-solvers-use-these-conditions",
+          "body": [
+            {
+              "_key": "oc6l3-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc6l3-001s1", "_type": "span", "marks": [], "text": "Ananya starts the job Monday morning. Nobody at the desk hand-derives KKT conditions on paper for a 40-stock portfolio; they call a solver library and read the output. The person who understands what that output actually means, rather than treating it as a black box, is the one who can trust it, debug it when it misbehaves, and explain it in a meeting. This lesson is that translation, from six chapters of hand derivation to what actually runs when you press enter." }
+              ]
+            },
+            {
+              "_key": "oc6l3-002",
+              "_type": "bigIdea",
+              "text": "Every real portfolio optimizer, Excel Solver, Python's cvxpy, or a terminal's built-in portfolio tool, is running some numerical variant of exactly the KKT conditions this course derived by hand. Understanding the theory means being able to read solver output, diagnose failures, and trust results instead of treating the solver as magic."
+            },
+            {
+              "_key": "oc6l3-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc6l3-003s1", "_type": "span", "marks": [], "text": "What Makes This Problem Class Special to a Solver" }
+              ]
+            },
+            {
+              "_key": "oc6l3-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc6l3-004s1", "_type": "span", "marks": [], "text": "Chapter 1 named this problem class: a quadratic objective, linear constraints, a QP. That classification is not academic trivia, it is exactly why dedicated, fast, reliable QP solvers exist at all, separate from generic nonlinear optimizers. Because Chapter 2 proved the objective is always convex whenever Sigma is a genuine covariance matrix, a QP solver can be built to exploit that guaranteed structure directly, instead of hedging against the possibility of getting trapped at a bad local minimum." }
+              ]
+            },
+            {
+              "_key": "oc6l3-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc6l3-005s1", "_type": "span", "marks": [], "text": "Two Families of Algorithms" }
+              ]
+            },
+            {
+              "_key": "oc6l3-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc6l3-006s1", "_type": "span", "marks": [], "text": "Active-set methods are, essentially, the exact hand procedure from Chapter 5, automated and made efficient. A solver maintains a working guess of which inequality constraints bind, solves the resulting equality-only system with fast linear algebra, checks the computed multipliers' signs, and adds or drops one constraint from its guess at a time until every KKT condition checks out. Interior-point methods take a different route: start somewhere strictly inside the feasible region, away from every boundary, and follow a smooth path guided by a relaxed, numerically softened version of the KKT system, using Newton's method, tightening toward the exact solution step by step rather than jumping straight to a boundary." }
+              ]
+            },
+            {
+              "_key": "oc6l3-007",
+              "_type": "table",
+              "caption": "Two solver families, same target",
+              "headers": ["Method", "Approach", "Good Fit For"],
+              "rows": [
+                { "_key": "oc6l3-007r1", "_type": "tableRow", "cells": ["Active-set", "Guess binding constraints, solve, adjust the guess, repeat", "Small to medium problems, warm-starting from a nearby known solution"] },
+                { "_key": "oc6l3-007r2", "_type": "tableRow", "cells": ["Interior-point", "Follow a smooth path through the interior toward the KKT solution", "Large-scale problems, hundreds or thousands of assets"] }
+              ]
+            },
+            {
+              "_key": "oc6l3-008",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc6l3-008s1", "_type": "span", "marks": [], "text": "Reading Solver Output Like a KKT Diagnosis" }
+              ]
+            },
+            {
+              "_key": "oc6l3-009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc6l3-009s1", "_type": "span", "marks": [], "text": "A solved QP typically returns a status flag, the optimal weights, the achieved objective value, and often the dual values, the multipliers, on each constraint. Every one of these maps directly onto a KKT condition already covered. Weights and objective value are primal feasibility and the primal optimal value. The multipliers should satisfy dual feasibility (non-negative on every inequality constraint) and complementary slackness (a multiplier near zero for any weight that is strictly positive). Many solvers also report a duality gap or tolerance, the exact quantity Lesson 1 of this chapter defined, and it tells you precisely how certified the answer is, not just how confident the software sounds." }
+              ]
+            },
+            {
+              "_key": "oc6l3-010",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc6l3-010s1", "_type": "span", "marks": [], "text": "A Worked Example: Setting Up the Five-Stock Problem in Code" }
+              ]
+            },
+            {
+              "_key": "oc6l3-011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc6l3-011s1", "_type": "span", "marks": [], "text": "Here is Chapter 5's HDFC Bank, ICICI Bank, TCS, Infosys, HUL case study, expressed in cvxpy, a widely used Python convex optimization library." }
+              ]
+            },
+            {
+              "_key": "oc6l3-012",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "import cvxpy as cp\nimport numpy as np\n\nSigma = np.array([\n    [0.0676, 0.0546, 0.0125, 0.0130, 0.0070],\n    [0.0546, 0.0784, 0.0121, 0.0126, 0.0060],\n    [0.0125, 0.0121, 0.0576, 0.0420, 0.0043],\n    [0.0130, 0.0126, 0.0420, 0.0625, 0.0045],\n    [0.0070, 0.0060, 0.0043, 0.0045, 0.0324],\n])\n\nw = cp.Variable(5)\nobjective = cp.Minimize(cp.quad_form(w, Sigma))\nconstraints = [cp.sum(w) == 1, w >= 0]\nproblem = cp.Problem(objective, constraints)\nproblem.solve()\n\nprint(problem.status)              # 'optimal'\nprint(w.value)                     # ~[0.1087, 0.0860, 0.1687, 0.1185, 0.5180]\nprint(problem.value)               # minimum variance achieved\nprint(constraints[1].dual_value)   # multipliers on w >= 0, all ~0.0",
+              "caption": "The objective, cp.quad_form(w, Sigma), is literally wᵀΣw. The constraints list is literally the budget rule and the no-short-selling rule, written almost exactly as Chapter 1 first stated them."
+            },
+            {
+              "_key": "oc6l3-013",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Run this and the reported weights match Chapter 5's hand-derived answer to within rounding: roughly 10.87%, 8.60%, 16.87%, 11.85%, and 51.80%. The reported dual values on the w ≥ 0 constraints all come back essentially zero, confirming, from the solver's own KKT machinery, exactly what the hand calculation already found: none of the no-short-selling constraints bind. Six chapters of theory and one call to a solver agree to the decimal place."
+            },
+            {
+              "_key": "oc6l3-014",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Read the dual values",
+              "question": "After solving the 5-stock long-only minimum variance problem with cvxpy, you check constraints[1].dual_value (the multipliers on the w ≥ 0 constraints) and find all five are exactly 0.0. What does this confirm, consistent with Chapter 5's hand-derived result?",
+              "options": [
+                "The solver failed to converge",
+                "None of the no-short-selling constraints are binding, exactly matching the Chapter 5 case study's conclusion that the unconstrained solution was already feasible",
+                "All five stocks have zero expected return",
+                "The covariance matrix is singular"
+              ],
+              "correctIndex": 1,
+              "explanation": "By complementary slackness, a multiplier of exactly zero (within solver tolerance) on every inequality constraint means none of them are binding, the found solution sits strictly inside every wi ≥ 0 boundary. This exactly matches the hand-derived conclusion from Chapter 5: the equality-only solution already satisfied every constraint."
+            },
+            {
+              "_key": "oc6l3-015",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Debug a colleague's dual value",
+              "scenario": "A colleague runs a similar cvxpy optimization on a 10-stock long-only minimum variance portfolio and reports back: the solver says status is optimal, but one of my dual values came back as -0.003, and I'm confused.",
+              "prompt": "Using what you know about dual feasibility, what would you tell your colleague to check first?",
+              "modelAnswer": "A genuinely valid KKT solution for a wi ≥ 0 constraint must have a non-negative multiplier. A value of -0.003 is either a tiny numerical rounding artifact near zero, common and usually harmless if the true value is meant to be zero, or a sign convention mismatch, since different solvers report the multiplier on gi(x) ≤ 0 differently depending on how the constraint was entered, which can flip the sign. The first thing to check is how that specific solver defines the sign of its reported dual values for that constraint type, before assuming the optimization itself produced a wrong answer."
+            },
+            {
+              "_key": "oc6l3-016",
+              "_type": "flashcardSet",
+              "title": "Solvers in Practice: Core Terms",
+              "cards": [
+                { "_key": "oc6l3-016f1", "term": "Active-set method (solver)", "definition": "The automated, efficient version of Chapter 5's guess-solve-verify procedure, used by many QP solvers." },
+                { "_key": "oc6l3-016f2", "term": "Interior-point method", "definition": "A solver approach that follows a smooth path through the interior of the feasible region toward the KKT solution, well suited to large-scale problems." },
+                { "_key": "oc6l3-016f3", "term": "Dual value (solver output)", "definition": "The Lagrange multiplier a solver reports for each constraint, checkable against dual feasibility and complementary slackness exactly as derived by hand." },
+                { "_key": "oc6l3-016f4", "term": "Duality gap (solver tolerance)", "definition": "The reported measure of how certifiably close a solver's answer is to the true optimum, a direct application of weak duality from earlier in this chapter." }
+              ]
+            },
+            {
+              "_key": "oc6l3-017",
+              "_type": "keyTakeaways",
+              "points": [
+                "QP solvers exist as a dedicated, fast, reliable class of software specifically because Chapter 2 guarantees this problem type is convex.",
+                "Active-set methods automate Chapter 5's guess-solve-verify procedure; interior-point methods instead follow a smooth path through the feasible region's interior, better suited to large problems.",
+                "Solver output, weights, objective value, dual values, and a duality gap, maps directly onto primal feasibility, the primal optimal value, dual feasibility and complementary slackness, and weak duality.",
+                "Coding the five-stock case study in cvxpy reproduces Chapter 5's hand-derived weights and confirms every dual value is essentially zero, matching the conclusion that no constraint binds.",
+                "A negative reported multiplier for an inequality constraint is either numerical noise near zero or a sign convention issue, worth checking before assuming the solve itself is wrong.",
+                "The next lesson catalogs what actually goes wrong in practice, non-convexity, infeasibility, and numerical instability, and how to recognize each from the theory this course has built."
+              ]
+            },
+            {
+              "_key": "oc6l3-018",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to buy or sell any security named here. Code is illustrative of standard library usage, not a recommendation for any specific software, vendor, or trading system. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

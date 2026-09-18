@@ -1,0 +1,405 @@
+{
+  "courseSlug": "introduction-to-angel-investing-what-it-means-to-invest-in-startups",
+  "chapters": [
+    {
+      "title": "Chapter 4: The Legal, Regulatory and Tax Basics in India",
+      "lessons": [
+        {
+          "title": "Term Sheet Basics: Liquidation Preference, Anti-Dilution and Pro-Rata Rights",
+          "slug": "term-sheet-basics-liquidation-preference-anti-dilution-and-pro-rata-rights",
+          "body": [
+            {
+              "_key": "c4l3-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l3-001s1", "_type": "span", "text": "Two term sheets can show the same ₹40 crore valuation and still be worth very different amounts to you. One gives later investors a simple 1x preference; the other gives them 2x participating preference and full ratchet anti-dilution. In a modest exit or a down round, those few words can cut your payout in half. You met liquidation preference and pro-rata rights earlier in this course. This lesson goes deeper into the three clauses that most change what an angel actually receives, with the maths for each, plus a quick guide to the other terms you will see in Indian shareholders' agreements.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l3-002",
+              "_type": "bigIdea",
+              "text": "Valuation decides how much of the company you own. Terms decide how much of the money you actually get. Always read the preference, anti-dilution and pro-rata clauses before you celebrate the valuation."
+            },
+            {
+              "_key": "c4l3-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l3-003s1", "_type": "span", "text": "Clause 1: Liquidation Preference, in Full", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l3-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "c4l3-004m1", "_type": "glossaryTerm", "definition": "The investor takes the greater of its preference amount or its as-converted share of the proceeds, but not both." },
+                { "_key": "c4l3-004m2", "_type": "glossaryTerm", "definition": "The investor first takes its preference amount and then also shares in whatever is left, in proportion to its ownership. Sometimes called \"double dipping\"." }
+              ],
+              "children": [
+                { "_key": "c4l3-004s1", "_type": "span", "text": "A liquidation preference has three dials: the multiple (1x, 1.5x, 2x of the money invested), whether it is ", "marks": [] },
+                { "_key": "c4l3-004s2", "_type": "span", "text": "non-participating", "marks": ["c4l3-004m1"] },
+                { "_key": "c4l3-004s3", "_type": "span", "text": " or ", "marks": [] },
+                { "_key": "c4l3-004s4", "_type": "span", "text": "participating", "marks": ["c4l3-004m2"] },
+                { "_key": "c4l3-004s5", "_type": "span", "text": ", and whether participation is capped. It applies on a \"liquidation event\", which in Indian SHAs usually includes not just a shutdown but also an acquisition or sale of the business.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l3-005",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l3-005s1", "_type": "span", "text": "Set-up: Series A investors put in ₹20 crore and own 25% on an as-converted basis. You own 1% in equity shares. Founders, other angels and the ESOP pool hold the remaining 74%. The company is sold for ₹60 crore.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l3-006",
+              "_type": "table",
+              "caption": "A ₹60 crore sale under four preference terms (illustrative)",
+              "headers": ["Term for Series A", "Series A receives", "Left for everyone else (75%)", "Your 1% receives"],
+              "rows": [
+                { "_key": "c4l3-006r1", "_type": "tableRow", "cells": ["No preference", "25% × ₹60 crore = ₹15 crore", "₹45 crore", "₹60 lakh"] },
+                { "_key": "c4l3-006r2", "_type": "tableRow", "cells": ["1x non-participating", "Greater of ₹20 crore or ₹15 crore = ₹20 crore", "₹40 crore", "1/75 of ₹40 crore = ₹53.3 lakh"] },
+                { "_key": "c4l3-006r3", "_type": "tableRow", "cells": ["1x participating", "₹20 crore + 25% of ₹40 crore = ₹30 crore", "75% of ₹40 crore = ₹30 crore", "1% of ₹40 crore = ₹40 lakh"] },
+                { "_key": "c4l3-006r4", "_type": "tableRow", "cells": ["2x non-participating", "Greater of ₹40 crore or ₹15 crore = ₹40 crore", "₹20 crore", "1/75 of ₹20 crore = ₹26.7 lakh"] }
+              ]
+            },
+            {
+              "_key": "c4l3-007",
+              "_type": "chart",
+              "chartType": "bar",
+              "title": "Your payout from the same ₹60 crore sale (₹ lakh)",
+              "xAxisLabel": "Series A preference term",
+              "yAxisLabel": "₹ lakh to your 1%",
+              "data": [
+                { "_key": "c4l3-007d1", "label": "No preference", "value": 60 },
+                { "_key": "c4l3-007d2", "label": "1x non-participating", "value": 53.3 },
+                { "_key": "c4l3-007d3", "label": "1x participating", "value": 40 },
+                { "_key": "c4l3-007d4", "label": "2x non-participating", "value": 26.7 }
+              ]
+            },
+            {
+              "_key": "c4l3-008",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "A bigger sale, participating terms",
+              "prompt": "Same set-up, but the company sells for ₹100 crore and Series A has a 1x participating preference. How much does your 1% receive, in ₹ lakh?",
+              "correctValue": 80,
+              "tolerance": 0.5,
+              "unit": "₹ lakh",
+              "explanation": "Series A first takes ₹20 crore, leaving ₹80 crore. That ₹80 crore is shared by everyone by ownership, so your 1% gets ₹80 lakh. With a 1x non-participating preference, Series A would instead convert, since 25% of ₹100 crore = ₹25 crore beats ₹20 crore, and you would get the full 1% of ₹100 crore, ₹1 crore. Participation costs you ₹20 lakh even in a good exit."
+            },
+            {
+              "_key": "c4l3-009",
+              "_type": "comparison",
+              "title": "Non-participating vs participating preference",
+              "columns": [
+                {
+                  "_key": "c4l3-009c1",
+                  "label": "Non-participating",
+                  "points": [
+                    "Investor chooses its preference or its ownership share, not both",
+                    "Only bites in modest exits below a break-even price",
+                    "In large exits, everyone shares strictly by ownership",
+                    "Widely seen as the balanced, standard term for early rounds"
+                  ]
+                },
+                {
+                  "_key": "c4l3-009c2",
+                  "label": "Participating",
+                  "points": [
+                    "Investor takes its preference and then shares in the rest",
+                    "Reduces what common shareholders get in almost every exit",
+                    "The gap narrows but never disappears as exits get bigger",
+                    "Sometimes capped, for example at 3x, after which the investor must choose"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c4l3-010",
+              "_type": "keyFact",
+              "label": "Break-even exit for a 1x non-participating preference",
+              "value": "Money invested ÷ ownership",
+              "context": "Above this sale price the investor converts and shares by ownership. For ₹20 crore at 25%, that is ₹80 crore; in any sale below ₹80 crore, the preference reduces what you receive."
+            },
+            {
+              "_key": "c4l3-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l3-011s1", "_type": "span", "text": "Clause 2: Anti-Dilution Protection", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l3-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "c4l3-012m1", "_type": "glossaryTerm", "definition": "The price at which each preference share converts into equity shares. Lowering it gives the investor more equity shares for the same investment." },
+                { "_key": "c4l3-012m2", "_type": "glossaryTerm", "definition": "Anti-dilution that resets the conversion price all the way down to the new, lower round price, regardless of how much money the new round raises." },
+                { "_key": "c4l3-012m3", "_type": "glossaryTerm", "definition": "Anti-dilution that lowers the conversion price only partly, weighted by how many new shares are issued at the lower price relative to all shares outstanding." }
+              ],
+              "children": [
+                { "_key": "c4l3-012s1", "_type": "span", "text": "Anti-dilution clauses protect investors holding CCPS when a later round is priced lower than theirs, a down round. They work by lowering the investor's ", "marks": [] },
+                { "_key": "c4l3-012s2", "_type": "span", "text": "conversion price", "marks": ["c4l3-012m1"] },
+                { "_key": "c4l3-012s3", "_type": "span", "text": ", so their preference shares convert into more equity shares. Those extra shares come out of everyone else's ownership, including yours. The two main types are ", "marks": [] },
+                { "_key": "c4l3-012s4", "_type": "span", "text": "full ratchet", "marks": ["c4l3-012m2"] },
+                { "_key": "c4l3-012s5", "_type": "span", "text": " and ", "marks": [] },
+                { "_key": "c4l3-012s6", "_type": "span", "text": "broad-based weighted average", "marks": ["c4l3-012m3"] },
+                { "_key": "c4l3-012s7", "_type": "span", "text": ".", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l3-013",
+              "_type": "mathBlock",
+              "latex": "CP_2 = CP_1 \\times \\frac{A + B}{A + C}",
+              "caption": "Broad-based weighted average. CP₁ = old conversion price, CP₂ = new conversion price, A = fully diluted shares before the new round, B = shares the new money would buy at CP₁, C = shares actually issued in the new round."
+            },
+            {
+              "_key": "c4l3-014",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l3-014s1", "_type": "span", "text": "Worked example: before a down round, a company has 10,00,000 fully diluted shares. Series A invested ₹20 crore at ₹500 per share, receiving 4,00,000 CCPS. You hold 10,000 equity shares. The company now raises ₹10 crore at ₹250 per share, issuing 4,00,000 new shares.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l3-015",
+              "_type": "table",
+              "caption": "The down round under three anti-dilution terms (illustrative)",
+              "headers": ["Term", "Series A conversion price", "Series A equity shares on conversion", "Total shares after the round", "Your 10,000 shares as a %"],
+              "rows": [
+                { "_key": "c4l3-015r1", "_type": "tableRow", "cells": ["No anti-dilution", "₹500", "4,00,000", "14,00,000", "0.714%"] },
+                { "_key": "c4l3-015r2", "_type": "tableRow", "cells": ["Broad-based weighted average", "₹500 × 12,00,000 ÷ 14,00,000 = ₹428.57", "₹20 crore ÷ ₹428.57 = 4,66,667", "14,66,667", "0.682%"] },
+                { "_key": "c4l3-015r3", "_type": "tableRow", "cells": ["Full ratchet", "₹250", "₹20 crore ÷ ₹250 = 8,00,000", "18,00,000", "0.556%"] }
+              ]
+            },
+            {
+              "_key": "c4l3-016",
+              "_type": "collapsible",
+              "title": "Show me the weighted average maths",
+              "content": [
+                {
+                  "_key": "c4l3-017",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "number",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    { "_key": "c4l3-017s1", "_type": "span", "text": "A = 10,00,000 fully diluted shares before the round.", "marks": [] }
+                  ]
+                },
+                {
+                  "_key": "c4l3-018",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "number",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    { "_key": "c4l3-018s1", "_type": "span", "text": "B = ₹10 crore ÷ ₹500 = 2,00,000 shares, what the new money would have bought at the old price.", "marks": [] }
+                  ]
+                },
+                {
+                  "_key": "c4l3-019",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "number",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    { "_key": "c4l3-019s1", "_type": "span", "text": "C = ₹10 crore ÷ ₹250 = 4,00,000 shares, what it actually bought.", "marks": [] }
+                  ]
+                },
+                {
+                  "_key": "c4l3-020",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "number",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    { "_key": "c4l3-020s1", "_type": "span", "text": "CP₂ = ₹500 × (10,00,000 + 2,00,000) ÷ (10,00,000 + 4,00,000) = ₹500 × 12 ÷ 14 = ₹428.57.", "marks": [] }
+                  ]
+                },
+                {
+                  "_key": "c4l3-021",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    { "_key": "c4l3-021s1", "_type": "span", "text": "Weighted average moves the price only partway, because a ₹10 crore round is small relative to the whole company. Full ratchet ignores size completely: even a ₹10 lakh round at ₹250 would reset Series A to ₹250. \"Broad-based\" means A counts all fully diluted shares, including the ESOP pool; a \"narrow-based\" version counts fewer shares and gives investors a bigger adjustment.", "marks": [] }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c4l3-022",
+              "_type": "chart",
+              "chartType": "bar",
+              "title": "Your stake after the down round (%)",
+              "xAxisLabel": "Anti-dilution term held by Series A",
+              "yAxisLabel": "Your ownership (%)",
+              "data": [
+                { "_key": "c4l3-022d1", "label": "None", "value": 0.714 },
+                { "_key": "c4l3-022d2", "label": "Weighted average", "value": 0.682 },
+                { "_key": "c4l3-022d3", "label": "Full ratchet", "value": 0.556 }
+              ]
+            },
+            {
+              "_key": "c4l3-023",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Calculate the new conversion price",
+              "prompt": "Seed investors hold CCPS with a conversion price of ₹800 and broad-based weighted average anti-dilution. The company has 5,00,000 fully diluted shares and raises ₹4 crore at ₹400 per share. What is the seed investors' new conversion price, in rupees?",
+              "correctValue": 733.33,
+              "tolerance": 0.5,
+              "unit": "₹",
+              "explanation": "A = 5,00,000. B = ₹4 crore ÷ ₹800 = 50,000. C = ₹4 crore ÷ ₹400 = 1,00,000. CP₂ = ₹800 × (5,50,000 ÷ 6,00,000) = ₹800 × 0.9167 = ₹733.33. Under full ratchet, it would drop all the way to ₹400."
+            },
+            {
+              "_key": "c4l3-024",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Angels holding plain equity shares almost never have anti-dilution protection, so every extra share a protected investor receives in a down round comes partly out of your stake. When you see full ratchet in a term sheet, treat it as a serious negative for everyone without it, including the founders whose motivation you are relying on."
+            },
+            {
+              "_key": "c4l3-025",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l3-025s1", "_type": "span", "text": "Clause 3: Pro-Rata Rights and Their Fine Print", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l3-026",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "c4l3-026m1", "_type": "glossaryTerm", "definition": "An investor holding at least a specified amount or percentage of the company. Term sheets often reserve pro-rata and information rights for this group only." },
+                { "_key": "c4l3-026m2", "_type": "glossaryTerm", "definition": "A clause requiring existing investors to invest their pro-rata share in a future round, or lose some rights, such as having their preference shares converted to equity." }
+              ],
+              "children": [
+                { "_key": "c4l3-026s1", "_type": "span", "text": "In Chapter 2 you learned the pro-rata maths: keeping your stake costs your percentage multiplied by the new money raised. The fine print decides whether you get the right at all. Many term sheets give pro-rata rights only to a ", "marks": [] },
+                { "_key": "c4l3-026s2", "_type": "span", "text": "major investor", "marks": ["c4l3-026m1"] },
+                { "_key": "c4l3-026s3", "_type": "span", "text": ", defined by a threshold that small angels often fall below. Some leads negotiate super pro-rata rights to buy more than their share. And a ", "marks": [] },
+                { "_key": "c4l3-026s4", "_type": "span", "text": "pay-to-play", "marks": ["c4l3-026m2"] },
+                { "_key": "c4l3-026s5", "_type": "span", "text": " clause can turn the right into an obligation, penalising investors who do not follow on in a difficult round.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l3-027",
+              "_type": "table",
+              "caption": "Pro-rata variations and what they mean for a ₹25 lakh angel",
+              "headers": ["Clause", "What it says", "Effect on a small angel"],
+              "rows": [
+                { "_key": "c4l3-027r1", "_type": "tableRow", "cells": ["Pro-rata for all investors", "Every shareholder may invest to maintain their stake", "You can protect your position in the winners"] },
+                { "_key": "c4l3-027r2", "_type": "tableRow", "cells": ["Pro-rata for major investors only", "Only holders above a threshold, such as ₹2 crore invested, get the right", "You are likely excluded and will be diluted in every round"] },
+                { "_key": "c4l3-027r3", "_type": "tableRow", "cells": ["Super pro-rata for the lead", "The lead can buy more than its current share of the next round", "Less of the next round is available to everyone else"] },
+                { "_key": "c4l3-027r4", "_type": "tableRow", "cells": ["Pay-to-play", "Investors who do not take up their pro-rata lose preferences or other rights", "Forces you to add money in hard times or accept a weaker position"] }
+              ]
+            },
+            {
+              "_key": "c4l3-028",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l3-028s1", "_type": "span", "text": "Other Terms You Will See in Indian SHAs", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l3-029",
+              "_type": "table",
+              "caption": "A quick reference to common clauses",
+              "headers": ["Clause", "What it does", "What to check as an angel"],
+              "rows": [
+                { "_key": "c4l3-029r1", "_type": "tableRow", "cells": ["Information rights", "Entitles investors to financial statements, MIS reports and budgets", "Whether you receive them, or only major investors do"] },
+                { "_key": "c4l3-029r2", "_type": "tableRow", "cells": ["Board seat or observer", "Gives an investor a vote, or a non-voting seat, on the board", "Who represents the angel group, if anyone"] },
+                { "_key": "c4l3-029r3", "_type": "tableRow", "cells": ["Reserved matters", "Lists decisions that need specific investors' approval, such as new share issues or a sale", "Whose approval is needed; it is rarely yours"] },
+                { "_key": "c4l3-029r4", "_type": "tableRow", "cells": ["Founder vesting and lock-in", "Founders earn or keep their shares over time and cannot sell early", "That founders are tied in for several years"] },
+                { "_key": "c4l3-029r5", "_type": "tableRow", "cells": ["Drag-along, tag-along, ROFR", "Govern who can force, join or block share sales", "The drag-along threshold and whether you have tag-along"] },
+                { "_key": "c4l3-029r6", "_type": "tableRow", "cells": ["Exclusivity or no-shop", "Stops founders talking to other investors for a set period", "The length; it binds the company, not you"] }
+              ]
+            },
+            {
+              "_key": "c4l3-030",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Which clause hurts most in a down round?",
+              "question": "A startup you backed with equity shares raises a large down round. Its Series A investor holds CCPS. Which Series A term would most increase your dilution?",
+              "options": [
+                "Information rights",
+                "Broad-based weighted average anti-dilution",
+                "Full ratchet anti-dilution",
+                "A 30-day exclusivity clause"
+              ],
+              "correctIndex": 2,
+              "explanation": "Full ratchet resets the Series A conversion price all the way to the new, lower price, giving it the most extra shares and diluting unprotected holders like you the most. Weighted average gives a smaller adjustment. Information rights and exclusivity do not change ownership."
+            },
+            {
+              "_key": "c4l3-031",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Ishaan's seed term sheet",
+              "scenario": "Ishaan, an angel in Bengaluru, is offered ₹25 lakh of equity shares in a seed round. The lead VC is investing ₹3 crore and its term sheet includes:\n1. CCPS with a 1x participating liquidation preference.\n2. Full ratchet anti-dilution.\n3. Pro-rata rights only for investors who put in at least ₹2 crore.\n4. Information rights only for the lead.\n5. A drag-along that the lead and founders together can trigger.",
+              "prompt": "What do these terms mean for Ishaan, and what should he ask for or consider before investing?",
+              "modelAnswer": "1. Stacked against common shareholders: participating preference reduces his payout in almost every exit, and full ratchet shifts the most dilution onto him if a down round happens.\n2. Excluded from protections: with a ₹2 crore threshold, he gets no pro-rata rights, so he will be diluted in every future round; and without information rights, he may not even see the numbers.\n3. No control over exits: the lead and founders can drag him into a sale, including one where preferences leave little for equity holders.\n4. What he can ask for: to invest in the same CCPS class as the lead, or at least receive information rights and a tag-along; a non-participating preference and broad-based weighted average anti-dilution, which are widely regarded as more balanced at seed; and pro-rata rights for all investors or a lower threshold. Many angels negotiate these collectively through the angel group rather than alone.\n5. The realistic view: a ₹25 lakh cheque has limited leverage. If none of these points move, he should model the payout in a modest exit and a down round, and be willing to walk away. Terms this aggressive at seed are also a signal about the lead's power over the founders."
+            },
+            {
+              "_key": "c4l3-032",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "Name the method",
+              "textWithBlank": "The anti-dilution method that resets the conversion price all the way down to the new, lower round price is called full ___.",
+              "correctAnswers": ["ratchet"],
+              "explanation": "Full ratchet ignores the size of the new round and gives protected investors the maximum adjustment. Broad-based weighted average adjusts only partway, based on how many shares the new round adds."
+            },
+            {
+              "_key": "c4l3-033",
+              "_type": "flashcardSet",
+              "title": "Term Sheet Clauses",
+              "cards": [
+                { "_key": "c4l3-033f1", "term": "Non-participating preference", "definition": "Investor takes the greater of its preference amount or its as-converted share, not both." },
+                { "_key": "c4l3-033f2", "term": "Participating preference", "definition": "Investor takes its preference first and then also shares in what remains by ownership." },
+                { "_key": "c4l3-033f3", "term": "Conversion price", "definition": "The price at which each preference share converts into equity; lowering it gives the investor more equity shares." },
+                { "_key": "c4l3-033f4", "term": "Full ratchet", "definition": "Anti-dilution that resets the conversion price to the new, lower round price regardless of round size." },
+                { "_key": "c4l3-033f5", "term": "Broad-based weighted average", "definition": "Anti-dilution that lowers the conversion price partly: CP₂ = CP₁ × (A + B) ÷ (A + C)." },
+                { "_key": "c4l3-033f6", "term": "Major investor threshold", "definition": "A minimum holding required to get pro-rata or information rights; small angels often fall below it." },
+                { "_key": "c4l3-033f7", "term": "Pay-to-play", "definition": "Investors who do not follow on in a future round lose preferences or other rights." },
+                { "_key": "c4l3-033f8", "term": "Reserved matters", "definition": "Decisions that need approval from specific investors, such as issuing new shares or selling the company." }
+              ]
+            },
+            {
+              "_key": "c4l3-034",
+              "_type": "keyTakeaways",
+              "points": [
+                "Valuation sets your ownership, but preference, anti-dilution and pro-rata terms decide how much money you actually receive.",
+                "A 1x non-participating preference bites only below a break-even exit of money invested ÷ ownership; participating and higher multiples cut your payout in almost every exit.",
+                "Anti-dilution lowers protected investors' conversion price in a down round, and the extra shares dilute unprotected holders like angels.",
+                "Broad-based weighted average adjusts partly, CP₂ = CP₁ × (A + B) ÷ (A + C); full ratchet resets fully and hurts common shareholders most.",
+                "Pro-rata rights are often limited to major investors above a threshold, so check whether you qualify before counting on them.",
+                "Small angels have limited leverage: ask for the same class as the lead, information rights and tag-along, model bad outcomes, and be ready to walk away."
+              ]
+            },
+            {
+              "_key": "c4l3-035",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not legal or investment advice. Real shareholders' agreements vary widely and can combine clauses in ways that change these calculations, and FEMA pricing rules can limit some adjustments for foreign investors. All companies, people and figures are illustrative. Have a qualified legal professional review any term sheet before you sign."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

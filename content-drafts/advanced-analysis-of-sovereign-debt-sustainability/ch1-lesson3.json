@@ -1,0 +1,384 @@
+{
+  "courseSlug": "advanced-analysis-of-sovereign-debt-sustainability",
+  "chapters": [
+    {
+      "title": "Chapter 1: The Mechanics of Sovereign Debt Sustainability",
+      "lessons": [
+        {
+          "title": "Fiscal Reaction Functions: Do Governments Actually Correct Course?",
+          "slug": "fiscal-reaction-functions-do-governments-actually-correct-course",
+          "body": [
+            {
+              "_key": "c1l3k001",
+              "_type": "bigIdea",
+              "text": "A country's debt path is not decided by whether it can theoretically run a primary surplus. It is decided by whether it actually does so when debt rises, and that response, or its absence, is something you can measure rather than assume."
+            },
+            {
+              "_key": "c1l3k002",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3k002s1",
+                  "_type": "span",
+                  "text": "The last two lessons treated the primary balance, pb in the debt dynamics identity, as a single number a government chooses each year. This lesson asks a sharper question: does a government's pb choice systematically respond to its own rising debt, tightening as debt climbs, or does it stay disconnected from the debt level until a crisis forces a correction? Economists have a formal tool for testing exactly this, called a fiscal reaction function, and the answer it gives for a given country tells you far more about long-run sustainability than any single year's deficit number.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3k003",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l3k003s1", "_type": "span", "text": "The Fiscal Reaction Function: A Formal Definition", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c1l3k004",
+              "_type": "mathBlock",
+              "latex": "pb_t = \\rho + \\beta \\cdot d_{t-1} + \\gamma \\cdot gap_t + \\varepsilon_t",
+              "caption": "pb = primary balance (% of GDP), d(t-1) = lagged debt-to-GDP ratio, gap = the output gap, a control for the business cycle, β = the fiscal reaction coefficient this lesson is built around"
+            },
+            {
+              "_key": "c1l3k005",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c1l3k005md1",
+                  "_type": "glossaryTerm",
+                  "definition": "A 1998 result, from economist Henning Bohn's study of US public debt, showing that if a government's primary balance responds positively to its own lagged debt-to-GDP ratio, that response is sufficient, under fairly general conditions, to guarantee its debt path is sustainable, without needing to specify a particular debt ceiling."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c1l3k005s1",
+                  "_type": "span",
+                  "text": "This equation is estimated as a regression on historical data, and the coefficient that matters most is β. A positive, statistically significant β means the primary balance improves as debt rises, exactly the self-correcting behaviour a stable debt path needs. A β close to zero, or statistically insignificant, means the primary balance moves independently of the debt level, drifting on politics, the business cycle, or plain inertia instead. This framework comes from what is known as ",
+                  "marks": []
+                },
+                {
+                  "_key": "c1l3k005s2",
+                  "_type": "span",
+                  "text": "Bohn's sufficiency result",
+                  "marks": ["c1l3k005md1"]
+                },
+                {
+                  "_key": "c1l3k005s3",
+                  "_type": "span",
+                  "text": ", which reframed sustainability testing away from asking whether a debt level looks too high, and toward asking whether policy actually corrects when it should.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3k006",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Bohn's result is a sufficient condition, not a necessary one. A country can still be sustainable with a flat β if it simply has very favourable r-g dynamics, as covered in Lesson 1, and never needs to correct. But a positive, significant β is the closest thing debt sustainability research has to direct evidence that a government will actually do what a DSA baseline merely assumes it will do."
+            },
+            {
+              "_key": "c1l3k007",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l3k007s1", "_type": "span", "text": "What a Positive vs a Flat Reaction Looks Like", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c1l3k008",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Illustrative Fiscal Reaction: Stabilising vs Non-Responsive (stylised, not fitted to real data)",
+              "xAxisLabel": "Debt-to-GDP Band",
+              "yAxisLabel": "Average Primary Balance (% of GDP)",
+              "data": [
+                { "_key": "c1l3k008d1", "label": "40-50%", "value": 0 },
+                { "_key": "c1l3k008d2", "label": "50-60%", "value": 0 },
+                { "_key": "c1l3k008d3", "label": "60-70%", "value": 0 },
+                { "_key": "c1l3k008d4", "label": "70-80%", "value": 0 },
+                { "_key": "c1l3k008d5", "label": "80-90%", "value": 0 }
+              ],
+              "series": [
+                { "_key": "c1l3k008ser1", "label": "Stabilising (β > 0)", "values": [-1.5, -0.5, 0.5, 1.5, 2.5] },
+                { "_key": "c1l3k008ser2", "label": "Non-Responsive (β ≈ 0)", "values": [-1.5, -1.4, -1.6, -1.5, -1.4] }
+              ]
+            },
+            {
+              "_key": "c1l3k009",
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "c1l3k009s1",
+                  "label": "United States (Bohn, historical)",
+                  "value": "β ≈ 0.1",
+                  "context": "The original 1998 estimate; modest but positive and durable across decades of data"
+                },
+                {
+                  "_key": "c1l3k009s2",
+                  "label": "Italy (post-EMU era)",
+                  "value": "β ≈ 0.3 to 0.5",
+                  "context": "A strong, forced correction under Maastricht entry criteria and subsequent EU fiscal surveillance"
+                },
+                {
+                  "_key": "c1l3k009s3",
+                  "label": "Greece (pre-2010)",
+                  "value": "β ≈ 0, not significant",
+                  "context": "Fiscal policy loosened through the 2000s boom despite a rising debt load; no measurable correction until forced by crisis"
+                },
+                {
+                  "_key": "c1l3k009s4",
+                  "label": "India (RBI / academic estimates)",
+                  "value": "β ≈ 0.1 to 0.2",
+                  "context": "Modest and positive at the central level; notably weaker and more procyclical at the state government level"
+                }
+              ]
+            },
+            {
+              "_key": "c1l3k010",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l3k010s1", "_type": "span", "text": "Why Discretion Often Fails: The Political Economy of Deficit Bias", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c1l3k011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3k011s1",
+                  "_type": "span",
+                  "text": "A flat or insignificant β is rarely an accident. Political economists have documented a recurring 'deficit bias': elected governments face concentrated pressure to spend, from constituencies, coalition partners, and election cycles, while the cost of running a deficit is diffuse and falls partly on future governments who cannot vote today. Layer emerging-market credit access on top of this and you get a specific, well-documented pattern: fiscal policy that is procyclical rather than countercyclical. Governments loosen policy in booms, when credit is cheap and political appetite to spend is highest, and are then forced into sharp, involuntary austerity in downturns, exactly when market access dries up. This is the opposite of the textbook prescription, and it shows up as a weak or flat fiscal reaction function in the data.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3k012",
+              "_type": "comparison",
+              "title": "Countercyclical (Ideal) vs Procyclical (Common in Emerging Markets)",
+              "columns": [
+                {
+                  "_key": "c1l3k012c1",
+                  "label": "Countercyclical (Textbook Ideal)",
+                  "points": [
+                    "Runs a larger deficit or looser policy during a downturn, supporting demand",
+                    "Builds a primary surplus and rebuilds fiscal space during a boom",
+                    "Requires the credibility to keep borrowing precisely when the fiscal position looks weakest"
+                  ]
+                },
+                {
+                  "_key": "c1l3k012c2",
+                  "label": "Procyclical (Common in Emerging Markets)",
+                  "points": [
+                    "Loosens fiscal policy during a boom, when credit is cheap and political pressure to spend is high",
+                    "Is forced into sudden, sharp austerity during a downturn when market access dries up",
+                    "Reinforces the business cycle instead of dampening it, and is the pattern most associated with weak fiscal reaction functions"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c1l3k013",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l3k013s1", "_type": "span", "text": "Fiscal Rules as a Substitute for a Missing Reaction Function", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c1l3k014",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3k014s1",
+                  "_type": "span",
+                  "text": "If discretionary judgment cannot be relied on to produce a positive β, the standard policy response is to legislate one instead, a numerical fiscal rule that removes discretion from the equation entirely. These rules take several distinct forms, each targeting a different part of the debt dynamics identity, and each with its own well-known failure mode.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3k015",
+              "_type": "table",
+              "caption": "Four families of fiscal rules, and how each one tends to break",
+              "headers": ["Rule Type", "How It Works", "Example", "Known Weakness"],
+              "rows": [
+                {
+                  "_key": "c1l3k015r1",
+                  "_type": "tableRow",
+                  "cells": ["Deficit (Flow) Rule", "Caps the fiscal deficit as a fixed % of GDP each year", "India's original FRBM Act target of a 3% of GDP fiscal deficit", "Ignores the existing debt level and the business cycle; a 3% deficit is far more prudent at 40% debt than at 90%"]
+                },
+                {
+                  "_key": "c1l3k015r2",
+                  "_type": "tableRow",
+                  "cells": ["Debt (Stock) Rule", "Sets a ceiling on the debt-to-GDP ratio itself", "The Maastricht Treaty's 60% of GDP debt ceiling for the Eurozone", "Gives no year-by-year guidance on the pace of adjustment, and is routinely breached without real consequence; Italy has stayed above 100% for decades"]
+                },
+                {
+                  "_key": "c1l3k015r3",
+                  "_type": "tableRow",
+                  "cells": ["Expenditure Rule", "Caps the growth rate of government spending, often below nominal GDP growth", "Switzerland's constitutional 'debt brake' (Schuldenbremse)", "Can force pro-cyclical spending cuts in a genuine downturn if it lacks an explicit cyclical adjustment"]
+                },
+                {
+                  "_key": "c1l3k015r4",
+                  "_type": "tableRow",
+                  "cells": ["Structural (Cyclically Adjusted) Balance Rule", "Targets the balance the budget would show if output were at potential, stripping out the cycle", "Chile's structural balance rule, monitored by an independent panel of experts", "Depends on a contestable, hard-to-observe estimate of potential output, which can be quietly adjusted to hit the target"]
+                }
+              ]
+            },
+            {
+              "_key": "c1l3k016",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Nearly every fiscal rule in the table above has an escape clause, and nearly every escape clause has been used. India invoked the FRBM Act's escape clause in 2008-09 during the global financial crisis, and again from 2020-21 through the pandemic; the EU activated the Stability and Growth Pact's general escape clause for four straight years, 2020 through 2023. A rule that can be suspended exactly when debt is rising fastest only constrains behaviour in the years it was least needed."
+            },
+            {
+              "_key": "c1l3k017",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l3k017s1", "_type": "span", "text": "When Nothing Else Works: Markets Force the Correction", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c1l3k018",
+              "_type": "timeline",
+              "title": "The UK Gilt Crisis, September 2022",
+              "events": [
+                {
+                  "_key": "c1l3k018e1",
+                  "date": "23 September 2022",
+                  "title": "The Mini-Budget",
+                  "description": "Chancellor Kwasi Kwarteng announces roughly £45 billion of unfunded tax cuts, with no independent costing from the Office for Budget Responsibility, at a time when UK debt was already elevated after the pandemic."
+                },
+                {
+                  "_key": "c1l3k018e2",
+                  "date": "23 to 27 September 2022",
+                  "title": "Gilt Market Revolt",
+                  "description": "30-year UK gilt yields jump more than 100 basis points within days, sterling falls to a record low near $1.03, and margin calls cascade through pension funds' liability-driven investment (LDI) strategies, forcing a wave of forced gilt selling."
+                },
+                {
+                  "_key": "c1l3k018e3",
+                  "date": "28 September 2022",
+                  "title": "The Bank of England Steps In",
+                  "description": "The Bank of England launches a temporary, targeted long-dated gilt-buying programme purely to restore market functioning and halt a doom loop in the pension sector, explicitly kept separate from monetary policy."
+                },
+                {
+                  "_key": "c1l3k018e4",
+                  "date": "14 to 20 October 2022",
+                  "title": "The Reversal",
+                  "description": "Kwarteng is dismissed, most of the mini-budget's tax measures are reversed by incoming Chancellor Jeremy Hunt, and Prime Minister Liz Truss resigns after 44 days in office, the shortest tenure of any UK Prime Minister."
+                }
+              ]
+            },
+            {
+              "_key": "c1l3k019",
+              "_type": "callout",
+              "type": "insight",
+              "text": "The UK gilt crisis is a live demonstration of ideas from earlier in this course: a market can force r sharply higher within days, far faster than any DSA stress-test horizon, and it did so specifically because the primary balance moved in the wrong direction, unfunded tax cuts, at a moment markets judged the country's fiscal reaction function to have failed. No IMF program, no legislated rule, and no domestic political check stopped the initial policy; the bond market did, in under a week."
+            },
+            {
+              "_key": "c1l3k020",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l3k020s1", "_type": "span", "text": "India's Fiscal Reaction Function in Practice", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c1l3k021",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3k021s1",
+                  "_type": "span",
+                  "text": "India's own fiscal reaction function has been studied repeatedly by RBI researchers and academics, and the broad finding is consistent with the statGrid figures above: the discretionary response of India's primary balance to rising debt has historically been positive but modest at the central government level, and considerably weaker and more procyclical at the state government level, where capital expenditure is often the first casualty of a revenue shortfall rather than the outcome of a considered correction. This is precisely why India legislated the FRBM Act in 2003 in the first place: a numerical, rule-based target was meant to substitute for a discretionary fiscal response that repeated studies found unreliable on its own. The FRBM Act's own history since then makes the same point this lesson keeps returning to: it has an escape clause, and that clause has been invoked whenever the correction would have been most painful. Chapter 3 covers the FRBM Act's specific numerical targets and the Finance Commission's role in detail; the point to take from this lesson is narrower: a country's willingness to legislate a rule in the first place is itself evidence about how much you should trust its discretionary judgment alone.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3k022",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Is This Really a Fiscal Reaction Function?",
+              "scenario": "You are given three years of a country's data. Year 1: debt 60% of GDP, primary balance -2% of GDP. Year 2: debt 70% of GDP, primary balance -1% of GDP. Year 3: debt 80% of GDP, primary balance 0% of GDP.",
+              "prompt": "Does this look like evidence of a stabilising, positive-β fiscal reaction function? What would you want to check before concluding that from just three data points?",
+              "modelAnswer": "Taken at face value, this does look like a textbook positive reaction: every 10 percentage point rise in debt is accompanied by roughly a 1 percentage point improvement in the primary balance, which sits in the same range as Bohn's classic US estimate of around 0.1. But three annual observations are not a regression, and this exact pattern would also appear if the economy had simply been accelerating over the same three years, pulling revenue up mechanically as the output gap closed, with no deliberate policy choice involved at all. Before concluding this is a genuine, credible fiscal reaction function, you would want a longer time series, a control for the output gap so a cyclical revenue windfall is not mistaken for discretionary tightening, and ideally evidence the same pattern held up during a period when debt was falling rather than only rising."
+            },
+            {
+              "_key": "c1l3k023",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Check Your Understanding",
+              "question": "Economists studying Latin American and many other emerging-market fiscal policies have repeatedly found a 'procyclical' pattern: governments loosen fiscal policy in booms and are forced to tighten in downturns, the opposite of the textbook countercyclical ideal. Which of the following best explains why this happens?",
+              "options": [
+                "Emerging-market finance ministries lack the technical capacity to calculate a primary balance",
+                "Governments borrow freely in booms when credit is cheap and political pressure to spend is high, then lose market access exactly when a downturn hits, forcing tightening by necessity rather than choice",
+                "Procyclical policy is a deliberate strategy to maximise long-run growth",
+                "Central banks require governments to run procyclical fiscal policy as a condition of their independence"
+              ],
+              "correctIndex": 1,
+              "explanation": "This is the classic 'procyclical fiscal policy' finding from the emerging-market literature. Credit is cheap and political demand to spend is high during a boom, so governments loosen policy exactly when they should be building buffers instead. When a downturn or a sudden stop in capital flows hits, market access dries up and austerity is forced at the worst possible moment, the opposite of a stabilising fiscal reaction function."
+            },
+            {
+              "_key": "c1l3k024",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l3k024s1", "_type": "span", "text": "A Field Checklist for Judging Fiscal Credibility", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c1l3k025",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Before You Trust a Government's Willingness to Correct Course",
+              "steps": [
+                "Check whether the primary balance has actually improved historically when debt rose, using several years of data rather than one or two",
+                "Control for the output gap, so a cyclical revenue windfall is not mistaken for a genuine discretionary correction",
+                "Check whether the country operates under a legislated fiscal rule, and identify which type: deficit, debt, expenditure, or structural balance",
+                "Look up how many times the rule's escape clause has been invoked, and under what circumstances",
+                "Identify who enforces the rule: an independent fiscal council with real teeth, or the same finance ministry the rule is meant to constrain",
+                "Weigh whether market discipline, bond yields, the currency, or CDS spreads, is likely to force a correction faster than any domestic institution would, as it did in the UK in 2022"
+              ]
+            },
+            {
+              "_key": "c1l3k026",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson explains the fiscal reaction function framework and cites illustrative coefficient estimates and historical episodes for educational purposes only. It is not investment advice, and the β estimates cited vary meaningfully across academic studies depending on the sample period, data, and econometric specification used; always consult current published research before relying on a specific figure."
+            },
+            {
+              "_key": "c1l3k027",
+              "_type": "keyTakeaways",
+              "points": [
+                "A fiscal reaction function tests whether a government's primary balance actually improves as its debt rises; a positive, significant β is Bohn's sufficient condition for sustainability",
+                "A flat or insignificant β reflects a well-documented political economy problem, deficit bias and procyclical fiscal policy, where governments loosen policy in booms and are forced to tighten in downturns",
+                "Fiscal rules (deficit, debt, expenditure, or structural balance rules) exist mainly to substitute for a discretionary reaction function that repeated studies find unreliable, but nearly every rule has an escape clause, and nearly every escape clause gets used",
+                "When institutions fail to force a correction, markets sometimes do it directly and fast, as the UK's 2022 gilt crisis showed within a single week",
+                "India's own studies show a modest, positive β at the central government level and a weaker, more procyclical pattern at the state level, which is exactly why the FRBM Act exists as a rule-based substitute, covered in full in Chapter 3"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

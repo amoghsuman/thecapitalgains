@@ -1,0 +1,224 @@
+{
+  "courseSlug": "understanding-stochastic-calculus-brownian-motion-itos-lemma-and-the-path-to-black-scholes",
+  "chapters": [
+    {
+      "title": "Chapter 4: Beyond Black-Scholes: Extensions of the Toolkit",
+      "lessons": [
+        {
+          "title": "Stochastic Volatility: Why Constant Sigma Breaks Down",
+          "slug": "stochastic-volatility-why-constant-sigma-breaks-down",
+          "body": [
+            {
+              "_key": "c4l3-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l3-001s1", "_type": "span", "marks": [], "text": "A trader on Rohan's desk pulls up a live Nifty options chain and asks a question the Black-Scholes formula cannot answer on its own: \"If σ is one constant number, why does inverting the formula on real market prices give a different σ for every strike?\" Every lesson so far has flagged constant volatility as an assumption, an idealization the previous lesson's Chapter 3 assumption table listed openly. This lesson finally opens that assumption up and looks at what breaks, and what replaces it, when volatility is allowed to move on its own." }
+              ]
+            },
+            {
+              "_key": "c4l3-002",
+              "_type": "bigIdea",
+              "text": "Real option prices, inverted through the Black-Scholes formula, produce a different implied volatility at every strike, a pattern called the volatility smile or skew, direct empirical proof that constant volatility is only an approximation. Stochastic volatility models fix this by making variance itself a second stochastic process, correlated with the stock's own randomness, using exactly the multivariate Ito tools from the previous lesson."
+            },
+            {
+              "_key": "c4l3-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l3-003s1", "_type": "span", "marks": [], "text": "The Empirical Problem: Implied Volatility Isn't Flat" }
+              ]
+            },
+            {
+              "_key": "c4l3-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "c4l3-004m1", "_type": "glossaryTerm", "definition": "The single value of σ that, plugged into the Black-Scholes formula alongside the option's actual known S, K, r, and τ, reproduces the option's real, observed market price exactly." }
+              ],
+              "children": [
+                { "_key": "c4l3-004s1", "_type": "span", "marks": [], "text": "Given a real, traded option price, define its " },
+                { "_key": "c4l3-004s2", "_type": "span", "marks": ["c4l3-004m1"], "text": "implied volatility" },
+                { "_key": "c4l3-004s3", "_type": "span", "marks": [], "text": ": the σ value that makes the Black-Scholes formula output that exact market price, everything else held fixed. India VIX is precisely this quantity, aggregated across a basket of near-the-money Nifty options. If Black-Scholes's constant-σ assumption were literally true, every option on the same stock, at the same expiry, would imply the identical σ, regardless of strike." }
+              ]
+            },
+            {
+              "_key": "c4l3-005",
+              "_type": "table",
+              "caption": "An illustrative Nifty options implied volatility skew (Nifty spot ≈ 24,000)",
+              "headers": ["Strike", "Implied volatility"],
+              "rows": [
+                { "_key": "c4l3-005r1", "_type": "tableRow", "cells": ["22,000 (OTM put)", "14.5%"] },
+                { "_key": "c4l3-005r2", "_type": "tableRow", "cells": ["23,000", "12.6%"] },
+                { "_key": "c4l3-005r3", "_type": "tableRow", "cells": ["24,000 (at the money)", "11.5%"] },
+                { "_key": "c4l3-005r4", "_type": "tableRow", "cells": ["25,000", "11.0%"] },
+                { "_key": "c4l3-005r5", "_type": "tableRow", "cells": ["26,000 (OTM call)", "10.7%"] }
+              ]
+            },
+            {
+              "_key": "c4l3-006",
+              "_type": "callout",
+              "type": "warning",
+              "text": "This downward-sloping pattern, called a volatility skew, is a real, persistent feature of equity index options, including Nifty and Bank Nifty, not a data artifact. Lower strikes (protective, out-of-the-money puts) consistently trade at higher implied volatility than higher strikes, reflecting real demand for crash protection. A single constant σ cannot reproduce this shape; it can only match one strike at a time."
+            },
+            {
+              "_key": "c4l3-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l3-007s1", "_type": "span", "marks": [], "text": "Modeling Variance as Its Own Stochastic Process" }
+              ]
+            },
+            {
+              "_key": "c4l3-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l3-008s1", "_type": "span", "marks": [], "text": "The most influential fix, the Heston model (1993), stops treating variance as a fixed number and instead models it as v(t), a second stochastic process, correlated with the stock's own Brownian motion using exactly the two-process framework from the previous lesson. Variance is given its own SDE, one that pulls it back toward a long-run average, exactly the same mean-reverting square-root form used in interest rate modeling (the Cox-Ingersoll-Ross model), an interesting cross-field reuse of the same mathematical object." }
+              ]
+            },
+            {
+              "_key": "c4l3-009",
+              "_type": "mathBlock",
+              "latex": "dS = \\mu S\\, dt + \\sqrt{v(t)}\\, S\\, dW_1, \\qquad dv = \\kappa(\\theta - v)\\, dt + \\xi \\sqrt{v}\\, dW_2, \\qquad dW_1\\, dW_2 = \\rho\\, dt",
+              "caption": "The Heston stochastic volatility model"
+            },
+            {
+              "_key": "c4l3-010",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l3-010s1", "_type": "span", "marks": [], "text": "What Each Parameter Means" }
+              ]
+            },
+            {
+              "_key": "c4l3-011",
+              "_type": "table",
+              "caption": "The four new parameters the Heston model introduces",
+              "headers": ["Parameter", "Meaning"],
+              "rows": [
+                { "_key": "c4l3-011r1", "_type": "tableRow", "cells": ["κ (kappa)", "Mean-reversion speed: how quickly v(t) is pulled back toward its long-run level, θ"] },
+                { "_key": "c4l3-011r2", "_type": "tableRow", "cells": ["θ (theta)", "Long-run variance level; √θ is the long-run volatility v(t) reverts toward over time"] },
+                { "_key": "c4l3-011r3", "_type": "tableRow", "cells": ["ξ (xi)", "Volatility of volatility: how much v(t) itself fluctuates around its mean-reverting path"] },
+                { "_key": "c4l3-011r4", "_type": "tableRow", "cells": ["ρ (rho)", "Correlation between the stock's and the variance's Brownian motions; typically negative for equities"] }
+              ]
+            },
+            {
+              "_key": "c4l3-012",
+              "_type": "callout",
+              "type": "insight",
+              "text": "A negative ρ here is called the leverage effect: when the stock falls, volatility tends to rise, and vice versa, exactly the well-documented inverse relationship between Nifty and India VIX. On days Nifty drops sharply, India VIX almost always spikes; on calm, rising days, it typically drifts lower. The Heston model builds this real empirical pattern directly into its correlation parameter, something a single constant σ has no way to express at all."
+            },
+            {
+              "_key": "c4l3-013",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l3-013s1", "_type": "span", "marks": [], "text": "Simulating Stochastic Volatility" }
+              ]
+            },
+            {
+              "_key": "c4l3-014",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l3-014s1", "_type": "span", "marks": [], "text": "Simulating v(t) needs one numerical safeguard the previous chapters never had to worry about: naive Euler-Maruyama can push v below zero, since nothing in a straightforward discretization stops it, even though a real variance can never be negative. The standard fix, called full truncation, replaces v with max(v, 0) wherever it appears inside a square root." }
+              ]
+            },
+            {
+              "_key": "c4l3-015",
+              "_type": "codeBlock",
+              "language": "python",
+              "caption": "Simulating the Heston model with a full-truncation scheme",
+              "code": "import numpy as np\n\nS0, mu = 3900, 0.15\nv0, kappa, theta, xi, rho = 0.04, 2.0, 0.09, 0.3, -0.6\nT, n_steps = 1.0, 252\ndt = T / n_steps\n\nS, v = np.zeros(n_steps+1), np.zeros(n_steps+1)\nS[0], v[0] = S0, v0\n\nfor i in range(n_steps):\n    v_pos = max(v[i], 0)  # full truncation: never take sqrt of a negative variance\n    Z1 = np.random.normal(0, 1)\n    Z2 = rho*Z1 + np.sqrt(1 - rho**2)*np.random.normal(0, 1)\n    S[i+1] = S[i] * np.exp((mu - 0.5*v_pos)*dt + np.sqrt(v_pos*dt)*Z1)\n    v[i+1] = v[i] + kappa*(theta - v_pos)*dt + xi*np.sqrt(v_pos*dt)*Z2\n\nprint(f\"Initial volatility: {np.sqrt(v0):.1%}\")\nprint(f\"Final volatility:   {np.sqrt(max(v[-1], 0)):.1%}\")\nprint(f\"Long-run volatility (theta): {np.sqrt(theta):.1%}\")"
+            },
+            {
+              "_key": "c4l3-016",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "One simulated path of instantaneous volatility, √v(t), mean-reverting toward 30%",
+              "xAxisLabel": "Month",
+              "yAxisLabel": "Instantaneous volatility (%)",
+              "data": [
+                { "_key": "c4l3-016d1", "label": "0", "value": 20.0 },
+                { "_key": "c4l3-016d2", "label": "2", "value": 25.5 },
+                { "_key": "c4l3-016d3", "label": "4", "value": 29.2 },
+                { "_key": "c4l3-016d4", "label": "6", "value": 26.5 },
+                { "_key": "c4l3-016d5", "label": "8", "value": 30.8 },
+                { "_key": "c4l3-016d6", "label": "10", "value": 33.2 },
+                { "_key": "c4l3-016d7", "label": "12", "value": 28.3 }
+              ]
+            },
+            {
+              "_key": "c4l3-017",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Pricing options under the Heston model rigorously requires solving a more complex PDE than Black-Scholes's, typically via characteristic functions and Fourier inversion, mathematical machinery well beyond this course's scope. This lesson's goal is narrower and more honest: understand precisely which assumption stochastic volatility relaxes, why it matters empirically, and how to simulate it, not to derive its full closed-form (or semi-closed-form) pricing formula."
+            },
+            {
+              "_key": "c4l3-018",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Explain the leverage effect's sign",
+              "question": "Why is ρ, the correlation between the stock's and variance's Brownian motions, typically calibrated to a negative value for equity indices like Nifty?",
+              "options": [
+                "Because stock prices and volatility are mathematically required to always move oppositely",
+                "Because it captures the empirically observed leverage effect: sharp price declines tend to coincide with rising volatility, and calm, rising markets with falling volatility",
+                "Because a negative ρ is needed purely to keep v(t) from going negative in simulation",
+                "Because r is usually smaller than μ, forcing ρ negative"
+              ],
+              "correctIndex": 1,
+              "explanation": "The negative correlation is a calibration choice that matches a real, well-documented market pattern, the inverse relationship between Nifty and India VIX, not a mathematical requirement of the model. Full truncation, not the sign of ρ, is what keeps v(t) non-negative in simulation."
+            },
+            {
+              "_key": "c4l3-019",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Compute the long-run volatility",
+              "prompt": "For this lesson's calibration, θ = 0.09. What is the long-run volatility, √θ, expressed as a percentage?",
+              "correctValue": 30,
+              "tolerance": 0.5,
+              "unit": "%",
+              "explanation": "√0.09 = 0.30, or 30%. Variance, not volatility, is the quantity that mean-reverts directly in the Heston SDE; volatility is its square root, so θ itself is a variance level, not a volatility level."
+            },
+            {
+              "_key": "c4l3-020",
+              "_type": "flashcardSet",
+              "title": "Core Terms From This Lesson",
+              "cards": [
+                { "_key": "c4l3-020f1", "term": "Implied volatility", "definition": "The σ value that, plugged into the Black-Scholes formula, reproduces an option's actual observed market price; India VIX is an aggregated implied volatility measure." },
+                { "_key": "c4l3-020f2", "term": "Volatility smile / skew", "definition": "The pattern where implied volatility varies systematically with strike price, direct empirical evidence against the Black-Scholes constant-volatility assumption." },
+                { "_key": "c4l3-020f3", "term": "Heston model", "definition": "A stochastic volatility model where variance v(t) follows its own mean-reverting SDE, correlated with the stock's Brownian motion via a leverage parameter ρ." },
+                { "_key": "c4l3-020f4", "term": "Leverage effect", "definition": "The empirical tendency for volatility to rise when prices fall and fall when prices rise, modeled in Heston via a negative correlation, ρ, between the two Brownian motions." }
+              ]
+            },
+            {
+              "_key": "c4l3-021",
+              "_type": "keyTakeaways",
+              "points": [
+                "Implied volatility, the σ that makes Black-Scholes match a real market price, varies systematically with strike in real Nifty and Bank Nifty options, a pattern called the volatility smile or skew, direct evidence against constant σ.",
+                "The Heston model replaces constant σ with a second stochastic process, v(t), following a mean-reverting SDE correlated with the stock's own Brownian motion, using the multivariate Ito framework from the previous lesson.",
+                "Its four parameters, κ, θ, ξ, and ρ, control mean-reversion speed, long-run variance, volatility-of-volatility, and the leverage effect (typically negative for equities, matching the real Nifty-VIX inverse relationship).",
+                "Simulating v(t) safely requires a numerical safeguard, full truncation, since naive discretization can otherwise produce a negative, meaningless variance.",
+                "Pricing options rigorously under Heston needs Fourier-based methods beyond this course's scope; the next lesson addresses a different broken assumption entirely, continuity, with a model built to handle sudden market gaps."
+              ]
+            },
+            {
+              "_key": "c4l3-022",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to buy, sell, or hold any security named here. The Nifty implied volatility figures and Heston model parameters used throughout this lesson are simplified illustrative numbers, not live market data. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

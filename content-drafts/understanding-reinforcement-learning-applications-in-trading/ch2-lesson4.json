@@ -1,0 +1,221 @@
+{
+  "courseSlug": "understanding-reinforcement-learning-applications-in-trading",
+  "chapters": [
+    {
+      "title": "Chapter 2: Core RL Concepts a Trader Needs",
+      "lessons": [
+        {
+          "title": "On-Policy vs Off-Policy Learning: SARSA vs Q-Learning Explained",
+          "slug": "on-policy-vs-off-policy-learning-sarsa-vs-q-learning-explained",
+          "body": [
+            {
+              "_key": "rl2l4b01",
+              "_type": "bigIdea",
+              "text": "SARSA and Q-learning differ by exactly one term in an otherwise identical update rule, and that one term decides whether an agent learns to respect the risk of its own mistakes near a dangerous state, or learns to ignore it."
+            },
+            {
+              "_key": "rl2l4b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl2l4b02s1", "_type": "span", "text": "On-Policy vs Off-Policy: What the Distinction Actually Means", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl2l4b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl2l4b03s1",
+                  "_type": "span",
+                  "text": "Every algorithm that updates value estimates needs to decide something subtle: does it evaluate the policy it is actually using to choose actions right now, exploratory quirks included, or does it evaluate a different, typically better, target policy regardless of what it actually did? The first choice is on-policy learning. The second is off-policy learning. SARSA and Q-learning are the cleanest possible illustration of the difference, because they differ by exactly one term in an otherwise nearly identical update rule.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl2l4b04",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl2l4b04s1", "_type": "span", "text": "SARSA: Learning the Value of the Policy You Actually Follow", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl2l4b05",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl2l4b05s1",
+                  "_type": "span",
+                  "text": "SARSA takes its name from the five-element sequence its update rule needs: state, action, reward, next state, next action, literally S, A, R, S, A. Its update uses the action the agent actually takes next, under whatever policy is currently generating its behavior, typically epsilon-greedy.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl2l4b06",
+              "_type": "mathBlock",
+              "latex": "Q(s,a) \\leftarrow Q(s,a) + \\alpha \\Big[ r + \\gamma Q(s', a') - Q(s,a) \\Big]",
+              "caption": "The SARSA update. Here a' is the action the agent actually takes next under its current behavior policy, exploratory randomness included. SARSA is on-policy: it learns the value of the exact policy generating its own experience."
+            },
+            {
+              "_key": "rl2l4b07",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl2l4b07s1",
+                  "_type": "span",
+                  "text": "Because a' comes from the same epsilon-greedy policy generating the training data, SARSA's value estimates bake in the consequences of the agent's own occasional exploratory missteps. If exploring near a costly state sometimes leads to disaster, SARSA's learned values reflect that risk, and the resulting policy learns to route around it.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl2l4b08",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl2l4b08s1", "_type": "span", "text": "Q-Learning: Learning the Value of the Best Possible Action, Regardless of What You Actually Did", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl2l4b09",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl2l4b09s1",
+                  "_type": "span",
+                  "text": "Q-learning changes exactly one term. Instead of using the action actually taken next, it uses the best possible action available in the next state, regardless of whether the agent's exploratory policy would actually choose it.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl2l4b10",
+              "_type": "mathBlock",
+              "latex": "Q(s,a) \\leftarrow Q(s,a) + \\alpha \\Big[ r + \\gamma \\max_{a'} Q(s', a') - Q(s,a) \\Big]",
+              "caption": "The Q-learning update. The max over a' evaluates the best possible next action, not the one the behavior policy actually takes. Q-learning is off-policy: the behavior policy, often epsilon-greedy, generates the experience, but the update learns the value of a different, greedy target policy."
+            },
+            {
+              "_key": "rl2l4b11",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl2l4b11s1",
+                  "_type": "span",
+                  "text": "This single change means Q-learning's value estimates describe the world as it would look under perfect, greedy play from here on, even though the data it learned from came from a noisier, exploring policy. That makes Q-learning's estimates, in a sense, more optimistic: they don't carry the cost of the agent's own future exploratory mistakes, because the update pretends those mistakes won't happen.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl2l4b12",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl2l4b12s1", "_type": "span", "text": "Why This Difference Matters Near a Real Risk Boundary", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl2l4b13",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl2l4b13s1",
+                  "_type": "span",
+                  "text": "This difference sounds academic until it is applied to a state near real danger. The classic illustration in the original RL literature is a gridworld with a cliff: a path along the cliff edge is the shortest, highest-reward route, but an exploratory misstep near the edge sends the agent falling off and paying a large penalty. Q-learning, evaluating the best possible next action rather than the one its own exploration might actually take, learns to value the short, risky path along the edge highly, since that path is optimal under perfect greedy play. SARSA, whose update reflects the actual epsilon-greedy policy still exploring during training, learns that hugging the edge is dangerous precisely because its own exploration sometimes causes a fall, and settles on a longer but safer route.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl2l4b14",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl2l4b14s1",
+                  "_type": "span",
+                  "text": "The trading equivalent is a state close to a genuine risk boundary: running a leveraged position near a margin threshold, or holding a short-volatility book into a known event like a Reserve Bank of India policy announcement or a large index expiry, where a small further adverse move triggers a forced, costly exit. A Q-learning agent trained near this boundary evaluates the best possible outcome from staying close to it, exactly the size and proximity that maximizes reward under perfect play, without pricing in that its own exploration, while still training, will occasionally take a bad action right at the boundary. A SARSA agent trained the same way learns the actual expected cost of operating near that boundary, exploration mistakes included, and tends to settle on a policy that keeps more distance from the edge.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl2l4b15",
+              "_type": "table",
+              "caption": "SARSA vs Q-Learning",
+              "headers": ["", "SARSA (On-Policy)", "Q-Learning (Off-Policy)"],
+              "rows": [
+                { "_key": "rl2l4b15r1", "_type": "tableRow", "cells": ["Update uses", "The action actually taken next, a'", "The best possible next action, max_a' Q(s',a')"] },
+                { "_key": "rl2l4b15r2", "_type": "tableRow", "cells": ["Learns the value of", "The exact policy generating its own experience, exploration included", "A different, greedy target policy, regardless of the exploring behavior policy"] },
+                { "_key": "rl2l4b15r3", "_type": "tableRow", "cells": ["Behavior near a risky boundary", "Tends to learn a more cautious policy, since its own exploratory mistakes are priced into the learned value", "Tends to learn a more aggressive policy, since it evaluates ideal play without pricing in its own future exploration errors"] },
+                { "_key": "rl2l4b15r4", "_type": "tableRow", "cells": ["Good fit when", "Safety during training and deployment genuinely matters, and the policy will keep exploring", "You want the best achievable policy and can control or eliminate exploration risk separately"] }
+              ]
+            },
+            {
+              "_key": "rl2l4b16",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Neither algorithm is simply better. Q-learning's off-policy value estimates are exactly what you want if the deployed policy will be fully greedy with no further exploration, an accurate estimate of the best achievable outcome. SARSA's on-policy estimates are what you want if exploration, or any other source of policy noise, persists into how the strategy will actually be run. Confusing the two is a quiet way to end up with a live strategy sized more aggressively near risk than its own training ever actually validated."
+            },
+            {
+              "_key": "rl2l4b17",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Choosing SARSA or Q-Learning for a Leveraged Strategy",
+              "scenario": "A researcher is training an RL agent to manage position size for a Bank Nifty futures strategy allowed to use leverage up to a broker-defined margin limit. During training, the agent uses an epsilon-greedy policy with epsilon decaying slowly over a long training run, and the plan is to deploy the final trained policy with a small residual epsilon left in place for continued adaptation live, rather than going fully greedy.",
+              "prompt": "Given that some exploration will persist even after deployment, would SARSA or Q-learning better reflect the actual risk this strategy will face near its leverage limit? Why?",
+              "modelAnswer": "SARSA is the better fit here. Since the deployed policy retains a small residual epsilon rather than becoming fully greedy, the strategy will continue to occasionally take exploratory actions even in production, including near the leverage limit where an exploratory misstep could trigger a margin call or a forced deleveraging. SARSA's on-policy update learns the value of the actual policy being followed, exploration included, so its learned value estimates near the leverage boundary already account for the real risk of an occasional bad exploratory action. Q-learning's off-policy update evaluates the best possible outcome under purely greedy play, understating the risk of operating close to the limit precisely because it does not price in the exploration that this deployment plan explicitly keeps in place."
+            },
+            {
+              "_key": "rl2l4b18",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Reading the Two Update Rules",
+              "question": "What is the single difference between the SARSA update rule and the Q-learning update rule?",
+              "options": [
+                "SARSA uses a higher learning rate α than Q-learning",
+                "Q-learning uses the maximum Q-value over all possible next actions, while SARSA uses the Q-value of the action actually taken next",
+                "SARSA does not use a discount factor γ, while Q-learning does",
+                "Q-learning can only be used with continuous action spaces"
+              ],
+              "correctIndex": 1,
+              "explanation": "The two update rules are identical except for one term: SARSA plugs in Q(s', a'), where a' is the action the agent's current behavior policy actually takes next, while Q-learning plugs in max_a' Q(s', a'), the value of the best possible next action regardless of what the behavior policy would actually do. That single difference is what makes SARSA on-policy and Q-learning off-policy."
+            },
+            {
+              "_key": "rl2l4b19",
+              "_type": "keyTakeaways",
+              "points": [
+                "On-policy learning evaluates the exact policy generating the training data; off-policy learning evaluates a different target policy, often the greedy one, regardless of what the exploring behavior policy actually does",
+                "SARSA's update uses the action actually taken next, a', making it on-policy and sensitive to the real cost of its own exploration",
+                "Q-learning's update uses the best possible next action, max_a' Q(s',a'), making it off-policy: it learns the value of ideal greedy play, not the value of the noisier policy actually generating its data",
+                "Near a genuine risk boundary, like a leverage or margin limit, Q-learning tends to learn a more aggressive policy because it does not price in the risk of its own future exploratory mistakes, while SARSA tends to learn a more cautious one because it does",
+                "Neither method is universally better; the right choice depends on whether the deployed strategy will keep exploring (favoring SARSA) or run fully greedy with exploration risk controlled separately (favoring Q-learning)",
+                "Chapter 3 turns all of this into a working trading environment: state, action, and reward design applied concretely, with the algorithm choices from this chapter ready to be trained against real Nifty 50 data"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

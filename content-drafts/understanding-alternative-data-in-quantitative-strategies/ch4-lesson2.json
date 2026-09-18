@@ -1,0 +1,334 @@
+{
+  "courseSlug": "understanding-alternative-data-in-quantitative-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 4: From Raw Data to Usable Signal",
+      "lessons": [
+        {
+          "title": "Point-in-Time Data: Handling Reporting Lags and Restatements",
+          "slug": "point-in-time-data-handling-reporting-lags-and-restatements",
+          "body": [
+            {
+              "_key": "c4l2k001",
+              "_type": "bigIdea",
+              "text": "The question is never what happened. It is when you would have actually known it, and most backtests that look brilliant on a first pass are quietly answering the wrong question."
+            },
+            {
+              "_key": "c4l2k002",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2k002s1",
+                  "_type": "span",
+                  "text": "This is one of the most important disciplines in this entire course, and it is also the easiest to skip past without noticing, because a dataset with the wrong dates attached still looks perfectly normal in a spreadsheet. Chapter 6 covers the specific damage this does to a backtest. This lesson covers the engineering discipline that prevents the damage from ever entering your data in the first place.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2k003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2k003s1",
+                  "_type": "span",
+                  "text": "Two Dates Every Alternative Dataset Needs",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2k004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c4l2m001",
+                  "_type": "glossaryTerm",
+                  "definition": "The date and time at which a data point actually became available to someone acting on it, as distinct from the date the data point describes. A signal built for a historical backtest must only use information whose knowledge date has already passed relative to the simulated decision date."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c4l2k004s1",
+                  "_type": "span",
+                  "text": "Every observation in your dataset describes something about a period, a day, a month, a quarter, and that is its period date. Separately, every observation became known to the outside world at some later moment, its ",
+                  "marks": []
+                },
+                {
+                  "_key": "c4l2k004s2",
+                  "_type": "span",
+                  "text": "knowledge date",
+                  "marks": ["c4l2m001"]
+                },
+                {
+                  "_key": "c4l2k004s3",
+                  "_type": "span",
+                  "text": ". A dataset that only stores the period date and silently assumes the knowledge date is the same day is unusable for a rigorous backtest, because it lets your model see the future.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2k005",
+              "_type": "table",
+              "caption": "Period date and knowledge date are rarely the same day",
+              "headers": ["Data Type", "Period Date", "Knowledge Date"],
+              "rows": [
+                {
+                  "_key": "c4l2k005r1",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Quarterly financial results",
+                    "The quarter end, such as 30 June",
+                    "Whenever the company actually files results, typically several weeks later"
+                  ]
+                },
+                {
+                  "_key": "c4l2k005r2",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Satellite imagery analysis",
+                    "The date the satellite captured the image",
+                    "The later date the processed NDVI or object count was actually delivered, after cloud correction and analysis"
+                  ]
+                },
+                {
+                  "_key": "c4l2k005r3",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Government aggregate data, such as e-way bill summaries",
+                    "The month the shipments actually occurred",
+                    "The later date the government or vendor actually published that month's figure"
+                  ]
+                },
+                {
+                  "_key": "c4l2k005r4",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Earnings call tone analysis",
+                    "The date the call took place",
+                    "The later date a usable transcript was actually posted and processed"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c4l2k006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2k006s1",
+                  "_type": "span",
+                  "text": "The Vintage Problem: When 'Final' Isn't What You Would Have Seen",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2k007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c4l2m002",
+                  "_type": "glossaryTerm",
+                  "definition": "The specific version of a data point as it existed and was published at a particular moment in time, before any later revision. Many official statistics, and by extension many alternative data sources built on top of them, are revised after their first release."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c4l2k007s1",
+                  "_type": "span",
+                  "text": "Many government and economic data series, India's industrial production data among them, are revised one or more times after their first release, and any alternative data built on top of such series inherits the same problem. Each version of a figure as it existed at a given time is a separate ",
+                  "marks": []
+                },
+                {
+                  "_key": "c4l2k007s2",
+                  "_type": "span",
+                  "text": "data vintage",
+                  "marks": ["c4l2m002"]
+                },
+                {
+                  "_key": "c4l2k007s3",
+                  "_type": "span",
+                  "text": ". If your database only stores the latest, most-revised value and stamps it against the original period date, a backtest will use information that did not actually exist yet on that historical date, quietly overstating how good the strategy would really have looked in real time.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2k008",
+              "_type": "table",
+              "caption": "One month of e-way bill data, published and then revised twice",
+              "headers": ["Version", "Publish Date (Knowledge Date)", "Reported Value for March"],
+              "rows": [
+                {
+                  "_key": "c4l2k008r1",
+                  "_type": "tableRow",
+                  "cells": [
+                    "First print",
+                    "15 April",
+                    "100 (index)"
+                  ]
+                },
+                {
+                  "_key": "c4l2k008r2",
+                  "_type": "tableRow",
+                  "cells": [
+                    "First revision",
+                    "15 May",
+                    "108 (index)"
+                  ]
+                },
+                {
+                  "_key": "c4l2k008r3",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Second revision (treated as final)",
+                    "15 June",
+                    "105 (index)"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c4l2k009",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Which Vintage Would You Have Actually Seen?",
+              "question": "You are simulating a trading decision as of 20 April, using the e-way bill vintages in the table above. Which value for March should your backtest use?",
+              "options": [
+                "105, the final, most accurate figure",
+                "108, the first revision, since it is closer to the true value",
+                "100, the first print, since that is the only value that had actually been published by 20 April",
+                "The average of all three versions"
+              ],
+              "correctIndex": 2,
+              "explanation": "As of 20 April, only the first print, published 15 April with a value of 100, existed in the world. The 108 revision was not published until 15 May, and the 105 final figure not until 15 June, both after your simulated decision date. Using either of those values on 20 April would mean your backtest is quietly using information from the future."
+            },
+            {
+              "_key": "c4l2k010",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2k010s1",
+                  "_type": "span",
+                  "text": "Building a Point-in-Time Database: What to Actually Store",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2k011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2k011s1",
+                  "_type": "span",
+                  "text": "The standard fix used by professional quant desks is an append-only store: never overwrite an old value when a revision arrives, insert a new row carrying the new knowledge date instead, and always query 'what was known as of this date' rather than 'what is the value for this period.'",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2k012",
+              "_type": "codeBlock",
+              "language": "sql",
+              "code": "CREATE TABLE eway_bill_vintages (\n    entity_id TEXT NOT NULL,\n    period_date DATE NOT NULL,\n    knowledge_date DATE NOT NULL,\n    value NUMERIC NOT NULL\n    -- Never UPDATE a row here. Every revision is a new row.\n);\n\n-- The point-in-time query: what value was actually known\n-- for March, as of a simulated decision date of 20 April?\nSELECT period_date, value, knowledge_date\nFROM eway_bill_vintages\nWHERE entity_id = 'IN_ALL_STATES'\n  AND period_date = '2024-03-01'\n  AND knowledge_date <= '2024-04-20'\nORDER BY knowledge_date DESC\nLIMIT 1;\n-- Returns the 15 April first print (value 100), correctly\n-- excluding the May and June revisions that hadn't happened yet.",
+              "caption": "An append-only, bitemporal schema: store every vintage as its own row, and always filter by knowledge_date, never just by period_date."
+            },
+            {
+              "_key": "c4l2k013",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2k013s1",
+                  "_type": "span",
+                  "text": "Alternative-Data-Specific Knowledge Date Traps",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2k014",
+              "_type": "table",
+              "caption": "Each alt data category from Chapter 2 has its own knowledge-date trap",
+              "headers": ["Category", "The Trap"],
+              "rows": [
+                {
+                  "_key": "c4l2k014r1",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Satellite and geolocation data",
+                    "Assuming the image capture date is when the insight was available, when the real availability date is after cloud correction, computer vision processing, and vendor delivery"
+                  ]
+                },
+                {
+                  "_key": "c4l2k014r2",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Web and app data",
+                    "Using the timestamp embedded in a scraped page rather than the timestamp your own scraper actually retrieved it, which can differ if a scrape runs on a delay or a retry"
+                  ]
+                },
+                {
+                  "_key": "c4l2k014r3",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Text and sentiment data",
+                    "Using an earnings call's date instead of the later date a usable transcript was actually posted and processed by your pipeline"
+                  ]
+                },
+                {
+                  "_key": "c4l2k014r4",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Supply chain and corporate data",
+                    "Treating a government portal's most recently displayed figure for a past month as if it had always shown that figure, ignoring that it may have shown a different number on the actual historical date"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c4l2k015",
+              "_type": "callout",
+              "type": "insight",
+              "text": "If your data pipeline has never had to answer the question 'what did this table look like on this specific past date,' it is not yet a point-in-time database, no matter how clean or well organized it looks today."
+            },
+            {
+              "_key": "c4l2k016",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "The revision figures used in this lesson are illustrative examples for teaching the concept, not reported data for any specific month or dataset. Always confirm the actual revision history and publication dates directly with the original data source."
+            },
+            {
+              "_key": "c4l2k017",
+              "_type": "keyTakeaways",
+              "points": [
+                "Every dataset needs two dates: a period date describing what the observation is about, and a knowledge date describing when it actually became available",
+                "Many government and economic data series are revised after first release, and each version at a point in time is a separate data vintage",
+                "Backtesting a historical decision must use only the vintage that existed as of that decision date, never a later, more accurate revision",
+                "The standard engineering fix is an append-only, bitemporal database: never overwrite a value on revision, add a new row with the new knowledge date and query by knowledge date, not period date",
+                "Each alternative data category carries its own specific knowledge-date trap: satellite processing lag, scraper retrieval delay, transcript posting lag, and portal display versus historical publication",
+                "This lesson builds the data engineering foundation; Chapter 6 covers exactly how ignoring it quietly inflates backtest performance"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

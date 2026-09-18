@@ -1,0 +1,234 @@
+{
+  "courseSlug": "understanding-multi-asset-systematic-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 6: Risk Parity and Volatility-Weighted Allocation",
+      "lessons": [
+        {
+          "title": "Risk Parity's Achilles Heel: Leverage, Rate Regimes, and 2022",
+          "slug": "risk-paritys-achilles-heel-leverage-rate-regimes-and-2022",
+          "body": [
+            {
+              "_key": "mac6l4b01",
+              "_type": "bigIdea",
+              "text": "Risk parity solves the equal-capital-is-not-equal-risk problem genuinely well. In exchange, it usually needs leverage to deliver a competitive return, and its structural tilt toward low-volatility bonds leaves it maximally exposed exactly when the stock-bond relationship it depends on breaks down, which is precisely what happened in 2022."
+            },
+            {
+              "_key": "mac6l4b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac6l4b02s1",
+                  "_type": "span",
+                  "text": "Lesson 3's solved portfolio assigned over 55% of its weight to G-Sec futures, the least volatile of the three assets. This closing lesson explains why that heavy bond tilt is not just a mathematical curiosity, it is the source of risk parity's two most significant real weaknesses: the leverage most practical implementations require, and the specific vulnerability that made 2022 one of the hardest years on record for risk-parity-style strategies.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac6l4b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac6l4b03s1", "_type": "span", "text": "The Leverage Problem: Why Risk Parity Usually Isn't Unlevered", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac6l4b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac6l4b04s1",
+                  "_type": "span",
+                  "text": "An unlevered risk parity portfolio, weighted heavily toward low-volatility assets like G-Secs, structurally earns a lower expected return than a more equity-heavy portfolio, since equities carry a higher long-run expected return, the equity risk premium, precisely because they carry more risk. To make risk parity's return competitive with a traditional equity-heavy allocation, most real-world implementations, including well-known institutional risk parity funds, lever up the entire book, using exactly Chapter 6's own vol-targeting mechanics from Lesson 2, until its overall volatility, and with it its expected return, approaches a more competitive level.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac6l4b05",
+              "_type": "table",
+              "caption": "Illustrative Return and Volatility, Unlevered vs Levered Risk Parity vs Traditional Allocation",
+              "headers": ["Portfolio", "Leverage", "Illustrative Return", "Illustrative Volatility"],
+              "rows": [
+                { "_key": "mac6l4b05r1", "_type": "tableRow", "cells": ["Unlevered Risk Parity (Lesson 3's weights)", "1.0x", "≈8%", "≈6.4%"] },
+                { "_key": "mac6l4b05r2", "_type": "tableRow", "cells": ["Levered Risk Parity (vol-matched to equities)", "≈1.9x", "≈15% (before financing costs)", "≈12%"] },
+                { "_key": "mac6l4b05r3", "_type": "tableRow", "cells": ["Traditional Equity-Heavy Allocation", "1.0x", "≈10%", "≈11%"] }
+              ]
+            },
+            {
+              "_key": "mac6l4b06",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "These return and volatility figures are illustrative, meant to show the general shape of the leverage trade-off, not a forecast or a specific fund's actual figures. Real levered returns are also reduced by financing costs, covered next, which this simplified illustration does not net out."
+            },
+            {
+              "_key": "mac6l4b07",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Risk parity does not eliminate risk, it relocates it. Instead of concentration risk, capital dominated by one volatile asset, a levered risk parity book carries leverage risk, financing cost, margin sensitivity, and amplified losses if the underlying correlation assumptions break down. This is a genuine trade, not a free improvement."
+            },
+            {
+              "_key": "mac6l4b08",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac6l4b08s1", "_type": "span", "text": "Leverage's Hidden Costs: Funding Rates and Margin Calls", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac6l4b09",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac6l4b09s1",
+                  "_type": "span",
+                  "text": "Leverage is never free. Borrowed capital carries a financing cost, which directly eats into the levered portfolio's net return, and a leveraged position is more sensitive to margin requirements, since a given percentage move in the underlying assets produces a larger percentage move in posted collateral needs. This reintroduces exactly the forced-selling liquidity risk Chapter 3's lesson on the 2008 Global Financial Crisis covered: a leveraged book facing margin calls during a genuine crisis can be forced to sell into the worst possible conditions, regardless of how sound its underlying diversification logic is.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac6l4b10",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac6l4b10s1", "_type": "span", "text": "2022: When the Assumption Risk Parity Depends On Broke", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac6l4b11",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac6l4b11s1",
+                  "_type": "span",
+                  "text": "Risk parity's diversification claim rests heavily on bonds and equities being negatively, or at least weakly, correlated, exactly the relationship Chapter 3's crisis lesson showed held during 2008 and 2020 but flipped positive during 2022's inflation shock. A risk parity portfolio, structurally overweight bonds for low-volatility reasons and often further levered for return purposes, was positioned for exactly the wrong regime in 2022: both its equity and its heavily weighted, often leveraged, bond exposure fell together, removing the diversification benefit the entire framework depends on, at the same moment leverage was amplifying the loss. 2022 is widely reported in financial media as one of the most difficult years on record for risk-parity-style and \"All Weather\"-style multi-asset funds, for exactly this reason.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac6l4b12",
+              "_type": "callout",
+              "type": "warning",
+              "text": "A risk parity portfolio's backtest, run mostly over a period when stocks and bonds were negatively correlated, will look excellent. That backtest is silently assuming the correlation regime that produced it will persist. Chapter 3 already showed why that assumption cannot be taken for granted, and 2022 is the concrete case where it failed."
+            },
+            {
+              "_key": "mac6l4b13",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac6l4b13s1", "_type": "span", "text": "The Deeper Lesson: Risk Parity Has No View on Why Correlation Is What It Is", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac6l4b14",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac6l4b14s1",
+                  "_type": "span",
+                  "text": "Risk parity is entirely backward-looking: it takes whatever volatility and correlation the data shows and allocates accordingly, with no structural model of why that correlation exists or whether it is likely to hold in a different kind of shock. It cannot distinguish a durable, growth-shock-era negative stock-bond correlation from one that flips positive specifically during an inflation shock, because it was never built to ask that question in the first place, exactly the shock-type distinction Chapter 3's crisis lesson spent an entire lesson establishing. This is not a flaw unique to risk parity, it is the honest limit of any method built purely from historical volatility and correlation, which is precisely why this course paired Chapter 6's allocation machinery with Chapter 3's crisis-type awareness rather than treating either as sufficient alone.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac6l4b15",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Risk parity answers \"how should I allocate given the correlations I currently observe.\" It cannot answer \"will these correlations hold during the next crisis, and if not, which kind of crisis would break them.\" That second question is exactly what Chapter 3's work on crisis types and correlation breakdown exists to at least partially address, which is why the two chapters work as a pair, not as redundant coverage of the same idea."
+            },
+            {
+              "_key": "mac6l4b16",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac6l4b16s1", "_type": "span", "text": "Closing Out Chapter 6", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac6l4b17",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac6l4b17s1",
+                  "_type": "span",
+                  "text": "Risk parity is a genuine improvement over naive equal capital weighting, Lesson 1's whole argument, but it is not a complete risk management solution by itself. It needs explicit leverage discipline, Lesson 2's caps and no-trade bands, and honest awareness of correlation instability, Chapter 3's entire toolkit, layered on top of it, not treated as unnecessary once risk parity is in place. Chapter 7 combines every asset class from Chapter 2 and every strategy from Chapters 4 and 5 into one coherent multi-asset, multi-strategy book, using risk-parity-style allocation as its backbone while carrying forward every limitation this lesson has just been honest about. Chapter 9 then builds the explicit kill switches and drawdown controls that this lesson's leverage and correlation-breakdown risks specifically call for.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac6l4b18",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "The Fund With a Decade of Great Numbers, Then 2022",
+              "scenario": "A levered risk parity fund posts strong, smooth, risk-adjusted returns for over a decade, consistently citing low correlation between its equity and bond legs as the source of its stability. In 2022, the fund posts one of its worst years on record, with losses across both its equity and bond exposure simultaneously, amplified by its standing leverage.",
+              "prompt": "Using this lesson's framework, explain what happened, and whether the fund's pre-2022 track record should have been trusted as fully representative of the strategy's risk.",
+              "modelAnswer": "The fund's pre-2022 track record reflected a period when stocks and bonds were genuinely negatively or weakly correlated, exactly the regime Chapter 3 showed held during 2008's later stages and 2020, and risk parity performed well precisely because that assumption held throughout the sample. 2022 was an inflation shock, the specific shock type Chapter 3 identified as capable of flipping the equity-bond correlation positive, and the fund's structurally bond-heavy, leveraged positioning meant it was maximally exposed exactly when that flip occurred, its usual diversification benefit disappearing at the same moment leverage was amplifying the combined loss. The pre-2022 track record was not fraudulent or wrong, it was an honest description of performance under the correlation regime that happened to prevail during that period, but it should never have been read as proof the strategy was robust to every possible regime, since risk parity, as this lesson explains, has no built-in way to anticipate a shock type capable of breaking its core assumption."
+            },
+            {
+              "_key": "mac6l4b19",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why Risk Parity Usually Needs Leverage",
+              "question": "Based on this lesson, why do most real-world risk parity implementations use leverage rather than running unlevered?",
+              "options": [
+                "Because leverage is required by SEBI regulation for all systematic strategies",
+                "Because an unlevered risk parity portfolio, weighted heavily toward low-volatility assets like bonds, earns a structurally lower expected return than a more equity-heavy allocation, and leverage is used to bring its return closer to competitive levels",
+                "Because leverage eliminates all risk from the portfolio",
+                "Because low-volatility assets like G-Secs cannot be purchased without leverage"
+              ],
+              "correctIndex": 1,
+              "explanation": "An unlevered risk parity book, tilted heavily toward low-volatility assets because of how risk contribution works, structurally earns a lower expected return than equity-heavy alternatives, since it holds less of the asset class carrying the equity risk premium. Leverage is the standard tool used to scale the whole book's risk and return back up toward a competitive level, at the direct cost of financing charges and margin sensitivity."
+            },
+            {
+              "_key": "mac6l4b20",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Questions to Ask Before Trusting a Risk Parity Allocation",
+              "steps": [
+                "What leverage, if any, is being applied to scale the unlevered risk-parity weights toward a target return, and what does that leverage cost in financing charges?",
+                "What correlation regime does the backtest primarily reflect, and would it look meaningfully different if it were dominated by an inflation-shock period like 2022 instead?",
+                "Does the strategy have an explicit response if stock-bond correlation flips positive, or does it assume the negative correlation relationship indefinitely?",
+                "What happens to the portfolio's margin requirements, and its ability to meet them, during a fast, severe drawdown across multiple asset classes at once?",
+                "Is the allocation being reviewed periodically against fresh volatility and correlation data, or was it solved once and left static?"
+              ]
+            },
+            {
+              "_key": "mac6l4b21",
+              "_type": "keyTakeaways",
+              "points": [
+                "An unlevered risk parity portfolio structurally earns a lower expected return than an equity-heavy allocation, since it holds less of the asset class carrying the equity risk premium",
+                "Most real-world risk parity implementations use leverage to bring overall return closer to competitive levels, trading concentration risk for leverage risk",
+                "Leverage carries real costs: financing charges that reduce net return, and margin sensitivity that can force selling during exactly the crisis conditions Chapter 3's 2008 lesson covered",
+                "2022's inflation shock flipped the equity-bond correlation positive, exactly the regime risk parity's diversification claim depends on not happening, which is why 2022 was historically difficult for risk-parity-style funds",
+                "Risk parity is entirely backward-looking, with no structural model of why a correlation exists or whether a specific shock type could break it, exactly the gap Chapter 3's crisis-type framework exists to address",
+                "Chapter 6 and Chapter 3 work as a pair, not redundant coverage: risk parity provides the allocation machinery, and Chapter 3 provides the honest awareness of when that machinery's core assumptions can fail"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

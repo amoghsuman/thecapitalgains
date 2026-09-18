@@ -1,0 +1,189 @@
+{
+  "courseSlug": "understanding-capacity-constraints-and-strategy-scaling",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Capacity Is the Silent Constraint on Every Strategy",
+      "lessons": [
+        {
+          "title": "Case Study: A Strategy That Worked on Rs 10 Lakh and Broke at Rs 50 Crore",
+          "slug": "case-study-a-strategy-that-worked-on-rs-10-lakh-and-broke-at-rs-50-crore",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "c1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c1s1", "text": "The two previous lessons gave you the theory. This one walks through how it plays out in practice, using a composite case study built from a pattern that shows up repeatedly across Indian systematic trading desks, not a specific named fund. The numbers are illustrative, but the mechanism, and the order in which things broke, is exactly what tends to happen when a small-cap strategy scales past what its universe can support.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c2s1", "text": "The Strategy: Post-Earnings Drift on NSE Small-Caps", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c3",
+              "style": "normal",
+              "markDefs": [
+                { "_type": "glossaryTerm", "_key": "gt1", "definition": "The tendency for a stock's price to keep drifting in the direction of an earnings surprise for weeks after the result is announced, instead of adjusting instantly. A well-documented, long-studied anomaly in equity markets worldwide." }
+              ],
+              "children": [
+                { "_type": "span", "_key": "c3s1", "text": "The strategy behind this case study exploits ", "marks": [] },
+                { "_type": "span", "_key": "c3s2", "text": "post-earnings announcement drift", "marks": ["gt1"] },
+                { "_type": "span", "_key": "c3s3", "text": ": when an NSE-listed small or micro-cap stock, market cap under roughly Rs 2,000 crore, beats expectations by a wide margin in its quarterly results, its price tends to keep drifting upward for the following few weeks rather than adjusting instantly. The trader buys the day after results are filed and holds for around 15 trading days, screening roughly 20 to 25 qualifying stocks each quarter using publicly filed results and an earnings-surprise scan, the kind of screen you could build yourself on screener.in.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "timeline",
+              "_key": "c4",
+              "title": "Four Stages of Scaling the Same Strategy",
+              "events": [
+                { "date": "Stage 1", "title": "Rs 10 Lakh: Proof of Concept", "description": "Trading personal capital, positions of Rs 40,000 to 50,000 per stock. Orders are too small to register against any stock's daily volume." },
+                { "date": "Stage 2", "title": "Rs 2 Crore: Seed Capital", "description": "A family office backs the strategy. Positions grow to Rs 8 to 10 lakh per stock. Still comfortable for most names, but entries in the thinnest micro-caps start taking a partial extra day." },
+                { "date": "Stage 3", "title": "Rs 15 Crore: Institutional Mandate", "description": "A boutique quant shop allocates Rs 15 crore. Positions of Rs 60 to 75 lakh now represent 10 to 20 percent of average daily volume in the more illiquid names, and some stocks have to be dropped from the universe entirely." },
+                { "date": "Stage 4", "title": "Rs 50 Crore: AIF Launch", "description": "The strategy is packaged into a SEBI-registered AIF at Rs 50 crore. Position sizes now exceed a full day's volume in many candidate stocks, forcing a choice between multi-day execution or drifting into larger, more liquid, less mispriced names." }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c5",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c5s1", "text": "Stage One and Two: Where It Worked", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c6",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c6s1", "text": "At Rs 10 lakh, the strategy delivered roughly 45 percent CAGR over three years with a Sharpe ratio of 2.1, and average slippage under 0.1 percent. This is the number that gets shown in a pitch deck. At Rs 2 crore, position sizes of Rs 8 to 10 lakh were still small relative to most of the universe, and CAGR held up reasonably well at around 38 percent, Sharpe 1.7. The strategy still looked, on paper, like one of the best things on the desk.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c7",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c7s1", "text": "Stage Three and Four: Where It Broke", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c8",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c8s1", "text": "At Rs 15 crore, positions of Rs 60 to 75 lakh started to represent 10 to 20 percent of average daily volume in the more illiquid names in the universe. Building a full position took two to three trading days instead of one, and by the time it was complete, part of the drift the strategy was trying to capture had already happened without the fund fully positioned to catch it. At Rs 50 crore, the arithmetic stopped working altogether for a large share of the original universe: a Rs 2 crore position in a stock with Rs 40 to 80 lakh of daily traded value cannot be built or exited in a single day at any reasonable participation rate. Realized CAGR fell to roughly 7 percent, with a Sharpe ratio of 0.4 and several negative months, a portfolio that no longer resembled the one in the pitch deck at all.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "chart",
+              "_key": "c9",
+              "chartType": "bar",
+              "title": "Realized CAGR by Stage",
+              "xAxisLabel": "Stage (AUM)",
+              "yAxisLabel": "CAGR (%)",
+              "data": [
+                { "label": "Rs 10 Lakh", "value": 45 },
+                { "label": "Rs 2 Cr", "value": 38 },
+                { "label": "Rs 15 Cr", "value": 19 },
+                { "label": "Rs 50 Cr", "value": 7 }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "c10",
+              "caption": "Stage-by-stage summary, illustrative figures",
+              "headers": ["Stage", "AUM", "Avg Position vs ADV", "Sharpe Ratio"],
+              "rows": [
+                { "cells": ["1", "Rs 10 lakh", "Well under 1%", "2.1"] },
+                { "cells": ["2", "Rs 2 crore", "5 to 10%", "1.7"] },
+                { "cells": ["3", "Rs 15 crore", "10 to 20%", "0.9"] },
+                { "cells": ["4", "Rs 50 crore", "Often over 100%", "0.4"] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c11",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c11s1", "text": "What Actually Broke: Three Forces at Once", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "c12",
+              "headers": ["Force", "What It Did"],
+              "rows": [
+                { "cells": ["Market impact", "Building and exiting oversized positions in illiquid names moved prices against the fund on both ends of the trade"] },
+                { "cells": ["Crowding", "Publicly available NSE and BSE results data meant other prop desks and quant shops ran similar earnings-surprise scans, so the same 20 to 25 stock shortlist increasingly overlapped with other participants' target lists each quarter, compressing the drift before this fund had even finished executing"] },
+                { "cells": ["Capacity-driven style drift", "To keep position sizes reasonable relative to volume, the universe had to tilt toward larger, more liquid mid-caps, which are more efficiently priced and have less drift left to capture, diluting the very edge the strategy was built on"] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "c13",
+              "type": "insight",
+              "text": "Notice that none of these three forces are a flaw in the original idea. Post-earnings drift in small-caps is a real, well-documented pattern, and the strategy correctly identified it. What broke was the assumption that a Rs 10 lakh result could be multiplied by 500 and stay a Rs 50 crore result. This exact failure mode, a public, well-known signal in an illiquid universe, is a favorite topic in quant and prop trading interviews precisely because it tests whether a candidate understands capacity, not just alpha generation."
+            },
+            {
+              "_type": "block",
+              "_key": "c14",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c14s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "c15",
+              "variant": "numericInput",
+              "title": "Position Size vs Available Liquidity",
+              "prompt": "A Rs 50 crore fund allocates 2% of AUM to a single small-cap stock with average daily traded value of Rs 40 lakh. What is the position size as a percentage of that stock's average daily volume?",
+              "correctValue": 250,
+              "tolerance": 5,
+              "unit": "%",
+              "explanation": "2% of Rs 50 crore is Rs 1 crore. Rs 1 crore divided by Rs 40 lakh of average daily traded value is 2.5, or 250%. A single position here is worth two and a half days of the stock's entire traded volume, meaning it cannot be built or exited in one day without moving the price heavily against the fund."
+            },
+            {
+              "_type": "block",
+              "_key": "c16",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c16s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "c17",
+              "text": "The same signal that produces a 45 percent CAGR on Rs 10 lakh can produce single-digit returns on Rs 50 crore, not because the idea was wrong, but because the idea was never big enough to hold that much capital in the first place."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "c18",
+              "points": [
+                "A strategy's live track record at one AUM level tells you very little about what it will do at ten or fifty times that AUM, especially when the underlying universe is illiquid.",
+                "Public, well-documented anomalies such as post-earnings drift are especially capacity-constrained in an illiquid universe, since other participants can and do replicate the same screen using the same public data.",
+                "Scaling often forces a choice between multi-day execution, which lets part of the opportunity decay before the position is even built, or drifting the universe toward larger, more liquid, more efficiently priced names, which dilutes the original edge.",
+                "Market impact, crowding, and capacity-driven style drift rarely arrive one at a time, they compound, which is why realized returns at scale can fall far faster than a simple linear extrapolation would suggest."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

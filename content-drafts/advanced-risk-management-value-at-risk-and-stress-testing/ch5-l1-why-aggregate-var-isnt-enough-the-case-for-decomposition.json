@@ -1,0 +1,179 @@
+{
+  "courseSlug": "advanced-risk-management-value-at-risk-and-stress-testing",
+  "chapters": [
+    {
+      "title": "Chapter 5: Portfolio Risk Decomposition (Marginal, Component, and Incremental VaR)",
+      "lessons": [
+        {
+          "title": "Why Aggregate VaR Isn't Enough: The Case for Decomposition",
+          "slug": "why-aggregate-var-isnt-enough-the-case-for-decomposition",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "o1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "o1s1", "text": "Every VaR figure this course has computed so far has been a single number describing an entire portfolio. That number tells you how much you could lose. It does not tell you which position is responsible for how much of that number, and if you cannot answer that, you cannot answer the next obvious question a risk committee will ask: if we need to cut risk by 20%, which position should we trim first?", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "o2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "o2s1", "text": "The Problem with a Single Aggregate Number", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "o3",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "o3s1", "text": "Recall the two-asset portfolio from Chapter 2's Parametric VaR lesson: Rs 50,00,000 in Nifty futures, daily volatility 1.2%, alongside Rs 30,00,000 in gold, daily volatility 1.0%, with a correlation of -0.10 between the two. The portfolio's 99% 1-day VaR came out to Rs 1,49,661, lower than the simple sum of the two individual VaRs, Rs 2,09,340, thanks to diversification.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "o4",
+              "caption": "Recap: the two-asset portfolio from Chapter 2",
+              "headers": ["", "Value", "Daily volatility", "Standalone VaR (99%)"],
+              "rows": [
+                { "cells": ["Nifty futures", "Rs 50,00,000", "1.2%", "Rs 1,39,560"] },
+                { "cells": ["Gold", "Rs 30,00,000", "1.0%", "Rs 69,780"] },
+                { "cells": ["Portfolio (rho = -0.10)", "Rs 80,00,000 combined", "", "Rs 1,49,661"] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "o5",
+              "type": "insight",
+              "text": "Here is the question Chapter 2 never answered: of that Rs 1,49,661 portfolio VaR, how much is 'caused' by the Nifty position, and how much by gold? It is tempting to just prorate by standalone VaR, Nifty is roughly 67% of the sum of standalone VaRs, so maybe it accounts for 67% of the Rs 1,49,661. That guess turns out to be wrong, and this chapter is about why, and what the correct answer actually is."
+            },
+            {
+              "_type": "block",
+              "_key": "o6",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "o6s1", "text": "Why This Actually Matters", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "o7",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "o7s1", "text": "A single aggregate VaR figure cannot answer any of these genuinely practical questions: which position should be trimmed first if the desk needs to cut risk. Whether a proposed new trade would meaningfully increase the book's risk, or barely move it because it happens to diversify the existing positions. Which position is quietly the largest source of risk, even if it is not the largest position by rupee value. Capital allocation decisions across multiple desks or strategies, where the firm wants to reward desks that add return without adding much marginal risk.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "o8",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "o8s1", "text": "Three Ways to Decompose Risk", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "o9",
+              "caption": "Three related but distinct decomposition tools, covered one per lesson in this chapter",
+              "headers": ["Tool", "Question it answers"],
+              "rows": [
+                { "cells": ["Marginal VaR", "If I increase this position by a tiny amount, how much does portfolio VaR change, per rupee?"] },
+                { "cells": ["Component VaR", "How much of the total portfolio VaR is attributable to this position, such that all components sum exactly back to the total?"] },
+                { "cells": ["Incremental VaR", "If I add or remove this entire position, size and all, how much does portfolio VaR actually change?"] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "o10",
+              "type": "insight",
+              "text": "Notice the progression. Marginal VaR is a per-rupee sensitivity, useful for fine-tuning. Component VaR takes that same sensitivity and scales it up to answer 'how much of the whole pie is this slice', with every slice adding up exactly to the total. Incremental VaR answers a blunter, often more practical question: not a tiny nudge, but what happens if this specific trade, at its actual size, is added or removed entirely."
+            },
+            {
+              "_type": "block",
+              "_key": "o11",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "o11s1", "text": "A First Intuition: Correlation Determines the Split", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "o12",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "o12s1", "text": "Standalone VaR, the number you would get if you held only that one position, ignores how it interacts with the rest of the portfolio entirely. A position that is negatively correlated with the rest of the book, like gold here, is doing useful work, it offsets risk rather than adding to it, so its true contribution to portfolio risk is smaller than its standalone VaR suggests, and can even turn negative in extreme cases where a position is a strong enough hedge. A position that is highly correlated with everything else, effectively duplicating existing risk, contributes more to portfolio VaR than its standalone figure implies. The exact math behind this is Marginal and Component VaR, covered next.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "o13",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "o13s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "o14",
+              "variant": "scenario",
+              "title": "Reasoning Before the Formula",
+              "scenario": "A desk holds three positions: a large Nifty futures position, a Bank Nifty futures position that is 85% correlated with the Nifty position, and a small gold position that is -10% correlated with both. All three have similar standalone VaR figures.",
+              "prompt": "Without doing any calculation yet, which position would you expect to have the largest true contribution to portfolio VaR, and which the smallest, and why?",
+              "modelAnswer": "The Bank Nifty position is likely to have the largest true contribution to portfolio risk, despite having a similar standalone VaR to the others, because its 85% correlation with the Nifty position means it is largely duplicating risk that is already in the book rather than adding something new or offsetting. The gold position is likely to have the smallest true contribution, and possibly a contribution well below its standalone VaR, because its negative correlation means it is actively offsetting risk from the other two positions. This is exactly the intuition Marginal and Component VaR make precise in the next two lessons."
+            },
+            {
+              "_type": "exercise",
+              "_key": "o15",
+              "variant": "quiz",
+              "title": "Quick Check",
+              "question": "Why can't standalone VaR, the VaR of a position held on its own, be used directly as that position's 'share' of total portfolio VaR?",
+              "options": [
+                "Standalone VaR is always calculated incorrectly",
+                "Standalone VaR ignores how the position is correlated with the rest of the portfolio, which is exactly what determines whether it adds to or offsets total risk",
+                "Standalone VaR can only be computed for options, not for futures or equities",
+                "Portfolio VaR is always exactly equal to the sum of standalone VaRs, so no decomposition is needed"
+              ],
+              "correctIndex": 1,
+              "explanation": "Standalone VaR describes a position in isolation. A portfolio's actual risk depends on how every position moves together, which standalone VaR says nothing about. A position that diversifies the book contributes less than its standalone figure suggests, one that duplicates existing risk contributes more."
+            },
+            {
+              "_type": "block",
+              "_key": "o16",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "o16s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "o17",
+              "text": "A portfolio's total VaR tells you how much you could lose. It does not tell you which position to trim if you need to lose less. Decomposition is what turns a single number into a set of actionable answers."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "o18",
+              "points": [
+                "Aggregate portfolio VaR cannot answer which position to trim, which new trade adds meaningful risk, or which position is a hidden concentration, even though every one of those is a routine risk management question.",
+                "Marginal VaR, Component VaR, and Incremental VaR are three related but distinct tools, answering a per-rupee sensitivity, an exact additive share of total risk, and the effect of adding or removing a full position, respectively.",
+                "A position's standalone VaR is a poor proxy for its true contribution to portfolio risk, because it ignores correlation with the rest of the book entirely.",
+                "A negatively correlated position, like gold in the Chapter 2 example, likely contributes less to total risk than its standalone VaR suggests, while a highly correlated position contributes more, this intuition is made exact in the next two lessons."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

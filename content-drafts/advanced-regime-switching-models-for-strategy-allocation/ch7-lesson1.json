@@ -1,0 +1,203 @@
+{
+  "courseSlug": "advanced-regime-switching-models-for-strategy-allocation",
+  "chapters": [
+    {
+      "title": "Chapter 7: Backtesting Regime-Switching Systems Rigorously",
+      "lessons": [
+        {
+          "title": "Look-Ahead Bias in Regime Labels: The Silent Backtest Killer",
+          "slug": "look-ahead-bias-in-regime-labels-the-silent-backtest-killer",
+          "body": [
+            {
+              "_key": "rswc7l1b01",
+              "_type": "bigIdea",
+              "text": "The single most common way to wreck a regime-switching backtest leaves no error message, no crash, and no obvious symptom except one: the results look fantastic, right up until the strategy goes live."
+            },
+            {
+              "_key": "rswc7l1b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc7l1b02s1",
+                  "_type": "span",
+                  "text": "Chapter 3 and Chapter 4 both drew a careful line between filtered probabilities, which use only data up to each day, and smoothed probabilities or a Viterbi decode, which use the entire sample. This lesson makes explicit exactly why using the wrong one in a backtest is not a minor technicality, it is the most common single reason a regime-switching strategy looks brilliant on historical data and falls apart the moment it trades live.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l1b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc7l1b03s1",
+                  "_type": "span",
+                  "text": "The Trap: Fit Once, Decode the Whole History",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l1b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc7l1b04s1",
+                  "_type": "span",
+                  "text": "Here is a workflow that feels completely reasonable and is exactly wrong. Fit an HMM once on the full 2015 to 2024 history. Call model.predict() or read off smoothed_marginal_probabilities to get a regime label for every single day in that history. Backtest a strategy that trades based on those labels. Every step here uses a real, working piece of code from Chapters 3 and 4. The problem is what those labels actually contain: the fitted transition matrix and emission distributions were estimated using every day in the sample, including days far in the future relative to any given historical date, and the smoothed or decoded label for a day in, say, 2019 used information from 2020 through 2024 to help decide what regime 2019 was in. A backtest built this way could never have been run live in 2019, because in 2019 none of that future data existed yet.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l1b05",
+              "_type": "callout",
+              "type": "warning",
+              "text": "This is look-ahead bias in its purest form, and it is silent. Nothing in the code errors out. The backtest runs, produces a clean equity curve, and reports an excellent Sharpe ratio, all while quietly having access to information about the future that no live trader would ever have had on any of those historical days."
+            },
+            {
+              "_key": "rswc7l1b06",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc7l1b06s1",
+                  "_type": "span",
+                  "text": "Quantifying the Leak",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l1b07",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc7l1b07s1",
+                  "_type": "span",
+                  "text": "The leak shows up most clearly in detection lag. A genuinely point-in-time system, one using only filtered probabilities re-estimated with data available up to each day, needs several confirming observations before it commits to a new regime, echoing Chapter 1's persistence discussion. A system built on smoothed or Viterbi labels can flag a regime change almost the instant it begins, because it already 'knows,' from data that has not happened yet relative to that day, that the following days confirm the shift.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l1b08",
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "rswc7l1b08st1",
+                  "label": "Point-in-time detection lag (illustrative)",
+                  "value": "~5 to 7 trading days",
+                  "context": "Using filtered probabilities only, as a live system genuinely would"
+                },
+                {
+                  "_key": "rswc7l1b08st2",
+                  "label": "Look-ahead-biased detection lag (illustrative)",
+                  "value": "~0 to 1 trading days",
+                  "context": "Using smoothed or Viterbi labels, which see the future relative to each historical day"
+                },
+                {
+                  "_key": "rswc7l1b08st3",
+                  "label": "Illustrative Sharpe ratio, same strategy logic",
+                  "value": "0.8 (correct) vs 2.6 (leaked)",
+                  "context": "The leaked version isn't a better strategy, it is a strategy being unfairly credited with foresight"
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l1b09",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "These figures are illustrative, meant to convey the scale and direction of the distortion, not measured from an actual comparison. The exact inflation varies by strategy, but the direction, look-ahead-biased backtests looking dramatically, unrealistically better, is extremely consistent across the finance literature on this failure mode."
+            },
+            {
+              "_key": "rswc7l1b10",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc7l1b10s1",
+                  "_type": "span",
+                  "text": "The Fix: Walk-Forward Fitting, Not One Static Fit",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l1b11",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc7l1b11s1",
+                  "_type": "span",
+                  "text": "The correct discipline is walk-forward fitting: refit the model periodically using only data available up to that point, and generate every trading signal from that point-in-time fit's filtered probabilities, never from a single full-sample fit's smoothed or decoded output. The next lesson builds this methodology and the code to implement it properly.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l1b12",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Diagnosing Look-Ahead Bias in a Regime-Switching Backtest",
+              "steps": [
+                "Check whether the model was fit once on the entire dataset, or refit periodically using only data available at each point in time",
+                "Check whether trading signals came from filtered_marginal_probabilities or from smoothed_marginal_probabilities or model.predict() (Viterbi)",
+                "If smoothed or decoded labels were used for signals anywhere in the pipeline, treat every backtest result as invalid until it is rerun using filtered probabilities from point-in-time fits only",
+                "Compare the strategy's apparent detection lag around known regime shifts, like the ones in Chapter 1, against a plausible, honestly-estimated live lag; a near-zero lag on a historical backtest is a strong warning sign",
+                "Re-run the exact same strategy logic using a genuinely walk-forward pipeline and compare the Sharpe ratio; a large gap between the two versions confirms how much of the original result was look-ahead bias"
+              ]
+            },
+            {
+              "_key": "rswc7l1b13",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Reviewing a Colleague's Backtest",
+              "scenario": "A colleague presents a regime-switching strategy backtested from 2018 to 2024 with a Sharpe ratio of 2.4. When asked how the regime labels were generated, they say: 'I fit the HMM once on the whole 2018 to 2024 dataset, since more data gives a better fit, then used model.predict() to label every day and traded off those labels.'",
+              "prompt": "Is this backtest trustworthy? What specifically is wrong, and what would you ask them to redo before believing the 2.4 Sharpe ratio?",
+              "modelAnswer": "This backtest is very likely severely look-ahead biased and should not be trusted as reported. Fitting once on the full 2018 to 2024 sample means every day's fitted parameters, and therefore every day's decoded label from model.predict(), used information from later in the sample, including data that would not have existed at the time each historical trade was made. The 2.4 Sharpe ratio almost certainly reflects the model's ability to see the future within its own training window, not a genuine tradable edge. The right request is to rerun the entire backtest using a walk-forward setup, refitting the model periodically using only data available up to each point in time, and generating every signal from filtered_marginal_probabilities rather than model.predict() or smoothed_marginal_probabilities. If the Sharpe ratio drops sharply under that correction, which is the expected outcome given the described setup, the original 2.4 number should be discarded entirely, not treated as an optimistic upper bound."
+            },
+            {
+              "_key": "rswc7l1b14",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Spotting the Leak",
+              "question": "A backtest fits an HMM once on the full historical sample and generates trading signals from smoothed_marginal_probabilities. What is the core problem with this setup?",
+              "options": [
+                "smoothed_marginal_probabilities is buggy and should never be used for anything",
+                "Both the fitted parameters and the smoothed probabilities for any given historical day were computed using data from later in the sample, information no live trader would have had at that point in time",
+                "The HMM should have been fit with more states to avoid this problem",
+                "There is no problem; smoothed probabilities are always more accurate and should be preferred"
+              ],
+              "correctIndex": 1,
+              "explanation": "smoothed_marginal_probabilities is a legitimate, useful output, exactly the right tool for historical analysis once you already know you are analyzing the past. The problem here is using it to generate trading signals in a backtest meant to simulate live decision-making, where only information available up to each point in time should ever be used."
+            },
+            {
+              "_key": "rswc7l1b15",
+              "_type": "keyTakeaways",
+              "points": [
+                "Fitting an HMM or MS-AR model once on the full historical sample and then using it to label every day leaks future information into every historical day's label",
+                "This leak is silent: the backtest runs cleanly and produces an excellent-looking Sharpe ratio, with no error to signal that anything went wrong",
+                "The leak shows up most clearly as an unrealistically short detection lag around known regime shifts, since a look-ahead-biased model already 'knows' a shift is confirmed before a live system genuinely could",
+                "smoothed_marginal_probabilities and model.predict() (Viterbi) are legitimate tools for historical analysis, but neither should ever generate trading signals in a backtest meant to simulate live decisions",
+                "The fix is walk-forward fitting, refitting periodically on data available only up to each point in time and using filtered probabilities exclusively for signals, which the next lesson builds in full"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

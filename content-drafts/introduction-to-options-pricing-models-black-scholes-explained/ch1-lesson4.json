@@ -1,0 +1,291 @@
+{
+  "courseSlug": "introduction-to-options-pricing-models-black-scholes-explained",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Options Need a Pricing Model",
+      "lessons": [
+        {
+          "title": "From Binomial Trees to a Closed-Form Formula: A Quick History",
+          "slug": "from-binomial-trees-to-a-closed-form-formula-a-quick-history",
+          "body": [
+            {
+              "_key": "k1",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k1s",
+                  "_type": "span",
+                  "text": "A Century in the Making",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k2",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k2s1",
+                  "_type": "span",
+                  "text": "Chapter 3 is going to show you a formula that looks like it dropped out of the sky in 1973. It did not. The replication argument from the last lesson has a lineage stretching back more than seventy years before that, and the formula itself is really just an old idea taken to its logical, continuous-time limit.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "timeline",
+              "title": "From a forgotten PhD thesis to a Nobel Prize",
+              "events": [
+                {
+                  "_key": "k3",
+                  "date": "1900",
+                  "title": "Louis Bachelier's forgotten thesis",
+                  "description": "A French PhD student describes stock price movements using what is now called Brownian motion, in a thesis submitted in Paris. It predates Einstein's famous physics paper on Brownian motion by five years and is largely ignored by economists for decades."
+                },
+                {
+                  "_key": "k4",
+                  "date": "Mid-1950s",
+                  "title": "Bachelier resurfaces",
+                  "description": "Economists rediscover Bachelier's work. Paul Samuelson, among others, takes it seriously and starts refining it."
+                },
+                {
+                  "_key": "k5",
+                  "date": "1965",
+                  "title": "Samuelson fixes a flaw",
+                  "description": "Paul Samuelson proposes that stock prices should follow geometric, not arithmetic, Brownian motion. Bachelier's original version allowed prices to go negative, which real share prices never do."
+                },
+                {
+                  "_key": "k6",
+                  "date": "1967",
+                  "title": "Thorp and Kassouf take it to the market",
+                  "description": "Ed Thorp and Sheen Kassouf publish \"Beat the Market,\" applying quantitative hedging to real warrants and convertible bonds, years before Black and Scholes formalised the theory."
+                },
+                {
+                  "_key": "k7",
+                  "date": "1973",
+                  "title": "The formula and the exchange arrive together",
+                  "description": "The Chicago Board Options Exchange opens for trading in April, and Fischer Black and Myron Scholes publish their closed-form pricing formula the same year, with Robert Merton contributing a more rigorous derivation."
+                },
+                {
+                  "_key": "k8",
+                  "date": "1979",
+                  "title": "Cox, Ross, and Rubinstein build the tree",
+                  "description": "John Cox, Stephen Ross, and Mark Rubinstein publish the binomial options pricing model: a discrete, step-by-step version of the same no-arbitrage logic, easier to teach and to extend to trickier contracts."
+                },
+                {
+                  "_key": "k9",
+                  "date": "1997",
+                  "title": "The Nobel Prize, minus one name",
+                  "description": "Myron Scholes and Robert Merton receive the Nobel Prize in Economic Sciences for this work. Fischer Black had died in 1995, and the Nobel is not awarded posthumously."
+                }
+              ],
+              "_key": "k10"
+            },
+            {
+              "_type": "callout",
+              "type": "insight",
+              "text": "Bachelier's thesis was, by some accounts, marked down by his examiners partly because applying probability theory to something as unrespectable as speculation seemed like an odd choice for serious mathematics. The idea sat unused for half a century before finance caught up to it.",
+              "_key": "k11"
+            },
+            {
+              "_key": "k12",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k12s",
+                  "_type": "span",
+                  "text": "From One Step to Many: Building the Binomial Tree",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k13",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k13s1",
+                  "_type": "span",
+                  "text": "The Reliance example in the last lesson used one giant step: today, and one month later, with only two possible prices. Real stocks obviously do not jump straight from ₹2,800 to exactly ₹3,000 or ₹2,600 and nothing else. Cox, Ross, and Rubinstein's fix was simple to state: chop the month into many smaller steps, let the stock move up or down by a small amount at each one, and apply the exact same one-step replication logic from the last lesson at every single node of the tree, working backward from expiry to today.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k14",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k14s1",
+                  "_type": "span",
+                  "text": "More steps means more possible ending prices, and a much more realistic spread of outcomes. Because up-then-down and down-then-up land on the same price, the number of distinct ending prices grows by exactly one for every extra step, which is also why it is called a binomial tree: the count of paths to each node follows the same pattern as Pascal's triangle.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "table",
+              "caption": "More steps, more possible ending prices",
+              "headers": ["Number of steps", "Distinct ending prices"],
+              "rows": [
+                {
+                  "_key": "k15",
+                  "_type": "tableRow",
+                  "cells": ["1 (last lesson's example)", "2"]
+                },
+                {
+                  "_key": "k16",
+                  "_type": "tableRow",
+                  "cells": ["2", "3"]
+                },
+                {
+                  "_key": "k17",
+                  "_type": "tableRow",
+                  "cells": ["3", "4"]
+                },
+                {
+                  "_key": "k18",
+                  "_type": "tableRow",
+                  "cells": ["10", "11"]
+                },
+                {
+                  "_key": "k19",
+                  "_type": "tableRow",
+                  "cells": ["50", "51"]
+                }
+              ],
+              "_key": "k20"
+            },
+            {
+              "_type": "keyFact",
+              "label": "A finer tree, a smoother picture",
+              "value": "50 steps → 51 ending prices",
+              "context": "Split the same one-month option into 50 small steps instead of 1, and the tree already sketches something close to a smooth, bell-shaped spread of possible Reliance prices at expiry, rather than a coin flip between two outcomes.",
+              "_key": "k21"
+            },
+            {
+              "_key": "k22",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k22s",
+                  "_type": "span",
+                  "text": "Why the Tree and the Formula Converge",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k23",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k23s1",
+                  "_type": "span",
+                  "text": "Keep shrinking each step and adding more of them, letting the number of steps run toward infinity while the total time to expiry stays fixed at one month. The tree's computed option price does not wander off. It settles down toward one specific number. Black, Scholes, and Merton's achievement was solving for that exact settling point directly with calculus, using a result called Itô's lemma, rather than actually building an infinitely fine tree and computing it step by step. The tree and the formula are not two competing theories. The formula is the tree's limit as the steps shrink to nothing.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Illustrative pattern: tree price converging as steps increase",
+              "xAxisLabel": "Number of steps in the tree",
+              "yAxisLabel": "Computed option price (₹, illustrative)",
+              "data": [
+                { "_key": "k24", "label": "1 step", "value": 106.5 },
+                { "_key": "k25", "label": "5 steps", "value": 110.8 },
+                { "_key": "k26", "label": "10 steps", "value": 111.9 },
+                { "_key": "k27", "label": "50 steps", "value": 112.3 },
+                { "_key": "k28", "label": "200 steps", "value": 112.45 },
+                { "_key": "k29", "label": "Black-Scholes limit", "value": 112.5 }
+              ],
+              "_key": "k30"
+            },
+            {
+              "_key": "k31",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k31s1",
+                  "_type": "span",
+                  "text": "This chart is illustrative, not a live calculation. Chapter 3 builds the actual Black-Scholes formula, at which point you can compute the real limiting price for any option yourself and check that a fine enough tree lands on the same number.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "What happens as steps increase",
+              "question": "As you increase the number of steps in a binomial tree while keeping the total time to expiry fixed, what happens to the computed option price?",
+              "options": [
+                "It keeps rising indefinitely with no limit",
+                "It oscillates randomly with no pattern",
+                "It converges toward one specific value, the Black-Scholes price",
+                "It stays exactly the same no matter how many steps you use"
+              ],
+              "correctIndex": 2,
+              "explanation": "More, smaller steps make the tree a better approximation of continuous price movement. As steps increase toward infinity, the tree's price converges to the closed-form Black-Scholes price, which is the exact solution for that same continuous-time limit.",
+              "_key": "k32"
+            },
+            {
+              "_key": "k33",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k33s1",
+                  "_type": "span",
+                  "text": "If Black-Scholes gives the exact answer instantly, why do trading desks still build binomial trees decades later? Because the closed-form formula only prices options that can be exercised at expiry and nowhere else. Trees step through time node by node, so they can check at every single node whether early exercise would be worth more, something a single closed-form number cannot do. Lesson 2.4 lists exactly which real-world features the closed-form formula quietly assumes away.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "bigIdea",
+              "text": "The binomial tree and the Black-Scholes formula are the same idea at two different resolutions. One takes many small, honest steps to get there. The other jumps straight to where all those steps end up, using calculus instead of arithmetic.",
+              "_key": "k34"
+            },
+            {
+              "_type": "keyTakeaways",
+              "points": [
+                "Bachelier described stock prices with Brownian motion in 1900, decades before economists took the idea seriously.",
+                "Samuelson's 1965 fix (geometric instead of arithmetic Brownian motion) stopped stock prices from going negative in the model.",
+                "The CBOE opened and the Black-Scholes-Merton formula was published in the same year, 1973.",
+                "Cox, Ross, and Rubinstein's 1979 binomial tree repeats the one-step replication idea across many smaller steps, with the count of ending prices growing by one per extra step.",
+                "As the number of steps grows toward infinity, the tree's price converges to the exact Black-Scholes closed-form price. The formula is the tree's continuous-time limit, not a rival method.",
+                "Trees remain useful today for features the closed-form formula cannot handle directly, such as early exercise, previewed here and unpacked fully in Lesson 2.4."
+              ],
+              "_key": "k35"
+            },
+            {
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice. The convergence chart uses illustrative numbers to show the pattern of convergence, not an actual computed price series. Historical details are simplified for a general audience.",
+              "_key": "k36"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

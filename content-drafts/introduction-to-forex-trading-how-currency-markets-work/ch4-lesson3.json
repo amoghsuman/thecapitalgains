@@ -1,0 +1,391 @@
+{
+  "courseSlug": "introduction-to-forex-trading-how-currency-markets-work",
+  "chapters": [
+    {
+      "title": "Chapter 4: Trading Forex Legally in India",
+      "lessons": [
+        {
+          "title": "Currency Futures Decoded: Lot Size, Tick Value, Margin and Settlement",
+          "slug": "currency-futures-decoded-lot-size-tick-value-margin-and-settlement",
+          "body": [
+            {
+              "_key": "c4l3-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l3-001s1", "_type": "span", "text": "Karthik runs an auto parts business in Chennai and must pay a German supplier €200,000 next month. He decides to hedge with EUR/INR futures on NSE. His broker's order screen asks for a quantity in lots, blocks several lakh rupees of margin, and the next morning his ledger shows a ₹50,000 debit even though he has not paid the supplier anything. None of that is a mistake. It is how futures work. This lesson decodes the five numbers behind every currency futures position, so you can calculate the size, the cash you need and the final result of a hedge before you place it.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l3-002",
+              "_type": "bigIdea",
+              "text": "Every currency futures position runs on five numbers: lot size, tick value, margin, daily settlement price and final settlement price. Know them in advance and a hedge holds no surprises, including the cash it needs along the way."
+            },
+            {
+              "_key": "c4l3-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l3-003s1", "_type": "span", "text": "Number 1: Lot Size and Contract Value", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l3-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "c4l3-004m1", "_type": "glossaryTerm", "definition": "The total rupee value of a futures position: number of lots × lot size × price. Margins and many charges are calculated on it." }
+              ],
+              "children": [
+                { "_key": "c4l3-004s1", "_type": "span", "text": "You cannot buy €200,000 directly. You buy lots, each a fixed amount of currency. Multiply lots by lot size by price and you get the ", "marks": [] },
+                { "_key": "c4l3-004s2", "_type": "span", "text": "contract value", "marks": ["c4l3-004m1"] },
+                { "_key": "c4l3-004s3", "_type": "span", "text": ". One detail trips people up: JPY/INR is quoted in rupees per 100 yen, so its lot of ¥1,00,000 is really 1,000 units of that quote.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l3-005",
+              "_type": "table",
+              "caption": "Currency futures specifications on Indian exchanges (confirm current details with NSE or BSE)",
+              "headers": ["Contract", "Lot size", "Price quoted as", "Tick size", "Value of one tick per lot"],
+              "rows": [
+                { "_key": "c4l3-005r1", "_type": "tableRow", "cells": ["USD/INR", "$1,000", "₹ per $1", "₹0.0025", "₹2.50"] },
+                { "_key": "c4l3-005r2", "_type": "tableRow", "cells": ["EUR/INR", "€1,000", "₹ per €1", "₹0.0025", "₹2.50"] },
+                { "_key": "c4l3-005r3", "_type": "tableRow", "cells": ["GBP/INR", "£1,000", "₹ per £1", "₹0.0025", "₹2.50"] },
+                { "_key": "c4l3-005r4", "_type": "tableRow", "cells": ["JPY/INR", "¥1,00,000", "₹ per ¥100", "₹0.0025", "₹2.50"] },
+                { "_key": "c4l3-005r5", "_type": "tableRow", "cells": ["EUR/USD (cross currency)", "€1,000", "$ per €1", "0.0001", "$0.10, converted to rupees"] },
+                { "_key": "c4l3-005r6", "_type": "tableRow", "cells": ["GBP/USD (cross currency)", "£1,000", "$ per £1", "0.0001", "$0.10, converted to rupees"] },
+                { "_key": "c4l3-005r7", "_type": "tableRow", "cells": ["USD/JPY (cross currency)", "$1,000", "¥ per $1", "0.01", "¥10, converted to rupees"] }
+              ]
+            },
+            {
+              "_key": "c4l3-006",
+              "_type": "mathBlock",
+              "latex": "\\text{Contract value} = \\text{Lots} \\times \\text{Lot size} \\times \\text{Price}",
+              "caption": "For JPY/INR, divide the yen lot size by 100 first, because the price is per 100 yen"
+            },
+            {
+              "_key": "c4l3-007",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Size Karthik's hedge",
+              "prompt": "Karthik needs to hedge a €200,000 payment and buys EUR/INR futures at 110.80. How many lots does he buy, and what is the contract value? Enter the contract value in rupees.",
+              "correctValue": 22160000,
+              "tolerance": 0,
+              "unit": "₹",
+              "explanation": "Lots = €200,000 ÷ €1,000 = 200 lots. Contract value = 200 × 1,000 × 110.80 = ₹2,21,60,000, or about ₹2.22 crore. An importer paying euros buys EUR/INR futures, because a weaker rupee raises the cost of the payment."
+            },
+            {
+              "_key": "c4l3-008",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l3-008s1", "_type": "span", "text": "Number 2: Tick Value", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l3-009",
+              "_type": "mathBlock",
+              "latex": "\\text{Tick value per lot} = \\text{Tick size} \\times \\text{Lot size}",
+              "caption": "USD/INR: ₹0.0025 × 1,000 = ₹2.50 per lot"
+            },
+            {
+              "_key": "c4l3-010",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Notice that all four rupee pairs have the same tick value of ₹2.50 per lot, even though a euro, a pound and 100 yen are worth very different amounts. The lot sizes and quote units are designed that way. It makes the arithmetic of rupee-pair hedges identical: every quarter paisa is ₹2.50 a lot, every paisa is ₹10 a lot, and every rupee is ₹1,000 a lot."
+            },
+            {
+              "_key": "c4l3-011",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "The yen quote trap",
+              "prompt": "A Pune machinery importer hedging a yen payment buys 30 lots of JPY/INR futures at 63.6700 (rupees per 100 yen). The price rises to 63.9200. What is the gain in rupees?",
+              "correctValue": 7500,
+              "tolerance": 0,
+              "unit": "₹",
+              "explanation": "The move is 63.9200 minus 63.6700 = ₹0.25 per 100 yen. Each lot of ¥1,00,000 is 1,000 units of ¥100, so the gain per lot is 0.25 × 1,000 = ₹250. Across 30 lots: ₹250 × 30 = ₹7,500. Equivalently, 0.25 is 100 ticks, and 100 × ₹2.50 × 30 = ₹7,500. Forgetting the per-100-yen quote would make you overstate the position a hundredfold."
+            },
+            {
+              "_key": "c4l3-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l3-012s1", "_type": "span", "text": "Number 3: Margin", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l3-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "c4l3-013m1", "_type": "glossaryTerm", "definition": "Standard Portfolio Analysis of Risk. The clearing corporation's system for setting initial margin, based on the loss a portfolio could suffer in one day at 99% confidence." },
+                { "_key": "c4l3-013m2", "_type": "glossaryTerm", "definition": "An additional margin charged on top of SPAN margin to cover losses beyond what the risk model expects. For USD/INR futures it has been 0.5% of the position's value." },
+                { "_key": "c4l3-013m3", "_type": "glossaryTerm", "definition": "SEBI's rule that the full required margin must be available at all times during the day, checked through random intraday snapshots, not just at the end of the day." }
+              ],
+              "children": [
+                { "_key": "c4l3-013s1", "_type": "span", "text": "Margin is a good-faith deposit, not a cost. The clearing corporation calculates ", "marks": [] },
+                { "_key": "c4l3-013s2", "_type": "span", "text": "SPAN margin", "marks": ["c4l3-013m1"] },
+                { "_key": "c4l3-013s3", "_type": "span", "text": " to cover a bad day, and adds an ", "marks": [] },
+                { "_key": "c4l3-013s4", "_type": "span", "text": "extreme loss margin", "marks": ["c4l3-013m2"] },
+                { "_key": "c4l3-013s5", "_type": "span", "text": " for worse ones. Together they are a few percent of contract value for currency futures, and they rise when markets get volatile. Under SEBI's ", "marks": [] },
+                { "_key": "c4l3-013s6", "_type": "span", "text": "peak margin", "marks": ["c4l3-013m3"] },
+                { "_key": "c4l3-013s7", "_type": "span", "text": " rules, the full amount must be in your account before you trade, and brokers are penalised for any shortfall.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l3-014",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "c4l3-014s1", "label": "SPAN initial margin", "value": "99% one-day VaR", "context": "Covers a one-day loss the model expects 99 days out of 100" },
+                { "_key": "c4l3-014s2", "label": "Extreme loss margin, USD/INR futures", "value": "0.5%", "context": "Of the position's mark-to-market value" },
+                { "_key": "c4l3-014s3", "label": "Typical total, USD/INR futures", "value": "About 2% to 3%", "context": "Varies with volatility; check your broker's margin calculator" },
+                { "_key": "c4l3-014s4", "label": "Intraday margin checks", "value": "4 random snapshots", "context": "Peak margin rule; shortfall penalties start at 0.5%" }
+              ]
+            },
+            {
+              "_key": "c4l3-015",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Margin blocked",
+              "prompt": "Assume the total margin on Karthik's EUR/INR futures is 3% of contract value. With a contract value of ₹2,21,60,000, how much margin is blocked?",
+              "correctValue": 664800,
+              "tolerance": 0,
+              "unit": "₹",
+              "explanation": "3% × ₹2,21,60,000 = ₹6,64,800. The margin stays blocked for as long as the position is open and comes back when it is closed. It is separate from the daily profit and loss, which is settled in cash every day."
+            },
+            {
+              "_key": "c4l3-016",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l3-016s1", "_type": "span", "text": "Number 4: The Daily Settlement Price", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l3-017",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "c4l3-017m1", "_type": "glossaryTerm", "definition": "The price used to mark futures positions to market each day. For NSE currency futures, it is normally the weighted average price of the last half hour of trading." }
+              ],
+              "children": [
+                { "_key": "c4l3-017s1", "_type": "span", "text": "Every evening, NSE Clearing marks all open positions to the ", "marks": [] },
+                { "_key": "c4l3-017s2", "_type": "span", "text": "daily settlement price", "marks": ["c4l3-017m1"] },
+                { "_key": "c4l3-017s3", "_type": "span", "text": ", normally the weighted average of trades in the last half hour. If a contract did not trade in that window, a theoretical price based on spot and interest rates is used. The day's profit or loss is settled in cash on the next working day. That is why Karthik saw a debit before paying his supplier anything.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l3-018",
+              "_type": "table",
+              "caption": "Karthik's long 200 lots of EUR/INR futures bought at 110.80",
+              "headers": ["Day", "Daily settlement price", "Change from previous", "MTM on 200 lots (€200,000)", "Running total"],
+              "rows": [
+                { "_key": "c4l3-018r1", "_type": "tableRow", "cells": ["Day 1", "110.55", "minus 0.25 from entry", "minus ₹50,000", "minus ₹50,000"] },
+                { "_key": "c4l3-018r2", "_type": "tableRow", "cells": ["Day 2", "111.20", "+0.65", "+₹1,30,000", "+₹80,000"] },
+                { "_key": "c4l3-018r3", "_type": "tableRow", "cells": ["Day 3", "111.05", "minus 0.15", "minus ₹30,000", "+₹50,000"] }
+              ]
+            },
+            {
+              "_key": "c4l3-019",
+              "_type": "chart",
+              "chartType": "bar",
+              "title": "Karthik's Daily Mark-to-Market (₹)",
+              "xAxisLabel": "Day",
+              "yAxisLabel": "₹",
+              "data": [
+                { "_key": "c4l3-019d1", "label": "Day 1", "value": -50000 },
+                { "_key": "c4l3-019d2", "label": "Day 2", "value": 130000 },
+                { "_key": "c4l3-019d3", "label": "Day 3", "value": -30000 }
+              ]
+            },
+            {
+              "_key": "c4l3-020",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l3-020s1", "_type": "span", "text": "The running total after Day 3, +₹50,000, equals (111.05 minus 110.80) × 2,00,000. Daily settlement does not change the overall result. It only spreads it across days, so that neither side can build up a large unpaid loss.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l3-021",
+              "_type": "collapsible",
+              "title": "What happens if you cannot pay a mark-to-market debit",
+              "content": [
+                {
+                  "_key": "c4l3-022",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    { "_key": "c4l3-022s1", "_type": "span", "text": "Mark-to-market losses are first taken from free cash in your trading account. If that is not enough and your margin falls short, your broker issues a margin call and expects funds quickly, often by the next morning. If the money does not arrive, the broker can square off your position, closing some or all of it at the market price. For a hedger, a forced square-off is the worst outcome: the hedge disappears exactly when the currency is moving, and the underlying payment is left exposed. Always keep a cash buffer beyond the initial margin.", "marks": [] }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c4l3-023",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l3-023s1", "_type": "span", "text": "Number 5: The Final Settlement Price", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l3-024",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l3-024s1", "_type": "span", "text": "Rupee-pair futures stop trading at 12:30 pm, two working days before the last business day of the expiry month. Any position still open is settled against the final settlement price, which is the reference rate published around 1:30 pm that day. The last day's move, from the previous daily settlement price to the reference rate, is settled in cash, and the contract ceases to exist. No euros or dollars are ever delivered.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l3-025",
+              "_type": "timeline",
+              "title": "Expiry Day for a Rupee-Pair Future",
+              "events": [
+                { "_key": "c4l3-025e1", "date": "9:00 am", "title": "Market opens", "description": "The expiring contract trades normally. Hedgers who want to close early can do so now." },
+                { "_key": "c4l3-025e2", "date": "11:30 am to 12:30 pm", "title": "Reference rate window", "description": "A random 15-minute window of interbank trades in this hour is used to compute the reference rate." },
+                { "_key": "c4l3-025e3", "date": "12:30 pm", "title": "Trading stops", "description": "The expiring contract can no longer be traded. Open positions go to final settlement." },
+                { "_key": "c4l3-025e4", "date": "Around 1:30 pm", "title": "Reference rate published", "description": "This becomes the final settlement price for the contract." },
+                { "_key": "c4l3-025e5", "date": "After the close", "title": "Final settlement", "description": "The difference between the previous daily settlement price and the final settlement price is settled in cash, and margins are released." }
+              ]
+            },
+            {
+              "_key": "c4l3-026",
+              "_type": "mathBlock",
+              "latex": "\\text{Total profit or loss} = (\\text{Final settlement price} - \\text{Entry price}) \\times \\text{Lots} \\times \\text{Lot size}",
+              "caption": "For a long position. The sum of all daily MTM amounts and the final settlement always adds up to this."
+            },
+            {
+              "_key": "c4l3-027",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Karthik's total result",
+              "prompt": "After Day 3, Karthik holds to expiry. The EUR/INR reference rate on the last trading day is 111.40. The previous daily settlement price was 111.05. What is his total profit on the 200-lot futures position from entry at 110.80 to final settlement, in rupees?",
+              "correctValue": 120000,
+              "tolerance": 0,
+              "unit": "₹",
+              "explanation": "Total = (111.40 minus 110.80) × 200 × 1,000 = 0.60 × 2,00,000 = ₹1,20,000. Check: MTM so far was +₹50,000, and final settlement adds (111.40 minus 111.05) × 2,00,000 = ₹70,000. Meanwhile, paying €200,000 at around 111.40 costs about ₹1,20,000 more than at 110.80, so the futures gain offsets the costlier payment."
+            },
+            {
+              "_key": "c4l3-028",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l3-028s1", "_type": "span", "text": "The Costs Nobody Puts on the Order Screen", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l3-029",
+              "_type": "table",
+              "caption": "Charges on currency futures (rates change; check your broker's contract note)",
+              "headers": ["Charge", "How it works"],
+              "rows": [
+                { "_key": "c4l3-029r1", "_type": "tableRow", "cells": ["Brokerage", "Discount brokers such as Zerodha charge ₹20 or 0.03% per executed order, whichever is lower"] },
+                { "_key": "c4l3-029r2", "_type": "tableRow", "cells": ["Exchange transaction charges", "A small percentage of turnover, set by the exchange"] },
+                { "_key": "c4l3-029r3", "_type": "tableRow", "cells": ["SEBI turnover fee", "A tiny fee per crore of turnover"] },
+                { "_key": "c4l3-029r4", "_type": "tableRow", "cells": ["Stamp duty", "Charged on the buy side only"] },
+                { "_key": "c4l3-029r5", "_type": "tableRow", "cells": ["GST", "18% on brokerage, exchange charges and SEBI fees"] },
+                { "_key": "c4l3-029r6", "_type": "tableRow", "cells": ["Securities transaction tax", "Not charged on currency derivatives, unlike equity futures and options"] }
+              ]
+            },
+            {
+              "_key": "c4l3-030",
+              "_type": "keyFact",
+              "label": "Securities transaction tax on currency futures",
+              "value": "Nil",
+              "context": "STT applies to equity derivatives, and rates on equity futures and options were raised again from April 2026, but currency derivatives are not subject to STT."
+            },
+            {
+              "_key": "c4l3-031",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Tick value check",
+              "question": "What is the rupee value of one tick on one lot of JPY/INR futures, where the lot is ¥1,00,000, the price is quoted per ¥100, and the tick size is ₹0.0025?",
+              "options": [
+                "₹0.25",
+                "₹2.50",
+                "₹250",
+                "₹25,000"
+              ],
+              "correctIndex": 1,
+              "explanation": "¥1,00,000 is 1,000 units of ¥100. Tick value = ₹0.0025 × 1,000 = ₹2.50, the same as every other rupee-pair futures contract on Indian exchanges."
+            },
+            {
+              "_key": "c4l3-032",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Planning Karthik's cash",
+              "scenario": "Before placing his 200-lot EUR/INR hedge at 110.80, Karthik's finance manager asks one question: \"How much cash do we need to keep aside for this hedge?\" Assume total margin is 3% of contract value. The team wants to survive a scenario where the rupee strengthens sharply and EUR/INR falls to 108.80 within a week, before recovering.",
+              "prompt": "Work out the initial margin, the MTM debits if EUR/INR falls to 108.80, the total cash Karthik should keep available, and explain why these losses do not mean the hedge has failed.",
+              "modelAnswer": "1. Initial margin: 3% of ₹2,21,60,000 = ₹6,64,800.\n2. MTM debits if EUR/INR falls 2.00 to 108.80: 2.00 × 200 × 1,000 = ₹4,00,000, paid out over the week.\n3. Cash to keep available: at least ₹6,64,800 + ₹4,00,000 = ₹10,64,800, plus a buffer, because margin requirements can also rise when volatility jumps.\n4. The hedge has not failed. The same move means the €200,000 payment now costs about ₹4,00,000 less in rupees. The futures loss is offset by a cheaper payment. The combined cost stays close to 110.80.\n5. The real danger is not the loss but a cash shortfall: if Karthik cannot meet the MTM debits, his broker may square off the futures, leaving the payment unhedged just when the rupee is moving."
+            },
+            {
+              "_key": "c4l3-033",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Five numbers to calculate before any currency futures hedge",
+              "steps": [
+                "Lots: exposure amount ÷ lot size, rounded down so you do not over-hedge.",
+                "Contract value: lots × lot size × price, remembering the per-100-yen quote for JPY/INR.",
+                "Tick and rupee value: ₹2.50 per tick per lot for rupee pairs, ₹1,000 per rupee per lot.",
+                "Margin and cash buffer: initial margin plus the MTM debit from a plausible adverse move.",
+                "Exit plan: close before expiry near the payment date, or hold to final settlement against the reference rate."
+              ]
+            },
+            {
+              "_key": "c4l3-034",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "Daily settlement price",
+              "textWithBlank": "The daily settlement price for NSE currency futures is normally the weighted average price of the last ___ minutes of trading.",
+              "correctAnswers": ["30", "thirty"],
+              "explanation": "Using the weighted average of the last half hour, rather than the very last trade, makes the daily settlement price harder to manipulate with one small order at the close."
+            },
+            {
+              "_key": "c4l3-035",
+              "_type": "flashcardSet",
+              "title": "Currency Futures Mechanics",
+              "cards": [
+                { "_key": "c4l3-035f1", "term": "Contract value", "definition": "Lots × lot size × price. The rupee value of the position." },
+                { "_key": "c4l3-035f2", "term": "Tick value", "definition": "Tick size × lot size. ₹2.50 per lot for all rupee-pair futures." },
+                { "_key": "c4l3-035f3", "term": "SPAN margin", "definition": "Initial margin covering a one-day loss at 99% confidence." },
+                { "_key": "c4l3-035f4", "term": "Extreme loss margin", "definition": "Extra margin on top of SPAN for unusually large moves; 0.5% for USD/INR futures." },
+                { "_key": "c4l3-035f5", "term": "Daily settlement price", "definition": "Normally the last half hour's weighted average price, used for daily MTM settled the next working day." },
+                { "_key": "c4l3-035f6", "term": "Final settlement price", "definition": "The reference rate on the last trading day, against which expiring rupee-pair futures are cash-settled." }
+              ]
+            },
+            {
+              "_key": "c4l3-036",
+              "_type": "keyTakeaways",
+              "points": [
+                "Rupee-pair futures come in lots of $1,000, €1,000, £1,000 and ¥1,00,000, with JPY/INR quoted per 100 yen.",
+                "All rupee pairs have a tick of ₹0.0025 worth ₹2.50 per lot, so every rupee move is ₹1,000 per lot.",
+                "Margin is a deposit made up of SPAN plus extreme loss margin, typically a few percent of contract value, and must be available upfront under peak margin rules.",
+                "Positions are marked to market daily at the last half hour's weighted average price and settled in cash the next working day.",
+                "Expiring rupee-pair futures stop trading at 12:30 pm and are cash-settled against the reference rate.",
+                "Daily MTM spreads the profit or loss over time. The total always equals the final settlement price minus the entry price, times the position size.",
+                "Currency derivatives carry brokerage, exchange charges, stamp duty and GST, but no STT. Hedgers must also keep a cash buffer for adverse MTM."
+              ]
+            },
+            {
+              "_key": "c4l3-037",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment, trading or hedging advice. Contract specifications, margin rates, charges and settlement rules are set by the exchanges, clearing corporations, SEBI and the government, and can change. Rupee-pair contracts may be used only to hedge genuine currency exposures. Margin percentages and prices in the examples are illustrative. Confirm current details with NSE, BSE and your broker."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

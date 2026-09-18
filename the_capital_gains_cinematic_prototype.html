@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Capital Gains — Cinematic Prototype</title>
+<style>
+:root{
+  --paper:#f4f0e7;--ink:#17372d;--muted:#69766f;--line:#d8d0c1;
+  --gold:#b4965c;--night:#081713;--cream:#eee7d8;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Georgia,serif}
+button{font:inherit}.wrap{max-width:1180px;margin:auto;padding:0 28px}
+nav{height:78px;display:flex;align-items:center;justify-content:space-between;font-family:Arial,sans-serif;font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+.brand{font-family:Georgia,serif;font-size:20px;letter-spacing:-.03em;text-transform:none}
+.navlinks{display:flex;gap:26px;color:#607069}
+.hero{min-height:720px;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:30px}
+.kicker,.eyebrow{font:600 10px Arial,sans-serif;letter-spacing:.17em;text-transform:uppercase;color:#8b7650}
+h1{font-size:clamp(52px,7vw,94px);line-height:.91;letter-spacing:-.055em;font-weight:400;margin:14px 0 22px;max-width:620px}
+.lede{font:16px/1.7 Arial,sans-serif;color:var(--muted);max-width:540px}
+.cta{display:inline-flex;margin-top:24px;padding:13px 19px;border:1px solid var(--ink);border-radius:999px;background:var(--ink);color:var(--cream);font:600 11px Arial,sans-serif;letter-spacing:.04em}
+.hero-art{height:550px;border-radius:28px;background:#071511;position:relative;overflow:hidden;border:1px solid #244238}
+canvas{width:100%;height:100%;display:block}.hero-label{position:absolute;left:24px;bottom:22px;color:#b8aa8d;font:10px Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase}.live{position:absolute;right:20px;top:18px;color:#c8b47f;font:10px Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase}.dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#b4965c;margin-right:7px;animation:pulse 1.5s infinite}@keyframes pulse{50%{opacity:.25}}
+section{padding:120px 0}.sectionhead{display:flex;justify-content:space-between;gap:30px;align-items:end;margin-bottom:40px}.sectionhead h2{font-size:clamp(36px,5vw,62px);font-weight:400;line-height:.96;letter-spacing:-.04em;margin:8px 0 0;max-width:700px}.sectionhead p{font:14px/1.6 Arial,sans-serif;color:var(--muted);max-width:350px}
+.book-stage{background:#ded5c3;border-radius:28px;padding:45px;min-height:620px;display:flex;align-items:center;justify-content:center;perspective:1200px}
+.book{width:min(760px,100%);height:470px;position:relative;transform-style:preserve-3d;filter:drop-shadow(0 24px 24px rgba(39,31,20,.16))}
+.page{position:absolute;top:0;width:50%;height:100%;background:#f8f4ea;border:1px solid #c9bfac;overflow:hidden;padding:42px 38px}
+.left{left:0;border-radius:9px 0 0 9px}.right{right:0;border-radius:0 9px 9px 0}
+.spine{position:absolute;left:50%;top:0;height:100%;width:2px;background:#c8bda8;z-index:4}
+.page h3{font-size:28px;font-weight:400;margin:8px 0 15px}.page p{font:12px/1.7 Arial,sans-serif;color:#69736d}
+.page .num{font:10px Arial,sans-serif;letter-spacing:.14em;color:#9a8761}
+.chart{height:125px;margin-top:25px;border-bottom:1px solid #bdb3a2;border-left:1px solid #bdb3a2;position:relative}
+.line{position:absolute;left:5%;right:4%;bottom:20%;height:65%;border-top:2px solid var(--ink);transform:skewY(-13deg)}
+.line:after{content:"";position:absolute;right:0;top:-5px;width:9px;height:9px;border-radius:50%;background:var(--gold)}
+.page-turn{position:absolute;right:0;top:0;width:50%;height:100%;background:#f8f4ea;border:1px solid #c9bfac;border-radius:0 9px 9px 0;transform-origin:left center;transform:rotateY(0deg);transition:transform 1s cubic-bezier(.2,.7,.2,1);z-index:3;padding:42px 38px;backface-visibility:hidden}
+.page-turn.turn{transform:rotateY(-172deg)}
+.book-controls{display:flex;justify-content:center;gap:10px;margin-top:18px}.pill{padding:10px 15px;border:1px solid #bdb3a2;border-radius:999px;background:transparent;font:600 10px Arial,sans-serif;cursor:pointer;color:var(--ink)}.pill:hover{background:#f8f4ea}
+.obs{background:var(--night);color:var(--cream);border-radius:28px;padding:45px;overflow:hidden}
+.obs-grid{display:grid;grid-template-columns:1fr 1fr;gap:35px;align-items:center}
+.obs h2{font-size:clamp(38px,5vw,64px);font-weight:400;line-height:.95;letter-spacing:-.04em;margin:10px 0 18px}.obs p{font:14px/1.7 Arial,sans-serif;color:#aeb7b0;max-width:470px}
+.orbitbox{height:480px;position:relative;display:flex;align-items:center;justify-content:center}.ring{position:absolute;border:1px solid rgba(226,216,193,.2);border-radius:50%;width:170px;height:170px}.ring.r2{width:290px;height:290px;transform:rotate(28deg)}.ring.r3{width:420px;height:420px;transform:rotate(-24deg)}
+.core{width:105px;height:105px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-align:center;background:radial-gradient(circle at 35% 30%,#385449,#11241e 68%);border:1px solid #a99564;color:#d8c79f;font:600 10px Arial,sans-serif;letter-spacing:.12em}
+.node{position:absolute;width:70px;height:70px;border-radius:50%;border:1px solid rgba(225,214,190,.35);background:#12261f;color:#e8e0d0;font:600 9px Arial,sans-serif;cursor:pointer}.node.n1{top:15px}.node.n2{right:25px;top:145px}.node.n3{right:65px;bottom:38px}.node.n4{left:65px;bottom:38px}.node.n5{left:25px;top:145px}.node:hover,.node.active{border-color:#c9ae72;transform:scale(1.08)}
+.signal{margin-top:25px;border-top:1px solid rgba(225,214,190,.2);padding-top:15px;display:flex;justify-content:space-between;gap:20px;font:10px Arial,sans-serif;color:#9da9a2;text-transform:uppercase;letter-spacing:.12em}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.flowitem{padding:32px 22px;min-height:190px;border-right:1px solid var(--line);position:relative}.flowitem:last-child{border-right:0}.flowitem strong{font:10px Arial,sans-serif;letter-spacing:.13em}.flowitem h3{font-size:24px;font-weight:400;margin:28px 0 8px}.flowitem p{font:12px/1.55 Arial,sans-serif;color:var(--muted)}
+.flowitem:after{content:"→";position:absolute;right:12px;top:28px;color:#aa9461}.flowitem:last-child:after{content:""}
+.final{padding:150px 0;text-align:center}.final h2{font-size:clamp(46px,7vw,86px);font-weight:400;line-height:.95;letter-spacing:-.055em;margin:15px auto;max-width:850px}.final p{font:14px/1.7 Arial,sans-serif;color:var(--muted);max-width:500px;margin:auto}
+@media(max-width:800px){.hero,.obs-grid{grid-template-columns:1fr}.hero{padding:55px 0 80px}.hero-art{height:430px}.sectionhead{display:block}.sectionhead p{margin-top:20px}.book-stage{padding:18px;min-height:450px}.book{height:340px}.page,.page-turn{padding:26px 20px}.page h3{font-size:20px}.flow{grid-template-columns:1fr 1fr}.flowitem:nth-child(2){border-right:0}.flowitem:nth-child(-n+2){border-bottom:1px solid var(--line)}.navlinks{display:none}}
+@media(max-width:520px){.wrap{padding:0 18px}.hero-art{height:360px}.book-stage{padding:10px}.book{height:280px}.page,.page-turn{padding:18px 13px}.page p{font-size:9px}.chart{height:70px;margin-top:12px}.obs{padding:25px}.orbitbox{height:390px}.ring.r3{width:330px;height:330px}.flow{grid-template-columns:1fr}.flowitem{border-right:0!important;border-bottom:1px solid var(--line)!important}.flowitem:last-child{border-bottom:0!important}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.dot{animation:none}.page-turn{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><div class="brand">The Capital Gains</div><div class="navlinks"><span>Learn</span><span>Research</span><span>Portfolios</span><span>About</span></div><div>Explore →</div></nav>
+
+<div class="hero">
+  <div>
+    <div class="kicker">The investing playbook for Indian markets</div>
+    <h1>Make sense of the market.</h1>
+    <p class="lede">A cinematic, interactive way to discover the ideas, frameworks and research behind better investing decisions.</p>
+    <a class="cta" href="#book">Enter the playbook →</a>
+  </div>
+  <div class="hero-art">
+    <canvas id="space"></canvas>
+    <div class="live"><span class="dot"></span>live market universe</div>
+    <div class="hero-label">Equities · Macro · FX · F&O · Portfolio</div>
+  </div>
+</div>
+
+<section id="book">
+  <div class="sectionhead">
+    <div><div class="eyebrow">01 / The Playbook</div><h2>Some things are better understood one page at a time.</h2></div>
+    <p>Scroll through a lesson as though you're opening an investor's field book. Each page introduces one layer of the process.</p>
+  </div>
+  <div class="book-stage">
+    <div>
+      <div class="book">
+        <div class="page left"><div class="num">CHAPTER 01</div><h3>Equity</h3><p>What does owning a share actually mean? Start with the mental model before the terminology.</p><div class="chart"><div class="line"></div></div><p style="margin-top:18px">Ownership → Earnings → Value</p></div>
+        <div class="page right"><div class="num">CHAPTER 02</div><h3>Research</h3><p>Turn a company into a structured question. Business quality, financials, valuation and risk.</p><div class="chart"><div class="line" style="transform:skewY(9deg);bottom:30%"></div></div><p style="margin-top:18px">Evidence → Thesis → Decision</p></div>
+        <div class="spine"></div>
+        <div class="page-turn" id="turn"><div class="num">CHAPTER 03</div><h3>Portfolio</h3><p>Ideas become allocation. Position size, diversification, rules and review.</p><div class="chart"><div class="line" style="transform:skewY(-5deg);bottom:38%"></div></div><p style="margin-top:18px">Conviction → Weight → Review</p></div>
+      </div>
+      <div class="book-controls"><button class="pill" id="prev">← Previous</button><button class="pill" id="next">Turn the page →</button></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="obs">
+    <div class="obs-grid">
+      <div><div class="eyebrow">02 / The Observatory</div><h2>Explore the market as a system.</h2><p>Instead of a wall of cards, give visitors a universe they can explore. Select a layer and follow the connection back to an investing decision.</p><div class="signal"><span id="sig">Select a layer</span><span id="sig2">Awaiting input</span></div></div>
+      <div class="orbitbox">
+        <div class="ring"></div><div class="ring r2"></div><div class="ring r3"></div><div class="core" id="core">YOUR<br>PROCESS</div>
+        <button class="node n1" data-t="EQUITIES" data-s="Companies → earnings">EQUITIES</button>
+        <button class="node n2" data-t="FX" data-s="Rates → currency">FX</button>
+        <button class="node n3" data-t="COMMODITIES" data-s="Gold → macro">COMMODITIES</button>
+        <button class="node n4" data-t="F&O" data-s="Options → tactics">F&O</button>
+        <button class="node n5" data-t="SECTORS" data-s="Themes → cycles">SECTORS</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sectionhead">
+    <div><div class="eyebrow">03 / From curiosity to conviction</div><h2>Follow the trail.</h2></div>
+    <p>The magic is in connecting the pieces. A lesson should naturally lead somewhere.</p>
+  </div>
+  <div class="flow">
+    <div class="flowitem"><strong>01 / LEARN</strong><h3>Framework</h3><p>Understand the idea.</p></div>
+    <div class="flowitem"><strong>02 / RESEARCH</strong><h3>Evidence</h3><p>Test it against reality.</p></div>
+    <div class="flowitem"><strong>03 / BUILD</strong><h3>Allocation</h3><p>Turn conviction into a portfolio decision.</p></div>
+    <div class="flowitem"><strong>04 / REVIEW</strong><h3>Judgment</h3><p>Learn what happened and improve the process.</p></div>
+  </div>
+</section>
+
+<div class="final"><div class="eyebrow">04 / The Capital Gains</div><h2>The market will always be uncertain. Your process can be deliberate.</h2><p>Courses, research and portfolios brought together as one investing system.</p><a class="cta" href="#book">Begin the journey →</a></div>
+</div>
+
+<script>
+(function(){
+const canvas=document.getElementById('space'),ctx=canvas.getContext('2d');let w,h,dpr,stars=[],raf;
+function resize(){const r=canvas.getBoundingClientRect();dpr=Math.min(devicePixelRatio||1,2);w=r.width;h=r.height;canvas.width=w*dpr;canvas.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);stars=Array.from({length:120},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.25+.2,a:Math.random()*.8+.15,s:Math.random()*.0008+.0003,p:Math.random()*6.28}))}
+function draw(t){ctx.clearRect(0,0,w,h);const cx=w*.5,cy=h*.52;ctx.fillStyle='#071511';ctx.fillRect(0,0,w,h);
+stars.forEach((q,i)=>{q.p+=q.s*10;const a=q.a*(.55+.45*Math.sin(q.p+t*.001));ctx.fillStyle='rgba(231,223,205,'+a+')';ctx.beginPath();ctx.arc(q.x,q.y,q.r,0,7);ctx.fill()});
+for(let k=0;k<4;k++){ctx.beginPath();ctx.arc(cx,cy,90+k*62,0,Math.PI*2);ctx.strokeStyle='rgba(214,201,170,'+(0.16-k*.025)+')';ctx.stroke()}
+const pts=[[-.0,-.39], [.38,-.06],[.25,.36],[-.29,.34],[-.4,-.06]];pts.forEach((p,i)=>{const ang=t*.00008*(i%2?1:-1),x=cx+(p[0]*h)*Math.cos(ang)-(p[1]*h)*Math.sin(ang),y=cy+(p[0]*h)*Math.sin(ang)+(p[1]*h)*Math.cos(ang);ctx.fillStyle=i===0?'#b4965c':'#d6d0c0';ctx.beginPath();ctx.arc(x,y,i===0?5:3,0,7);ctx.fill()});
+ctx.fillStyle='rgba(180,150,92,.08)';ctx.beginPath();ctx.arc(cx,cy,48+Math.sin(t*.001)*3,0,7);ctx.fill();ctx.fillStyle='#d8c79f';ctx.font='600 10px Arial';ctx.textAlign='center';ctx.fillText('YOUR PROCESS',cx,cy+3);
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches)raf=requestAnimationFrame(draw)}
+resize();addEventListener('resize',resize);draw(0);
+const turn=document.getElementById('turn');let turned=false;document.getElementById('next').onclick=()=>{turned=true;turn.classList.add('turn')};document.getElementById('prev').onclick=()=>{turned=false;turn.classList.remove('turn')};
+document.querySelectorAll('.node').forEach(n=>n.addEventListener('click',()=>{document.querySelectorAll('.node').forEach(x=>x.classList.remove('active'));n.classList.add('active');document.getElementById('core').innerHTML=n.dataset.t;document.getElementById('sig').textContent=n.dataset.t;document.getElementById('sig2').textContent=n.dataset.s}));
+})();
+</script>
+</body>
+</html>

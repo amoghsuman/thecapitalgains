@@ -1,0 +1,229 @@
+{
+  "courseSlug": "understanding-momentum-and-trend-following-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 6: Backtesting and the Traps That Break Trend and Momentum Strategies",
+      "lessons": [
+        {
+          "title": "Overfitting and Curve-Fitting: When a Backtest Lies",
+          "slug": "overfitting-and-curve-fitting-when-a-backtest-lies",
+          "body": [
+            {
+              "_key": "m22-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m22-001s1", "_type": "span", "marks": [], "text": "The last lesson covered data snooping: testing many strategies and reporting only the best one. This lesson covers a related but distinct trap that can happen even with a single, final strategy design: overfitting, where a model has enough flexibility to fit not just the genuine pattern in the data but also the random noise specific to that one historical sample." }
+              ]
+            },
+            {
+              "_key": "m22-002",
+              "_type": "bigIdea",
+              "text": "An overfit strategy performs beautifully on the exact historical data it was built and tuned on, and meaningfully worse on new data it has never seen, because part of what it 'learned' was noise that happened to exist in one specific sample and will not repeat. This is detectable, and this lesson covers exactly how."
+            },
+            {
+              "_key": "m22-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m22-003s1", "_type": "span", "marks": [], "text": "Overfitting vs Data Snooping: Related but Different" }
+              ]
+            },
+            {
+              "_key": "m22-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m22-004s1", "_type": "span", "marks": [], "text": "Data snooping is about how many things you tried, testing 100 parameter combinations and reporting the best. Overfitting is about how flexible any single thing you tried actually is, a strategy with 8 tunable filters can overfit a dataset in a single attempt, no multiple testing required, simply because it has enough free parameters to bend itself around that specific sample's noise. The two problems often occur together in practice, searching over many combinations and picking the best is itself a way of finding the most overfit option, but they are conceptually separate failure modes worth being able to tell apart." }
+              ]
+            },
+            {
+              "_key": "m22-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m22-005s1", "_type": "span", "marks": [], "text": "A Simple Illustration: Fitting a Line vs Fitting a Squiggle" }
+              ]
+            },
+            {
+              "_key": "m22-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m22-006s1", "_type": "span", "marks": [], "text": "A straight line drawn through a scatter of noisy data points will not pass through every single point exactly, but it captures the genuine underlying trend and continues to fit reasonably well on new points drawn from the same relationship. A highly flexible curve, wiggling up and down with enough degrees of freedom, can be made to pass through every single training point perfectly. It looks like a dramatically better fit on the data it was drawn on, and it is almost always a dramatically worse predictor of any new point, because most of that perfect fit was wiggling to match noise, not signal. Chapter 2's filtered crossover rule, with its band size and slope lookback added on top of the basic two-parameter crossover, is the trading strategy version of adding more wiggle room to the curve." }
+              ]
+            },
+            {
+              "_key": "m22-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m22-007s1", "_type": "span", "marks": [], "text": "In-Sample vs Out-of-Sample Testing" }
+              ]
+            },
+            {
+              "_key": "m22-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "m22-008m1", "_type": "glossaryTerm", "definition": "The portion of historical data used to design, tune, and select a strategy's parameters, as opposed to out-of-sample data, held back and never touched until final validation." }
+              ],
+              "children": [
+                { "_key": "m22-008s1", "_type": "span", "marks": [], "text": "The fundamental discipline against overfitting is to split historical data into two parts before any tuning begins: " },
+                { "_key": "m22-008s2", "_type": "span", "marks": ["m22-008m1"], "text": "in-sample" },
+                { "_key": "m22-008s3", "_type": "span", "marks": [], "text": " data, used to design and tune the strategy, and out-of-sample data, deliberately held back and never looked at, let alone tuned against, until the strategy's final design is locked in. A common convention reserves the most recent 20 to 30% of the available history as the out-of-sample holdout. The out-of-sample result is the honest one. A large gap between strong in-sample performance and weak out-of-sample performance is the single clearest sign of overfitting there is." }
+              ]
+            },
+            {
+              "_key": "m22-009",
+              "_type": "table",
+              "caption": "In-sample vs out-of-sample Sharpe ratio: a simple system vs an overfit one (illustrative)",
+              "headers": ["System", "In-sample Sharpe", "Out-of-sample Sharpe", "Degradation"],
+              "rows": [
+                { "_key": "m22-009r1", "_type": "tableRow", "cells": ["Simple (2 parameters)", "1.1", "0.9", "-18.2%"] },
+                { "_key": "m22-009r2", "_type": "tableRow", "cells": ["Heavily tuned (8 parameters)", "2.8", "0.3", "-89.3%"] }
+              ]
+            },
+            {
+              "_key": "m22-010",
+              "_type": "callout",
+              "type": "insight",
+              "text": "The heavily tuned system looked far more impressive in-sample, a Sharpe of 2.8 versus 1.1, exactly the kind of headline number that would win a pitch meeting. Out-of-sample, it collapses to 0.3, worse than the simple system's out-of-sample result of 0.9. Some in-sample-to-out-of-sample degradation is normal and expected even for a genuinely good strategy. A collapse this severe is the signature of a strategy that mostly learned noise."
+            },
+            {
+              "_key": "m22-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m22-011s1", "_type": "span", "marks": [], "text": "Walk-Forward Validation: Testing Like You'd Actually Trade" }
+              ]
+            },
+            {
+              "_key": "m22-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m22-012s1", "_type": "span", "marks": [], "text": "A single static in-sample/out-of-sample split is a reasonable first check, but it only tests one specific holdout period. Walk-forward validation is more realistic: optimize the strategy's parameters on a rolling window of past data, test on the immediately following period, then roll the whole window forward and repeat, re-optimizing fresh each time. This mirrors how a strategy would actually be used in live trading, periodically re-tuned on the latest available data, rather than tuned once on a fixed historical block and then judged on a single, separate slice." }
+              ]
+            },
+            {
+              "_key": "m22-013",
+              "_type": "table",
+              "caption": "Walk-forward validation structure (illustrative)",
+              "headers": ["Window", "Optimize on (in-sample)", "Test on (out-of-sample)"],
+              "rows": [
+                { "_key": "m22-013r1", "_type": "tableRow", "cells": ["1", "2018-2019", "2020"] },
+                { "_key": "m22-013r2", "_type": "tableRow", "cells": ["2", "2019-2020", "2021"] },
+                { "_key": "m22-013r3", "_type": "tableRow", "cells": ["3", "2020-2021", "2022"] },
+                { "_key": "m22-013r4", "_type": "tableRow", "cells": ["4", "2021-2022", "2023"] }
+              ]
+            },
+            {
+              "_key": "m22-014",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m22-014s1", "_type": "span", "marks": [], "text": "A Warning Sign: Parameter Sensitivity" }
+              ]
+            },
+            {
+              "_key": "m22-015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m22-015s1", "_type": "span", "marks": [], "text": "A genuinely robust strategy should perform similarly whether its moving average window is 48, 50, or 52 days, small, sensible changes to a parameter that isn't meaningfully special shouldn't swing the result dramatically. If a strategy's backtested performance is excellent at exactly 50 days and falls apart at 48 or 52, that precision is itself a red flag, not a sign the researcher found the exact right number. Real, repeatable market patterns are rarely so precisely tuned to one specific integer." }
+              ]
+            },
+            {
+              "_key": "m22-016",
+              "_type": "codeBlock",
+              "language": "python",
+              "caption": "A simple walk-forward validation loop skeleton",
+              "code": "import pandas as pd\n\ndef walk_forward_windows(data, train_years=2, test_years=1, step_years=1):\n    start_year = data.index.year.min()\n    end_year = data.index.year.max()\n    windows = []\n    train_start = start_year\n    while train_start + train_years + test_years <= end_year + 1:\n        train_end = train_start + train_years\n        test_end = train_end + test_years\n        windows.append({\n            \"train\": (train_start, train_end),\n            \"test\": (train_end, test_end),\n        })\n        train_start += step_years\n    return windows\n\n# Each window's parameters would be re-optimized on its own \"train\" range\n# and evaluated, untouched, only on its own \"test\" range."
+            },
+            {
+              "_key": "m22-017",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Calculate the performance degradation",
+              "prompt": "A strategy's Sharpe ratio falls from 2.8 in-sample to 0.3 out-of-sample. What is the percentage decline, rounded to 1 decimal place?",
+              "correctValue": 89.3,
+              "tolerance": 0.3,
+              "unit": "%",
+              "explanation": "(2.8 - 0.3) / 2.8 x 100 = 2.5 / 2.8 x 100 = 89.3%. A decline this severe is a strong signal that the in-sample result was driven substantially by overfitting rather than a genuine, repeatable edge."
+            },
+            {
+              "_key": "m22-018",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Overfitting or data snooping?",
+              "question": "A trader designs one single crossover strategy with 8 tunable filters, tunes every filter's value once to maximize the in-sample Sharpe ratio, and never tests any other version. What is the primary risk here, most precisely?",
+              "options": [
+                "Data snooping, since many separate strategies were compared",
+                "Overfitting, since a single, highly flexible model was tuned to fit one historical sample closely, even without testing multiple separate strategies",
+                "Survivorship bias, since only surviving companies were tested",
+                "Look-ahead bias, since future information was used"
+              ],
+              "correctIndex": 1,
+              "explanation": "Only one strategy was ever built and tested, ruling out data snooping's 'many attempts, report the best' mechanism. The risk here is overfitting: an 8-parameter model has enough flexibility to fit one sample's noise closely in a single attempt."
+            },
+            {
+              "_key": "m22-019",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Reading the parameter sensitivity chart",
+              "scenario": "A colleague shows you a chart of backtested Sharpe ratio against SMA window length, from 40 to 60 days. The line is smooth and gently curved, peaking around 1.2 at 50 days and staying above 1.0 for every window from 45 to 55 days. A second colleague shows a similar chart for their own strategy, spiking sharply to a Sharpe of 2.5 exactly at 50 days and dropping below 0.2 at both 48 and 52 days.",
+              "prompt": "Based on this lesson, which strategy would you trust more, and why?",
+              "modelAnswer": "The first strategy is far more trustworthy. Its performance is stable across a reasonable range of nearby parameter values, exactly what a genuinely robust, repeatable pattern should look like. The second strategy's razor-sharp spike at precisely 50 days, collapsing at 48 and 52, is a classic overfitting signature: the strategy appears to have been tuned to fit noise specific to exactly that one parameter value on the historical sample tested, rather than capturing a real pattern that would hold up on new data."
+            },
+            {
+              "_key": "m22-020",
+              "_type": "toolLink",
+              "label": "Read more on walk-forward optimization via QuantStart or similar quant research sites",
+              "url": "https://www.quantstart.com",
+              "description": "QuantStart and similar independent quant research sites cover walk-forward validation and overfitting prevention in more depth, useful further reading before implementing this lesson's methods on a real strategy."
+            },
+            {
+              "_key": "m22-021",
+              "_type": "flashcardSet",
+              "title": "Overfitting: Core Terms",
+              "cards": [
+                { "_key": "m22-021f1", "term": "Overfitting", "definition": "A model or strategy fitting the noise specific to one historical sample, not just the genuine underlying pattern, causing it to perform worse on new data." },
+                { "_key": "m22-021f2", "term": "In-sample / out-of-sample", "definition": "In-sample data is used to design and tune a strategy. Out-of-sample data is held back, untouched during design, and used only for final, honest validation." },
+                { "_key": "m22-021f3", "term": "Walk-forward validation", "definition": "Repeatedly optimizing on a rolling window of past data and testing on the immediately following period, then rolling forward, mimicking how a strategy would actually be re-tuned in live use." },
+                { "_key": "m22-021f4", "term": "Parameter sensitivity", "definition": "How much a strategy's performance changes with small adjustments to its parameters. High sensitivity, a sharp peak at one exact value, is a warning sign of overfitting." }
+              ]
+            },
+            {
+              "_key": "m22-022",
+              "_type": "keyTakeaways",
+              "points": [
+                "Overfitting is distinct from data snooping: it can happen with a single strategy design, when that design has enough tunable flexibility to fit one historical sample's noise closely.",
+                "Splitting data into in-sample, used for design and tuning, and out-of-sample, held back for final validation, is the fundamental defense, and a large performance gap between the two is the clearest overfitting signal.",
+                "Walk-forward validation, repeatedly re-optimizing on a rolling window and testing on the period that follows, is a more realistic test than a single static split.",
+                "A strategy whose performance is highly sensitive to small, precise parameter changes, a sharp peak that collapses just one or two units away, is a warning sign, not evidence the exact right number was found.",
+                "Every filter and parameter added to a strategy, as Chapter 2 first warned, is both a potential improvement and a new opportunity to overfit. This lesson gives the concrete tools to tell the difference."
+              ]
+            },
+            {
+              "_key": "m22-023",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice. All Sharpe ratios and performance figures used as examples are illustrative and hypothetical, not the output of an actual backtest. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

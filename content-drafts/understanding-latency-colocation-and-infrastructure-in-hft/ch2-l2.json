@@ -1,0 +1,115 @@
+{
+  "courseSlug": "understanding-latency-colocation-and-infrastructure-in-hft",
+  "chapters": [
+    {
+      "lessons": [
+        {
+          "title": "SEBI's Fairness Rules — Cable Length, Randomization, and the NSE Co-lo Case",
+          "slug": "sebis-fairness-rules-cable-length-randomization-and-the-nse-co-lo-case",
+          "body": [
+            {
+              "_key": "b1",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "b1s1", "_type": "span", "text": "Every firm in NSE's colocation facility is paying the same posted fee for the same nominal service. That should mean they are all equally fast. For several years in the mid-2010s, Indian regulators found that was not quite true, and the resulting case became one of the defining episodes in how SEBI thinks about fairness inside a colocation facility.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b2",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "b2s1", "_type": "span", "text": "The Problem: Not All Colocated Racks Are Equal", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b3",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "b3s1", "_type": "span", "text": "The previous lesson treated colocation as something anyone could buy. That is true, but it created a second, subtler fairness question once inside the facility: are all colocated members actually equal to each other? A rack placed slightly closer to the exchange's core switch, a cable a few metres shorter, or a server assigned to a marginally faster secondary node can hand one colocated firm a real, persistent advantage over another colocated firm, even though both are paying the same fees for the same nominal service.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b4",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "md4a", "_type": "glossaryTerm", "definition": "A market data feed that carries every individual order book update as it happens, rather than a periodic snapshot. Historically available mainly as a premium service inside colocation facilities." }
+              ],
+              "children": [
+                { "_key": "b4s1", "_type": "span", "text": "One specific technical issue at the centre of Indian debates on this topic is the ", "marks": [] },
+                { "_key": "b4s2", "_type": "span", "text": "tick-by-tick (TBT) data feed", "marks": ["md4a"] },
+                { "_key": "b4s3", "_type": "span", "text": ", which carries every individual order book update as it happens rather than a periodic snapshot. For years it was available mainly as a premium service inside colocation facilities, and access to it, along with the order in which different colocated members received it, became central to one of the most closely watched cases in Indian market infrastructure.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b5",
+              "_type": "timeline",
+              "title": "The NSE Co-location Case: A Timeline",
+              "events": [
+                { "_key": "b5e1", "_type": "timelineEvent", "date": "circa 2015", "title": "A whistleblower complaint", "description": "An anonymous complaint alleged that NSE's system for assigning colocated members to its tick-by-tick data dissemination servers was not truly randomized, letting whichever member's server connected first to a given secondary server keep a persistent speed edge." },
+                { "_key": "b5e2", "_type": "timelineEvent", "date": "Mid-2010s", "title": "SEBI opens an investigation", "description": "SEBI examined how NSE's co-location architecture allocated members across dissemination servers, and whether specific brokers, most notably OPG Securities, had exploited the design to gain a consistent, non-random latency advantage over other colocated firms." },
+                { "_key": "b5e3", "_type": "timelineEvent", "date": "Following years", "title": "Findings and enforcement action", "description": "SEBI's proceedings found that NSE had failed to ensure equal access among its own colocated members, and directed disgorgement of wrongful gains from the brokers found to have benefited, alongside scrutiny of NSE itself. Multiple parties, including NSE, contested aspects of these orders before the Securities Appellate Tribunal (SAT)." },
+                { "_key": "b5e4", "_type": "timelineEvent", "date": "After the case", "title": "Remedial changes", "description": "Exchanges strengthened randomization in how colocated members are allocated to servers and racks, and SEBI's broader framework pushed toward giving all trading members, not just colocated ones, access to tick-by-tick data feeds, narrowing one source of information asymmetry." }
+              ]
+            },
+            {
+              "_key": "b6",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "The summary above captures the widely reported substance of the case. Specific dates, monetary figures, and the current status of any appeals should be checked against SEBI's and SAT's published orders directly, since regulatory proceedings of this kind span several years and multiple stages."
+            },
+            {
+              "_key": "b7",
+              "_type": "table",
+              "caption": "Colocation fairness practices, before and after",
+              "headers": ["Practice", "Before", "After"],
+              "rows": [
+                { "_key": "b7r1", "_type": "tableRow", "cells": ["Server and rack allocation", "Allocation could let a member exploit connection order for a persistent latency edge", "Allocation is randomized among colocated members so no one member can consistently secure the fastest slot"] },
+                { "_key": "b7r2", "_type": "tableRow", "cells": ["Tick-by-tick data feed access", "Available mainly as a premium service inside colocation", "Pushed toward availability to all trading members, narrowing the information gap between colocated and non-colocated firms"] },
+                { "_key": "b7r3", "_type": "tableRow", "cells": ["Regulatory oversight", "Largely reactive, relying on members or whistleblowers to flag issues", "Ongoing SEBI review of exchange co-location architecture as part of standard algorithmic trading regulation"] }
+              ]
+            },
+            {
+              "_key": "b8",
+              "_type": "keyFact",
+              "label": "Core Regulatory Principle",
+              "value": "Equal access among colocated members",
+              "context": "SEBI's fairness framework for colocation is not about whether colocation itself is fair to non-colocated firms, that was the previous lesson's question. It is about ensuring firms that do pay for colocation cannot gain an unintended edge over each other through rack placement or server allocation."
+            },
+            {
+              "_key": "b9",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "Name the actual concern",
+              "textWithBlank": "In the NSE co-location case, the core regulatory concern was that some brokers gained a persistent latency edge over other ___ members, not over firms outside the facility entirely.",
+              "correctAnswers": ["colocated", "co-located"],
+              "explanation": "The issue was fairness within the group of firms that had already paid for colocation, not fairness between colocated and non-colocated firms, which is a separate, already-settled question covered in the previous lesson."
+            },
+            {
+              "_key": "b10",
+              "_type": "bigIdea",
+              "text": "Paying for colocation buys you into a room. SEBI's fairness rules exist to make sure everyone in that room is actually standing at the same distance from the finish line."
+            },
+            {
+              "_key": "b11",
+              "_type": "keyTakeaways",
+              "points": [
+                "Colocation fairness has two separate layers: whether colocation itself is open to all who pay (previous lesson), and whether firms that do colocate are treated equally within the facility (this lesson).",
+                "The NSE co-location case centered on allegations that a flawed server allocation architecture let specific brokers, most notably OPG Securities, gain a persistent, non-random latency edge over other colocated members.",
+                "SEBI's investigation and enforcement action, along with Securities Appellate Tribunal proceedings, ran over several years and pushed exchanges toward randomized allocation of colocated members to servers and racks.",
+                "A related reform was widening access to tick-by-tick data feeds beyond just colocated members, reducing one source of information asymmetry.",
+                "Treat the specific dates and figures in this case as a starting point, not a final citation. Check SEBI's and SAT's published orders directly for the authoritative record."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

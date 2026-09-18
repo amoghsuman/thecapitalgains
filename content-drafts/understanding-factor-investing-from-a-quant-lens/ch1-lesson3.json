@@ -1,0 +1,276 @@
+{
+  "courseSlug": "understanding-factor-investing-from-a-quant-lens",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Factors? Foundations of Factor Investing",
+      "lessons": [
+        {
+          "title": "Factor Investing in India: Smart Beta Indices and ETFs on the NSE",
+          "slug": "factor-investing-in-india-smart-beta-indices-and-etfs-on-the-nse",
+          "body": [
+            {
+              "_key": "f1l3b01",
+              "_type": "bigIdea",
+              "text": "A factor is not academic theory sitting in a 1993 paper. On the NSE, it is a rules-based index, licensed to an AMC, wrapped into an ETF or index fund, and buyable through the same Zerodha or Groww app you already use, at a fraction of what an active fund charges to try to do the same thing with a fund manager's judgment instead of a formula."
+            },
+            {
+              "_key": "f1l3b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "f1l3b02s1", "_type": "span", "text": "The first two lessons built the theory: why factors exist, and why economists still argue about whether the premium is risk, bias, or friction. This lesson is about the plumbing, how that theory actually reaches an Indian investor's demat account, who builds these indices, how each one picks its stocks, and the practical traps, thin liquidity, tracking error, momentum crashes, that a quant analyst needs to know before treating an NSE factor product as a clean substitute for running the strategy themselves.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f1l3b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "f1l3b03s1", "_type": "span", "text": "From Academic Factor to a Listed NSE Index", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f1l3b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "f1l3m01",
+                  "_type": "glossaryTerm",
+                  "definition": "The NSE group subsidiary responsible for building, maintaining, and licensing the Nifty family of indices, including the factor and strategy indices covered in this lesson. It was formerly known as India Index Services and Products Limited (IISL) before being rebranded."
+                }
+              ],
+              "children": [
+                { "_key": "f1l3b04s1", "_type": "span", "text": "The path from an academic factor to something you can buy on the NSE runs through a single entity: ", "marks": [] },
+                { "_key": "f1l3b04s2", "_type": "span", "text": "NSE Indices Limited", "marks": ["f1l3m01"] },
+                { "_key": "f1l3b04s3", "_type": "span", "text": ", the NSE group's index-services arm. It writes a public methodology document for each factor index, defining the eligible universe, the ranking signal, the rebalancing calendar, and the weighting and capping rules, then computes and publishes the index daily. An asset management company does not need to invent a factor strategy from scratch; it licenses an existing NSE index and launches an ETF or index fund that mechanically replicates it, under SEBI's mutual fund regulations for passive schemes.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f1l3b05",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "f1l3b05s1", "_type": "span", "text": "How Each NSE Factor Index Actually Picks Its Stocks", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f1l3b06",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "f1l3b06s1", "_type": "span", "text": "Every NSE factor index starts from a base universe, commonly the Nifty 50, Nifty 100, or Nifty 200, and then applies its own signal to rank and select a smaller subset. The table below sketches the broad approach behind five widely tracked indices. Treat the specifics as directional; always confirm exact formulas, lookback windows, and rebalancing dates against NSE Indices Limited's own published methodology document before building anything on top of them.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f1l3b07",
+              "_type": "table",
+              "caption": "Broad construction logic behind five NSE factor indices",
+              "headers": ["Index", "Base Universe", "Core Signal", "What It Rewards"],
+              "rows": [
+                { "_key": "f1l3b07r1", "_type": "tableRow", "cells": ["Nifty50 Value 20", "Nifty 50", "A composite value score blending metrics like P/E, P/B, dividend yield, and return on capital employed", "Statistically cheap large-caps with reasonable quality, not just the lowest P/E stock in the index"] },
+                { "_key": "f1l3b07r2", "_type": "tableRow", "cells": ["Nifty200 Momentum 30", "Nifty 200", "A risk-adjusted price momentum score using 6-month and 12-month returns", "Stocks with strong, sustained recent price trends, scaled down for excess volatility"] },
+                { "_key": "f1l3b07r3", "_type": "tableRow", "cells": ["Nifty Alpha 50", "Nifty 100 and Nifty Midcap 50 combined", "A risk-adjusted 'alpha' score derived from trailing return relative to volatility", "Stocks that have delivered strong returns per unit of risk taken, not just the fastest movers"] },
+                { "_key": "f1l3b07r4", "_type": "tableRow", "cells": ["Nifty200 Quality 30", "Nifty 200", "A quality score combining return on equity, low leverage (debt-to-equity), and earnings stability", "Financially sound, conservatively run companies over highly leveraged or erratic earners"] },
+                { "_key": "f1l3b07r5", "_type": "tableRow", "cells": ["Nifty100 Low Volatility 30", "Nifty 100", "Standard deviation of daily returns over a trailing window, ranked from lowest to highest", "The steadiest, least volatile large-caps in the index, deliberately avoiding high-beta names"] }
+              ]
+            },
+            {
+              "_key": "f1l3b08",
+              "_type": "collapsible",
+              "title": "Show me more: how a risk-adjusted momentum or alpha score is typically built",
+              "content": [
+                {
+                  "_key": "f1l3b08b1",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    { "_key": "f1l3b08b1s1", "_type": "span", "text": "Raw price return alone is a noisy signal; a stock that gained 60% on a single news spike looks identical to one that gained 60% steadily over a year. NSE's momentum and alpha indices address this by dividing (or otherwise adjusting) trailing return by a measure of volatility, so the score favours consistent, lower-drama trends over erratic spikes. Conceptually, this looks like a Sharpe-ratio-style calculation applied over multiple lookback windows, for example both 6-month and 12-month returns, combined into a single composite score before stocks are ranked and the top names selected.", "marks": [] }
+                  ]
+                },
+                {
+                  "_key": "f1l3b08b2",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    { "_key": "f1l3b08b2s1", "_type": "span", "text": "The exact weights given to each lookback window, and the precise volatility adjustment formula, are set out in NSE Indices Limited's published methodology documents and have been revised over time as the index provider refines the approach. A quant analyst building a similar in-house signal should read the current methodology document directly rather than relying on a general description like this one.", "marks": [] }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "f1l3b09",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "f1l3b09s1", "_type": "span", "text": "The Regulatory Wrapper: SEBI, TER Caps, and Passive Fund Rules", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f1l3b10",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "f1l3m02",
+                  "_type": "glossaryTerm",
+                  "definition": "The annual cost of running a fund, covering management fees, custody, registrar, and other operating costs, expressed as a percentage of assets under management and deducted daily from the fund's NAV."
+                }
+              ],
+              "children": [
+                { "_key": "f1l3b10s1", "_type": "span", "text": "An index fund or ETF tracking an NSE factor index is regulated by SEBI as a passive mutual fund scheme, which matters for two practical reasons. First, SEBI's Total Expense Ratio, or ", "marks": [] },
+                { "_key": "f1l3b10s2", "_type": "span", "text": "TER", "marks": ["f1l3m02"] },
+                { "_key": "f1l3b10s3", "_type": "span", "text": ", ceiling for passive index schemes sits well below the cap for active equity funds, which is why these factor products are typically a fraction of the cost of an actively managed equity fund pursuing a similar style. Second, SEBI requires passive schemes to regularly disclose tracking error, how closely the fund's returns follow the underlying index, and tracking difference, the gap between the fund's actual return and the index's return after all costs. A large, persistent tracking error is a signal something in the fund's replication process, not the underlying factor, is eating into your returns.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f1l3b11",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "f1l3b11st1", "label": "Typical passive fund TER", "value": "Well under 1%", "context": "vs roughly 2 to 2.25% for many active equity funds" },
+                { "_key": "f1l3b11st2", "label": "Typical rebalancing", "value": "Semi-annual", "context": "Common across most NSE strategy indices, though exact calendars vary by index" },
+                { "_key": "f1l3b11st3", "label": "Typical single-stock cap", "value": "Around 5%", "context": "A common diversification rule to avoid one stock dominating the index" }
+              ]
+            },
+            {
+              "_key": "f1l3b12",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "f1l3b12s1", "_type": "span", "text": "Buying a Factor Index in Practice: ETF vs Index Fund, and the Liquidity Trap", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f1l3b13",
+              "_type": "comparison",
+              "title": "ETF vs Index Fund for the Same NSE Factor Index",
+              "columns": [
+                {
+                  "_key": "f1l3b13c1",
+                  "label": "ETF",
+                  "points": [
+                    "Bought and sold on the NSE through a broker like Zerodha, at intraday prices, needs a demat and trading account",
+                    "Real-time pricing, but returns depend on the ETF's own bid-ask spread and trading volume, not just the index",
+                    "A thinly traded factor ETF can have a wide spread, so the effective entry and exit cost can be meaningfully worse than the index's own move that day",
+                    "No separate exit load in most cases, but impact cost from a wide spread functions like a hidden one"
+                  ]
+                },
+                {
+                  "_key": "f1l3b13c2",
+                  "label": "Index Fund",
+                  "points": [
+                    "Bought directly from the AMC or through a platform like Zerodha Coin, transacted at end-of-day NAV, no demat account required",
+                    "No intraday liquidity concern, since you transact at NAV rather than a market-quoted price",
+                    "Possible exit load if redeemed within a short holding period, disclosed in the scheme information document",
+                    "Slightly easier for SIP-style periodic investing than most ETFs"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "f1l3b14",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Do not assume every NSE factor ETF is liquid just because the underlying index is well known. Several factor and strategy ETFs in India trade with thin daily volumes and wide bid-ask spreads. For a quant desk sizing real positions, checking average daily traded value and typical spread on the specific ETF, not just the popularity of the index it tracks, is a mandatory step before allocating capital, and for a retail investor, the index fund version is often the simpler, lower-friction way to get the same exposure."
+            },
+            {
+              "_key": "f1l3b15",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "f1l3b15s1", "_type": "span", "text": "A Real-World Caution: Momentum Crashes", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f1l3b16",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "f1l3m03",
+                  "_type": "glossaryTerm",
+                  "definition": "A sharp, sudden reversal in a momentum strategy's returns, typically occurring when the market snaps from a downturn into a fast recovery and the beaten-down, high-beta stocks a momentum portfolio had rotated out of rally hardest, while the strategy is left holding lower-beta 'winners' from the downturn."
+                }
+              ],
+              "children": [
+                { "_key": "f1l3b16s1", "_type": "span", "text": "Kent Daniel and Tobias Moskowitz documented in a 2016 paper that momentum strategies are prone to sharp, infrequent ", "marks": [] },
+                { "_key": "f1l3b16s2", "_type": "span", "text": "momentum crashes", "marks": ["f1l3m03"] },
+                { "_key": "f1l3b16s3", "_type": "span", "text": ", usually around sudden market rebounds after a steep sell-off. India's own COVID crash and recovery in 2020 is a live example of this dynamic: a momentum strategy built into March 2020 would have been holding stocks that had fallen the least or held up best during the downturn, and would likely have missed a meaningful part of the sharpest phase of the rebound, since that rebound was led disproportionately by the previously battered, high-beta cyclical stocks the strategy had rotated away from. A quant analyst treating a momentum factor index as a smooth, always-on source of return, rather than one with occasional, sharp drawdowns concentrated around regime reversals, is missing exactly the risk this factor is paid to carry.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f1l3b17",
+              "_type": "toolLink",
+              "label": "NSE Indices Limited: Official Index Methodology Documents",
+              "url": "https://www.niftyindices.com",
+              "description": "The authoritative source for exact, current methodology, universe, rebalancing dates, and capping rules for every Nifty factor and strategy index referenced in this lesson. Always verify against this source before building or trading on any index detail."
+            },
+            {
+              "_key": "f1l3b18",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "ETF or Index Fund for a Momentum Tilt",
+              "scenario": "A retail investor on Zerodha wants exposure to the Nifty200 Momentum 30 index. They notice the ETF tracking it has an average daily traded value far lower than the Nifty 50 ETFs they are used to trading, with a bid-ask spread of roughly 0.5 to 1 percent on a typical day. An index fund tracking the same underlying index is also available directly from the AMC.",
+              "prompt": "What should this investor weigh before choosing between the ETF and the index fund, and why might the index fund be the more sensible default here?",
+              "modelAnswer": "The investor should weigh the impact cost of the ETF's spread against any convenience benefit of intraday trading, which a long-term factor investor rarely needs. A 0.5 to 1 percent round-trip spread on a thinly traded ETF is a real, recurring drag, especially for someone investing periodically rather than trading actively, and it stacks on top of the fund's TER. Since the investor is not trying to time intraday entries or exits, and index funds are transacted at end-of-day NAV without a bid-ask spread, the index fund route usually removes this liquidity cost entirely, at the modest inconvenience of not having intraday pricing. The right answer depends on position size and holding period, but for a long-horizon factor allocation bought through periodic investing, the index fund is generally the lower-friction default."
+            },
+            {
+              "_key": "f1l3b19",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Test Yourself: Regulatory Oversight",
+              "question": "Which regulator sets the Total Expense Ratio ceilings and mandates tracking error and tracking difference disclosures for NSE factor index funds and ETFs in India?",
+              "options": [
+                "NSE Indices Limited",
+                "The Reserve Bank of India",
+                "SEBI",
+                "AMFI, on a purely voluntary basis"
+              ],
+              "correctIndex": 2,
+              "explanation": "SEBI regulates mutual funds, including passive index funds and ETFs, and sets the TER ceilings and disclosure requirements, including tracking error and tracking difference reporting. NSE Indices Limited builds and maintains the underlying indices but does not regulate the funds that track them."
+            },
+            {
+              "_key": "f1l3b20",
+              "_type": "flashcardSet",
+              "title": "Vocabulary Check: Terms From This Lesson",
+              "cards": [
+                { "_key": "f1l3b20c1", "term": "NSE Indices Limited", "definition": "The NSE group subsidiary (formerly IISL) that builds, maintains, and publishes the methodology for the Nifty family of indices, including factor and strategy indices." },
+                { "_key": "f1l3b20c2", "term": "Total Expense Ratio (TER)", "definition": "The annual cost of running a fund, expressed as a percentage of AUM; SEBI caps TER lower for passive index funds and ETFs than for active equity funds." },
+                { "_key": "f1l3b20c3", "term": "Tracking error / tracking difference", "definition": "Tracking error measures how closely a fund's returns follow its benchmark index; tracking difference measures the actual return gap between the fund and the index after all costs." },
+                { "_key": "f1l3b20c4", "term": "Impact cost", "definition": "The extra cost of executing a trade beyond the quoted price, driven mainly by the bid-ask spread and available liquidity, especially significant for thinly traded ETFs." },
+                { "_key": "f1l3b20c5", "term": "Momentum crash", "definition": "A sharp, sudden reversal in momentum strategy returns, typically around fast market rebounds after a steep sell-off, when previously beaten-down stocks rally hardest while the strategy still holds prior winners." }
+              ]
+            },
+            {
+              "_key": "f1l3b21",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "Index names, methodology descriptions, and fund structures discussed in this lesson are for educational illustration only and are not investment advice or a recommendation to buy any specific ETF, index fund, or index. Methodologies, TER levels, and liquidity conditions change over time; always verify current details directly with NSE Indices Limited, the relevant AMC's scheme information document, and SEBI before making any decision."
+            },
+            {
+              "_key": "f1l3b22",
+              "_type": "keyTakeaways",
+              "points": [
+                "NSE Indices Limited (formerly IISL) builds and publishes the methodology for every Nifty factor index; AMCs license these indices to launch ETFs and index funds under SEBI's passive fund regulations",
+                "Each factor index starts from a base universe (commonly Nifty 50, 100, or 200) and applies its own signal, value, momentum, alpha, quality, or low volatility, to rank and select a subset, subject to diversification caps",
+                "Passive index funds and ETFs carry SEBI-capped TERs well below active equity funds, and SEBI mandates tracking error and tracking difference disclosure to flag replication slippage",
+                "ETFs trade intraday on the NSE and are exposed to bid-ask spread and liquidity risk; index funds transact at end-of-day NAV and avoid this, often making them the simpler default for long-horizon factor exposure",
+                "Momentum strategies, including NSE momentum indices, are prone to sharp momentum crashes around fast market rebounds, as seen around India's COVID-19 crash and recovery in 2020",
+                "Always verify exact index methodology, rebalancing dates, and capping rules against NSE Indices Limited's own published documents rather than general descriptions"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

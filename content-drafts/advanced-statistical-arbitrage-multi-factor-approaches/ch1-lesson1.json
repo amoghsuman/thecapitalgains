@@ -1,0 +1,272 @@
+{
+  "courseSlug": "advanced-statistical-arbitrage-multi-factor-approaches",
+  "chapters": [
+    {
+      "title": "Chapter 1: Statistical Arbitrage Foundations: From Pairs to Multi-Factor Systems",
+      "lessons": [
+        {
+          "title": "What Statistical Arbitrage Really Means: Market Neutrality and Alpha Isolation",
+          "slug": "what-statistical-arbitrage-really-means-market-neutrality-and-alpha-isolation",
+          "body": [
+            {
+              "_key": "sac1l1b01",
+              "_type": "bigIdea",
+              "text": "Statistical arbitrage is not a claim that you have found free money. It is a claim that you have found a relationship reliable enough, and a position structured neutrally enough, that your return stops depending on which way the Nifty moves tomorrow."
+            },
+            {
+              "_key": "sac1l1b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sac1l1b02s1", "_type": "span", "text": "True Arbitrage vs Statistical Arbitrage", "marks": [] }
+              ]
+            },
+            {
+              "_key": "sac1l1b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "sac1l1b03s1",
+                  "_type": "span",
+                  "text": "True arbitrage is a risk-free profit from a genuine price discrepancy: the same instrument trading at two different prices at the same instant. If a stock somehow quoted differently on the NSE and BSE order books for a measurable window, a co-located algorithm would buy on the cheaper exchange and sell on the other before you had finished reading the quote. That gap closes in microseconds and is not something a retail trader, or most institutional desks, will ever capture. It is also, by construction, riskless: both legs execute at known prices, at the same moment, with no assumption about the future.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "sac1l1b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "sac1l1b04s1",
+                  "_type": "span",
+                  "text": "Statistical arbitrage borrows the word but not the guarantee. It is a relative-value bet: you identify two or more related securities whose prices have historically moved together, and you take a position that profits if that relationship holds or reverts, and loses if it breaks down. There is no instant, riskless proof of a mispricing. There is a statistical estimate, built on historical data, that a spread which has drifted apart is more likely than not to come back together. That is a meaningfully weaker claim than true arbitrage, and everything in this course, from cointegration testing to risk limits, exists because that claim can be wrong.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "sac1l1b05",
+              "_type": "table",
+              "caption": "The word 'arbitrage' means very different things in each case",
+              "headers": ["Dimension", "True Arbitrage", "Statistical Arbitrage"],
+              "rows": [
+                { "_key": "sac1l1b05r1", "_type": "tableRow", "cells": ["Risk", "None, by construction", "Real: the relationship can break down"] },
+                { "_key": "sac1l1b05r2", "_type": "tableRow", "cells": ["Basis for the trade", "Simultaneous, verifiable price discrepancy", "Statistical estimate from historical data"] },
+                { "_key": "sac1l1b05r3", "_type": "tableRow", "cells": ["Typical holding period", "Milliseconds", "Days to months"] },
+                { "_key": "sac1l1b05r4", "_type": "tableRow", "cells": ["Realistic access", "Co-located institutional infrastructure", "Any desk with clean data and disciplined risk limits"] }
+              ]
+            },
+            {
+              "_key": "sac1l1b06",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Every strategy in this course is a bet, not a guarantee. Calling it 'statistical arbitrage' does not remove the risk. It describes a specific way of taking risk: through relative value between related securities, rather than through a directional view on where the market as a whole is headed."
+            },
+            {
+              "_key": "sac1l1b07",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sac1l1b07s1", "_type": "span", "text": "What Makes a Position Market Neutral", "marks": [] }
+              ]
+            },
+            {
+              "_key": "sac1l1b08",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "sac1l1b08s1",
+                  "_type": "span",
+                  "text": "Buy 100 shares of HDFC Bank and you have a directional bet: you profit if HDFC Bank rises, and a big chunk of whether it rises is simply whether the market as a whole rises, since HDFC Bank's beta to the Nifty is close to 1. To strip that market direction out, you pair the long with a short in a related stock, sized so the two positions' market exposures roughly cancel. What is left is a bet purely on how HDFC Bank performs relative to the stock you shorted, not on where the Nifty goes.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "sac1l1b09",
+              "_type": "mathBlock",
+              "latex": "\\beta_{\\text{portfolio}} = V_L \\beta_L - V_S \\beta_S \\approx 0 \\quad\\Longrightarrow\\quad V_S = V_L \\cdot \\frac{\\beta_L}{\\beta_S}",
+              "caption": "V_L and V_S are the rupee values of the long and short legs, and beta_L, beta_S are each stock's beta to the Nifty. Solving for V_S gives the short value that makes the combined position's net market beta approximately zero."
+            },
+            {
+              "_key": "sac1l1b10",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "sac1l1b10s1",
+                  "_type": "span",
+                  "text": "Say you go long ₹10,00,000 of HDFC Bank with an estimated beta of 1.05, and want to hedge it with a short in ICICI Bank, estimated beta 1.15 (illustrative figures; a real desk would recompute both on a rolling window, not treat them as fixed). Beta-neutral sizing calls for shorting V_S = 10,00,000 × (1.05 / 1.15), which is close to ₹9,13,000. Do that, and a broad market move, up or down, should move both legs by roughly the same rupee amount and largely cancel out. What survives in your P&L is the spread between HDFC Bank and ICICI Bank specifically.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "sac1l1b11",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Sizing a Beta-Neutral Hedge",
+              "prompt": "You go long ₹5,00,000 of Stock A, beta 1.20. To make the combined position approximately beta-neutral, how much should you short of Stock B, beta 0.80? (Nearest ₹1,000)",
+              "correctValue": 750000,
+              "tolerance": 10000,
+              "unit": "₹",
+              "explanation": "V_S = V_L × (β_L / β_S) = 5,00,000 × (1.20 / 0.80) = 5,00,000 × 1.5 = ₹7,50,000. The lower-beta stock needs a larger rupee short to carry the same market exposure as the higher-beta long."
+            },
+            {
+              "_key": "sac1l1b12",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sac1l1b12s1", "_type": "span", "text": "Why Bother Isolating Alpha at All", "marks": [] }
+              ]
+            },
+            {
+              "_key": "sac1l1b13",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "sac1l1m01",
+                  "_type": "glossaryTerm",
+                  "definition": "The portion of a portfolio's return explained simply by its exposure to the broad market's movement, as opposed to any skill-based, stock-specific insight."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "sac1l1b13s1",
+                  "_type": "span",
+                  "text": "A long-only Nifty index fund, or most buy-and-hold retail portfolios built through a Zerodha or similar broking account, earn what is essentially ",
+                  "marks": []
+                },
+                { "_key": "sac1l1b13s2", "_type": "span", "text": "beta", "marks": ["sac1l1m01"] },
+                {
+                  "_key": "sac1l1b13s3",
+                  "_type": "span",
+                  "text": ": the market's own return, whatever that turns out to be over the holding period. Nothing wrong with that as an investing approach, but it means the portfolio's fate is tied to the market's mood, including years when that mood is a 38 percent drawdown. Alpha isolation is the attempt to earn a return stream that does not depend on that mood: a return that comes from a specific, repeatable insight (a spread that reverts, a factor that has historically been rewarded) rather than from simply being long the market when it happens to go up.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "sac1l1b14",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Illustrative: Market-Neutral Book vs Nifty 50 (rebased to 100, January to June 2020)",
+              "xAxisLabel": "Month",
+              "yAxisLabel": "Index (rebased)",
+              "data": [
+                { "_key": "sac1l1b14d1", "label": "Jan 2020" },
+                { "_key": "sac1l1b14d2", "label": "Feb 2020" },
+                { "_key": "sac1l1b14d3", "label": "Mar 2020" },
+                { "_key": "sac1l1b14d4", "label": "Apr 2020" },
+                { "_key": "sac1l1b14d5", "label": "May 2020" },
+                { "_key": "sac1l1b14d6", "label": "Jun 2020" }
+              ],
+              "series": [
+                { "_key": "sac1l1b14s1", "label": "Illustrative Market-Neutral Book", "values": [100, 101, 99, 103, 105, 107] },
+                { "_key": "sac1l1b14s2", "label": "Nifty 50", "values": [100, 96, 62, 71, 75, 83] }
+              ]
+            },
+            {
+              "_key": "sac1l1b15",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "The Nifty 50 path above is stylized to match the real magnitude of the January to March 2020 crash and the partial recovery into June, roughly a 38 percent peak-to-trough decline followed by a partial rebound. It is not the exact daily closing series. The market-neutral line is a hypothetical illustration of what beta-neutral construction is designed to achieve, not an actual fund's or strategy's audited track record."
+            },
+            {
+              "_key": "sac1l1b16",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Market neutral does not mean risk-free. It removes market direction risk, not the risk that the spread itself moves against you. HDFC Bank could underperform ICICI Bank for a genuine business reason, a change in loan book quality, a regulatory action, a merger integration issue, and the pair's spread can widen further before, or instead of, converging. That spread-specific exposure is usually called basis risk, and it is the risk that remains after you have hedged away the market."
+            },
+            {
+              "_key": "sac1l1b17",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "The Goal of Beta Neutrality",
+              "textWithBlank": "A well-constructed statistical arbitrage position aims for a net market beta close to ___.",
+              "correctAnswers": ["zero", "0"],
+              "explanation": "The long and short legs are sized so their market exposures largely offset, leaving a net beta near zero. This isolates the position's return from broad market direction, though it does not eliminate the risk that the specific spread between the two legs moves against you."
+            },
+            {
+              "_key": "sac1l1b18",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sac1l1b18s1", "_type": "span", "text": "Putting the Definition Together", "marks": [] }
+              ]
+            },
+            {
+              "_key": "sac1l1b19",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "sac1l1b19s1",
+                  "_type": "span",
+                  "text": "Statistical arbitrage, as this course uses the term, is a market-neutral, relative-value strategy that takes long and short positions in related securities sized to cancel out broad market exposure, with the expectation that a statistically identified relationship between them will hold or revert. It is not risk-free, it is not guaranteed, and it is not the same thing as picking undervalued stocks and holding them. The chapters ahead build this up in stages: pairs first, then baskets of more than two names, then full multi-factor models that combine dozens of such relationships into one book.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "sac1l1b20",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Stat Arb or Not?",
+              "question": "Which of the following is closest to a genuine statistical arbitrage trade?",
+              "options": [
+                "Buying Nifty call options ahead of the Union Budget because you expect a market rally",
+                "Buying a stock you believe is undervalued based on its price-to-earnings ratio and holding it for two years",
+                "Going long HDFC Bank and short ICICI Bank in a ratio sized so the combined position has close to zero net Nifty beta",
+                "Buying gold as a hedge against equity market volatility"
+              ],
+              "correctIndex": 2,
+              "explanation": "The first, second, and fourth options are all directional bets, on the market, on one stock's absolute value, or on gold versus equities. Only the third option is structured as a market-neutral relative-value position between two related securities, which is the defining feature of statistical arbitrage."
+            },
+            {
+              "_key": "sac1l1b21",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Is This Desk Running Stat Arb?",
+              "scenario": "A prop desk tells you they run a 'market-neutral' book. On inspection, they are long a basket of PSU banks and short an equal rupee amount of Nifty futures, with no attempt to match the basket's beta to the futures' beta, and the basket's beta to the Nifty is currently estimated at 1.4.",
+              "prompt": "Is this book actually market neutral? What would you check before accepting that label?",
+              "modelAnswer": "Not necessarily, and the rupee amounts being equal is the giveaway. Market neutrality is about beta exposure canceling out, not rupee value matching. If the PSU bank basket has a beta of 1.4 against the Nifty, an equal rupee short in Nifty futures, which has a beta of approximately 1 to itself, leaves a net positive beta of roughly 0.4 on the position. In a sharp Nifty rally, this book would still make money from its residual long market exposure, and in a sharp fall it would still lose money from it, exactly what a genuinely market-neutral book is designed to avoid. The fix is to size the futures short using the basket's actual beta, not its rupee value, and to re-check that beta periodically since it drifts over time."
+            },
+            {
+              "_key": "sac1l1b22",
+              "_type": "keyTakeaways",
+              "points": [
+                "True arbitrage is risk-free and closes in microseconds; statistical arbitrage is a risk-bearing bet on a statistically estimated relationship",
+                "A position is market neutral when its long and short legs are sized by beta, not by rupee value, so net market exposure is close to zero",
+                "The beta-neutral short value is V_S = V_L × (β_L / β_S)",
+                "Isolating alpha means separating skill-based, relationship-specific return from beta, the return you get simply for being exposed to the market's direction",
+                "Market neutral removes market direction risk, not basis risk: the spread between the two legs can still move against you",
+                "The rest of this course builds from single pairs, to baskets, to full multi-factor systems, on top of this same market-neutral foundation"
+              ]
+            },
+            {
+              "_key": "sac1l1b23",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is educational content on statistical arbitrage concepts and is not investment advice or a recommendation to trade any specific security. Beta estimates, hedge ratios, and historical relationships change over time and require independent verification before being used with real capital."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

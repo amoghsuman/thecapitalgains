@@ -1,0 +1,283 @@
+{
+  "courseSlug": "introduction-to-statistical-arbitrage",
+  "chapters": [
+    {
+      "title": "Chapter 1: What Statistical Arbitrage Actually Is",
+      "lessons": [
+        {
+          "title": "Relative Value Thinking: Trading the Spread, Not the Stock",
+          "slug": "relative-value-thinking-trading-the-spread-not-the-stock",
+          "body": [
+            {
+              "_key": "sa2-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa2-001s1", "_type": "span", "marks": [], "text": "An equity research analyst covering TCS spends her time answering one question: is TCS cheap or expensive, based on its own growth, margins, and cash flows? A stat arb trader looking at the same stock asks a completely different question: is TCS cheap or expensive relative to Infosys right now, compared to how the two have traded against each other historically? He may have no opinion at all on whether TCS is a good business. He only needs an opinion on whether the current gap between TCS and Infosys is unusually wide, and likely to narrow. This shift, from asking \"is this asset cheap\" to asking \"is this asset cheap relative to that one\", is called relative value thinking, and it is the mental model underneath every stat arb trade." }
+              ]
+            },
+            {
+              "_key": "sa2-002",
+              "_type": "bigIdea",
+              "text": "In relative value thinking, you never need to know whether a stock is cheap or expensive in absolute terms. You only need to know whether it is cheap or expensive relative to something else you consider genuinely comparable. The comparison, not either stock in isolation, is what you are actually trading."
+            },
+            {
+              "_key": "sa2-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa2-003s1", "_type": "span", "marks": [], "text": "Absolute Valuation vs Relative Value" }
+              ]
+            },
+            {
+              "_key": "sa2-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa2-004s1", "_type": "span", "marks": [], "text": "Most of what gets taught as \"valuation\" in investing is absolute: build a discounted cash flow model, estimate fair value, compare it to the market price. That approach needs you to be right about growth rates, margins, and discount rates years into the future, which is genuinely hard. Relative value sidesteps almost all of that forecasting. You are not asking what TCS is worth in some absolute sense. You are asking whether the market's current pricing of TCS against Infosys, two companies exposed to much the same IT services demand, the same rupee-dollar rate, and the same US client budgets, is out of line with how it has priced them against each other before." }
+              ]
+            },
+            {
+              "_key": "sa2-005",
+              "_type": "comparison",
+              "title": "Two Ways to Ask \"Is This Stock a Buy?\"",
+              "columns": [
+                {
+                  "_key": "sa2-005c1",
+                  "label": "Absolute Valuation",
+                  "points": [
+                    "Asks: what is this company intrinsically worth?",
+                    "Needs a view on long-run growth, margins, and a discount rate",
+                    "Can be right about the business and still wrong about timing",
+                    "Exposed to the whole market's direction while you wait to be proven right"
+                  ]
+                },
+                {
+                  "_key": "sa2-005c2",
+                  "label": "Relative Value",
+                  "points": [
+                    "Asks: is this cheap or expensive relative to a comparable peer, right now?",
+                    "Needs a view on the historical relationship between two prices",
+                    "Does not require an opinion on either company's intrinsic worth",
+                    "Built to be insulated from the market's direction while you wait"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "sa2-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa2-006s1", "_type": "span", "marks": [], "text": "The Spread Is the Asset You Are Trading" }
+              ]
+            },
+            {
+              "_key": "sa2-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "sa2-007m1", "_type": "glossaryTerm", "definition": "A synthetic asset built from two related securities, most simply as a price ratio (Price A ÷ Price B), that a stat arb trader treats as the actual thing being bought or sold." }
+              ],
+              "children": [
+                { "_key": "sa2-007s1", "_type": "span", "marks": [], "text": "Once you commit to relative value thinking, the natural next step is to stop treating TCS and Infosys as two separate stocks and start treating the relationship between them as a single tradeable object: the " },
+                { "_key": "sa2-007s2", "_type": "span", "marks": ["sa2-007m1"], "text": "spread" },
+                { "_key": "sa2-007s3", "_type": "span", "marks": [], "text": ". The simplest version of a spread is a price ratio, TCS's price divided by Infosys's price. If the ratio has historically hovered in a fairly narrow range, say between roughly 2.30 and 2.45, and it suddenly jumps to 2.58, that number itself becomes the thing you have a view on, not TCS and not Infosys individually." }
+              ]
+            },
+            {
+              "_key": "sa2-008",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "TCS / Infosys price ratio over ten trading weeks (illustrative)",
+              "xAxisLabel": "Trading week",
+              "yAxisLabel": "TCS price ÷ Infosys price",
+              "data": [
+                { "_key": "sa2-008d1", "label": "1" },
+                { "_key": "sa2-008d2", "label": "2" },
+                { "_key": "sa2-008d3", "label": "3" },
+                { "_key": "sa2-008d4", "label": "4" },
+                { "_key": "sa2-008d5", "label": "5" },
+                { "_key": "sa2-008d6", "label": "6" },
+                { "_key": "sa2-008d7", "label": "7" },
+                { "_key": "sa2-008d8", "label": "8" },
+                { "_key": "sa2-008d9", "label": "9" },
+                { "_key": "sa2-008d10", "label": "10" }
+              ],
+              "series": [
+                {
+                  "_key": "sa2-008se1",
+                  "label": "TCS / Infosys ratio",
+                  "values": [2.38, 2.40, 2.42, 2.51, 2.58, 2.55, 2.47, 2.41, 2.39, 2.38]
+                }
+              ]
+            },
+            {
+              "_key": "sa2-009",
+              "_type": "keyFact",
+              "label": "Historical range assumed for this example",
+              "value": "~2.30 to 2.45",
+              "context": "The Week 5 spike to 2.58 sits well outside this range, which is exactly the kind of stretch a relative value trader watches for. Chapter 2 replaces \"well outside\" with a precise z-score."
+            },
+            {
+              "_key": "sa2-010",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa2-010s1", "_type": "span", "marks": [], "text": "Why This Insulates You From \"Is the Market Cheap?\" Questions" }
+              ]
+            },
+            {
+              "_key": "sa2-011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa2-011s1", "_type": "span", "marks": [], "text": "The reason relative value trading is called market neutral becomes concrete once you compare two scenarios. If a broad market selloff hits both TCS and Infosys equally, the ratio between them barely moves, and a spread trade built on that ratio earns close to nothing, whether the Nifty fell 5 percent or rose 5 percent that week is irrelevant. If instead one stock moves more than the other, for entirely stock-specific reasons, the ratio itself shifts, and that shift is what the spread trade is designed to capture." }
+              ]
+            },
+            {
+              "_key": "sa2-012",
+              "_type": "table",
+              "caption": "Same broad market move, very different spread outcome (illustrative)",
+              "headers": ["", "Scenario A: Both Fall Equally", "Scenario B: TCS Falls More"],
+              "rows": [
+                { "_key": "sa2-012r1", "_type": "tableRow", "cells": ["TCS price", "₹4,000 → ₹3,800 (−5%)", "₹4,000 → ₹3,720 (−7%)"] },
+                { "_key": "sa2-012r2", "_type": "tableRow", "cells": ["Infosys price", "₹1,700 → ₹1,615 (−5%)", "₹1,700 → ₹1,615 (−5%)"] },
+                { "_key": "sa2-012r3", "_type": "tableRow", "cells": ["TCS / Infosys ratio", "2.353 → 2.353 (unchanged)", "2.353 → 2.304 (down)"] },
+                { "_key": "sa2-012r4", "_type": "tableRow", "cells": ["Spread trade P&L (short TCS, long Infosys)", "~₹0, before costs", "Profit, since the ratio moved in the trade's favor"] }
+              ]
+            },
+            {
+              "_key": "sa2-013",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa2-013s1", "_type": "span", "marks": [], "text": "Going Long the Spread, Going Short the Spread" }
+              ]
+            },
+            {
+              "_key": "sa2-014",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa2-014s1", "_type": "span", "marks": [], "text": "Once you think of the ratio itself as the asset, buying and selling it map onto specific stock positions. If the ratio is unusually low and you expect it to rise back toward normal, you go long the spread: buy the stock in the numerator, TCS, and sell the stock in the denominator, Infosys. If the ratio is unusually high, as in the Week 5 spike above, and you expect it to fall back toward normal, you go short the spread: sell TCS and buy Infosys. In the chart above, a trader shorting the spread at Week 5, when the ratio hit 2.58, would be short TCS and long Infosys, betting on the ratio's reversion back toward its 2.30 to 2.45 range." }
+              ]
+            },
+            {
+              "_key": "sa2-015",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This trips up almost everyone the first time: \"shorting the spread\" does not mean you are bearish on both stocks. It means you expect the ratio between them to fall. You could be shorting the spread while both stocks rise, as long as TCS rises less than Infosys, or falls more than Infosys. The direction of either stock alone tells you nothing about whether the trade is working."
+
+            },
+            {
+              "_key": "sa2-016",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Long the spread or short the spread?",
+              "question": "The Reliance Industries / ONGC price ratio has historically traded between 8 and 10. It currently sits at 6.5, well below that range. A trader expects it to revert upward. What position should she take?",
+              "options": [
+                "Long the spread: buy Reliance Industries, sell ONGC",
+                "Short the spread: sell Reliance Industries, buy ONGC",
+                "Buy both Reliance Industries and ONGC",
+                "Sell both Reliance Industries and ONGC"
+              ],
+              "correctIndex": 0,
+              "explanation": "The ratio is unusually low and she expects it to rise back toward its normal 8 to 10 range. Rising means the numerator, Reliance Industries, needs to gain on the denominator, ONGC. That means going long the spread: buy Reliance Industries, sell ONGC."
+            },
+            {
+              "_key": "sa2-017",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "Complete the trade",
+              "textWithBlank": "If you believe Stock A is expensive relative to Stock B, and you expect that gap to close, you would go long Stock B and ___ Stock A.",
+              "correctAnswers": ["short", "sell", "short sell"],
+              "explanation": "Being relatively expensive means the trade profits if A underperforms B, which means selling (shorting) A while buying (going long) B."
+            },
+            {
+              "_key": "sa2-018",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa2-018s1", "_type": "span", "marks": [], "text": "Seeing the Spread in Python" }
+              ]
+            },
+            {
+              "_key": "sa2-019",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa2-019s1", "_type": "span", "marks": [], "text": "Once you have daily closing prices for two stocks, most commonly pulled from your broker's historical data API or a data vendor, building the ratio series is a two-line operation in pandas. This is the same ratio plotted in the chart above, just computed rather than drawn." }
+              ]
+            },
+            {
+              "_key": "sa2-020",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "import pandas as pd\n\n# tcs_close and infy_close are daily close price Series, same date index\ndf = pd.DataFrame({\"tcs\": tcs_close, \"infy\": infy_close})\ndf[\"ratio\"] = df[\"tcs\"] / df[\"infy\"]\n\nprint(df[\"ratio\"].describe())\nprint(\"Latest ratio:\", df[\"ratio\"].iloc[-1])",
+              "caption": "A minimal pandas snippet to compute and inspect a price ratio spread"
+            },
+            {
+              "_key": "sa2-021",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa2-021s1", "_type": "span", "marks": [], "text": "A Word on Costs: The Spread Is Not Free to Trade" }
+              ]
+            },
+            {
+              "_key": "sa2-022",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa2-022s1", "_type": "span", "marks": [], "text": "Every spread trade has two legs, which means two sets of brokerage, two sets of Securities Transaction Tax, and two bid-ask spreads to cross, not one. Shorting the leg you are selling also has its own cost: if the stock is not in the F&O segment, shorting it intraday-only or via the exchange's Securities Lending and Borrowing (SLB) mechanism carries a borrow fee on top of everything else. None of this shows up in a clean chart like the one above. A ratio that looks attractively stretched can still be a losing trade once both legs' costs are subtracted from a small expected reversion. Chapter 6 covers transaction costs and slippage in full, but keep this in mind from the start: relative value insulates you from market direction, it does not insulate you from costs." }
+              ]
+            },
+            {
+              "_key": "sa2-023",
+              "_type": "flashcardSet",
+              "title": "Relative Value: Core Terms",
+              "cards": [
+                { "_key": "sa2-023f1", "term": "Relative value", "definition": "Assessing whether an asset is cheap or expensive compared to a similar, comparable asset, rather than in absolute terms." },
+                { "_key": "sa2-023f2", "term": "Spread", "definition": "A synthetic asset built from two related securities, most simply a price ratio, that a stat arb trader treats as the thing being bought or sold." },
+                { "_key": "sa2-023f3", "term": "Long the spread", "definition": "Buying the numerator asset and selling the denominator asset, betting the ratio between them will rise." },
+                { "_key": "sa2-023f4", "term": "Short the spread", "definition": "Selling the numerator asset and buying the denominator asset, betting the ratio between them will fall." },
+                { "_key": "sa2-023f5", "term": "Securities Lending and Borrowing (SLB)", "definition": "An NSE-regulated mechanism that lets a trader borrow shares to sell short beyond the intraday window, for stocks not available in the F&O segment." }
+              ]
+            },
+            {
+              "_key": "sa2-024",
+              "_type": "keyTakeaways",
+              "points": [
+                "Relative value thinking asks whether one asset is cheap or expensive compared to a genuinely comparable peer, not whether it is cheap or expensive in some absolute sense.",
+                "The spread, most simply a price ratio between two related stocks, becomes the actual object you have a view on and trade, not either stock individually.",
+                "When both stocks in a pair move together, the ratio barely changes and a spread trade earns close to nothing, which is exactly why the trade is insulated from broad market direction.",
+                "Going long the spread means buying the numerator stock and selling the denominator stock, betting the ratio rises. Going short the spread is the reverse.",
+                "A spread trade has two legs, so it carries two sets of costs, including a borrow fee if shorting a stock outside the F&O segment through the NSE's SLB mechanism.",
+                "None of this tells you yet whether a given pair's relationship is real or strong enough to trade. That formal test, cointegration, is the subject of Chapter 3."
+              ]
+            },
+            {
+              "_key": "sa2-025",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice or a recommendation to buy, sell, or short any security named here. All price figures, ratios, and charts are illustrative and do not represent actual historical data. Short selling and spread trading carry real risk of loss. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

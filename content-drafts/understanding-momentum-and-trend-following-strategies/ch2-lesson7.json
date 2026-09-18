@@ -1,0 +1,219 @@
+{
+  "courseSlug": "understanding-momentum-and-trend-following-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 2: Measuring Trend - Moving Averages and Crossovers",
+      "lessons": [
+        {
+          "title": "Building a Moving Average Crossover Trading Rule",
+          "slug": "building-a-moving-average-crossover-trading-rule",
+          "body": [
+            {
+              "_key": "m7-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m7-001s1", "_type": "span", "marks": [], "text": "The last lesson ended with a warning: a bare golden cross and death cross, with no other filter, whipsaws badly in a sideways market. \"Buy the golden cross, sell the death cross\" is not yet a trading rule, it is a sentence. A real rule needs an unambiguous entry, an unambiguous exit, and something to reduce the number of false signals a raw crossover generates. This lesson builds all three, in Python, on top of the SMA and EMA mechanics from Lesson 1." }
+              ]
+            },
+            {
+              "_key": "m7-002",
+              "_type": "bigIdea",
+              "text": "A trading rule is not a feeling, it is a fully specified function that maps price data to a position, long, short, or flat, with no ambiguity or judgement calls left for the moment of execution. Turning a crossover concept into a real rule means specifying exactly when to enter, exactly when to exit, and exactly what filters, if any, stand between a raw crossover and an actual trade."
+            },
+            {
+              "_key": "m7-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m7-003s1", "_type": "span", "marks": [], "text": "The Bare-Bones Rule: Entry and Exit" }
+              ]
+            },
+            {
+              "_key": "m7-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m7-004s1", "_type": "span", "marks": [], "text": "The simplest possible version is stop-and-reverse: hold a long position whenever the short SMA is above the long SMA, and a short position whenever it is below, flipping instantly on every crossover with no third state. A more conservative long-or-flat version stays in cash on a death cross rather than going short, which avoids shorting risk but gives up the trend-following logic of profiting from a downtrend too. Both versions share the same core weakness identified in the last lesson: every single crossing event, including a marginal, noisy one, generates a trade." }
+              ]
+            },
+            {
+              "_key": "m7-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m7-005s1", "_type": "span", "marks": [], "text": "Filter 1: A Minimum Separation Band" }
+              ]
+            },
+            {
+              "_key": "m7-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m7-006s1", "_type": "span", "marks": [], "text": "The first fix is to stop treating every crossing as equally meaningful. Instead of acting the instant the short SMA ticks above the long SMA, require the gap between them to clear a minimum band, for example 1% of the long SMA's value, before treating it as a real signal. A short SMA that crosses above the long SMA by 0.1% and drifts back below it within days was never a meaningful trend change, it was noise sitting exactly at the boundary. Requiring a 1% separation filters out exactly this kind of marginal, low-conviction crossing." }
+              ]
+            },
+            {
+              "_key": "m7-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m7-007s1", "_type": "span", "marks": [], "text": "Filter 2: A Slope Confirmation on the Longer Average" }
+              ]
+            },
+            {
+              "_key": "m7-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m7-008s1", "_type": "span", "marks": [], "text": "The second fix checks the longer moving average's own direction, not just its level relative to the shorter one. A golden cross that fires while the 200-day SMA is still falling is a much weaker signal than one that fires after the 200-day SMA has already turned up, since the long-term trend itself has not yet confirmed a change. A simple slope filter compares today's 200-day SMA to its value 20 trading days ago, and only accepts a golden cross if that comparison is positive, and a death cross only if it is negative. This does not eliminate lag, it adds to it, but it meaningfully reduces the number of golden crosses taken directly into a market that is still structurally falling." }
+              ]
+            },
+            {
+              "_key": "m7-009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m7-009s1", "_type": "span", "marks": [], "text": "Where to Place the Stop" }
+              ]
+            },
+            {
+              "_key": "m7-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m7-010s1", "_type": "span", "marks": [], "text": "A pure crossover system already has a built-in exit, the opposing cross, but waiting for a full death cross to exit a long position can give back a large, unnecessary chunk of profit if the stock reverses sharply before the slower long SMA catches up. A common practical addition is a hard stop placed either at a fixed percentage below entry, or at the shorter moving average itself, exiting if price closes below the 50-day SMA even without a full crossover. Volatility-based stops, sized off each stock's own typical daily movement rather than a flat percentage, are covered in full later in this course, once position sizing and risk management are introduced properly." }
+              ]
+            },
+            {
+              "_key": "m7-011",
+              "_type": "codeBlock",
+              "language": "python",
+              "caption": "A filtered SMA crossover rule: separation band plus slope confirmation",
+              "code": "import pandas as pd\n\ndef crossover_position(close, short_window=50, long_window=200, band_pct=0.01, slope_lookback=20):\n    sma_short = close.rolling(short_window).mean()\n    sma_long = close.rolling(long_window).mean()\n\n    # Filter 1: require a minimum separation before treating the cross as real\n    spread_pct = (sma_short - sma_long) / sma_long\n    cleared_long = spread_pct > band_pct\n    cleared_short = spread_pct < -band_pct\n\n    # Filter 2: require the long SMA's own slope to agree with the signal's direction\n    long_sma_slope = sma_long.diff(slope_lookback)\n    golden_cross_confirmed = cleared_long & (long_sma_slope > 0)\n    death_cross_confirmed = cleared_short & (long_sma_slope < 0)\n\n    raw_signal = pd.Series(0, index=close.index)\n    raw_signal[golden_cross_confirmed] = 1\n    raw_signal[death_cross_confirmed] = -1\n\n    # Carry the last confirmed signal forward until the next one fires\n    position = raw_signal.replace(0, pd.NA).ffill().fillna(0)\n    return position\n\nclose = pd.read_csv(\"nifty_close.csv\", index_col=\"date\", parse_dates=True)[\"close\"]\nposition = crossover_position(close)"
+            },
+            {
+              "_key": "m7-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m7-012s1", "_type": "span", "marks": [], "text": "A Worked Walkthrough: Filters Rejecting a Whipsaw" }
+              ]
+            },
+            {
+              "_key": "m7-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m7-013s1", "_type": "span", "marks": [], "text": "Here is an illustrative sequence showing the two filters at work on a hypothetical stock, with a 1% separation band and a 20-day slope lookback." }
+              ]
+            },
+            {
+              "_key": "m7-014",
+              "_type": "table",
+              "caption": "Illustrative filtered crossover walkthrough (illustrative figures)",
+              "headers": ["Event", "50-day SMA", "200-day SMA", "Spread", "200-day SMA slope (20d)", "Signal"],
+              "rows": [
+                { "_key": "m7-014r1", "_type": "tableRow", "cells": ["A: marginal cross", "101.2", "101.0", "+0.20%", "Falling", "Rejected, both filters fail"] },
+                { "_key": "m7-014r2", "_type": "tableRow", "cells": ["B: confirmed death cross", "99.5", "100.8", "-1.29%", "Falling", "Short/flat confirmed"] },
+                { "_key": "m7-014r3", "_type": "tableRow", "cells": ["C: confirmed golden cross", "103.0", "101.5", "+1.48%", "Rising", "Long confirmed"] }
+              ]
+            },
+            {
+              "_key": "m7-015",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Event A is exactly the kind of noisy, marginal crossing the raw system from Lesson 2 would have traded on. Both filters reject it, the spread hasn't cleared the 1% band and the long SMA is still falling. Event B fires only once the spread and slope genuinely agree with each other, which is the entire point of stacking two independent filters instead of relying on either alone."
+            },
+            {
+              "_key": "m7-016",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "m7-016s1", "label": "Effect of the separation band", "value": "Fewer, higher-conviction signals", "context": "Cuts marginal, low-conviction crosses that sit near the boundary" },
+                { "_key": "m7-016s2", "label": "Effect of the slope filter", "value": "Avoids counter-trend entries", "context": "Reduces golden crosses taken while the long-term trend is still falling, and vice versa" },
+                { "_key": "m7-016s3", "label": "Cost of both filters", "value": "More lag, not less", "context": "Every filter added on top of the raw crossover waits for more confirmation, at the cost of entering later" },
+                { "_key": "m7-016s4", "label": "Number of parameters introduced", "value": "4: two windows, one band, one lookback", "context": "Each one is a choice that can be tuned, and each one is a chance to overfit to the past, covered next" }
+              ]
+            },
+            {
+              "_key": "m7-017",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Every filter added to a rule is also a new parameter that can be tuned to fit historical data almost perfectly, without actually improving the rule's real, forward-looking performance. A four-parameter system that looks flawless on the last five years of Nifty data is not automatically better than the two-parameter version from Lesson 2, it may simply be more curve-fitted to that specific stretch of history. Proper backtesting discipline, including how to guard against exactly this trap, is covered in full later in this course."
+            },
+            {
+              "_key": "m7-018",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "What does the slope filter actually add?",
+              "question": "A golden cross fires: the 50-day SMA has crossed above the 200-day SMA by more than the required 1% band. But the 200-day SMA is still lower than it was 20 days ago. What does the slope filter in this lesson do?",
+              "options": [
+                "Nothing, the separation band is the only filter that matters",
+                "It rejects the signal, since the long-term trend has not yet confirmed a turn upward",
+                "It automatically doubles the position size",
+                "It converts the golden cross into a death cross"
+              ],
+              "correctIndex": 1,
+              "explanation": "The slope filter requires the 200-day SMA itself to be rising before accepting a golden cross. A falling 200-day SMA means the long-term trend has not yet turned, even if the short-term crossover has technically cleared the separation band."
+            },
+            {
+              "_key": "m7-019",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Choosing between two systems",
+              "scenario": "You backtest two versions of a crossover rule on five years of Nifty 500 stock data. Version 1, the bare crossover from Lesson 2, returns 8% annualized with 40 trades a year. Version 2, with the separation band and slope filter added, returns 14% annualized with 12 trades a year, on the exact same five years of data.",
+              "prompt": "Based on this lesson, should you conclude Version 2 is the better system and deploy it with real capital? What would you want to check first?",
+              "modelAnswer": "Not on this evidence alone. Version 2 has two more tunable parameters than Version 1, the band size and the slope lookback, and a result this much better on the same five-year sample is exactly the pattern you'd expect from a system that has been, even unintentionally, curve-fit to that specific stretch of history. Before trusting the result, you would want to test Version 2 on a different time period it wasn't tuned on, check whether small changes to the band or lookback swing the result wildly, since a robust rule shouldn't be that sensitive, and check the result holds up after realistic transaction costs given the lower trade count works in its favor there. A single backtest number, however good, is not enough on its own."
+            },
+            {
+              "_key": "m7-020",
+              "_type": "toolLink",
+              "label": "Pull historical NSE price data for backtesting via Zerodha's Kite Connect API",
+              "url": "https://kite.trade",
+              "description": "Kite Connect provides historical OHLC data for NSE and BSE instruments through a documented API, a practical way to source the price series this lesson's code expects, subject to its own subscription and usage terms."
+            },
+            {
+              "_key": "m7-021",
+              "_type": "flashcardSet",
+              "title": "Crossover Trading Rules: Core Terms",
+              "cards": [
+                { "_key": "m7-021f1", "term": "Stop-and-reverse system", "definition": "A trading rule that is always fully invested, flipping directly from long to short (or vice versa) on every signal, with no flat or cash state." },
+                { "_key": "m7-021f2", "term": "Separation band", "definition": "A minimum required gap between two moving averages before a crossover is treated as a real signal, filtering out marginal, low-conviction crosses." },
+                { "_key": "m7-021f3", "term": "Slope filter", "definition": "A rule that only accepts a crossover signal if the longer moving average's own recent direction agrees with the signal, reducing counter-trend entries." },
+                { "_key": "m7-021f4", "term": "Curve-fitting", "definition": "Tuning a strategy's parameters to perform unusually well on a specific historical sample in a way that does not generalize to new, unseen data." }
+              ]
+            },
+            {
+              "_key": "m7-022",
+              "_type": "keyTakeaways",
+              "points": [
+                "A real trading rule fully specifies entry, exit, and any filters, leaving no ambiguity for the moment of execution.",
+                "A minimum separation band filters out marginal crossings that sit near the boundary between the two moving averages.",
+                "A slope filter on the longer moving average avoids taking a crossover signal against a long-term trend that has not yet actually turned.",
+                "Both filters add lag on top of the crossover's existing lag, trading faster entries for higher-conviction ones.",
+                "Every added filter is also an added parameter, and more parameters mean more risk of a rule that is curve-fit to the past rather than genuinely robust, a topic this course returns to in depth."
+              ]
+            },
+            {
+              "_key": "m7-023",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice. The code shown is an illustrative teaching example, not production-tested trading software, and requires your own historical price data to run. Consult a SEBI-registered investment adviser or research analyst before trading, and review SEBI's algorithmic trading framework before deploying any automated strategy with real capital."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

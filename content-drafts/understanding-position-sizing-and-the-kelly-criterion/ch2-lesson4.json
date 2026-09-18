@@ -1,0 +1,260 @@
+{
+  "courseSlug": "understanding-position-sizing-and-the-kelly-criterion",
+  "chapters": [
+    {
+      "title": "Chapter 2: Deriving the Kelly Criterion",
+      "lessons": [
+        {
+          "title": "Worked Example: Sizing a Nifty Swing Trade Using Kelly",
+          "slug": "worked-example-sizing-a-nifty-swing-trade-using-kelly",
+          "body": [
+            {
+              "_key": "c2l4-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l4-001s1", "_type": "span", "marks": [], "text": "This lesson takes the Nifty swing trader archetype from Lesson 1.2, a 40% win rate with a 3:1 payoff ratio, all the way from a raw backtest to an actual number of shares and rupees. The formula gives a clean answer of 20% of capital. Turning that 20% into an order ticket is where most of the real-world detail lives, and where a formula that looked simple on paper runs into an account that cannot always do what the formula asks." }
+              ]
+            },
+            {
+              "_key": "c2l4-002",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l4-002s1", "_type": "span", "marks": [], "text": "The Setup: A Familiar Trade" }
+              ]
+            },
+            {
+              "_key": "c2l4-003",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l4-003s1", "_type": "span", "marks": [], "text": "The setup: buy a Nifty 50 large-cap stock on a pullback to its 20-day EMA within an established uptrend, target the prior swing high, and stop below the pullback low. Backtested across 85 signals over three years of NSE price data: entry near ₹1,000, target near ₹1,150 (a 15% gain), stop near ₹950 (a 5% loss), winning 40% of the time." }
+              ]
+            },
+            {
+              "_key": "c2l4-004",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l4-004s1", "_type": "span", "marks": [], "text": "Step 1: Is 85 Trades Enough to Trust?" }
+              ]
+            },
+            {
+              "_key": "c2l4-005",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l4-005s1", "_type": "span", "marks": [], "text": "Before sizing anything, apply the standard-error check from Lesson 1.2 to this specific sample." }
+              ]
+            },
+            {
+              "_key": "c2l4-006",
+              "_type": "mathBlock",
+              "latex": "SE(p) = \\sqrt{\\dfrac{0.40 \\times 0.60}{85}} \\approx 5.31\\%",
+              "caption": "Applying Lesson 1.2's formula to this backtest's actual sample size"
+            },
+            {
+              "_key": "c2l4-007",
+              "_type": "keyFact",
+              "label": "95% confidence interval for the true win rate",
+              "value": "29.6% to 50.4%",
+              "context": "Measured at 40% on 85 trades. Wide enough that the true edge could be meaningfully smaller, or larger, than the headline number."
+            },
+            {
+              "_key": "c2l4-008",
+              "_type": "callout",
+              "type": "warning",
+              "text": "This confidence interval is not narrow. It is proceeded with here for the sake of completing the sizing calculation end to end, but a range this wide is exactly the kind of estimation uncertainty that Lesson 3.3 deals with directly. Treat every number in this lesson as \"full Kelly under the assumption that 40% is exactly correct,\" not as a guaranteed edge."
+            },
+            {
+              "_key": "c2l4-009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l4-009s1", "_type": "span", "marks": [], "text": "Step 2: Compute Full Kelly" }
+              ]
+            },
+            {
+              "_key": "c2l4-010",
+              "_type": "table",
+              "caption": "From backtest to Kelly fraction",
+              "headers": ["Quantity", "Value", "Formula"],
+              "rows": [
+                { "_key": "c2l4-010r1", "_type": "tableRow", "cells": ["Win rate (p)", "0.40", "From 85 backtested signals"] },
+                { "_key": "c2l4-010r2", "_type": "tableRow", "cells": ["Payoff ratio (b)", "3.00", "₹150 target ÷ ₹50 stop"] },
+                { "_key": "c2l4-010r3", "_type": "tableRow", "cells": ["Expectancy, E(R)", "0.60R", "(0.40 × 3.00) − 0.60"] },
+                { "_key": "c2l4-010r4", "_type": "tableRow", "cells": ["Kelly fraction, f*", "20.0%", "0.60R ÷ 3.00"] }
+              ]
+            },
+            {
+              "_key": "c2l4-011",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Confirm the Kelly fraction",
+              "prompt": "Using f* = (pb − q) / b with p = 0.40 and b = 3.00, what is f* as a percentage?",
+              "correctValue": 20,
+              "tolerance": 0.5,
+              "unit": "%",
+              "explanation": "E(R) = (0.40 × 3.00) − 0.60 = 1.20 − 0.60 = 0.60R. f* = 0.60 ÷ 3.00 = 0.20, or 20% of capital."
+            },
+            {
+              "_key": "c2l4-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l4-012s1", "_type": "span", "marks": [], "text": "Step 3: Turn 20% Into an Actual Order" }
+              ]
+            },
+            {
+              "_key": "c2l4-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l4-013s1", "_type": "span", "marks": [], "text": "Here is the detail that trips people up: f* is a fraction of capital to risk if the stop is hit, in R-multiple terms, not a fraction of capital to spend buying the stock. On a trading account of ₹8,00,000, f* = 20% means the trade should be sized so that a stop-out costs ₹1,60,000, the amount defined as 1R in this system." }
+              ]
+            },
+            {
+              "_key": "c2l4-014",
+              "_type": "mathBlock",
+              "latex": "\\text{Shares} = \\dfrac{f^{*} \\times \\text{Bankroll}}{\\text{Stop-loss \\%} \\times \\text{Entry price}}",
+              "caption": "Risk capital divided by the rupee risk per share"
+            },
+            {
+              "_key": "c2l4-015",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "c2l4-015s1", "label": "Bankroll", "value": "₹8,00,000", "context": "Trading capital" },
+                { "_key": "c2l4-015s2", "label": "Risk capital (1R)", "value": "₹1,60,000", "context": "20% of bankroll" },
+                { "_key": "c2l4-015s3", "label": "Risk per share", "value": "₹50", "context": "5% stop on a ₹1,000 entry" },
+                { "_key": "c2l4-015s4", "label": "Shares to buy", "value": "3,200", "context": "₹1,60,000 ÷ ₹50" }
+              ]
+            },
+            {
+              "_key": "c2l4-016",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l4-016s1", "_type": "span", "marks": [], "text": "3,200 shares at ₹1,000 each is a position worth ₹32,00,000, four times the entire ₹8,00,000 account. Full Kelly, applied honestly to a trade with a tight 5% stop, does not fit inside the account's own capital at all." }
+              ]
+            },
+            {
+              "_key": "c2l4-017",
+              "_type": "mathBlock",
+              "latex": "\\text{Implied leverage} = \\dfrac{f^{*}}{\\text{Stop-loss \\%}} = \\dfrac{0.20}{0.05} = 4.0\\text{x}",
+              "caption": "A general relationship: the tighter the stop relative to f*, the more leverage full Kelly demands"
+            },
+            {
+              "_key": "c2l4-018",
+              "_type": "donutChart",
+              "title": "₹32,00,000 position: own capital vs leveraged exposure",
+              "data": [
+                { "_key": "c2l4-018d1", "label": "Own capital (₹8,00,000)", "value": 800000 },
+                { "_key": "c2l4-018d2", "label": "Additional exposure via leverage (₹24,00,000)", "value": 2400000 }
+              ]
+            },
+            {
+              "_key": "c2l4-019",
+              "_type": "callout",
+              "type": "warning",
+              "text": "This is the same pattern Lesson 2.3 found with the continuous Kelly formula on a diversified index: full Kelly frequently demands leverage most accounts cannot or should not deploy for a single position. A cash equity delivery trade does not offer 4x margin, and even where leveraged products exist, running 4x on one stock's swing trade is a very different risk decision than the 20% figure alone suggests."
+            },
+            {
+              "_key": "c2l4-020",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l4-020s1", "_type": "span", "marks": [], "text": "Step 4: What a Cash-Only Account Can Actually Achieve" }
+              ]
+            },
+            {
+              "_key": "c2l4-021",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l4-021s1", "_type": "span", "marks": [], "text": "Without leverage, the largest position is 100% of capital deployed into the stock: all ₹8,00,000 buys 800 shares at ₹1,000. If stopped out, the loss is 800 × ₹50 = ₹40,000, which is exactly 5% of capital, the stop-loss percentage itself. This is not a coincidence: for any unlevered position, the maximum risk fraction achievable is the stop-loss percentage, because 100% capital deployed times a 5% stop always risks 5% of the account, regardless of what f* says." }
+              ]
+            },
+            {
+              "_key": "c2l4-022",
+              "_type": "comparison",
+              "title": "What the formula asks for vs what cash alone can deliver",
+              "columns": [
+                {
+                  "_key": "c2l4-022c1",
+                  "label": "Full Kelly (f* = 20%)",
+                  "points": [
+                    "3,200 shares, ₹32,00,000 position",
+                    "Requires 4x leverage on the account",
+                    "Risks the full ₹1,60,000 (20% of capital) if stopped out"
+                  ]
+                },
+                {
+                  "_key": "c2l4-022c2",
+                  "label": "Unlevered cash ceiling",
+                  "points": [
+                    "800 shares, ₹8,00,000 position (all-in)",
+                    "No leverage used",
+                    "Risks only ₹40,000 (5% of capital) if stopped out"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c2l4-023",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Choose a practical path",
+              "scenario": "You have confirmed p = 0.40, b = 3.00, and f* = 20% for this setup, on an ₹8,00,000 cash trading account with no margin facility for delivery stock positions.",
+              "prompt": "Given that full Kelly requires 4x leverage this account does not have, what would you actually do? List at least two realistic options.",
+              "modelAnswer": "Two realistic options: (1) Accept the unlevered ceiling and size at 100% of capital deployed (800 shares), which only risks 5% of capital rather than the intended 20%, meaningfully undersizing relative to full Kelly. (2) Express the same view through Nifty stock futures or options, which offer built-in leverage through exchange margin, making it possible to approach the 20% risk fraction without needing 4x cash borrowing, though this introduces its own margin, rollover, and liquidity considerations. Neither option is \"full Kelly on cash equity,\" because that combination is not available in this account. Chapter 3 covers a third option: deliberately choosing to size below full Kelly even when it is technically available, which turns out to be the practical standard for good reasons beyond just leverage access."
+            },
+            {
+              "_key": "c2l4-024",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "The stop-loss ceiling",
+              "question": "For an unlevered position (100% of capital deployed, no margin), what determines the maximum risk fraction achievable if the position is stopped out?",
+              "options": [
+                "The Kelly fraction f*, always",
+                "The stop-loss percentage on the trade",
+                "The win rate p",
+                "The payoff ratio b"
+              ],
+              "correctIndex": 1,
+              "explanation": "With no leverage, the largest possible position is 100% of capital. A 100%-of-capital position with a 5% stop always risks exactly 5% of capital if stopped out, regardless of what f* calculates. Reaching a higher risk fraction, such as this lesson's 20% Kelly target, requires leverage whenever the stop-loss percentage is smaller than f*."
+            },
+            {
+              "_key": "c2l4-025",
+              "_type": "keyTakeaways",
+              "points": [
+                "f* from the Kelly formula defines the fraction of capital to risk (1R), not the fraction of capital to spend buying the position.",
+                "Shares to buy = (f* × bankroll) ÷ (stop-loss % × entry price). A tight stop can force a very large share count relative to account size.",
+                "Implied leverage = f* ÷ stop-loss %. When f* exceeds the stop-loss percentage, full Kelly cannot be achieved without leverage.",
+                "For an unlevered position, the maximum achievable risk fraction is simply the stop-loss percentage, no matter what f* calculates.",
+                "This worked example's 4x leverage requirement mirrors Lesson 2.3's finding for a diversified index: full Kelly routinely asks for more risk, and often more leverage, than most accounts should actually use."
+              ]
+            },
+            {
+              "_key": "c2l4-026",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "The setup, backtest statistics, and account figures in this lesson are illustrative and constructed for teaching purposes, not a verified historical strategy or a recommendation to trade this or any specific stock. This lesson is for education only and is not investment or trading advice. Using leverage or margin significantly increases risk of loss. Consult a SEBI-registered investment adviser before making trading decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

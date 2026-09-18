@@ -1,0 +1,319 @@
+{
+  "courseSlug": "introduction-to-portfolio-optimization-markowitz-and-beyond",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Portfolio Thinking Beats Stock Picking",
+      "lessons": [
+        {
+          "title": "The Diversification Problem: Why Owning More Stocks Isn't Enough",
+          "slug": "the-diversification-problem-why-owning-more-stocks-isnt-enough",
+          "body": [
+            {
+              "_key": "poc1l1-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc1l1-001s1", "_type": "span", "marks": [], "text": "Rohan runs a small prop desk out of his apartment in Pune. His book holds twenty five stocks, and he tells his family, only half joking, that he is basically an index fund because no single stock can hurt him too much. Then March 2020 happens, and his twenty five stock, supposedly diversified book falls almost exactly as hard as the Nifty 50. Rohan did not do the math wrong. He built the wrong kind of portfolio. This is the first mistake this course exists to fix: the number of stocks you own tells you almost nothing about how well diversified you actually are." }
+              ]
+            },
+            {
+              "_key": "poc1l1-002",
+              "_type": "bigIdea",
+              "text": "Diversification is not about how many stocks you own. It is about how independently those stocks move from each other. A portfolio of twenty five correlated stocks can carry almost the same risk as owning just one."
+            },
+            {
+              "_key": "poc1l1-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc1l1-003s1", "_type": "span", "marks": [], "text": "The Naive View: More Names, Less Risk" }
+              ]
+            },
+            {
+              "_key": "poc1l1-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "poc1l1-004m1", "_type": "glossaryTerm", "definition": "The portion of a stock's risk that comes from factors specific to that company, such as a weak quarterly result, a management exit, or a product recall. It can be reduced by holding other stocks whose company-specific risks are unrelated." }
+              ],
+              "children": [
+                { "_key": "poc1l1-004s1", "_type": "span", "marks": [], "text": "Most retail investors, and more than a few professionals, treat diversification as a counting exercise. Own five stocks, and a single bad quarter from one company can wreck your month. Own twenty, and no single name matters as much. This intuition is not wrong. It describes something real, called " },
+                { "_key": "poc1l1-004s2", "_type": "span", "marks": ["poc1l1-004m1"], "text": "unsystematic risk" },
+                { "_key": "poc1l1-004s3", "_type": "span", "marks": [], "text": ". As you add stocks whose company-specific problems are unrelated to each other, those bumps start cancelling out in the portfolio's average return, and the portfolio's swings get smaller. That is real, and it is why funds hold dozens of names instead of one." }
+              ]
+            },
+            {
+              "_key": "poc1l1-005",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc1l1-005s1", "_type": "span", "marks": [], "text": "The naive view stops there: more stocks, smoother ride. It quietly assumes that every new stock you add behaves independently of the ones you already own. That assumption is doing almost all the work, and it is usually false." }
+              ]
+            },
+            {
+              "_key": "poc1l1-006",
+              "_type": "keyFact",
+              "label": "A typical NSE large-cap stock, standalone",
+              "value": "~35% annualized volatility",
+              "context": "Illustrative. Actual volatility varies by stock and period, but this is a reasonable starting point before any diversification is applied."
+            },
+            {
+              "_key": "poc1l1-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc1l1-007s1", "_type": "span", "marks": [], "text": "What the Textbook Curve Looks Like" }
+              ]
+            },
+            {
+              "_key": "poc1l1-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc1l1-008s1", "_type": "span", "marks": [], "text": "Plot portfolio volatility on the y-axis against the number of stocks held on the x-axis, and you get a curve that falls fast at first, then flattens. But how far it falls, and where it flattens, depends entirely on how correlated your holdings are. Here is that curve for two very different ten-stock portfolios, built up one stock at a time:" }
+              ]
+            },
+            {
+              "_key": "poc1l1-009",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Portfolio volatility as holdings increase (illustrative)",
+              "xAxisLabel": "Number of stocks held",
+              "yAxisLabel": "Annualized portfolio volatility (%)",
+              "data": [
+                { "_key": "poc1l1-009d1", "label": "1" },
+                { "_key": "poc1l1-009d2", "label": "2" },
+                { "_key": "poc1l1-009d3", "label": "5" },
+                { "_key": "poc1l1-009d4", "label": "10" },
+                { "_key": "poc1l1-009d5", "label": "15" },
+                { "_key": "poc1l1-009d6", "label": "20" },
+                { "_key": "poc1l1-009d7", "label": "30" },
+                { "_key": "poc1l1-009d8", "label": "50" }
+              ],
+              "series": [
+                {
+                  "_key": "poc1l1-009se1",
+                  "label": "Multi-sector portfolio (avg. correlation ~0.35)",
+                  "values": [35, 28.8, 24.2, 22.5, 22, 21.6, 21.3, 21.1]
+                },
+                {
+                  "_key": "poc1l1-009se2",
+                  "label": "Single-sector portfolio, only banking stocks (avg. correlation ~0.65)",
+                  "values": [35, 31.8, 29.7, 29, 28.7, 28.6, 28.5, 28.4]
+                }
+              ]
+            },
+            {
+              "_key": "poc1l1-010",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Both curves start at the same point, since one stock is one stock. They flatten out at very different floors. The multi-sector portfolio's floor is what the next section calls systematic risk, the risk the market carries as a whole. The single-sector portfolio's floor is higher because banking stocks share so much of their risk already: RBI rate moves, the credit cycle, and FII flows into financials. No amount of additional bank stocks diversifies that away."
+            },
+            {
+              "_key": "poc1l1-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc1l1-011s1", "_type": "span", "marks": [], "text": "Where the Naive View Breaks: Correlation, Not Count" }
+              ]
+            },
+            {
+              "_key": "poc1l1-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "poc1l1-012m1", "_type": "glossaryTerm", "definition": "A measure, between -1 and +1, of how closely two assets' returns move together. +1 means they move in perfect lockstep, 0 means their movements are unrelated, and -1 means they move in exact opposite directions. Chapter 2 covers how to calculate it." }
+              ],
+              "children": [
+                { "_key": "poc1l1-012s1", "_type": "span", "marks": [], "text": "The reason the two curves above diverge is a single idea: how closely, on average, your holdings move together. Statisticians call this " },
+                { "_key": "poc1l1-012s2", "_type": "span", "marks": ["poc1l1-012m1"], "text": "correlation" },
+                { "_key": "poc1l1-012s3", "_type": "span", "marks": [], "text": ". HDFC Bank and ICICI Bank do not move in lockstep, but they are both large private banks, both sensitive to the same RBI repo rate decisions, the same credit cycle, and the same FII flows into financial stocks. Add State Bank of India, Kotak Mahindra Bank, Axis Bank, IndusInd Bank, Bank of Baroda, Punjab National Bank, Federal Bank, and IDFC First Bank to the book, and you now hold ten stocks that mostly react to the same handful of triggers. You have not built ten independent bets. You have built one leveraged bet on Indian banking, spread across ten tickers." }
+              ]
+            },
+            {
+              "_key": "poc1l1-013",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc1l1-013s1", "_type": "span", "marks": [], "text": "Case Study: Two Ten-Stock Portfolios" }
+              ]
+            },
+            {
+              "_key": "poc1l1-014",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc1l1-014s1", "_type": "span", "marks": [], "text": "Both portfolios below hold exactly ten NSE-listed large-cap stocks with roughly equal weights. Only their composition differs." }
+              ]
+            },
+            {
+              "_key": "poc1l1-015",
+              "_type": "table",
+              "caption": "Same stock count, very different diversification",
+              "headers": ["Portfolio A: All Banking", "Portfolio B: Spread Across Sectors"],
+              "rows": [
+                { "_key": "poc1l1-015r1", "_type": "tableRow", "cells": ["HDFC Bank", "HDFC Bank (Banking)"] },
+                { "_key": "poc1l1-015r2", "_type": "tableRow", "cells": ["ICICI Bank", "Reliance Industries (Energy)"] },
+                { "_key": "poc1l1-015r3", "_type": "tableRow", "cells": ["State Bank of India", "TCS (IT)"] },
+                { "_key": "poc1l1-015r4", "_type": "tableRow", "cells": ["Kotak Mahindra Bank", "Hindustan Unilever (FMCG)"] },
+                { "_key": "poc1l1-015r5", "_type": "tableRow", "cells": ["Axis Bank", "Sun Pharma (Pharma)"] },
+                { "_key": "poc1l1-015r6", "_type": "tableRow", "cells": ["IndusInd Bank", "Maruti Suzuki (Auto)"] },
+                { "_key": "poc1l1-015r7", "_type": "tableRow", "cells": ["Bank of Baroda", "Bharti Airtel (Telecom)"] },
+                { "_key": "poc1l1-015r8", "_type": "tableRow", "cells": ["Punjab National Bank", "Asian Paints (Consumer)"] },
+                { "_key": "poc1l1-015r9", "_type": "tableRow", "cells": ["Federal Bank", "Titan Company (Consumer Durables)"] },
+                { "_key": "poc1l1-015r10", "_type": "tableRow", "cells": ["IDFC First Bank", "Larsen & Toubro (Infrastructure)"] }
+              ]
+            },
+            {
+              "_key": "poc1l1-016",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "poc1l1-016s1", "label": "Portfolio A volatility", "value": "~29%", "context": "Illustrative, all banking" },
+                { "_key": "poc1l1-016s2", "label": "Portfolio B volatility", "value": "~22.5%", "context": "Illustrative, spread across sectors" },
+                { "_key": "poc1l1-016s3", "label": "Number of stocks", "value": "10 vs 10", "context": "Identical in both portfolios" },
+                { "_key": "poc1l1-016s4", "label": "Average pairwise correlation", "value": "0.65 vs 0.35", "context": "This gap is the entire story" }
+              ]
+            },
+            {
+              "_key": "poc1l1-017",
+              "_type": "callout",
+              "type": "warning",
+              "text": "In March 2020, sector-level differences like this compressed hard. When the whole market panics, correlations across sectors spike toward 1, and even a well-spread book like Portfolio B falls close to Portfolio A. Diversification reduces normal-times risk. It does its least useful work exactly when you need it most. Chapter 2 and Chapter 5 both come back to this."
+            },
+            {
+              "_key": "poc1l1-018",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc1l1-018s1", "_type": "span", "marks": [], "text": "Systematic vs Unsystematic Risk, in Plain Terms" }
+              ]
+            },
+            {
+              "_key": "poc1l1-019",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "poc1l1-019m1", "_type": "glossaryTerm", "definition": "The portion of risk that comes from broad market or economy-wide forces, such as RBI rate decisions, crude oil prices, or a global risk-off move. It cannot be reduced by adding more stocks, no matter how many you hold." }
+              ],
+              "children": [
+                { "_key": "poc1l1-019s1", "_type": "span", "marks": [], "text": "The two floors in the earlier chart have names. The height Portfolio B settles at is " },
+                { "_key": "poc1l1-019s2", "_type": "span", "marks": ["poc1l1-019m1"], "text": "systematic risk" },
+                { "_key": "poc1l1-019s3", "_type": "span", "marks": [], "text": ": the risk every Indian equity portfolio carries simply by being exposed to the Indian market. The gap between Portfolio A's floor and Portfolio B's floor is unsystematic risk that Portfolio A failed to diversify away, because every stock in it responds to the same banking-sector triggers. This distinction, not the raw stock count, is what the rest of this course is built on." }
+              ]
+            },
+            {
+              "_key": "poc1l1-020",
+              "_type": "comparison",
+              "title": "What Actually Reduces Portfolio Risk",
+              "columns": [
+                {
+                  "_key": "poc1l1-020c1",
+                  "label": "Adding a stock with LOW correlation to what you hold",
+                  "points": [
+                    "Drops portfolio volatility meaningfully",
+                    "Works best across sectors, asset classes, or return drivers",
+                    "Most of the benefit shows up in the first 15 to 20 holdings"
+                  ]
+                },
+                {
+                  "_key": "poc1l1-020c2",
+                  "label": "Adding a stock with HIGH correlation to what you hold",
+                  "points": [
+                    "Barely moves portfolio volatility",
+                    "Common mistake: buying five more IT stocks after already holding TCS and Infosys",
+                    "Gives a false sense of safety, the \"I own 30 stocks\" feeling without the risk reduction"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "poc1l1-021",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Test the naive view",
+              "question": "An investor holds 15 stocks, all from the Nifty IT index. She adds five more IT stocks, bringing her total to 20. What is the MOST likely effect on her portfolio's volatility?",
+              "options": [
+                "It falls sharply, because she now owns 20 stocks instead of 15",
+                "It falls only slightly, because IT stocks are highly correlated with each other",
+                "It rises, because more stocks always add risk",
+                "It becomes zero, because she is now fully diversified"
+              ],
+              "correctIndex": 1,
+              "explanation": "Adding more stocks from the same sector adds very little diversification benefit, because they already share most of their risk drivers. Real risk reduction needs holdings whose return drivers do not overlap much, not just a bigger count."
+            },
+            {
+              "_key": "poc1l1-022",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Build the better book",
+              "scenario": "A friend messages you his portfolio: 18 stocks, all from the Nifty Auto and Nifty Bank indices, roughly split evenly between the two. He says, \"I'm well diversified, I own 18 different companies.\"",
+              "prompt": "What would you tell him, and what would you actually check before agreeing or disagreeing?",
+              "modelAnswer": "Owning 18 companies is not the same as being diversified if they cluster in just two sectors that respond to similar macro triggers: interest rates, consumer discretionary spending, and overall risk appetite. Before agreeing, check the average pairwise correlation across his holdings using historical return data. What matters is whether his 18 stocks are 18 genuinely different bets, or effectively two or three big sector bets spread across 18 tickers."
+            },
+            {
+              "_key": "poc1l1-023",
+              "_type": "keyFact",
+              "label": "How many stocks capture most of the diversifiable benefit?",
+              "value": "~15 to 20, if spread across sectors",
+              "context": "Beyond this, adding more names barely moves portfolio volatility if the holdings are reasonably uncorrelated. Concentrated, single-sector portfolios never reach this floor, no matter how many names you add."
+            },
+            {
+              "_key": "poc1l1-024",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc1l1-024s1", "_type": "span", "marks": [], "text": "Everything in this lesson is a preview. You now know that diversification is a correlation problem dressed up as a counting problem. Chapter 2 gives you the actual mathematics: covariance, correlation, and portfolio variance, so instead of eyeballing \"spread across sectors\" you can calculate exactly how much risk a new stock adds or removes." }
+              ]
+            },
+            {
+              "_key": "poc1l1-025",
+              "_type": "toolLink",
+              "label": "Screen stocks by sector on screener.in",
+              "url": "https://www.screener.in",
+              "description": "Useful for quickly checking sector concentration across your own holdings before assuming you are diversified."
+            },
+            {
+              "_key": "poc1l1-026",
+              "_type": "flashcardSet",
+              "title": "Diversification: Core Terms",
+              "cards": [
+                { "_key": "poc1l1-026f1", "term": "Unsystematic risk", "definition": "Risk specific to a single company or sector, such as a weak earnings quarter or a management exit. Can be reduced by adding uncorrelated holdings." },
+                { "_key": "poc1l1-026f2", "term": "Systematic risk", "definition": "Market-wide risk from broad economic forces, such as RBI rate moves or crude oil prices. Cannot be diversified away no matter how many stocks you hold." },
+                { "_key": "poc1l1-026f3", "term": "Correlation", "definition": "A measure between -1 and +1 of how closely two assets' returns move together. The lower it is between your holdings, the more diversification benefit you get." },
+                { "_key": "poc1l1-026f4", "term": "Naive diversification", "definition": "The mistaken belief that diversification is purely a function of how many stocks or assets you hold, regardless of how closely those holdings move together." }
+              ]
+            },
+            {
+              "_key": "poc1l1-027",
+              "_type": "keyTakeaways",
+              "points": [
+                "The number of stocks you own is a weak proxy for diversification. What matters is how correlated those stocks are with each other.",
+                "Adding low-correlation stocks reduces portfolio volatility meaningfully. Adding high-correlation stocks barely moves it, even though your stock count goes up.",
+                "Most of the diversification benefit from adding stocks shows up within the first 15 to 20 holdings, if they are spread across sectors.",
+                "A concentrated, single-sector portfolio never reaches the same low-risk floor as a multi-sector one, no matter how many names it holds.",
+                "Systematic risk (market-wide) cannot be diversified away. Unsystematic risk (company or sector specific) can, but only by adding genuinely uncorrelated holdings.",
+                "Correlations across sectors tend to spike toward 1 during market panics, which is exactly when diversification helps the least."
+              ]
+            },
+            {
+              "_key": "poc1l1-028",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to buy or sell any security named here. Figures and correlation values used in the charts and tables are illustrative, not live market data. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,455 @@
+{
+  "courseSlug": "understanding-bond-pricing-yield-to-maturity-duration-and-convexity",
+  "chapters": [
+    {
+      "title": "Chapter 3: Duration: Measuring Interest Rate Risk",
+      "lessons": [
+        {
+          "title": "Portfolio Duration and Reading Modified Duration on a Debt Fund Factsheet",
+          "slug": "portfolio-duration-and-reading-modified-duration-on-a-debt-fund-factsheet",
+          "body": [
+            {
+              "_key": "c3l5-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l5-001s1",
+                  "_type": "span",
+                  "text": "Most Indian investors never buy a single G-Sec. Their bond exposure comes through debt mutual funds, and the only window into those funds is a two-page factsheet with a box of numbers: YTM, Macaulay duration, modified duration, average maturity. Most readers glance at the YTM and skip the rest. After this chapter, you can do much better. This lesson shows how a fund's duration is built from its holdings, what each number in that box actually tells you, and how to use them together to judge risk before you invest.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l5-002",
+              "_type": "bigIdea",
+              "text": "A debt fund's factsheet box is a complete risk summary if you know how to read it. YTM is what the portfolio yields today, modified duration is how hard its NAV will move when yields change, and Macaulay duration is the horizon it is built for."
+            },
+            {
+              "_key": "c3l5-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l5-003s1",
+                  "_type": "span",
+                  "text": "Portfolio Duration Is a Weighted Average",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l5-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l5-004s1",
+                  "_type": "span",
+                  "text": "In the last lesson you added up PV01s. The same idea gives a portfolio's duration directly: multiply each holding's duration by its share of the portfolio's market value, and add. This works for Macaulay duration, modified duration and average maturity alike.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l5-005",
+              "_type": "mathBlock",
+              "latex": "D_{\\text{Portfolio}} = \\sum_{i} w_i \\times D_i, \\qquad w_i = \\frac{\\text{Market value of holding } i}{\\text{Total market value}}",
+              "caption": "Weights must be by market value, not face value, and must add up to 100%, including cash and T-bills."
+            },
+            {
+              "_key": "c3l5-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l5-006s1",
+                  "_type": "span",
+                  "text": "Building a Fund's Factsheet Numbers",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l5-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l5-007s1",
+                  "_type": "span",
+                  "text": "Here is a simplified, illustrative debt fund with five positions, each shown with the figures a fund's risk team would calculate at month-end. All bonds are priced on coupon dates for simplicity.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l5-008",
+              "_type": "table",
+              "caption": "Illustrative debt fund portfolio at month-end",
+              "headers": ["Holding", "Weight", "Residual maturity (years)", "Yield", "Macaulay duration", "Modified duration"],
+              "rows": [
+                { "_key": "c3l5-008r1", "_type": "tableRow", "cells": ["91-day T-bills and TREPS", "8%", "0.25", "6.60%", "0.25", "0.25"] },
+                { "_key": "c3l5-008r2", "_type": "tableRow", "cells": ["7.00% G-Sec, 3 years", "20%", "3", "6.95%", "2.76", "2.67"] },
+                { "_key": "c3l5-008r3", "_type": "tableRow", "cells": ["7.25% SDL, 5 years", "25%", "5", "7.30%", "4.28", "4.13"] },
+                { "_key": "c3l5-008r4", "_type": "tableRow", "cells": ["7.10% G-Sec, 10 years", "30%", "10", "7.05%", "7.33", "7.08"] },
+                { "_key": "c3l5-008r5", "_type": "tableRow", "cells": ["7.20% G-Sec, 14 years", "17%", "14", "7.15%", "9.06", "8.74"] },
+                { "_key": "c3l5-008r6", "_type": "tableRow", "cells": ["Portfolio (weighted)", "100%", "7.25", "7.07%", "5.38", "5.20"] }
+              ]
+            },
+            {
+              "_key": "c3l5-009",
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "c3l5-009s1",
+                  "label": "Annualised portfolio YTM",
+                  "value": "7.07%",
+                  "context": "Weighted yield of holdings, before expenses"
+                },
+                {
+                  "_key": "c3l5-009s2",
+                  "label": "Average maturity",
+                  "value": "7.25 years",
+                  "context": "Weighted time to final repayment"
+                },
+                {
+                  "_key": "c3l5-009s3",
+                  "label": "Macaulay duration",
+                  "value": "5.38 years",
+                  "context": "Weighted average time to cash flows"
+                },
+                {
+                  "_key": "c3l5-009s4",
+                  "label": "Modified duration",
+                  "value": "5.20",
+                  "context": "About 5.2% NAV move per 1% yield move"
+                }
+              ]
+            },
+            {
+              "_key": "c3l5-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l5-010s1",
+                  "_type": "span",
+                  "text": "That is exactly the box you see on a real factsheet. Notice where this fund would sit: a Macaulay duration of 5.38 years places it in SEBI's medium to long duration category, which requires a portfolio Macaulay duration between 4 and 7 years. Also notice that the 30% in the 10-year G-Sec and 17% in the 14-year G-Sec together contribute over two-thirds of the portfolio's duration. As with PV01, the long bonds dominate the risk.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l5-011",
+              "_type": "callout",
+              "type": "insight",
+              "text": "The portfolio YTM on factsheets is calculated as a market-value-weighted average of each holding's yield, as above. That is a practical shortcut, not the true internal yield of the combined cash flows, but for a diversified portfolio the difference is small. Factsheets present it on an annualised basis, so that funds holding semi-annual and annual-coupon bonds can be compared on the same footing, which is exactly the conversion you learned in Chapter 2."
+            },
+            {
+              "_key": "c3l5-012",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Calculate a portfolio's modified duration",
+              "prompt": "A fund holds 50% in bonds with a modified duration of 2, 30% in bonds with a modified duration of 6, and 20% in bonds with a modified duration of 10. What is the portfolio's modified duration?",
+              "correctValue": 4.8,
+              "tolerance": 0.01,
+              "unit": "",
+              "explanation": "0.50 × 2 + 0.30 × 6 + 0.20 × 10 = 1.0 + 1.8 + 2.0 = 4.8. Although only 20% of the money sits in the longest bonds, they contribute over 40% of the portfolio's duration."
+            },
+            {
+              "_key": "c3l5-013",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l5-013s1",
+                  "_type": "span",
+                  "text": "The Three Maturity Numbers on Every Factsheet",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l5-014",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l5-014s1",
+                  "_type": "span",
+                  "text": "Average maturity, Macaulay duration and modified duration all measure \"how long\" in some sense, and they always appear in the same order for an ordinary bond fund: average maturity is the longest, Macaulay duration is shorter because coupons return money early, and modified duration is slightly shorter still because it divides by (1 + yield per period). Each answers a different question.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l5-015",
+              "_type": "table",
+              "caption": "What each factsheet number is for",
+              "headers": ["Factsheet number", "What it measures", "Use it to"],
+              "rows": [
+                { "_key": "c3l5-015r1", "_type": "tableRow", "cells": ["Average maturity", "Weighted time until holdings repay their principal", "See how far out the fund lends; spot very long bonds hidden in the portfolio"] },
+                { "_key": "c3l5-015r2", "_type": "tableRow", "cells": ["Macaulay duration", "Weighted average time to receive all cash flows", "Check the SEBI category fit and match the fund to your investment horizon"] },
+                { "_key": "c3l5-015r3", "_type": "tableRow", "cells": ["Modified duration", "Approximate % NAV change for a 1% change in yields", "Estimate how much the NAV could rise or fall when rates move"] },
+                { "_key": "c3l5-015r4", "_type": "tableRow", "cells": ["Annualised portfolio YTM", "Weighted yield of current holdings", "Estimate the fund's gross return potential, before expenses and rate changes"] }
+              ]
+            },
+            {
+              "_key": "c3l5-016",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Spot the typo",
+              "question": "A factsheet for an illustrative short duration fund lists: average maturity 2.9 years, Macaulay duration 3.2 years, modified duration 2.5 years. Which number is almost certainly wrong?",
+              "options": [
+                "Average maturity, because it should be below modified duration",
+                "Macaulay duration, because it cannot exceed average maturity for an ordinary bond fund",
+                "Modified duration, because it should equal Macaulay duration",
+                "None; these numbers are consistent"
+              ],
+              "correctIndex": 1,
+              "explanation": "For a fund holding ordinary fixed-coupon bonds, average maturity ≥ Macaulay duration ≥ modified duration. A Macaulay duration of 3.2 years above an average maturity of 2.9 years breaks that ordering. Also, Macaulay duration of 3.2 years is above the 1 to 3 year band SEBI sets for a short duration fund, and the gap to modified duration (2.5) is far too wide for normal yields. Either would prompt a closer look."
+            },
+            {
+              "_key": "c3l5-017",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l5-017s1",
+                  "_type": "span",
+                  "text": "Duration Across SEBI's Debt Fund Categories",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l5-018",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l5-018s1",
+                  "_type": "span",
+                  "text": "SEBI's duration-based categories make it easy to see roughly how much NAV risk you are signing up for. The chart shows an illustrative mid-point modified duration for each category and the approximate NAV change it implies for a sudden 50 basis point rise in yields.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l5-019",
+              "_type": "table",
+              "caption": "SEBI duration-based debt fund categories (Macaulay duration bands) with illustrative NAV sensitivity",
+              "headers": ["Category", "Portfolio Macaulay duration", "Illustrative modified duration", "Approx. NAV change for +50 bps"],
+              "rows": [
+                { "_key": "c3l5-019r1", "_type": "tableRow", "cells": ["Ultra short duration", "3 to 6 months", "0.4", "−0.2%"] },
+                { "_key": "c3l5-019r2", "_type": "tableRow", "cells": ["Low duration", "6 to 12 months", "0.7", "−0.35%"] },
+                { "_key": "c3l5-019r3", "_type": "tableRow", "cells": ["Short duration", "1 to 3 years", "2.0", "−1.0%"] },
+                { "_key": "c3l5-019r4", "_type": "tableRow", "cells": ["Medium duration", "3 to 4 years", "3.4", "−1.7%"] },
+                { "_key": "c3l5-019r5", "_type": "tableRow", "cells": ["Medium to long duration", "4 to 7 years", "5.2", "−2.6%"] },
+                { "_key": "c3l5-019r6", "_type": "tableRow", "cells": ["Long duration", "Above 7 years", "9.0", "−4.5%"] }
+              ]
+            },
+            {
+              "_key": "c3l5-020",
+              "_type": "chart",
+              "chartType": "bar",
+              "title": "Approximate NAV Fall for a 50 bp Rise in Yields, by Category (%)",
+              "xAxisLabel": "SEBI category (illustrative modified duration)",
+              "yAxisLabel": "NAV change (%)",
+              "data": [
+                { "_key": "c3l5-020d1", "label": "Ultra short", "value": -0.2 },
+                { "_key": "c3l5-020d2", "label": "Low", "value": -0.35 },
+                { "_key": "c3l5-020d3", "label": "Short", "value": -1.0 },
+                { "_key": "c3l5-020d4", "label": "Medium", "value": -1.7 },
+                { "_key": "c3l5-020d5", "label": "Medium to long", "value": -2.6 },
+                { "_key": "c3l5-020d6", "label": "Long", "value": -4.5 }
+              ]
+            },
+            {
+              "_key": "c3l5-021",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Read a factsheet, estimate a NAV move",
+              "prompt": "An illustrative medium duration fund's factsheet shows a modified duration of 3.65 years. G-Sec yields fall by 30 basis points over a week. Roughly what percentage gain in NAV should you expect from the price effect alone? Round to two decimal places.",
+              "correctValue": 1.10,
+              "tolerance": 0.02,
+              "unit": "%",
+              "explanation": "%ΔNAV ≈ −3.65 × (−0.0030) × 100 = +1.095%, or about 1.10%. The week's accrued yield income adds a little on top, and the fund's actual bonds may not all move by exactly 30 bps."
+            },
+            {
+              "_key": "c3l5-022",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l5-022s1",
+                  "_type": "span",
+                  "text": "Putting YTM and Duration Together",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l5-023",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l5-023s1",
+                  "_type": "span",
+                  "text": "The most useful thing you can do with a factsheet is read YTM and modified duration as a pair. YTM is the income cushion; modified duration is the size of the swing. Divide one by the other and you get a quick breakeven: how big a one-time rise in yields would wipe out a year's yield income. For our illustrative fund, 7.07% ÷ 5.20 ≈ 1.36, so a rise of about 136 basis points would erase roughly a year of income, before expenses.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l5-024",
+              "_type": "keyFact",
+              "label": "Quick breakeven from any factsheet",
+              "value": "(YTM − expense ratio) ÷ modified duration",
+              "context": "The approximate one-time yield rise, in percentage points, that cancels one year of net income. Higher is more forgiving."
+            },
+            {
+              "_key": "c3l5-025",
+              "_type": "comparison",
+              "title": "What the Factsheet Tells You vs What It Does Not",
+              "columns": [
+                {
+                  "_key": "c3l5-025c1",
+                  "label": "The factsheet box tells you",
+                  "points": [
+                    "The yield of today's holdings, before expenses",
+                    "How sensitive today's portfolio is to a parallel shift in yields",
+                    "Roughly which horizon the portfolio is built for",
+                    "Whether the fund is operating within its SEBI category"
+                  ]
+                },
+                {
+                  "_key": "c3l5-025c2",
+                  "label": "The factsheet box does not tell you",
+                  "points": [
+                    "Your future return: holdings, yields and duration change every month",
+                    "Credit risk: check the rating breakdown and top holdings separately",
+                    "Liquidity risk: how easily the fund can sell its bonds in stress",
+                    "How the fund manager will change duration after the factsheet date"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c3l5-026",
+              "_type": "collapsible",
+              "title": "SEBI's Potential Risk Class matrix",
+              "content": [
+                {
+                  "_key": "c3l5-027",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c3l5-027s1",
+                      "_type": "span",
+                      "text": "Since late 2021, every debt fund's scheme documents and factsheet carry a Potential Risk Class (PRC) matrix. It places the fund on a grid using two maximum limits the fund commits to: interest rate risk, measured by Macaulay duration, and credit risk, measured by a credit risk value based on the ratings of what it can hold. The PRC shows the most risk the fund is allowed to take, not what it currently holds, so read it alongside the factsheet's actual duration.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c3l5-028",
+                  "_type": "table",
+                  "caption": "Interest rate risk axis of the PRC matrix",
+                  "headers": ["Class", "Maximum portfolio Macaulay duration"],
+                  "rows": [
+                    { "_key": "c3l5-028r1", "_type": "tableRow", "cells": ["Class I (relatively low)", "Up to 0.5 year"] },
+                    { "_key": "c3l5-028r2", "_type": "tableRow", "cells": ["Class II (moderate)", "Up to 1 year"] },
+                    { "_key": "c3l5-028r3", "_type": "tableRow", "cells": ["Class III (relatively high)", "Any duration"] }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c3l5-029",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Duration is a snapshot. Fund managers, especially in dynamic bond and gilt funds, can lengthen or shorten duration sharply within a month. A gilt fund showing a modified duration of 3 in one factsheet can show 9 a few months later if the manager turns bullish on rate cuts. Check the duration trend over the last six to twelve factsheets, not just the latest one."
+            },
+            {
+              "_key": "c3l5-030",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "Name the ordering",
+              "textWithBlank": "For an ordinary bond fund, average maturity is the longest of the three factsheet measures, then Macaulay duration, then ___ duration.",
+              "correctAnswers": ["modified", "mod"],
+              "explanation": "Coupons pull Macaulay duration below average maturity, and dividing by (1 + yield per period) pulls modified duration slightly below Macaulay duration."
+            },
+            {
+              "_key": "c3l5-031",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Sunita's three-year goal",
+              "scenario": "Sunita Rao, a 36-year-old school vice principal in Mysuru, wants to invest ₹20 lakh for a home down payment in about three years. She shortlists two illustrative direct-plan debt funds. Fund X (short duration): annualised portfolio YTM 7.45%, Macaulay duration 2.6 years, modified duration 2.5 years, average maturity 3.1 years, expense ratio 0.35%, 100% in AAA and sovereign. Fund Y (medium duration): YTM 7.70%, Macaulay duration 3.8 years, modified duration 3.65 years, average maturity 5.2 years, expense ratio 0.60%, 85% AAA and sovereign, 15% AA. Sunita leans towards Fund Y for its higher YTM.",
+              "prompt": "Compare the two funds using the factsheet numbers: net yield, NAV risk from a 50 bp rise, horizon fit and credit quality. Which fund better suits her goal, and why?",
+              "modelAnswer": "1. Net yield: Fund X = 7.45% − 0.35% = 7.10%. Fund Y = 7.70% − 0.60% = 7.10%. After expenses, the higher YTM gives her nothing extra.\n2. NAV risk from a sudden 50 bp rise: Fund X ≈ −2.5 × 0.5 = −1.25%, about ₹25,000 on ₹20 lakh. Fund Y ≈ −3.65 × 0.5 = −1.83%, about ₹36,500.\n3. Breakeven: Fund X ≈ 7.10 ÷ 2.5 = 2.84 percentage points; Fund Y ≈ 7.10 ÷ 3.65 = 1.95. Fund X can absorb a larger yield rise before a year's income is wiped out.\n4. Horizon fit: Fund X's Macaulay duration of 2.6 years is close to her three-year goal. Fund Y's 3.8 years is longer than her horizon, so she would likely need to exit while rate risk is still meaningful.\n5. Credit: Fund Y's 15% in AA bonds adds credit risk that Fund X avoids, with no net yield reward.\n6. Conclusion: Fund X suits her better on every measure. She should still check both funds' duration trend over recent factsheets, the PRC matrix and the tax treatment of her gains before investing."
+            },
+            {
+              "_key": "c3l5-032",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Reading a debt fund factsheet in five minutes",
+              "steps": [
+                "Note the SEBI category and check the Macaulay duration sits inside its band.",
+                "Subtract the expense ratio of your plan (direct or regular) from the annualised portfolio YTM.",
+                "Multiply modified duration by 0.5 to see the approximate NAV fall from a 50 bp rise in yields.",
+                "Divide net yield by modified duration for the breakeven yield rise.",
+                "Compare Macaulay duration with your own investment horizon.",
+                "Check the rating breakdown and top holdings for credit risk the duration numbers do not show.",
+                "Look at duration across the last six to twelve factsheets to see how actively the manager changes it.",
+                "Read the PRC matrix for the maximum risk the fund is permitted to take."
+              ]
+            },
+            {
+              "_key": "c3l5-033",
+              "_type": "toolLink",
+              "label": "AMFI India",
+              "url": "https://www.amfiindia.com",
+              "description": "The Association of Mutual Funds in India publishes scheme information, NAV data and links to each AMC's factsheets, which carry YTM, Macaulay duration and modified duration for every debt scheme."
+            },
+            {
+              "_key": "c3l5-034",
+              "_type": "keyTakeaways",
+              "points": [
+                "Portfolio duration is the market-value-weighted average of each holding's duration, including cash and T-bills.",
+                "Our illustrative fund: YTM 7.07%, average maturity 7.25 years, Macaulay duration 5.38 years, modified duration 5.20.",
+                "For ordinary bond funds, average maturity ≥ Macaulay duration ≥ modified duration. A factsheet that breaks this deserves a closer look.",
+                "Use Macaulay duration for category and horizon fit, modified duration for NAV sensitivity, and YTM for gross income.",
+                "(YTM − expense ratio) ÷ modified duration gives a quick breakeven yield rise for one year of income.",
+                "Factsheet numbers are month-end snapshots. Check the trend, the credit profile and the PRC matrix too."
+              ]
+            },
+            {
+              "_key": "c3l5-035",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment or tax advice. The fund portfolios, factsheet figures and investors are illustrative and do not represent any actual scheme. SEBI category definitions and disclosure rules may change, so refer to the latest scheme information document and factsheet. Mutual fund investments are subject to market risks; read all scheme-related documents carefully and consult a SEBI-registered investment adviser before investing."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

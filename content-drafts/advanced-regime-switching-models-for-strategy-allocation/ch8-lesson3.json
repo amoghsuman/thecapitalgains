@@ -1,0 +1,227 @@
+{
+  "courseSlug": "advanced-regime-switching-models-for-strategy-allocation",
+  "chapters": [
+    {
+      "title": "Chapter 8: Risk Management Through Regime Transitions",
+      "lessons": [
+        {
+          "title": "Drawdown Control When the Regime Model Is Wrong",
+          "slug": "drawdown-control-when-the-regime-model-is-wrong",
+          "body": [
+            {
+              "_key": "rswc8l3b01",
+              "_type": "bigIdea",
+              "text": "Every defense built so far still trusts the model to some degree. This lesson builds a backstop that works even when the model is flatly wrong, using nothing but the portfolio's own realized drawdown."
+            },
+            {
+              "_key": "rswc8l3b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc8l3b02s1",
+                  "_type": "span",
+                  "text": "Confidence scaling and the transition penalty both still depend on the model's own probability outputs being roughly right. What happens when the model has a genuine blind spot, Chapter 3's honest warning that Gaussian emissions understate true tail risk, or Chapter 4's finding that a sector-concentrated index can confuse an idiosyncratic single-institution shock for a market-wide regime? A model that is wrong about its own uncertainty produces a confidence score that is also wrong, and every downstream defense built on that confidence score inherits the same blind spot.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc8l3b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc8l3b03s1",
+                  "_type": "span",
+                  "text": "Why You Need a Defense That Doesn't Trust the Model",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc8l3b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc8l3b04s1",
+                  "_type": "span",
+                  "text": "A model-independent circuit breaker does not ask the model whether it is confident. It reacts to what is actually happening to your capital, using Chapter 2's own drawdown formula, distance from the running equity peak, and nothing else. This is deliberately the crudest, least sophisticated tool in the entire course, and that is exactly the point: crude, model-independent rules are precisely what still work when a sophisticated model has failed in a way it cannot see itself.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc8l3b05",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc8l3b05s1",
+                  "_type": "span",
+                  "text": "A Drawdown-Based De-Risking Ladder",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc8l3b06",
+              "_type": "table",
+              "caption": "A simple de-risking ladder, keyed purely to realized portfolio drawdown",
+              "headers": ["Drawdown From Peak", "Action"],
+              "rows": [
+                {
+                  "_key": "rswc8l3b06r1",
+                  "_type": "tableRow",
+                  "cells": ["Less than 5%", "Normal operation; full model-driven sizing from Chapters 6 and 8"]
+                },
+                {
+                  "_key": "rswc8l3b06r2",
+                  "_type": "tableRow",
+                  "cells": ["5% to 10%", "Reduce all positions by 50%, regardless of what any regime signal currently says"]
+                },
+                {
+                  "_key": "rswc8l3b06r3",
+                  "_type": "tableRow",
+                  "cells": ["10% to 15%", "Reduce all positions by 80%"]
+                },
+                {
+                  "_key": "rswc8l3b06r4",
+                  "_type": "tableRow",
+                  "cells": ["More than 15%", "Flatten to near zero, halt all new position-taking, require manual review before resuming"]
+                }
+              ]
+            },
+            {
+              "_key": "rswc8l3b07",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc8l3b07s1",
+                  "_type": "span",
+                  "text": "A concrete illustrative path through this ladder on a Rs 1 crore book.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc8l3b08",
+              "_type": "table",
+              "caption": "An illustrative drawdown path and the ladder actions it triggers",
+              "headers": ["Week", "Equity", "Drawdown", "Action Triggered"],
+              "rows": [
+                {
+                  "_key": "rswc8l3b08r1",
+                  "_type": "tableRow",
+                  "cells": ["1", "Rs 1.00 crore", "0%", "Normal operation"]
+                },
+                {
+                  "_key": "rswc8l3b08r2",
+                  "_type": "tableRow",
+                  "cells": ["2", "Rs 0.94 crore", "-6%", "Reduce 50%"]
+                },
+                {
+                  "_key": "rswc8l3b08r3",
+                  "_type": "tableRow",
+                  "cells": ["3", "Rs 0.89 crore", "-11%", "Reduce 80%"]
+                },
+                {
+                  "_key": "rswc8l3b08r4",
+                  "_type": "tableRow",
+                  "cells": ["4", "Rs 0.83 crore", "-17%", "Flatten, halt, manual review"]
+                }
+              ]
+            },
+            {
+              "_key": "rswc8l3b09",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc8l3b09s1",
+                  "_type": "span",
+                  "text": "Why This Overrides Everything Else in the Book",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc8l3b10",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc8l3b10s1",
+                  "_type": "span",
+                  "text": "This ladder is deliberately built to override every other rule in this course, Kelly sizing, confidence scaling, the transition penalty, Chapter 5's strategy-mix weights, all of it, once drawdown crosses its thresholds. That is not a design flaw, it is the entire point. A deep, unexpected drawdown is direct evidence that something the modeling framework assumed is not currently true, and no amount of trusting the model more is the right response to that evidence. Trusting the model less, mechanically and immediately, is.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc8l3b11",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Everything else in this course, the HMM, Markov switching regression, Kelly sizing, confidence scaling, is about making better decisions within the model's own framework. This drawdown ladder is what protects you when the framework itself has failed in a way it cannot detect about itself. Every serious systematic operation needs both: a sophisticated model for the vast majority of the time it works, and a crude, unconditional backstop for the rare moments it doesn't."
+            },
+            {
+              "_key": "rswc8l3b12",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Reading the Ladder",
+              "prompt": "A portfolio's running peak equity is Rs 2 crore. It is currently worth Rs 1.76 crore. What is the current drawdown, as a positive percentage?",
+              "correctValue": 12,
+              "tolerance": 0.2,
+              "unit": "%",
+              "explanation": "Drawdown = 1 - (1.76 / 2.00) = 1 - 0.88 = 0.12, or 12%. Per this lesson's ladder, a 12% drawdown falls in the 10% to 15% band, triggering an 80% reduction in all positions regardless of what any regime signal currently indicates."
+            },
+            {
+              "_key": "rswc8l3b13",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "When the Model and the Ladder Disagree",
+              "scenario": "Your regime model reports a confident 0.90 probability of a Calm regime, and Chapter 6's sizing formula suggests a large long position. At the same time, your portfolio's realized drawdown has just crossed 12% from its running peak, driven by a string of losses the model did not anticipate.",
+              "prompt": "Which signal should govern your position size right now, and why?",
+              "modelAnswer": "The drawdown ladder governs, not the model's confident regime read. A confident model output and a genuinely deep, unanticipated drawdown happening at the same time is itself informative: it suggests the model's confidence is not tracking reality well right now, exactly the blind-spot scenario this lesson is built for. Trusting the model's 0.90 confidence more, by sizing up as its own formula suggests, would be trusting the very system that failed to anticipate the drawdown in the first place. The correct action is to apply the 10% to 15% band's 80% reduction regardless of the model's output, and only reconsider full model-driven sizing after the drawdown recovers below the ladder's thresholds and a manual review, if the drawdown had crossed 15%, has taken place."
+            },
+            {
+              "_key": "rswc8l3b14",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why the Ladder Ignores the Model's Own Confidence",
+              "question": "Why does this lesson's drawdown ladder deliberately ignore the regime model's own confidence score when deciding whether to de-risk?",
+              "options": [
+                "Because confidence scores are always wrong and should never be used for anything",
+                "Because if the model has a genuine blind spot, its own confidence score is wrong too, so a defense that depends on the model correctly reporting its own uncertainty cannot protect against the model being wrong about that uncertainty",
+                "Because the drawdown ladder is meant to replace confidence scaling entirely in all situations",
+                "Because SEBI requires all systematic strategies to use drawdown-only risk controls"
+              ],
+              "correctIndex": 1,
+              "explanation": "A model's confidence score is itself a model output, and inherits whatever blind spots the model has. If the model is fooled, its confidence score is likely to be fooled along with it. A defense based purely on realized capital, independent of anything the model believes about itself, is the only kind of backstop that can catch a failure the model cannot see."
+            },
+            {
+              "_key": "rswc8l3b15",
+              "_type": "keyTakeaways",
+              "points": [
+                "A model-independent circuit breaker reacts to realized portfolio drawdown directly, using Chapter 2's own drawdown formula, rather than trusting the model's self-reported confidence",
+                "This is necessary because a model with a genuine blind spot, fat-tailed emissions, an idiosyncratic single-institution shock, produces a confidence score that inherits the same blind spot",
+                "A simple de-risking ladder, progressively larger position cuts at 5%, 10%, and 15% drawdown, is a standard, well-established systematic risk management practice",
+                "This ladder is designed to override every other rule in the course once triggered, because a deep, unanticipated drawdown is direct evidence the modeling framework's assumptions are not currently holding",
+                "Every serious systematic operation needs both a sophisticated model for most conditions and a crude, unconditional, model-independent backstop for the rare moments the model itself fails"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

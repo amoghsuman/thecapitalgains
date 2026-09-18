@@ -1,0 +1,283 @@
+{
+  "courseSlug": "understanding-alternative-data-in-quantitative-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 6: Backtesting Alternative Data Strategies Rigorously",
+      "lessons": [
+        {
+          "title": "Overfitting and Multiple Testing When Data Is Expensive",
+          "slug": "overfitting-and-multiple-testing-when-data-is-expensive",
+          "body": [
+            {
+              "_key": "c6l3k001",
+              "_type": "bigIdea",
+              "text": "Chapter 5 told you to write your hypothesis before testing it. This lesson is what happens when the hypothesis was written down honestly, but the pipeline built to test it quietly ran twenty hidden hypotheses along the way."
+            },
+            {
+              "_key": "c6l3k002",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l3k002s1",
+                  "_type": "span",
+                  "text": "Chapter 5, Lesson 1 gave you the research discipline: pre-register, log every attempt, protect a holdout. This lesson gives you the statistical machinery for correcting a result once you know, honestly, how many things were actually tried, and explains why alternative data makes this specific problem harder than it is for traditional price and fundamental data.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l3k003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l3k003s1",
+                  "_type": "span",
+                  "text": "Why Alt Data Overfitting Is a Harder Problem: Short History, Many Choices",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l3k004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l3k004s1",
+                  "_type": "span",
+                  "text": "Traditional price data can stretch back decades, giving you many genuinely independent market cycles to test against. A new alt data source might only have three to five years of history, a fraction of that. At the same time, Chapter 4's feature engineering process hands you several real choices for a single signal idea: which normalization method, which rolling window length, which lag. Every one of those choices, even if you never think of it as 'testing a hypothesis,' is effectively another trial run against the same limited data.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l3k005",
+              "_type": "table",
+              "caption": "One 'signal idea' can hide many implicit trials once you count every processing choice",
+              "headers": ["Choice Point", "Options Considered"],
+              "rows": [
+                {
+                  "_key": "c6l3k005r1",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Normalization method",
+                    "4 options: YoY growth, MoM growth, indexed level, per-revenue-scaled"
+                  ]
+                },
+                {
+                  "_key": "c6l3k005r2",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Rolling window length",
+                    "3 options: 7-day, 14-day, 30-day smoothing"
+                  ]
+                },
+                {
+                  "_key": "c6l3k005r3",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Lag applied before signal",
+                    "2 options: 1-week lag, 2-week lag"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c6l3k006",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Count the Hidden Trials",
+              "prompt": "Using the table above, if a researcher tried every combination of 4 normalization methods, 3 window lengths, and 2 lag choices before reporting the best-performing combination, how many total combinations, effectively how many hidden trials, were actually tested?",
+              "correctValue": 24,
+              "tolerance": 0,
+              "unit": "",
+              "explanation": "4 x 3 x 2 = 24 combinations. A researcher who reports only the single best-performing combination out of these 24, without disclosing or correcting for the other 23 that were tried and discarded, has run into exactly the multiple testing problem from Chapter 5, even though it started from what felt like one hypothesis."
+            },
+            {
+              "_key": "c6l3k007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l3k007s1",
+                  "_type": "span",
+                  "text": "Correcting for Multiple Tests: Bonferroni and False Discovery Rate",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l3k008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c6l3m001",
+                  "_type": "glossaryTerm",
+                  "definition": "A conservative multiple testing correction that divides the original significance threshold by the number of tests performed, making it substantially harder for any single result to be called significant as the number of trials grows."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c6l3k008s1",
+                  "_type": "span",
+                  "text": "The simplest fix is the ",
+                  "marks": []
+                },
+                {
+                  "_key": "c6l3k008s2",
+                  "_type": "span",
+                  "text": "Bonferroni correction",
+                  "marks": ["c6l3m001"]
+                },
+                {
+                  "_key": "c6l3k008s3",
+                  "_type": "span",
+                  "text": ": divide your original significance threshold by the number of trials, and only treat a result as genuinely significant if it clears that stricter, adjusted bar.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l3k009",
+              "_type": "mathBlock",
+              "latex": "\\alpha_{adjusted} = \\frac{\\alpha_{original}}{N}",
+              "caption": "N is the number of trials or combinations tested. As N grows, the adjusted threshold becomes much stricter, which is exactly the point."
+            },
+            {
+              "_key": "c6l3k010",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Apply the Bonferroni Correction",
+              "prompt": "Using the original 5% significance threshold and the 24 hidden trials counted earlier, what is the Bonferroni-adjusted significance threshold, as a percentage, to two decimal places?",
+              "correctValue": 0.21,
+              "tolerance": 0.02,
+              "unit": "%",
+              "explanation": "Adjusted threshold = 5% / 24 = 0.2083%, which rounds to 0.21%. A result that looked comfortably significant at the original 5% threshold now has to clear a bar more than 20 times stricter to survive correction, which is precisely why so many results that look good before accounting for hidden trials quietly fail to hold up afterward."
+            },
+            {
+              "_key": "c6l3k011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l3k011s1",
+                  "_type": "span",
+                  "text": "Bonferroni is deliberately conservative, and with a large number of trials it can end up rejecting genuinely useful signals along with the false ones. A commonly used, less punishing alternative is False Discovery Rate control, often implemented through the Benjamini-Hochberg procedure, which controls the expected proportion of false discoveries among the results you do call significant, rather than trying to eliminate essentially every chance of even one false discovery. Many quant desks favour False Discovery Rate methods over Bonferroni for exactly this reason, especially once the number of trials climbs into the dozens or hundreds.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l3k012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l3k012s1",
+                  "_type": "span",
+                  "text": "Deflated Sharpe Ratio and Probability of Backtest Overfitting",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l3k013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l3k013s1",
+                  "_type": "span",
+                  "text": "Researchers, most notably Marcos Lopez de Prado and co-authors, have developed more specialized tools for exactly this problem in a trading context. The Deflated Sharpe Ratio adjusts a strategy's observed Sharpe ratio downward based on how many strategy variations were tried before arriving at the reported one, answering the question of how likely it is that a Sharpe ratio this good would have appeared purely by chance given the number of attempts made. A related concept, the Probability of Backtest Overfitting, directly estimates the likelihood that a strategy selected as the best performer in-sample will actually underperform out-of-sample.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l3k014",
+              "_type": "collapsible",
+              "title": "Why this lesson doesn't walk through the full formulas",
+              "content": [
+                {
+                  "_key": "c6l3k014b1",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c6l3k014b1s1",
+                      "_type": "span",
+                      "text": "The Deflated Sharpe Ratio and Probability of Backtest Overfitting both require tracking the full distribution of Sharpe ratios across every variation tried, not just the number of trials the way Bonferroni does, which makes them genuinely more powerful but also meaningfully more involved to implement correctly. Treat this lesson as pointing you toward the right published research to study in depth once your desk is running enough parallel strategy variations that a simple trial count, as used with Bonferroni above, stops being precise enough on its own.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c6l3k015",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l3k015s1",
+                  "_type": "span",
+                  "text": "A Practical Discipline for Alt Data's Short History",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l3k016",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Keeping Hidden Trials Honest",
+              "steps": [
+                "Fix hyperparameters, normalization method, window length, lag, using economic reasoning or a small, separate holdout before touching the main test sample, rather than grid-searching across the full history",
+                "Keep a hyperparameter search log alongside the hypothesis log from Chapter 5, recording every combination actually tried, not just the winning one",
+                "Apply a Bonferroni or False Discovery Rate correction sized to the true number of combinations tried, not just the number of distinct 'signal ideas'",
+                "Treat any result that only survives on a short alt data history, even after correction, with continued caution, since short history gives limited power to distinguish a real effect from noise",
+                "Prefer a single, theory-motivated parameter choice over an exhaustively searched one whenever the available history is thin, accepting a possibly slightly weaker result in exchange for a much more trustworthy one"
+              ]
+            },
+            {
+              "_key": "c6l3k017",
+              "_type": "callout",
+              "type": "insight",
+              "text": "The most dangerous multiple testing in alt data research rarely looks like testing many features. It looks like tuning one feature's parameters until it works, then reporting only the version that did. Count every choice honestly, or the correction you apply will be correcting the wrong number."
+            },
+            {
+              "_key": "c6l3k018",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "The figures and combination counts in this lesson are illustrative teaching examples. Nothing here is a recommendation to trade any security, and the statistical methods described should be studied from primary published sources before being implemented in a production research process."
+            },
+            {
+              "_key": "c6l3k019",
+              "_type": "keyTakeaways",
+              "points": [
+                "Alt data's typically short history combined with the many hyperparameter choices in feature engineering makes hidden multiple testing a bigger risk than it is for traditional, decades-deep price data",
+                "Every choice of normalization method, rolling window, and lag is effectively a separate trial, four normalization methods, three window lengths, and two lag choices already hide 24 combinations",
+                "The Bonferroni correction divides the significance threshold by the number of trials, in this lesson's example turning a 5% threshold into a much stricter 0.21% bar",
+                "False Discovery Rate control, often via the Benjamini-Hochberg procedure, is a commonly used, less punishing alternative to Bonferroni once trial counts grow large",
+                "The Deflated Sharpe Ratio and Probability of Backtest Overfitting, associated with Marcos Lopez de Prado's published research, offer more specialized tools for this exact problem and are worth studying directly as a desk's research sophistication grows",
+                "The practical discipline for short alt data history is fixing key parameters before the main test, logging every combination tried, correcting proportionally, and staying skeptical of any result that only survives on a thin history"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

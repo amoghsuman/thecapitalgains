@@ -1,0 +1,203 @@
+{
+  "courseSlug": "understanding-numerical-methods-in-quantitative-finance-binomial-trees-and-finite-difference-methods",
+  "chapters": [
+    {
+      "title": "Chapter 2: The One-Step and Multi-Step Binomial Tree",
+      "lessons": [
+        {
+          "title": "Case Study: Pricing a 3-Month Nifty Call Option on a Six-Step Tree",
+          "slug": "case-study-pricing-a-3-month-nifty-call-option-on-a-six-step-tree",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "j1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "j1s1", "text": "Every piece built across this chapter now runs together, start to finish, on one sized case. Calibrate u, d, and p from Lesson 4, build the recombining lattice from Lesson 3, and step backward through it with Lesson 1's formula, proven arbitrage-free in Lesson 2. Nothing new gets introduced here, this lesson is the full pipeline, run once, end to end.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "j2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "j2s1", "text": "Setting Up the Case", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "j3",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "j3s1", "text": "Nifty 50 sits at 24,000, illustrative for this case study rather than a live quote. A trader wants to price an at-the-money call struck at 24,000, expiring in 3 months, using a six-step tree, 14% annualized volatility, roughly in the range India VIX has historically traded, and a 6.5% continuously compounded risk-free rate.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "j4",
+              "caption": "Case setup",
+              "headers": ["Input", "Value"],
+              "rows": [
+                { "cells": ["Nifty 50 spot, S0", "24,000"] },
+                { "cells": ["Strike, K", "24,000 (at the money call)"] },
+                { "cells": ["Time to expiry, T", "3 months (0.25 years)"] },
+                { "cells": ["Number of steps, N", "6"] },
+                { "cells": ["Step length, delta-t", "T / 6 ≈ 0.0417 years, about 2 weeks per step"] },
+                { "cells": ["Annualized volatility, sigma", "14%"] },
+                { "cells": ["Risk-free rate, r", "6.5% (continuous)"] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "j5",
+              "type": "warning",
+              "text": "Six steps for a 3-month option is deliberately coarse, chosen so the full lattice fits on one page. A real desk would run this same pipeline with far more steps. Chapter 3's convergence lesson picks up exactly this question, how many steps are actually enough."
+            },
+            {
+              "_type": "block",
+              "_key": "j6",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "j6s1", "text": "Calibrating u, d, and p", "marks": [] }
+              ]
+            },
+            {
+              "_type": "statGrid",
+              "_key": "j7",
+              "stats": [
+                { "label": "u", "value": "1.02899", "context": "e^(0.14 × sqrt(0.0417)), a +2.90% move per step" },
+                { "label": "d", "value": "0.97183", "context": "1 / u, a −2.82% move per step" },
+                { "label": "p", "value": "0.5403", "context": "(e^(0.065 × 0.0417) − d) / (u − d)" }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "j8",
+              "type": "insight",
+              "text": "The risk-free growth factor over one step, e^(0.065 × 0.0417), works out to about 1.00271, comfortably between d and u, 0.97183 and 1.02899. The no-arbitrage condition from Lesson 1 holds cleanly, as it almost always does once u and d come from a proper CRR calibration rather than being picked by hand."
+            },
+            {
+              "_type": "block",
+              "_key": "j9",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "j9s1", "text": "Building the Six-Step Lattice", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "j10",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "j10s1", "text": "Six steps produce exactly 7 terminal nodes, not 2 to the power 6, or 64, thanks to the recombination property from Lesson 3.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "j11",
+              "caption": "Terminal nodes after six steps",
+              "headers": ["Up-Moves (j)", "Nifty Level", "Call Payoff"],
+              "rows": [
+                { "cells": ["0", "20,218.33", "0.00"] },
+                { "cells": ["1", "21,407.56", "0.00"] },
+                { "cells": ["2", "22,666.75", "0.00"] },
+                { "cells": ["3", "24,000.00", "0.00"] },
+                { "cells": ["4", "25,411.67", "1,411.67"] },
+                { "cells": ["5", "26,906.38", "2,906.38"] },
+                { "cells": ["6", "28,489.00", "4,489.00"] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "j12",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "j12s1", "text": "Backward Induction to Today", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "j13",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "j13s1", "text": "Six full passes of Lesson 1's one-step formula, each pass shrinking the lattice by one level, take the 7 terminal payoffs down to a single number today. Two checkpoints along the way:", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "j14",
+              "caption": "Two checkpoints in the backward pass",
+              "headers": ["Checkpoint", "Node Values"],
+              "rows": [
+                { "cells": ["One step before expiry (6 nodes)", "0.00, 0.00, 0.00, 760.66, 2,213.26, 3,751.30"] },
+                { "cells": ["One step after today (2 nodes)", "404.82 (down node), 1,229.75 (up node)"] }
+              ]
+            },
+            {
+              "_type": "keyFact",
+              "_key": "j15",
+              "label": "Six-step call price, today",
+              "value": "₹848.23",
+              "context": "Per unit of Nifty index value. The actual premium payable on a real contract multiplies this by the contract's lot size"
+            },
+            {
+              "_type": "codeBlock",
+              "_key": "j16",
+              "language": "python",
+              "code": "import numpy as np\n\nS0, K, sigma, T, N, r = 24000, 24000, 0.14, 0.25, 6, 0.065\ndt = T / N\nu = np.exp(sigma * np.sqrt(dt))\nd = 1 / u\np = (np.exp(r * dt) - d) / (u - d)\ndisc = np.exp(-r * dt)\n\n# Terminal stock prices and payoffs, j = number of up-moves\nj = np.arange(N + 1)\nS_T = S0 * (u ** j) * (d ** (N - j))\npayoffs = np.maximum(S_T - K, 0)\n\n# Backward induction, one level at a time\nvalues = payoffs.copy()\nfor step in range(N, 0, -1):\n    values = disc * (p * values[1:] + (1 - p) * values[:-1])\n\nprint(f\"u: {u:.5f}, d: {d:.5f}, p: {p:.4f}\")\nprint(f\"Six-step call price: Rs {values[0]:.2f}\")",
+              "caption": "The entire chapter, calibration through backward induction, in about a dozen lines. Running this reproduces u ≈ 1.02899, d ≈ 0.97183, p ≈ 0.5403, and a final price of Rs 848.23, matching the hand-built lattice above node for node."
+            },
+            {
+              "_type": "exercise",
+              "_key": "j17",
+              "variant": "quiz",
+              "title": "Quick Check",
+              "question": "In the terminal-nodes table above, only j = 4, 5, and 6 have a nonzero payoff, while j = 0, 1, 2, and 3 are all zero. Why?",
+              "options": [
+                "Because the risk-neutral probability p only applies to those three nodes",
+                "Because the strike equals the spot price, so only paths ending strictly above 24,000 finish in the money",
+                "Because those are the only nodes reached with a positive probability",
+                "Because the risk-free rate only affects the upper half of the lattice"
+              ],
+              "correctIndex": 1,
+              "explanation": "The call is struck exactly at the money, K = 24,000, equal to S0. Its payoff is max(S − K, 0), which is zero for any terminal Nifty level at or below 24,000. Only j = 4, 5, and 6 land above the strike, at 25,411.67, 26,906.38, and 28,489.00, so those are the only nodes contributing anything to the price once discounted back."
+            },
+            {
+              "_type": "exercise",
+              "_key": "j18",
+              "variant": "scenario",
+              "title": "More Steps, Same Option",
+              "scenario": "A colleague wants a more precise price for the same 3-month, at-the-money Nifty call, and suggests rerunning the case study with 60 steps instead of 6.",
+              "prompt": "What would need to change in the setup above to do this, and what would you expect to happen to the final price?",
+              "modelAnswer": "Only N and delta-t change, N becomes 60 and delta-t becomes T divided by 60, about 1.25 trading days per step instead of roughly 2 weeks. Sigma and r stay the same, since they describe the stock and the market, not the tree's resolution, so u, d, and p get recalculated from the smaller delta-t, both u and d moving closer to 1 as Lesson 4 showed. The terminal lattice grows to 61 nodes instead of 7, still trivial computationally thanks to recombination, and the final price should land close to the six-step answer of Rs 848.23, refined rather than overturned. Exactly how close, and how many steps are genuinely needed before the answer stops changing meaningfully, is what Chapter 3's convergence lesson works out properly."
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "j19",
+              "text": "A binomial tree is not five separate ideas, it is one pipeline: calibrate u, d, and p from real volatility, build a lattice that recombines by construction, and apply one no-arbitrage formula, node by node, backward from a known expiry payoff to today. Every later chapter in this course, American exercise, convergence, Greeks, is a variation played on top of this exact pipeline."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "j20",
+              "points": [
+                "A full binomial pricing run has four stages: define the setup, calibrate u, d, and p with CRR, build the recombining lattice, and backward-induct with the one-step formula.",
+                "For a 3-month, at-the-money Nifty call, 14% volatility, 6.5% rate, and six steps, CRR gives u ≈ 1.02899, d ≈ 0.97183, p ≈ 0.5403.",
+                "Recombination keeps the lattice to 7 terminal nodes rather than 64, and only the nodes ending above the 24,000 strike, j = 4, 5, and 6, contribute a nonzero payoff for this at-the-money call.",
+                "Backward induction through six levels of the one-step formula prices this call at ₹848.23 per unit of index value.",
+                "The same pipeline runs identically in code, adding more steps only changes N and delta-t, not the underlying logic, and refines the answer rather than replacing it, a question Chapter 3 takes up directly."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

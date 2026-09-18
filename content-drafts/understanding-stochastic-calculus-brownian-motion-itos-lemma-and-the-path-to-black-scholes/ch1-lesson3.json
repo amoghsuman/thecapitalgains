@@ -1,0 +1,271 @@
+{
+  "courseSlug": "understanding-stochastic-calculus-brownian-motion-itos-lemma-and-the-path-to-black-scholes",
+  "chapters": [
+    {
+      "title": "Chapter 1: The Wiener Process: From Random Walks to Brownian Motion",
+      "lessons": [
+        {
+          "title": "Why Brownian Motion Has No Derivative: Continuous but Nowhere Smooth",
+          "slug": "why-brownian-motion-has-no-derivative-continuous-but-nowhere-smooth",
+          "body": [
+            {
+              "_key": "c1l3-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l3-001s1", "_type": "span", "marks": [], "text": "Rohan's interviewer sketches a jagged zigzag on the whiteboard, meant to represent a simulated Wiener process path, and asks: \"What is the slope of this curve at this exact point?\" Rohan reaches for the standard definition of a derivative from his engineering coursework, sets up the difference quotient, and starts shrinking the time step toward zero. It does not settle down to a number. It gets wilder. That is not a mistake in his algebra. It is the defining, and genuinely strange, fact about Brownian motion that this lesson makes precise." }
+              ]
+            },
+            {
+              "_key": "c1l3-002",
+              "_type": "bigIdea",
+              "text": "A Wiener process is continuous everywhere, meaning its path never jumps, but it is differentiable nowhere, meaning it never has a well-defined instantaneous slope at any single point. This is not a technicality. It is the exact reason ordinary calculus cannot be applied to functions of Brownian motion, and the reason Chapter 2 has to build an entirely new set of rules."
+            },
+            {
+              "_key": "c1l3-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l3-003s1", "_type": "span", "marks": [], "text": "Applying the Ordinary Definition of a Derivative" }
+              ]
+            },
+            {
+              "_key": "c1l3-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l3-004s1", "_type": "span", "marks": [], "text": "In ordinary calculus, the derivative of a function f at time t is the limit of the difference quotient, [f(t+h) - f(t)] / h, as h shrinks to zero. For a smooth function like f(t) = t^2, that quotient settles down neatly to 2t as h gets small. Try the exact same recipe on a Wiener process W(t), and something goes wrong." }
+              ]
+            },
+            {
+              "_key": "c1l3-005",
+              "_type": "mathBlock",
+              "latex": "\\frac{W(t+h) - W(t)}{h}, \\qquad \\text{as } h \\to 0",
+              "caption": "The difference quotient applied to a Wiener process"
+            },
+            {
+              "_key": "c1l3-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l3-006s1", "_type": "span", "marks": [], "text": "Why That Limit Never Settles Down" }
+              ]
+            },
+            {
+              "_key": "c1l3-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l3-007s1", "_type": "span", "marks": [], "text": "From the previous lesson's Property 3, the increment W(t+h) - W(t) is normally distributed with mean 0 and variance h. Divide that increment by h to build the difference quotient, and its variance does not shrink the way you would hope. Dividing a random variable by h scales its variance by 1/h^2, so the variance of the difference quotient is h divided by h^2, which is 1/h. As h shrinks toward zero, 1/h grows without bound. The difference quotient does not converge to a fixed number; its spread explodes." }
+              ]
+            },
+            {
+              "_key": "c1l3-008",
+              "_type": "mathBlock",
+              "latex": "\\text{Var}\\!\\left(\\frac{W(t+h)-W(t)}{h}\\right) = \\frac{\\text{Var}(W(t+h)-W(t))}{h^2} = \\frac{h}{h^2} = \\frac{1}{h} \\ \\xrightarrow[h \\to 0]{} \\ \\infty",
+              "caption": "The variance of the difference quotient blows up as h shrinks"
+            },
+            {
+              "_key": "c1l3-009",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "c1l3-009s1", "label": "h = 1", "value": "SD = 1", "context": "1 / sqrt(1)" },
+                { "_key": "c1l3-009s2", "label": "h = 0.01", "value": "SD = 10", "context": "1 / sqrt(0.01)" },
+                { "_key": "c1l3-009s3", "label": "h = 0.0001", "value": "SD = 100", "context": "1 / sqrt(0.0001)" },
+                { "_key": "c1l3-009s4", "label": "h = 0.000001", "value": "SD = 1,000", "context": "1 / sqrt(0.000001)" }
+              ]
+            },
+            {
+              "_key": "c1l3-010",
+              "_type": "comparison",
+              "title": "A Smooth Function vs a Wiener Process, as h Shrinks",
+              "columns": [
+                {
+                  "_key": "c1l3-010c1",
+                  "label": "Smooth function, e.g. f(t) = t^2",
+                  "points": [
+                    "Difference quotient [f(t+h)-f(t)]/h settles down to a single number, 2t, as h shrinks",
+                    "The limit exists and defines the derivative at every point",
+                    "The graph looks straighter and straighter the more you zoom in"
+                  ]
+                },
+                {
+                  "_key": "c1l3-010c2",
+                  "label": "Wiener process, W(t)",
+                  "points": [
+                    "Difference quotient [W(t+h)-W(t)]/h has variance 1/h, which explodes as h shrinks",
+                    "No limit exists; the derivative is undefined at every point",
+                    "The path looks exactly as jagged no matter how far you zoom in"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-011",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Contrast this with any smooth price model you might build in a spreadsheet, where zooming into a chart eventually makes the curve look like a straight line. Zoom into a real intraday NSE tick chart, say Bank Nifty futures over one minute instead of one day, and it still looks just as jagged and erratic as the full-day chart. That visual persistence of jaggedness at every zoom level is not an accident of market microstructure alone; it is the same mathematical signature this lesson just derived for Brownian motion."
+            },
+            {
+              "_key": "c1l3-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l3-012s1", "_type": "span", "marks": [], "text": "The Self-Similar, Fractal Character of Brownian Paths" }
+              ]
+            },
+            {
+              "_key": "c1l3-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "c1l3-013m1", "_type": "glossaryTerm", "definition": "A shape or process where a piece of it, rescaled, looks statistically identical to the whole. Coastlines and fern leaves are classic visual examples; Brownian motion is the classic random-process example." }
+              ],
+              "children": [
+                { "_key": "c1l3-013s1", "_type": "span", "marks": [], "text": "The reason zooming in never smooths the path out is a precise scaling property of Brownian motion, and it is what makes Brownian paths a genuine example of a " },
+                { "_key": "c1l3-013s2", "_type": "span", "marks": ["c1l3-013m1"], "text": "self-similar, fractal" },
+                { "_key": "c1l3-013s3", "_type": "span", "marks": [], "text": " object. Speed up time by a factor of c, and the resulting process has the same distribution as the original process scaled in space by the square root of c." }
+              ]
+            },
+            {
+              "_key": "c1l3-014",
+              "_type": "mathBlock",
+              "latex": "W(ct) \\ \\stackrel{d}{=}\\ \\sqrt{c}\\, W(t), \\qquad c > 0",
+              "caption": "The self-similarity (scaling) property of Brownian motion, equal in distribution, not path by path"
+            },
+            {
+              "_key": "c1l3-015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l3-015s1", "_type": "span", "marks": [], "text": "Set c = 100: a Wiener process watched over 100 times as long looks, statistically, like a Wiener process scaled up in space by the square root of 100, which is 10. Flip that around: zoom into a tiny 1/100th-length window of a Wiener path and magnify what you see by 10x in the vertical direction, and it looks statistically like the original full path. There is no special zoom level at which the path becomes smooth, because every zoom level is, statistically, a copy of every other zoom level. The two charts below make this concrete: a full simulated path over one year, and a zoomed-in slice covering only the first 0.01 years, about two and a half trading days, plotted on its own, much finer scale." }
+              ]
+            },
+            {
+              "_key": "c1l3-016",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Full simulated Wiener process path over 1 year",
+              "xAxisLabel": "Time (years)",
+              "yAxisLabel": "W(t)",
+              "data": [
+                { "_key": "c1l3-016d1", "label": "0.0", "value": 0 },
+                { "_key": "c1l3-016d2", "label": "0.2", "value": -0.08 },
+                { "_key": "c1l3-016d3", "label": "0.4", "value": 0.20 },
+                { "_key": "c1l3-016d4", "label": "0.6", "value": -0.05 },
+                { "_key": "c1l3-016d5", "label": "0.8", "value": 0.30 },
+                { "_key": "c1l3-016d6", "label": "1.0", "value": 0.12 }
+              ]
+            },
+            {
+              "_key": "c1l3-017",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Zoomed into the first 0.01 years (about 2.5 trading days), on its own finer scale",
+              "xAxisLabel": "Time (years)",
+              "yAxisLabel": "W(t)",
+              "data": [
+                { "_key": "c1l3-017d1", "label": "0.000", "value": 0 },
+                { "_key": "c1l3-017d2", "label": "0.002", "value": 0.015 },
+                { "_key": "c1l3-017d3", "label": "0.004", "value": -0.020 },
+                { "_key": "c1l3-017d4", "label": "0.006", "value": 0.030 },
+                { "_key": "c1l3-017d5", "label": "0.008", "value": -0.010 },
+                { "_key": "c1l3-017d6", "label": "0.010", "value": 0.025 }
+              ]
+            },
+            {
+              "_key": "c1l3-018",
+              "_type": "codeBlock",
+              "language": "python",
+              "caption": "Simulating the same path at two different zoom levels",
+              "code": "import numpy as np\n\ndef simulate_brownian_motion(T, n_steps):\n    dt = T / n_steps\n    increments = np.random.normal(0, np.sqrt(dt), n_steps)\n    return np.concatenate(([0.0], np.cumsum(increments)))\n\n# Full path: 1 year, 252 steps\nfull_path = simulate_brownian_motion(T=1.0, n_steps=252)\n\n# Zoomed path: first 0.01 years, but resolved with 252 steps of its own\nzoomed_path = simulate_brownian_motion(T=0.01, n_steps=252)\n\nprint(f\"Full path SD over 1 year (theoretical): {np.sqrt(1.0):.4f}\")\nprint(f\"Zoomed path SD over 0.01 years (theoretical): {np.sqrt(0.01):.4f}\")\n# Both paths look equally jagged relative to their own scale, even though\n# the zoomed path's absolute wiggle is 10x smaller (since sqrt(0.01) = 0.1\n# and sqrt(1) = 1), exactly as the self-similarity property predicts."
+            },
+            {
+              "_key": "c1l3-019",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l3-019s1", "_type": "span", "marks": [], "text": "Why This Matters: Ordinary Calculus Needs a Patch" }
+              ]
+            },
+            {
+              "_key": "c1l3-020",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l3-020s1", "_type": "span", "marks": [], "text": "Every technique in ordinary calculus, the chain rule, integration by parts, Taylor expansion truncated after the first derivative term, leans on functions having a well-defined derivative, or at least being smooth enough to approximate locally by a straight line. A Wiener process has neither property. There is no dW/dt to plug into a chain rule. This is exactly why a function of Brownian motion cannot be differentiated the ordinary way, and why Chapter 2 introduces Ito's lemma as a genuinely new tool, not a shortcut or a notational convenience. The next lesson supplies the second half of the explanation: quadratic variation, which shows that while the ordinary first-derivative term blows up to infinity, a different quantity, one that ordinary calculus normally throws away as negligible, turns out to be finite and unavoidably important for Brownian motion. That surviving quantity is precisely the extra term Ito's lemma adds." }
+              ]
+            },
+            {
+              "_key": "c1l3-021",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Do not read \"dW\" in a stochastic differential equation as if it behaves like an ordinary infinitesimal dt from first-year calculus. It does not have a derivative, it does not shrink smoothly to zero the way dt does, and treating it as an ordinary infinitesimal is the single most common source of sign errors and missing terms when people first learn Ito's lemma in the next chapter."
+            },
+            {
+              "_key": "c1l3-022",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Test the non-differentiability argument",
+              "question": "As the time step h shrinks toward zero, what happens to the variance of the difference quotient [W(t+h) - W(t)] / h for a standard Wiener process?",
+              "options": [
+                "It shrinks toward zero, just like for a smooth function, so the derivative exists",
+                "It stays constant at 1, regardless of h",
+                "It grows without bound, equal to 1/h, so no finite limit exists",
+                "It becomes negative, which is impossible for a variance"
+              ],
+              "correctIndex": 2,
+              "explanation": "Var(W(t+h) - W(t)) = h, and dividing by h before taking variance scales it by 1/h^2, giving Var of the quotient equal to h/h^2 = 1/h. As h shrinks toward zero, 1/h grows without bound, so the difference quotient has no finite limit and the derivative does not exist."
+            },
+            {
+              "_key": "c1l3-023",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Push back on a common misconception",
+              "scenario": "A colleague preparing for the same prop trading interview as Rohan argues: \"Brownian motion is continuous everywhere, and in my calculus courses, continuous functions were basically always differentiable except maybe at a few sharp corners. So a Wiener process should be differentiable almost everywhere too, just not at a few odd points.\"",
+              "prompt": "Using this lesson's variance calculation, explain precisely why this intuition, which is true for typical continuous functions from a calculus course, fails for Brownian motion.",
+              "modelAnswer": "Typical continuous functions from a calculus course, like piecewise-smooth curves with the occasional sharp corner, are differentiable everywhere except at that small, isolated set of corner points. Brownian motion behaves completely differently: the variance of its difference quotient, [W(t+h) - W(t)] / h, equals 1/h at every single point t, not just at a few exceptional points, and 1/h explodes toward infinity as h shrinks no matter which t you picked. There is no point on the path, and no matter how you pick it, where this blow-up fails to happen. So the failure of differentiability is not a sparse set of corners sitting inside an otherwise smooth curve; it is a property that holds at literally every point on the path, all at once."
+            },
+            {
+              "_key": "c1l3-024",
+              "_type": "flashcardSet",
+              "title": "Core Terms From This Lesson",
+              "cards": [
+                { "_key": "c1l3-024f1", "term": "Difference quotient", "definition": "The expression [f(t+h) - f(t)] / h, whose limit as h approaches zero defines the ordinary derivative of a function f at time t." },
+                { "_key": "c1l3-024f2", "term": "Nowhere differentiable", "definition": "A property of a function (or path) where the derivative fails to exist at every single point, not merely at a sparse set of exceptional points." },
+                { "_key": "c1l3-024f3", "term": "Self-similarity (fractal scaling)", "definition": "A property where rescaling a process in time and space appropriately (here, W(ct) equal in distribution to sqrt(c) times W(t)) reproduces a statistically identical copy of the original process." },
+                { "_key": "c1l3-024f4", "term": "Quadratic variation (preview)", "definition": "A measure of accumulated squared movement along a path, which the next lesson shows is finite and positive for Brownian motion, unlike for any ordinary smooth function, where it is always zero." }
+              ]
+            },
+            {
+              "_key": "c1l3-025",
+              "_type": "keyTakeaways",
+              "points": [
+                "The ordinary derivative of a Wiener process does not exist at any point, because the variance of its difference quotient, 1/h, grows without bound as h shrinks to zero.",
+                "This is a much stronger statement than the usual calculus-course exceptions at a few sharp corners: a Wiener process fails to be differentiable at every single point on its path.",
+                "Brownian motion is self-similar: W(ct) has the same distribution as sqrt(c) times W(t), which is exactly why zooming into a path never makes it look smoother.",
+                "Ordinary calculus tools like the chain rule assume a well-defined derivative, or at least local smoothness; Brownian motion has neither, which is why it needs its own calculus.",
+                "The next lesson supplies the other half of the picture: quadratic variation, the quantity ordinary calculus discards as negligible, turns out to be finite and unavoidable for Brownian motion, and becomes the extra term in Ito's lemma."
+              ]
+            },
+            {
+              "_key": "c1l3-026",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to buy, sell, or hold any security or contract named here. References to Bank Nifty futures tick charts are illustrative and simplified, not live market data or a claim about current market conditions. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

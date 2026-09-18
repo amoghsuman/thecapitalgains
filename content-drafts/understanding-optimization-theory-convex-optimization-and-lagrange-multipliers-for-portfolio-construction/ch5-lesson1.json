@@ -1,0 +1,193 @@
+{
+  "courseSlug": "understanding-optimization-theory-convex-optimization-and-lagrange-multipliers-for-portfolio-construction",
+  "chapters": [
+    {
+      "title": "Chapter 5: Beyond Equality: KKT Conditions and Inequality Constraints",
+      "lessons": [
+        {
+          "title": "Why Real Portfolios Need Inequality Constraints (No Short-Selling, Position Limits)",
+          "slug": "why-real-portfolios-need-inequality-constraints-no-short-selling-position-limits",
+          "body": [
+            {
+              "_key": "oc5l1-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc5l1-001s1", "_type": "span", "marks": [], "text": "Ananya passed the last round. Chapter 4's closing case study ended with an uncomfortable fact, twice: the mathematically optimal answer sometimes wants to short a stock, and most real mandates simply will not allow that. The final round asks her to fix it properly. This chapter builds the tool for it, but first, this lesson is about understanding precisely why Chapter 4's tool cannot just be patched to handle the problem." }
+              ]
+            },
+            {
+              "_key": "oc5l1-002",
+              "_type": "bigIdea",
+              "text": "Most real portfolio mandates carry rules that cannot be written as equalities: no shorting, position caps, sector limits. These are inequality constraints, and Lagrange multipliers, exactly as built in Chapter 4, have no mechanism to enforce them."
+            },
+            {
+              "_key": "oc5l1-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc5l1-003s1", "_type": "span", "marks": [], "text": "A Quick Recap: Equality vs Inequality" }
+              ]
+            },
+            {
+              "_key": "oc5l1-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc5l1-004s1", "_type": "span", "marks": [], "text": "Chapter 1 drew this line early: an equality constraint must be satisfied exactly, like the budget rule. An inequality constraint sets a bound the decision variables must stay within, like a rule against short-selling. Every constraint used across Chapter 4 was an equality. This chapter's entire job is the other kind." }
+              ]
+            },
+            {
+              "_key": "oc5l1-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc5l1-005s1", "_type": "span", "marks": [], "text": "Real Constraints Fund Managers Actually Face" }
+              ]
+            },
+            {
+              "_key": "oc5l1-006",
+              "_type": "table",
+              "caption": "Common inequality constraints in real portfolio mandates (illustrative forms; exact limits vary by fund and regulation)",
+              "headers": ["Constraint", "Typical Form"],
+              "rows": [
+                { "_key": "oc5l1-006r1", "_type": "tableRow", "cells": ["No short-selling", "wi ≥ 0 for every stock"] },
+                { "_key": "oc5l1-006r2", "_type": "tableRow", "cells": ["Single-stock concentration cap", "wi ≤ some fund-specific limit"] },
+                { "_key": "oc5l1-006r3", "_type": "tableRow", "cells": ["Sector concentration cap", "Sum of weights in a sector ≤ some limit"] },
+                { "_key": "oc5l1-006r4", "_type": "tableRow", "cells": ["Minimum cash or liquidity buffer", "Cash or liquid holdings ≥ some minimum"] },
+                { "_key": "oc5l1-006r5", "_type": "tableRow", "cells": ["Leverage cap", "Sum of absolute weights ≤ some multiple of capital"] }
+              ]
+            },
+            {
+              "_key": "oc5l1-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc5l1-007s1", "_type": "span", "marks": [], "text": "Why the Lagrangian Can't Just \"Add an Inequality\"" }
+              ]
+            },
+            {
+              "_key": "oc5l1-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc5l1-008s1", "_type": "span", "marks": [], "text": "Chapter 4's whole trick rested on one fact: differentiating the Lagrangian with respect to a multiplier always reproduces its constraint exactly, because an equality constraint is always, unconditionally, true at the solution. An inequality constraint does not share that property. It might hold with room to spare, or it might hold exactly at its boundary, and which one happens depends on the specific problem, not on some fixed rule you can bake into a single derivative." }
+              ]
+            },
+            {
+              "_key": "oc5l1-009",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This is the genuinely new difficulty this chapter solves. An equality constraint is always active, no exceptions. An inequality constraint is sometimes active and sometimes not, and the optimizer has to figure out which, for every inequality constraint, as part of solving the problem. That is a fundamentally different kind of question than anything Chapter 4 had to answer."
+            },
+            {
+              "_key": "oc5l1-010",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc5l1-010s1", "_type": "span", "marks": [], "text": "Binding vs Non-Binding Constraints" }
+              ]
+            },
+            {
+              "_key": "oc5l1-011",
+              "_type": "table",
+              "caption": "The two possible states of an inequality constraint at the optimum",
+              "headers": ["State", "Meaning", "Behaves Like"],
+              "rows": [
+                { "_key": "oc5l1-011r1", "_type": "tableRow", "cells": ["Binding (active)", "The optimal solution sits exactly on the constraint's boundary", "An equality constraint, exactly at that boundary value"] },
+                { "_key": "oc5l1-011r2", "_type": "tableRow", "cells": ["Non-binding (slack)", "The optimal solution sits comfortably inside the boundary, not touching it", "No constraint at all; it can be ignored for this particular solution"] }
+              ]
+            },
+            {
+              "_key": "oc5l1-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc5l1-012s1", "_type": "span", "marks": [], "text": "Two examples from earlier in this course already show both states. Chapter 4's Reliance-TCS-HDFC Bank minimum variance portfolio came out to (22.56%, 44.54%, 32.90%), every weight comfortably positive. Impose wi ≥ 0 on that problem and every single constraint is non-binding, none of them touch their boundary, so the unconstrained answer is already the answer. Chapter 4's constructed Stock X and Stock Y hedge example is the opposite: the unconstrained solution wanted wX ≈ -57%, which does not just approach the boundary of wX ≥ 0, it violates it outright. That constraint is binding, and the true constrained answer has to sit exactly at wX = 0 once the rule is enforced, not at -57% and not left unchanged." }
+              ]
+            },
+            {
+              "_key": "oc5l1-013",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc5l1-013s1", "_type": "span", "marks": [], "text": "What This Chapter Builds" }
+              ]
+            },
+            {
+              "_key": "oc5l1-014",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc5l1-014s1", "_type": "span", "marks": [], "text": "The next lesson introduces the Karush-Kuhn-Tucker conditions, KKT for short, a principled extension of the Lagrangian rather than a patch bolted on top of it. KKT systematically determines which inequality constraints bind and which stay slack, then applies exactly the same first-order, gradient-based machinery from Chapter 4 to whichever ones do. Nothing about the underlying logic changes. What changes is the bookkeeping needed to handle a constraint that might or might not matter." }
+              ]
+            },
+            {
+              "_key": "oc5l1-015",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Binding or non-binding?",
+              "question": "For Chapter 4's constructed two-stock hedge example, unconstrained minimum variance weights approximately -57% on Stock X and 157% on Stock Y, is the no-short-selling constraint wX ≥ 0 binding or non-binding at the unconstrained optimum?",
+              "options": [
+                "Non-binding, since the constraint is satisfied",
+                "Binding, since the unconstrained solution (-57%) violates it entirely",
+                "Cannot be determined without recomputing",
+                "Both, depending on which stock is considered"
+              ],
+              "correctIndex": 1,
+              "explanation": "A constraint is binding when the true optimum, once the rule is enforced, must sit exactly on its boundary. Here the unconstrained solution violates wX ≥ 0 outright, so the constraint is binding, and the correctly constrained optimum must sit exactly at wX = 0, not at -57%. The next lesson builds the tool that finds that boundary point correctly, rather than simply clamping the unconstrained answer to zero, which is not generally the right fix."
+            },
+            {
+              "_key": "oc5l1-016",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Check which rules actually matter",
+              "scenario": "A fund manager runs the closed-form minimum variance formula on the Reliance-TCS-HDFC Bank three-stock portfolio from Chapter 4 and gets weights (22.56%, 44.54%, 32.90%). The fund's mandate prohibits short-selling and caps any single stock at 50%.",
+              "prompt": "Are either of these two inequality constraints, no-short-selling or the 50% cap, binding for this particular solution? What does your answer imply about whether Chapter 5's extra machinery is even needed here?",
+              "modelAnswer": "Neither constraint binds. All three weights are already positive, satisfying no-short-selling with room to spare, and all three are well under 50%, satisfying the cap with room to spare too. When the unconstrained, equality-only solution already happens to satisfy every inequality constraint, it is also the correct answer to the more restrictive problem. Chapter 5's KKT machinery would confirm this rather than change it. The extra machinery only changes the answer when at least one inequality constraint is actually violated by the unconstrained solution."
+            },
+            {
+              "_key": "oc5l1-017",
+              "_type": "flashcardSet",
+              "title": "Inequality Constraints: Core Terms",
+              "cards": [
+                { "_key": "oc5l1-017f1", "term": "Inequality constraint", "definition": "A rule setting a bound the decision variables must stay within, such as wi ≥ 0. Unlike an equality constraint, it may or may not hold exactly at the optimum." },
+                { "_key": "oc5l1-017f2", "term": "Binding (active) constraint", "definition": "An inequality constraint whose boundary the optimal solution sits exactly on. Behaves like an equality constraint at that point." },
+                { "_key": "oc5l1-017f3", "term": "Non-binding (slack) constraint", "definition": "An inequality constraint the optimal solution satisfies with room to spare, not touching its boundary. Can be ignored for that particular solution." },
+                { "_key": "oc5l1-017f4", "term": "KKT conditions (preview)", "definition": "A principled extension of the Lagrangian that determines which inequality constraints bind and applies the appropriate machinery to each. Introduced in the next lesson." }
+              ]
+            },
+            {
+              "_key": "oc5l1-018",
+              "_type": "keyTakeaways",
+              "points": [
+                "Real portfolio mandates are full of inequality constraints: no short-selling, position caps, sector limits, liquidity minimums, leverage caps.",
+                "Lagrange multipliers, exactly as built in Chapter 4, only handle equality constraints, because their core trick relies on a constraint always being exactly true at the solution.",
+                "An inequality constraint can be binding (the optimum sits exactly on its boundary) or non-binding (slack, satisfied with room to spare), and which one happens depends on the specific problem.",
+                "When every inequality constraint turns out non-binding, the unconstrained, equality-only answer is already correct, as Chapter 4's Reliance-TCS-HDFC Bank example shows.",
+                "When at least one inequality constraint is violated by the unconstrained solution, as in the Stock X and Stock Y hedge example, the true constrained optimum sits exactly at that constraint's boundary, and finding it correctly needs new machinery.",
+                "The next lesson introduces KKT conditions, the systematic extension of the Lagrangian that determines binding constraints and solves the problem correctly either way."
+              ]
+            },
+            {
+              "_key": "oc5l1-019",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to buy or sell any security. Constraint types and limits described are illustrative of common mandate structures, not exact regulatory figures for any specific fund category. Consult a SEBI-registered investment adviser or the specific fund's offer document before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

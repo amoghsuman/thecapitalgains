@@ -1,0 +1,206 @@
+{
+  "courseSlug": "understanding-implied-volatility-and-the-volatility-surface",
+  "chapters": [
+    {
+      "title": "Chapter 3: The Term Structure of Volatility",
+      "lessons": [
+        {
+          "title": "Contango and Backwardation in Volatility",
+          "slug": "contango-and-backwardation-in-volatility",
+          "body": [
+            {
+              "_key": "k1",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                { "_key": "k1s", "_type": "span", "text": "Contango: The Market's Resting State", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k2",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                { "_key": "k2s1", "_type": "span", "text": "Lesson 1's baseline example sloped upward: 10.85% at 7 days, climbing to 13.20% by 90 days. That shape, contango, is the more common resting state for an equity index term structure in calm conditions, and the reason comes down to a property volatility actually has: it is mean-reverting. Periods of unusually low or unusually high volatility do not persist forever. They tend to drift back toward a long-run average over time.", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "keyFact",
+              "label": "Anchoring the mean-reversion argument",
+              "value": "Illustrative long-run average Nifty ATM IV: ~13.5%, vs today's calm 7-day reading of 10.85%",
+              "context": "When the market is currently calmer than its own long-run average, options expiring soon mostly just price that calm. Options expiring later have more time for volatility to revert back up toward the long-run average, so they carry a higher annualized IV. That gap is what tilts the curve into contango.",
+              "_key": "k3"
+            },
+            {
+              "_key": "k4",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                { "_key": "k4s1", "_type": "span", "text": "Nothing dramatic has to happen for this shape to show up. It is simply what you would expect from a variable that oscillates around a long-run average: right now sits below that average, and the further out you look, the more the curve leans toward the average rather than toward today's unusually quiet print.", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k5",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                { "_key": "k5s", "_type": "span", "text": "Backwardation: When Something Is Wrong, or Something Is Scheduled", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k6",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                { "_key": "k6s1", "_type": "span", "text": "Backwardation flips the curve: short-dated IV sits above long-dated IV. Two genuinely different situations produce this, and it is worth keeping them separate in your head.", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k7",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                { "_key": "k7s1", "_type": "span", "text": "The first is a specific, known event sitting close on the calendar, a Budget, an earnings date, an RBI policy decision, an election result. Chapter 1 already showed how sharply near-term ATM IV can rise ahead of a dated event like this. A monthly or quarterly expiry, where that same event is just a few days out of a much longer window, absorbs far less of that one-off premium. Near-term IV spikes, far-term IV barely moves, and the curve inverts. Lesson 3 goes deep on exactly this driver.", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k8",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                { "_key": "k8s1", "_type": "span", "text": "The second is acute, ongoing market stress, a genuine crisis rather than a scheduled event. Current volatility is extreme, and while the market usually still expects some elevated volatility to persist for a while, it typically expects things to calm down eventually. Near-term IV spikes to extreme levels; longer-dated IV rises too, but by proportionally less. India VIX futures, and the equivalent futures curves on global volatility indices, are famous for going into steep backwardation during exactly these episodes, the COVID crash of March 2020 being the standard textbook example. Lesson 4 covers reading that VIX futures curve properly.", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "callout",
+              "type": "insight",
+              "text": "Contango is volatility's default, resting posture. Backwardation is a signal that something specific is different right now, either a dated event sitting close ahead, or genuine, ongoing stress the market expects to eventually fade. Seeing backwardation on an otherwise unremarkable day is itself worth investigating.",
+              "_key": "k9"
+            },
+            {
+              "_key": "k10",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                { "_key": "k10s", "_type": "span", "text": "Trading the Shape: The Calendar Spread", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k11",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                { "_key": "k11s1", "_type": "span", "text": "A calendar spread is the standard structure for expressing a view on the term structure's shape itself: sell a near-dated option and buy a longer-dated option, both at the same strike, usually ATM. It is a direct bet on how the relationship between near-term and far-term IV will evolve, largely independent of which direction the underlying moves.", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "table",
+              "caption": "Nifty ATM term structure: calm baseline (Lesson 1) vs ahead of a scheduled event",
+              "headers": ["Scenario", "7-Day ATM IV", "30-Day ATM IV", "Shape"],
+              "rows": [
+                { "_key": "r1", "_type": "tableRow", "cells": ["Calm baseline (Lesson 1)", "10.85%", "12.50%", "Contango"] },
+                { "_key": "r2", "_type": "tableRow", "cells": ["3 days ahead of a major scheduled event", "18.00%", "13.00%", "Backwardation"] }
+              ],
+              "_key": "k12"
+            },
+            {
+              "_key": "k13",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                { "_key": "k13s1", "_type": "span", "text": "In the second row, a trader expecting the event to pass without a huge move could sell the 7-day ATM option and buy the 30-day ATM option at the same strike. If the event resolves and no outsized move follows, the 7-day leg's IV typically crushes back down hard, the same IV crush mechanic from Chapter 1, while the 30-day leg, having priced in far less of that one-off event to begin with, holds its value comparatively better. The trade profits as the term structure normalizes back toward something closer to the calm baseline shape.", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "callout",
+              "type": "warning",
+              "text": "A calendar spread is a bet on shape, not a bet free of price risk. If the underlying makes a genuinely large move away from the strike before the near leg expires, the position's own delta and gamma exposure can produce a loss even when the term-structure read was completely correct.",
+              "_key": "k14"
+            },
+            {
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Diagnosing the shape and its likely aftermath",
+              "question": "Nifty's 7-day ATM IV is 24% while its 30-day ATM IV is only 13%, on a day when a major, closely watched RBI policy decision is due in 3 days. What is the most likely explanation, and what should a trader expect to happen to the shape once the decision passes?",
+              "options": [
+                "This is ordinary contango and nothing unusual is happening",
+                "This is backwardation, most likely driven by the near-term RBI decision inflating the 7-day IV disproportionately; once the decision passes, near-term IV would typically fall sharply (IV crush), and the curve would likely normalize back toward a more typical contango shape",
+                "The 30-day IV figure must be an error and should simply be corrected to match the 7-day figure",
+                "Backwardation like this means Nifty is guaranteed to crash within the week"
+              ],
+              "correctIndex": 1,
+              "explanation": "A dated, near-term event inflating short-dated IV far more than long-dated IV is the classic cause of backwardation covered in this lesson. Once the event resolves, the near leg typically sees a sharp IV crush, pulling the curve back toward its more usual contango shape, assuming no lasting shock followed from the decision itself.",
+              "_key": "k15"
+            },
+            {
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "A calendar spread ahead of the RBI decision",
+              "scenario": "A trader notices Nifty's term structure has flipped into backwardation ahead of the same scheduled RBI decision: 7-day ATM IV at 18%, 30-day ATM IV at 13%. She considers a calendar spread: sell the 7-day ATM straddle, buy the 30-day ATM straddle, same strike.",
+              "prompt": "Explain the reasoning behind this trade, and the main risk it still carries even if her read on the term structure is correct.",
+              "modelAnswer": "She is selling the richly priced, event-inflated near leg and buying the comparatively cheaper far leg. If the RBI decision passes without a large surprise move, the near leg's IV should crush hard, the same mechanic Chapter 1 covered, while the far leg, having priced in only a small sliver of that one-off event, holds its value comparatively better. Buying back the now-cheap near leg and closing the far leg captures the term structure normalizing back toward contango. The main risk is that this is a bet on shape, not a bet free of price risk: if Nifty makes a large move in either direction around the decision, the position's own delta and gamma exposure near the short expiry can still produce a loss, even though her read on the term structure itself turned out to be correct.",
+              "_key": "k16"
+            },
+            {
+              "_type": "comparison",
+              "title": "What Pulls the Curve Each Way",
+              "columns": [
+                {
+                  "_key": "c1",
+                  "label": "What pulls the curve into contango",
+                  "points": [
+                    "Volatility mean reversion: calm current vol expected to drift back up toward a higher long-run average over time",
+                    "No major scheduled event sitting disproportionately in the near-term window",
+                    "The market's default, most common resting shape in calm conditions"
+                  ]
+                },
+                {
+                  "_key": "c2",
+                  "label": "What pushes the curve into backwardation",
+                  "points": [
+                    "A specific, known near-term event, Budget, results, RBI policy, elections, inflating near-dated IV disproportionately (Lesson 3)",
+                    "Acute, ongoing market stress, where current volatility is extreme but expected to eventually fade (Lesson 4's VIX futures curve)",
+                    "A shape that tends to normalize back toward contango once the event passes or the stress subsides"
+                  ]
+                }
+              ],
+              "_key": "k17"
+            },
+            {
+              "_type": "bigIdea",
+              "text": "Contango is volatility remembering that it usually calms back down. Backwardation is volatility signalling that something specific, or something serious, is happening right now. Reading which shape you are looking at, and why, tells you more than memorizing either word ever could.",
+              "_key": "k18"
+            },
+            {
+              "_type": "keyTakeaways",
+              "points": [
+                "Contango, the market's more common resting shape, is mainly explained by volatility mean reversion: calm near-term IV is expected to drift back up toward a higher long-run average at longer horizons.",
+                "Backwardation flips this, short-dated IV exceeding long-dated IV, and has two main drivers: a specific known near-term event disproportionately inflating near-dated IV, or acute market-wide stress the market expects to eventually fade.",
+                "A calendar spread, selling the near-dated option and buying the longer-dated option at the same strike, is the standard structure for expressing a view on the term structure's shape itself.",
+                "Calendar spreads built around an expected event-driven backwardation profit mainly from the near leg's IV crush once the event passes, but still carry real price risk if the underlying makes a large move.",
+                "Term structure shape is diagnostic: unexplained backwardation on an otherwise ordinary day is worth investigating for a scheduled event or emerging stress you might have missed."
+              ],
+              "_key": "k19"
+            },
+            {
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice. All term structure figures and the calendar spread scenario are hypothetical and illustrative, continuing the running Nifty example from earlier chapters. The reference to India VIX futures and global volatility indices going into backwardation during real crises describes a well-documented general pattern, not a specific live reading. Always check live prices and IV on NSE or your broker's terminal before trading, and consult a SEBI-registered advisor for personalised advice.",
+              "_key": "k20"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

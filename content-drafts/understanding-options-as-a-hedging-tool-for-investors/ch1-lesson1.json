@@ -1,0 +1,707 @@
+{
+  "courseSlug": "understanding-options-as-a-hedging-tool-for-investors",
+  "chapters": [
+    {
+      "title": "Chapter 1: Thinking Like a Hedger, Not a Trader",
+      "lessons": [
+        {
+          "title": "Hedging vs Speculation: Why Investors Use Options Differently",
+          "slug": "hedging-vs-speculation-why-investors-use-options-differently",
+          "body": [
+            {
+              "_key": "c1l1-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l1-001s1",
+                  "_type": "span",
+                  "text": "In September 2024, SEBI published a study that should be pinned above every trading screen in India. Between FY22 and FY24, 93% of individual traders in equity F&O lost money, and their combined net losses crossed ₹1.8 lakh crore. Read that and the natural conclusion is that options are a casino. That conclusion is wrong. The contract is not the problem. The purpose is. The same Nifty put that wipes out a speculator's capital can quietly protect a salaried investor's retirement corpus. This lesson is about that difference, because every decision you make with options later in this course depends on getting it right first.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1-002",
+              "_type": "bigIdea",
+              "text": "A speculator buys an option to create risk they do not already have. A hedger buys an option to reduce a risk they already own. Same contract, same price, opposite job."
+            },
+            {
+              "_key": "c1l1-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l1-003s1",
+                  "_type": "span",
+                  "text": "Same Contract, Two Very Different Jobs",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c1l1-004m1",
+                  "_type": "glossaryTerm",
+                  "definition": "An option that gives the buyer the right, but not the obligation, to sell the underlying at a fixed price (the strike) on or before expiry. Its value rises as the underlying falls below the strike."
+                },
+                {
+                  "_key": "c1l1-004m2",
+                  "_type": "glossaryTerm",
+                  "definition": "The price the option buyer pays upfront to the seller. For a buyer, this is the most they can lose on the option itself."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c1l1-004s1",
+                  "_type": "span",
+                  "text": "Picture two people in Bengaluru placing the exact same order on Zerodha on the same morning. The Nifty 50 is at 25,000. Both buy one lot of a three-month Nifty 24,000 ",
+                  "marks": []
+                },
+                {
+                  "_key": "c1l1-004s2",
+                  "_type": "span",
+                  "text": "put option",
+                  "marks": ["c1l1-004m1"]
+                },
+                {
+                  "_key": "c1l1-004s3",
+                  "_type": "span",
+                  "text": " at a ",
+                  "marks": []
+                },
+                {
+                  "_key": "c1l1-004s4",
+                  "_type": "span",
+                  "text": "premium",
+                  "marks": ["c1l1-004m2"]
+                },
+                {
+                  "_key": "c1l1-004s5",
+                  "_type": "span",
+                  "text": " of ₹250. One Nifty lot is 65 units, so each of them pays 250 × 65 = ₹16,250.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1-005",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l1-005s1",
+                  "_type": "span",
+                  "text": "Ananya, 38, product manager. ",
+                  "marks": ["strong"]
+                },
+                {
+                  "_key": "c1l1-005s2",
+                  "_type": "span",
+                  "text": "She holds ₹16,25,000 in a Nifty 50 index fund, built over eight years of SIPs. She is not trying to make money on the put. She is trying to stop a crash from taking a big bite out of money she has already made.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1-006",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l1-006s1",
+                  "_type": "span",
+                  "text": "Rohit, 27, analyst. ",
+                  "marks": ["strong"]
+                },
+                {
+                  "_key": "c1l1-006s2",
+                  "_type": "span",
+                  "text": "He owns no stocks and no mutual funds. He read a thread predicting a correction and wants to profit from it. If the market does not fall, his ₹16,250 is gone.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l1-007s1",
+                  "_type": "span",
+                  "text": "The broker, the exchange and the person who sold them the put cannot tell these two apart. The only difference is what sits next to the option. Ananya's put is attached to a portfolio. Rohit's put stands alone.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1-008",
+              "_type": "keyFact",
+              "label": "Notional value of one Nifty lot",
+              "value": "65 × 25,000 = ₹16,25,000",
+              "context": "That is why one lot is a close match for Ananya's portfolio. NSE revises lot sizes from time to time, so always check the current lot size on NSE before sizing a hedge."
+            },
+            {
+              "_key": "c1l1-009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l1-009s1",
+                  "_type": "span",
+                  "text": "The Scoreboard Changes: How a Hedge Is Judged",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l1-010s1",
+                  "_type": "span",
+                  "text": "A speculator looks at one number: did the option make money? A hedger looks at a different number: what happened to the whole portfolio, option included? To keep the maths clean, assume Ananya's index fund moves exactly in line with the Nifty. Real portfolios do not, and Chapter 3 deals with that. Here is the formula a hedger actually cares about.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1-011",
+              "_type": "mathBlock",
+              "latex": "\\text{Hedged P\\&L} = \\Delta\\text{Portfolio} + \\big(\\max(K - S_T,\\ 0) - P\\big) \\times Q",
+              "caption": "K = strike, S_T = Nifty at expiry, P = premium per unit, Q = quantity (lot size × number of lots)"
+            },
+            {
+              "_key": "c1l1-012",
+              "_type": "table",
+              "caption": "Ananya's ₹16,25,000 portfolio at expiry, with and without one Nifty 24,000 put bought at ₹250 (illustrative)",
+              "headers": [
+                "Nifty at expiry",
+                "Portfolio change (unhedged)",
+                "Put payoff minus premium",
+                "Portfolio change (hedged)"
+              ],
+              "rows": [
+                {
+                  "_key": "c1l1-012r1",
+                  "_type": "tableRow",
+                  "cells": ["21,250 (down 15%)", "−₹2,43,750", "(2,750 − 250) × 65 = +₹1,62,500", "−₹81,250 (down 5%)"]
+                },
+                {
+                  "_key": "c1l1-012r2",
+                  "_type": "tableRow",
+                  "cells": ["23,750 (down 5%)", "−₹81,250", "(250 − 250) × 65 = ₹0", "−₹81,250 (down 5%)"]
+                },
+                {
+                  "_key": "c1l1-012r3",
+                  "_type": "tableRow",
+                  "cells": ["25,000 (flat)", "₹0", "(0 − 250) × 65 = −₹16,250", "−₹16,250 (down 1%)"]
+                },
+                {
+                  "_key": "c1l1-012r4",
+                  "_type": "tableRow",
+                  "cells": ["27,500 (up 10%)", "+₹1,62,500", "(0 − 250) × 65 = −₹16,250", "+₹1,46,250 (up 9%)"]
+                }
+              ]
+            },
+            {
+              "_key": "c1l1-013",
+              "_type": "chart",
+              "chartType": "bar",
+              "title": "Ananya's portfolio change at expiry: unhedged vs hedged",
+              "xAxisLabel": "Nifty at expiry",
+              "yAxisLabel": "Change in portfolio value (₹)",
+              "data": [
+                { "_key": "c1l1-013d1", "label": "21,250 (−15%)" },
+                { "_key": "c1l1-013d2", "label": "23,750 (−5%)" },
+                { "_key": "c1l1-013d3", "label": "25,000 (flat)" },
+                { "_key": "c1l1-013d4", "label": "27,500 (+10%)" }
+              ],
+              "series": [
+                { "_key": "c1l1-013s1", "label": "Unhedged", "values": [-243750, -81250, 0, 162500] },
+                { "_key": "c1l1-013s2", "label": "Hedged with one 24,000 put", "values": [-81250, -81250, -16250, 146250] }
+              ]
+            },
+            {
+              "_key": "c1l1-014",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l1-014s1",
+                  "_type": "span",
+                  "text": "Look at what the put did. However far the Nifty falls, Ananya cannot lose more than ₹81,250, or 5%. That is the 4% gap between 25,000 and the 24,000 strike (₹65,000) plus the ₹16,250 premium. In return, she gives up ₹16,250 of return in every scenario where the market does not crash. That trade-off is the entire game.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1-015",
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "c1l1-015a",
+                  "label": "Ananya's worst case",
+                  "value": "−₹81,250",
+                  "context": "Capped at 5%, no matter how deep the fall"
+                },
+                {
+                  "_key": "c1l1-015b",
+                  "label": "Ananya's cost if no crash",
+                  "value": "₹16,250",
+                  "context": "1% of the portfolio for three months of cover"
+                },
+                {
+                  "_key": "c1l1-015c",
+                  "label": "Rohit's best case above",
+                  "value": "+₹1,62,500",
+                  "context": "10 times his outlay, if the Nifty falls 15%"
+                },
+                {
+                  "_key": "c1l1-015d",
+                  "label": "Rohit's loss if no crash",
+                  "value": "₹16,250",
+                  "context": "100% of the money he put in"
+                }
+              ]
+            },
+            {
+              "_key": "c1l1-016",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l1-016s1",
+                  "_type": "span",
+                  "text": "Now read the same ₹16,250 through each person's eyes. For Rohit, the put expiring worthless is a total loss. For Ananya, it means her portfolio did fine and she paid a modest premium for peace of mind. Nobody who pays ₹25,000 a year for car insurance feels cheated when they do not crash the car.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1-017",
+              "_type": "payoffDiagram",
+              "instrumentType": "put",
+              "position": "long",
+              "strikePrice": 24000,
+              "premium": 250,
+              "spotPriceRange": { "min": 20000, "max": 28000 },
+              "caption": "This is the put on its own, which is all Rohit owns. Breakeven is 23,750 (strike minus premium). For Ananya, this line gets added to her portfolio, which is why her combined result looks so different."
+            },
+            {
+              "_key": "c1l1-018",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Test the floor",
+              "prompt": "The Nifty closes at 22,500 on expiry day, down 10%. Using the same setup (₹16,25,000 portfolio, one lot of 65, 24,000 put bought at ₹250), what is Ananya's total hedged loss in rupees? Enter it as a positive number.",
+              "correctValue": 81250,
+              "tolerance": 0,
+              "unit": "₹",
+              "explanation": "Unhedged loss: 10% of ₹16,25,000 = ₹1,62,500. Put payoff: (24,000 − 22,500) × 65 = ₹97,500. Minus the ₹16,250 premium, the put nets +₹81,250. Total: −₹1,62,500 + ₹81,250 = −₹81,250. Same as the 15% fall. Below the strike, the floor holds."
+            },
+            {
+              "_key": "c1l1-019",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l1-019s1",
+                  "_type": "span",
+                  "text": "The Two Mindsets Side by Side",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1-020",
+              "_type": "comparison",
+              "title": "Hedger vs speculator",
+              "columns": [
+                {
+                  "_key": "c1l1-020c1",
+                  "label": "Hedger (Ananya)",
+                  "points": [
+                    "Starts with an existing exposure: stocks, mutual funds, ESOPs",
+                    "Buys options to shrink a risk already owned",
+                    "Sizes the option to match the exposure, never larger",
+                    "Judges success on the whole portfolio, option included",
+                    "Expects the hedge to lose a small amount most of the time",
+                    "Asks: how much downside can I live with, and what will it cost to cap it?"
+                  ]
+                },
+                {
+                  "_key": "c1l1-020c2",
+                  "label": "Speculator (Rohit)",
+                  "points": [
+                    "Starts with no position in the underlying",
+                    "Buys options to take on a new, leveraged risk",
+                    "Sizes the trade by conviction or available capital",
+                    "Judges success on the option's own profit or loss",
+                    "Needs to be right on direction, size of move and timing",
+                    "Asks: how much can I make if I am right?"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c1l1-021",
+              "_type": "callout",
+              "type": "insight",
+              "text": "A hedge that makes money usually means something bad happened to what you own. A hedge that loses its premium usually means your portfolio did well. If you catch yourself hoping your hedge pays off, you have quietly switched from hedger to speculator."
+            },
+            {
+              "_key": "c1l1-022",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l1-022s1",
+                  "_type": "span",
+                  "text": "Three Tests That Tell You Which One You Are",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1-023",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l1-023s1",
+                  "_type": "span",
+                  "text": "Calling a trade a hedge does not make it one. Run every options position through these three tests.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1-024",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "number",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l1-024s1",
+                  "_type": "span",
+                  "text": "Do you own the risk? ",
+                  "marks": ["strong"]
+                },
+                {
+                  "_key": "c1l1-024s2",
+                  "_type": "span",
+                  "text": "A Nifty put hedges a Nifty-like portfolio. A Bank Nifty put bought by someone who owns only pharma stocks is not a hedge. It is a bet on banks.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1-025",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "number",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l1-025s1",
+                  "_type": "span",
+                  "text": "Is the size matched? ",
+                  "marks": ["strong"]
+                },
+                {
+                  "_key": "c1l1-025s2",
+                  "_type": "span",
+                  "text": "One lot against a ₹16 lakh portfolio is a hedge. Four lots against the same portfolio means three of them protect nothing. They are a leveraged bet that the market will fall.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1-026",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "number",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l1-026s1",
+                  "_type": "span",
+                  "text": "Are you comfortable if it expires worthless? ",
+                  "marks": ["strong"]
+                },
+                {
+                  "_key": "c1l1-026s2",
+                  "_type": "span",
+                  "text": "If losing the premium would upset you, you were really hoping for a crash. A true hedger treats an unused premium as the cost of cover, not a mistake.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1-027",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Over-hedging is the most common way investors slide into speculation without noticing. Buy puts worth more than your portfolio and you are now net short the market. In a sharp rally, like the Nifty's recovery after the June 2024 election result day, the extra puts lose money while your portfolio's gains are already partly eaten by the premium."
+            },
+            {
+              "_key": "c1l1-028",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Spot the real hedge",
+              "question": "Which of these is a genuine hedge?",
+              "options": [
+                "A salaried professional with no equity holdings buys Bank Nifty puts the day before an RBI policy announcement.",
+                "An investor with ₹16 lakh in a Nifty 50 index fund buys one lot of Nifty puts before the Union Budget.",
+                "An investor with ₹16 lakh in a Nifty 50 index fund buys four lots of Nifty puts before the Union Budget.",
+                "A trader buys Reliance call options ahead of the company's AGM, expecting a big announcement."
+              ],
+              "correctIndex": 1,
+              "explanation": "Option B owns the risk (a Nifty-tracking fund) and matches the size (one lot, roughly ₹16 lakh notional). Option A owns no underlying exposure. Option C fails the sizing test, since three of the four lots are a directional bet. Option D is a pure directional bet on one event."
+            },
+            {
+              "_key": "c1l1-029",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l1-029s1",
+                  "_type": "span",
+                  "text": "Why the SEBI Numbers Should Not Scare Hedgers Away",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1-030",
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "c1l1-030a",
+                  "label": "Individual F&O traders who lost money",
+                  "value": "93%",
+                  "context": "FY22 to FY24, SEBI study, September 2024"
+                },
+                {
+                  "_key": "c1l1-030b",
+                  "label": "Aggregate net losses",
+                  "value": "Over ₹1.8 lakh crore",
+                  "context": "Individual traders, over the same three years"
+                },
+                {
+                  "_key": "c1l1-030c",
+                  "label": "Traders who made over ₹1 lakh",
+                  "value": "About 1%",
+                  "context": "After adjusting for transaction costs"
+                }
+              ]
+            },
+            {
+              "_key": "c1l1-031",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l1-031s1",
+                  "_type": "span",
+                  "text": "Those losses come overwhelmingly from people behaving like Rohit: frequent, short-term, leveraged bets on direction, often in weekly index options. A hedger is playing a different game with different goals. But be honest about one thing. Hedging is not free money either. Like any insurance, a well-run hedge is expected to cost you a little in most periods. Ananya's 1% for three months works out to roughly 4% a year if she rolls it continuously, which is a large slice of a 12% equity return. When that cost is worth paying, and when it is not, is what the rest of this course will teach you to judge.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1-032",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Meera's college fee problem",
+              "scenario": "Meera, 44, is a bank manager in Pune with ₹40 lakh in equity mutual funds. Her daughter's college fees of ₹12 lakh are due in 10 months, and Meera plans to redeem that amount from her funds. A colleague tells her to buy weekly Nifty puts every Friday, saying, \"If the market falls you make money, and if it doesn't it's only a small amount.\"",
+              "prompt": "Is the colleague's idea hedging or speculation? What is the real risk Meera needs to manage, and what are her sensible options?",
+              "modelAnswer": "1. The real risk is specific: ₹12 lakh must be available in 10 months. The other ₹28 lakh is long-term money that can ride out volatility.\n2. Weekly puts bought every Friday are closer to speculation. Each one decays fast, the premiums add up over roughly 40 weeks, and the size is not tied to the ₹12 lakh she actually needs. It also only protects her if a fall happens to occur in a week she is covered and near the strike she chose.\n3. The simplest hedge needs no options at all: move ₹12 lakh into a liquid or short-duration debt fund now, in stages if she prefers. The risk disappears. She should check the capital gains tax impact of redeeming before she does it.\n4. If she wants to stay invested for the upside, a longer-dated Nifty put sized to roughly ₹12 lakh of exposure, not her full ₹40 lakh, is a real hedge. She should compare its cost with simply de-risking.\nThe lesson: hedging starts with naming the exact risk. Options are one tool for it, not the only one."
+            },
+            {
+              "_key": "c1l1-033",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "The hedger's scoreboard",
+              "textWithBlank": "A hedger judges an options position by its effect on the whole ___, not by the option's own profit or loss.",
+              "correctAnswers": ["portfolio", "position", "holdings"],
+              "explanation": "An option that expires worthless can still be a perfectly good hedge if the portfolio it protected did well. Judging a hedge in isolation is the speculator's scoreboard."
+            },
+            {
+              "_key": "c1l1-034",
+              "_type": "collapsible",
+              "title": "Is buying options to hedge ever the wrong tool?",
+              "content": [
+                {
+                  "_key": "c1l1-034a",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c1l1-034as1",
+                      "_type": "span",
+                      "text": "Often, yes. Options suit risks that are temporary, event-driven or hard to exit cheaply. If a risk is permanent, such as holding more equity than your age or goals justify, changing your asset allocation is usually cheaper and simpler than paying premium forever. Options also make less sense when:",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c1l1-034b",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c1l1-034bs1",
+                      "_type": "span",
+                      "text": "The portfolio is too small to match even one lot, so any hedge is automatically over-sized.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c1l1-034c",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c1l1-034cs1",
+                      "_type": "span",
+                      "text": "The portfolio looks nothing like any index with liquid options, such as a basket of small caps.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c1l1-034d",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c1l1-034ds1",
+                      "_type": "span",
+                      "text": "Volatility is already high and protection is expensive, a situation Chapter 2 covers through India VIX.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c1l1-035",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Before you place any options order",
+              "steps": [
+                "Write down the exact holding or goal you are protecting, and its rupee value.",
+                "Check that the option's underlying actually moves with that holding.",
+                "Multiply the lot size by the index level to confirm the notional value is not larger than your exposure.",
+                "Write down the most you are willing to spend on premium, as a percentage of the portfolio.",
+                "Ask yourself honestly whether you would be relieved or disappointed if the option expired worthless."
+              ]
+            },
+            {
+              "_key": "c1l1-036",
+              "_type": "toolLink",
+              "label": "NSE Option Chain",
+              "url": "https://www.nseindia.com/option-chain",
+              "description": "Live Nifty and stock option prices by strike and expiry. Use it to see what protection actually costs before you think about buying any."
+            },
+            {
+              "_key": "c1l1-037",
+              "_type": "flashcardSet",
+              "title": "Hedging vs Speculation",
+              "cards": [
+                {
+                  "_key": "c1l1-037f1",
+                  "term": "Hedging",
+                  "definition": "Taking a position that reduces the risk of something you already own, accepting a known cost in return."
+                },
+                {
+                  "_key": "c1l1-037f2",
+                  "term": "Speculation",
+                  "definition": "Taking a position to profit from a price move, creating a risk you did not previously have."
+                },
+                {
+                  "_key": "c1l1-037f3",
+                  "term": "Put option",
+                  "definition": "The right, not the obligation, to sell the underlying at the strike price. It gains value as the underlying falls below the strike."
+                },
+                {
+                  "_key": "c1l1-037f4",
+                  "term": "Premium",
+                  "definition": "The upfront price of an option. For a hedger, it is the cost of cover."
+                },
+                {
+                  "_key": "c1l1-037f5",
+                  "term": "Notional value",
+                  "definition": "Lot size multiplied by the price of the underlying. One Nifty lot of 65 at 25,000 is ₹16,25,000."
+                },
+                {
+                  "_key": "c1l1-037f6",
+                  "term": "Over-hedging",
+                  "definition": "Buying more protection than your exposure, which turns the extra portion into a directional bet."
+                }
+              ]
+            },
+            {
+              "_key": "c1l1-038",
+              "_type": "keyTakeaways",
+              "points": [
+                "The same option can be a hedge or a speculation. What decides it is whether you already own the risk it offsets.",
+                "A hedger judges results on the whole portfolio, not on the option's own profit or loss.",
+                "A protective put caps the downside at the gap to the strike plus the premium, in exchange for a small cost in every non-crash scenario.",
+                "A real hedge passes three tests: you own the risk, the size matches, and you are comfortable if it expires worthless.",
+                "SEBI's data on F&O losses describes speculators. Hedging has a different goal, but it still has a real cost that must be justified.",
+                "Sometimes the best hedge is not an option at all, but a change in asset allocation."
+              ]
+            },
+            {
+              "_key": "c1l1-039",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice. Option prices, lot sizes and premiums used here are illustrative. Options carry risk, and SEBI's data shows most individual F&O traders lose money. Consult a SEBI-registered investment adviser before using options in your portfolio."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

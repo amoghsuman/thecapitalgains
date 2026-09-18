@@ -1,0 +1,210 @@
+{
+  "courseSlug": "understanding-momentum-and-trend-following-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 6: Backtesting and the Traps That Break Trend and Momentum Strategies",
+      "lessons": [
+        {
+          "title": "Transaction Costs, Slippage, and Capacity: The Silent Return Killers",
+          "slug": "transaction-costs-slippage-and-capacity-the-silent-return-killers",
+          "body": [
+            {
+              "_key": "m23-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m23-001s1", "_type": "span", "marks": [], "text": "Suppose a strategy survives everything covered so far: no survivorship bias, no look-ahead bias, tested with proper out-of-sample discipline, stable across nearby parameter values. It can still fail in live trading, for the most mundane reason of all. Every backtest in this course, including its own worked examples, has quietly assumed trades execute at the exact observed price with no cost attached. Real trading never works that way, and the gap matters most for exactly the kind of strategies this course covers, ones that trade often." }
+              ]
+            },
+            {
+              "_key": "m23-002",
+              "_type": "bigIdea",
+              "text": "Three separate cost sources eat into a strategy's real-world return: transaction costs charged on every trade, slippage between the price a signal fires at and the price an order actually fills at, and capacity constraints that make a strategy's edge shrink as more capital chases it. All three scale with how often a strategy trades, which is exactly why turnover, mentioned only in passing in earlier chapters, deserves a full accounting here."
+            },
+            {
+              "_key": "m23-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m23-003s1", "_type": "span", "marks": [], "text": "Transaction Costs in India: What Actually Gets Deducted" }
+              ]
+            },
+            {
+              "_key": "m23-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m23-004s1", "_type": "span", "marks": [], "text": "A single trade on an Indian exchange is not just brokerage. It typically stacks several separate charges: brokerage itself, often a flat fee per order or zero on delivery trades with many discount brokers but not on intraday or F&O; Securities Transaction Tax, STT, charged differently for delivery, intraday, and F&O trades; exchange transaction charges; SEBI turnover fees; stamp duty; and GST applied on top of the brokerage and certain other charges. None of these are large individually. Stacked together, and multiplied by however many times a strategy trades in a year, they add up to a real, persistent drag that a backtest assuming frictionless execution never sees." }
+              ]
+            },
+            {
+              "_key": "m23-005",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Exact STT, stamp duty, and turnover fee rates are revised periodically, including in Union Budgets, and differ by trade type. Always check your broker's current, official cost breakdown and the exchange's published circulars before relying on any specific rate. This lesson deliberately uses a single rounded, illustrative all-in cost figure rather than a precise current rate, to avoid stating a number that may already be outdated by the time you read this." }
+            ,
+            {
+              "_key": "m23-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m23-006s1", "_type": "span", "marks": [], "text": "Slippage: The Gap Between Signal and Fill" }
+              ]
+            },
+            {
+              "_key": "m23-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "m23-007m1", "_type": "glossaryTerm", "definition": "The difference between the price a trading signal is based on and the price an order actually executes at, driven by the time delay between signal and execution and by the order's own effect on the market." }
+              ],
+              "children": [
+                { "_key": "m23-007s1", "_type": "span", "marks": ["m23-007m1"], "text": "Slippage" },
+                { "_key": "m23-007s2", "_type": "span", "marks": [], "text": " is the gap between the price a backtest assumes a trade happens at, often the previous day's close, and the price the order actually fills at in reality. It grows with two things: how much time passes between the signal and the order reaching the market, and how large the order is relative to the stock's normal trading volume, since a large order pushes the price against itself as it fills. A crossover system trading a liquid Nifty 50 stock at a modest size faces minimal slippage. The same system trading a thinly traded small cap, or trading a position sized larger than the stock can comfortably absorb, faces slippage that can meaningfully erode an otherwise sound signal." }
+              ]
+            },
+            {
+              "_key": "m23-008",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m23-008s1", "_type": "span", "marks": [], "text": "Capacity: Why a Great Backtest Return Doesn't Scale" }
+              ]
+            },
+            {
+              "_key": "m23-009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m23-009s1", "_type": "span", "marks": [], "text": "A backtest run on a spreadsheet has no capacity limit, it can size a hypothetical position at any amount without moving the price. Real capital does not have this luxury. As more money is deployed into the same strategy, whether that is your own capital growing or, as Chapter 1's limits-to-arbitrage discussion covered, other traders crowding into the same well-known signal, the strategy's own trading starts to move prices against itself, and the effect is exactly the slippage problem above, just scaled up. This is one reason a small, less liquid stock universe can show a much larger backtested edge than the exact same strategy run on a large, liquid universe, and also why that larger edge often cannot actually be captured at meaningful size." }
+              ]
+            },
+            {
+              "_key": "m23-010",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m23-010s1", "_type": "span", "marks": [], "text": "Worked Example: Turnover's Real Cost" }
+              ]
+            },
+            {
+              "_key": "m23-011",
+              "_type": "mathBlock",
+              "latex": "\\text{Net Return} = \\text{Gross Return} - (\\text{Round Trips per Year} \\times \\text{Cost per Round Trip})",
+              "caption": "A simplified cost-drag approximation: each buy-and-sell round trip incurs an illustrative all-in cost, brokerage, STT, exchange charges, and slippage combined, and that cost is subtracted from the strategy's gross backtested return for every round trip made in a year."
+            },
+            {
+              "_key": "m23-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m23-012s1", "_type": "span", "marks": [], "text": "Take two versions of the same 18% gross annualized backtested strategy, identical in every respect except rebalance frequency, using an illustrative all-in cost of 0.15% per round trip." }
+              ]
+            },
+            {
+              "_key": "m23-013",
+              "_type": "table",
+              "caption": "Same 18% gross return, two turnover levels (illustrative, 0.15% per round trip)",
+              "headers": ["System", "Round trips/year", "Cost drag", "Net return"],
+              "rows": [
+                { "_key": "m23-013r1", "_type": "tableRow", "cells": ["Fast (weekly rebalance)", "50", "7.5%", "10.5%"] },
+                { "_key": "m23-013r2", "_type": "tableRow", "cells": ["Slow (quarterly rebalance)", "4", "0.6%", "17.4%"] }
+              ]
+            },
+            {
+              "_key": "m23-014",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Both systems started from the identical 18% gross backtested return. Purely from turnover, the fast system loses nearly 42% of its gross return to costs, while the slow system loses barely 3%. This is exactly the freshness-versus-cost trade-off introduced in Chapter 4's rebalance frequency discussion, now quantified: a faster signal is worth nothing if its edge is smaller than what turnover costs to capture it."
+            },
+            {
+              "_key": "m23-015",
+              "_type": "codeBlock",
+              "language": "python",
+              "caption": "A simple net-of-cost return adjustment",
+              "code": "def net_return(gross_return, round_trips_per_year, cost_per_round_trip=0.0015):\n    cost_drag = round_trips_per_year * cost_per_round_trip\n    return gross_return - cost_drag\n\nfast_net = net_return(gross_return=0.18, round_trips_per_year=50)\nslow_net = net_return(gross_return=0.18, round_trips_per_year=4)\n\nprint(f\"Fast system net return: {fast_net:.1%}\")\nprint(f\"Slow system net return: {slow_net:.1%}\")"
+            },
+            {
+              "_key": "m23-016",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Calculate the net return",
+              "prompt": "A strategy has a 22% gross annualized backtested return, trades 20 round trips a year, and faces an all-in cost of 0.20% per round trip. What is its approximate net annualized return, in percent?",
+              "correctValue": 18,
+              "tolerance": 0.3,
+              "unit": "%",
+              "explanation": "Cost drag = 20 x 0.20% = 4.0%. Net return = 22% - 4.0% = 18%. Even a moderate per-trade cost adds up meaningfully once multiplied across 20 round trips in a year."
+            },
+            {
+              "_key": "m23-017",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why does capacity matter for a great backtest?",
+              "question": "A backtest on a small, illiquid stock universe shows an excellent 25% annualized return. Based on this lesson, what should you check before assuming this return is achievable with real capital?",
+              "options": [
+                "Nothing, a backtested return is achievable regardless of position size",
+                "Whether the position sizes assumed in the backtest are realistic relative to each stock's actual trading volume, since illiquid stocks are exactly where capacity constraints and slippage bite hardest",
+                "Only whether the strategy passed the walk-forward validation from the last lesson",
+                "Whether the strategy uses RSI or moving averages"
+              ],
+              "correctIndex": 1,
+              "explanation": "Illiquid stocks are precisely where a backtest's frictionless-execution assumption breaks down most severely in reality, since even a modest amount of real capital can move the price against itself. A strong backtested return on such a universe needs a capacity and slippage check before being trusted at any meaningful size."
+            },
+            {
+              "_key": "m23-018",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Choosing between two validated strategies",
+              "scenario": "Two strategies both pass the out-of-sample and walk-forward checks from the last lesson, with similar out-of-sample Sharpe ratios. Strategy A rebalances weekly with 50 round trips a year. Strategy B rebalances quarterly with 4 round trips a year.",
+              "prompt": "Based on this lesson, what additional question would you want answered before choosing between them, beyond their backtested Sharpe ratios?",
+              "modelAnswer": "Whether those backtested Sharpe ratios were calculated gross or net of realistic transaction costs and slippage. As this lesson's worked example showed, two strategies with identical gross returns can end up with very different net returns purely because of turnover, Strategy A's 50 round trips a year expose it to far more cumulative cost drag than Strategy B's 4. A fair comparison requires re-running both strategies' Sharpe ratios net of a realistic, consistent cost assumption, not comparing gross figures that quietly favor the higher-turnover strategy."
+            },
+            {
+              "_key": "m23-019",
+              "_type": "toolLink",
+              "label": "Check current brokerage and statutory charges on your broker's official cost page",
+              "url": "https://zerodha.com/charges",
+              "description": "Brokers are required to disclose their full cost breakdown, brokerage, STT, exchange charges, stamp duty, and GST, and these pages are updated when rates change, a more reliable source than any fixed figure in a course."
+            },
+            {
+              "_key": "m23-020",
+              "_type": "flashcardSet",
+              "title": "Costs and Capacity: Core Terms",
+              "cards": [
+                { "_key": "m23-020f1", "term": "Slippage", "definition": "The difference between the price a trading signal is based on and the price an order actually executes at, growing with delay and order size relative to liquidity." },
+                { "_key": "m23-020f2", "term": "Round trip", "definition": "A complete buy-and-sell (or sell-and-buy) cycle for a single position, the standard unit for measuring a strategy's transaction cost exposure." },
+                { "_key": "m23-020f3", "term": "Capacity constraint", "definition": "The tendency of a strategy's real-world edge to shrink as more capital is deployed into it, since larger trades move prices against themselves." },
+                { "_key": "m23-020f4", "term": "Cost drag", "definition": "The cumulative reduction in a strategy's return caused by transaction costs and slippage across all its trades in a period." }
+              ]
+            },
+            {
+              "_key": "m23-021",
+              "_type": "keyTakeaways",
+              "points": [
+                "Real trading involves stacked costs, brokerage, STT, exchange charges, stamp duty, and GST, none large individually but meaningful once multiplied across a strategy's actual number of trades.",
+                "Slippage, the gap between a signal's price and the actual fill price, grows with execution delay and with order size relative to a stock's liquidity.",
+                "Capacity constraints mean a strategy's edge shrinks as more capital chases it, which is why a strong backtest on an illiquid universe often cannot be captured at meaningful real-world size.",
+                "Turnover is the common thread across all three: this lesson's worked example showed two strategies with identical 18% gross returns ending up at 10.5% and 17.4% net, purely from a difference in rebalance frequency.",
+                "A strategy's true quality should always be judged net of realistic costs, not on the gross, frictionless backtest figure most of this course's earlier examples used for simplicity."
+              ]
+            },
+            {
+              "_key": "m23-022",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice. All cost percentages, round-trip counts, and return figures are illustrative and approximate. Actual brokerage, STT, exchange charges, and stamp duty rates change over time and vary by trade type, always confirm current rates with your broker and the relevant exchange before making any trading decision. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

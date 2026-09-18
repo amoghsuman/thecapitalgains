@@ -1,0 +1,191 @@
+{
+  "courseSlug": "understanding-transaction-costs-and-slippage-in-backtests",
+  "chapters": [
+    {
+      "title": "Chapter 4: Strategy Sensitivity and Break-Even Analysis",
+      "lessons": [
+        {
+          "title": "Break-Even Analysis: How Much Edge Do You Need to Survive Costs?",
+          "slug": "break-even-analysis-how-much-edge-do-you-need-to-survive-costs",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "p1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "p1s1", "text": "Lesson 1 computed cost drag from turnover. Lesson 2 solved for the holding period a cost budget allows. This lesson flips the question one more time, the way it actually gets asked before a strategy goes live: turnover is fixed by the strategy's own logic, so how much gross edge does it need just to survive its own costs, and how much more than that should you actually require before trusting it with real capital?", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "p2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "p2s1", "text": "The Break-Even Edge Formula", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "p3",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "p3s1", "text": "Net CAGR is gross CAGR minus cost drag. Net CAGR is exactly zero, break-even, when gross CAGR equals cost drag. Since Lesson 1 already gives cost drag as turnover times round-trip cost, break-even gross CAGR is simply that same number.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "mathBlock",
+              "_key": "p4",
+              "latex": "\\text{Break-Even Gross CAGR} = \\text{Turnover Ratio} \\times \\text{Round-Trip Cost (\\%)}",
+              "caption": "Below this gross CAGR, the strategy loses money net of costs. At exactly this level, it earns nothing after costs."
+            },
+            {
+              "_type": "block",
+              "_key": "p5",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "p5s1", "text": "Break-Even Is Not Good Enough: The Case for a Margin of Safety", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "p6",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "p6s1", "text": "A strategy engineered to exactly break even is not a strategy worth trading, it earns nothing net of costs while still carrying full market risk and drawdown. Worse, every case study in this course has shown that real-world costs tend to come in higher than modeled: Chapter 1 found market impact was the largest, least-anticipated component of a backtest's shortfall, and Chapter 3 showed simplified slippage models understating true cost by an order of magnitude on illiquid trades. A strategy should clear break-even with room to spare, not sit right on top of it.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "p7",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "p7s1", "text": "Worked Example: Setting a Go/No-Go Threshold", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "p8",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "p8s1", "text": "Take the weekly rotation strategy from Lessons 1 and 2, turnover 13.0x, round-trip cost 0.30%. Break-even gross CAGR is 3.90%, the same cost drag figure computed in Lesson 1. Apply a safety margin on top of that break-even figure before deciding the strategy clears the bar.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "p9",
+              "caption": "Safety margin applied to the weekly rotation strategy's break-even edge",
+              "headers": ["Safety Margin", "Required Gross CAGR", "Net CAGR If Exactly Met"],
+              "rows": [
+                { "cells": ["1x (bare break-even)", "3.90%", "0.00%"] },
+                { "cells": ["2x", "7.80%", "3.90%"] },
+                { "cells": ["3x", "11.70%", "7.80%"] }
+              ]
+            },
+            {
+              "_type": "chart",
+              "_key": "p10",
+              "chartType": "bar",
+              "title": "Required Gross CAGR at Increasing Safety Margins",
+              "xAxisLabel": "Safety Margin",
+              "yAxisLabel": "Required Gross CAGR (%)",
+              "data": [
+                { "label": "1x (break-even)", "value": 3.90 },
+                { "label": "2x", "value": 7.80 },
+                { "label": "3x", "value": 11.70 }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "p11",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "p11s1", "text": "Why a 1x Margin Fails in Practice", "marks": [] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "p12",
+              "type": "warning",
+              "text": "A strategy that just clears break-even in a backtest is, in practice, betting that every cost assumption in the model is exactly right or conservative. This course has repeatedly shown that assumption fails: market impact undermodeled, spread widening around volatile periods, simplified slippage models missing an order of magnitude of true cost on illiquid names. A 2x to 3x margin above break-even is not padding for its own sake, it is the buffer that absorbs the gap between a cost model and what a market actually charges."
+            },
+            {
+              "_type": "block",
+              "_key": "p13",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "p13s1", "text": "A Practical Go/No-Go Checklist", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "p14",
+              "variant": "checklist",
+              "title": "Before Taking a Strategy Live",
+              "steps": [
+                "Compute round-trip cost using the full model from Chapters 2 and 3, transaction costs plus spread plus market impact, not a flat shortcut estimate.",
+                "Compute the strategy's turnover ratio, or equivalently its average holding period.",
+                "Compute break-even gross CAGR as turnover ratio multiplied by round-trip cost.",
+                "Apply at least a 2x to 3x safety margin to set the minimum gross CAGR you will actually require.",
+                "Confirm the backtest's gross CAGR clears that margin, not merely break-even.",
+                "Re-run the cost and impact calculations at the capital size you actually intend to trade, not the backtest's default or convenient size."
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "p15",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "p15s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "p16",
+              "variant": "numericInput",
+              "title": "Quick Check",
+              "prompt": "A strategy has a turnover ratio of 6.0x and a round-trip cost of 0.40%. Using a 2x safety margin, what minimum gross CAGR should you require before considering it live-ready?",
+              "correctValue": 4.8,
+              "tolerance": 0.05,
+              "unit": "%",
+              "explanation": "Break-even gross CAGR is 6.0 x 0.40% = 2.4%. A 2x safety margin doubles that to 4.8%. A backtest showing anything below 4.8% gross CAGR would not clear this strategy's go/no-go bar, even if it is technically still profitable after costs."
+            },
+            {
+              "_type": "block",
+              "_key": "p17",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "p17s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "p18",
+              "text": "Break-even gross CAGR is just turnover multiplied by round-trip cost, and it is the floor, not the target. Every cost estimate in this course has shown a tendency to be optimistic against reality, so require a strategy to clear break-even by 2x to 3x, not merely reach it, before treating a backtest as a reason to trade real capital."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "p19",
+              "points": [
+                "Break-even gross CAGR equals turnover ratio multiplied by round-trip cost, the same cost drag figure from Lesson 1, viewed as a minimum threshold rather than an expected drag.",
+                "A strategy that only just breaks even earns nothing after costs while still carrying full market risk, which makes bare break-even an unacceptable target, not a success condition.",
+                "A 2x to 3x safety margin above break-even accounts for the recurring pattern across this course of modeled costs coming in lower than real ones, especially market impact and slippage on less liquid names.",
+                "A disciplined go/no-go checklist, full cost model, turnover, break-even threshold with margin, and a check at real trading size, turns break-even analysis into an actionable pre-launch gate rather than an abstract formula."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

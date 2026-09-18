@@ -1,0 +1,440 @@
+{
+  "courseSlug": "understanding-cyclical-vs-defensive-stocks",
+  "chapters": [
+    {
+      "title": "Chapter 1: What Makes a Stock Cyclical or Defensive",
+      "lessons": [
+        {
+          "title": "Measuring It Yourself: Earnings Volatility, Beta, and Drawdowns on Screener.in",
+          "slug": "measuring-it-yourself-earnings-volatility-beta-and-drawdowns-on-screenerin",
+          "body": [
+            {
+              "_key": "c1l3-001",
+              "_type": "bigIdea",
+              "text": "Stop borrowing labels from TV anchors and fund factsheets. Three numbers, all of which you can pull in fifteen minutes, tell you where a stock sits on the spectrum: how much its earnings swing, how much its price moves with the Nifty, and how far it has fallen before."
+            },
+            {
+              "_key": "c1l3-002",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-002s1",
+                  "_type": "span",
+                  "text": "The last two lessons gave you the concept and the five positions on the spectrum. This lesson turns them into a measurement routine. Earnings volatility is the primary evidence because cyclicality lives in the business. Beta and drawdowns are supporting evidence because they show how the market has actually treated the stock. Use all three, and trust earnings when they disagree.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-003",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "c1l3-003a", "_type": "stat", "label": "Measure 1", "value": "Earnings volatility", "context": "Primary evidence, from the Profit and Loss table" },
+                { "_key": "c1l3-003b", "_type": "stat", "label": "Measure 2", "value": "Beta", "context": "How much the price moves with the Nifty 50" },
+                { "_key": "c1l3-003c", "_type": "stat", "label": "Measure 3", "value": "Maximum drawdown", "context": "The worst peak-to-trough price fall" }
+              ]
+            },
+            {
+              "_key": "c1l3-004",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-004s1",
+                  "_type": "span",
+                  "text": "Measure 1: Earnings Volatility",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-005",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-005s1",
+                  "_type": "span",
+                  "text": "Open any company on Screener.in and scroll to the Profit and Loss section. You get more than a decade of annual Sales, Operating Profit, OPM %, and Net Profit in one table. From that table, pull four numbers.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-006",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l3-006s1", "_type": "span", "text": "Loss years: ", "marks": ["strong"] },
+                { "_key": "c1l3-006s2", "_type": "span", "text": "how many of the last 10 years ended with a net loss.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c1l3-007",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l3-007s1", "_type": "span", "text": "Profit decline years: ", "marks": ["strong"] },
+                { "_key": "c1l3-007s2", "_type": "span", "text": "how many years net profit fell compared with the year before.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c1l3-008",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l3-008s1", "_type": "span", "text": "OPM range: ", "marks": ["strong"] },
+                { "_key": "c1l3-008s2", "_type": "span", "text": "the gap between the highest and lowest operating profit margin. A cyclical's margin can move 15 to 25 percentage points across a cycle; a staples company's often stays within a few points.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c1l3-009",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [
+                {
+                  "_key": "c1l3-009m1",
+                  "_type": "glossaryTerm",
+                  "definition": "Standard deviation divided by the average. It expresses how widely values are spread relative to their typical size, so companies of different sizes can be compared."
+                }
+              ],
+              "children": [
+                { "_key": "c1l3-009s1", "_type": "span", "text": "Profit variability: ", "marks": ["strong"] },
+                { "_key": "c1l3-009s2", "_type": "span", "text": "the ", "marks": [] },
+                { "_key": "c1l3-009s3", "_type": "span", "text": "coefficient of variation", "marks": ["c1l3-009m1"] },
+                { "_key": "c1l3-009s4", "_type": "span", "text": " of 10 years of net profit, which squeezes the whole pattern into one comparable number.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c1l3-010",
+              "_type": "mathBlock",
+              "latex": "\\text{CV} = \\frac{\\text{Standard deviation of annual net profit}}{\\text{Average annual net profit}}",
+              "caption": "In Excel or Google Sheets: =STDEV.P(range)/AVERAGE(range)"
+            },
+            {
+              "_key": "c1l3-011",
+              "_type": "table",
+              "caption": "Worked example: two illustrative companies, net profit in ₹ crore",
+              "headers": ["Year", "Company A (metals)", "Company B (FMCG)"],
+              "rows": [
+                { "_key": "c1l3-011r1", "_type": "tableRow", "cells": ["FY16", "(200)", "1,000"] },
+                { "_key": "c1l3-011r2", "_type": "tableRow", "cells": ["FY17", "600", "1,080"] },
+                { "_key": "c1l3-011r3", "_type": "tableRow", "cells": ["FY18", "1,400", "1,170"] },
+                { "_key": "c1l3-011r4", "_type": "tableRow", "cells": ["FY19", "1,800", "1,270"] },
+                { "_key": "c1l3-011r5", "_type": "tableRow", "cells": ["FY20", "400", "1,350"] },
+                { "_key": "c1l3-011r6", "_type": "tableRow", "cells": ["FY21", "900", "1,390"] },
+                { "_key": "c1l3-011r7", "_type": "tableRow", "cells": ["FY22", "3,200", "1,520"] },
+                { "_key": "c1l3-011r8", "_type": "tableRow", "cells": ["FY23", "1,500", "1,650"] },
+                { "_key": "c1l3-011r9", "_type": "tableRow", "cells": ["FY24", "(100)", "1,790"] },
+                { "_key": "c1l3-011r10", "_type": "tableRow", "cells": ["FY25", "700", "1,900"] }
+              ]
+            },
+            {
+              "_key": "c1l3-012",
+              "_type": "chart",
+              "chartType": "bar",
+              "title": "Company A vs Company B: Annual Net Profit (Illustrative)",
+              "xAxisLabel": "Financial year",
+              "yAxisLabel": "Net profit (₹ crore)",
+              "data": [
+                { "_key": "c1l3-012d1", "_type": "chartPoint", "label": "FY16" },
+                { "_key": "c1l3-012d2", "_type": "chartPoint", "label": "FY17" },
+                { "_key": "c1l3-012d3", "_type": "chartPoint", "label": "FY18" },
+                { "_key": "c1l3-012d4", "_type": "chartPoint", "label": "FY19" },
+                { "_key": "c1l3-012d5", "_type": "chartPoint", "label": "FY20" },
+                { "_key": "c1l3-012d6", "_type": "chartPoint", "label": "FY21" },
+                { "_key": "c1l3-012d7", "_type": "chartPoint", "label": "FY22" },
+                { "_key": "c1l3-012d8", "_type": "chartPoint", "label": "FY23" },
+                { "_key": "c1l3-012d9", "_type": "chartPoint", "label": "FY24" },
+                { "_key": "c1l3-012d10", "_type": "chartPoint", "label": "FY25" }
+              ],
+              "series": [
+                { "_key": "c1l3-012s1", "_type": "chartSeries", "label": "Company A (metals)", "values": [-200, 600, 1400, 1800, 400, 900, 3200, 1500, -100, 700] },
+                { "_key": "c1l3-012s2", "_type": "chartSeries", "label": "Company B (FMCG)", "values": [1000, 1080, 1170, 1270, 1350, 1390, 1520, 1650, 1790, 1900] }
+              ]
+            },
+            {
+              "_key": "c1l3-013",
+              "_type": "table",
+              "caption": "The earnings volatility scorecard for both companies",
+              "headers": ["Measure", "Company A", "Company B"],
+              "rows": [
+                { "_key": "c1l3-013r1", "_type": "tableRow", "cells": ["Loss years (of 10)", "2 (FY16, FY24)", "0"] },
+                { "_key": "c1l3-013r2", "_type": "tableRow", "cells": ["Profit decline years (of 9 comparisons)", "3 (FY20, FY23, FY24)", "0"] },
+                { "_key": "c1l3-013r3", "_type": "tableRow", "cells": ["Average net profit", "₹1,020 crore", "₹1,412 crore"] },
+                { "_key": "c1l3-013r4", "_type": "tableRow", "cells": ["Standard deviation", "₹957 crore", "₹285 crore"] },
+                { "_key": "c1l3-013r5", "_type": "tableRow", "cells": ["Coefficient of variation", "0.94", "0.20"] },
+                { "_key": "c1l3-013r6", "_type": "tableRow", "cells": ["Profit trend", "No clear trend, swings around ₹1,000 crore", "About 7.4% compounded growth, FY16 to FY25"] }
+              ]
+            },
+            {
+              "_key": "c1l3-014",
+              "_type": "callout",
+              "type": "warning",
+              "text": "The coefficient of variation breaks down when average profit is close to zero or negative. A company that lost money in most years can show a meaningless or negative CV. In those cases, rely on loss years, decline years, and the OPM range instead."
+            },
+            {
+              "_key": "c1l3-015",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-015s1",
+                  "_type": "span",
+                  "text": "Measure 2: Beta",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-016",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c1l3-016m1",
+                  "_type": "glossaryTerm",
+                  "definition": "A measure of how much a stock's returns tend to move relative to the market index. A beta of 1.3 means the stock has historically moved about 1.3% for every 1% move in the index."
+                }
+              ],
+              "children": [
+                { "_key": "c1l3-016s2", "_type": "span", "text": "Beta", "marks": ["c1l3-016m1"] },
+                { "_key": "c1l3-016s3", "_type": "span", "text": " tells you how sensitive a stock's price has been to the Nifty 50. Cyclicals usually carry a beta above 1, because the market reprices their future profits aggressively whenever the economic outlook changes. Defensives usually sit below 1. Beta is about price behaviour, not earnings, which is why it supports your earnings analysis rather than replacing it.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c1l3-017",
+              "_type": "mathBlock",
+              "latex": "\\beta = \\frac{\\text{Cov}(R_{\\text{stock}},\\ R_{\\text{Nifty}})}{\\text{Var}(R_{\\text{Nifty}})}",
+              "caption": "R = periodic returns, usually monthly over 3 to 5 years"
+            },
+            {
+              "_key": "c1l3-018",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-018s1",
+                  "_type": "span",
+                  "text": "You do not need to do this by hand. Screener.in's company pages focus on financials, so calculate beta yourself in a spreadsheet. Download 3 to 5 years of month-end closing prices for the stock and for the Nifty 50 from the NSE website, turn each into monthly percentage returns, and use =SLOPE(stock returns, Nifty returns). The slope of that regression is beta.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-019",
+              "_type": "table",
+              "caption": "Reading beta: rules of thumb",
+              "headers": ["Beta", "What It Means", "Typical of"],
+              "rows": [
+                { "_key": "c1l3-019r1", "_type": "tableRow", "cells": ["Below 0.8", "Price moves noticeably less than the Nifty", "FMCG staples, regulated utilities, many pharma names"] },
+                { "_key": "c1l3-019r2", "_type": "tableRow", "cells": ["0.8 to 1.2", "Price moves broadly in line with the Nifty", "Large private banks, IT services, diversified large caps"] },
+                { "_key": "c1l3-019r3", "_type": "tableRow", "cells": ["Above 1.2", "Price amplifies Nifty moves in both directions", "Metals, PSU banks, real estate, capital goods"] }
+              ]
+            },
+            {
+              "_key": "c1l3-020",
+              "_type": "comparison",
+              "title": "What Beta Can and Cannot Tell You",
+              "columns": [
+                {
+                  "_key": "c1l3-020a",
+                  "_type": "comparisonColumn",
+                  "label": "Useful for",
+                  "points": [
+                    "Estimating how hard a stock may fall in a broad market sell-off",
+                    "Comparing price sensitivity across stocks and funds",
+                    "Checking whether the market already treats a stock as cyclical"
+                  ]
+                },
+                {
+                  "_key": "c1l3-020b",
+                  "_type": "comparisonColumn",
+                  "label": "Misleading when",
+                  "points": [
+                    "The period is short or unusual, such as a single crash year",
+                    "A stock is thinly traded, so its price barely moves with anything",
+                    "Company-specific news, like a merger or USFDA action, dominated the period",
+                    "The business has changed, so past price behaviour no longer fits"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-021",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-021s1",
+                  "_type": "span",
+                  "text": "Measure 3: Maximum Drawdown",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-022",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-022s1",
+                  "_type": "span",
+                  "text": "Drawdown is the fall from a previous peak to the lowest point before a new peak. Maximum drawdown is the worst such fall over the period you study. It answers the question that actually matters when you hold a stock: how much pain has it delivered before? On Screener.in, set the price chart to its longest range and find the biggest peak-to-trough fall. Then compare it with the Nifty 50 over the same window. In 2008, the Nifty 50 fell more than 60% from its January peak to its October low. A stock that fell 80% in the same window was amplifying the cycle; one that fell 30% was cushioning it.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-023",
+              "_type": "mathBlock",
+              "latex": "\\text{Drawdown (\\%)} = \\frac{\\text{Trough price} - \\text{Peak price}}{\\text{Peak price}} \\times 100",
+              "caption": "Always measure from the peak, never from your own buying price"
+            },
+            {
+              "_key": "c1l3-024",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Calculate the Drawdown",
+              "prompt": "A capital goods stock hit ₹1,250 at its peak, then fell to ₹700 before recovering. What was its maximum drawdown? Enter the size of the fall as a positive number.",
+              "correctValue": 44,
+              "tolerance": 0.5,
+              "unit": "%",
+              "explanation": "(700 - 1,250) / 1,250 × 100 = -44%. Note the recovery math too: to get from ₹700 back to ₹1,250, the stock needs to rise about 78.6%. Deep drawdowns take far larger gains to repair, which is why cyclical drawdowns can trap investors for years."
+            },
+            {
+              "_key": "c1l3-025",
+              "_type": "collapsible",
+              "title": "For Python users: beta and maximum drawdown in a few lines",
+              "content": [
+                {
+                  "_key": "c1l3-025b1",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c1l3-025b1s1",
+                      "_type": "span",
+                      "text": "If you export daily closing prices for a stock and the Nifty 50 as CSV files with Date and Close columns, this script calculates both measures. Rename the columns first if your download uses different headers.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c1l3-025b2",
+                  "_type": "codeBlock",
+                  "language": "python",
+                  "code": "import pandas as pd\n\nstock = pd.read_csv(\"stock.csv\", parse_dates=[\"Date\"], index_col=\"Date\")[\"Close\"]\nnifty = pd.read_csv(\"nifty50.csv\", parse_dates=[\"Date\"], index_col=\"Date\")[\"Close\"]\n\nprices = pd.concat([stock, nifty], axis=1, keys=[\"stock\", \"nifty\"]).dropna().sort_index()\n\n# Beta from month-end returns (use \"M\" instead of \"ME\" on pandas older than 2.2)\nmonthly = prices.resample(\"ME\").last().pct_change().dropna()\nbeta = monthly[\"stock\"].cov(monthly[\"nifty\"]) / monthly[\"nifty\"].var()\n\n# Maximum drawdown from daily prices\ndrawdown = prices[\"stock\"] / prices[\"stock\"].cummax() - 1\n\nprint(f\"Beta: {beta:.2f}\")\nprint(f\"Maximum drawdown: {drawdown.min():.1%}\")",
+                  "caption": "Beta from monthly returns, maximum drawdown from daily prices"
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-026",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-026s1",
+                  "_type": "span",
+                  "text": "Putting the Three Together",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-027",
+              "_type": "table",
+              "caption": "Classification scorecard: rules of thumb for this course, not official cut-offs",
+              "headers": ["Measure", "Points to Cyclical", "Points to Defensive"],
+              "rows": [
+                { "_key": "c1l3-027r1", "_type": "tableRow", "cells": ["Loss years in last 10", "1 or more", "None"] },
+                { "_key": "c1l3-027r2", "_type": "tableRow", "cells": ["Profit decline years in last 10", "3 or more", "0 or 1"] },
+                { "_key": "c1l3-027r3", "_type": "tableRow", "cells": ["Coefficient of variation of net profit", "Above 0.5", "Below 0.3"] },
+                { "_key": "c1l3-027r4", "_type": "tableRow", "cells": ["OPM range, highest minus lowest", "More than 10 percentage points", "Less than 5 percentage points"] },
+                { "_key": "c1l3-027r5", "_type": "tableRow", "cells": ["Beta, 3 to 5 years of monthly data", "Above 1.2", "Below 0.8"] },
+                { "_key": "c1l3-027r6", "_type": "tableRow", "cells": ["Maximum drawdown vs Nifty 50 in the same bear market", "Deeper than the index", "Shallower than the index"] }
+              ]
+            },
+            {
+              "_key": "c1l3-028",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "When the Measures Disagree",
+              "question": "A company has zero loss years, a profit CV of 0.18, and an OPM range of 3 percentage points over 10 years. But its beta is 1.3 and it fell more than the Nifty 50 in the last correction. What is the most reasonable conclusion?",
+              "options": [
+                "It is a cyclical, because beta and drawdown are the market's verdict",
+                "It is a defensive business whose stock has recently traded with high sentiment or valuation risk",
+                "The data is contradictory, so the stock cannot be classified",
+                "It is a deep cyclical in disguise"
+              ],
+              "correctIndex": 1,
+              "explanation": "Earnings are the primary evidence, and every earnings measure here says defensive. A high beta and deep fall usually point to something else: an expensive valuation that derated, heavy institutional flows, or company-specific worries. The business is defensive; the stock carried price risk."
+            },
+            {
+              "_key": "c1l3-029",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Your 15-Minute Measurement Routine",
+              "steps": [
+                "Open the company on Screener.in and go to the Profit and Loss table",
+                "Count loss years and profit decline years over the last 10 years",
+                "Note the highest and lowest OPM % and calculate the range",
+                "Use Export to Excel, or copy the Net Profit row into a sheet, and calculate =STDEV.P(range)/AVERAGE(range)",
+                "Download 3 to 5 years of monthly closes for the stock and the Nifty 50 from the NSE website and calculate beta with =SLOPE()",
+                "Check the longest price chart for the maximum drawdown and compare it with the Nifty 50's fall in the same period",
+                "Score each measure on the scorecard and place the stock on the spectrum, giving earnings measures the most weight"
+              ]
+            },
+            {
+              "_key": "c1l3-030",
+              "_type": "toolLink",
+              "label": "NSE India",
+              "url": "https://www.nseindia.com",
+              "description": "Historical price data for individual stocks and for indices like the Nifty 50, which you need for beta and drawdown calculations."
+            },
+            {
+              "_key": "c1l3-031",
+              "_type": "keyTakeaways",
+              "points": [
+                "Earnings volatility is the primary evidence: count loss years and decline years, check the OPM range, and calculate the coefficient of variation of net profit",
+                "Beta measures how much the price moves with the Nifty 50; cyclicals usually sit above 1.2 and defensives below 0.8",
+                "Maximum drawdown shows the worst historical price pain; compare it with the index in the same bear market",
+                "Deep drawdowns need much larger gains to recover: a 44% fall needs a 78.6% rise to get back to the peak",
+                "When measures disagree, trust earnings for the business and treat beta and drawdown as signals of price or valuation risk"
+              ]
+            },
+            {
+              "_key": "c1l3-032",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "Company A and Company B, their figures, and the scorecard thresholds are illustrative teaching tools, not official classifications. Website layouts and download options on Screener.in and NSE can change. This lesson is educational and is not a recommendation to buy or sell any security."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,289 @@
+{
+  "courseSlug": "understanding-stochastic-calculus-brownian-motion-itos-lemma-and-the-path-to-black-scholes",
+  "chapters": [
+    {
+      "title": "Chapter 3: The Path to Black-Scholes",
+      "lessons": [
+        {
+          "title": "Building the Riskless Hedge: Delta Hedging and the Replicating Portfolio",
+          "slug": "building-the-riskless-hedge-delta-hedging-and-the-replicating-portfolio",
+          "body": [
+            {
+              "_key": "c3l2-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2-001s1", "_type": "span", "marks": [], "text": "\"Here's the actual insight behind Black-Scholes,\" the interviewer says. \"Not the formula, everyone can look that up. The hedge.\" This lesson builds that hedge from scratch: a portfolio combining a short option position with a precisely chosen number of shares of stock, chosen so that, thanks to Ito's lemma, its random term cancels exactly. What's left over is a riskless portfolio, and no-arbitrage tells you exactly what a riskless portfolio must earn." }
+              ]
+            },
+            {
+              "_key": "c3l2-002",
+              "_type": "bigIdea",
+              "text": "Short one option and hold exactly Δ = ∂C/∂S shares of the underlying stock, and the randomness in the option's value and the randomness in the stock's value cancel each other out perfectly. What remains is a riskless portfolio, and no-arbitrage forces it to earn exactly the risk-free rate. That single constraint is the seed the Black-Scholes PDE grows from."
+            },
+            {
+              "_key": "c3l2-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2-003s1", "_type": "span", "marks": [], "text": "The Simplest Case: Hedging With Just Two Possible Outcomes" }
+              ]
+            },
+            {
+              "_key": "c3l2-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2-004s1", "_type": "span", "marks": [], "text": "Before the calculus, a deliberately simplified, illustrative toy world with only two possible outcomes: a stock at ₹100 today either rises to ₹110 or falls to ₹90 tomorrow, nothing in between. A call option struck at ₹100 pays ₹10 if the stock rises, and ₹0 if it falls." }
+              ]
+            },
+            {
+              "_key": "c3l2-005",
+              "_type": "table",
+              "caption": "A two-outcome toy world (illustrative, not a real forecast)",
+              "headers": ["Outcome", "Stock price", "Option payoff"],
+              "rows": [
+                { "_key": "c3l2-005r1", "_type": "tableRow", "cells": ["Up", "₹110", "₹10"] },
+                { "_key": "c3l2-005r2", "_type": "tableRow", "cells": ["Down", "₹90", "₹0"] }
+              ]
+            },
+            {
+              "_key": "c3l2-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2-006s1", "_type": "span", "marks": [], "text": "How many shares, Δ, would you need to hold, alongside a short position in one option, so that your total portfolio is worth exactly the same amount whether the stock goes up or down? Set the two portfolio values equal and solve for Δ: this is the discrete-world ancestor of the continuous-time hedge ratio this lesson builds toward." }
+              ]
+            },
+            {
+              "_key": "c3l2-007",
+              "_type": "mathBlock",
+              "latex": "\\Delta = \\frac{C_{up} - C_{down}}{S_{up} - S_{down}} = \\frac{10 - 0}{110 - 90} = 0.5",
+              "caption": "The discrete hedge ratio: option payoff spread divided by stock price spread"
+            },
+            {
+              "_key": "c3l2-008",
+              "_type": "table",
+              "caption": "Portfolio value (short 1 option, long 0.5 shares) in each outcome",
+              "headers": ["Outcome", "-1 × Option payoff", "+0.5 × Stock price", "Total portfolio"],
+              "rows": [
+                { "_key": "c3l2-008r1", "_type": "tableRow", "cells": ["Up", "-₹10", "0.5 × ₹110 = ₹55", "₹45"] },
+                { "_key": "c3l2-008r2", "_type": "tableRow", "cells": ["Down", "₹0", "0.5 × ₹90 = ₹45", "₹45"] }
+              ]
+            },
+            {
+              "_key": "c3l2-009",
+              "_type": "keyFact",
+              "label": "Portfolio value, both outcomes",
+              "value": "₹45",
+              "context": "Identical whether the stock rises or falls, confirming this exact combination carries zero risk"
+            },
+            {
+              "_key": "c3l2-010",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This Δ = 0.5 is precisely the same quantity you see labeled \"Delta\" on a real options chain on Zerodha or Sensibull, the number of shares' worth of price sensitivity one option carries. In this toy two-outcome world, it is a simple ratio. In the continuous Black-Scholes world built next, it becomes ∂C/∂S, exactly the same intuition, just computed by calculus instead of by two data points."
+            },
+            {
+              "_key": "c3l2-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2-011s1", "_type": "span", "marks": [], "text": "The Unknown: A Pricing Function C(S, t)" }
+              ]
+            },
+            {
+              "_key": "c3l2-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2-012s1", "_type": "span", "marks": [], "text": "Back to continuous time, with infinitely many possible outcomes, not just two. Assume a smooth pricing function C(S, t) exists for an option written on S, twice differentiable in S and once in t, without yet assuming any particular formula for it. That formula is exactly what this chapter is building toward; for now, C(S, t) is simply the price of the option, whatever it turns out to be, at stock price S and time t." }
+              ]
+            },
+            {
+              "_key": "c3l2-013",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2-013s1", "_type": "span", "marks": [], "text": "Applying Ito's Lemma to the Option Price" }
+              ]
+            },
+            {
+              "_key": "c3l2-014",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2-014s1", "_type": "span", "marks": [], "text": "Since S follows GBM, Chapter 2's Ito's lemma applies directly to C(S, t), exactly the way it applied to ln(S) two lessons ago, just with a general function C in place of ln." }
+              ]
+            },
+            {
+              "_key": "c3l2-015",
+              "_type": "mathBlock",
+              "latex": "dC = \\left[C_t + \\mu S\\, C_S + \\tfrac{1}{2}\\sigma^2 S^2\\, C_{SS}\\right] dt + \\sigma S\\, C_S\\, dW",
+              "caption": "Ito's lemma applied to the option price C(S, t)"
+            },
+            {
+              "_key": "c3l2-016",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2-016s1", "_type": "span", "marks": [], "text": "Constructing the Continuous-Time Hedge" }
+              ]
+            },
+            {
+              "_key": "c3l2-017",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2-017s1", "_type": "span", "marks": [], "text": "Build a portfolio Π by shorting one option and holding Δ shares of the stock, funding all trading purely by buying and selling the stock and the riskless asset, never injecting outside cash, a condition called self-financing. Over an infinitesimal instant dt, with Δ treated as momentarily fixed, the portfolio's change in value comes from the option's change and the stock's change, weighted by Δ." }
+              ]
+            },
+            {
+              "_key": "c3l2-018",
+              "_type": "mathBlock",
+              "latex": "\\Pi = -C + \\Delta S \\qquad\\qquad d\\Pi = -dC + \\Delta\\, dS",
+              "caption": "The hedged portfolio and its instantaneous change"
+            },
+            {
+              "_key": "c3l2-019",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2-019s1", "_type": "span", "marks": [], "text": "Choosing Δ to Cancel the Randomness" }
+              ]
+            },
+            {
+              "_key": "c3l2-020",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2-020s1", "_type": "span", "marks": [], "text": "Substitute Ito's lemma's expression for dC and the GBM expression for dS, then collect every dt term separately from every dW term." }
+              ]
+            },
+            {
+              "_key": "c3l2-021",
+              "_type": "mathBlock",
+              "latex": "d\\Pi = \\underbrace{\\Big[-C_t - \\mu S C_S - \\tfrac{1}{2}\\sigma^2 S^2 C_{SS} + \\Delta \\mu S\\Big]}_{dt \\text{ terms}} dt \\;+\\; \\underbrace{\\Big[-\\sigma S C_S + \\Delta \\sigma S\\Big]}_{dW \\text{ terms}} dW",
+              "caption": "Grouping the drift and diffusion terms of dΠ"
+            },
+            {
+              "_key": "c3l2-022",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2-022s1", "_type": "span", "marks": [], "text": "The dW coefficient is σS(Δ - C_S). Setting Δ = C_S makes it exactly zero, and every ounce of randomness disappears from the portfolio. This is the exact same logic as the two-outcome toy example: choose the number of shares so that the up-move and down-move (or, here, every possible instantaneous move) leave the portfolio unchanged. With Δ = C_S, the μS·C_S terms in the dt bracket also cancel each other, leaving a clean, fully deterministic result." }
+              ]
+            },
+            {
+              "_key": "c3l2-023",
+              "_type": "mathBlock",
+              "latex": "\\Delta = C_S \\qquad\\Longrightarrow\\qquad d\\Pi = -\\left[C_t + \\tfrac{1}{2}\\sigma^2 S^2 C_{SS}\\right] dt \\qquad \\text{(no } dW \\text{ term at all)}",
+              "caption": "With Δ chosen correctly, the portfolio's change is entirely deterministic"
+            },
+            {
+              "_key": "c3l2-024",
+              "_type": "callout",
+              "type": "warning",
+              "text": "This derivation quietly leans on the \"continuous trading\" assumption from the previous lesson: it assumes Δ can be rebalanced continuously, funded purely by trading the stock and the riskless asset, never by injecting outside cash (the self-financing condition), and that the instantaneous change in Π does not require applying Chapter 2's Ito product rule to Δ·S, even though Δ = C_S is itself a stochastic process that changes over time. A fully rigorous treatment justifies this using the formal definition of a self-financing trading strategy. This course states the result, used by every classical textbook derivation, rather than proving that finer technical point."
+            },
+            {
+              "_key": "c3l2-025",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2-025s1", "_type": "span", "marks": [], "text": "No-Arbitrage Pins Down the Return" }
+              ]
+            },
+            {
+              "_key": "c3l2-026",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2-026s1", "_type": "span", "marks": [], "text": "A portfolio with zero randomness must earn exactly the risk-free rate, r, no more and no less. If it earned more, borrowing at r to buy it would be a riskless profit machine; if it earned less, shorting it and investing the proceeds at r would be. Either way, the no-arbitrage assumption from the previous lesson's assumption table rules it out. So Π must satisfy one more equation." }
+              ]
+            },
+            {
+              "_key": "c3l2-027",
+              "_type": "mathBlock",
+              "latex": "d\\Pi = r\\,\\Pi\\, dt",
+              "caption": "No-arbitrage: a riskless portfolio earns exactly the risk-free rate"
+            },
+            {
+              "_key": "c3l2-028",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Two separate expressions for dΠ now exist: one purely in terms of C's derivatives, from the hedge itself, and one in terms of r and Π, from no-arbitrage. Setting them equal and substituting Π = -C + C_S·S is exactly one line of algebra away from the Black-Scholes partial differential equation, and that one line is where the next lesson begins."
+            },
+            {
+              "_key": "c3l2-029",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Test the cancellation logic",
+              "question": "In the grouped expression for dΠ, the dW coefficient is σS(Δ - C_S). What must Δ equal for the dW term to vanish entirely, and why?",
+              "options": [
+                "Δ = C_SS, because that is the second-derivative term appearing elsewhere in the expansion",
+                "Δ = C_S, because it exactly matches the coefficient multiplying dW on the option's side, so the two cancel",
+                "Δ = C_t, because that term governs how the option's value changes purely with time",
+                "Δ can be any value; the dW term always cancels regardless of what Δ is"
+              ],
+              "correctIndex": 1,
+              "explanation": "The dW coefficient is σS(Δ - C_S). This is zero only when Δ = C_S exactly, matching the stock's own diffusion contribution to the option's value. Any other choice of Δ leaves genuine, uncancelled randomness in the portfolio."
+            },
+            {
+              "_key": "c3l2-030",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Compute a fresh hedge ratio",
+              "prompt": "TCS is at ₹3,900 today and, in a simplified two-outcome illustration, either rises to ₹4,100 or falls to ₹3,700 tomorrow. A call option struck at ₹4,000 pays ₹100 if TCS rises to ₹4,100 (its intrinsic value above the strike) and ₹0 if it falls to ₹3,700. What is Δ, the number of shares needed per short option to make the portfolio riskless? (Use Δ = (Cup - Cdown) / (Sup - Sdown).)",
+              "correctValue": 0.25,
+              "tolerance": 0.01,
+              "explanation": "Δ = (100 - 0) / (4,100 - 3,700) = 100 / 400 = 0.25. Holding 0.25 shares against one short call gives a portfolio worth -0 + 0.25×3,700 = ₹925 if TCS falls, and -100 + 0.25×4,100 = -100 + 1,025 = ₹925 if it rises, the same value in both outcomes."
+            },
+            {
+              "_key": "c3l2-031",
+              "_type": "flashcardSet",
+              "title": "Core Terms From This Lesson",
+              "cards": [
+                { "_key": "c3l2-031f1", "term": "Delta (Δ)", "definition": "The hedge ratio, ∂C/∂S in continuous time, the number of shares of the underlying needed per option to make a combined portfolio instantaneously riskless." },
+                { "_key": "c3l2-031f2", "term": "Replicating / hedged portfolio", "definition": "A portfolio, here Π = -C + ΔS, constructed so its random component cancels exactly, leaving a deterministic, riskless value process." },
+                { "_key": "c3l2-031f3", "term": "Self-financing (trading strategy)", "definition": "A condition on a trading strategy where all rebalancing is funded purely by trading the existing assets in the portfolio, with no external cash added or withdrawn." }
+              ]
+            },
+            {
+              "_key": "c3l2-032",
+              "_type": "keyTakeaways",
+              "points": [
+                "In a simple two-outcome world, the hedge ratio Δ = (Cup - Cdown)/(Sup - Sdown) makes a short-option, long-stock portfolio worth exactly the same in either outcome, riskless by construction.",
+                "In continuous time, applying Ito's lemma to an assumed pricing function C(S,t) and building Π = -C + ΔS shows that choosing Δ = C_S makes the portfolio's dW term vanish entirely.",
+                "With Δ = C_S, dΠ = -[C_t + (1/2)σ²S²C_SS] dt, a purely deterministic expression with no randomness left in it at all.",
+                "No-arbitrage then forces this riskless portfolio to earn exactly the risk-free rate: dΠ = rΠ dt, a second expression for the same quantity.",
+                "The next lesson sets these two expressions for dΠ equal to each other and does the remaining algebra, arriving at the Black-Scholes partial differential equation itself."
+              ]
+            },
+            {
+              "_key": "c3l2-033",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to buy, sell, or hold any security named here. All stock prices, option payoffs, and hedge ratios in this lesson are simplified illustrative numbers, not live market data or a forecast. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

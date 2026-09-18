@@ -1,0 +1,203 @@
+{
+  "courseSlug": "understanding-numerical-methods-in-quantitative-finance-binomial-trees-and-finite-difference-methods",
+  "chapters": [
+    {
+      "title": "Chapter 4: Finite Difference Methods for Option Pricing",
+      "lessons": [
+        {
+          "title": "The Implicit and Crank-Nicolson Methods: Trading Speed for Stability",
+          "slug": "the-implicit-and-crank-nicolson-methods-trading-speed-for-stability",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "s1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "s1s1", "text": "Lesson 3 exposed the explicit method's trap precisely: coefficients not guaranteed to stay non-negative, and a scheme that can look fine for a while before collapsing without warning. This lesson builds two ways around that trap, one that removes it entirely at the cost of more work per step, and one that keeps that safety while actually improving accuracy.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "s2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "s2s1", "text": "The Implicit Method: Solve for the Whole Layer at Once", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "s3",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "s3s1", "text": "The explicit method approximated every spatial derivative using the already-known layer, j plus 1. The implicit method makes one change, approximating them using the unknown layer, j, instead.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "mathBlock",
+              "_key": "s4",
+              "latex": "-a_i\\,f_{i-1,j} + (2-b_i)\\,f_{i,j} - c_i\\,f_{i+1,j} = f_{i,j+1}",
+              "caption": "The same a_i, b_i, c_i from Chapter 4, Lesson 3's explicit method, rearranged onto the unknown layer. Every equation now has three unknowns, not one."
+            },
+            {
+              "_type": "block",
+              "_key": "s5",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "s5s1", "text": "With three unknowns per equation, no single grid point can be solved on its own anymore. Every equation for layer j is linked to its neighbours, forming one large system that must be solved simultaneously across the whole layer. The system has a specific, convenient shape, though, tridiagonal, each equation only ever touches its immediate left and right neighbours, never anything further away. That shape is what makes a specialized solver, the Thomas algorithm, able to solve the entire system in time proportional to N, not the N cubed a generic matrix solver would need.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "s6",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "s6s1", "text": "Unconditional Stability, Demonstrated", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "s7",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "s7s1", "text": "Rerun Lesson 3's exact grid, N = 200, the same one that produced ₹123.22 and ₹1,049.52 with the explicit method at M = 10 and M = 11, on the implicit method instead.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "s8",
+              "caption": "Explicit vs implicit, identical grid, identical time steps",
+              "headers": ["Time Steps (M)", "Explicit Method (Lesson 3)", "Implicit Method"],
+              "rows": [
+                { "cells": ["20", "₹873.07", "₹864.69"] },
+                { "cells": ["15", "₹874.51", "₹863.30"] },
+                { "cells": ["11", "₹1,049.52 (broken)", "₹861.28"] },
+                { "cells": ["10", "₹123.22 (broken)", "₹860.52"] },
+                { "cells": ["5", "not tested, already unusable", "₹852.23"] },
+                { "cells": ["2", "not tested, already unusable", "₹827.82"] },
+                { "cells": ["1", "not tested, already unusable", "₹789.96"] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "s9",
+              "type": "insight",
+              "text": "The implicit column never breaks, all the way down to a single time step covering the option's entire 3-month life. Accuracy degrades smoothly and predictably as M shrinks, exactly what Chapter 3's tree taught to expect from too few steps, never the sudden cliff the explicit method showed at M = 11 and M = 10. This is what unconditional stability means in practice, not that coarse time steps are free of error, only that the error stays bounded and sensible rather than exploding."
+            },
+            {
+              "_type": "block",
+              "_key": "s10",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "s10s1", "text": "Crank-Nicolson: Splitting the Difference", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "s11",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "s11s1", "text": "Both explicit and implicit approximate the time derivative to the same, first order of accuracy, they just place the spatial derivatives on different layers. Crank-Nicolson averages the two equations directly, half explicit, half implicit, which keeps the implicit method's unconditional stability while improving the time discretization to second order, converging faster as steps shrink. It is the standard default choice in real finite difference option pricing for exactly this combination.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "s12",
+              "caption": "Implicit vs Crank-Nicolson, identical grid, identical time steps",
+              "headers": ["Time Steps (M)", "Implicit Method", "Crank-Nicolson"],
+              "rows": [
+                { "cells": ["20", "₹864.69", "₹868.93"] },
+                { "cells": ["15", "₹863.30", "₹868.97"] },
+                { "cells": ["11", "₹861.28", "₹869.05"] },
+                { "cells": ["10", "₹860.52", "₹869.09"] },
+                { "cells": ["5", "₹852.23", "₹870.11"] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "s13",
+              "type": "insight",
+              "text": "At every single M in this table, Crank-Nicolson lands closer to the true ₹875.93 than implicit does, for identical computational cost per step. That consistent edge is second-order time accuracy showing up directly in the numbers, not a coincidence of this particular option."
+            },
+            {
+              "_type": "block",
+              "_key": "s14",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "s14s1", "text": "Crank-Nicolson's Own Wrinkle", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "s15",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "s15s1", "text": "Push M down to a single time step, the option's entire life in one jump, and Crank-Nicolson returns ₹1,012.47, an overshoot, not the smooth degradation implicit showed at the same M = 1. This is not the explicit method's catastrophic blow-up, the number stays finite and roughly in the right neighbourhood, but it is a real, documented wrinkle: Crank-Nicolson is unconditionally stable, it will not diverge to infinity, but it is not immune to spurious oscillation when time steps are extremely coarse relative to a sharp feature in the payoff, like a call's kink at the strike. Unconditional stability guarantees the method won't explode. It does not guarantee every answer is a good one.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "s16",
+              "caption": "All three methods, side by side",
+              "headers": ["Method", "Per-Step Cost", "Stability", "Time Accuracy"],
+              "rows": [
+                { "cells": ["Explicit", "One direct formula per point, cheapest per step", "Conditional, can blow up if delta-t is too large", "First order"] },
+                { "cells": ["Implicit", "Solve a tridiagonal system per layer, more work per step", "Unconditional, never blows up", "First order"] },
+                { "cells": ["Crank-Nicolson", "Same tridiagonal solve as implicit", "Unconditional, but can oscillate at very coarse delta-t", "Second order, converges faster"] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "s17",
+              "variant": "quiz",
+              "title": "Quick Check",
+              "question": "Why can't the implicit method solve for each grid point f(i, j) one at a time, the way the explicit method does?",
+              "options": [
+                "Because the implicit method doesn't use the Black-Scholes PDE",
+                "Because each implicit equation involves three unknowns at layer j simultaneously, f(i-1,j), f(i,j), and f(i+1,j), rather than one unknown expressed in terms of known values",
+                "Because implicit methods only work for put options",
+                "Because delta-t must be zero in the implicit method"
+              ],
+              "correctIndex": 1,
+              "explanation": "The explicit method's spatial derivatives use the already-known layer j+1, leaving exactly one unknown per equation, f(i,j), solvable directly. The implicit method places those same spatial derivatives on the unknown layer j instead, so every equation ties together three unknown neighbours at once, requiring the whole layer to be solved as one linked system rather than point by point."
+            },
+            {
+              "_type": "exercise",
+              "_key": "s18",
+              "variant": "scenario",
+              "title": "Choosing a Method for Two Different Jobs",
+              "scenario": "A derivatives desk needs two different things from its finite difference pricer: a nightly batch job revaluing thousands of exotic positions with strict accuracy requirements, and a lightweight sanity-check tool that traders can run on demand for a rough, instant estimate mid-conversation.",
+              "prompt": "Which method fits each job better, and why?",
+              "modelAnswer": "The nightly batch job should use Crank-Nicolson. It has hours to run, accuracy matters more than raw speed, and Crank-Nicolson's second-order convergence means fewer time steps are needed to hit a given accuracy target than either pure method, worth the tridiagonal solve at each step. The instant, on-demand sanity-check tool is a better fit for the explicit method, provided its stability condition is checked and respected for the specific parameters in play, since a single direct formula per point is the cheapest option available and speed is the whole point of that tool. Reaching for explicit without checking stability, or reaching for implicit or Crank-Nicolson when speed is the actual priority and accuracy tolerance is loose, both miss what each method is actually good at."
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "s19",
+              "text": "Moving the spatial derivatives from the known layer to the unknown one trades a direct formula for a linked system, and buys unconditional stability in return. Averaging that system with the explicit one, Crank-Nicolson, buys back real accuracy on top of that stability, at no extra per-step cost, which is exactly why it is the default choice in practice rather than either pure method alone."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "s20",
+              "points": [
+                "The implicit method places spatial derivatives on the unknown layer j, turning each grid point's equation into a three-unknown relationship solved via a tridiagonal system, not a single direct formula.",
+                "A tridiagonal system solves in time proportional to N via the Thomas algorithm, keeping the implicit method's extra per-step cost modest rather than prohibitive.",
+                "On Lesson 3's exact grid, the implicit method never breaks, degrading smoothly from ₹864.69 at M = 20 down to ₹789.96 at a single time step, where the explicit method had already produced nonsense.",
+                "Crank-Nicolson averages the explicit and implicit equations, keeping unconditional stability while reaching second-order time accuracy, consistently outperforming implicit at identical cost across every M tested here.",
+                "Crank-Nicolson is not immune to all error at extreme time steps, it can overshoot rather than blow up, a real limitation distinct from, and much milder than, the explicit method's catastrophic failure mode."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

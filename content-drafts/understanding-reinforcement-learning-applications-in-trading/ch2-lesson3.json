@@ -1,0 +1,205 @@
+{
+  "courseSlug": "understanding-reinforcement-learning-applications-in-trading",
+  "chapters": [
+    {
+      "title": "Chapter 2: Core RL Concepts a Trader Needs",
+      "lessons": [
+        {
+          "title": "Model-Free vs Model-Based RL: Why Markets Force You Into Model-Free Methods",
+          "slug": "model-free-vs-model-based-rl-why-markets-force-you-into-model-free-methods",
+          "body": [
+            {
+              "_key": "rl2l3b01",
+              "_type": "bigIdea",
+              "text": "Chess and Go hand an RL agent a perfect model of the world for free: the rules. Markets hand an agent nothing of the sort, and that single difference is why almost every serious RL trading system is model-free, learning what to do from experience rather than trying to predict the world first."
+            },
+            {
+              "_key": "rl2l3b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl2l3b02s1", "_type": "span", "text": "What \"Model\" Means in Model-Based RL", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl2l3b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl2l3b03s1",
+                  "_type": "span",
+                  "text": "A model-based RL agent has access to, or learns, an explicit model of how its environment behaves: the transition function P(s'|s,a) and reward function R(s,a,s') from the MDP formalism two lessons back. With that model in hand, the agent can plan ahead without needing to act in the world first, simulating many possible future trajectories internally and picking the best one. AlphaZero, one of deep RL's most famous results, combines a learned value estimate with Monte Carlo Tree Search, effectively looking ahead through thousands of hypothetical future game states before choosing a move, because chess and Go both hand the agent a perfect, known model for free: the rules of the game never change and never hide anything.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl2l3b04",
+              "_type": "table",
+              "caption": "Model-Based Systems and Where Their Model Comes From",
+              "headers": ["System", "What Its Model Is", "Why It Works There"],
+              "rows": [
+                { "_key": "rl2l3b04r1", "_type": "tableRow", "cells": ["AlphaZero (Chess/Go)", "The complete, exact rules of the game", "Rules are fixed, fully known, and identical every game; the model is perfect by construction"] },
+                { "_key": "rl2l3b04r2", "_type": "tableRow", "cells": ["Dyna-Q (classic RL)", "A learned approximation of P(s'|s,a), built from experience and reused for simulated planning", "Works well in environments simple and stable enough for a learned model to stay accurate"] },
+                { "_key": "rl2l3b04r3", "_type": "tableRow", "cells": ["Robotics world models", "A learned simulator of physics, often imperfect", "Useful when real-world trials are expensive, but performance depends heavily on how good the learned physics model actually is"] }
+              ]
+            },
+            {
+              "_key": "rl2l3b05",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl2l3b05s1", "_type": "span", "text": "What Model-Free Means, and Why It Fits Markets", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl2l3b06",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl2l3b06s1",
+                  "_type": "span",
+                  "text": "Markets offer nothing close to a known, fixed model. The transition function P(s'|s,a), what happens next given the current state and the agent's action, is the combined outcome of every other participant's simultaneous decisions, order flow, and reaction to news, shaped by a market structure and participant mix that itself changes over the years a strategy might trade. Trying to build a genuinely accurate explicit model of this is not a smaller version of the RL problem, it is closest to solving the forecasting problem finance has struggled with for a century.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl2l3b07",
+              "_type": "callout",
+              "type": "insight",
+              "text": "If you could build an accurate model of P(s'|s,a) for a market, you would not need reinforcement learning to trade it. You would just trade directly on the forecast. The entire premise of model-free RL in finance is an admission that no such reliable model exists, so the agent learns what to do from experienced outcomes instead of trying to predict the world first."
+            },
+            {
+              "_key": "rl2l3b08",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl2l3b08s1", "_type": "span", "text": "Two Families of Model-Free Method, Plus a Hybrid", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl2l3b09",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl2l3b09s1",
+                  "_type": "span",
+                  "text": "Model-free methods split into two broad families, plus a hybrid. Value-based methods, like Q-learning and its deep-learning extension DQN, learn an estimate of Q(s,a) and act by choosing whichever action has the highest estimated value, exactly as the previous lesson described. Policy-based methods skip value estimation and instead directly learn the policy π(a|s), adjusting it through gradient ascent to make actions that led to higher returns more likely in the future. Actor-critic methods, which most modern trading RL research actually uses, learn both at once: an actor that outputs the policy, and a critic that estimates value to tell the actor how good its recent actions actually were.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl2l3b10",
+              "_type": "comparison",
+              "title": "Three Families of Model-Free Method",
+              "columns": [
+                {
+                  "_key": "rl2l3b10c1",
+                  "label": "Value-Based (e.g. Q-learning, DQN)",
+                  "points": [
+                    "Learns Q(s,a), acts by choosing the highest-value action",
+                    "Naturally suited to discrete action spaces (buy, sell, hold)",
+                    "Simple to reason about and debug"
+                  ]
+                },
+                {
+                  "_key": "rl2l3b10c2",
+                  "label": "Policy-Based (e.g. REINFORCE)",
+                  "points": [
+                    "Learns π(a|s) directly, no value estimation required to act",
+                    "Handles continuous action spaces naturally, like a position-size percentage",
+                    "Tends to have noisier, higher-variance training"
+                  ]
+                },
+                {
+                  "_key": "rl2l3b10c3",
+                  "label": "Actor-Critic (e.g. PPO, A2C)",
+                  "points": [
+                    "Learns a policy (actor) and a value function (critic) together",
+                    "The critic reduces the variance that pure policy-based methods suffer from",
+                    "The most common choice in modern trading RL research, picked up further in Chapter 3"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "rl2l3b11",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl2l3b11s1", "_type": "span", "text": "Where Model-Based Ideas Sneak Back In: Simulators", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl2l3b12",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl2l3b12s1",
+                  "_type": "span",
+                  "text": "One nuance is worth being precise about, because it is easy to overstate the model-free versus model-based distinction. Model-free simply means the agent never builds an explicit representation of P(s'|s,a) to plan with. It does not mean training happens with no model of the environment at all. Chapter 1 already established that offline training happens against historical data or a simulator, and that simulator, whatever assumptions it makes about fills, slippage, and market impact, is itself an implicit model of how the market behaves. A model-free agent trained inside a simulator is not escaping the need for an accurate model of the world; it is outsourcing that model to whoever built the simulator, and inheriting every one of that simulator's blind spots.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl2l3b13",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Model-free does not mean assumption-free. The fidelity of the simulator or historical replay an agent trains against directly determines how much distributional shift it faces once live, the same gap Chapter 1 covered under the backtest-to-live divide. Choosing model-free RL sidesteps the problem of modeling market dynamics explicitly for planning, but it does not sidestep the problem of needing a realistic environment to learn from in the first place."
+            },
+            {
+              "_key": "rl2l3b14",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Model-Based, Model-Free, or Something In Between?",
+              "scenario": "A quant researcher builds a Nifty 50 options-selling agent. It trains inside a custom simulator that replays two years of historical option chain data and models bid-ask spread crossing and brokerage costs, but assumes every order fills instantly at the simulator's quoted price with no market impact, regardless of size. The agent itself learns only a policy π(a|s), with no explicit model of price dynamics used for planning.",
+              "prompt": "Is this system model-free, model-based, or does the description not fully settle the question? What is the most important gap between this simulator and a real market?",
+              "modelAnswer": "The agent's own learning algorithm is model-free: it learns a policy directly from simulated experience, with no explicit P(s'|s,a) used for internal planning. But the simulator it trains inside is itself an implicit model of the market, one that includes realistic costs and spreads but assumes zero market impact regardless of order size. That is the most important gap: any position large enough to move the market in reality will be systematically under-costed in this simulator, so the agent has no incentive during training to avoid overly large or overly frequent trades that a real market would penalize through slippage and impact. A model-free algorithm still depends entirely on the quality of whatever environment, real or simulated, generated the experience it learned from."
+            },
+            {
+              "_key": "rl2l3b15",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why Markets Push Toward Model-Free Methods",
+              "question": "Which of the following best explains why reinforcement learning applications in trading are overwhelmingly model-free rather than model-based, unlike a system such as AlphaZero for chess?",
+              "options": [
+                "Model-based methods are always computationally slower than model-free methods",
+                "Markets have no known, fixed transition function; building an accurate explicit model of market dynamics is roughly as hard as the forecasting problem finance has never fully solved",
+                "Model-free methods require less historical data than model-based methods",
+                "Regulators in India prohibit model-based approaches to automated trading"
+              ],
+              "correctIndex": 1,
+              "explanation": "Chess and Go hand an agent a perfect, fully known model for free, their rules. Markets offer nothing equivalent: the transition function reflects the combined, constantly shifting behavior of every participant, and building an accurate explicit model of it is not a smaller version of the RL problem but close to the market forecasting problem itself. That is the structural reason trading RL leans model-free, learning what to do from experienced outcomes rather than trying to predict the world first."
+            },
+            {
+              "_key": "rl2l3b16",
+              "_type": "keyTakeaways",
+              "points": [
+                "Model-based RL learns or is given an explicit model of the environment's dynamics, P(s'|s,a) and R(s,a,s'), and can plan ahead by simulating future trajectories, as AlphaZero does using chess and Go's perfectly known rules",
+                "Markets offer no equivalent fixed, known model; building an accurate explicit model of market dynamics is close to the forecasting problem finance has never reliably solved, which is why trading RL is overwhelmingly model-free",
+                "Model-free methods split into value-based (learn Q, act greedily), policy-based (learn π directly), and actor-critic (learn both), with actor-critic the most common choice in modern trading RL research",
+                "Model-free does not mean assumption-free: an agent still trains inside a simulator or historical replay, and that environment is itself an implicit model of the market whose blind spots the agent inherits",
+                "A simulator that idealizes fills or ignores market impact quietly removes any incentive for the agent to avoid behavior a real market would penalize, the same backtest-to-live gap Chapter 1 introduced, now seen from the model-free side"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,235 @@
+{
+  "courseSlug": "understanding-momentum-and-trend-following-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 4: Cross-Sectional Momentum - Ranking and Rotation",
+      "lessons": [
+        {
+          "title": "Time-Series Momentum vs Cross-Sectional Momentum",
+          "slug": "time-series-momentum-vs-cross-sectional-momentum",
+          "body": [
+            {
+              "_key": "m13-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m13-001s1", "_type": "span", "marks": [], "text": "Chapter 1 promised a formal version of the trend-following-versus-momentum distinction once this course reached the quantitative material. This is that lesson. Both ideas turn into precise, computable rules with different mathematics behind them, and the difference is not just academic vocabulary, it changes what each strategy actually holds at any given moment, sometimes in a way that looks contradictory until you see the formulas side by side." }
+              ]
+            },
+            {
+              "_key": "m13-002",
+              "_type": "bigIdea",
+              "text": "Time-series momentum sets a position in an asset based only on the sign of that asset's own past return, entirely independent of any other asset. Cross-sectional momentum sets a position based on an asset's rank relative to a defined universe of peers at that same moment. The two can, and sometimes do, disagree completely on the same stock at the same time."
+            },
+            {
+              "_key": "m13-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m13-003s1", "_type": "span", "marks": [], "text": "Time-Series Momentum: The Formal Definition" }
+              ]
+            },
+            {
+              "_key": "m13-004",
+              "_type": "mathBlock",
+              "latex": "\\text{Position}_{i,t} = \\text{sign}\\left(r_{i,\\, t-k:t}\\right)",
+              "caption": "Time-series momentum: the position in asset i at time t depends only on the sign of that same asset's own trailing return over the past k periods, positive return means long, negative means short."
+            },
+            {
+              "_key": "m13-005",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "m13-005m1", "_type": "glossaryTerm", "definition": "The academic name for trend following: a position determined purely by the sign of one asset's own past return, with no reference to any other asset." }
+              ],
+              "children": [
+                { "_key": "m13-005s1", "_type": "span", "marks": ["m13-005m1"], "text": "Time-series momentum" },
+                { "_key": "m13-005s2", "_type": "span", "marks": [], "text": ", often abbreviated TSMOM, is the formal academic name for the trend following covered in Chapter 2. It was rigorously documented across asset classes by Moskowitz, Ooi, and Pedersen in their 2012 paper 'Time Series Momentum,' which tested the idea across several dozen liquid equity index, currency, commodity, and bond futures contracts going back decades, and found significant, largely consistent risk-adjusted returns from simply going long an asset that has recently risen and short one that has recently fallen, asset by asset, with no comparison between them." }
+              ]
+            },
+            {
+              "_key": "m13-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m13-006s1", "_type": "span", "marks": [], "text": "Cross-Sectional Momentum: The Formal Definition" }
+              ]
+            },
+            {
+              "_key": "m13-007",
+              "_type": "mathBlock",
+              "latex": "\\text{Position}_{i,t} = f\\Big(\\text{rank of } r_{i,\\,t-k:t} \\text{ within universe } U_t\\Big)",
+              "caption": "Cross-sectional momentum: the position in asset i at time t depends on how its trailing return ranks against every other asset in a defined universe at that same time, not on its own return in isolation."
+            },
+            {
+              "_key": "m13-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "m13-008m1", "_type": "glossaryTerm", "definition": "The academic name for classic momentum: a position determined by an asset's trailing return rank relative to a defined universe of peers, not by its own absolute return." }
+              ],
+              "children": [
+                { "_key": "m13-008s1", "_type": "span", "marks": ["m13-008m1"], "text": "Cross-sectional momentum" },
+                { "_key": "m13-008s2", "_type": "span", "marks": [], "text": ", XSMOM for short, is the formal name for the classic momentum introduced in Chapter 1 and documented by Jegadeesh and Titman in 1993. A typical implementation ranks every stock in a universe, say the Nifty 200, by trailing return, goes long the top decile, and shorts or avoids the bottom decile. What matters is not whether a stock's own return was positive or negative in absolute terms, only where it lands relative to everything else in the universe at that specific moment." }
+              ]
+            },
+            {
+              "_key": "m13-009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m13-009s1", "_type": "span", "marks": [], "text": "The Key Mathematical Difference, Made Concrete" }
+              ]
+            },
+            {
+              "_key": "m13-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m13-010s1", "_type": "span", "marks": [], "text": "Take five hypothetical NSE stocks during a broad market decline, where every single one of them has a negative trailing 6-month return." }
+              ]
+            },
+            {
+              "_key": "m13-011",
+              "_type": "table",
+              "caption": "Five hypothetical stocks in a broad decline: TSMOM vs XSMOM signals (illustrative)",
+              "headers": ["Stock", "6-month return", "TSMOM signal", "Rank (1 = best)", "XSMOM signal (long top 2, short bottom 2)"],
+              "rows": [
+                { "_key": "m13-011r1", "_type": "tableRow", "cells": ["A", "-2%", "Short", "1st", "Long"] },
+                { "_key": "m13-011r2", "_type": "tableRow", "cells": ["B", "-8%", "Short", "2nd", "Long"] },
+                { "_key": "m13-011r3", "_type": "tableRow", "cells": ["C", "-15%", "Short", "3rd", "Neutral"] },
+                { "_key": "m13-011r4", "_type": "tableRow", "cells": ["D", "-20%", "Short", "4th", "Short"] },
+                { "_key": "m13-011r5", "_type": "tableRow", "cells": ["E", "-25%", "Short", "5th", "Short"] }
+              ]
+            },
+            {
+              "_key": "m13-012",
+              "_type": "callout",
+              "type": "insight",
+              "text": "TSMOM shorts all five stocks, every single one has a negative sign on its own trailing return. XSMOM goes long Stock A and Stock B, both of which are down for the period, simply because they fell less than the rest of the universe. This is not a contradiction, it is the direct mathematical consequence of an absolute rule versus a relative one, and it is exactly why the two strategies can hold opposite positions in the same stock at the same time."
+            },
+            {
+              "_key": "m13-013",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m13-013s1", "_type": "span", "marks": [], "text": "Practical Implications: Net Market Exposure" }
+              ]
+            },
+            {
+              "_key": "m13-014",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m13-014s1", "_type": "span", "marks": [], "text": "This difference has a real consequence for how each strategy behaves as a whole portfolio. TSMOM's net market exposure moves with the market's own overall trend. In the broad decline above, a TSMOM portfolio would end up entirely short, fully exposed to a bet that the decline continues. XSMOM, by construction, holds a long book and a short book of similar size within the same universe, which keeps it close to market-neutral, similar in spirit to the market-neutral framing from statistical arbitrage, regardless of whether the whole universe is rising or falling. A trader choosing between the two is not just choosing a signal, they are choosing a fundamentally different relationship to overall market direction." }
+              ]
+            },
+            {
+              "_key": "m13-015",
+              "_type": "comparison",
+              "title": "TSMOM vs XSMOM, Formalized",
+              "columns": [
+                {
+                  "_key": "m13-015c1",
+                  "label": "Time-Series Momentum (TSMOM)",
+                  "points": [
+                    "Position depends only on sign(own trailing return)",
+                    "No comparison to any other asset",
+                    "Net exposure moves with the market's own trend",
+                    "Can be fully long or fully short the whole book at once",
+                    "Formalized by Moskowitz, Ooi, and Pedersen, 2012"
+                  ]
+                },
+                {
+                  "_key": "m13-015c2",
+                  "label": "Cross-Sectional Momentum (XSMOM)",
+                  "points": [
+                    "Position depends on rank within a defined universe",
+                    "Always compared to peers at the same point in time",
+                    "Structurally close to market-neutral by construction",
+                    "Can be long a stock that is falling, if it fell less than peers",
+                    "Formalized by Jegadeesh and Titman, 1993"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "m13-016",
+              "_type": "codeBlock",
+              "language": "python",
+              "caption": "TSMOM and XSMOM signals on the same five-stock example",
+              "code": "import pandas as pd\n\nreturns = pd.Series({\"A\": -0.02, \"B\": -0.08, \"C\": -0.15, \"D\": -0.20, \"E\": -0.25})\n\n# Time-series momentum: sign of each stock's own return, independent of the others\ntsmom_signal = returns.apply(lambda r: 1 if r > 0 else (-1 if r < 0 else 0))\n\n# Cross-sectional momentum: rank within the universe, long top 2, short bottom 2\nranked = returns.rank(ascending=False)\nxsmom_signal = ranked.apply(lambda rank: 1 if rank <= 2 else (-1 if rank >= 4 else 0))\n\nprint(pd.DataFrame({\"return\": returns, \"tsmom\": tsmom_signal, \"xsmom\": xsmom_signal}))"
+            },
+            {
+              "_key": "m13-017",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Can XSMOM go long a losing stock?",
+              "question": "A stock is down 5% over the past 6 months, but every other stock in its comparison universe is down more than 15% over the same period. What would a cross-sectional momentum strategy most likely do with this stock?",
+              "options": [
+                "Short it, since its absolute return is negative",
+                "Ignore it entirely, since XSMOM only works on stocks with positive returns",
+                "Potentially go long it, since it ranks near the top of the universe despite its own negative return",
+                "It is impossible to say without knowing the stock's dividend yield"
+              ],
+              "correctIndex": 2,
+              "explanation": "Cross-sectional momentum ranks stocks relative to their universe, not by their own absolute return. A stock down only 5% while its peers are down over 15% ranks near the top and could be a long candidate, exactly like Stock A and Stock B in this lesson's worked example."
+            },
+            {
+              "_key": "m13-018",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Reading the worked table",
+              "prompt": "In this lesson's five-stock example, how many stocks receive the exact same signal, long, short, or neutral, from both TSMOM and XSMOM?",
+              "correctValue": 2,
+              "tolerance": 0,
+              "explanation": "TSMOM shorts all five stocks. XSMOM is long A and B, neutral on C, and short D and E. Only D and E receive the same signal, short, from both strategies, which is 2 stocks out of 5."
+            },
+            {
+              "_key": "m13-019",
+              "_type": "toolLink",
+              "label": "Read the original Jegadeesh-Titman and Moskowitz-Ooi-Pedersen papers via SSRN or Google Scholar",
+              "url": "https://scholar.google.com",
+              "description": "Both foundational papers referenced in this lesson, Jegadeesh and Titman's 1993 cross-sectional study and Moskowitz, Ooi, and Pedersen's 2012 time-series momentum study, are widely available and worth reading directly for anyone planning to implement either strategy seriously."
+            },
+            {
+              "_key": "m13-020",
+              "_type": "flashcardSet",
+              "title": "TSMOM vs XSMOM: Core Terms",
+              "cards": [
+                { "_key": "m13-020f1", "term": "Time-series momentum (TSMOM)", "definition": "A position determined purely by the sign of one asset's own past return, with no reference to any other asset. The academic name for trend following." },
+                { "_key": "m13-020f2", "term": "Cross-sectional momentum (XSMOM)", "definition": "A position determined by an asset's trailing return rank relative to a defined universe of peers, not by its own absolute return." },
+                { "_key": "m13-020f3", "term": "Universe (in momentum)", "definition": "The defined group of comparable securities, such as the Nifty 200, that a cross-sectional momentum strategy ranks against each other." },
+                { "_key": "m13-020f4", "term": "Net market exposure", "definition": "The overall directional tilt of a portfolio to the broader market, close to zero for a market-neutral strategy like XSMOM, and variable for TSMOM depending on how many assets it is currently long versus short." }
+              ]
+            },
+            {
+              "_key": "m13-021",
+              "_type": "keyTakeaways",
+              "points": [
+                "Time-series momentum sets a position from the sign of one asset's own trailing return alone, formalized by Moskowitz, Ooi, and Pedersen in 2012.",
+                "Cross-sectional momentum sets a position from an asset's rank within a defined universe of peers, formalized by Jegadeesh and Titman in 1993.",
+                "The two can disagree completely: in a broad decline, TSMOM can short every asset in sight while XSMOM stays long the relatively strongest ones, even if those are still down in absolute terms.",
+                "TSMOM's net market exposure moves with the market's own trend and can be fully long or fully short. XSMOM is structurally close to market-neutral by construction.",
+                "Neither formulation is more correct than the other, they answer different questions, and the choice between them is a real portfolio design decision, not just a labelling exercise."
+              ]
+            },
+            {
+              "_key": "m13-022",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice. The five-stock example is entirely hypothetical and does not represent any real securities. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

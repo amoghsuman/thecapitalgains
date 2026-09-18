@@ -1,0 +1,347 @@
+{
+  "courseSlug": "introduction-to-options-pricing-models-black-scholes-explained",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Options Need a Pricing Model",
+      "lessons": [
+        {
+          "title": "The Problem Black-Scholes Was Built to Solve",
+          "slug": "the-problem-black-scholes-was-built-to-solve",
+          "body": [
+            {
+              "_key": "k1",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k1s",
+                  "_type": "span",
+                  "text": "Before 1973: Why Nobody Could Price an Option Fairly",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k2",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k2s1",
+                  "_type": "span",
+                  "text": "Option-like contracts are not new. Indian bazaars traded informal ",
+                  "marks": []
+                },
+                {
+                  "_key": "k2s2",
+                  "_type": "span",
+                  "text": "teji-mandi",
+                  "marks": ["gd1"]
+                },
+                {
+                  "_key": "k2s3",
+                  "_type": "span",
+                  "text": " arrangements in commodities and shares long before SEBI existed, and the BSE ran a carry-forward system called ",
+                  "marks": []
+                },
+                {
+                  "_key": "k2s4",
+                  "_type": "span",
+                  "text": "badla",
+                  "marks": ["gd2"]
+                },
+                {
+                  "_key": "k2s5",
+                  "_type": "span",
+                  "text": " for decades before SEBI banned it in 2001 and moved the market to rolling settlement and, soon after, exchange-traded derivatives. In every one of these arrangements, the price was set by negotiation, custom, and gut feel. Nobody had a formula. Nobody needed one, because there was no large, liquid, anonymous market forcing every participant to agree on a single number at the same moment.",
+                  "marks": []
+                }
+              ],
+              "markDefs": [
+                {
+                  "_key": "gd1",
+                  "_type": "glossaryTerm",
+                  "definition": "An informal, unofficial forward or option-like arrangement historically used in Indian commodity and stock bazaars, priced by negotiation rather than a formula. Not an exchange-traded contract."
+                },
+                {
+                  "_key": "gd2",
+                  "_type": "glossaryTerm",
+                  "definition": "A carry-forward settlement mechanism once used on the BSE, letting traders roll a position to the next settlement cycle for a fee. SEBI banned it in 2001 after the Ketan Parekh scam."
+                }
+              ]
+            },
+            {
+              "_key": "k3",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k3s1",
+                  "_type": "span",
+                  "text": "Once options started trading on real exchanges, most famously the Chicago Board Options Exchange, which opened in April 1973, negotiation was no longer good enough. Thousands of strangers needed to trade the same contract at the same price, continuously, all day. That forces a hard question: what is the one, single, defensible fair price for this option, right now?",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k4",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k4s1",
+                  "_type": "span",
+                  "text": "The obvious approach is to forecast: estimate how likely Nifty is to rise, average the payoff across every scenario, weighted by probability, and discount it back to today. This fails for a reason that has nothing to do with being bad at forecasting. It fails because it needs two inputs nobody can agree on: the stock's true expected return, and the risk premium each investor personally demands for holding that uncertainty. A pension fund and a proprietary trader can look at the same Nifty chart and rationally demand different risk premiums. Both are right, for themselves. Neither answer can be THE market price, because a market price has to be one number, not one per investor.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "callout",
+              "type": "warning",
+              "text": "If an option's fair price depends on what you personally believe the stock will do, there is no such thing as a single fair price. There are only opinions, and a market cannot run on opinions alone. This is the wall every pricing attempt hit before 1973.",
+              "_key": "k5"
+            },
+            {
+              "_key": "k6",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k6s",
+                  "_type": "span",
+                  "text": "The Insight: Price It Without Forecasting, Using Replication",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k7",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k7s1",
+                  "_type": "span",
+                  "text": "Fischer Black and Myron Scholes, with important contributions from Robert Merton, found a way around the disagreement entirely. Instead of forecasting where the stock is going, build a portfolio out of the stock itself and a risk-free loan that pays off exactly the same amount as the option, in every single possible future outcome. If two things always pay off identically, the ",
+                  "marks": []
+                },
+                {
+                  "_key": "k7s2",
+                  "_type": "span",
+                  "text": "law of one price",
+                  "marks": ["gd3"]
+                },
+                {
+                  "_key": "k7s3",
+                  "_type": "span",
+                  "text": " says they must cost the same today. If they did not, you could buy the cheap one, sell the expensive one, pocket the difference risk-free, and repeat forever. That free-money loophole is called ",
+                  "marks": []
+                },
+                {
+                  "_key": "k7s4",
+                  "_type": "span",
+                  "text": "arbitrage",
+                  "marks": ["gd4"]
+                },
+                {
+                  "_key": "k7s5",
+                  "_type": "span",
+                  "text": ", and real, liquid markets close it fast. This single idea, price by replication and refuse to allow arbitrage, is the entire intellectual foundation this course is built on. Notice what it never asks you for: an opinion on whether the stock goes up or down.",
+                  "marks": []
+                }
+              ],
+              "markDefs": [
+                {
+                  "_key": "gd3",
+                  "_type": "glossaryTerm",
+                  "definition": "Two assets or portfolios with identical payoffs in every future state must trade at the same price today, or a risk-free profit becomes available."
+                },
+                {
+                  "_key": "gd4",
+                  "_type": "glossaryTerm",
+                  "definition": "A trade that locks in a risk-free profit from a price discrepancy, with no net investment. Liquid markets compete this opportunity away almost instantly."
+                }
+              ]
+            },
+            {
+              "_key": "k8",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k8s",
+                  "_type": "span",
+                  "text": "A Worked Example: Pricing a Reliance Call Without Forecasting Anything",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k9",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k9s1",
+                  "_type": "span",
+                  "text": "Simplify the real world down to two outcomes, one month from now. Reliance is at ₹2,800 today. In a month, assume it lands at either ₹3,000 or ₹2,600, nothing in between. A call option struck at ₹2,800 pays whatever it pays in each of those two states.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "table",
+              "caption": "The two possible outcomes, one month out",
+              "headers": ["State", "Reliance price", "Call payoff (strike ₹2,800)"],
+              "rows": [
+                {
+                  "_key": "k10",
+                  "_type": "tableRow",
+                  "cells": ["Up", "₹3,000", "₹200"]
+                },
+                {
+                  "_key": "k11",
+                  "_type": "tableRow",
+                  "cells": ["Down", "₹2,600", "₹0"]
+                }
+              ],
+              "_key": "k12"
+            },
+            {
+              "_key": "k13",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k13s1",
+                  "_type": "span",
+                  "text": "Nowhere in that table is a probability. That is deliberate. Now build a portfolio of Reliance shares plus a risk-free loan that matches ₹200 in the up state and ₹0 in the down state, exactly.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "mathBlock",
+              "latex": "\\Delta = \\frac{C_u - C_d}{S_u - S_d} = \\frac{200 - 0}{3{,}000 - 2{,}600} = 0.5 \\text{ shares}",
+              "caption": "This ratio, delta, is the number of Reliance shares needed to replicate one call option. Chapter 4 revisits delta as a full-fledged Greek.",
+              "_key": "k14"
+            },
+            {
+              "_key": "k15",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k15s1",
+                  "_type": "span",
+                  "text": "Holding 0.5 shares is worth ₹1,500 in the up state and ₹1,300 in the down state, which is ₹1,300 more than the option pays in both cases (₹1,500 − ₹200 = ₹1,300, and ₹1,300 − ₹0 = ₹1,300). So borrow ₹1,300 worth of repayment against those shares. If you borrow money today at a monthly rate implied by a 6% annual risk-free rate, roughly 0.5% for one month, you would need to borrow ₹1,300 ÷ 1.005 ≈ ₹1,293.53 today to owe exactly ₹1,300 in a month, regardless of which state occurs, because a risk-free loan's repayment does not depend on Reliance's price.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "k16",
+                  "label": "Cost of 0.5 Reliance shares today",
+                  "value": "₹1,400.00",
+                  "context": "0.5 × ₹2,800"
+                },
+                {
+                  "_key": "k17",
+                  "label": "Amount borrowed today",
+                  "value": "₹1,293.53",
+                  "context": "₹1,300 repayment discounted at 0.5% for one month"
+                },
+                {
+                  "_key": "k18",
+                  "label": "Replicating portfolio cost",
+                  "value": "₹106.47",
+                  "context": "₹1,400.00 − ₹1,293.53"
+                }
+              ],
+              "_key": "k19"
+            },
+            {
+              "_key": "k20",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k20s1",
+                  "_type": "span",
+                  "text": "That portfolio, 0.5 Reliance shares funded partly by borrowed money, pays exactly ₹200 if Reliance rises to ₹3,000 and exactly ₹0 if it falls to ₹2,600, matching the call in both states. By the law of one price, the call must also cost ₹106.47 today. If it traded at ₹120 in the market, you would sell the option, buy the cheaper replicating portfolio, and pocket the ₹13.53 gap risk-free. If it traded at ₹90, you would do the reverse. Either way, the arbitrage-free price is pinned at ₹106.47, and it took nothing more than the two future prices, the strike, and the risk-free rate to find it.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "callout",
+              "type": "insight",
+              "text": "Go back and check: did the calculation ever ask how likely the up move was compared to the down move? It did not. Whether you think Reliance rallying to ₹3,000 is a 90% likely outcome or a 10% likely outcome, the replicating portfolio, and therefore the option's fair price, does not change. That is the specific problem Black-Scholes was built to solve: pricing an option using only quantities the whole market can observe and agree on, with no need for anyone's personal forecast.",
+              "_key": "k21"
+            },
+            {
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Does the forecast matter?",
+              "question": "Two traders disagree sharply: one thinks Reliance rising to ₹3,000 is very likely, the other thinks it is unlikely. Using the replication argument above, whose view gives the correct option price of ₹106.47?",
+              "options": [
+                "The trader who thinks it is likely, because probability drives value",
+                "The trader who thinks it is unlikely, because caution is safer",
+                "Neither view matters. The price is pinned by the replicating portfolio regardless of either trader's probability estimate",
+                "The average of the two views, weighted by how confident each trader is"
+              ],
+              "correctIndex": 2,
+              "explanation": "The replicating portfolio's cost never used a probability of up versus down. It only used the two possible prices, the strike, and the risk-free rate. Both traders, no matter how they disagree, are bound by the same no-arbitrage price.",
+              "_key": "k22"
+            },
+            {
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Recompute delta for a different spread",
+              "prompt": "Same setup, but now assume Reliance lands at either ₹2,950 (call payoff ₹150 against the ₹2,800 strike) or ₹2,700 (call payoff ₹0). What is delta for this replicating portfolio?",
+              "correctValue": 0.6,
+              "tolerance": 0.01,
+              "explanation": "Delta = (Cu − Cd) / (Su − Sd) = (150 − 0) / (2,950 − 2,700) = 150 / 250 = 0.6 shares per option.",
+              "_key": "k23"
+            },
+            {
+              "_type": "bigIdea",
+              "text": "Black-Scholes did not invent a better way to forecast stock prices. It removed the need to forecast at all, by pricing options off a portfolio that replicates them exactly, leaving nothing for a forecast to add.",
+              "_key": "k24"
+            },
+            {
+              "_type": "keyTakeaways",
+              "points": [
+                "Before exchange-traded options, prices were set by negotiation, as with India's informal teji-mandi contracts and the BSE's badla system, banned by SEBI in 2001.",
+                "Forecasting-based pricing fails because it needs the stock's expected return and each investor's personal risk premium, and no two investors agree on either.",
+                "The law of one price says two portfolios with identical payoffs in every future state must cost the same today, or arbitrage is possible.",
+                "A portfolio of the underlying stock plus a risk-free loan, sized by delta, can replicate an option's payoff exactly, which pins down the option's price without ever using a probability estimate.",
+                "In the worked example, a ₹2,800-strike Reliance call replicated with 0.5 shares and ₹1,293.53 of borrowing priced out to ₹106.47, using only observable prices and the risk-free rate."
+              ],
+              "_key": "k25"
+            },
+            {
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice. The Reliance prices, payoffs, and risk-free rate in this lesson are hypothetical, built to illustrate the no-arbitrage replication argument, not to represent live market quotes. Historical details on badla and teji-mandi are simplified for a general audience; consult primary SEBI and exchange sources for exact regulatory history.",
+              "_key": "k26"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

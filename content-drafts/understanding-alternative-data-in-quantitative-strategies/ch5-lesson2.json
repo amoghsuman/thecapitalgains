@@ -1,0 +1,344 @@
+{
+  "courseSlug": "understanding-alternative-data-in-quantitative-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 5: Signal Research and Alpha Construction",
+      "lessons": [
+        {
+          "title": "Statistical Validation: Information Coefficient and Signal Decay Curves",
+          "slug": "statistical-validation-information-coefficient-and-signal-decay-curves",
+          "body": [
+            {
+              "_key": "c5l2k001",
+              "_type": "bigIdea",
+              "text": "Chapter 1 told you an edge decays. This lesson gives you the tool that actually measures the decay, instead of just describing it."
+            },
+            {
+              "_key": "c5l2k002",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l2k002s1",
+                  "_type": "span",
+                  "text": "With a pre-registered hypothesis from the previous lesson in hand, this lesson gives you the standard quant metrics for actually testing it: the Information Coefficient, its consistency over time, and how to measure a signal's decay curve empirically rather than just assuming its shape.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l2k003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l2k003s1",
+                  "_type": "span",
+                  "text": "The Information Coefficient: Quant Research's Standard Report Card",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l2k004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c5l2m001",
+                  "_type": "glossaryTerm",
+                  "definition": "The rank correlation, typically Spearman correlation, between a signal's cross-sectional ranking of stocks at a given time and those stocks' actual forward returns over a chosen horizon. Computed period by period, then averaged into a mean IC."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c5l2k004s1",
+                  "_type": "span",
+                  "text": "The ",
+                  "marks": []
+                },
+                {
+                  "_key": "c5l2k004s2",
+                  "_type": "span",
+                  "text": "Information Coefficient",
+                  "marks": ["c5l2m001"]
+                },
+                {
+                  "_key": "c5l2k004s3",
+                  "_type": "span",
+                  "text": ", or IC, is the standard way quant researchers score a signal: at each point in time, rank every stock in your universe by the signal, separately rank every stock by its actual subsequent return, and correlate the two rankings. A signal with genuine predictive power produces a positive IC more often than not, while a useless signal produces an IC that bounces randomly around zero.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l2k005",
+              "_type": "table",
+              "caption": "Rough industry rule of thumb for interpreting mean IC magnitude, not a strict cutoff",
+              "headers": ["Mean IC", "Typical Interpretation"],
+              "rows": [
+                {
+                  "_key": "c5l2k005r1",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Below 0.02",
+                    "Weak, likely too close to noise to be usable on its own"
+                  ]
+                },
+                {
+                  "_key": "c5l2k005r2",
+                  "_type": "tableRow",
+                  "cells": [
+                    "0.02 to 0.05",
+                    "A genuinely usable signal by common equity quant standards, especially as one input among several"
+                  ]
+                },
+                {
+                  "_key": "c5l2k005r3",
+                  "_type": "tableRow",
+                  "cells": [
+                    "0.05 to 0.10",
+                    "A strong individual signal, worth real research attention and capital"
+                  ]
+                },
+                {
+                  "_key": "c5l2k005r4",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Above 0.10",
+                    "Rare for a single signal, and worth double-checking for a data leak or look-ahead bias before celebrating"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c5l2k006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l2k006s1",
+                  "_type": "span",
+                  "text": "From a Single IC to a Track Record: ICIR",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l2k007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c5l2m002",
+                  "_type": "glossaryTerm",
+                  "definition": "The mean IC divided by the standard deviation of IC across periods, a measure of how consistently a signal delivers its average predictive power over time, analogous to a Sharpe ratio for the signal itself rather than for a portfolio."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c5l2k007s1",
+                  "_type": "span",
+                  "text": "A mean IC alone hides an important detail: whether that average came from steady, dependable performance or from one enormous month dragging up an otherwise unreliable series. ",
+                  "marks": []
+                },
+                {
+                  "_key": "c5l2k007s2",
+                  "_type": "span",
+                  "text": "ICIR",
+                  "marks": ["c5l2m002"]
+                },
+                {
+                  "_key": "c5l2k007s3",
+                  "_type": "span",
+                  "text": " answers exactly this question by measuring consistency across time, not just average strength.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l2k008",
+              "_type": "mathBlock",
+              "latex": "ICIR = \\frac{\\text{mean}(IC)}{\\text{std}(IC)}",
+              "caption": "Computed across the same set of time periods used to calculate the mean IC. A higher ICIR means the signal's predictive power is more stable period to period, not just stronger on average."
+            },
+            {
+              "_key": "c5l2k009",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Calculate ICIR",
+              "prompt": "A signal's monthly IC series over 36 months has a mean IC of 0.04 and a standard deviation of IC of 0.08. What is the ICIR?",
+              "correctValue": 0.5,
+              "tolerance": 0.02,
+              "unit": "",
+              "explanation": "ICIR = 0.04 / 0.08 = 0.5. This tells you the signal's period-to-period consistency, independent of how many periods you measured it over. A signal with the same 0.04 mean IC but a standard deviation of 0.16 would have an ICIR of only 0.25, meaning a noisier, less dependable track record despite an identical average."
+            },
+            {
+              "_key": "c5l2k010",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l2k010s1",
+                  "_type": "span",
+                  "text": "The Fundamental Law: Why Breadth Matters as Much as Skill",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l2k011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c5l2m003",
+                  "_type": "glossaryTerm",
+                  "definition": "A relationship from quantitative portfolio theory, associated with Richard Grinold, stating that a strategy's achievable information ratio scales with both the skill of each individual forecast (IC) and the number of roughly independent bets made (breadth), not skill alone."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c5l2k011s1",
+                  "_type": "span",
+                  "text": "ICIR measures consistency across time. A separate, equally important idea from quantitative portfolio theory, the ",
+                  "marks": []
+                },
+                {
+                  "_key": "c5l2k011s2",
+                  "_type": "span",
+                  "text": "Fundamental Law of Active Management",
+                  "marks": ["c5l2m003"]
+                },
+                {
+                  "_key": "c5l2k011s3",
+                  "_type": "span",
+                  "text": ", concerns breadth within a single period: the number of roughly independent bets a signal lets you place at once, such as how many stocks in your universe it can meaningfully rank. A mediocre IC applied across a broad universe can outperform a strong IC applied to only a handful of names.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l2k012",
+              "_type": "mathBlock",
+              "latex": "IR \\approx IC \\times \\sqrt{\\text{Breadth}}",
+              "caption": "Breadth is the approximate number of independent bets made per period. This IR describes the strategy's achievable information ratio under this framework, a related but distinct idea from the ICIR measured above, which describes the signal's own consistency over time."
+            },
+            {
+              "_key": "c5l2k013",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Apply the Fundamental Law",
+              "prompt": "A signal has a mean IC of 0.05 and is applied across a universe treated as roughly 100 independent bets per rebalance. Using IR ≈ IC x sqrt(Breadth), what is the approximate resulting information ratio?",
+              "correctValue": 0.5,
+              "tolerance": 0.02,
+              "unit": "",
+              "explanation": "IR = 0.05 x sqrt(100) = 0.05 x 10 = 0.5. Notice this modest 0.05 IC, which the earlier table called merely 'usable,' produces the same 0.5 figure as the ICIR exercise above through an entirely different mechanism: not by being consistent over time, but by being applied broadly across many roughly independent bets in the same period. Real desks care about both dimensions, consistency over time and breadth within a period, because a strategy can fall short by being weak in either one."
+            },
+            {
+              "_key": "c5l2k014",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l2k014s1",
+                  "_type": "span",
+                  "text": "Signal Decay Curves: How Far Into the Future Does This Signal See?",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l2k015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l2k015s1",
+                  "_type": "span",
+                  "text": "Chapter 1 introduced alpha decay as a theoretical curve. Here is how to measure it directly: compute IC separately against 1-day, 5-day, 10-day, 20-day, and 40-day forward returns, using the exact same signal each time, and plot IC against horizon. The shape of that curve tells you the signal's effective useful life, which in turn tells you how often you should actually rebalance a strategy built on it.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l2k016",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Stylized IC decay curve across forecast horizons",
+              "xAxisLabel": "Forward return horizon (trading days)",
+              "yAxisLabel": "Mean IC",
+              "data": [
+                { "_key": "c5l2k016d0", "label": "1", "value": 0.010 },
+                { "_key": "c5l2k016d1", "label": "5", "value": 0.035 },
+                { "_key": "c5l2k016d2", "label": "10", "value": 0.050 },
+                { "_key": "c5l2k016d3", "label": "20", "value": 0.045 },
+                { "_key": "c5l2k016d4", "label": "40", "value": 0.025 },
+                { "_key": "c5l2k016d5", "label": "60", "value": 0.010 }
+              ]
+            },
+            {
+              "_key": "c5l2k017",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l2k017s1",
+                  "_type": "span",
+                  "text": "This is a stylized illustration of a common pattern, not a measured result for any real signal. IC often builds for a few days as the underlying information gets incorporated, peaks, then fades as the market catches up or the underlying situation changes, exactly the exponential decay shape from Chapter 1 made empirical.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l2k018",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Reading the Decay Curve",
+              "question": "Based on the stylized decay curve above, which rebalance frequency would make the most sense for a strategy built on this signal?",
+              "options": [
+                "Rebalance daily, since IC is highest at the shortest horizon",
+                "Rebalance roughly every 10 trading days, near where IC peaks",
+                "Rebalance every 60 trading days, to capture the longest available horizon",
+                "Rebalance frequency doesn't matter once you have a positive IC at any horizon"
+              ],
+              "correctIndex": 1,
+              "explanation": "The curve peaks around the 10-day horizon, meaning the signal's predictive power is strongest there, not at 1 day where IC is still low, and not at 60 days where it has already decayed back down. Rebalancing near where IC peaks captures most of the signal's usable predictive power without the unnecessary turnover and cost of trading more frequently than the signal actually justifies."
+            },
+            {
+              "_key": "c5l2k019",
+              "_type": "callout",
+              "type": "insight",
+              "text": "IC tells you if a signal works. ICIR tells you how reliably. The Fundamental Law tells you how broadly it needs to be applied to matter. A decay curve tells you how long it stays useful. A signal report that only shows one of these four is an incomplete report, no matter how good that one number looks."
+            },
+            {
+              "_key": "c5l2k020",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "The IC, ICIR, and decay curve figures in this lesson are illustrative teaching examples, not results for any real dataset or strategy. Nothing here is a recommendation to trade any security."
+            },
+            {
+              "_key": "c5l2k021",
+              "_type": "keyTakeaways",
+              "points": [
+                "The Information Coefficient (IC) is the rank correlation between a signal's cross-sectional ranking and stocks' actual forward returns, the standard quant measure of a signal's predictive power",
+                "A commonly cited rule of thumb treats mean IC below 0.02 as weak, 0.02 to 0.05 as usable, 0.05 to 0.10 as strong, and above 0.10 as rare enough to double-check for a data leak",
+                "ICIR (mean IC divided by standard deviation of IC) measures how consistently a signal performs over time, distinct from how strong it is on average",
+                "The Fundamental Law of Active Management, IR approximately equals IC times the square root of breadth, shows that a modest IC applied broadly across many independent bets can match a stronger IC applied narrowly",
+                "A signal decay curve, IC plotted against forecast horizon, empirically measures the alpha decay first introduced in Chapter 1, and should directly inform how often a strategy built on the signal actually needs to rebalance",
+                "A complete evaluation of a signal needs all four: IC for strength, ICIR for consistency, breadth for how widely it can be applied, and a decay curve for how long it remains useful"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

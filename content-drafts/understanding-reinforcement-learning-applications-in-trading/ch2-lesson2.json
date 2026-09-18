@@ -1,0 +1,293 @@
+{
+  "courseSlug": "understanding-reinforcement-learning-applications-in-trading",
+  "chapters": [
+    {
+      "title": "Chapter 2: Core RL Concepts a Trader Needs",
+      "lessons": [
+        {
+          "title": "Value Functions, Policies, and the Exploration-Exploitation Tradeoff",
+          "slug": "value-functions-policies-and-the-exploration-exploitation-tradeoff",
+          "body": [
+            {
+              "_key": "rl2l2b01",
+              "_type": "bigIdea",
+              "text": "Almost every RL algorithm reduces to one question, answered slightly differently each time: how good is it to be in this state, or to take this action from it? Value functions answer that question precisely enough to act on, and the Bellman equation is what makes answering it learnable at all."
+            },
+            {
+              "_key": "rl2l2b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl2l2b02s1", "_type": "span", "text": "Policies: The Agent's Rulebook, Formalized", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl2l2b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl2l2b03s1",
+                  "_type": "span",
+                  "text": "A policy, written π, is the formal version of a trader's playbook: a mapping from states to actions. A deterministic policy, π(s) = a, always takes the same action in a given state, buy whenever RSI crosses above 60, say. A stochastic policy, π(a|s), instead gives a probability distribution over actions for each state, for example a 70% chance of buying and a 30% chance of holding in the same setup. Stochastic policies matter more in RL than the deterministic framing traders are used to, because during training the agent genuinely needs some randomness to discover whether an untried action might work better than its current favorite.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl2l2b04",
+              "_type": "table",
+              "caption": "Deterministic vs Stochastic Policy",
+              "headers": ["", "Deterministic Policy", "Stochastic Policy"],
+              "rows": [
+                { "_key": "rl2l2b04r1", "_type": "tableRow", "cells": ["Notation", "π(s) = a", "π(a|s) = probability of action a in state s"] },
+                { "_key": "rl2l2b04r2", "_type": "tableRow", "cells": ["Trading analogy", "A fixed rule: RSI > 60 always means buy", "A trader who is 70% inclined to buy and 30% inclined to hold in the same setup"] },
+                { "_key": "rl2l2b04r3", "_type": "tableRow", "cells": ["Useful for", "Deployment, once training has converged", "Training, where some randomness is needed to keep exploring untried actions"] }
+              ]
+            },
+            {
+              "_key": "rl2l2b05",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl2l2b05s1", "_type": "span", "text": "Value Functions: How Good Is a State, Really?", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl2l2b06",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl2l2b06s1",
+                  "_type": "span",
+                  "text": "Not every state is equally good to be in, and not every action from a given state is equally good either. The state-value function V^π(s) answers the first question: starting in state s and following policy π from then on, how much discounted return should the agent expect?",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl2l2b07",
+              "_type": "mathBlock",
+              "latex": "V^{\\pi}(s) = \\mathbb{E}_{\\pi}\\left[ G_t \\mid S_t = s \\right]",
+              "caption": "The state-value function: the expected return starting from state s, if the agent follows policy π for every step after that."
+            },
+            {
+              "_key": "rl2l2b08",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl2l2b08s1",
+                  "_type": "span",
+                  "text": "The action-value function, Q^π(s,a), answers a more specific question: starting in state s, taking a particular action a right now, and only then following π, how much discounted return should the agent expect? This is the quantity almost every practical trading RL algorithm actually estimates, because it directly compares specific actions against each other.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl2l2b09",
+              "_type": "mathBlock",
+              "latex": "Q^{\\pi}(s,a) = \\mathbb{E}_{\\pi}\\left[ G_t \\mid S_t = s, A_t = a \\right]",
+              "caption": "The action-value function: the expected return of taking action a in state s, then following policy π afterward. Comparing Q(s, buy) against Q(s, sell) and Q(s, hold) for the same state is literally how a trained agent decides what to do."
+            },
+            {
+              "_key": "rl2l2b10",
+              "_type": "table",
+              "caption": "A Worked Example: Q-Values for One State",
+              "headers": ["Action", "Estimated Q(s,a)", "Interpretation"],
+              "rows": [
+                { "_key": "rl2l2b10r1", "_type": "tableRow", "cells": ["Buy", "+0.42", "Expected discounted return if the agent buys here and then follows its policy"] },
+                { "_key": "rl2l2b10r2", "_type": "tableRow", "cells": ["Sell", "-0.18", "Expected discounted return if the agent sells here"] },
+                { "_key": "rl2l2b10r3", "_type": "tableRow", "cells": ["Hold", "+0.11", "Expected discounted return if the agent stays flat"] }
+              ]
+            },
+            {
+              "_key": "rl2l2b11",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl2l2b11s1",
+                  "_type": "span",
+                  "text": "Given these three numbers, a greedy agent simply picks the action with the highest Q-value, buy, in this example, since +0.42 exceeds both alternatives. Training an RL agent is, in large part, the process of getting these Q-value estimates accurate enough that acting greedily on them produces good real-world decisions.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl2l2b12",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl2l2b12s1", "_type": "span", "text": "The Bellman Equation: Value Today in Terms of Value Tomorrow", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl2l2b13",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl2l2b13s1",
+                  "_type": "span",
+                  "text": "Value functions have a defining property that makes them computable at all: they can be written recursively, in terms of the value of the very next state. This is the Bellman equation, and it is the single most important identity in reinforcement learning.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl2l2b14",
+              "_type": "mathBlock",
+              "latex": "V^{\\pi}(s) = \\sum_{a} \\pi(a|s) \\sum_{s'} P(s'|s,a) \\Big[ R(s,a,s') + \\gamma V^{\\pi}(s') \\Big]",
+              "caption": "The Bellman expectation equation: the value of the current state equals the expected immediate reward, plus the discounted value of whatever state comes next. Value today is defined in terms of value tomorrow, which is what makes it learnable step by step rather than requiring the full future to be known in advance."
+            },
+            {
+              "_key": "rl2l2b15",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl2l2b15s1",
+                  "_type": "span",
+                  "text": "This recursion is what every algorithm from here through the end of this course exploits in one form or another. Instead of needing to know the return of an entire multi-day trading episode before learning anything, an agent can update its value estimate for the current state using just the immediate reward and its own current estimate of the next state's value. That single property, learning one step at a time rather than waiting for a full episode to finish, is what makes RL tractable on problems as long and noisy as a trading strategy's lifetime.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl2l2b16",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl2l2b16s1", "_type": "span", "text": "Optimal Value Functions and the Best Possible Policy", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl2l2b17",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl2l2b17s1",
+                  "_type": "span",
+                  "text": "Everything above was defined for a specific policy π. The optimal value functions, V*(s) and Q*(s,a), drop that qualifier: they describe the best possible expected return achievable from a state, or from a state-action pair, under the best possible policy. Once Q*(s,a) is known, or well enough estimated, the optimal policy falls out immediately.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl2l2b18",
+              "_type": "mathBlock",
+              "latex": "\\pi^{*}(s) = \\arg\\max_{a} Q^{*}(s,a)",
+              "caption": "The optimal policy is simply: in every state, take the action with the highest optimal Q-value. Almost the entire practical challenge of RL is getting a good enough estimate of Q*, not designing the decision rule once you have it."
+            },
+            {
+              "_key": "rl2l2b19",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl2l2b19s1", "_type": "span", "text": "Exploration vs Exploitation: Why the Agent Must Sometimes Trade Badly on Purpose", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl2l2b20",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl2l2b20s1",
+                  "_type": "span",
+                  "text": "Acting greedily on the current Q-value estimates is called exploitation: using what the agent currently believes is best. The problem is that early in training, those beliefs are often wrong. An action the agent has rarely or never tried might actually be better than its current favorite, but the agent will never find out unless it occasionally tries something other than its greedy choice. That occasional deviation is exploration, and balancing the two is the exploration-exploitation tradeoff. The simplest and still widely used approach is epsilon-greedy: with probability epsilon, take a random action instead of the greedy one; the rest of the time, exploit the current best estimate. Epsilon typically starts high early in training, when Q-value estimates are still unreliable and exploring broadly is valuable, and decays toward a small value as training progresses and the estimates firm up.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl2l2b21",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "A Typical Epsilon Decay Schedule During Training",
+              "xAxisLabel": "Training Episode",
+              "yAxisLabel": "Epsilon (Exploration Rate)",
+              "data": [
+                { "_key": "rl2l2b21d1", "label": "0", "value": 1.00 },
+                { "_key": "rl2l2b21d2", "label": "200", "value": 0.62 },
+                { "_key": "rl2l2b21d3", "label": "400", "value": 0.38 },
+                { "_key": "rl2l2b21d4", "label": "600", "value": 0.24 },
+                { "_key": "rl2l2b21d5", "label": "800", "value": 0.15 },
+                { "_key": "rl2l2b21d6", "label": "1000", "value": 0.05 }
+              ]
+            },
+            {
+              "_key": "rl2l2b22",
+              "_type": "table",
+              "caption": "Epsilon-Greedy Behavior at Different Epsilon Values",
+              "headers": ["Epsilon Value", "Behavior", "When Appropriate"],
+              "rows": [
+                { "_key": "rl2l2b22r1", "_type": "tableRow", "cells": ["ε = 1.0", "Fully random actions, no use of learned values at all", "Very start of training, when Q-value estimates are meaningless"] },
+                { "_key": "rl2l2b22r2", "_type": "tableRow", "cells": ["ε = 0.1", "90% greedy, 10% random", "Mid-to-late training, refining a mostly-trusted policy"] },
+                { "_key": "rl2l2b22r3", "_type": "tableRow", "cells": ["ε = 0.0", "Fully greedy, no exploration at all", "Deployment, after training is complete and the policy is fixed"] }
+              ]
+            },
+            {
+              "_key": "rl2l2b23",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Chapter 1 explained why trading RL almost never explores live, a bad exploratory action costs real money. Epsilon-greedy exploration in this course happens during offline training, against historical data or a simulator, not against a live market. Setting epsilon above zero on a live, real-money account, letting the agent occasionally trade at random to keep learning, is not a research choice serious systematic desks make; it is a way to fund random noise with real capital."
+            },
+            {
+              "_key": "rl2l2b24",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Choosing Between Exploitation and Exploration Mid-Training",
+              "scenario": "Partway through training an RL agent on two years of Nifty 50 futures data, epsilon has decayed to 0.05. The agent's Q-value estimates show Q(s, buy) = 0.30, Q(s, sell) = 0.28, and Q(s, hold) = 0.05 for the current state, three closely matched values between buy and sell.",
+              "prompt": "Given ε = 0.05, what will the agent most likely do in this state, and what risk does the closeness between Q(s, buy) and Q(s, sell) suggest about how reliable that choice really is?",
+              "modelAnswer": "With ε = 0.05, the agent acts greedily about 95% of the time, so it will most likely choose buy, since 0.30 is the highest of the three Q-value estimates, with a small 5% chance of a uniformly random action instead. The closeness between Q(s, buy) at 0.30 and Q(s, sell) at 0.28 is the more important signal here: a gap that small is well within the noise of a value estimate learned from historical data, and treating buy as confidently correct while sell is confidently wrong overstates what the numbers actually support. In practice this kind of narrow margin is a reason to want more training data or more exploration around this specific state before trusting the greedy choice with meaningful size, not a reason to treat 0.30 versus 0.28 as a decisive edge."
+            },
+            {
+              "_key": "rl2l2b25",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Reading the Bellman Equation",
+              "question": "According to the Bellman equation, the value of the current state V(s) is expressed in terms of which of the following?",
+              "options": [
+                "Only the immediate reward, with no reference to future states",
+                "The full history of every state the agent has ever visited",
+                "The expected immediate reward plus the discounted value of the next state",
+                "A value that must be computed from scratch by simulating the entire rest of the episode"
+              ],
+              "correctIndex": 2,
+              "explanation": "The defining feature of the Bellman equation is that it expresses today's value recursively, as the expected immediate reward plus the discounted value of whatever state comes next, rather than requiring the entire future trajectory to be known or simulated in advance. This recursive structure is exactly what allows RL algorithms to learn from one step at a time."
+            },
+            {
+              "_key": "rl2l2b26",
+              "_type": "keyTakeaways",
+              "points": [
+                "A policy π maps states to actions, either deterministically (a fixed rule) or stochastically (a probability distribution over actions), with stochastic policies needed during training to preserve exploration",
+                "The state-value function V^π(s) and action-value function Q^π(s,a) both measure expected discounted return, from a state, or from a specific state-action pair, under a given policy",
+                "The Bellman equation expresses value recursively, today's value equals expected immediate reward plus the discounted value of the next state, which is what makes learning from single steps possible instead of requiring a full episode",
+                "The optimal policy is simply to act greedily on the optimal action-value function Q*(s,a); nearly all of the practical difficulty in RL is estimating Q* well, not deciding what to do once you have it",
+                "Epsilon-greedy exploration trades off exploitation (acting on current best estimates) against exploration (occasionally trying something else to keep learning), typically starting high and decaying as training progresses",
+                "Exploration of this kind belongs in offline training against historical data or a simulator, never on a live account; letting a live agent act randomly to keep exploring means funding noise with real capital"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

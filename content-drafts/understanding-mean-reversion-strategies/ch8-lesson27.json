@@ -1,0 +1,145 @@
+{
+  "courseSlug": "understanding-mean-reversion-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 8: When Mean Reversion Fails",
+      "lessons": [
+        {
+          "title": "Case Study: Yes Bank, DHFL, and Stocks That Reverted to Zero, Not the Mean",
+          "slug": "case-study-yes-bank-dhfl-and-stocks-that-reverted-to-zero-not-the-mean",
+          "body": [
+            {
+              "_key": "mr8l27-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr8l27-001s1", "_type": "span", "marks": [], "text": "Chapter 1 introduced Yes Bank and DHFL as the clearest possible contrast to a genuine reversion: falls that reflected real, permanent solvency problems, not overreactions waiting to correct. This closing case study asks a harder, more useful question than \"were these bad investments\", which is obvious in hindsight. It asks whether the specific tools built across this course, the moving-average slope filter, the failed-reversion signal, the structural-break checklist, would have protected a disciplined trader in something closer to real time, without requiring anyone to predict a banking crisis in advance." }
+              ]
+            },
+            {
+              "_key": "mr8l27-002",
+              "_type": "bigIdea",
+              "text": "Neither Yes Bank nor DHFL collapsed overnight. Both showed a multi-quarter accumulation of the exact warning signs this course's checklist was built to catch, well before their final outcomes. A disciplined system does not need to predict a solvency crisis to survive one. It needs its slope filters and stop-losses to keep doing their ordinary job, trade after trade, without anyone overriding them because a stock \"looks too cheap not to bounce\"."
+            },
+            {
+              "_key": "mr8l27-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr8l27-003s1", "_type": "span", "marks": [], "text": "The Warning Signs Were Not Hidden" }
+              ]
+            },
+            {
+              "_key": "mr8l27-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr8l27-004s1", "_type": "span", "marks": [], "text": "Yes Bank's troubles became publicly visible well before its March 2020 reconstruction. The RBI's supervisory review had flagged a divergence between the bank's own reported bad-loan figures and the regulator's assessment as far back as 2018, and the RBI's decision not to extend the then-CEO's tenure in September 2018 was a widely reported governance red flag that triggered a sharp stock reaction at the time. Rating downgrades and further asset-quality disclosures continued through 2019. DHFL's decline followed a similar shape: the IL&FS default in September 2018 triggered a sector-wide funding crisis for housing financiers, an investigative report in January 2019 raised specific fund-diversion allegations against the company, and rating downgrades accumulated through the year before its eventual default and insolvency resolution. In both cases, a full year or more of accumulating, identifiable evidence preceded the final outcome." }
+              ]
+            },
+            {
+              "_key": "mr8l27-005",
+              "_type": "table",
+              "caption": "Applying Lesson 1's checklist to both stocks, in the year before their outcomes",
+              "headers": ["Warning Sign", "Yes Bank", "DHFL"],
+              "rows": [
+                { "_key": "mr8l27-005r1", "cells": ["Sloping moving average, not flat", "Persistently downward through 2018 to 2020", "Persistently downward through 2018 to 2019"] },
+                { "_key": "mr8l27-005r2", "cells": ["Specific, identifiable fundamental catalysts", "NPA divergence, governance concerns, rating downgrades", "IL&FS-triggered sector crisis, fund-diversion allegations, rating downgrades"] },
+                { "_key": "mr8l27-005r3", "cells": ["Volatility not reverting to its old baseline", "Elevated and erratic through the deterioration", "Elevated and erratic through the deterioration"] },
+                { "_key": "mr8l27-005r4", "cells": ["A run of failed systematic reversions", "Any mechanical dip-buying would have repeatedly failed", "Any mechanical dip-buying would have repeatedly failed"] }
+              ]
+            },
+            {
+              "_key": "mr8l27-006",
+              "_type": "callout",
+              "type": "insight",
+              "text": "All four warning signs from Lesson 1's checklist were present, and accumulating, well before either stock's final outcome. None of them individually required predicting a banking or NBFC crisis. Each one only required a system willing to actually apply the rules this course has built, instead of treating a beaten-down price as reason enough on its own."
+            },
+            {
+              "_key": "mr8l27-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr8l27-007s1", "_type": "span", "marks": [], "text": "What a Disciplined System Would Have Actually Done" }
+              ]
+            },
+            {
+              "_key": "mr8l27-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr8l27-008s1", "_type": "span", "marks": [], "text": "Consider a hypothetical systematic trader running Chapter 7's complete multi-signal system on a watchlist that happened to include one of these names through its deterioration. Chapter 3's slope filter would have rejected most z-score entry signals outright, since the moving average was sloping downward, not flat, exactly the falling-mean trap it exists to catch. On the handful of signals the filter did let through, before the slope became obviously steep, Chapter 7's fixed stop-loss would have closed the position at a small, pre-defined loss within days, not months. After two or three such stop-outs on the same name in a relatively short stretch, Lesson 1's failed-reversion signal would have flagged the stock for removal from the tradeable universe entirely, well before the final, catastrophic move." }
+              ]
+            },
+            {
+              "_key": "mr8l27-009",
+              "_type": "table",
+              "caption": "Disciplined system vs a naive buy-the-dip trader (illustrative)",
+              "headers": ["", "Disciplined System", "Naive Buy-the-Dip Trader"],
+              "rows": [
+                { "_key": "mr8l27-009r1", "cells": ["Response to a downward-sloping moving average", "Most entries rejected by the slope filter from Chapter 3", "Ignored, since the price still looked \"statistically cheap\""] },
+                { "_key": "mr8l27-009r2", "cells": ["Response to a losing signal", "Closed quickly at a small, fixed stop-loss", "Held, expecting an eventual reversion that never came"] },
+                { "_key": "mr8l27-009r3", "cells": ["Response to repeated failures on the same name", "Removed from the tradeable universe after Lesson 1's failed-reversion signal", "Treated each new dip as a fresh, unrelated opportunity"] },
+                { "_key": "mr8l27-009r4", "cells": ["Illustrative outcome", "A handful of small, capped losses spread across many months", "A single, near-total loss on a position held through the eventual outcome"] }
+              ]
+            },
+            {
+              "_key": "mr8l27-010",
+              "_type": "callout",
+              "type": "warning",
+              "text": "None of this required foresight. A disciplined system does not need to know in September 2018 that a bank is heading toward reconstruction eighteen months later. It only needs its slope filter and stop-loss to fire on schedule, every time, without an operator deciding this particular dip feels different from all the others. The entire value of a mechanical system is that it does not need to feel anything at all."
+            },
+            {
+              "_key": "mr8l27-011",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Compare the disciplined trader's total loss",
+              "prompt": "A disciplined trader's slope filter and stop-loss rules produced three separate stopped-out signals on a deteriorating stock over 18 months, each capped at a ₹4,000 loss under Chapter 7's risk-based sizing. What was the trader's total loss across all three attempts?",
+              "correctValue": 12000,
+              "tolerance": 100,
+              "unit": "₹",
+              "explanation": "3 x ₹4,000 = ₹12,000 in total, spread across 18 months. A hypothetical naive buy-the-dip position of ₹1,00,000 held through the eventual outcome would have lost on the order of ₹85,000 to ₹90,000 in a single trade, an order of magnitude worse than the disciplined trader's cumulative, capped losses."
+            },
+            {
+              "_key": "mr8l27-012",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Which warning sign was not part of this course's checklist?",
+              "question": "Based on Lesson 1's structural-break checklist, which of the following was NOT one of the practical warning signs this course uses to flag a deteriorating stock?",
+              "options": [
+                "A persistently downward-sloping moving average",
+                "A specific, identifiable fundamental catalyst, such as a rating downgrade or governance concern",
+                "A brand new competitor launching in the same city, unconnected to any statistical or financial signal",
+                "A run of failed reversions on the same stock"
+              ],
+              "correctIndex": 2,
+              "explanation": "A new competitor entering a market is a real business risk, but it is not one of this course's specific, mechanically checkable warning signs. The other three, a sloping moving average, an identifiable fundamental catalyst, and a run of failed systematic signals, are exactly the checklist items from Lesson 1 that were present in both the Yes Bank and DHFL cases."
+            },
+            {
+              "_key": "mr8l27-013",
+              "_type": "keyTakeaways",
+              "points": [
+                "Both Yes Bank and DHFL showed a multi-quarter accumulation of identifiable warning signs, rating downgrades, governance concerns, and sector-wide funding stress, well before their final outcomes, not a single, unforeseeable overnight event.",
+                "All four of Lesson 1's checklist items, a sloping moving average, specific fundamental catalysts, elevated non-reverting volatility, and a run of failed reversions, were present in both cases in the run-up to their outcomes.",
+                "A disciplined system does not need to predict a solvency crisis. Its slope filter rejects most entries into a genuinely declining stock, and its stop-loss and failed-reversion tracking limit the damage on the rest, mechanically, without requiring foresight.",
+                "The gap between a disciplined system's small, capped losses and a naive buy-the-dip trader's near-total loss on the same stock is not about who predicted the outcome better. It is about whose rules were actually followed.",
+                "Lesson 4 closes the course by turning this checklist, and everything else built across eight chapters, into a concrete, ongoing reversion watchlist you can actually maintain."
+              ]
+            },
+            {
+              "_key": "mr8l27-014",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice or a recommendation to buy, sell, or hold any security. References to Yes Bank and DHFL describe general, publicly reported historical events and are presented as rounded, illustrative context, not precise data, and should be independently verified. All trade logs, loss figures, and comparisons in this lesson are hypothetical and illustrative. Past events do not guarantee future outcomes. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

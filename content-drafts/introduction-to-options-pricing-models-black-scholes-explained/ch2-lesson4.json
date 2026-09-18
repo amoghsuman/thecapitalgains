@@ -1,0 +1,313 @@
+{
+  "courseSlug": "introduction-to-options-pricing-models-black-scholes-explained",
+  "chapters": [
+    {
+      "title": "Chapter 2: Building Blocks: Randomness, Volatility, and Brownian Motion",
+      "lessons": [
+        {
+          "title": "The Assumptions Behind Black-Scholes and Where They Break Down",
+          "slug": "the-assumptions-behind-black-scholes-and-where-they-break-down",
+          "body": [
+            {
+              "_key": "k1",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k1s",
+                  "_type": "span",
+                  "text": "Seven Promises the Formula Makes",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k2",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k2s1",
+                  "_type": "span",
+                  "text": "Every closed-form formula buys its elegance with simplifying assumptions. Black-Scholes makes roughly seven of them. Knowing this list by heart is what separates someone who can compute an option price from someone who knows when to trust that price and when to treat it as a rough anchor instead of gospel.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "table",
+              "caption": "What the formula assumes, and what real markets actually do",
+              "headers": ["Assumption", "What Black-Scholes assumes", "Real market reality"],
+              "rows": [
+                {
+                  "_key": "k3",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Constant volatility",
+                    "One single σ applies to every strike and every expiry at once",
+                    "A live option chain shows a different implied volatility for almost every strike (the volatility smile or skew)"
+                  ]
+                },
+                {
+                  "_key": "k4",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Constant risk-free rate",
+                    "One steady interest rate for the option's entire life",
+                    "The RBI repo rate and T-bill yields move, especially noticeable for longer-dated options"
+                  ]
+                },
+                {
+                  "_key": "k5",
+                  "_type": "tableRow",
+                  "cells": [
+                    "No dividends (basic version)",
+                    "The underlying pays out nothing before expiry",
+                    "Indian stocks pay dividends that mechanically lower the price on the ex-date"
+                  ]
+                },
+                {
+                  "_key": "k6",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Continuous price movement",
+                    "Price follows a smooth path with no sudden jumps (geometric Brownian motion)",
+                    "Real prices gap on results, news, and events, and extreme sessions can hit exchange circuit filters"
+                  ]
+                },
+                {
+                  "_key": "k7",
+                  "_type": "tableRow",
+                  "cells": [
+                    "European-style exercise",
+                    "The option can only be exercised at expiry, never before",
+                    "Many contracts worldwide, and India's own exchange-traded stock options for years, allow exercise anytime before expiry"
+                  ]
+                },
+                {
+                  "_key": "k8",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Frictionless markets",
+                    "No transaction costs, unlimited short selling, continuous costless hedging",
+                    "Real trading has brokerage, Securities Transaction Tax, bid-ask spreads, lot sizes, and margin limits"
+                  ]
+                },
+                {
+                  "_key": "k9",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Independent, identically distributed returns",
+                    "Each period's move is unrelated to the last, drawn from the same distribution throughout",
+                    "Volatility clustering means calm and turbulent stretches tend to bunch together, not spread evenly"
+                  ]
+                }
+              ],
+              "_key": "k10"
+            },
+            {
+              "_key": "k11",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k11s",
+                  "_type": "span",
+                  "text": "European Exercise: Not Every Indian Option Ever Met This Promise",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k12",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k12s1",
+                  "_type": "span",
+                  "text": "Lesson 1.4 flagged this one and promised a return visit. The closed-form Black-Scholes formula only prices European-style options correctly, contracts that can only be exercised on the expiry date itself. Today's NSE index options, on Nifty and Bank Nifty, are European-style, so this assumption holds cleanly for most of India's most actively traded contracts. It was not always true across the board: India's exchange-traded stock options ran American-style, exercisable on any trading day before expiry, before the exchanges moved them to European-style. An assumption baked into a formula can be a live regulatory choice, not a law of nature, and it can change under you.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k13",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k13s",
+                  "_type": "span",
+                  "text": "Constant Volatility: An Assumption the Market's Own Prices Disprove",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k14",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k14s1",
+                  "_type": "span",
+                  "text": "Black-Scholes wants one σ, used for every strike on the chain. Back out implied volatility strike by strike from real, live premiums instead, and you get a different number at almost every strike. Deep out-of-the-money puts routinely trade at a noticeably higher implied volatility than at-the-money options, because there is structurally more demand for downside protection than for an equally far out-of-the-money call. This pattern is called the ",
+                  "marks": []
+                },
+                {
+                  "_key": "k14s2",
+                  "_type": "span",
+                  "text": "volatility skew",
+                  "marks": ["gd1"]
+                },
+                {
+                  "_key": "k14s3",
+                  "_type": "span",
+                  "text": ", and it is a direct, daily, observable contradiction of the model's own constant-volatility assumption. It also echoes Lesson 2.1's caution about the random walk's independence assumption: calm and turbulent periods cluster together in time (volatility clustering), which is exactly why a single constant σ, whether over strikes or over time, is a convenient simplification and not a description of how real markets actually behave.",
+                  "marks": []
+                }
+              ],
+              "markDefs": [
+                {
+                  "_key": "gd1",
+                  "_type": "glossaryTerm",
+                  "definition": "The pattern where implied volatility differs systematically across strikes for the same expiry, typically higher for out-of-the-money puts than for at-the-money or out-of-the-money calls on equity indices."
+                }
+              ]
+            },
+            {
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Illustrative implied volatility skew across a Nifty option chain",
+              "xAxisLabel": "Strike",
+              "yAxisLabel": "Implied volatility (%)",
+              "data": [
+                { "_key": "k15", "label": "24,000 (OTM put)", "value": 18.5 },
+                { "_key": "k16", "label": "24,400", "value": 16.0 },
+                { "_key": "k17", "label": "24,800 (ATM)", "value": 14.5 },
+                { "_key": "k18", "label": "25,200", "value": 14.0 },
+                { "_key": "k19", "label": "25,600 (OTM call)", "value": 14.5 }
+              ],
+              "_key": "k20"
+            },
+            {
+              "_type": "callout",
+              "type": "insight",
+              "text": "If the model insists on one σ but the market clearly trades many, why does anyone still use Black-Scholes? Because it remains an excellent, fast, universally understood translator between price and volatility. Traders do not treat its output as the one true price; they treat implied volatility itself as the real product, quoting and trading in volatility terms, and simply plug a different σ into the same formula for each strike. The model being technically wrong about constant volatility does not stop it from being the shared language the entire options market speaks.",
+              "_key": "k21"
+            },
+            {
+              "_key": "k22",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k22s",
+                  "_type": "span",
+                  "text": "Jump Risk: When the Price Path Isn't Smooth",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k23",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k23s1",
+                  "_type": "span",
+                  "text": "Geometric Brownian motion, from Lesson 2.2, moves continuously. However fine you zoom into the timeline, the price never teleports; it only ever takes infinitesimally small steps. Real markets do not respect that. Earnings surprises, policy announcements, and major political events can gap a price sharply between one trade and the next, sometimes triggering exchange circuit filters that halt trading altogether. Indian markets have lived through single-session shocks severe enough to trip circuit breakers around unexpected news, most famously around a major election result in the mid-2000s. A model built on continuous paths structurally cannot price this kind of jump risk correctly, which is exactly why implied volatility tends to rise sharply ahead of any date where a jump is plausible, as you saw with the Budget-day chart in the last lesson.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k24",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k24s",
+                  "_type": "span",
+                  "text": "Frictions the Formula Quietly Assumes Away",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k25",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k25s1",
+                  "_type": "span",
+                  "text": "The replication argument from Chapter 1 needed a portfolio you could rebalance continuously, at zero cost, in unlimited size. Real trading on Zerodha or any other broker involves brokerage, Securities Transaction Tax on options trades, a bid-ask spread that widens in illiquid strikes, fixed lot sizes that stop you from hedging in perfectly fractional amounts, and margin requirements that can limit how large a hedge you can actually carry. None of this breaks the formula's logic. It just means the theoretical price it outputs is a clean reference point, not a number you can costlessly trade exactly at.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Spot the broken assumption",
+              "question": "A trader notices that Nifty's 24,000-strike put has a much higher implied volatility than its 24,800-strike (ATM) call, on the same expiry. Which Black-Scholes assumption does this observation most directly contradict?",
+              "options": [
+                "European-style exercise only",
+                "No dividends before expiry",
+                "Constant volatility across all strikes",
+                "A constant, known risk-free rate"
+              ],
+              "correctIndex": 2,
+              "explanation": "Black-Scholes assumes a single σ for every strike. Different implied volatilities at different strikes on the same expiry, the volatility skew, is a direct, observable violation of that specific assumption.",
+              "_key": "k26"
+            },
+            {
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Trusting the model into a known event",
+              "scenario": "Two days before a scheduled RBI policy announcement, Vikram plugs today's numbers, including today's historical volatility figure, into a Black-Scholes calculator and gets a theoretical price for a Nifty option. He assumes that price is \"the fair value\" and buys accordingly, ignoring the fact that the live option chain is already trading well above his calculated number.",
+              "prompt": "Using at least two of this lesson's broken assumptions, explain what Vikram is likely getting wrong.",
+              "modelAnswer": "First, Vikram used historical volatility as his σ input, but Black-Scholes needs an estimate of future volatility, and the market itself is telling him, through elevated implied volatility ahead of a known event, that it expects more movement than the recent past has shown. Using yesterday's volatility to price tomorrow's uncertainty ignores exactly the historical-versus-implied gap from Lesson 2.3.\n\nSecond, an RBI announcement is a classic jump-risk event: the market can gap sharply on the news itself, not drift smoothly into it the way geometric Brownian motion assumes. A single constant σ estimated from calm, ordinary days cannot honestly capture the chance of a sudden, event-driven jump.\n\nRather than treating his calculated number as \"the fair value\" and assuming the market is wrong, Vikram should treat the live market price as the more informed one: it is already pricing in both the anticipation of the event and the possibility of a jump, both of which his backward-looking, constant-volatility calculation left out.",
+              "_key": "k27"
+            },
+            {
+              "_type": "bigIdea",
+              "text": "Black-Scholes is not a law of markets. It is a precise answer to a simplified question. Knowing exactly which seven simplifications you accepted to get that answer is what lets you use the formula with judgment instead of blind faith.",
+              "_key": "k28"
+            },
+            {
+              "_type": "keyTakeaways",
+              "points": [
+                "Black-Scholes rests on roughly seven assumptions: constant volatility, a constant risk-free rate, no dividends, continuous (no-jump) price movement, European-only exercise, frictionless markets, and independent, identically distributed returns.",
+                "European-only exercise holds for today's NSE index options but was not always true of Indian exchange-traded stock options, a reminder that model assumptions can be regulatory choices, not fixed facts.",
+                "The volatility skew, different implied volatility at different strikes on the same expiry, is a direct daily contradiction of the constant-volatility assumption, yet traders still use the formula by quoting and trading in volatility terms per strike.",
+                "Continuous, no-jump price paths cannot capture real gap risk around results, policy announcements, or major political events, which is exactly why implied volatility rises ahead of such dates.",
+                "Real trading involves brokerage, Securities Transaction Tax, bid-ask spreads, lot sizes, and margin limits that the frictionless-market assumption ignores entirely.",
+                "None of this makes Black-Scholes useless. It makes its output a precise, well-understood reference point, not a guarantee, which is exactly the judgment this course is building toward."
+              ],
+              "_key": "k29"
+            },
+            {
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice. The illustrative volatility skew figures and Vikram's scenario are hypothetical. Details on the historical shift of Indian stock options from American to European style, and on past instances of circuit-filter-triggering sessions, are simplified for a general audience; verify exact dates and rules from NSE and SEBI circulars before relying on them.",
+              "_key": "k30"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

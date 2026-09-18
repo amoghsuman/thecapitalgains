@@ -1,0 +1,263 @@
+{
+  "courseSlug": "understanding-stochastic-calculus-brownian-motion-itos-lemma-and-the-path-to-black-scholes",
+  "chapters": [
+    {
+      "title": "Chapter 2: Ito Calculus: The Rules for Working With Randomness",
+      "lessons": [
+        {
+          "title": "Deriving Ito's Lemma: A Taylor Series Walkthrough",
+          "slug": "deriving-itos-lemma-a-taylor-series-walkthrough",
+          "body": [
+            {
+              "_key": "c2l3-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-001s1", "_type": "span", "marks": [], "text": "\"You stated the formula correctly last time,\" the interviewer says, \"now prove it to me.\" Fair request. The previous lesson handed you Ito's lemma and showed it working on one example. This lesson opens up the machine: a full second-order Taylor expansion, term by term, with every piece sorted into \"keep\" or \"discard\" based on how fast it vanishes as the time step shrinks to zero. By the end, the formula from the last lesson will not look like something you memorized. It will look like something you built." }
+              ]
+            },
+            {
+              "_key": "c2l3-002",
+              "_type": "bigIdea",
+              "text": "Ito's lemma falls directly out of a second-order Taylor expansion of f(X(t), t), once every term is sorted by how quickly it vanishes as the time step shrinks. Most second-order terms vanish faster than the time step itself and get discarded, exactly as in ordinary calculus. Exactly one second-order term, the one built from (dW)², vanishes no faster than the time step, and that lone survivor is the entire content of the lemma."
+            },
+            {
+              "_key": "c2l3-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-003s1", "_type": "span", "marks": [], "text": "Setting Up the Full Second-Order Taylor Expansion" }
+              ]
+            },
+            {
+              "_key": "c2l3-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-004s1", "_type": "span", "marks": [], "text": "Start from the most general place: a twice-differentiable function f(x, t), expanded to second order around a point (X, t) as both x and t receive small increments Δx and Δt. This is the standard multivariable Taylor expansion, nothing stochastic has entered yet." }
+              ]
+            },
+            {
+              "_key": "c2l3-005",
+              "_type": "mathBlock",
+              "latex": "\\Delta f \\approx f_t\\,\\Delta t + f_x\\,\\Delta x + \\tfrac{1}{2} f_{tt}\\,(\\Delta t)^2 + f_{xt}\\,\\Delta x\\,\\Delta t + \\tfrac{1}{2} f_{xx}\\,(\\Delta x)^2 + \\tfrac{1}{6} f_{xxx}\\,(\\Delta x)^3 + \\cdots",
+              "caption": "The general second-order (and beyond) multivariable Taylor expansion"
+            },
+            {
+              "_key": "c2l3-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-006s1", "_type": "span", "marks": [], "text": "Substituting the SDE Increment" }
+              ]
+            },
+            {
+              "_key": "c2l3-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-007s1", "_type": "span", "marks": [], "text": "Now bring in the stochastic differential equation from two lessons ago: X follows dX = a\\,dt + b\\,dW, so Δx = aΔt + bΔW. Squaring this increment, since it appears in the (Δx)² term above, produces three pieces of very different sizes." }
+              ]
+            },
+            {
+              "_key": "c2l3-008",
+              "_type": "mathBlock",
+              "latex": "\\Delta x = a\\,\\Delta t + b\\,\\Delta W \\qquad (\\Delta x)^2 = a^2(\\Delta t)^2 \\;+\\; 2ab\\,\\Delta t\\,\\Delta W \\;+\\; b^2(\\Delta W)^2",
+              "caption": "Substituting the SDE increment and expanding its square"
+            },
+            {
+              "_key": "c2l3-009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-009s1", "_type": "span", "marks": [], "text": "Counting Orders: What Survives as Δt → 0" }
+              ]
+            },
+            {
+              "_key": "c2l3-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-010s1", "_type": "span", "marks": [], "text": "This is the actual walkthrough: go term by term through the Taylor expansion, using ΔW's typical size, √Δt, to work out how fast each term shrinks, and keep only the terms that shrink no faster than Δt itself. Everything smaller is discarded, the same rule ordinary calculus already follows, just applied honestly to a term whose size ordinary calculus never has to consider." }
+              ]
+            },
+            {
+              "_key": "c2l3-011",
+              "_type": "table",
+              "caption": "Sorting every Taylor term by how fast it vanishes",
+              "headers": ["Term", "Approximate size", "Keep or discard?"],
+              "rows": [
+                { "_key": "c2l3-011r1", "_type": "tableRow", "cells": ["f_t Δt", "order Δt", "Keep"] },
+                { "_key": "c2l3-011r2", "_type": "tableRow", "cells": ["f_x · aΔt", "order Δt", "Keep (the drift piece of f_x·Δx)"] },
+                { "_key": "c2l3-011r3", "_type": "tableRow", "cells": ["f_x · bΔW", "order √Δt", "Keep (the diffusion piece of f_x·Δx)"] },
+                { "_key": "c2l3-011r4", "_type": "tableRow", "cells": ["(1/2) f_xx · b²(ΔW)²", "order Δt, since (ΔW)² ≈ Δt", "Keep, this is the Ito correction term"] },
+                { "_key": "c2l3-011r5", "_type": "tableRow", "cells": ["(1/2) f_xx · a²(Δt)², and f_xx · ab·ΔtΔW", "order (Δt)² and Δt^1.5", "Discard"] },
+                { "_key": "c2l3-011r6", "_type": "tableRow", "cells": ["(1/2) f_tt (Δt)², and f_xt · Δx·Δt", "order (Δt)² and Δt^1.5", "Discard"] },
+                { "_key": "c2l3-011r7", "_type": "tableRow", "cells": ["(1/6) f_xxx (Δx)³, and all higher-order terms", "order Δt^1.5 or smaller", "Discard"] }
+              ]
+            },
+            {
+              "_key": "c2l3-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-012s1", "_type": "span", "marks": [], "text": "Four terms survive, and only four. Collecting them gives the pre-limit form of Ito's lemma, still written with Δ's rather than d's, one step before the final substitution." }
+              ]
+            },
+            {
+              "_key": "c2l3-013",
+              "_type": "mathBlock",
+              "latex": "\\Delta f \\approx f_t\\,\\Delta t + f_x\\,(a\\Delta t + b\\Delta W) + \\tfrac{1}{2} f_{xx}\\, b^2(\\Delta W)^2",
+              "caption": "What remains after discarding every term that vanishes faster than Δt"
+            },
+            {
+              "_key": "c2l3-014",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-014s1", "_type": "span", "marks": [], "text": "Replacing (ΔW)² With Δt: The Rigorous Justification" }
+              ]
+            },
+            {
+              "_key": "c2l3-015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-015s1", "_type": "span", "marks": [], "text": "The last remaining step is replacing (ΔW)² with Δt inside that surviving term. This is not a claim that every single increment squared exactly equals Δt, it obviously does not, ΔW is random and (ΔW)² varies from one small step to the next. What Chapter 1's fourth lesson actually proved is that E[(ΔW)²] = Δt exactly, and that Var[(ΔW)²] = 2(Δt)², an order of Δt smaller than the mean itself. Once you sum this term across a full partition of a finite interval, the way Chapter 1 summed Qn, those per-step fluctuations average out and the sum converges to the deterministic value you would get from just replacing every (ΔW)² with its mean, Δt. The replacement is exact in the limit that defines the stochastic integral, even though it is only approximately true for any single, finite step." }
+              ]
+            },
+            {
+              "_key": "c2l3-016",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This is precisely the same argument Chapter 1's fourth lesson made about Qn: a fixed mean (t, or here Δt per step) plus a variance that shrinks faster than the mean matters (2(Δt)² against a mean of Δt) is what turns a random quantity into a usable, deterministic substitution once you sum and take a limit. Ito's lemma does not introduce a new leap of faith here, it reuses the exact leap of faith this course already justified two lessons ago."
+            },
+            {
+              "_key": "c2l3-017",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-017s1", "_type": "span", "marks": [], "text": "Arriving at Ito's Lemma" }
+              ]
+            },
+            {
+              "_key": "c2l3-018",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-018s1", "_type": "span", "marks": [], "text": "Substitute (ΔW)² → Δt into the four surviving terms, let Δ's become d's as the partition becomes infinitesimally fine, and the exact formula from the previous lesson appears, this time earned rather than handed to you." }
+              ]
+            },
+            {
+              "_key": "c2l3-019",
+              "_type": "mathBlock",
+              "latex": "df = \\left[f_t + a\\,f_x + \\tfrac{1}{2} b^2 f_{xx}\\right] dt + b\\,f_x\\, dW",
+              "caption": "Ito's lemma, now derived rather than stated"
+            },
+            {
+              "_key": "c2l3-020",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-020s1", "_type": "span", "marks": [], "text": "A Full Walkthrough Example: d(W(t)⁴)" }
+              ]
+            },
+            {
+              "_key": "c2l3-021",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-021s1", "_type": "span", "marks": [], "text": "Extend the previous lesson's x² and x³ examples one step further, with f(x) = x⁴ and X(t) = W(t), so a = 0 and b = 1. Here f'(x) = 4x³ and f''(x) = 12x². Every term in the order-counting table above still applies unchanged, only f and its derivatives are different." }
+              ]
+            },
+            {
+              "_key": "c2l3-022",
+              "_type": "mathBlock",
+              "latex": "d\\big(W(t)^4\\big) = \\left[0 + 0 + \\tfrac{1}{2}(1)^2(12W(t)^2)\\right] dt + (1)(4W(t)^3)\\, dW = 6W(t)^2\\, dt + 4W(t)^3\\, dW",
+              "caption": "Ito's lemma applied to f(x) = x⁴, with X(t) = W(t)"
+            },
+            {
+              "_key": "c2l3-023",
+              "_type": "codeBlock",
+              "language": "python",
+              "caption": "Verifying d(W⁴) numerically against a direct simulation",
+              "code": "import numpy as np\n\ndef simulate_wiener(T=1.0, n_steps=2000):\n    dt = T / n_steps\n    increments = np.random.normal(0, np.sqrt(dt), n_steps)\n    return np.concatenate(([0.0], np.cumsum(increments)))\n\nW = simulate_wiener(T=1.0, n_steps=2000)\ndt = 1.0 / 2000\n\n# Direct simulated change in W^4 over the full path\ndirect_change = W[-1]**4 - W[0]**4\n\n# Ito's lemma prediction, summed step by step across the path\nito_predicted = np.sum(6 * W[:-1]**2 * dt + 4 * W[:-1]**3 * np.diff(W))\n\nprint(f\"Direct change in W(1)^4:        {direct_change:.4f}\")\nprint(f\"Ito's lemma predicted change:   {ito_predicted:.4f}\")\n# The two match closely; any remaining small gap shrinks further as n_steps grows,\n# exactly as the order-counting table above predicts."
+            },
+            {
+              "_key": "c2l3-024",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Do not walk away thinking √Δt terms like f_x·bΔW are somehow \"second-order small\" just because they involve randomness. They are first-order terms, exactly as important as f_x·aΔt, and they become the dW piece of the final answer. The only terms this lesson discards are ones that shrink strictly faster than Δt itself: anything of order (Δt)^1.5 or smaller."
+            },
+            {
+              "_key": "c2l3-025",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Test the order-counting logic",
+              "question": "Why does the third-derivative term, (1/6)·f_xxx·(Δx)³, always vanish and get discarded when deriving Ito's lemma for an SDE dX = a dt + b dW?",
+              "options": [
+                "Because third derivatives are always zero for functions used in finance",
+                "Because (Δx)³ is dominated by b³(ΔW)³, which is order (Δt)^1.5, smaller than the Δt-order terms that survive",
+                "Because Ito's lemma only applies to functions with at most two derivatives",
+                "Because (Δx)³ is always exactly zero for a Wiener process"
+              ],
+              "correctIndex": 1,
+              "explanation": "(Δx)³ is dominated by its bΔW piece cubed, giving b³(ΔW)³, which has typical size (√Δt)³ = Δt^1.5. That is strictly smaller order than Δt, so it vanishes faster than the terms kept in Ito's lemma and can be safely discarded as Δt → 0, for the same reason (Δt)² and Δt^1.5 cross terms were discarded in the walkthrough table."
+            },
+            {
+              "_key": "c2l3-026",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Extract the coefficient from d(W⁴)",
+              "prompt": "In d(W(t)⁴) = 6·W(t)²·dt + 4·W(t)³·dW, what is the coefficient of dt, expressed as a multiple of W(t)² (i.e., just the number in front of W(t)²)?",
+              "correctValue": 6,
+              "tolerance": 0.01,
+              "explanation": "With f(x) = x⁴, f''(x) = 12x², and the Ito correction term is (1/2)·b²·f''(x) = (1/2)·(1)²·(12x²) = 6x². The coefficient of dt, as a multiple of W(t)², is 6."
+            },
+            {
+              "_key": "c2l3-027",
+              "_type": "flashcardSet",
+              "title": "Core Terms From This Lesson",
+              "cards": [
+                { "_key": "c2l3-027f1", "term": "Order counting", "definition": "The technique of comparing how fast different Taylor expansion terms shrink as Δt → 0, keeping only terms of order Δt or larger and discarding anything that vanishes strictly faster." },
+                { "_key": "c2l3-027f2", "term": "Ito correction term", "definition": "The single surviving second-order Taylor term, (1/2)·b²·f_xx·dt, which exists only because (ΔW)² is order Δt rather than order (Δt)², unlike every other second-order term in the expansion." },
+                { "_key": "c2l3-027f3", "term": "Mean-square convergence", "definition": "The type of convergence used to justify replacing (ΔW)² with Δt: the fluctuation around this replacement (its variance) shrinks faster than the replacement's own size, so summed over a partition, the substitution becomes exact in the limit." }
+              ]
+            },
+            {
+              "_key": "c2l3-028",
+              "_type": "keyTakeaways",
+              "points": [
+                "Ito's lemma comes directly from a full second-order Taylor expansion of f(X(t), t), with the SDE increment Δx = aΔt + bΔW substituted in.",
+                "Sorting every term in that expansion by how fast it vanishes as Δt → 0 leaves exactly four survivors: f_t·Δt, f_x·aΔt, f_x·bΔW, and (1/2)·f_xx·b²(ΔW)²; everything else is order (Δt)^1.5 or smaller and gets discarded.",
+                "Replacing (ΔW)² with Δt in the surviving correction term is justified by mean-square convergence, the same argument Chapter 1's fourth lesson used for quadratic variation, not a new assumption.",
+                "Applying the full derivation to f(x) = x⁴ with X(t) = W(t) gives d(W⁴) = 6W²dt + 4W³dW, extending the x² and x³ examples from the previous lesson with the identical method.",
+                "The next lesson puts this fully derived tool to its most important use in this course: applying Ito's lemma to geometric Brownian motion, the model behind the Black-Scholes formula."
+              ]
+            },
+            {
+              "_key": "c2l3-029",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to buy, sell, or hold any security. All figures in this lesson are illustrative mathematical results from simulation, not live market data."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,247 @@
+{
+  "courseSlug": "understanding-risk-parity-and-advanced-portfolio-construction",
+  "chapters": [
+    {
+      "title": "Chapter 2: Risk Parity Fundamentals",
+      "lessons": [
+        {
+          "title": "Volatility Targeting and Leverage in Risk Parity",
+          "slug": "volatility-targeting-and-leverage-in-risk-parity",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "b1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b1s1", "text": "The Rs 10 lakh portfolio from the last lesson has a real problem, and it is not a bug in the math. Putting 57.6% of your capital into a G-Sec fund produces a genuinely calm portfolio, volatility of roughly 4.7%, but calm comes at the cost of return, because G-Secs simply do not pay equity-like returns. This lesson is about the tool institutional risk parity funds use to fix that: leverage, applied deliberately to hit a chosen volatility target, and the financing cost that determines whether that leverage is actually worth using.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b2s1", "text": "The Problem With an Unlevered Risk Parity Portfolio", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b3",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b3s1", "text": "Attach illustrative long-run expected returns to the three sleeves from the last lesson, Nifty 50 at 12%, the G-Sec/gilt fund at 7%, and gold at 8%, purely to see the scale of the problem, not as a forecast this course is asking you to trust. Weighted by the 20.1/57.6/22.2 ERC split, the unlevered portfolio's expected return comes out to roughly 8.2%.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "statGrid",
+              "_key": "b4",
+              "stats": [
+                { "label": "Unlevered ERC portfolio (illustrative)", "value": "Vol 4.7% / Return 8.2%", "context": "20.1% equity, 57.6% G-Sec, 22.2% gold" },
+                { "label": "Nifty 50 alone (illustrative)", "value": "Vol 14.0% / Return 12.0%", "context": "100% equity, undiversified" },
+                { "label": "Volatility gap", "value": "~3x", "context": "Nifty's volatility is roughly three times the unlevered ERC portfolio's" }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "b5",
+              "type": "insight",
+              "text": "This is not a flaw to fix by abandoning risk parity. A portfolio dominated by a low-volatility sleeve is mechanically going to have low volatility and, correspondingly, a lower expected return in rupee terms than an all-equity portfolio. The entire premise of institutional risk parity, going back to Bridgewater's original All Weather approach, is that you do not have to accept this calm-but-low-returning portfolio as the finish line. You scale it up."
+            },
+            {
+              "_type": "block",
+              "_key": "b6",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b6s1", "text": "Volatility Targeting: Scaling the Whole Portfolio, Not Just One Asset", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b7",
+              "style": "normal",
+              "markDefs": [
+                { "_type": "glossaryTerm", "_key": "gt1", "definition": "Scaling an entire portfolio's exposure up or down, using leverage or cash, so its realized or expected volatility matches a chosen target level." }
+              ],
+              "children": [
+                { "_type": "span", "_key": "b7s1", "text": "The fix is called ", "marks": [] },
+                { "_type": "span", "_key": "b7s2", "text": "volatility targeting", "marks": ["gt1"] },
+                { "_type": "span", "_key": "b7s3", "text": ": pick a target volatility, often chosen to match a familiar benchmark like Nifty 50's own volatility so the comparison is apples to apples, then scale every sleeve in the portfolio up by the same multiple. Scaling every sleeve by the same factor is the critical detail, it means the ratio between the sleeves, and therefore each one's share of total risk, is completely unchanged. Leverage rescales the portfolio. It does not touch the equal risk contribution property from the last two lessons.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "mathBlock",
+              "_key": "b8",
+              "latex": "L = \\frac{\\sigma_{target}}{\\sigma_p}, \\qquad E[R_L] = L \\cdot E[R_p] - (L - 1) \\cdot r_f",
+              "caption": "Leverage multiple L needed to reach a target volatility, and the expected return of the levered portfolio. The levered return scales the unlevered portfolio's return by L, then subtracts a financing cost r_f on the borrowed (L-1) portion of the notional."
+            },
+            {
+              "_type": "block",
+              "_key": "b9",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b9s1", "text": "Rearranged slightly, E[R_L] equals E[R_p] plus (L minus 1) times (E[R_p] minus r_f). Every extra unit of leverage adds or subtracts exactly the gap between the unlevered portfolio's return and the financing rate. If your financing rate is below the unlevered portfolio's return, leverage is a straightforward amplifier of that edge. If your financing rate is above it, leverage subtracts value, mechanically, no matter how well diversified the underlying portfolio is.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b10",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b10s1", "text": "How You Would Actually Get the Leverage in India", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b11",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b11s1", "text": "This is where the theory meets Indian market structure, and where the financing rate in that formula stops being an abstraction. There are a few practical routes to leverage, and they carry very different costs.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "b12",
+              "caption": "Leverage routes available to an Indian investor or trader (illustrative cost ranges)",
+              "headers": ["Route", "How it works", "Illustrative annualized cost"],
+              "rows": [
+                { "cells": ["Broker margin trading facility (MTF)", "Borrow cash from your broker against existing holdings to buy more of the ETF/fund positions outright", "~12% to 18%"] },
+                { "cells": ["Index and interest rate futures", "Get notional exposure to Nifty 50 via Nifty futures and to G-Sec duration via NSE Interest Rate Futures, posting only margin rather than full notional; financing cost is embedded in the futures price as cost of carry", "~6.5% to 7.5%, close to the repo/T-bill rate"] },
+                { "cells": ["Loan against securities (LAS)", "Borrow against existing fund or ETF holdings through a bank or NBFC facility, subject to a haircut on the pledged value", "~9% to 12%"] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "b13",
+              "type": "warning",
+              "text": "Futures financing tends to be meaningfully cheaper than a broker's margin trading facility, because futures cost of carry is arbitraged tightly against money market rates by institutional participants, while MTF interest is priced as a retail lending product with a much wider spread over the broker's own cost of funds. This gap is not a rounding error, it is often the difference between leverage that adds value and leverage that destroys it, as the case study below shows."
+            },
+            {
+              "_type": "block",
+              "_key": "b14",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b14s1", "text": "Case Study: Levering the ERC Portfolio to Nifty's Volatility", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b15",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b15s1", "text": "Target Nifty 50's own volatility, 14%, so the comparison to an all-equity portfolio is fair. With the unlevered ERC portfolio's volatility at 4.7%, that requires leverage of roughly 2.95x, meaning you would run notional exposure of about Rs 29.5 lakh against a Rs 10 lakh capital base, borrowing the remaining Rs 19.5 lakh through whichever route from the table above you choose.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "b16",
+              "caption": "Levered ERC portfolio expected return at 2.95x leverage, by financing route (illustrative)",
+              "headers": ["Financing route", "Illustrative financing rate", "Levered expected return", "vs. Nifty 50 alone (12.0%)"],
+              "rows": [
+                { "cells": ["Institutional repo-like rate", "6.5%", "~11.6%", "Slightly below"] },
+                { "cells": ["Index/rate futures cost of carry", "~7.0%", "~10.6%", "Below"] },
+                { "cells": ["Broker margin trading facility", "15.0%", "~-5.0%", "Far below, and negative"] }
+              ]
+            },
+            {
+              "_type": "chart",
+              "_key": "b17",
+              "chartType": "bar",
+              "title": "Expected return at 2.95x leverage by financing rate (illustrative)",
+              "xAxisLabel": "Financing route",
+              "yAxisLabel": "Expected return (%)",
+              "data": [
+                { "label": "Unlevered ERC", "value": 8.2 },
+                { "label": "Levered, repo (6.5%)", "value": 11.6 },
+                { "label": "Levered, futures (~7.0%)", "value": 10.6 },
+                { "label": "Levered, MTF (15.0%)", "value": -5.0 }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "b18",
+              "type": "warning",
+              "text": "The breakeven financing rate for this portfolio is exactly its unlevered expected return, about 8.2%. Below that rate, leverage helps. Above it, every extra unit of leverage subtracts from expected return, and a typical Indian broker's margin trading facility, at 12% to 18%, sits well above that breakeven point. This is precisely why institutional risk parity funds, which finance leverage near repo rates through futures and swaps, can run this strategy profitably in a way that a retail investor borrowing cash through MTF often cannot."
+            },
+            {
+              "_type": "callout",
+              "_key": "b19",
+              "type": "disclaimer",
+              "text": "These figures use illustrative expected returns and cost assumptions to demonstrate the leverage mechanism, not a forecast or investment recommendation. The specific breakeven rate, and whether leverage helps or hurts, will differ with your own return and cost assumptions. Also note this framework uses expected arithmetic return. Leverage scales volatility along with return, and compounded, realized returns suffer a variance drag roughly proportional to half the portfolio's variance, a distinction chapter 4 covers when discussing honest backtesting of leveraged strategies."
+            },
+            {
+              "_type": "block",
+              "_key": "b20",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b20s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "codeBlock",
+              "_key": "b21",
+              "language": "python",
+              "code": "def levered_return(unlevered_return, unlevered_vol, target_vol, financing_rate):\n    L = target_vol / unlevered_vol\n    levered_return = unlevered_return + (L - 1) * (unlevered_return - financing_rate)\n    return L, levered_return\n\nRp, sigma_p = 0.082, 0.047       # unlevered ERC portfolio: ~8.2% return, ~4.7% vol\ntarget_vol = 0.14                 # match Nifty 50's volatility\n\nfor route, rf in [('Repo-like', 0.065), ('Futures', 0.07), ('MTF', 0.15)]:\n    L, RL = levered_return(Rp, sigma_p, target_vol, rf)\n    print(f'{route}: leverage={L:.2f}x, financing={rf:.1%}, levered return={RL:.1%}')\n\n# breakeven financing rate: the rate at which leverage neither helps nor hurts\nprint(f'Breakeven financing rate = unlevered return = {Rp:.1%}')",
+              "caption": "Swap in your own return and volatility assumptions, and your own actual MTF or futures financing rate quotes, to check whether leverage is worth using for a portfolio you are actually running."
+            },
+            {
+              "_type": "exercise",
+              "_key": "b22",
+              "variant": "scenario",
+              "title": "A Prop Desk's Financing Advantage",
+              "scenario": "You are comparing two versions of the same 2.95x-levered risk parity strategy. A proprietary trading desk finances its leverage through interest rate futures and repo at close to 6.75%. A retail investor attempting the same strategy through their broker's margin trading facility is quoted 14%.",
+              "prompt": "Without recomputing exact numbers, explain qualitatively why the same portfolio, the same weights, the same leverage multiple, can be a good strategy for one and a poor one for the other.",
+              "modelAnswer": "The portfolio's unlevered expected return and volatility are identical for both, so the leverage multiple needed to hit the same target volatility is identical too. What differs entirely is the financing rate in the levered-return formula. The prop desk's 6.75% sits below the unlevered portfolio's roughly 8.2% expected return, so leverage adds value for them. The retail investor's 14% sits above it, so the same leverage subtracts value for them. This is not a difference in strategy or skill, it is a difference in access to cheap financing, which is exactly why institutional risk parity implementations lean so heavily on futures and repo markets rather than borrowing cash outright."
+            },
+            {
+              "_type": "exercise",
+              "_key": "b23",
+              "variant": "numericInput",
+              "title": "Quick Check",
+              "prompt": "If the unlevered ERC portfolio's expected return is 8.2%, what financing rate (as a percentage) makes leverage exactly value-neutral, neither helping nor hurting expected return, regardless of the leverage multiple used?",
+              "correctValue": 8.2,
+              "tolerance": 0.2,
+              "unit": "%",
+              "explanation": "From E[R_L] = E[R_p] + (L-1)*(E[R_p] - r_f), the (L-1) term multiplies (E[R_p] - r_f). Whenever r_f equals E[R_p], that bracket is zero, so E[R_L] equals E[R_p] no matter how large L is. This is the breakeven financing rate, and it is always exactly equal to the unlevered portfolio's own expected return."
+            },
+            {
+              "_type": "block",
+              "_key": "b24",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b24s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "b25",
+              "text": "Leverage does not change a risk parity portfolio's risk balance, scaling every sleeve equally preserves equal risk contribution exactly. What leverage changes is scale, and whether that scaling helps or hurts depends entirely on one number: whether your financing rate sits above or below the unlevered portfolio's own expected return. In India, that makes the financing route, futures and repo versus retail margin funding, as important a decision as the portfolio weights themselves."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "b26",
+              "points": [
+                "An unlevered risk parity portfolio dominated by a low-volatility sleeve like G-Secs will have correspondingly modest expected returns. That is mechanical, not a flaw to fix by abandoning equal risk contribution.",
+                "Volatility targeting scales every sleeve by the same leverage multiple L = target volatility / current volatility, which preserves each sleeve's risk contribution share exactly.",
+                "The levered return formula, E[R_L] = E[R_p] + (L-1) * (E[R_p] - financing rate), means leverage only adds value when the financing rate is below the unlevered portfolio's expected return. Above that breakeven point, leverage subtracts value regardless of diversification quality.",
+                "In India, futures-based leverage (Nifty futures, NSE Interest Rate Futures) typically finances close to repo/T-bill rates, while a broker's margin trading facility is priced meaningfully higher, often above a diversified portfolio's own expected return.",
+                "This gap in financing cost is a large part of why institutional risk parity funds can profitably run levered strategies that would be value-destructive for a retail investor borrowing cash outright.",
+                "This lesson used expected arithmetic returns for clarity. Leverage also amplifies volatility, and the resulting variance drag on compounded returns is a separate, important cost covered in chapter 4's discussion of honest backtesting."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,311 @@
+{
+  "courseSlug": "advanced-analysis-of-sovereign-debt-sustainability",
+  "chapters": [
+    {
+      "title": "Chapter 2: Reading Sovereign Risk Through Market Signals",
+      "lessons": [
+        {
+          "title": "Sovereign CDS Spreads and Market-Implied Default Probability",
+          "slug": "sovereign-cds-spreads-and-market-implied-default-probability",
+          "body": [
+            {
+              "_key": "c2l2k001",
+              "_type": "bigIdea",
+              "text": "A sovereign CDS spread is not really insurance pricing. It is the market's real-time, dollar-denominated bet on default, and once you fix a recovery assumption, that bet converts directly into an implied probability."
+            },
+            {
+              "_key": "c2l2k002",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2k002s1",
+                  "_type": "span",
+                  "text": "The previous lesson's yield decomposition left one component only loosely defined: the sovereign credit spread, s, buried inside a bond's quoted yield alongside inflation, term premium, and liquidity effects. A credit default swap isolates exactly that component and prices it directly, on its own, as a standalone contract. This lesson takes that instrument apart: how it works, how its spread converts into an implied default probability, and where that conversion, and the market pricing it, can mislead you.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2k003",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l2k003s1", "_type": "span", "text": "What a Sovereign CDS Actually Is", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l2k004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c2l2k004md1",
+                  "_type": "glossaryTerm",
+                  "definition": "A committee of major dealers and buy-side firms, convened by ISDA, that rules on contested questions under standard CDS contracts, most importantly whether a 'credit event' has actually occurred and, if so, what the auction-determined recovery price should be."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c2l2k004s1",
+                  "_type": "span",
+                  "text": "A sovereign CDS is a bilateral contract in which a protection buyer pays a running premium, quoted in basis points per year on a notional amount, to a protection seller. If a defined 'credit event', typically a failure to pay, a restructuring, or a repudiation or moratorium, occurs on the reference sovereign's debt, the seller compensates the buyer for the loss, most commonly settled today through a standardised ISDA auction that sets a single market-wide recovery price rather than requiring physical delivery of bonds. Whether a credit event has actually happened is not self-evident; it is formally ruled on by the ",
+                  "marks": []
+                },
+                {
+                  "_key": "c2l2k004s2",
+                  "_type": "span",
+                  "text": "ISDA Determinations Committee",
+                  "marks": ["c2l2k004md1"]
+                },
+                {
+                  "_key": "c2l2k004s3",
+                  "_type": "span",
+                  "text": ", a point this lesson returns to later, because it has mattered enormously in practice.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2k005",
+              "_type": "keyFact",
+              "label": "The Standard Sovereign CDS Contract",
+              "value": "5-year tenor",
+              "context": "By far the most liquid and widely quoted maturity; other tenors exist but trade with markedly less depth"
+            },
+            {
+              "_key": "c2l2k006",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l2k006s1", "_type": "span", "text": "From Spread to Implied Default Probability", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l2k007",
+              "_type": "mathBlock",
+              "latex": "s \\approx h \\times (1-R)",
+              "caption": "s = CDS spread (annualised, as a decimal), h = the risk-neutral annual hazard (default) rate implied by the market, R = the assumed recovery rate on the defaulted debt"
+            },
+            {
+              "_key": "c2l2k008",
+              "_type": "mathBlock",
+              "latex": "PD_T \\approx 1 - e^{-hT}",
+              "caption": "PD_T = cumulative implied probability of default within T years, using the hazard rate h solved from the spread above"
+            },
+            {
+              "_key": "c2l2k009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2k009s1",
+                  "_type": "span",
+                  "text": "Rearranging the first identity gives h = s / (1-R). Once you have a hazard rate, the second identity converts it into a cumulative default probability over any horizon T. The market convention for sovereign CDS pricing has long used a standard recovery assumption of 25%, chosen for comparability across issuers, not as a forecast for any specific country's actual eventual recovery.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2k010",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Convert a Spread Into a Default Probability",
+              "prompt": "A sovereign's 5-year CDS spread is quoted at 400 basis points, and you use the standard 25% market-convention recovery rate. Using h = s/(1-R) and PD_T = 1 - e^(-hT), what is the approximate cumulative implied probability of default over the 5-year life of the contract? Answer in percent, e.g. 23.4 for 23.4%.",
+              "correctValue": 23.4,
+              "tolerance": 2,
+              "unit": "%",
+              "explanation": "h = 0.04 / (1 - 0.25) = 0.04 / 0.75 ≈ 0.0533, or about 5.33% per year. Over 5 years, PD_5 = 1 - e^(-0.0533 × 5) = 1 - e^(-0.267) ≈ 1 - 0.766 = 0.234, or about 23.4%. A 400 bps spread is roughly what a solidly sub-investment-grade sovereign might trade at; the implied probability is meaningful but far from a coin flip."
+            },
+            {
+              "_key": "c2l2k011",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l2k011s1", "_type": "span", "text": "The Recovery Rate Assumption Nobody Should Take at Face Value", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l2k012",
+              "_type": "table",
+              "caption": "The 25% convention vs what sovereigns have actually recovered",
+              "headers": ["Case", "Year", "Recovery Outcome", "What It Shows"],
+              "rows": [
+                {
+                  "_key": "c2l2k012r1",
+                  "_type": "tableRow",
+                  "cells": ["Market Convention (Pricing Assumption)", "N/A", "25% (standard)", "Used to make quotes comparable across issuers; not a forecast for any specific country"]
+                },
+                {
+                  "_key": "c2l2k012r2",
+                  "_type": "tableRow",
+                  "cells": ["Greece", "2012", "~21.5% (CDS auction final price)", "A deep, negotiated haircut close to what distressed pricing had already implied ahead of the restructuring"]
+                },
+                {
+                  "_key": "c2l2k012r3",
+                  "_type": "tableRow",
+                  "cells": ["Ecuador", "2008-09", "~35%", "A 'strategic' default where the government argued part of its debt was illegitimate, then repurchased bonds cheaply in the open market"]
+                }
+              ]
+            },
+            {
+              "_key": "c2l2k013",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Treat the 25% recovery convention as a pricing tool, not a forecast. Actual sovereign recoveries have ranged from roughly a fifth of face value to well over half, depending on the country's negotiating leverage, the structure of the restructuring, and how much of the debt was held by official versus private creditors. Any implied default probability you calculate is only as good as the recovery assumption feeding into it."
+            },
+            {
+              "_key": "c2l2k014",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l2k014s1", "_type": "span", "text": "CDS vs Cash Bond Spread: The Basis, and Why It Sometimes Breaks", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l2k015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2k015s1",
+                  "_type": "span",
+                  "text": "In an efficient market, a sovereign's CDS spread and its equivalent-maturity cash bond spread should sit close together, since both are pricing the same underlying default risk; the gap between the two is called the basis. In practice the basis moves around, and often widens sharply in stress, because CDS and cash bonds are traded by different participants under different funding and margin constraints. A macro fund wanting to express or hedge a sovereign credit view frequently prefers CDS over shorting the cash bond directly, because shorting government bonds is operationally difficult, capital-intensive, or simply restricted in many markets, while a CDS contract requires no ownership or borrowing of the underlying bond at all.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2k016",
+              "_type": "callout",
+              "type": "insight",
+              "text": "That same ease of use worried European regulators during the 2010-12 Eurozone debt crisis: a trader could buy CDS protection on Greek, Italian, Spanish, or Portuguese debt purely as a speculative bet on distress, without owning any of the underlying bonds, a position known as a 'naked' CDS. The EU's Short Selling Regulation banned naked sovereign CDS on EU sovereign debt from November 2012 onward, on the view that this speculative positioning was itself amplifying the borrowing costs of the very sovereigns under stress."
+            },
+            {
+              "_key": "c2l2k017",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l2k017s1", "_type": "span", "text": "When 'Default' Isn't Obvious: The ISDA Determinations Committee", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l2k018",
+              "_type": "timeline",
+              "title": "Two Rulings That Redefined What 'Default' Means for CDS",
+              "events": [
+                {
+                  "_key": "c2l2k018e1",
+                  "date": "2012",
+                  "title": "Greece's Retroactive CACs Trigger a Restructuring",
+                  "description": "Greece amended its bonds' terms to insert collective action clauses retroactively, then used them to force a deep haircut on private bondholders who had not agreed to the exchange. ISDA's Determinations Committee ruled this constituted a 'restructuring' credit event, triggering CDS payouts across the market."
+                },
+                {
+                  "_key": "c2l2k018e2",
+                  "date": "2014",
+                  "title": "Argentina's Failure to Pay Despite Wanting to Pay",
+                  "description": "A US court injunction, arising from a dispute with holdout creditors from Argentina's 2001 default, blocked a scheduled coupon payment even though Argentina had deposited the funds. ISDA's Determinations Committee ruled this was a 'failure to pay' credit event, triggering CDS payouts, despite Argentina's public insistence that it wanted to pay and blamed the court order alone."
+                }
+              ]
+            },
+            {
+              "_key": "c2l2k019",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l2k019s1", "_type": "span", "text": "Reading Sovereign CDS as an Early Warning, With a Dose of Scepticism", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l2k020",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2k020s1",
+                  "_type": "span",
+                  "text": "Sovereign CDS spreads have a genuinely strong track record as an early warning: they widened sharply ahead of Greece's 2012 restructuring, Zambia's 2020 default, Sri Lanka's 2022 default, and Ghana's 2022 default, often well before a rating downgrade or an IMF program announcement caught up. But the sovereign CDS market itself is considerably thinner than the underlying government bond market for most countries. Trading volumes are lower, the number of active dealers is smaller, and for many emerging markets, India included, CDS liquidity is markedly lower than in the local G-Sec market, since India has never needed the kind of foreign-currency crisis insurance a distressed frontier sovereign does. Funds seeking India-correlated hedges often use a basket of more liquid Asian emerging-market CDS as a proxy instead of India's own thinly-traded contract. A single day's spike in a thinly-traded name can reflect one large hedging flow or a single dealer repositioning rather than a genuine, broad-based repricing of default risk.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2k021",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Read a Thin-Market CDS Spike Correctly",
+              "scenario": "A frontier sovereign's 5-year CDS spread jumps from 600 bps to 1,100 bps in a single trading session, on volume dealers describe as 'one client-driven trade'. No rating action, no missed payment, and no material news has been reported on the sovereign that day.",
+              "prompt": "Before treating this as a genuine deterioration in the country's credit outlook, what do you check first?",
+              "modelAnswer": "The first check is whether this was a single, large, one-off trade moving an illiquid market, rather than a broad shift in dealer quotes and positioning across multiple counterparties. In a thinly-traded CDS market, one client needing to buy a large amount of protection quickly, for reasons that may have nothing to do with a considered credit view, a portfolio rebalancing, a forced unwind, or a hedge against an unrelated position, can move the quoted spread sharply without reflecting the market's actual consensus. You would want to see whether the spread holds at the new level over the following days, whether cash bond spreads and the currency moved in sympathy, and whether other dealers are quoting anywhere near the same level, before concluding the market's view of the country's risk has genuinely shifted."
+            },
+            {
+              "_key": "c2l2k022",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Check Your Understanding",
+              "question": "Argentina's 2014 CDS credit event was triggered by a 'failure to pay', even though Argentina had deposited the funds for its coupon payment and stated publicly that it wanted to pay. What does this case demonstrate about how sovereign 'default' works for CDS purposes?",
+              "options": [
+                "CDS credit events are triggered purely by a country's stated intent, regardless of whether payment is actually received",
+                "A credit event is a specific, legally defined determination made by ISDA's Determinations Committee based on contractual triggers, and can occur even when a government is willing but legally prevented from paying",
+                "Argentina's case shows that CDS contracts never pay out unless a government explicitly declares bankruptcy",
+                "The case shows that CDS spreads become irrelevant once a legal dispute is involved"
+              ],
+              "correctIndex": 1,
+              "explanation": "ISDA's Determinations Committee ruled Argentina's missed payment, caused by a US court injunction tied to a holdout-creditor dispute, a 'failure to pay' credit event, triggering CDS payouts, regardless of Argentina's stated willingness to pay. Whether a 'default' has occurred for CDS purposes is a specific contractual and legal determination, not simply a judgment call about a government's intent or economic capacity to pay."
+            },
+            {
+              "_key": "c2l2k023",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l2k023s1", "_type": "span", "text": "A Field Checklist for Reading Sovereign CDS", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l2k024",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Before You Trust a Sovereign CDS Spread",
+              "steps": [
+                "Confirm which tenor you are looking at; 5-year is the standard, most liquid quote, and shorter or longer tenors can be far less liquid",
+                "Check the assumed recovery rate behind any implied default probability calculation; the 25% market convention is a pricing convenience, not a forecast for that specific country",
+                "Compare the CDS spread to the equivalent-maturity cash bond spread; a large, persistent basis is worth investigating on its own",
+                "Check reported trading volume and the number of active dealer quotes before treating a sharp one-day move as a genuine shift in market view",
+                "Remember that a 'credit event' is a specific ISDA Determinations Committee ruling on contractual triggers, not simply your own read of whether a country is 'in default'",
+                "For markets with thin sovereign CDS liquidity, such as India, check whether a broader Asian or emerging-market basket of CDS is moving in the same direction before reading too much into a single name"
+              ]
+            },
+            {
+              "_key": "c2l2k025",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson explains sovereign CDS mechanics and default-probability arithmetic for educational purposes only. It is not investment advice, and the historical recovery rates, spread levels, and case details cited are approximate and drawn from public reporting; always verify against current ISDA, dealer, and market data before relying on a specific figure."
+            },
+            {
+              "_key": "c2l2k026",
+              "_type": "keyTakeaways",
+              "points": [
+                "A sovereign CDS spread converts directly into a market-implied default probability through s ≈ h × (1-R), once you fix a recovery rate assumption, conventionally 25% for sovereigns",
+                "Actual sovereign recoveries have varied enormously in practice, from roughly a fifth of face value (Greece, 2012) to over a third (Ecuador, 2008-09), so any implied probability is only as reliable as its recovery assumption",
+                "The CDS-bond basis exists because CDS is easier to trade than shorting cash bonds directly, which is exactly why the EU banned 'naked' sovereign CDS on its own debt in 2012",
+                "Whether a 'credit event' has occurred is a specific legal and contractual determination made by ISDA's Determinations Committee, not simply a judgment call, as Greece's 2012 and Argentina's 2014 cases both show",
+                "Sovereign CDS is a genuinely strong early-warning signal historically, but its thinner liquidity than the underlying bond market, especially for names like India, means a single sharp move deserves scrutiny before being read as a consensus shift"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

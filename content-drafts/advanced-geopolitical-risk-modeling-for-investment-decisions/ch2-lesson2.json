@@ -1,0 +1,394 @@
+{
+  "courseSlug": "advanced-geopolitical-risk-modeling-for-investment-decisions",
+  "chapters": [
+    {
+      "title": "Chapter 2: Quantitative Frameworks for Geopolitical Risk",
+      "lessons": [
+        {
+          "title": "Scenario Analysis and Stress-Testing Portfolios Against Geopolitical Shocks",
+          "slug": "scenario-analysis-and-stress-testing-portfolios-against-geopolitical-shocks",
+          "body": [
+            {
+              "_key": "c2l2k001",
+              "_type": "bigIdea",
+              "text": "A geopolitical risk index tells you how stressed the market is right now. Stress testing answers a different question: given that stress, what does it actually cost your specific portfolio, in rupees and percent, not just in vibes."
+            },
+            {
+              "_key": "c2l2k002",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2k002s1",
+                  "_type": "span",
+                  "text": "The composite GRI from the last lesson is a diagnostic instrument. Knowing today's reading sits in the Elevated band tells a portfolio committee that something real is happening, but it does not tell them whether their specific mix of holdings is exposed or insulated. This lesson closes that gap with a three-step stress-testing process: define a scenario, map each holding's sensitivity to the four channels, and combine the two into a single projected portfolio impact. The output is a number a committee can actually act on.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2k003",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2k003s1",
+                  "_type": "span",
+                  "text": "Step 1: Define the Scenario, Historical Replay or Synthetic Construction",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2k004",
+              "_type": "comparison",
+              "title": "Two Ways to Define a Stress Scenario",
+              "columns": [
+                {
+                  "_key": "c2l2k004c1",
+                  "label": "Historical Replay",
+                  "points": [
+                    "Reuses a real episode's channel z-scores, such as the Russia-Ukraine war or the Covid crash from Chapter 1",
+                    "Grounded in something that actually happened, easy to defend to a committee",
+                    "Backward-looking by construction; the next shock rarely repeats the last one exactly",
+                    "Fast to set up, since the channel readings are already estimated in this course"
+                  ]
+                },
+                {
+                  "_key": "c2l2k004c2",
+                  "label": "Synthetic Construction",
+                  "points": [
+                    "Builds a plausible new scenario, such as a Taiwan Strait escalation disrupting chip supply chains",
+                    "Can probe risks the portfolio has never actually lived through",
+                    "Requires real judgment to size each channel's shock without historical precedent to anchor it",
+                    "More work to build, but often more relevant to genuinely forward-looking risks"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c2l2k005",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2k005s1",
+                  "_type": "span",
+                  "text": "Step 2: Map Channel Sensitivities by Sector",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2k006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2k006s1",
+                  "_type": "span",
+                  "text": "The most common mistake at this step is assuming every sector loses when a channel fires. It does not. A weaker INR is a currency-channel shock that hurts an importer and helps an IT exporter billing in dollars. A spike in geopolitical tension can hurt an oil marketing company through costlier crude while helping a gold ETF and a defence PSU through the exact same headline. Sizing this correctly means assigning each sector a primary channel exposure, a direction, and an illustrative sensitivity, a beta, expressed here as the expected percentage move in that sector for every 1.0 point of z-score shock in its channel.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2k007",
+              "_type": "table",
+              "caption": "Illustrative sector sensitivities, expected % move per 1.0 z-score shock in the primary channel",
+              "headers": ["Sector", "Primary Channel", "Illustrative Beta", "Direction"],
+              "rows": [
+                {
+                  "_key": "c2l2k007r1",
+                  "_type": "tableRow",
+                  "cells": ["Oil Marketing Companies (e.g. IOC, BPCL, HPCL)", "Commodity", "-4% per z", "Negative, costlier crude compresses marketing margins"]
+                },
+                {
+                  "_key": "c2l2k007r2",
+                  "_type": "tableRow",
+                  "cells": ["Aviation (e.g. IndiGo)", "Commodity", "-5% per z", "Negative, jet fuel is roughly a third of operating cost"]
+                },
+                {
+                  "_key": "c2l2k007r3",
+                  "_type": "tableRow",
+                  "cells": ["IT & Export Services (e.g. TCS, Infosys)", "Currency", "+2% per z", "Positive, a weaker INR raises dollar revenue in rupee terms"]
+                },
+                {
+                  "_key": "c2l2k007r4",
+                  "_type": "tableRow",
+                  "cells": ["Export-Oriented Goods Manufacturers (textiles, engineering goods)", "Trade", "-2.5% per z", "Negative, higher freight cost and delayed deliveries"]
+                },
+                {
+                  "_key": "c2l2k007r5",
+                  "_type": "tableRow",
+                  "cells": ["Banks & NBFCs (e.g. HDFC Bank, ICICI Bank)", "Currency & Capital Flows", "-1.8% per z", "Negative, FPI outflow and rate defence tighten liquidity"]
+                },
+                {
+                  "_key": "c2l2k007r6",
+                  "_type": "tableRow",
+                  "cells": ["Gold ETF (e.g. a Nippon India ETF Gold BeES-type fund)", "Capital Flows (safe-haven demand)", "+3.5% per z", "Positive, safe-haven flows lift gold prices"]
+                },
+                {
+                  "_key": "c2l2k007r7",
+                  "_type": "tableRow",
+                  "cells": ["Defence PSUs (e.g. HAL, BEL)", "Composite GRI (sentiment)", "+1.5% per z", "Positive, elevated tension lifts defence-spend expectations"]
+                }
+              ]
+            },
+            {
+              "_key": "c2l2k008",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2k008s1",
+                  "_type": "span",
+                  "text": "Step 3: Size the Shock, Then Size the Portfolio Impact",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2k009",
+              "_type": "mathBlock",
+              "latex": "\\Delta \\text{Portfolio} \\approx \\sum_{i=1}^{n} w_i \\times \\beta_i \\times z_i",
+              "caption": "w_i is the portfolio weight of sector i, beta_i is that sector's sensitivity to its primary channel, and z_i is the scenario's z-score shock for that channel, taken directly from the same z-score scale built in the previous lesson."
+            },
+            {
+              "_key": "c2l2k010",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2k010s1",
+                  "_type": "span",
+                  "text": "Worked Example: Stress-Testing a Portfolio Against a Russia-Ukraine-Type Scenario",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2k011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2k011s1",
+                  "_type": "span",
+                  "text": "Take a hypothetical diversified portfolio and reuse the previous lesson's Russia-Ukraine-episode z-scores as the scenario: trade at 1.1, commodity at 2.3, currency at 1.5, capital flows at 1.5, a composite GRI of 1.6, squarely in the Elevated band.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2k012",
+              "_type": "table",
+              "caption": "Full worked stress test, weight × beta × scenario shock",
+              "headers": ["Sector", "Weight", "Scenario Shock (z)", "Sector Impact", "Weighted Contribution"],
+              "rows": [
+                {
+                  "_key": "c2l2k012r1",
+                  "_type": "tableRow",
+                  "cells": ["Oil Marketing Companies", "10%", "2.3 (commodity)", "-9.2%", "-0.92%"]
+                },
+                {
+                  "_key": "c2l2k012r2",
+                  "_type": "tableRow",
+                  "cells": ["Aviation", "5%", "2.3 (commodity)", "-11.5%", "-0.58%"]
+                },
+                {
+                  "_key": "c2l2k012r3",
+                  "_type": "tableRow",
+                  "cells": ["IT & Export Services", "20%", "1.5 (currency)", "+3.0%", "+0.60%"]
+                },
+                {
+                  "_key": "c2l2k012r4",
+                  "_type": "tableRow",
+                  "cells": ["Export-Oriented Manufacturers", "10%", "1.1 (trade)", "-2.75%", "-0.28%"]
+                },
+                {
+                  "_key": "c2l2k012r5",
+                  "_type": "tableRow",
+                  "cells": ["Banks & NBFCs", "30%", "1.5 (currency/capital flows)", "-2.7%", "-0.81%"]
+                },
+                {
+                  "_key": "c2l2k012r6",
+                  "_type": "tableRow",
+                  "cells": ["Gold ETF", "5%", "1.5 (capital flows)", "+5.25%", "+0.26%"]
+                },
+                {
+                  "_key": "c2l2k012r7",
+                  "_type": "tableRow",
+                  "cells": ["Defence PSUs", "5%", "1.6 (composite GRI)", "+2.4%", "+0.12%"]
+                },
+                {
+                  "_key": "c2l2k012r8",
+                  "_type": "tableRow",
+                  "cells": ["Cash & Other (no material exposure)", "15%", "n/a", "0%", "0.00%"]
+                }
+              ]
+            },
+            {
+              "_key": "c2l2k013",
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "c2l2k013s1",
+                  "label": "Total Projected Portfolio Impact",
+                  "value": "~-1.6%",
+                  "context": "Sum of all weighted contributions above, under this Elevated-band scenario"
+                },
+                {
+                  "_key": "c2l2k013s2",
+                  "label": "Same Scenario, 100% in Oil Marketing Companies",
+                  "value": "~-9.2%",
+                  "context": "The concentrated alternative; the diversified portfolio's positive-beta holdings meaningfully cushion the blow"
+                },
+                {
+                  "_key": "c2l2k013s3",
+                  "label": "Positive-Beta Holdings' Combined Weight",
+                  "value": "30%",
+                  "context": "IT services, gold ETF, and defence PSUs, the holdings actually gaining in this scenario"
+                }
+              ]
+            },
+            {
+              "_key": "c2l2k014",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "def stress_test(portfolio, scenario):\n    \"\"\"portfolio: list of dicts, each {'sector', 'weight', 'channel', 'beta'}\n       weight as a decimal (0.10 for 10%), beta as %-move per 1.0 z-score.\n    scenario: dict of {channel: z_score_shock}.\n    Returns (total_impact_pct, per_sector_contribution).\n    \"\"\"\n    contributions = {}\n    for holding in portfolio:\n        z = scenario.get(holding['channel'], 0.0)\n        sector_impact = holding['beta'] * z\n        contributions[holding['sector']] = holding['weight'] * sector_impact\n\n    total_impact_pct = sum(contributions.values())\n    return round(total_impact_pct, 2), contributions\n\n\nportfolio = [\n    {'sector': 'Oil Marketing Companies', 'weight': 0.10, 'channel': 'commodity', 'beta': -4.0},\n    {'sector': 'Aviation', 'weight': 0.05, 'channel': 'commodity', 'beta': -5.0},\n    {'sector': 'IT & Export Services', 'weight': 0.20, 'channel': 'currency', 'beta': 2.0},\n    {'sector': 'Export Manufacturers', 'weight': 0.10, 'channel': 'trade', 'beta': -2.5},\n    {'sector': 'Banks & NBFCs', 'weight': 0.30, 'channel': 'currency', 'beta': -1.8},\n    {'sector': 'Gold ETF', 'weight': 0.05, 'channel': 'capital_flows', 'beta': 3.5},\n    {'sector': 'Defence PSUs', 'weight': 0.05, 'channel': 'composite', 'beta': 1.5},\n]\nscenario = {'commodity': 2.3, 'currency': 1.5, 'trade': 1.1, 'capital_flows': 1.5, 'composite': 1.6}\n\ntotal, breakdown = stress_test(portfolio, scenario)\nprint(f\"Total projected impact: {total}%\")",
+              "caption": "The same worked example as a runnable function. Swap in your own portfolio and any scenario, historical or synthetic, to get a projected impact and a per-sector breakdown."
+            },
+            {
+              "_key": "c2l2k015",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2k015s1",
+                  "_type": "span",
+                  "text": "Severity Ladders: Mild, Base, and Severe Scenarios",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2k016",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2k016s1",
+                  "_type": "span",
+                  "text": "A single stress test gives one number for one scenario. A severity ladder gives a range, running the same portfolio through a Mild, a Base, and a Severe version of the shock, tied to the same GRI bands from the previous lesson. This is closer to how the exercise is actually used inside a portfolio committee: not one prediction, but a spread of plausible outcomes to size the decision against.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2k017",
+              "_type": "table",
+              "caption": "The same portfolio under three severities of the same scenario shape",
+              "headers": ["Severity", "GRI Band", "Composite GRI", "Projected Portfolio Impact"],
+              "rows": [
+                {
+                  "_key": "c2l2k017r1",
+                  "_type": "tableRow",
+                  "cells": ["Mild", "Moderate", "~0.75", "~-0.75%"]
+                },
+                {
+                  "_key": "c2l2k017r2",
+                  "_type": "tableRow",
+                  "cells": ["Base", "Elevated (Russia-Ukraine-like)", "~1.6", "~-1.6%"]
+                },
+                {
+                  "_key": "c2l2k017r3",
+                  "_type": "tableRow",
+                  "cells": ["Severe", "Severe (Covid-like)", "~3.4", "~-3.4%"]
+                }
+              ]
+            },
+            {
+              "_key": "c2l2k018",
+              "_type": "chart",
+              "chartType": "bar",
+              "title": "Projected Portfolio Impact Across the Severity Ladder",
+              "xAxisLabel": "Severity",
+              "yAxisLabel": "Projected Impact (%)",
+              "data": [
+                { "_key": "c2l2k018d1", "label": "Mild", "value": -0.75 },
+                { "_key": "c2l2k018d2", "label": "Base", "value": -1.6 },
+                { "_key": "c2l2k018d3", "label": "Severe", "value": -3.4 }
+              ]
+            },
+            {
+              "_key": "c2l2k019",
+              "_type": "callout",
+              "type": "warning",
+              "text": "The Severe column above is a straight-line extrapolation of the Base case, and that is precisely where this method is weakest. Betas estimated from calm or moderately stressed markets often do not hold in a genuine crisis. Correlations that look low or even offsetting in normal conditions tend to converge toward one under real panic, banks, exporters, and sometimes even gold can all fall together when liquidity itself is the problem, quietly erasing the diversification benefit this worked example relied on. Betas estimated from past episodes may also simply not apply to a genuinely novel shock with no close historical analogue. And a static model like this one does not capture second-round effects, an RBI rate defence, a government fiscal response, or a circuit-breaker trading halt, all of which change how a real stress event actually plays out but are invisible to a single point estimate."
+            },
+            {
+              "_key": "c2l2k020",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Stress-Test a New Scenario",
+              "scenario": "Tensions between China and Taiwan escalate sharply after a disputed naval incident in the Taiwan Strait. Global chip manufacturers halt shipments through the region for several weeks, shipping insurers add a war-risk premium on East Asia routes, and global investors rotate hard into gold and the US dollar.",
+              "prompt": "Walk through this using the three-step process from this lesson: which channels does this scenario shock, which sectors in a typical Indian portfolio would be hurt or helped, and where on the Mild-Base-Severe ladder would you place it?",
+              "modelAnswer": "The trade channel fires hard, since chip shipments halting and war-risk shipping premiums are a direct trade disruption. The capital flow channel also fires hard, given the described rotation into gold and the dollar implies a broader emerging-market risk-off move that would likely hit Indian FPI flows too, even though India is not a direct party to the dispute. The commodity channel fires only indirectly unless the standoff spreads to affect oil or LNG shipping routes near the region. In a typical Indian portfolio, electronics and auto manufacturers reliant on imported chips, and export-oriented goods manufacturers facing higher freight and insurance costs, would be hurt, while gold ETFs and defence PSUs would likely gain on the same headline. Given that three of four channels are plausibly firing and chip supply chains typically take weeks to renormalise even after de-escalation, this sits closer to the Base rung than Mild, with real risk of sliding toward Severe if the standoff persists or escalates further, echoing how both the Russia-Ukraine war and Covid-19 evolved from an initial shock into a sustained multi-month stress."
+            },
+            {
+              "_key": "c2l2k021",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Compute a Sector's Weighted Contribution",
+              "prompt": "Using this lesson's worked example, the Banks & NBFCs holding has a weight of 30%, a beta of -1.8% per 1.0 z-score of currency-channel shock, and faces a scenario shock of 1.5. What is its weighted contribution to the total portfolio impact, in percent?",
+              "correctValue": -0.81,
+              "tolerance": 0.02,
+              "unit": "%",
+              "explanation": "Sector impact = beta × shock = -1.8% × 1.5 = -2.7%. Weighted contribution = weight × sector impact = 30% × -2.7% = -0.81%, exactly the figure in the worked table above."
+            },
+            {
+              "_key": "c2l2k022",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Build Your Own Portfolio Stress Test",
+              "steps": [
+                "List your actual holdings grouped into broad sectors, using this lesson's groupings or your own",
+                "Assign each sector a primary channel exposure and an illustrative beta, starting from this lesson's table and adjusting for your own view of each holding's specific business model",
+                "Pick a scenario, either a historical replay of a Chapter 1 episode or your own synthetic scenario, and estimate a z-score shock for each channel",
+                "Run the numbers through this lesson's Python function, or a spreadsheet version of it, to get a total projected impact and a per-sector breakdown",
+                "Compare a fully concentrated loss in your worst single sector to your actual diversified total loss, the way this lesson compared an all-OMC portfolio to the diversified example, to see what your diversification is actually buying you"
+              ]
+            },
+            {
+              "_key": "c2l2k023",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "The sector sensitivities, portfolio weights, and scenario figures in this lesson are illustrative and built for teaching purposes, not verified betas or a real recommended portfolio. Actual sector sensitivities vary by company, time period, and market conditions, and should be estimated from real data before being used professionally. This is educational content, not investment advice."
+            },
+            {
+              "_key": "c2l2k024",
+              "_type": "keyTakeaways",
+              "points": [
+                "Stress testing turns the previous lesson's diagnostic GRI reading into a decision tool by sizing an actual projected impact on a specific portfolio",
+                "Not every sector loses when a channel fires; the same currency shock that hurts an importer can help a dollar-billing IT exporter, and the same tension that hurts an oil marketing company can lift a gold ETF and a defence PSU",
+                "A diversified portfolio's positive-beta holdings can meaningfully cushion a shock, shown here as roughly a -1.6% projected impact versus a -9.2% impact for a fully concentrated single-sector portfolio under the same scenario",
+                "A severity ladder, running Mild, Base, and Severe versions of a scenario, gives a range of outcomes rather than one number, closer to how this analysis is actually used in a portfolio committee",
+                "Linear beta-based stress testing is weakest exactly when it matters most: correlations often converge in a genuine crisis, past betas may not hold for a novel shock, and static models miss second-round policy responses, all worth remembering before the next lesson turns to volatility itself, India VIX and Nifty drawdowns"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

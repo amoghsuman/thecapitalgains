@@ -1,0 +1,225 @@
+{
+  "courseSlug": "understanding-capacity-constraints-and-strategy-scaling",
+  "chapters": [
+    {
+      "title": "Chapter 6: Execution at Scale: Algos, Slicing, and Managing Impact",
+      "lessons": [
+        {
+          "title": "Case Study: Naive Execution vs VWAP Execution Cost Comparison",
+          "slug": "case-study-naive-execution-vs-vwap-execution-cost-comparison",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "c1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c1s1", "text": "This illustrative case study puts real rupee numbers on the last two lessons, comparing three ways of executing the exact same order: a naive lump sum, a naive TWAP that ignores intraday volume shape, and a proper VWAP that follows it.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c2s1", "text": "Setting Up the Case", "marks": [] }
+              ]
+            },
+            {
+              "_type": "statGrid",
+              "_key": "c3",
+              "stats": [
+                { "label": "Order size", "value": "Rs 3 Cr (buy)", "context": "To be executed within a single trading day" },
+                { "label": "Stock's total daily ADV", "value": "Rs 30 Cr", "context": "10% of ADV overall" },
+                { "label": "Daily volatility, Y", "value": "2%, 0.75", "context": "Consistent with earlier chapters" }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c4",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c4s1", "text": "The Day's Actual Volume Shape", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "c5",
+              "caption": "Illustrative U-shaped intraday volume, six one-hour buckets from 9:15 AM to 3:30 PM",
+              "headers": ["Bucket", "Share of Day's Volume", "Bucket ADV"],
+              "rows": [
+                { "cells": ["1: Open", "25%", "Rs 7.5 Cr"] },
+                { "cells": ["2", "15%", "Rs 4.5 Cr"] },
+                { "cells": ["3: Midday approaches", "10%", "Rs 3.0 Cr"] },
+                { "cells": ["4: Midday lull", "8%", "Rs 2.4 Cr"] },
+                { "cells": ["5", "12%", "Rs 3.6 Cr"] },
+                { "cells": ["6: Close", "30%", "Rs 9.0 Cr"] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c6",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c6s1", "text": "Approach 1: Naive Lump Sum", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c7",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c7s1", "text": "The entire Rs 3 crore is placed as a single market order around late morning, Bucket 3, ADV Rs 3 crore for that hour. That is a 100% participation ratio against that single bucket's volume. Applying the square-root model, the square root of 1.0 is 1.0, so impact cost is 0.75 times 2% times 1.0, or 1.5% of order value, Rs 4.5 lakh.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c8",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c8s1", "text": "Approach 2: Naive TWAP, Equal Time Slices", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c9",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c9s1", "text": "Splitting the order into six equal Rs 0.5 crore slices, one per bucket, ignores that the buckets have very different ADV. Participation ratio swings from 6.67% in the busy closing bucket to 20.83% in the thin midday bucket.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "c10",
+              "caption": "Naive TWAP: equal Rs 0.5 Cr per bucket",
+              "headers": ["Bucket", "Participation Ratio", "Impact Cost"],
+              "rows": [
+                { "cells": ["1", "6.67%", "0.39%"] },
+                { "cells": ["2", "11.11%", "0.50%"] },
+                { "cells": ["3", "16.67%", "0.61%"] },
+                { "cells": ["4", "20.83%", "0.68%"] },
+                { "cells": ["5", "13.89%", "0.56%"] },
+                { "cells": ["6", "5.56%", "0.35%"] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c11",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c11s1", "text": "Weighted across all six equal slices, total TWAP impact cost comes to about 0.52% of order value, roughly Rs 1.55 lakh. Much better than the lump sum, but the thin midday bucket is clearly still doing disproportionate damage.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c12",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c12s1", "text": "Approach 3: Proper VWAP, Volume-Matched Slices", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c13",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c13s1", "text": "VWAP sizes each slice to match that bucket's share of the day's volume exactly. Since the order is 10% of total daily ADV, and each slice is the same 10% share of that bucket's own volume, participation ratio comes out to exactly 10% in every single bucket, by construction.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "c14",
+              "caption": "Proper VWAP: slice matched to each bucket's volume share",
+              "headers": ["Bucket", "Participation Ratio", "Impact Cost"],
+              "rows": [
+                { "cells": ["1 through 6", "10.00% in every bucket", "0.47% in every bucket"] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "c15",
+              "type": "insight",
+              "text": "This uniform 10% is not a coincidence, it is the entire point of VWAP. Because each slice equals the order's overall participation rate times that bucket's own volume, the participation ratio in every bucket collapses to exactly the order's overall participation rate against total ADV, completely independent of how lumpy the day's volume actually is. That is why VWAP total impact cost, 0.47%, is the lowest of the three, even though it is only modestly better than the naive TWAP's 0.52%."
+            },
+            {
+              "_type": "table",
+              "_key": "c16",
+              "caption": "All three approaches, side by side",
+              "headers": ["Approach", "Impact Cost", "Rupee Cost"],
+              "rows": [
+                { "cells": ["Naive lump sum", "1.50%", "Rs 4.50 lakh"] },
+                { "cells": ["Naive TWAP", "0.52%", "Rs 1.55 lakh"] },
+                { "cells": ["Proper VWAP", "0.47%", "Rs 1.42 lakh"] }
+              ]
+            },
+            {
+              "_type": "chart",
+              "_key": "c17",
+              "chartType": "bar",
+              "title": "Total Impact Cost by Execution Approach",
+              "yAxisLabel": "Impact Cost (Rs Lakh)",
+              "data": [
+                { "label": "Naive Lump Sum", "value": 4.5 },
+                { "label": "Naive TWAP", "value": 1.55 },
+                { "label": "Proper VWAP", "value": 1.42 }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c18",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c18s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "c19",
+              "variant": "numericInput",
+              "title": "Recompute the Lump Sum in a Different Bucket",
+              "prompt": "If the naive lump sum order had instead been placed entirely in the closing bucket (Bucket 6, ADV Rs 9 Cr) rather than Bucket 3, what would the impact cost be, as a percentage of order value? Round to two decimals.",
+              "correctValue": 0.87,
+              "tolerance": 0.03,
+              "unit": "%",
+              "explanation": "Participation ratio = Rs 3 Cr / Rs 9 Cr = 0.3333. Square root of 0.3333 is 0.5774. Impact cost = 0.75 x 2% x 0.5774 = 0.87%, notably better than placing the same lump sum in the thinner Bucket 3, but still far worse than either TWAP or VWAP."
+            },
+            {
+              "_type": "block",
+              "_key": "c20",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c20s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "c21",
+              "text": "The biggest single win in this case study is simply slicing the order at all, from 1.50% down to 0.52%. Getting the slicing right, matching the day's actual volume shape instead of the clock, is a smaller but real second win on top of that, 0.52% down to 0.47%. Both matter, but they are not the same size of problem."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "c22",
+              "points": [
+                "Splitting a large order into smaller slices at all produces the single largest reduction in impact cost, far larger than the gain from choosing the best slicing method afterward.",
+                "Naive equal-time slicing (TWAP) still overexposes an order to the day's thinnest volume periods, since it ignores how unevenly volume is actually distributed.",
+                "VWAP achieves a constant participation ratio across every period by construction, matching each slice's size to that period's share of volume, which is exactly why it minimizes impact cost in this kind of comparison.",
+                "The choice of when to place even a single naive order matters enormously, the same lump sum placed in a busier bucket instead of a thin one cut its own impact cost by more than 40% in this example."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

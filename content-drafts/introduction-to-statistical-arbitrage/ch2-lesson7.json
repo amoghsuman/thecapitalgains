@@ -1,0 +1,251 @@
+{
+  "courseSlug": "introduction-to-statistical-arbitrage",
+  "chapters": [
+    {
+      "title": "Chapter 2: The Statistical Toolkit — Correlation, Spread, and Z-Score",
+      "lessons": [
+        {
+          "title": "The Z-Score: Turning a Spread Into a Trading Signal",
+          "slug": "the-z-score-turning-a-spread-into-a-trading-signal",
+          "body": [
+            {
+              "_key": "sa7-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa7-001s1", "_type": "span", "marks": [], "text": "Lesson 6 built a spread as a regression residual, a leftover number in rupees that oscillates around zero when a pair is behaving normally. But a residual of ₹5 on its own tells you very little. Is that a big deviation or a small one? It depends entirely on how much this particular spread normally moves around. A number that is unremarkable for one pair could be an extreme outlier for another. The z-score exists to answer exactly this question, and it is the single number most stat arb entry and exit rules are actually built on." }
+              ]
+            },
+            {
+              "_key": "sa7-002",
+              "_type": "bigIdea",
+              "text": "A z-score converts a raw spread value into a single standardized number: how many standard deviations away from its own recent average the spread currently sits. It turns \"the spread looks kind of stretched\" into a precise, comparable number that means the same thing for every pair."
+            },
+            {
+              "_key": "sa7-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa7-003s1", "_type": "span", "marks": [], "text": "Why a Raw Spread Number Isn't Enough" }
+              ]
+            },
+            {
+              "_key": "sa7-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa7-004s1", "_type": "span", "marks": [], "text": "A ₹5 residual might be a genuinely large move for a pair whose spread typically swings within ₹2 of its average, and a complete non-event for a pair whose spread routinely swings ₹20 in either direction. Comparing raw spread values across different pairs, or even across different periods for the same pair if its volatility has changed, does not tell you anything reliable. What you actually want to know is: relative to how this spread normally behaves, how unusual is today's value?" }
+              ]
+            },
+            {
+              "_key": "sa7-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa7-005s1", "_type": "span", "marks": [], "text": "The Z-Score Formula" }
+              ]
+            },
+            {
+              "_key": "sa7-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa7-006s1", "_type": "span", "marks": [], "text": "The z-score answers that question directly." }
+              ]
+            },
+            {
+              "_key": "sa7-007",
+              "_type": "mathBlock",
+              "latex": "z_t = \\dfrac{\\text{Spread}_t - \\mu}{\\sigma}",
+              "caption": "μ and σ are the mean and standard deviation of the spread, usually computed over a trailing lookback window (commonly 60 to 120 trading days) rather than the entire available history, so the z-score adapts to how the pair has been behaving recently."
+            },
+            {
+              "_key": "sa7-008",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa7-008s1", "_type": "span", "marks": [], "text": "Worked Example: Turning a Spread Series Into a Signal" }
+              ]
+            },
+            {
+              "_key": "sa7-009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa7-009s1", "_type": "span", "marks": [], "text": "Continuing with the regression residual spread from Lesson 6, here is an illustrative 20-day run of daily spread values for the same pair, ending in a day where the spread stretches noticeably wider than its recent norm." }
+              ]
+            },
+            {
+              "_key": "sa7-010",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "20-day regression residual spread, HDFC vs ICICI (illustrative)",
+              "xAxisLabel": "Day",
+              "yAxisLabel": "Spread (₹, regression residual)",
+              "data": [
+                { "_key": "sa7-010d1", "label": "1" },
+                { "_key": "sa7-010d2", "label": "2" },
+                { "_key": "sa7-010d3", "label": "3" },
+                { "_key": "sa7-010d4", "label": "4" },
+                { "_key": "sa7-010d5", "label": "5" },
+                { "_key": "sa7-010d6", "label": "6" },
+                { "_key": "sa7-010d7", "label": "7" },
+                { "_key": "sa7-010d8", "label": "8" },
+                { "_key": "sa7-010d9", "label": "9" },
+                { "_key": "sa7-010d10", "label": "10" },
+                { "_key": "sa7-010d11", "label": "11" },
+                { "_key": "sa7-010d12", "label": "12" },
+                { "_key": "sa7-010d13", "label": "13" },
+                { "_key": "sa7-010d14", "label": "14" },
+                { "_key": "sa7-010d15", "label": "15" },
+                { "_key": "sa7-010d16", "label": "16" },
+                { "_key": "sa7-010d17", "label": "17" },
+                { "_key": "sa7-010d18", "label": "18" },
+                { "_key": "sa7-010d19", "label": "19" },
+                { "_key": "sa7-010d20", "label": "20" }
+              ],
+              "series": [
+                {
+                  "_key": "sa7-010se1",
+                  "label": "Daily spread (₹)",
+                  "values": [2, -1, 3, -2, 1, -3, 2, 0, -2, 3, -1, 2, -3, 1, -2, 2, -1, 3, -2, 5]
+                }
+              ]
+            },
+            {
+              "_key": "sa7-011",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "import pandas as pd\n\nspread = pd.Series([2, -1, 3, -2, 1, -3, 2, 0, -2, 3, -1, 2, -3, 1, -2, 2, -1, 3, -2, 5])\n\n# mean and standard deviation over the preceding 19 days, excluding today\nmean = spread.iloc[:-1].mean()\nstd = spread.iloc[:-1].std()  # sample standard deviation (ddof=1 by default)\nz_today = (spread.iloc[-1] - mean) / std\n\nprint(f\"mean={mean:.3f}, std={std:.3f}, z={z_today:.2f}\")\n# mean=0.105, std=2.132, z=2.30",
+              "caption": "Computing today's z-score from the preceding 19 days of spread history"
+            },
+            {
+              "_key": "sa7-012",
+              "_type": "keyFact",
+              "label": "Z-score on Day 20",
+              "value": "≈ +2.30",
+              "context": "Roughly 2.3 standard deviations above its own recent average, a level many stat arb strategies treat as a meaningful entry signal (commonly around ±2)."
+            },
+            {
+              "_key": "sa7-013",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa7-013s1", "_type": "span", "marks": [], "text": "Reading the Sign and Magnitude" }
+              ]
+            },
+            {
+              "_key": "sa7-014",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa7-014s1", "_type": "span", "marks": [], "text": "The sign of the z-score tells you the direction of the stretch. A positive z-score means the spread is above its recent average, in the HDFC-minus-predicted-HDFC construction from Lesson 6, this means HDFC is trading relatively rich versus what the regression would predict from ICICI, the setup for shorting the spread (short HDFC, long ICICI in the β ratio) betting on reversion down. A negative z-score means the reverse: the spread is below its recent average, the setup for going long the spread. The magnitude tells you how extreme the stretch is, and how seriously to take it." }
+              ]
+            },
+            {
+              "_key": "sa7-015",
+              "_type": "table",
+              "caption": "A rough guide to interpreting |z| (not a rigid rule)",
+              "headers": ["|z| range", "Typical interpretation"],
+              "rows": [
+                { "_key": "sa7-015r1", "_type": "tableRow", "cells": ["Below 1", "Normal day-to-day fluctuation. No signal."] },
+                { "_key": "sa7-015r2", "_type": "tableRow", "cells": ["1 to 2", "A mild stretch. Worth watching, not yet acting on for most strategies."] },
+                { "_key": "sa7-015r3", "_type": "tableRow", "cells": ["2 to 2.5", "A commonly used entry threshold for many stat arb strategies."] },
+                { "_key": "sa7-015r4", "_type": "tableRow", "cells": ["Above 3", "Rare under normal conditions. Worth checking for a structural break (Lesson 4) rather than assuming an even bigger reversion is coming."] }
+              ]
+            },
+            {
+              "_key": "sa7-016",
+              "_type": "callout",
+              "type": "warning",
+              "text": "A z-score is only as trustworthy as the mean and standard deviation it is built from, and both assume the relationship is still the same one that generated your historical data. If the relationship has genuinely broken, the way Lesson 4's Asian Paints and Berger Paints case study discussed, an extreme z-score might mean \"this is the new normal\", not \"this will revert.\" A z-score is a signal to investigate, not a signal to trade blindly, and it works best alongside the economic judgment from Lesson 4 and the formal cointegration test from Chapter 3."
+            },
+            {
+              "_key": "sa7-017",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa7-017s1", "_type": "span", "marks": [], "text": "Choosing the Lookback Window" }
+              ]
+            },
+            {
+              "_key": "sa7-018",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "sa7-018m1", "_type": "glossaryTerm", "definition": "The trailing period, for example the last 60 to 120 trading days, used to compute a spread's mean and standard deviation for the z-score calculation." }
+              ],
+              "children": [
+                { "_key": "sa7-018s1", "_type": "span", "marks": [], "text": "How many days of history you use to compute the mean and standard deviation, the " },
+                { "_key": "sa7-018s2", "_type": "span", "marks": ["sa7-018m1"], "text": "lookback window" },
+                { "_key": "sa7-018s3", "_type": "span", "marks": [], "text": ", matters more than it might seem. Too short a window, say 10 days, makes the z-score noisy and overly sensitive to a single recent event. Too long a window, say two years, makes the z-score slow to adapt to a genuine change in how the pair behaves, and can quietly include stretches where the relationship was different from how it behaves today. The right choice is connected to the spread's own half-life from Lesson 3: a fast-reverting spread, with a half-life of days, can reasonably use a shorter lookback window, while a slower-reverting one typically needs a longer window to produce a stable estimate of its normal range." }
+              ]
+            },
+            {
+              "_key": "sa7-019",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Reading a z-score",
+              "question": "A pair's spread currently has a z-score of -2.6. What does this most directly tell you?",
+              "options": [
+                "The spread is 2.6% below its average",
+                "The spread is 2.6 standard deviations below its recent average, a relatively extreme reading",
+                "The correlation between the two stocks is -2.6",
+                "The hedge ratio should be reduced by 2.6"
+              ],
+              "correctIndex": 1,
+              "explanation": "A z-score expresses a deviation in standard deviation units, not percentage terms. A reading of -2.6 means the spread sits 2.6 standard deviations below its own recent average, a fairly extreme stretch by the rough guide in this lesson."
+            },
+            {
+              "_key": "sa7-020",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Compute the z-score",
+              "prompt": "A different pair's spread has a historical mean of ₹1.20 and a historical standard deviation of ₹3.50 over the lookback window. Today's spread value is −₹5.55. What is today's z-score?",
+              "correctValue": -1.93,
+              "tolerance": 0.1,
+              "explanation": "z = (−5.55 − 1.20) ÷ 3.50 = −6.75 ÷ 3.50 ≈ −1.93. A z-score around -1.9 means the spread is nearly two standard deviations below its historical average, in the range many strategies watch closely without necessarily being at the more extreme end yet."
+            },
+            {
+              "_key": "sa7-021",
+              "_type": "flashcardSet",
+              "title": "Z-Score: Core Terms",
+              "cards": [
+                { "_key": "sa7-021f1", "term": "Z-score", "definition": "A standardized measure of how many standard deviations a value sits from its average. For a spread, (current value − mean) ÷ standard deviation, computed over a chosen lookback window." },
+                { "_key": "sa7-021f2", "term": "Lookback window", "definition": "The trailing period, such as the last 60 to 120 trading days, used to compute a spread's mean and standard deviation for the z-score calculation." },
+                { "_key": "sa7-021f3", "term": "Entry threshold", "definition": "The z-score level, commonly around ±2, at which a stat arb strategy is designed to open a position, betting on reversion toward the mean." }
+              ]
+            },
+            {
+              "_key": "sa7-022",
+              "_type": "keyTakeaways",
+              "points": [
+                "A raw spread value is not comparable across pairs or across time. A z-score standardizes it by expressing the deviation in standard deviation units.",
+                "z = (spread − mean) ÷ standard deviation, with mean and standard deviation usually computed over a trailing lookback window rather than the full history.",
+                "The sign of the z-score gives the direction of the trade (short the spread on a high positive z-score, long the spread on a low negative one); the magnitude tells you how extreme the stretch is.",
+                "A commonly used entry threshold is around ±2, though this is a convention, not a law. Very large z-scores, beyond about 3, are worth checking for a structural break rather than assumed to be an even bigger reversion opportunity.",
+                "The right lookback window depends partly on the spread's own half-life from Lesson 3: a fast-reverting spread can use a shorter window; a slower one typically needs a longer one to avoid noisy, unstable estimates."
+              ]
+            },
+            {
+              "_key": "sa7-023",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice. All spread values, statistics, and charts here are illustrative and constructed for teaching purposes, not actual historical data for the securities named. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,239 @@
+{
+  "courseSlug": "understanding-optimization-theory-convex-optimization-and-lagrange-multipliers-for-portfolio-construction",
+  "chapters": [
+    {
+      "title": "Chapter 3: Unconstrained Optimization: Gradients, Hessians, and Critical Points",
+      "lessons": [
+        {
+          "title": "Case Study: Finding Minimum Variance Portfolio Weights With Calculus (Two Assets)",
+          "slug": "case-study-finding-minimum-variance-portfolio-weights-with-calculus-two-assets",
+          "body": [
+            {
+              "_key": "oc3l4-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc3l4-001s1", "_type": "span", "marks": [], "text": "Ananya's next task: for exactly two stocks, derive the minimum variance weights in closed form, by hand, no solver. This sounds like it needs Chapter 4's Lagrange multipliers, since the budget constraint is still there. But for exactly two assets, there is a shortcut she already has: the substitution trick from Chapter 1. This case study closes out Chapter 3 by combining that trick with the gradient, first-order, and second-order machinery just built, to derive one of the most quoted formulas in portfolio theory." }
+              ]
+            },
+            {
+              "_key": "oc3l4-002",
+              "_type": "bigIdea",
+              "text": "For exactly two assets, the constrained minimum variance problem collapses into a single unconstrained variable via substitution, solvable completely with the plain calculus tools built across this chapter."
+            },
+            {
+              "_key": "oc3l4-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc3l4-003s1", "_type": "span", "marks": [], "text": "Setting Up: Substitution Turns Two Weights Into One" }
+              ]
+            },
+            {
+              "_key": "oc3l4-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc3l4-004s1", "_type": "span", "marks": [], "text": "The budget constraint says w1 + w2 = 1. Solve it for w2, exactly as Chapter 1's toy example did, and the constraint disappears entirely." }
+              ]
+            },
+            {
+              "_key": "oc3l4-005",
+              "_type": "mathBlock",
+              "latex": "w_2 = 1 - w_1",
+              "caption": "One equation, one substitution, and the constraint is gone."
+            },
+            {
+              "_key": "oc3l4-006",
+              "_type": "mathBlock",
+              "latex": "\\sigma_p^2 = w_1^2 \\sigma_1^2 + w_2^2 \\sigma_2^2 + 2w_1 w_2 \\sigma_{12}",
+              "caption": "Portfolio variance for two assets, written out in scalar form instead of matrix form."
+            },
+            {
+              "_key": "oc3l4-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc3l4-007s1", "_type": "span", "marks": [], "text": "Expanding Into a Single-Variable Quadratic" }
+              ]
+            },
+            {
+              "_key": "oc3l4-008",
+              "_type": "collapsible",
+              "title": "Show me the full expansion",
+              "content": [
+                {
+                  "_key": "oc3l4-008a",
+                  "_type": "mathBlock",
+                  "latex": "f(w_1) = w_1^2\\sigma_1^2 + (1-w_1)^2\\sigma_2^2 + 2w_1(1-w_1)\\sigma_{12}",
+                  "caption": "Substitute w2 = 1 - w1 directly into the variance formula."
+                },
+                {
+                  "_key": "oc3l4-008b",
+                  "_type": "mathBlock",
+                  "latex": "f(w_1) = w_1^2\\sigma_1^2 + \\sigma_2^2 - 2w_1\\sigma_2^2 + w_1^2\\sigma_2^2 + 2w_1\\sigma_{12} - 2w_1^2\\sigma_{12}",
+                  "caption": "Expand (1-w1)² and 2w1(1-w1) term by term."
+                },
+                {
+                  "_key": "oc3l4-008c",
+                  "_type": "mathBlock",
+                  "latex": "f(w_1) = w_1^2(\\sigma_1^2 + \\sigma_2^2 - 2\\sigma_{12}) + w_1(2\\sigma_{12} - 2\\sigma_2^2) + \\sigma_2^2",
+                  "caption": "Collect terms by power of w1. This is now an ordinary quadratic in a single variable."
+                }
+              ]
+            },
+            {
+              "_key": "oc3l4-009",
+              "_type": "mathBlock",
+              "latex": "f(w_1) = A w_1^2 + B w_1 + C, \\quad A = \\sigma_1^2 + \\sigma_2^2 - 2\\sigma_{12}, \\; B = 2\\sigma_{12} - 2\\sigma_2^2, \\; C = \\sigma_2^2",
+              "caption": "A single-variable, unconstrained quadratic. Exactly the shape Chapter 3 already knows how to solve."
+            },
+            {
+              "_key": "oc3l4-010",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc3l4-010s1", "_type": "span", "marks": [], "text": "Applying the First-Order Condition" }
+              ]
+            },
+            {
+              "_key": "oc3l4-011",
+              "_type": "mathBlock",
+              "latex": "f'(w_1) = 2Aw_1 + B = 0 \\quad \\Rightarrow \\quad w_1^* = -\\frac{B}{2A}",
+              "caption": "The same set-the-derivative-to-zero move from earlier in this chapter, now applied to a real portfolio result."
+            },
+            {
+              "_key": "oc3l4-012",
+              "_type": "mathBlock",
+              "latex": "w_1^* = \\frac{\\sigma_2^2 - \\sigma_{12}}{\\sigma_1^2 + \\sigma_2^2 - 2\\sigma_{12}}",
+              "caption": "The closed-form two-asset minimum variance weight, obtained by substituting A and B back in."
+            },
+            {
+              "_key": "oc3l4-013",
+              "_type": "mathBlock",
+              "latex": "w_2^* = 1 - w_1^*",
+              "caption": "And the second weight follows immediately from the budget constraint."
+            },
+            {
+              "_key": "oc3l4-014",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc3l4-014s1", "_type": "span", "marks": [], "text": "Confirming It's a Minimum, Not a Maximum" }
+              ]
+            },
+            {
+              "_key": "oc3l4-015",
+              "_type": "mathBlock",
+              "latex": "f''(w_1) = 2A = 2(\\sigma_1^2 + \\sigma_2^2 - 2\\sigma_{12})",
+              "caption": "The second derivative, constant since f is quadratic."
+            },
+            {
+              "_key": "oc3l4-016",
+              "_type": "callout",
+              "type": "insight",
+              "text": "A = sigma1² + sigma2² - 2*sigma12 is not just some formula. It is exactly Var(R1 - R2), the variance of the return difference between the two assets. Chapter 2's proof that variance can never be negative applies here directly: A ≥ 0 always, and A = 0 only in the degenerate case where the two assets are perfectly correlated with identical volatility, effectively the same bet twice. So f''(w1) ≥ 0 in every realistic case, confirming a minimum, not a maximum. This single case study uses Chapter 1's substitution trick, Chapter 2's variance-can't-be-negative argument, and Chapter 3's calculus, all three, to reach one formula."
+            },
+            {
+              "_key": "oc3l4-017",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc3l4-017s1", "_type": "span", "marks": [], "text": "Numeric Case Study: Reliance and TCS" }
+              ]
+            },
+            {
+              "_key": "oc3l4-018",
+              "_type": "table",
+              "caption": "Inputs, reused from earlier in the course",
+              "headers": ["Quantity", "Value"],
+              "rows": [
+                { "_key": "oc3l4-018r1", "_type": "tableRow", "cells": ["σ1² (Reliance variance)", "0.0784"] },
+                { "_key": "oc3l4-018r2", "_type": "tableRow", "cells": ["σ2² (TCS variance)", "0.0576"] },
+                { "_key": "oc3l4-018r3", "_type": "tableRow", "cells": ["σ12 (covariance)", "0.0168"] }
+              ]
+            },
+            {
+              "_key": "oc3l4-019",
+              "_type": "mathBlock",
+              "latex": "w_1^* = \\frac{0.0576 - 0.0168}{0.0784 + 0.0576 - 2(0.0168)} = \\frac{0.0408}{0.1024} \\approx 0.3984",
+              "caption": "About 39.84% in Reliance."
+            },
+            {
+              "_key": "oc3l4-020",
+              "_type": "mathBlock",
+              "latex": "w_2^* = 1 - 0.3984 = 0.6016",
+              "caption": "About 60.16% in TCS."
+            },
+            {
+              "_key": "oc3l4-021",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "oc3l4-021s1", "label": "Optimal weights", "value": "39.84% Reliance, 60.16% TCS", "context": "The exact minimum variance split for this pair" },
+                { "_key": "oc3l4-021s2", "label": "Minimum portfolio variance", "value": "≈ 0.0413", "context": "f(w1*), computed by plugging w1* back into the quadratic" },
+                { "_key": "oc3l4-021s3", "label": "Minimum portfolio volatility", "value": "≈ 20.33%", "context": "Square root of the variance above, lower than either stock alone (28% and 24%)" }
+              ]
+            },
+            {
+              "_key": "oc3l4-022",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This connects directly back to the gradient computed earlier in this chapter. At the equal-weighted point, w = (0.5, 0.5), the gradient of portfolio variance was (0.0952, 0.0744), larger in the w1 direction, meaning steepest descent meant cutting w1 first. The exact optimum found here, w1* = 39.84%, is indeed lower than the 50% starting point, and w2* = 60.16% is higher. The gradient's direction and the closed-form answer agree."
+            },
+            {
+              "_key": "oc3l4-023",
+              "_type": "keyFact",
+              "label": "Two-asset minimum variance formula",
+              "value": "w1* = (σ2² - σ12) / (σ1² + σ2² - 2σ12)",
+              "context": "w2* = 1 - w1*. Worth memorizing: it is the fastest way to sanity-check any two-asset optimizer's output without running one."
+            },
+            {
+              "_key": "oc3l4-024",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Apply the two-asset formula",
+              "question": "Asset A has variance 0.09, Asset B has variance 0.04, and their covariance is 0.02. What is the minimum variance weight on Asset A?",
+              "options": ["0.2222 (about 22.2%)", "0.4444 (about 44.4%)", "0.5000 (50%)", "0.7778 (about 77.8%)"],
+              "correctIndex": 0,
+              "explanation": "w_A* = (σ_B² - σ_AB) / (σ_A² + σ_B² - 2σ_AB) = (0.04 - 0.02) / (0.09 + 0.04 - 0.04) = 0.02 / 0.09 ≈ 0.2222. Even though Asset A has higher standalone variance, the covariance term matters just as much as the individual variances in setting the final split."
+            },
+            {
+              "_key": "oc3l4-025",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "What happens under high correlation",
+              "scenario": "Two banking stocks have nearly identical volatility, 26% each, and a correlation close to 0.95, since they react to almost the same macro triggers.",
+              "prompt": "Without computing the exact formula, what would you expect the minimum variance weight split to look like, and why does the high correlation matter here?",
+              "modelAnswer": "As correlation approaches 1 with nearly equal volatilities, sigma12 approaches sigma1 times sigma2, which is close to sigma1 squared and sigma2 squared here since the vols are nearly equal. That pushes the denominator, sigma1² + sigma2² - 2sigma12, toward zero. With a denominator near zero, the weight split becomes extremely sensitive to tiny differences between the two variances, and can swing to extreme values that are unstable to small estimation errors in the inputs. In practice, this is a signal that two highly correlated, similarly volatile stocks are close to redundant for diversification purposes, and any 'optimal' split between them carries very little reliable information."
+            },
+            {
+              "_key": "oc3l4-026",
+              "_type": "keyTakeaways",
+              "points": [
+                "Substituting w2 = 1 - w1 turns the two-asset minimum variance problem into an unconstrained, single-variable quadratic, solvable with plain calculus.",
+                "The closed-form result: w1* = (σ2² - σ12) / (σ1² + σ2² - 2σ12), and w2* = 1 - w1*.",
+                "The second derivative, 2(σ1² + σ2² - 2σ12), equals 2Var(R1 - R2), which can never be negative, the same variance-cannot-be-negative argument from Chapter 2, confirming this critical point is always a minimum.",
+                "For the Reliance-TCS pair, the minimum variance split is roughly 39.84% Reliance and 60.16% TCS, with portfolio volatility around 20.33%, lower than either stock held alone.",
+                "This case study is a synthesis of the whole course so far: Chapter 1's substitution trick, Chapter 2's variance-based convexity argument, and Chapter 3's calculus toolkit, combined into one formula.",
+                "This substitution trick only works cleanly for exactly two assets. Chapter 4 introduces Lagrange multipliers, the general method that handles any number of assets and any number of equality constraints without ever needing to substitute a variable away."
+              ]
+            },
+            {
+              "_key": "oc3l4-027",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to buy or sell any security named here. Expected returns, volatilities, and covariances used in the case study are illustrative assumptions, not live or historical market data. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,364 @@
+{
+  "courseSlug": "understanding-bond-pricing-yield-to-maturity-duration-and-convexity",
+  "chapters": [
+    {
+      "title": "Chapter 5: Applying Duration and Convexity as an Indian Investor",
+      "lessons": [
+        {
+          "title": "Putting It Together: A Bond Risk Checklist Before You Buy",
+          "slug": "putting-it-together-a-bond-risk-checklist-before-you-buy",
+          "body": [
+            {
+              "_key": "c5l3-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l3-001s1",
+                  "_type": "span",
+                  "text": "You began this course able to read a bond's name. You can now price it, solve for its yield, measure how far its value is centred in time, estimate its loss to the rupee for a one basis point move, correct that estimate for curvature, and decide whether it fits a goal seven years away. This final lesson turns all of it into a single working routine: seven questions to ask of any bond, a full worked analysis of one security from start to finish, and the red flags that should stop a purchase.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l3-002",
+              "_type": "bigIdea",
+              "text": "Every bond decision reduces to three questions in order: what will it pay me, what return does today's price give me, and how much can it move against me before I need the money? Coupon rate answers none of them."
+            },
+            {
+              "_key": "c5l3-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l3-003s1",
+                  "_type": "span",
+                  "text": "The Seven Questions",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l3-004",
+              "_type": "table",
+              "caption": "The routine, and where each step came from",
+              "headers": ["Ask", "What you calculate", "Covered in"],
+              "rows": [
+                { "_key": "c5l3-004r1", "_type": "tableRow", "cells": ["1. What exactly will this pay, and when?", "Full cash flow schedule from the settlement date, with every coupon date and the redemption date", "Chapter 1"] },
+                { "_key": "c5l3-004r2", "_type": "tableRow", "cells": ["2. What will I actually pay?", "Clean price plus accrued interest, using the right day count", "Chapter 1"] },
+                { "_key": "c5l3-004r3", "_type": "tableRow", "cells": ["3. What return does that price give me?", "Yield to maturity, and yield to worst if there is a call", "Chapter 2"] },
+                { "_key": "c5l3-004r4", "_type": "tableRow", "cells": ["4. Is that return comparable to my alternatives?", "Effective annual yield, so FDs, NCDs and G-Secs sit on one basis", "Chapter 2"] },
+                { "_key": "c5l3-004r5", "_type": "tableRow", "cells": ["5. How much can it move against me?", "Modified duration, and PV01 in rupees on your actual position", "Chapter 3"] },
+                { "_key": "c5l3-004r6", "_type": "tableRow", "cells": ["6. How wrong is that estimate for a big move?", "Convexity adjustment, or full repricing; effective measures if there are options", "Chapter 4"] },
+                { "_key": "c5l3-004r7", "_type": "tableRow", "cells": ["7. Does it fit when I need the money?", "Macaulay duration against your horizon", "Chapter 5"] }
+              ]
+            },
+            {
+              "_key": "c5l3-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l3-005s1",
+                  "_type": "span",
+                  "text": "One Bond, All Seven Questions",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l3-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l3-006s1",
+                  "_type": "span",
+                  "text": "An illustrative G-Sec: 7.25% coupon, exactly 8 years to maturity, semi-annual coupons, quoted at ₹101.20 on a coupon date. You are considering ₹10 lakh of it. Here is the entire analysis, using only what this course has taught.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l3-007",
+              "_type": "table",
+              "caption": "Full analysis: 7.25% G-Sec, 8 years, at ₹101.20",
+              "headers": ["Measure", "Value", "What it tells you"],
+              "rows": [
+                { "_key": "c5l3-007r1", "_type": "tableRow", "cells": ["Cash flows", "16 coupons of ₹3.625, plus ₹100 at maturity", "₹36,250 every six months, ₹5,80,000 in total, plus ₹10 lakh at maturity on ₹10 lakh face value"] },
+                { "_key": "c5l3-007r2", "_type": "tableRow", "cells": ["Current yield", "7.16%", "Income per rupee invested, ignores the ₹1.20 you lose to par"] },
+                { "_key": "c5l3-007r3", "_type": "tableRow", "cells": ["Yield to maturity", "7.05%", "The real return if held to maturity and coupons are reinvested at 7.05%"] },
+                { "_key": "c5l3-007r4", "_type": "tableRow", "cells": ["Effective annual yield", "7.18%", "Use this to compare with a quarterly-compounded bank FD"] },
+                { "_key": "c5l3-007r5", "_type": "tableRow", "cells": ["Macaulay duration", "6.22 years", "Suits a goal about six years away"] },
+                { "_key": "c5l3-007r6", "_type": "tableRow", "cells": ["Modified duration", "6.01", "About 6% price move per 1% change in yields"] },
+                { "_key": "c5l3-007r7", "_type": "tableRow", "cells": ["Convexity", "45.0", "Positive, so gains beat losses; adds about 0.23% on a 100 bp move"] },
+                { "_key": "c5l3-007r8", "_type": "tableRow", "cells": ["PV01 on ₹10 lakh", "₹601", "Every basis point moves your position by about ₹601"] },
+                { "_key": "c5l3-007r9", "_type": "tableRow", "cells": ["Breakeven yield rise", "117 bps", "YTM ÷ modified duration: the rise that cancels one year of income"] }
+              ]
+            },
+            {
+              "_key": "c5l3-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l3-008s1",
+                  "_type": "span",
+                  "text": "Note the ordering: coupon 7.25%, current yield 7.16%, YTM 7.05%. That is the premium bond pattern from Chapter 2, and seeing it in that order is a quick check that nothing in the quote is wrong. Now put the risk in rupees.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l3-009",
+              "_type": "table",
+              "caption": "What ₹10 lakh of this bond does when yields move",
+              "headers": ["Yield change", "Price change", "Value change on ₹10 lakh"],
+              "rows": [
+                { "_key": "c5l3-009r1", "_type": "tableRow", "cells": ["−200 bps", "+12.97%", "+₹1,29,687"] },
+                { "_key": "c5l3-009r2", "_type": "tableRow", "cells": ["−100 bps", "+6.24%", "+₹62,397"] },
+                { "_key": "c5l3-009r3", "_type": "tableRow", "cells": ["−50 bps", "+3.06%", "+₹30,612"] },
+                { "_key": "c5l3-009r4", "_type": "tableRow", "cells": ["+50 bps", "−2.95%", "−₹29,487"] },
+                { "_key": "c5l3-009r5", "_type": "tableRow", "cells": ["+100 bps", "−5.79%", "−₹57,895"] },
+                { "_key": "c5l3-009r6", "_type": "tableRow", "cells": ["+200 bps", "−11.16%", "−₹1,11,645"] }
+              ]
+            },
+            {
+              "_key": "c5l3-010",
+              "_type": "chart",
+              "chartType": "bar",
+              "title": "Value Change on ₹10 Lakh of the 7.25% G-Sec (₹)",
+              "xAxisLabel": "Yield change",
+              "yAxisLabel": "Change in value (₹)",
+              "data": [
+                { "_key": "c5l3-010d1", "label": "−200 bps", "value": 129687 },
+                { "_key": "c5l3-010d2", "label": "−100 bps", "value": 62397 },
+                { "_key": "c5l3-010d3", "label": "−50 bps", "value": 30612 },
+                { "_key": "c5l3-010d4", "label": "+50 bps", "value": -29487 },
+                { "_key": "c5l3-010d5", "label": "+100 bps", "value": -57895 },
+                { "_key": "c5l3-010d6", "label": "+200 bps", "value": -111645 }
+              ]
+            },
+            {
+              "_key": "c5l3-011",
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "c5l3-011s1",
+                  "label": "Worst case shown",
+                  "value": "−₹1,11,645",
+                  "context": "A 200 bp rise, which happened in 2013 and again in 2022"
+                },
+                {
+                  "_key": "c5l3-011s2",
+                  "label": "Best case shown",
+                  "value": "+₹1,29,687",
+                  "context": "Convexity makes the gain larger than the loss"
+                },
+                {
+                  "_key": "c5l3-011s3",
+                  "label": "One year at +100 bps",
+                  "value": "+1.27%",
+                  "context": "Income of 7.05% absorbs most of the 5.79% price fall"
+                },
+                {
+                  "_key": "c5l3-011s4",
+                  "label": "Horizon it suits",
+                  "value": "About 6 years",
+                  "context": "Its Macaulay duration of 6.22 years"
+                }
+              ]
+            },
+            {
+              "_key": "c5l3-012",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Size your own risk",
+              "prompt": "Using the bond above, with a modified duration of 6.01, how much would a ₹25 lakh position lose if yields rose by 40 basis points? Ignore convexity and enter a positive rupee amount, to the nearest rupee.",
+              "correctValue": 60100,
+              "tolerance": 200,
+              "unit": "₹",
+              "explanation": "PV01 on ₹25 lakh = 6.01 × ₹25,00,000 × 0.0001 = ₹1,502.50 per basis point. For 40 basis points: ₹1,502.50 × 40 = ₹60,100. Convexity makes the actual loss slightly smaller, around ₹59,200."
+            },
+            {
+              "_key": "c5l3-013",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l3-013s1",
+                  "_type": "span",
+                  "text": "Red Flags That Should Stop a Purchase",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l3-014",
+              "_type": "table",
+              "caption": "What to do when you see these",
+              "headers": ["Red flag", "Why it matters", "What to do"],
+              "rows": [
+                { "_key": "c5l3-014r1", "_type": "tableRow", "cells": ["A quoted \"yield\" with no definition", "It is often the current yield, which flatters premium bonds", "Ask for yield to maturity, or calculate it yourself"] },
+                { "_key": "c5l3-014r2", "_type": "tableRow", "cells": ["A high coupon at a price well above ₹100", "Most of that coupon is returning your own premium", "Compare on YTM; check how soon the premium unwinds"] },
+                { "_key": "c5l3-014r3", "_type": "tableRow", "cells": ["A call date that nobody mentioned", "Your return may be the yield to call, not the YTM", "Get every call date and price; use yield to worst"] },
+                { "_key": "c5l3-014r4", "_type": "tableRow", "cells": ["A perpetual or AT1 bond sold on its coupon", "No maturity, coupons can be skipped, principal can be written down", "Treat as a separate risk category; most retail investors should avoid"] },
+                { "_key": "c5l3-014r5", "_type": "tableRow", "cells": ["Duration much longer than your horizon", "You may be forced to sell in a sell-off", "Match Macaulay duration to the horizon, or use a target maturity fund"] },
+                { "_key": "c5l3-014r6", "_type": "tableRow", "cells": ["A yield far above comparable bonds", "Extra yield is compensation for credit or liquidity risk, not a gift", "Read the rating rationale; check recent traded volumes"] },
+                { "_key": "c5l3-014r7", "_type": "tableRow", "cells": ["A platform price you cannot verify", "Spreads come straight out of your yield", "Cross-check against recent NSE or BSE RFQ trades before buying"] }
+              ]
+            },
+            {
+              "_key": "c5l3-015",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Which pitch should worry you most?",
+              "question": "Four illustrative bonds are offered to you. All are rated AAA. Which pitch deserves the most scepticism?",
+              "options": [
+                "A 7.10% G-Sec at ₹99.40, described as yielding 7.19% to maturity",
+                "A 9.75% bank Tier 2 bond at ₹108, described as \"9.75% for 8 years\", callable at par in 2 years",
+                "A 7.30% PSU bond at ₹100.00, described as yielding 7.30% to maturity",
+                "A 6.80% G-Sec at ₹96.50, described as yielding 7.35% to maturity"
+              ],
+              "correctIndex": 1,
+              "explanation": "The Tier 2 bond is a premium-priced callable bond described by its coupon. Its real return is the yield to worst: with a call at ₹100 in 2 years, the ₹8 premium is lost over just two years, so the yield to call is far below 9.75%. The other three are consistent: a discount bond yields above its coupon, and a par bond yields its coupon."
+            },
+            {
+              "_key": "c5l3-016",
+              "_type": "collapsible",
+              "title": "The complete formula sheet",
+              "content": [
+                {
+                  "_key": "c5l3-017",
+                  "_type": "table",
+                  "caption": "Every formula from this course, in one place",
+                  "headers": ["Measure", "Formula"],
+                  "rows": [
+                    { "_key": "c5l3-017r1", "_type": "tableRow", "cells": ["Price (on a coupon date)", "Σ [(C ÷ m) ÷ (1 + y/m)^t] + FV ÷ (1 + y/m)^n"] },
+                    { "_key": "c5l3-017r2", "_type": "tableRow", "cells": ["Accrued interest", "Annual coupon × days since last coupon ÷ days in year (30/360 for G-Secs)"] },
+                    { "_key": "c5l3-017r3", "_type": "tableRow", "cells": ["Dirty price", "Clean price + accrued interest"] },
+                    { "_key": "c5l3-017r4", "_type": "tableRow", "cells": ["Current yield", "Annual coupon ÷ market price"] },
+                    { "_key": "c5l3-017r5", "_type": "tableRow", "cells": ["YTM approximation", "(C + (FV − P) ÷ N) ÷ ((FV + P) ÷ 2)"] },
+                    { "_key": "c5l3-017r6", "_type": "tableRow", "cells": ["Effective annual yield", "(1 + r ÷ m)^m − 1"] },
+                    { "_key": "c5l3-017r7", "_type": "tableRow", "cells": ["Macaulay duration", "Σ [(PV of CF ÷ Price) × (t ÷ m)]"] },
+                    { "_key": "c5l3-017r8", "_type": "tableRow", "cells": ["Modified duration", "Macaulay duration ÷ (1 + y/m)"] },
+                    { "_key": "c5l3-017r9", "_type": "tableRow", "cells": ["Price change estimate", "−D_Mod × Δy + ½ × C × (Δy)²"] },
+                    { "_key": "c5l3-017r10", "_type": "tableRow", "cells": ["Convexity", "Σ [CF × t × (t + 1) ÷ (1 + y/m)^(t+2)] ÷ (P × m²)"] },
+                    { "_key": "c5l3-017r11", "_type": "tableRow", "cells": ["Effective duration", "(P₋ − P₊) ÷ (2 × P₀ × Δy)"] },
+                    { "_key": "c5l3-017r12", "_type": "tableRow", "cells": ["Effective convexity", "(P₋ + P₊ − 2P₀) ÷ (P₀ × Δy²)"] },
+                    { "_key": "c5l3-017r13", "_type": "tableRow", "cells": ["PV01", "Modified duration × market value × 0.0001"] },
+                    { "_key": "c5l3-017r14", "_type": "tableRow", "cells": ["Portfolio duration", "Σ (weight × duration), weights by market value"] },
+                    { "_key": "c5l3-017r15", "_type": "tableRow", "cells": ["Breakeven yield rise", "(YTM − expense ratio) ÷ modified duration"] },
+                    { "_key": "c5l3-017r16", "_type": "tableRow", "cells": ["Immunisation condition", "Portfolio Macaulay duration = investment horizon"] }
+                  ]
+                },
+                {
+                  "_key": "c5l3-018",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c5l3-018s1",
+                      "_type": "span",
+                      "text": "Spreadsheet equivalents: PRICE for clean price, ACCRINT for accrued interest, YIELD and RATE for yield to maturity, DURATION and MDURATION for the two durations, EFFECT and NOMINAL for compounding conversions. There is no convexity function, so use three PRICE calculations and the effective convexity formula.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c5l3-019",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "The one comparison that matters",
+              "textWithBlank": "When comparing two bonds with different coupons and prices, the only fair basis is yield to ___, or yield to worst if either bond is callable.",
+              "correctAnswers": ["maturity"],
+              "explanation": "Coupon rate describes the cash flows and current yield describes this year's income. Only yield to maturity accounts for the price paid, every coupon and the repayment of face value."
+            },
+            {
+              "_key": "c5l3-020",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Final decision: Aarti places ₹40 lakh",
+              "scenario": "Aarti Deshpande, a 51-year-old radiologist in Nashik, has ₹40 lakh from a matured FD. She needs roughly this money in six years to buy a clinic space, and would prefer not to watch its value swing. Her options: (A) the 7.25% G-Sec analysed in this lesson, 8 years to maturity at ₹101.20, YTM 7.05%, Macaulay duration 6.22 years; (B) a 9.40% NBFC NCD rated AA, 5 years left, trading at ₹107, yielding 7.60% to maturity, no call; (C) a long duration gilt fund, portfolio YTM 7.10%, modified duration 9.2, expense ratio 0.30%; (D) a 5-year bank FD at 7.10%, compounded quarterly.",
+              "prompt": "Run each option through the seven questions and recommend a course of action, with the reasoning she should be able to repeat back to her adviser.",
+              "modelAnswer": "1. Option A, the G-Sec: YTM 7.05%, effective annual yield 7.18%. Macaulay duration 6.22 years against a six-year horizon is almost exactly matched, so it is close to immunised. Sovereign, so no credit risk. Coupons must be reinvested, which leaves some uncertainty. PV01 on ₹40 lakh is about ₹2,404, so a 100 bp move is roughly ₹2.4 lakh in the interim, but that matters less because she is holding to her horizon.\n2. Option B, the NCD: the highest YTM at 7.60%, but three concerns. It matures in 5 years against her 6-year horizon, so she must reinvest for a year at unknown rates. It is AA, not AAA or sovereign, so the extra 55 bps over the G-Sec is payment for credit risk. Its 9.40% coupon at ₹107 is the classic premium trap from Chapter 1: a high coupon that is partly returning her own money. Worth considering for a portion, only after reading the rating rationale and checking traded volumes.\n3. Option C, the gilt fund: modified duration 9.2 is far longer than six years. She would be taking a rate view she has not expressed, and 2021 and 2022 showed what that does to patience. Reject on horizon mismatch.\n4. Option D, the FD: 7.10% quarterly compounds to an effective 7.29%, actually the highest effective yield here, with no price risk. But DICGC cover is only ₹5 lakh per depositor per bank, so ₹40 lakh in one bank is largely uninsured, and the tenor is 5 years against her 6-year need.\n5. Recommendation: the G-Sec is the best single fit, because duration matches the horizon and there is no credit risk. A target maturity fund maturing in about six years would do the same job with the coupon reinvestment handled automatically, and is worth comparing. If she wants more yield, a modest allocation to the AA NCD is defensible, sized so a default would not derail the clinic purchase. FDs across two or three banks can hold the short-term portion within insurance limits.\n6. What she should repeat back: \"I am matching duration to my six-year horizon, comparing everything on effective annual yield rather than coupon, and any extra yield I accept is a credit decision I have made deliberately.\""
+            },
+            {
+              "_key": "c5l3-021",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "The bond risk checklist",
+              "steps": [
+                "Write the full cash flow schedule from your settlement date, not from issue.",
+                "Confirm the settlement amount: clean price plus accrued interest on the correct day count.",
+                "Calculate yield to maturity, and yield to worst if any call or put exists.",
+                "Convert to effective annual yield before comparing with FDs or annual-coupon bonds.",
+                "Check the ordering: coupon, current yield and YTM must line up correctly for a premium or discount bond.",
+                "Calculate modified duration and PV01 on the actual rupee amount you plan to invest.",
+                "Estimate the loss for a 100 and 200 basis point rise, adding the convexity adjustment.",
+                "Compare Macaulay duration with your investment horizon, and prefer a match.",
+                "For anything with an embedded option, insist on effective duration and effective convexity.",
+                "Check credit rating and rationale, liquidity in recent trades, and the tax treatment for your slab.",
+                "Write down the breakeven yield rise, so you know how much bad news the income can absorb."
+              ]
+            },
+            {
+              "_key": "c5l3-022",
+              "_type": "flashcardSet",
+              "title": "The Whole Course in Twelve Cards",
+              "cards": [
+                { "_key": "c5l3-022f1", "term": "A bond is", "definition": "A schedule of promised cash flows, defined by face value, coupon rate, frequency and maturity date." },
+                { "_key": "c5l3-022f2", "term": "Price", "definition": "The present value of all remaining cash flows, discounted at the market yield." },
+                { "_key": "c5l3-022f3", "term": "Dirty price", "definition": "Clean price plus accrued interest. The screen quotes clean; you pay dirty." },
+                { "_key": "c5l3-022f4", "term": "Premium and discount", "definition": "Coupon above the market yield means premium; below means discount. Both pull to par." },
+                { "_key": "c5l3-022f5", "term": "Yield to maturity", "definition": "The single discount rate that equates all cash flows to the price. The only fair comparison." },
+                { "_key": "c5l3-022f6", "term": "Reinvestment assumption", "definition": "You earn the YTM only if every coupon is reinvested at the YTM." },
+                { "_key": "c5l3-022f7", "term": "Yield to worst", "definition": "The lowest of YTM and every yield to call. Use it for any callable bond." },
+                { "_key": "c5l3-022f8", "term": "Macaulay duration", "definition": "The value-weighted average time to receive cash flows, in years." },
+                { "_key": "c5l3-022f9", "term": "Modified duration", "definition": "Approximate percentage price change per 1% change in yield." },
+                { "_key": "c5l3-022f10", "term": "PV01", "definition": "Rupees gained or lost per basis point. Adds across a portfolio." },
+                { "_key": "c5l3-022f11", "term": "Convexity", "definition": "The curvature duration ignores. Positive for ordinary bonds, negative for callable ones." },
+                { "_key": "c5l3-022f12", "term": "Immunisation", "definition": "Macaulay duration equal to your horizon, so price and reinvestment risks offset." }
+              ]
+            },
+            {
+              "_key": "c5l3-023",
+              "_type": "callout",
+              "type": "insight",
+              "text": "If you remember one thing from this course, make it this: the coupon rate is the least informative number on a bond. It tells you what the issuer pays on face value and nothing about what you will earn. Price decides your yield, duration decides your risk, and your horizon decides whether that risk matters. Every mis-sold bond in India starts with an investor who looked at the coupon and stopped there."
+            },
+            {
+              "_key": "c5l3-024",
+              "_type": "keyTakeaways",
+              "points": [
+                "Run every bond through seven questions: cash flows, settlement amount, yield, comparability, rate risk, large-move accuracy, and horizon fit.",
+                "The worked G-Sec: coupon 7.25%, current yield 7.16%, YTM 7.05%, Macaulay duration 6.22, modified duration 6.01, convexity 45, PV01 ₹601 per ₹10 lakh.",
+                "Check that coupon, current yield and YTM line up in the right order; it catches bad quotes instantly.",
+                "Put risk in rupees: ₹10 lakh of that bond loses about ₹57,900 if yields rise 100 bps and gains about ₹62,400 if they fall.",
+                "The breakeven yield rise, YTM divided by modified duration, tells you how much bad news a year of income absorbs.",
+                "Watch for the red flags: undefined yields, premium-priced high coupons, unmentioned calls, perpetual bonds and duration far beyond your horizon.",
+                "Match Macaulay duration to your horizon, and let credit, liquidity and tax be decisions you make deliberately rather than accidents of a sales pitch."
+              ]
+            },
+            {
+              "_key": "c5l3-025",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment or tax advice. Bonds, funds, rates and investors are illustrative, and all calculations assume settlement on a coupon date with parallel yield movements. Real outcomes depend on credit events, liquidity, curve shape, costs and taxes. Verify every security's terms from RBI Retail Direct, CCIL, NSE, BSE or the issue documents, and consult a SEBI-registered investment adviser and a chartered accountant before investing."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

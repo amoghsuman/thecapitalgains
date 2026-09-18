@@ -1,0 +1,243 @@
+{
+  "courseSlug": "advanced-regime-switching-models-for-strategy-allocation",
+  "chapters": [
+    {
+      "title": "Chapter 3: Hidden Markov Models for Regime Identification",
+      "lessons": [
+        {
+          "title": "The Viterbi Algorithm: Decoding the Most Likely Regime Path",
+          "slug": "the-viterbi-algorithm-decoding-the-most-likely-regime-path",
+          "body": [
+            {
+              "_key": "rswc3l3b01",
+              "_type": "bigIdea",
+              "text": "Viterbi answers a different question than yesterday's Bayes update. Not 'what do we believe about today, given data so far,' but 'looking back at everything that happened, what is the single most coherent story of the whole regime history.'"
+            },
+            {
+              "_key": "rswc3l3b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc3l3b02s1",
+                  "_type": "span",
+                  "text": "The Bayesian update in Chapters 2 and 3 so far answers a filtering question: given data up to today, what is the probability of each state right now. That is exactly what a live trading system needs. It is not what you need when labeling five years of Nifty history for a backtest, where you want the single best-supported regime sequence across the entire period, using everything you know, including what happened afterward. That second question needs a different algorithm: Viterbi.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc3l3b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc3l3b03s1",
+                  "_type": "span",
+                  "text": "Two Different Questions: Filtering vs Decoding",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc3l3b04",
+              "_type": "table",
+              "caption": "Filtering and decoding solve related but different problems",
+              "headers": ["Question", "Method", "Output", "Used For"],
+              "rows": [
+                {
+                  "_key": "rswc3l3b04r1",
+                  "_type": "tableRow",
+                  "cells": ["What is today's regime probability, given data up to today?", "Forward algorithm (filtering)", "A probability distribution over states, updated daily", "Live regime monitoring, Chapter 6"]
+                },
+                {
+                  "_key": "rswc3l3b04r2",
+                  "_type": "tableRow",
+                  "cells": ["What was the single most likely state sequence across the whole history?", "Viterbi algorithm (decoding)", "One specific state sequence, the single best explanation of the full history", "Labeling historical data for backtesting, Chapter 7"]
+                }
+              ]
+            },
+            {
+              "_key": "rswc3l3b05",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc3l3b05s1",
+                  "_type": "span",
+                  "text": "The Core Idea: Dynamic Programming Over Paths",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc3l3b06",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc3l3b06s1",
+                  "_type": "span",
+                  "text": "Brute-force checking every possible state sequence is hopeless: with K states and T days, there are K to the power of T possible sequences, billions upon billions for even a few years of daily data. Viterbi avoids this by building the answer incrementally. At each day, for each state, it keeps only the single best path that could have led there, discarding every worse alternative immediately, because a worse partial path can never become part of the best overall path.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc3l3b07",
+              "_type": "mathBlock",
+              "latex": "\\delta_t(j) = \\max_i \\big[ \\delta_{t-1}(i)\\, A_{ij} \\big] \\, B_j(x_t)",
+              "caption": "Viterbi's core recursion: the best path probability ending in state j at time t, built from the best path ending in each state i at time t-1"
+            },
+            {
+              "_key": "rswc3l3b08",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc3l3b08s1",
+                  "_type": "span",
+                  "text": "A Worked Example: Three Days, Two States",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc3l3b09",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc3l3b09s1",
+                  "_type": "span",
+                  "text": "To keep the arithmetic tractable by hand, simplify emissions to two categories, a 'small' move or a 'large' move, instead of a continuous Gaussian. Use initial distribution pi(Calm) = 0.9, pi(Stressed) = 0.1, transition probabilities A(Calm to Calm) = 0.95, A(Calm to Stressed) = 0.05, A(Stressed to Calm) = 0.20, A(Stressed to Stressed) = 0.80, and emission probabilities B(small | Calm) = 0.9, B(large | Calm) = 0.1, B(small | Stressed) = 0.3, B(large | Stressed) = 0.7. Observed sequence: Day 1 small, Day 2 large, Day 3 large.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc3l3b10",
+              "_type": "table",
+              "caption": "Viterbi recursion, worked by hand",
+              "headers": ["Day", "Observation", "δ (Calm)", "δ (Stressed)", "Winning State (so far)"],
+              "rows": [
+                {
+                  "_key": "rswc3l3b10r1",
+                  "_type": "tableRow",
+                  "cells": ["1", "small", "0.9 × 0.9 = 0.8100", "0.1 × 0.3 = 0.0300", "Calm"]
+                },
+                {
+                  "_key": "rswc3l3b10r2",
+                  "_type": "tableRow",
+                  "cells": ["2", "large", "max(0.8100×0.95, 0.0300×0.20) × 0.1 = 0.07695", "max(0.8100×0.05, 0.0300×0.80) × 0.7 = 0.02835", "Calm"]
+                },
+                {
+                  "_key": "rswc3l3b10r3",
+                  "_type": "tableRow",
+                  "cells": ["3", "large", "max(0.07695×0.95, 0.02835×0.20) × 0.1 = 0.00731", "max(0.07695×0.05, 0.02835×0.80) × 0.7 = 0.01588", "Stressed"]
+                }
+              ]
+            },
+            {
+              "_key": "rswc3l3b11",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc3l3b11s1",
+                  "_type": "span",
+                  "text": "Day 3's Stressed score, 0.01588, beats its Calm score, 0.00731, so the path ends in Stressed. Backtracking: Day 3's winning Stressed score came from Day 2 being Stressed, since 0.02835 × 0.80 = 0.02268 beats 0.07695 × 0.05 = 0.00385. Day 2's winning Stressed score in turn came from Day 1 being Calm, since 0.8100 × 0.05 = 0.0405 beats 0.0300 × 0.80 = 0.0240. The fully decoded path is Calm, Stressed, Stressed.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc3l3b12",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Notice the twist: looking only at data through Day 2, Calm has the higher score (0.07695 vs 0.02835), so a purely forward, day-by-day view would have called Day 2 'Calm.' Once Day 3's large move is folded in, the fully decoded path revises Day 2 to 'Stressed' instead, because Stressed-Stressed explains two consecutive large moves far better than Calm-Stressed does. This is exactly what decoding is for: using later evidence to revise the most likely story of an earlier day, something a purely forward filter can never do on its own."
+            },
+            {
+              "_key": "rswc3l3b13",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc3l3b13s1",
+                  "_type": "span",
+                  "text": "Here is the same recursion as general-purpose code, working with any number of states and any length of observation sequence.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc3l3b14",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "import numpy as np\n\ndef viterbi(observations, pi, A, B):\n    n_states = A.shape[0]\n    n_obs = len(observations)\n\n    delta = np.zeros((n_obs, n_states))\n    backpointer = np.zeros((n_obs, n_states), dtype=int)\n\n    delta[0] = pi * B[:, observations[0]]\n\n    for t in range(1, n_obs):\n        for j in range(n_states):\n            scores = delta[t - 1] * A[:, j]\n            backpointer[t, j] = np.argmax(scores)\n            delta[t, j] = np.max(scores) * B[j, observations[t]]\n\n    path = np.zeros(n_obs, dtype=int)\n    path[-1] = np.argmax(delta[-1])\n    for t in range(n_obs - 2, -1, -1):\n        path[t] = backpointer[t + 1, path[t + 1]]\n\n    return path, delta",
+              "caption": "A general Viterbi implementation: forward pass builds delta and backpointer, then backtracking reconstructs the optimal path"
+            },
+            {
+              "_key": "rswc3l3b15",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc3l3b15s1",
+                  "_type": "span",
+                  "text": "In practice you will rarely write this loop yourself. Once a model is fitted, Python's hmmlearn library exposes the identical computation as a single method call, model.predict(observations), which returns the decoded state sequence directly. The next lesson fits that model on real Nifty data and uses exactly this method.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc3l3b16",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Extending the Recursion to a Fourth Day",
+              "prompt": "Add a fourth day with a 'small' observed move. Using δ₃(Calm) = 0.00731, δ₃(Stressed) = 0.01588 (unrounded: 0.015876), the transition matrix, and B(small | Stressed) = 0.3, compute δ₄(Stressed). Use δ₄(Stressed) = max(δ₃(Calm) × A(Calm to Stressed), δ₃(Stressed) × A(Stressed to Stressed)) × B(small | Stressed).",
+              "correctValue": 0.00381,
+              "tolerance": 0.0005,
+              "explanation": "max(0.00731 × 0.05, 0.015876 × 0.80) = max(0.000366, 0.012701) = 0.012701. Multiply by B(small | Stressed) = 0.3: δ₄(Stressed) ≈ 0.00381. Interestingly, if you also compute δ₄(Calm) you'd find it comes out higher (around 0.00625), so a single 'small' day after two 'large' days is enough for the decoded path to swing back to Calm, a nice illustration of how quickly the state estimate can move once the evidence shifts."
+            },
+            {
+              "_key": "rswc3l3b17",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "What the Day 2 Reversal Demonstrates",
+              "question": "Looking only at data through Day 2, the Calm path score (0.07695) beats the Stressed path score (0.02835). Yet the fully decoded Viterbi path, using all 3 days, labels Day 2 as Stressed. What does this demonstrate?",
+              "options": [
+                "The Viterbi algorithm made an error somewhere in the recursion",
+                "Decoding with the benefit of later data can revise the most likely label for an earlier day, something a purely forward, day-by-day view cannot do",
+                "The transition matrix must be miscalibrated if the two views disagree",
+                "Day 2's observation must have been misclassified as 'large'"
+              ],
+              "correctIndex": 1,
+              "explanation": "This is the defining feature of decoding versus filtering, not a bug. A day-by-day filter only ever sees data up to that day and cannot use the future to reconsider the past. Viterbi, by construction, looks at the entire sequence before committing to a final path, which is exactly why it is the right tool for labeling historical data rather than for a live, day-by-day trading decision."
+            },
+            {
+              "_key": "rswc3l3b18",
+              "_type": "keyTakeaways",
+              "points": [
+                "Filtering (the forward algorithm) answers 'what do we believe right now, given data so far,' and is what a live system uses",
+                "Decoding (the Viterbi algorithm) answers 'what is the single most likely regime sequence across the whole history,' and is what backtesting and historical labeling use",
+                "Viterbi avoids checking every possible state sequence by keeping only the single best path ending in each state at each time step, using dynamic programming",
+                "Because it uses the entire sequence, Viterbi can revise the most likely label for an earlier day once later evidence comes in, something filtering alone cannot do",
+                "hmmlearn's model.predict() runs this exact recursion in one line once a model is fitted, which the next lesson uses directly on real Nifty data"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

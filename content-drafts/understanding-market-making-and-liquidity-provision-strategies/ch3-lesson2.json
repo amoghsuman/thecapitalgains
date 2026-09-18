@@ -1,0 +1,242 @@
+{
+  "courseSlug": "understanding-market-making-and-liquidity-provision-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 3: Inventory Risk and Quote Skewing",
+      "lessons": [
+        {
+          "title": "The Avellaneda-Stoikov Intuition: Quoting Around a Reservation Price",
+          "slug": "the-avellaneda-stoikov-intuition-quoting-around-a-reservation-price",
+          "body": [
+            {
+              "_key": "mmc3l2b01",
+              "_type": "bigIdea",
+              "text": "A market maker that always centers its bid and ask on the mid price is treating every moment as if it were holding zero inventory. Avellaneda and Stoikov's 2008 model fixes exactly this: quote around a price that already knows how much you are currently holding, not around a price that has forgotten."
+            },
+            {
+              "_key": "mmc3l2b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc3l2b02s1",
+                  "_type": "span",
+                  "text": "From Fair Value to Reservation Price",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc3l2b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "mmc3l2m01",
+                  "_type": "glossaryTerm",
+                  "definition": "The price at which a market maker is genuinely indifferent between holding its current inventory as is, or trading one more unit of it, given its current risk aversion, the volatility it faces, and the time remaining before it must settle up. It sits below the mid price when the market maker is long, and above it when the market maker is short."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "mmc3l2b03s1",
+                  "_type": "span",
+                  "text": "Everything in the last lesson pointed at the same conclusion: a market maker holding unwanted inventory needs its next quote to actively encourage getting rid of it, not just sit centered on the mid price as if nothing had happened. Avellaneda and Stoikov's 2008 model formalises exactly how much that quote should move, by introducing a ",
+                  "marks": []
+                },
+                {
+                  "_key": "mmc3l2b03s2",
+                  "_type": "span",
+                  "text": "reservation price",
+                  "marks": ["mmc3l2m01"]
+                },
+                {
+                  "_key": "mmc3l2b03s3",
+                  "_type": "span",
+                  "text": ", sometimes called the indifference price, that a market maker quotes around instead of the mid price itself.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc3l2b04",
+              "_type": "mathBlock",
+              "latex": "r(s, q, t) = s - q \\gamma \\sigma^2 (T - t)",
+              "caption": "The Avellaneda-Stoikov reservation price: mid price s, adjusted for current inventory q, risk aversion γ, variance σ², and time remaining until the horizon T."
+            },
+            {
+              "_key": "mmc3l2b05",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc3l2b05s1",
+                  "_type": "span",
+                  "text": "Every term here has a plain-language job. The mid price s is where the reservation price starts. Inventory q is signed: positive when long, negative when short, zero when flat, and it is the only term that can push r away from s in either direction. Risk aversion γ scales how aggressively the market maker wants to correct for a given amount of inventory, higher γ meaning a more nervous market maker. Variance σ² captures how dangerous holding that inventory actually is, since a more volatile instrument makes any given position riskier to sit on. Time remaining, T minus t, matters because a position that has to be unwound in the next minute is far more urgent to correct for than one with hours left before the market maker needs to be flat.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc3l2b06",
+              "_type": "table",
+              "caption": "How each input pushes the reservation price away from the mid",
+              "headers": ["Input", "Increases", "Effect on |r − s|"],
+              "rows": [
+                { "_key": "mmc3l2b06r1", "_type": "tableRow", "cells": ["Inventory q (long)", "Larger positive q", "r moves further below s"] },
+                { "_key": "mmc3l2b06r2", "_type": "tableRow", "cells": ["Inventory q (short)", "Larger negative q", "r moves further above s"] },
+                { "_key": "mmc3l2b06r3", "_type": "tableRow", "cells": ["Variance σ²", "Higher volatility", "Gap between r and s widens for the same inventory"] },
+                { "_key": "mmc3l2b06r4", "_type": "tableRow", "cells": ["Risk aversion γ", "More risk-averse market maker", "Gap between r and s widens for the same inventory"] },
+                { "_key": "mmc3l2b06r5", "_type": "tableRow", "cells": ["Time remaining (T − t)", "More time left before the horizon", "Gap between r and s widens for the same inventory"] }
+              ]
+            },
+            {
+              "_key": "mmc3l2b07",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Computing a Reservation Price",
+              "prompt": "A market maker is long 50 units (q = 50), the mid price is ₹100, risk aversion γ = 0.01, variance σ² = 4, and there is half a trading session remaining, so (T − t) = 0.5. Using r = s − qγσ²(T − t), what is the reservation price, in rupees?",
+              "correctValue": 99,
+              "tolerance": 0.1,
+              "unit": "₹",
+              "explanation": "r = 100 − (50 × 0.01 × 4 × 0.5) = 100 − 1 = ₹99. Being long shifts the reservation price below the ₹100 mid, by an amount that depends on how much inventory is held, how volatile the instrument is, how risk-averse the market maker is set to be, and how much time remains, exactly as the sensitivity table above describes."
+            },
+            {
+              "_key": "mmc3l2b08",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Flipping the Sign of Inventory",
+              "question": "Using the same parameters as the previous exercise, but with the market maker now short 50 units instead of long (q = −50), what happens to the reservation price relative to the ₹100 mid?",
+              "options": [
+                "It moves below the mid, to ₹99, exactly as when long",
+                "It moves above the mid, to ₹101",
+                "It stays exactly at the ₹100 mid, since the size of the position is the same",
+                "It becomes undefined, since q cannot be negative"
+              ],
+              "correctIndex": 1,
+              "explanation": "With q = −50, the formula gives r = 100 − (−50 × 0.01 × 4 × 0.5) = 100 + 1 = ₹101. A short position pushes the reservation price above the mid, which is the mirror image of what a long position does, since a short market maker wants to encourage buying back its position rather than selling more."
+            },
+            {
+              "_key": "mmc3l2b09",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc3l2b09s1",
+                  "_type": "span",
+                  "text": "Turning a Reservation Price Into an Actual Quote",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc3l2b10",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc3l2b10s1",
+                  "_type": "span",
+                  "text": "The reservation price alone is not a quote; it is the center a market maker builds its quote around. The model's second result is how wide the total spread around that center should be.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc3l2b11",
+              "_type": "mathBlock",
+              "latex": "\\delta = \\gamma \\sigma^2 (T - t) + \\frac{2}{\\gamma} \\ln\\left(1 + \\frac{\\gamma}{\\kappa}\\right)",
+              "caption": "The Avellaneda-Stoikov optimal total spread. The first term is the same inventory-risk widening seen throughout this chapter; the second term reflects how sensitive incoming order flow is to price, governed by κ."
+            },
+            {
+              "_key": "mmc3l2b12",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "mmc3l2m02",
+                  "_type": "glossaryTerm",
+                  "definition": "A parameter describing how quickly incoming order flow dries up as a quote moves further from the mid price. A high κ means order flow is very price-sensitive, so a market maker must stay close to the mid to get filled at all; a low κ means order flow keeps arriving even at wider quotes."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "mmc3l2b12s1",
+                  "_type": "span",
+                  "text": "The first term of the spread formula should look familiar: it grows with variance, risk aversion, and time remaining, in exactly the same direction as the reservation price gap above, because it exists to compensate for the same inventory risk. The second term is new, and it behaves like a monopolist's classic trade-off between price and volume, governed by ",
+                  "marks": []
+                },
+                {
+                  "_key": "mmc3l2b12s2",
+                  "_type": "span",
+                  "text": "κ",
+                  "marks": ["mmc3l2m02"]
+                },
+                {
+                  "_key": "mmc3l2b12s3",
+                  "_type": "span",
+                  "text": ", the sensitivity of order flow to distance from the mid. Where order flow is highly price-sensitive, a wide quote simply stops getting filled, so this term shrinks, pulling the market maker back toward tighter quoting to stay competitive. Where order flow keeps arriving regardless of how wide the quote is, the market maker can safely charge more per fill without losing much volume, so this term grows.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc3l2b13",
+              "_type": "mathBlock",
+              "latex": "\\text{bid} = r - \\frac{\\delta}{2}, \\qquad \\text{ask} = r + \\frac{\\delta}{2}",
+              "caption": "The final quote construction: split the optimal spread evenly around the reservation price, not around the mid price."
+            },
+            {
+              "_key": "mmc3l2b14",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This is precisely what quote skewing means in practice. Because both the bid and the ask are built around a reservation price that has already shifted below the mid for a long market maker, the ask ends up lower than a symmetric quote would have placed it, making it more attractive for someone to buy the market maker's excess inventory, while the bid also ends up lower, making it less attractive for the market maker to buy still more. The same shift, expressed through one number, discourages further accumulation and encourages unwinding, without the market maker ever needing to place a special order just to offload its position."
+            },
+            {
+              "_key": "mmc3l2b15",
+              "_type": "table",
+              "caption": "The full quoting recipe, step by step",
+              "headers": ["Step", "Inputs Needed", "Output"],
+              "rows": [
+                { "_key": "mmc3l2b15r1", "_type": "tableRow", "cells": ["1. Compute reservation price", "Mid price, current inventory, risk aversion, variance, time remaining", "r"] },
+                { "_key": "mmc3l2b15r2", "_type": "tableRow", "cells": ["2. Compute optimal spread", "Variance, risk aversion, time remaining, order flow sensitivity κ", "δ"] },
+                { "_key": "mmc3l2b15r3", "_type": "tableRow", "cells": ["3. Build the quote", "r and δ from steps 1 and 2", "bid = r − δ/2, ask = r + δ/2"] }
+              ]
+            },
+            {
+              "_key": "mmc3l2b16",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "The Avellaneda-Stoikov model assumes a mid price that moves as Brownian motion, order arrivals that follow a Poisson process with intensity decaying exponentially in distance from the mid, and a finite horizon by which the market maker must be flat. None of these hold exactly for Nifty or Bank Nifty options, where volatility clusters, order flow is not perfectly random, and there is no hard requirement to be flat at any specific instant. The model is still the standard reference point in this field because its qualitative conclusions, skew away from the mid based on inventory and widen the spread with volatility and time horizon, hold up directionally even where its precise assumptions do not."
+            },
+            {
+              "_key": "mmc3l2b17",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Applying the Intuition on a Bank Nifty Desk",
+              "scenario": "A market maker on Bank Nifty weekly options has been accumulating a short position for the last twenty minutes as index-linked call buying keeps hitting its ask. It is now 20 minutes from expiry, and implied volatility has been rising through the session.",
+              "prompt": "Without doing the arithmetic, describe qualitatively what should happen to this market maker's reservation price and its quoted spread compared to where they sat when it was flat at the start of the session, and why.",
+              "modelAnswer": "The reservation price should move above the mid, since the market maker is now short, mirroring the long-inventory example worked through earlier in this lesson; this makes its bid more attractive to sellers, encouraging trades that help it buy back the position, while making its ask less attractive to buyers, discouraging further accumulation of the short. The quoted spread should also be wider than it was at the start of the session, since both a rising variance and a rising risk aversion to holding a position this close to expiry push the spread formula's first term up. Time remaining is falling as expiry approaches, which on its own would narrow that term, but with volatility rising as fast as it is described here, the volatility effect is likely to dominate over the shrinking time horizon in this scenario."
+            },
+            {
+              "_key": "mmc3l2b18",
+              "_type": "keyTakeaways",
+              "points": [
+                "The Avellaneda-Stoikov reservation price shifts a market maker's quoting center away from the mid price, based on current inventory, risk aversion, variance, and time remaining",
+                "A long position pushes the reservation price below the mid; a short position pushes it above",
+                "The optimal spread has two parts: an inventory-risk term that behaves like the widening seen throughout this chapter, and an order-flow-sensitivity term governed by κ",
+                "Quoting around the reservation price rather than the mid is what actually implements skewing: it makes the side that reduces inventory more attractive and the side that adds to it less attractive",
+                "The model's precise assumptions, Brownian mid-price movement and Poisson order arrivals, do not hold exactly in real markets like Nifty and Bank Nifty options, but its qualitative behaviour remains the standard reference",
+                "The next lesson turns this formula into a practical playbook for skewing quotes without moving the market"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

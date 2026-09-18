@@ -1,0 +1,163 @@
+{
+  "courseSlug": "understanding-numerical-methods-in-quantitative-finance-binomial-trees-and-finite-difference-methods",
+  "chapters": [
+    {
+      "title": "Chapter 2: The One-Step and Multi-Step Binomial Tree",
+      "lessons": [
+        {
+          "title": "Calibrating u, d, and p: The Cox-Ross-Rubinstein Parameterization",
+          "slug": "calibrating-u-d-and-p-the-cox-ross-rubinstein-parameterization",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "i1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "i1s1", "text": "Lessons 1 through 3 used u = 1.2 and d = 0.9 throughout, clean round numbers, chosen so the arithmetic stayed checkable by hand while the pricing formula, the no-arbitrage proof, and the backward-induction machinery got built. Nothing about those numbers came from an actual stock. No trading desk gets to hand-pick u and d like that, they have to be calibrated from something real, the stock's volatility. This lesson builds that missing bridge, the Cox-Ross-Rubinstein parameterization, the standard, most widely taught way of turning a volatility number into a usable u and d.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "i2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "i2s1", "text": "What u and d Actually Need to Represent", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "i3",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "i3s1", "text": "Chapter 1, Lesson 3 argued that a discrete binomial process, run over many small steps, should converge toward the same continuous, lognormal process Black-Scholes assumes. That convergence is not automatic for any arbitrary u and d, it only happens if the size of the up and down moves matches the stock's actual volatility over one step. The direction of the average move, the drift, is not u and d's job at all, that is entirely handled by the risk-neutral probability p from Lesson 1. u and d only have one job: represent how much the stock plausibly moves in one step, sized correctly against real volatility.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "i4",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "i4s1", "text": "The Cox-Ross-Rubinstein Formulas", "marks": [] }
+              ]
+            },
+            {
+              "_type": "mathBlock",
+              "_key": "i5",
+              "latex": "u = e^{\\sigma \\sqrt{\\Delta t}}, \\qquad d = e^{-\\sigma \\sqrt{\\Delta t}} = \\frac{1}{u}",
+              "caption": "The Cox-Ross-Rubinstein (CRR) parameterization, 1979. Sigma is the stock's annualized volatility, the same sigma from the Black-Scholes formula in Chapter 1, Lesson 1."
+            },
+            {
+              "_type": "block",
+              "_key": "i6",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "i6s1", "text": "The square root of delta-t is not decoration, it is the same scaling that shows up everywhere in options math, including inside Black-Scholes's own d1 and d2 terms. A Brownian motion's variance grows in direct proportion to elapsed time, so its standard deviation, the natural unit for how far the stock plausibly moves, grows with the square root of time. Setting d exactly equal to 1 over u, rather than picking two independent numbers the way Lessons 1 through 3 did, makes the up and down log-moves perfectly symmetric, plus sigma root delta-t and minus sigma root delta-t, which reduces calibration to fitting one number, sigma, instead of two.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "i7",
+              "type": "insight",
+              "text": "CRR is the standard, most widely taught parameterization, but not the only one in use, alternatives like the Jarrow-Rudd parameterization make different symmetry choices. This course builds exclusively on CRR because its d = 1 over u property is what keeps the tree cleanly recombining and symmetric in log-price space, exactly the property Lesson 3 relied on."
+            },
+            {
+              "_type": "block",
+              "_key": "i8",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "i8s1", "text": "Once u and d come from these formulas, the risk-neutral probability is computed exactly as Lesson 1 defined it, no change to that formula at all.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "mathBlock",
+              "_key": "i9",
+              "latex": "p = \\frac{e^{r\\,\\Delta t} - d}{u - d}",
+              "caption": "Unchanged from Lesson 1. For realistic volatility, rate, and step-size combinations, CRR's u and d keep this comfortably inside the valid 0-to-1 range, the no-arbitrage condition from Lesson 1 rarely binds in practice once u and d are properly calibrated."
+            },
+            {
+              "_type": "block",
+              "_key": "i10",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "i10s1", "text": "Worked Example: Calibrating a Monthly Step", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "i11",
+              "caption": "Setup",
+              "headers": ["Input", "Value"],
+              "rows": [
+                { "cells": ["Annualized volatility, sigma", "25%"] },
+                { "cells": ["Step length, delta-t", "1 month (1/12 year ≈ 0.0833)"] },
+                { "cells": ["Risk-free rate, r", "6% (continuous, annualized)"] }
+              ]
+            },
+            {
+              "_type": "statGrid",
+              "_key": "i12",
+              "stats": [
+                { "label": "u", "value": "1.0748", "context": "e^(0.25 × sqrt(1/12)), a +7.48% move" },
+                { "label": "d", "value": "0.9304", "context": "1 / u, a −6.96% move" },
+                { "label": "p", "value": "0.5167", "context": "(e^(0.06 × 1/12) − 0.9304) / (1.0748 − 0.9304)" }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "i13",
+              "type": "warning",
+              "text": "Compare these to Lessons 1 through 3's u = 1.2 and d = 0.9. Those were round numbers picked for clean arithmetic while the pricing machinery was being built, not a CRR calibration, and notice they were never a reciprocal pair either, 1 over 1.2 is 0.8333, not 0.9. Real CRR output for a properly sized step looks like the numbers above, u and d sitting close to 1, moving closer still as the step shrinks further, exactly the convergence behaviour Chapter 1, Lesson 3 previewed."
+            },
+            {
+              "_type": "exercise",
+              "_key": "i14",
+              "variant": "quiz",
+              "title": "Quick Check",
+              "question": "Under the CRR parameterization, if delta-t is cut from 1 month to 1 week while volatility stays fixed at 25%, what happens to u?",
+              "options": [
+                "u moves closer to 1, since sigma times the square root of delta-t shrinks",
+                "u moves further away from 1",
+                "u is unaffected by delta-t, only by sigma",
+                "u becomes negative"
+              ],
+              "correctIndex": 0,
+              "explanation": "A smaller delta-t shrinks the square root of delta-t term, which shrinks the exponent sigma times square root of delta-t, pulling u closer to 1 and d closer to 1 as well. This is the same idea from Chapter 1, Lesson 3, finer steps mean smaller per-step moves, and it is exactly why a properly calibrated tree with many steps looks nothing like the deliberately coarse u = 1.2 examples used earlier in this chapter."
+            },
+            {
+              "_type": "exercise",
+              "_key": "i15",
+              "variant": "scenario",
+              "title": "Why the Reciprocal Choice?",
+              "scenario": "Lesson 3 showed that recombination only requires using the same u and d at every step, it never required d to be the exact reciprocal of u. Yet CRR insists on d = 1 over u specifically.",
+              "prompt": "What does the reciprocal choice actually buy, beyond recombination, which a non-reciprocal pair like u = 1.2, d = 0.9 already achieves just as well?",
+              "modelAnswer": "Recombination alone only needs constant u and d, true, and Lessons 1 through 3's u = 1.2, d = 0.9 pair recombines perfectly well. What the reciprocal choice adds is symmetry in log-price space, since the natural logarithm of u equals the negative of the natural logarithm of d, the up and down moves are mirror images of each other around today's price. That symmetry is what lets a single volatility parameter, sigma, pin down both u and d simultaneously through one formula, rather than needing two independently chosen numbers that then have to be separately checked against the stock's actual variance. It turns calibration from a two-unknown problem into a one-unknown problem."
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "i16",
+              "text": "u and d are not free numbers to pick for convenience, they are volatility, translated into a move size. Cox-Ross-Rubinstein's u = e^(sigma root delta-t), d = 1/u is what actually connects the tidy lattice built in this chapter to a real stock's real, measurable behaviour."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "i17",
+              "points": [
+                "u and d only need to encode the size of the stock's moves, matched to its volatility. The direction, or drift, is handled entirely by the risk-neutral probability p, not by u and d.",
+                "The Cox-Ross-Rubinstein formulas, u = e^(sigma root delta-t) and d = 1/u, are the standard, most widely taught calibration, chosen because the reciprocal relationship keeps the tree symmetric in log-price space and reduces calibration to a single parameter, sigma.",
+                "For a stock with 25% annualized volatility and a monthly step, CRR gives u ≈ 1.0748 and d ≈ 0.9304, both close to 1, unlike the deliberately coarse u = 1.2, d = 0.9 used earlier in this chapter purely for clean arithmetic.",
+                "As delta-t shrinks, sigma times the square root of delta-t shrinks with it, pulling both u and d closer to 1, the exact discretization-refinement behaviour Chapter 1, Lesson 3 previewed.",
+                "The risk-neutral probability formula itself, p = (e^(r delta-t) − d) / (u − d), is unchanged from Lesson 1. Calibration only changes what u and d are, never how p or the pricing formula are computed from them."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

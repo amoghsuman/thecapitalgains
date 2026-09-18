@@ -1,0 +1,219 @@
+{
+  "courseSlug": "understanding-reinforcement-learning-applications-in-trading",
+  "chapters": [
+    {
+      "title": "Chapter 4: Training the Agent",
+      "lessons": [
+        {
+          "title": "Setting Up a Training Loop: Wiring the Environment to Stable-Baselines3",
+          "slug": "setting-up-a-training-loop-wiring-the-environment-to-stable-baselines3",
+          "body": [
+            {
+              "_key": "rl4l1b01",
+              "_type": "bigIdea",
+              "text": "Three chapters of state, reward, and action design have all been building toward one moment: handing the environment to an algorithm and actually training it. This lesson does exactly that, using a tested library instead of a hand-rolled training loop, and explains precisely what that library is doing underneath."
+            },
+            {
+              "_key": "rl4l1b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl4l1b02s1", "_type": "span", "text": "Why Use a Library Instead of Writing DQN From Scratch", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl4l1b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl4l1b03s1",
+                  "_type": "span",
+                  "text": "Every algorithm Chapter 2 described, Q-learning above all, is usually not implemented from scratch in real research or production work. Stable-Baselines3 provides tested, well-maintained PyTorch implementations of DQN, PPO, A2C, and several others, built specifically to consume the Gymnasium interface Chapter 3 built the trading environment around. Writing DQN from scratch once is a genuinely useful exercise for understanding what is happening inside it, which this lesson still explains, but relying on a library implementation for actual training avoids a long list of subtle bugs, incorrect target network update timing, replay buffer sampling errors, gradient clipping mistakes, that are easy to introduce and hard to notice in a hand-rolled version.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl4l1b04",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl4l1b04s1", "_type": "span", "text": "Wrapping the Environment for Training", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl4l1b05",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl4l1b05s1",
+                  "_type": "span",
+                  "text": "Before training starts, it is worth confirming the environment genuinely satisfies the Gymnasium contract, not just that it runs without crashing on a handful of random steps the way the previous chapter's sanity check confirmed. Stable-Baselines3 ships a dedicated checker for exactly this.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl4l1b06",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "from stable_baselines3.common.env_checker import check_env\nfrom stable_baselines3.common.monitor import Monitor\n\nenv = NiftyFuturesEnv(one_day_of_minute_bars)\ncheck_env(env, warn=True)   # validates spaces, reset()/step() signatures, dtypes\n\nenv = Monitor(env)          # wraps the env to log episode reward and length automatically",
+              "caption": "check_env() catches a wider range of interface mistakes than a manual sanity-check rollout does, mismatched dtypes, an observation that doesn't match the declared shape, a reward that isn't a plain float. Monitor() is a thin wrapper that records episode statistics SB3's own logging and callbacks rely on later."
+            },
+            {
+              "_key": "rl4l1b07",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl4l1b07s1", "_type": "span", "text": "Training a DQN Agent", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl4l1b08",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl4l1b08s1",
+                  "_type": "span",
+                  "text": "With a validated, monitored environment, training a DQN agent is a small amount of code, since Stable-Baselines3 handles the replay buffer, target network updates, and the training loop itself.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl4l1b09",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "from stable_baselines3 import DQN\n\nmodel = DQN(\n    \"MlpPolicy\",\n    env,\n    learning_rate=1e-4,\n    buffer_size=50_000,\n    batch_size=64,\n    gamma=0.99,\n    exploration_fraction=0.3,     # epsilon decays over the first 30% of training\n    exploration_final_eps=0.05,\n    verbose=1,\n)\n\nmodel.learn(total_timesteps=200_000)",
+              "caption": "gamma is the discount factor from Chapter 2, and exploration_fraction / exploration_final_eps control the epsilon-greedy schedule from the exploration-exploitation lesson, now handled by the library rather than hand-coded. \"MlpPolicy\" tells SB3 to approximate Q(s,a) with a small multilayer neural network rather than a lookup table."
+            },
+            {
+              "_key": "rl4l1b10",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl4l1b10s1", "_type": "span", "text": "What Actually Happens Inside model.learn()", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl4l1b11",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl4l1b11s1",
+                  "_type": "span",
+                  "text": "It is worth understanding what model.learn() is actually doing, because it is a direct extension of Chapter 2's Q-learning update, not a different algorithm. Chapter 2 defined tabular Q-learning as a lookup table, one entry per state-action pair, updated one transition at a time. That table does not scale past a handful of discrete states, and Chapter 3's continuous-valued state vector, momentum, volatility, a lookback window of returns, has effectively infinite distinct values. DQN replaces the table with a neural network, Q(s,a;θ), and turns the same Bellman-based update into a loss function minimized by gradient descent.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl4l1b12",
+              "_type": "mathBlock",
+              "latex": "L(\\theta) = \\mathbb{E}_{(s,a,r,s') \\sim \\text{buffer}} \\Big[ \\big( r + \\gamma \\max_{a'} Q(s', a'; \\theta^{-}) - Q(s, a; \\theta) \\big)^{2} \\Big]",
+              "caption": "The DQN loss: the same TD target from Chapter 2's Q-learning update, r + γ·max Q(s',a'), now compared against a neural network's current estimate and squared into a loss gradient descent can minimize. θ⁻ denotes a separate, periodically updated target network, rather than the same network being trained, which is what keeps the moving target of a naive implementation from destabilizing training."
+            },
+            {
+              "_key": "rl4l1b13",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl4l1b13s1",
+                  "_type": "span",
+                  "text": "The replay buffer, the buffer_size argument above, exists because neural network training assumes roughly independent, identically distributed samples, and consecutive trading steps are anything but independent. Storing past transitions and sampling minibatches from that buffer, rather than training on transitions in the exact order they happened, breaks the correlation between consecutive updates that would otherwise destabilize training.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl4l1b14",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl4l1b14s1", "_type": "span", "text": "Saving, Loading, and Evaluating a Trained Model", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl4l1b15",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl4l1b15s1",
+                  "_type": "span",
+                  "text": "Once training finishes, the model needs to be saved, reloaded independently of the training script, and evaluated using its learned policy rather than random actions, the way the previous chapter's sanity check did.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl4l1b16",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "model.save(\"dqn_nifty_futures_v1\")\n\n# ... later, in a separate evaluation script ...\nfrom stable_baselines3 import DQN\n\nmodel = DQN.load(\"dqn_nifty_futures_v1\")\n\nstate, info = env.reset()\ndone = False\ntotal_reward = 0.0\nwhile not done:\n    action, _ = model.predict(state, deterministic=True)\n    state, reward, done, truncated, info = env.step(action)\n    total_reward += reward\n\nprint(f\"Trained policy total reward: {total_reward:.2f}\")",
+              "caption": "deterministic=True makes the agent act fully greedily, ε = 0 in Chapter 2's terms, since evaluation should measure the policy's actual learned behavior, not a still-exploring version of it."
+            },
+            {
+              "_key": "rl4l1b17",
+              "_type": "callout",
+              "type": "warning",
+              "text": "This evaluation loop runs on the same environment instance, and in the code above, potentially the very same day of data, the model trained on. A policy that performs well here has, at minimum, memorized something about this specific data, and at worst has done nothing more than overfit to it. The next lesson covers how to read a training run honestly; the lesson after that covers evaluating on data the agent never trained on at all, which is the only evaluation that actually means anything."
+            },
+            {
+              "_key": "rl4l1b18",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Diagnosing an Environment That Fails check_env()",
+              "scenario": "Running check_env(env, warn=True) on a modified version of the trading environment produces a warning: \"Observation returned by reset() does not match the shape declared in observation_space.\"",
+              "prompt": "What kind of mistake in the environment's code would produce exactly this warning, and where in the environment built across this chapter would you look first?",
+              "modelAnswer": "This warning means the actual array returned by reset(), or by _get_state(), which reset() calls, has a different length or shape than what observation_space was declared with in __init__. The most likely cause is a mismatch between the declared state_dim, 2 * lookback + 2 in this course's environment, and what _get_state() actually concatenates, for example if lookback was changed in one place but not the other, or if a feature was added to the state vector without updating state_dim to match. The first place to check is __init__, comparing the observation_space shape argument against a manual count of what _get_state() concatenates, since the two are defined in different methods and nothing enforces they stay in sync automatically."
+            },
+            {
+              "_key": "rl4l1b19",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "What the Replay Buffer Actually Solves",
+              "question": "Why does DQN sample training minibatches from a replay buffer of past transitions instead of training directly on transitions in the order they were experienced?",
+              "options": [
+                "It has no real effect on training; the replay buffer only exists to save memory",
+                "Training on transitions in their original order violates the independent, identically distributed sample assumption neural network training relies on, since consecutive trading steps are highly correlated; sampling from a buffer breaks that correlation",
+                "The replay buffer is required by the Gymnasium interface specification",
+                "It only matters for continuous action spaces, not discrete ones like the DQN example in this lesson"
+              ],
+              "correctIndex": 1,
+              "explanation": "Consecutive states in a trading episode are highly correlated, today's state looks a lot like yesterday's, so training a neural network directly on transitions in their original sequential order would violate the roughly independent, identically distributed sample assumption gradient descent relies on for stable training. Sampling randomly from a replay buffer of many past transitions breaks that correlation, which is why buffer_size is one of the more consequential hyperparameters to get right."
+            },
+            {
+              "_key": "rl4l1b20",
+              "_type": "keyTakeaways",
+              "points": [
+                "Stable-Baselines3 provides tested implementations of DQN, PPO, and other algorithms from Chapter 2, built to consume exactly the Gymnasium interface Chapter 3's environment was built around",
+                "check_env() validates an environment's interface far more thoroughly than a manual random-action rollout, and is worth running before any real training begins",
+                "DQN is the same Q-learning update from Chapter 2, with the lookup table replaced by a neural network, Q(s,a;θ), trained by minimizing the squared TD error against a separate, periodically updated target network",
+                "The replay buffer exists to break the correlation between consecutive trading steps, which would otherwise violate the independent sample assumption neural network training depends on",
+                "model.predict(state, deterministic=True) evaluates the trained, fully greedy policy, ε = 0 in Chapter 2's terms, distinct from the random-action rollout used only to sanity-check the environment itself",
+                "Evaluating a trained model on the same data it trained on proves almost nothing beyond memorization; genuine evaluation requires data the agent never saw during training, covered in the next two lessons"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

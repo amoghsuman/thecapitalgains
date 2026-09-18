@@ -1,0 +1,190 @@
+{
+  "courseSlug": "understanding-implied-volatility-and-the-volatility-surface",
+  "chapters": [
+    {
+      "title": "Chapter 4: Building and Reading the Volatility Surface",
+      "lessons": [
+        {
+          "title": "Common Surface Distortions and What They Signal",
+          "slug": "common-surface-distortions-and-what-they-signal",
+          "body": [
+            {
+              "_key": "k1",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                { "_key": "k1s", "_type": "span", "text": "A Field Guide for What You'll Actually See", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k2",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                { "_key": "k2s1", "_type": "span", "text": "Real surfaces rarely look like this course's clean, textbook diagrams. They kink, hump, and jump in ways a smooth skew or a neat contango curve never would. This closing lesson covers two genuinely new distortion patterns you have not seen yet, then pulls every distortion from this entire course into a single reference table, and closes with the actual workflow for deciding whether something odd on a surface is real.", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k3",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                { "_key": "k3s", "_type": "span", "text": "Term Structure Humps: When the Event Date Itself Is Uncertain", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k4",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                { "_key": "k4s1", "_type": "span", "text": "Chapter 3 covered term structures that move one direction, contango or backwardation, because a specific event sits on a known, fixed date. Sometimes the market knows an event is coming but not exactly when, only that it will likely land somewhere inside a window, say the next six to eight weeks. Expiries clearly before that window see little extra premium. Expiries clearly after it, once the event has almost certainly already resolved, see little extra premium either. But whichever expiry actually falls inside that uncertain window absorbs a disproportionate share of the event risk, producing a hump instead of a straight slope.", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Suvidha Labs: A Term Structure Hump (USFDA Decision Expected in 6 to 8 Weeks)",
+              "xAxisLabel": "Days to Expiry",
+              "yAxisLabel": "ATM Implied Volatility (%)",
+              "data": [
+                { "_key": "d1", "_type": "chartPoint", "label": "7D", "value": 32 },
+                { "_key": "d2", "_type": "chartPoint", "label": "30D", "value": 35 },
+                { "_key": "d3", "_type": "chartPoint", "label": "60D", "value": 48 },
+                { "_key": "d4", "_type": "chartPoint", "label": "90D", "value": 33 }
+              ],
+              "_key": "k5"
+            },
+            {
+              "_key": "k6",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                { "_key": "k6s1", "_type": "span", "text": "Suvidha Labs, the hypothetical pharma company from Chapter 2's USFDA scenario, is awaiting a re-inspection result expected sometime in the next six to eight weeks, with no confirmed exact date. The 7-day and 30-day expiries sit close to its normal 32 to 35% range, since the decision almost certainly will not land that soon. The 60-day expiry, squarely inside the likely window, spikes to 48%. The 90-day expiry drops back down to 33%, because by then the market expects the outcome to already be known. Neither a straight contango nor a straight backwardation reading captures this. Only recognizing the shape as a hump does.", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k7",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                { "_key": "k7s", "_type": "span", "text": "Skew Discontinuities: When Adjacent Expiries Have Different Crowds", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k8",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                { "_key": "k8s1", "_type": "span", "text": "Chapter 4, Lesson 1 described skew flattening smoothly as expiry gets further away, the usual pattern. India's own market structure can break that smoothness. Chapter 2 already showed that India's nearest weekly expiries carry exceptionally heavy retail theta-selling activity, on both the call and put wings at once, which can compress that specific expiry's skew flatter than its underlying hedging demand alone would produce. The very next weekly expiry, where retail activity typically drops off sharply since Indian retail concentrates overwhelmingly in the single nearest weekly, can then show a noticeably steeper, more institutionally-driven skew again. The result is a skew that does not flatten gradually and smoothly step by step, but jumps in steepness between two adjacent, similarly-dated expiries.", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "callout",
+              "type": "insight",
+              "text": "This is really Chapter 2's positioning lesson showing up as a shape, not just a number. A skew that does not flatten the way it \"should\" between two neighboring expiries is telling you the crowd trading each one is genuinely different, retail-heavy at one tenor, institution-heavy at the other, not that anything is mispriced.",
+              "_key": "k9"
+            },
+            {
+              "_key": "k10",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                { "_key": "k10s", "_type": "span", "text": "The Complete Field Guide: Every Distortion This Course Has Covered", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "table",
+              "caption": "A reference guide to every surface distortion covered in this course",
+              "headers": ["Distortion", "Likely Cause", "What to Check First"],
+              "rows": [
+                { "_key": "r1", "_type": "tableRow", "cells": ["Flat IV curve across all strikes", "Stale or broken data feed; no liquid index has genuinely shown this since 1987", "Volume, OI, and a cross-check against NSE or a second source (Ch1, Ch2L1)"] },
+                { "_key": "r2", "_type": "tableRow", "cells": ["One strike's IV wildly out of line with its neighbors", "A stale last traded price or near-zero volume on that one strike", "That specific strike's volume, OI, and bid-ask width (Ch1L2, Ch1L4)"] },
+                { "_key": "r3", "_type": "tableRow", "cells": ["Term structure in backwardation", "A known near-term event, or acute ongoing market stress", "The event calendar, and whether VIX futures are also inverted (Ch3L2, Ch3L4)"] },
+                { "_key": "r4", "_type": "tableRow", "cells": ["A hump in the middle of the term structure", "An expected event with an uncertain exact date, inside one specific expiry's window", "Whether an event is expected \"sometime in\" that expiry's window (Ch4L4)"] },
+                { "_key": "r5", "_type": "tableRow", "cells": ["Skew shape jumps abruptly between adjacent expiries", "Different participant bases at different tenors, e.g. retail-heavy weeklies vs institution-heavy monthlies", "The relative retail vs institutional volume and OI split at each tenor (Ch2L3, Ch4L4)"] },
+                { "_key": "r6", "_type": "tableRow", "cells": ["IV Rank and IV Percentile strongly disagree", "A single extreme historical outlier day distorting the Rank calculation", "The actual IV history chart, not just the summary number (Ch4L3)"] }
+              ],
+              "_key": "k11"
+            },
+            {
+              "_key": "k12",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                { "_key": "k12s", "_type": "span", "text": "The Workflow: What to Actually Do When You See Something Odd", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "The final workflow, tying every chapter together",
+              "steps": [
+                "Check liquidity first: today's volume, open interest, and bid-ask width on the specific strike or expiry in question",
+                "Cross-check the reading against a second source, such as NSE's own site or a different broker terminal",
+                "Match the shape against the field guide above: is it a known, explainable pattern, or does it still look like a genuine anomaly?",
+                "If it matches an event-driven pattern, check the event calendar to confirm the specific date, or the likely window",
+                "Only once data quality and a plausible explanation are both ruled in, or ruled out, decide whether this is a real signal worth acting on, or noise worth ignoring"
+              ],
+              "_key": "k13"
+            },
+            {
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Naming the shape correctly",
+              "question": "A stock's term structure shows a 7-day ATM IV of 30%, a 30-day ATM IV of 33%, a 60-day ATM IV of 46%, and a 90-day ATM IV of 32%. Which pattern does this match, and what does it most likely signal?",
+              "options": [
+                "Simple contango, since IV generally rises with time",
+                "A term structure hump, most likely signaling an expected event with an uncertain exact date, one the market believes is most likely to land within the 60-day window rather than on a single clearly-dated occasion",
+                "Simple backwardation, since the 90-day IV ends up close to the 7-day IV",
+                "A calculation error, since IV supposedly cannot rise and then fall again across expiries"
+              ],
+              "correctIndex": 1,
+              "explanation": "IV rising, peaking at one specific expiry, then falling again is exactly this lesson's hump pattern, not simple contango or backwardation. It points to an event whose timing is uncertain within a window, rather than fixed to one known date, exactly like the Suvidha Labs example above.",
+              "_key": "k14"
+            },
+            {
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Reading a full surface, start to finish",
+              "scenario": "A junior analyst pulls up a mid-cap stock's full volatility surface. This week's (7-day) ATM IV is 28%, next week's (14-day) is 27%, the monthly (30-day) is 45%, and the quarterly (90-day) is 29%. The monthly expiry's skew also looks unusually steep on the put side compared to its neighboring expiries. Separately, she notices this stock's IV Rank sits at a low 8%, while its IV Percentile sits at a high 91%.",
+              "prompt": "Walk through what each of these four observations suggests on its own, and what overall picture they build together.",
+              "modelAnswer": "The 7-day and 14-day readings, close together around 27 to 28%, describe a normal, unremarkable baseline. The monthly expiry spiking to 45% before the quarterly drops back to 29% is a term structure hump: an event expected within roughly a one-month window, with an uncertain exact date, since neither the nearer nor the much further expiry shows the same premium. The unusually steep put-side skew specifically at that monthly expiry reinforces that this is being priced as genuine downside, crash-type event risk, not vague, direction-neutral uncertainty. The IV Rank versus IV Percentile gap, a low 8% against a high 91%, most likely means this stock had one or more extreme outlier days in its own past year that are dragging Rank down artificially, while Percentile more accurately shows today's IV is actually elevated relative to most of the past year. Before acting on any of this, she should still run the Chapter 1 liquidity checklist on the monthly expiry's specific strikes to rule out a data artefact. Assuming the data holds up, the combined picture is a stock facing a genuine, uncertain-timing, downside-leaning event roughly a month out, priced meaningfully above its own recent normal range.",
+              "_key": "k15"
+            },
+            {
+              "_type": "bigIdea",
+              "text": "A volatility surface is never really flat, never really smooth, and never really simple, because it is built entirely out of real people making real hedging and speculation decisions, all at once, across every strike and every expiry a market lists. Reading it well was never about memorizing one shape. It was about learning to ask, every time something looks odd: is this real, and if it is, what is it actually telling me?",
+              "_key": "k16"
+            },
+            {
+              "_type": "keyTakeaways",
+              "points": [
+                "A term structure hump, IV rising then falling across expiries rather than moving in one direction, usually signals an event expected within an uncertain window, not on one fixed known date.",
+                "Skew shape can jump abruptly between adjacent expiries when different participant bases dominate different tenors, such as retail-heavy weeklies against institution-heavy monthlies, a genuine exception to the usual smooth flattening pattern.",
+                "Every distortion this course has covered, a flat curve, an isolated stale strike, backwardation, a hump, a skew discontinuity, or a Rank-Percentile mismatch, has a specific likely cause and a specific first check, not one universal explanation.",
+                "The correct workflow when something looks odd stays the same every time: check liquidity and cross-check the data first, match the shape against a known pattern, confirm any relevant event or driver, and only then decide whether it is signal or noise.",
+                "Reading a volatility surface is ultimately reading positioning: who is hedging, who is speculating, who is providing liquidity, and how urgently, all expressed through the shape of a curve most traders only ever glance at."
+              ],
+              "_key": "k17"
+            },
+            {
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice. The Suvidha Labs hump example and the analyst's closing scenario are hypothetical and illustrative, not live market data, and Suvidha Labs remains a fictional company created for this course. Always check live prices, IV, and event calendars on NSE or your broker's terminal before trading, and consult a SEBI-registered advisor for personalised advice.",
+              "_key": "k18"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,259 @@
+{
+  "courseSlug": "understanding-multi-asset-systematic-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 5: Carry and Cross-Asset Value Strategies",
+      "lessons": [
+        {
+          "title": "The Carry Trade Concept: Getting Paid to Wait Across Asset Classes",
+          "slug": "the-carry-trade-concept-getting-paid-to-wait-across-asset-classes",
+          "body": [
+            {
+              "_key": "mac5l1b01",
+              "_type": "bigIdea",
+              "text": "Carry is the return you earn for simply holding a position while nothing else happens, no trend, no price move required. Every asset class in this course has a version of it, wearing a different name each time, and once you see the single idea underneath all of them, currency carry, bond rolldown, and commodity roll yield stop looking like four separate topics and start looking like one."
+            },
+            {
+              "_key": "mac5l1b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac5l1b02s1",
+                  "_type": "span",
+                  "text": "Pieces of carry have already appeared throughout this course: Chapter 2 covered the USD-INR interest rate differential, commodity roll yield in contango and backwardation, and previewed bond curve rolldown. Chapter 5 turns those pieces into an actual systematic strategy, and this opening lesson does what Chapter 4's opening lesson did for trend: define carry as one unifying concept, show why it is a genuine risk premium rather than free money, and explain why it complements trend-following so directly that Lesson 5 combines the two.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac5l1b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac5l1b03s1", "_type": "span", "text": "What Carry Actually Is: The Return From Doing Nothing", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac5l1b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac5l1b04s1",
+                  "_type": "span",
+                  "text": "Carry is the return an asset delivers if its spot price never moves at all. This is close to the exact opposite of trend-following, which earns nothing unless price actually moves in your favor. A high-carry position pays you simply for holding it through time, via a dividend, a coupon, a roll, or an interest rate differential, while a trend position pays you only for correctly anticipating direction.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac5l1b05",
+              "_type": "table",
+              "caption": "Carry's Different Disguises Across This Course's Asset Classes",
+              "headers": ["Asset Class", "What Carry Looks Like", "Covered In"],
+              "rows": [
+                { "_key": "mac5l1b05r1", "_type": "tableRow", "cells": ["Equities", "Dividend yield", "New to this lesson"] },
+                { "_key": "mac5l1b05r2", "_type": "tableRow", "cells": ["Fixed Income", "Yield plus curve rolldown", "Chapter 2, Lesson 2"] },
+                { "_key": "mac5l1b05r3", "_type": "tableRow", "cells": ["Commodities", "Roll yield: contango costs, backwardation pays", "Chapter 2, Lesson 3"] },
+                { "_key": "mac5l1b05r4", "_type": "tableRow", "cells": ["Currencies", "Interest rate differential", "Chapter 2, Lesson 4"] }
+              ]
+            },
+            {
+              "_key": "mac5l1b06",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac5l1b06s1", "_type": "span", "text": "The Unifying Formula: Carry as Forward Minus Spot", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac5l1b07",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac5l1b07s1",
+                  "_type": "span",
+                  "text": "Underneath every row of that table sits the same formula. In every asset class, carry can be expressed, roughly, as the annualized gap between an asset's forward or futures price and its spot price. In currencies, that gap comes from the interest rate differential, covered plainly in Chapter 2. In commodities, it comes from storage cost and convenience yield. In fixed income, it comes from where along the yield curve a bond sits and how its yield changes as it rolls down toward maturity. In equities, it shows up more directly as the dividend yield itself, the return an equity holder earns from simply holding through a dividend date with no price appreciation at all.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac5l1b08",
+              "_type": "mathBlock",
+              "latex": "carry \\approx \\frac{F - S}{S} \\times \\frac{1}{T}",
+              "caption": "Generalized carry, annualized. F is the forward or futures price, S is spot, T is time to expiry in years. This single expression underlies Chapter 2's currency forward premium, commodity roll yield, and bond rolldown, each driven by a different economic mechanism producing the F-S gap."
+            },
+            {
+              "_key": "mac5l1b09",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac5l1b09s1", "_type": "span", "text": "Why Carry Is Not Free Money: The Risk Premium Underneath It", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac5l1b10",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "mac5l1m01",
+                  "_type": "glossaryTerm",
+                  "definition": "Compensation an investor earns for bearing a specific, identifiable risk, as distinct from an anomaly or pricing error. A genuine risk premium persists over time precisely because it compensates for a real risk that does not disappear just because the return is measured and understood."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "mac5l1b10s1",
+                  "_type": "span",
+                  "text": "If carry were genuinely free money, arbitrage would compete it away almost immediately; markets do not reliably leave cash on the table for long. Carry persists because it is a real ",
+                  "marks": []
+                },
+                { "_key": "mac5l1b10s2", "_type": "span", "text": "risk premium", "marks": ["mac5l1m01"] },
+                {
+                  "_key": "mac5l1b10s3",
+                  "_type": "span",
+                  "text": ", compensation for a specific risk in every case. Chapter 2's currency lesson already showed this concretely: the 2013 taper tantrum wiped out years of accumulated INR carry in a matter of months, because the carry was compensation for exactly the depreciation risk that materialized. The same logic holds for every row in this lesson's table, commodity roll yield compensates for storage and price risk, bond rolldown compensates for duration and inflation risk, and equity dividend yield compensates for the underlying business risk of the company paying it. Academic research on carry strategies across currencies, commodities, bonds, and equities globally has documented this as a genuine, persistent return source precisely because it maps to identifiable risk, not because markets are inefficient.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac5l1b11",
+              "_type": "callout",
+              "type": "insight",
+              "text": "The most dangerous way to think about carry is as a steady, low-risk income stream. The correct way to think about it is as compensation for a specific tail risk that has simply not shown up yet. This is not a reason to avoid carry strategies, it is a reason to size them with that tail risk explicitly in mind, exactly as Chapter 2's currency lesson already argued."
+            },
+            {
+              "_key": "mac5l1b12",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac5l1b12s1", "_type": "span", "text": "Why Carry Complements Trend: Different Failure Conditions", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac5l1b13",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac5l1b13s1",
+                  "_type": "span",
+                  "text": "Chapter 4 closed by noting that trend-following's worst environment, choppy, range-bound markets, is close to the opposite of carry's worst environment, a sharp, sudden reversal. This is not a coincidence, it follows directly from what each strategy actually earns. Trend needs price to move in a persistent direction to earn anything at all, and gets whipsawed when price oscillates without committing to a direction. Carry earns its return specifically when price does not move much, and gets hurt precisely when a sudden move, the kind trend-following is built to capture, arrives instead.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac5l1b14",
+              "_type": "comparison",
+              "title": "Trend-Following vs Carry: Complementary Conditions",
+              "columns": [
+                {
+                  "_key": "mac5l1b14c1",
+                  "label": "Trend-Following",
+                  "points": [
+                    "Earns its return from sustained, directional price moves",
+                    "Whipsaws and loses money in choppy, range-bound markets",
+                    "Tends to perform well during sharp regime shifts and crises",
+                    "Requires price to actually move to earn anything"
+                  ]
+                },
+                {
+                  "_key": "mac5l1b14c2",
+                  "label": "Carry",
+                  "points": [
+                    "Earns its return simply from holding, if price stays roughly stable",
+                    "Performs reasonably in calm, range-bound, low-volatility markets",
+                    "Exposed to sharp losses during sudden reversals and crises",
+                    "Earns its return even if price never moves at all"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "mac5l1b15",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac5l1b15s1", "_type": "span", "text": "What This Chapter Builds", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac5l1b16",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac5l1b16s1",
+                  "_type": "span",
+                  "text": "Lessons 2 and 3 revisit currency and commodity carry, but now as fully specified trading strategies, signal construction, position sizing, and backtesting, building on the mechanics Chapter 2 already explained rather than re-explaining them. Lesson 4 extends carry's logic to a broader cross-asset value framework: identifying what is cheap versus expensive across equities, bonds, and commodities simultaneously. Lesson 5 closes the chapter by combining carry and trend explicitly, the natural conclusion of this lesson's complementary-conditions argument.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac5l1b17",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "The Desk That Called Carry \"Steady Income\"",
+              "scenario": "A newly formed systematic desk allocates a large share of its risk budget to a combination of currency carry, commodity roll-yield capture, and a bond rolldown strategy, describing the combined allocation in its investor materials as a \"steady income sleeve\" with historically low volatility. A risk committee member, reviewing this lesson's material, raises a concern before approving the sizing.",
+              "prompt": "What is the risk committee member likely concerned about, and how would you rewrite the investor materials to be more accurate?",
+              "modelAnswer": "The concern is that describing this allocation as \"steady income\" hides the fact that all three components are carry strategies, all compensation for tail risks, currency depreciation risk, commodity storage and price risk, and duration and inflation risk, that have simply not materialized in the historical sample being shown. Combining three carry strategies together does not remove this risk, and may concentrate it if the strategies' tail risks are correlated with each other, for instance if a single global risk-off event would hurt currency carry, commodity roll yield, and bond rolldown simultaneously. More accurate materials would describe the allocation as a carry-focused sleeve, explicitly name the specific risks each component is compensating for, and show performance across a period that included at least one sharp reversal, such as 2013's taper tantrum or 2022's rate-hike cycle, rather than presenting only a calm-period track record as representative."
+            },
+            {
+              "_key": "mac5l1b18",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why Carry and Trend Complement Each Other",
+              "question": "Based on this lesson, why do carry and trend-following tend to complement rather than duplicate each other in a combined portfolio?",
+              "options": [
+                "Because they are always perfectly negatively correlated by mathematical construction",
+                "Because trend earns its return from sustained price moves and struggles in choppy markets, while carry earns its return from price staying stable and struggles in sharp reversals, meaning their worst conditions are close to opposite",
+                "Because carry only applies to currencies and trend only applies to equities",
+                "Because they use the exact same signal formula, just with different position sizes"
+              ],
+              "correctIndex": 1,
+              "explanation": "Trend and carry earn their returns from close to opposite market behavior: trend needs sustained directional movement and is hurt by choppiness, while carry needs price stability and is hurt by sharp reversals. This near-opposite relationship between their worst environments is exactly what makes combining them, the subject of Lesson 5, a genuinely complementary strategy pairing rather than a redundant one."
+            },
+            {
+              "_key": "mac5l1b19",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "Naming the Underlying Concept",
+              "textWithBlank": "Compensation an investor earns for bearing a specific, identifiable risk, which persists over time because the underlying risk does not disappear just because the return is well understood, is called a ___.",
+              "correctAnswers": ["risk premium", "carry risk premium"],
+              "explanation": "Framing carry as a risk premium, not free money, is the central idea this lesson builds everything else on. It explains why carry persists rather than being arbitraged away, and why it demands careful sizing rather than being treated as low-risk income."
+            },
+            {
+              "_key": "mac5l1b20",
+              "_type": "keyTakeaways",
+              "points": [
+                "Carry is the return an asset delivers if its spot price does not move at all, the near-opposite of trend-following, which requires price to actually move",
+                "Carry appears across every asset class in this course under a different name: dividend yield for equities, yield and rolldown for fixed income, roll yield for commodities, and interest rate differential for currencies",
+                "A single generalized formula, carry approximately equal to (F-S)/S annualized, underlies all of these, with the F-S gap driven by a different economic mechanism in each asset class",
+                "Carry is a genuine risk premium, not free money; it persists because it compensates for a real, specific risk that eventually shows up, as the 2013 taper tantrum demonstrated for currency carry",
+                "Trend and carry tend to fail under close to opposite market conditions, trend in choppy markets, carry in sharp reversals, which is exactly what makes them complementary rather than redundant",
+                "This chapter builds carry into fully specified strategies for currencies and commodities, extends the logic to cross-asset value, and closes by combining carry with trend directly"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

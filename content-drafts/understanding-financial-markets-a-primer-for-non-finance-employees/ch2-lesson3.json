@@ -1,0 +1,350 @@
+{
+  "courseSlug": "understanding-financial-markets-a-primer-for-non-finance-employees",
+  "chapters": [
+    {
+      "title": "Chapter 2: The Equity Market",
+      "lessons": [
+        {
+          "title": "Nifty, Sensex and Market Capitalisation: Reading Market Headlines Without Confusion",
+          "slug": "nifty-sensex-and-market-capitalisation-reading-market-headlines-without-confusion",
+          "body": [
+            {
+              "_key": "c2l3-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-001s1", "_type": "span", "text": "\"Sensex crashes 800 points.\" \"Investor wealth down ₹4 lakh crore.\" \"Nifty at a record high.\" These headlines are written to be dramatic, and read literally they are close to meaningless. This lesson shows you what an index actually measures, so you can translate the headline into something useful in about ten seconds.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l3-002",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-002s1", "_type": "span", "text": "An Index Is a Weighted Average, Nothing More", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l3-003",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "c2l3-003m1", "_type": "glossaryTerm", "definition": "A single number tracking the combined price movement of a defined basket of stocks, used as a summary of how that segment of the market is doing." },
+                { "_key": "c2l3-003m2", "_type": "glossaryTerm", "definition": "The portion of a company's shares actually available for trading in the market, excluding holdings of promoters, governments and other locked-in strategic investors." }
+              ],
+              "children": [
+                { "_key": "c2l3-003s1", "_type": "span", "text": "An ", "marks": [] },
+                { "_key": "c2l3-003s2", "_type": "span", "text": "index", "marks": ["c2l3-003m1"] },
+                { "_key": "c2l3-003s3", "_type": "span", "text": " is a basket of shares tracked as one number. The Nifty 50 tracks 50 large companies on NSE, the Sensex tracks 30 on BSE. Neither is an average of prices. Both weight companies by ", "marks": [] },
+                { "_key": "c2l3-003s4", "_type": "span", "text": "free-float market capitalisation", "marks": ["c2l3-003m2"] },
+                { "_key": "c2l3-003s5", "_type": "span", "text": ", so a bigger company with more shares available to trade moves the index more than a smaller one. This is the single fact that explains most confusing market days.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l3-004",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "c2l3-004a", "label": "Nifty 50", "value": "50 companies", "context": "NSE's benchmark, base value 1000 as on 3 November 1995" },
+                { "_key": "c2l3-004b", "label": "Sensex", "value": "30 companies", "context": "BSE's benchmark, base value 100 for the year 1978-79" },
+                { "_key": "c2l3-004c", "label": "Both Weighted By", "value": "Free float", "context": "Promoter and locked-in holdings are excluded from the weight" }
+              ]
+            },
+            {
+              "_key": "c2l3-005",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Because both indices start from a base value set decades ago, the absolute level tells you nothing on its own. A Sensex level of 80,000 simply means the basket is 800 times its 1978-79 base. What matters is the percentage change, never the points."
+            },
+            {
+              "_key": "c2l3-006",
+              "_type": "mathBlock",
+              "latex": "\\text{Free-Float Market Cap} = \\text{Shares Outstanding} \\times \\text{Price} \\times \\text{Free-Float Factor}",
+              "caption": "The weight each company carries in an index is its free-float market cap as a share of the total for the basket."
+            },
+            {
+              "_key": "c2l3-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-007s1", "_type": "span", "text": "Build a three-stock index and the mechanics become obvious.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l3-008",
+              "_type": "table",
+              "caption": "A Three-Stock Index, Built From Scratch",
+              "headers": ["Company", "Shares Outstanding", "Price (₹)", "Total Market Cap", "Free Float", "Free-Float Market Cap", "Index Weight"],
+              "rows": [
+                { "_key": "c2l3-008r1", "cells": ["A", "100 crore", "500", "₹50,000 crore", "50%", "₹25,000 crore", "41.67%"] },
+                { "_key": "c2l3-008r2", "cells": ["B", "50 crore", "800", "₹40,000 crore", "75%", "₹30,000 crore", "50.00%"] },
+                { "_key": "c2l3-008r3", "cells": ["C", "200 crore", "100", "₹20,000 crore", "25%", "₹5,000 crore", "8.33%"] },
+                { "_key": "c2l3-008r4", "cells": ["Total", "", "", "₹1,10,000 crore", "", "₹60,000 crore", "100%"] }
+              ]
+            },
+            {
+              "_key": "c2l3-009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-009s1", "_type": "span", "text": "Company C has the most shares outstanding and the lowest price, yet carries the smallest weight, because most of its shares are held by promoters and are not available to trade. Company B is the largest company by total market cap only in second place, but it dominates the index with half the weight.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l3-010",
+              "_type": "chart",
+              "chartType": "bar",
+              "title": "Index Weight by Company (%)",
+              "xAxisLabel": "Company",
+              "yAxisLabel": "Weight in index (%)",
+              "data": [
+                { "_key": "c2l3-010a", "label": "A", "value": 41.67 },
+                { "_key": "c2l3-010b", "label": "B", "value": 50 },
+                { "_key": "c2l3-010c", "label": "C", "value": 8.33 }
+              ]
+            },
+            {
+              "_key": "c2l3-011",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Weight Decides Everything",
+              "prompt": "Using the three-stock index above, Company B falls 10% while A and C are unchanged. By what percentage does the index fall?",
+              "correctValue": 5,
+              "tolerance": 0,
+              "unit": "%",
+              "explanation": "B carries a 50% weight, so a 10% fall in B moves the index by 0.50 × 10% = 5%. Company C could double in the same session and add only 8.33 percentage points of its own move, because its weight is 8.33%. This is why a handful of heavyweight stocks can drag the Nifty down on a day when most stocks actually rose."
+            },
+            {
+              "_key": "c2l3-012",
+              "_type": "bigIdea",
+              "text": "The index is not the market. It is a weighted opinion about a few dozen large companies. On plenty of days, the Nifty falls while more stocks rise than fall, simply because the heavyweights had a bad morning."
+            },
+            {
+              "_key": "c2l3-013",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-013s1", "_type": "span", "text": "The Index Family, and What Each One Tells You", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l3-014",
+              "_type": "table",
+              "caption": "Common Indian Indices and Their Uses",
+              "headers": ["Index", "What It Tracks", "Read It When You Want to Know"],
+              "rows": [
+                { "_key": "c2l3-014r1", "cells": ["Nifty 50", "50 large companies on NSE", "How large Indian businesses are doing overall"] },
+                { "_key": "c2l3-014r2", "cells": ["Sensex", "30 large companies on BSE", "The same broad story, in the index most news channels quote"] },
+                { "_key": "c2l3-014r3", "cells": ["Nifty Next 50", "The 50 companies just below the Nifty 50", "Which large companies are candidates to enter the benchmark"] },
+                { "_key": "c2l3-014r4", "cells": ["Nifty Bank", "Major banking stocks", "Whether stress or optimism is concentrated in lenders"] },
+                { "_key": "c2l3-014r5", "cells": ["Nifty Midcap 150, Smallcap 250", "Mid-sized and smaller listed companies", "Whether the rally is broad or limited to the giants"] },
+                { "_key": "c2l3-014r6", "cells": ["Nifty 500", "A much wider slice of the listed universe", "A fuller picture of the market than any benchmark gives"] },
+                { "_key": "c2l3-014r7", "cells": ["Sectoral indices (IT, Auto, FMCG, Pharma)", "Companies within one industry", "How your own industry is being priced, which is the one most relevant to your job"] }
+              ]
+            },
+            {
+              "_key": "c2l3-015",
+              "_type": "comparison",
+              "title": "Price Index vs Total Return Index",
+              "columns": [
+                {
+                  "_key": "c2l3-015c1",
+                  "label": "Price Index (What Headlines Quote)",
+                  "points": [
+                    "Tracks only price movement of the constituents",
+                    "Ignores dividends paid out by those companies",
+                    "Understates what a long-term investor actually earned",
+                    "This is the Nifty or Sensex number you see on the news"
+                  ]
+                },
+                {
+                  "_key": "c2l3-015c2",
+                  "label": "Total Return Index (TRI)",
+                  "points": [
+                    "Tracks price movement plus dividends reinvested",
+                    "Gives the honest picture of total investor return",
+                    "Always shows a higher long-run return than the price index",
+                    "Indian mutual funds must benchmark performance against TRI"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-016",
+              "_type": "callout",
+              "type": "warning",
+              "text": "If someone compares a fund's returns with the plain Nifty rather than the Nifty TRI, the comparison is flattering the fund by the value of dividends it would have collected. SEBI required TRI benchmarking precisely to stop that."
+            },
+            {
+              "_key": "c2l3-017",
+              "_type": "collapsible",
+              "title": "What Happens When a Stock Enters or Exits the Nifty",
+              "content": [
+                {
+                  "_key": "c2l3-017a",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    { "_key": "c2l3-017as1", "_type": "span", "text": "Index constituents are reviewed periodically against rules on size, liquidity and listing history. When a change is announced, something mechanical happens:", "marks": [] }
+                  ]
+                },
+                {
+                  "_key": "c2l3-017b",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    { "_key": "c2l3-017bs1", "_type": "span", "text": "Index funds and ETFs tracking the Nifty are obliged to hold exactly what the index holds, so they must buy the incoming stock and sell the outgoing one, regardless of whether they like either company.", "marks": [] }
+                  ]
+                },
+                {
+                  "_key": "c2l3-017c",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    { "_key": "c2l3-017cs1", "_type": "span", "text": "That forced buying and selling often moves both stocks in the days around the change, which is why you sometimes see a sharp move with no news about the business itself.", "marks": [] }
+                  ]
+                },
+                {
+                  "_key": "c2l3-017d",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    { "_key": "c2l3-017ds1", "_type": "span", "text": "Inclusion is not an endorsement of quality. It means the company got large and liquid enough to qualify, which is a size test, not a judgement about the business.", "marks": [] }
+                  ]
+                },
+                {
+                  "_key": "c2l3-017e",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    { "_key": "c2l3-017es1", "_type": "span", "text": "If you hold an index fund through NPS or your EPF corpus, these switches happen inside your investment automatically, without you doing anything.", "marks": [] }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-018",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l3-018s1", "_type": "span", "text": "Translating the Headlines", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l3-019",
+              "_type": "table",
+              "caption": "What the Headline Says vs What It Means",
+              "headers": ["Headline", "What It Actually Means", "What to Check Instead"],
+              "rows": [
+                { "_key": "c2l3-019r1", "cells": ["\"Sensex crashes 800 points\"", "A move of roughly 1% when the index is near 80,000, which is an ordinary day", "The percentage change, not the points"] },
+                { "_key": "c2l3-019r2", "cells": ["\"Investor wealth down ₹4 lakh crore\"", "The combined market cap of listed companies fell by that amount on paper", "Nothing left any company's bank account; this is a change in valuation"] },
+                { "_key": "c2l3-019r3", "cells": ["\"Nifty hits all-time high\"", "The weighted basket of 50 large companies is at a record", "The advance-decline count, which shows how many stocks actually rose"] },
+                { "_key": "c2l3-019r4", "cells": ["\"FIIs sold ₹3,000 crore today\"", "Foreign investors were net sellers; domestic institutions may have absorbed it", "Both FII and DII flows together, since one offsets the other"] },
+                { "_key": "c2l3-019r5", "cells": ["\"Markets rally on rate cut hopes\"", "A narrative attached to a move after the fact", "Whether the move is large enough to need an explanation at all"] }
+              ]
+            },
+            {
+              "_key": "c2l3-020",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Points Versus Percentage",
+              "prompt": "The Sensex falls 800 points from a level of 80,000. What is the fall in percentage terms?",
+              "correctValue": 1,
+              "tolerance": 0,
+              "unit": "%",
+              "explanation": "800 ÷ 80,000 = 0.01, which is 1%. The same 800-point fall would have been a 4% crash when the Sensex was at 20,000. As index levels rise, point moves get bigger and mean less, which is why headline writers love them."
+            },
+            {
+              "_key": "c2l3-021",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Green Index, Red Portfolio",
+              "question": "The Nifty 50 closed up 1.2%, but the shares of your mid-sized employer fell 2%. What is the most likely explanation?",
+              "options": [
+                "The index calculation was wrong that day",
+                "Your company is not in the Nifty 50, and index moves are driven by its 50 heavyweight constituents",
+                "Mid-sized companies always move opposite to the index",
+                "Your company must have reported a loss that day"
+              ],
+              "correctIndex": 1,
+              "explanation": "The Nifty reflects 50 large companies weighted by free float. Thousands of other listed companies, including most mid and small caps, can move entirely independently. Compare your employer against a sectoral or midcap index instead, which is a far more relevant yardstick."
+            },
+            {
+              "_key": "c2l3-022",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "\"Are We Beating the Market?\"",
+              "scenario": "You support the investor relations team at a listed mid-sized pharma company. The CEO wants one slide for the board answering a simple question: are we doing better than the market? Over the last year the company's shares are up 9%, the Nifty 50 is up 14% and the Nifty Pharma index is up 4%.",
+              "prompt": "What does the slide need to say, and what would be misleading?",
+              "modelAnswer": "The honest answer is that it depends on the yardstick, and the slide should show both. Against the Nifty 50 the company underperformed by five percentage points, but that benchmark is a basket of 50 large companies across every sector, most of which face completely different demand and cost conditions. Against the Nifty Pharma index, which contains actual peers facing the same regulatory and pricing environment, the company outperformed by five percentage points, which is the more meaningful comparison for judging management performance. Showing only the sector index would flatter the company; showing only the Nifty 50 would punish it for sector conditions nobody inside the company controls. The clean slide shows the company against both, notes that the company is mid-sized while the Nifty 50 is a large-cap index, and if the board is assessing long-term shareholder outcomes, uses total return figures including dividends rather than price change alone. One year is also a short window, so a three-year and five-year line prevents a single good or bad quarter from carrying the whole story."
+            },
+            {
+              "_key": "c2l3-023",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "Quick Check",
+              "textWithBlank": "Indian benchmark indices weight companies by their ___ market capitalisation, which excludes promoter and other locked-in holdings.",
+              "correctAnswers": ["free-float", "free float", "freefloat"],
+              "explanation": "Free-float weighting means the index reflects shares genuinely available to trade. A company that is 80% promoter-held carries far less index weight than its total market cap suggests."
+            },
+            {
+              "_key": "c2l3-024",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "A Five-Minute Market Check, Done Properly",
+              "steps": [
+                "Read the percentage change in the Nifty 50 and ignore the points figure entirely",
+                "Check the advance-decline count to see whether the move was broad or driven by a few heavyweights",
+                "Look at the sectoral index for your own industry, which affects your company more than the benchmark does",
+                "Check FII and DII flows together, since a large foreign sale absorbed by domestic funds is a very different day from both selling",
+                "If comparing any fund or portfolio, use the total return version of the index, not the price index"
+              ]
+            },
+            {
+              "_key": "c2l3-025",
+              "_type": "toolLink",
+              "label": "NSE Indices",
+              "url": "https://www.niftyindices.com",
+              "description": "Official methodology documents, constituent lists and weights for every Nifty index. If you want to know exactly which companies drive the number quoted on television, the constituent list with weights is the place to look."
+            },
+            {
+              "_key": "c2l3-026",
+              "_type": "keyTakeaways",
+              "points": [
+                "An index is a free-float weighted basket, so the biggest and most freely traded companies dominate the number",
+                "Index levels are meaningless in absolute terms, because they are anchored to a base value set decades ago; only percentage change matters",
+                "The Nifty 50 and Sensex describe large companies, not the whole market, so your employer can easily move the other way",
+                "Sectoral and midcap indices are far more relevant benchmarks for most companies and most employees",
+                "Total return indices include dividends and are the honest yardstick for comparing investment performance",
+                "\"Investor wealth wiped out\" describes a fall in combined market capitalisation, not cash leaving any company",
+                "Index inclusion is a size and liquidity test, not a quality certificate, though it does force index funds to buy"
+              ]
+            },
+            {
+              "_key": "c2l3-027",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and does not constitute investment advice. The three-stock index, the performance figures in the scenario and all index levels used are illustrative examples for teaching the mechanics, not statements about current market levels or any real company."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

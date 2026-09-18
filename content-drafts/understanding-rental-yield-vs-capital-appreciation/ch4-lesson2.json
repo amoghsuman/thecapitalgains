@@ -1,0 +1,847 @@
+{
+  "courseSlug": "understanding-rental-yield-vs-capital-appreciation",
+  "chapters": [
+    {
+      "title": "Chapter 4: Measuring the Combined Return",
+      "lessons": [
+        {
+          "title": "CAGR vs XIRR: Measuring Property Returns With Real Cash Flows",
+          "slug": "cagr-vs-xirr-measuring-property-returns-with-real-cash-flows",
+          "body": [
+            {
+              "_key": "c4l2-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2-001s1",
+                  "_type": "span",
+                  "text": "Ask a property owner how an investment performed and you will usually hear one of three answers: \"It went up 45%\", \"It made about 6.4% a year\", or \"It gave 5.45% CAGR.\" All three can describe the same flat, and all three can be wrong about what the owner actually earned. Real property investing is a messy series of cash flows: a booking amount, construction instalments, GST, stamp duty, years of rent, maintenance bills and finally a sale. Only one measure handles all of that correctly. By the end of this lesson you will know when CAGR is enough, when it misleads, and how to calculate XIRR on any property's real cash flows in a spreadsheet or a few lines of Python.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-002",
+              "_type": "bigIdea",
+              "text": "CAGR only knows where you started and where you ended. XIRR knows every rupee you put in and took out, and exactly when. For property, where money moves in and out for years, XIRR is the honest number."
+            },
+            {
+              "_key": "c4l2-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2-003s1",
+                  "_type": "span",
+                  "text": "Three Ways to Describe a Gain",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c4l2-004m1",
+                  "_type": "glossaryTerm",
+                  "definition": "Total percentage gain over the whole holding period, with no adjustment for how long it took."
+                },
+                {
+                  "_key": "c4l2-004m2",
+                  "_type": "glossaryTerm",
+                  "definition": "Compound annual growth rate: the constant yearly rate that turns a starting value into an ending value over a period, assuming nothing is added or withdrawn in between."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c4l2-004s1",
+                  "_type": "span",
+                  "text": "A flat bought for ₹1 crore and sold for ₹1.45 crore seven years later has an ",
+                  "marks": []
+                },
+                {
+                  "_key": "c4l2-004s2",
+                  "_type": "span",
+                  "text": "absolute return",
+                  "marks": [
+                    "c4l2-004m1"
+                  ]
+                },
+                {
+                  "_key": "c4l2-004s3",
+                  "_type": "span",
+                  "text": " of 45%. Dividing by seven years gives a simple average of 6.43% a year, which overstates the result because it ignores compounding. The correct single-rate answer is the ",
+                  "marks": []
+                },
+                {
+                  "_key": "c4l2-004s4",
+                  "_type": "span",
+                  "text": "CAGR",
+                  "marks": [
+                    "c4l2-004m2"
+                  ]
+                },
+                {
+                  "_key": "c4l2-004s5",
+                  "_type": "span",
+                  "text": ".",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-005",
+              "_type": "mathBlock",
+              "latex": "\\text{CAGR} = \\left(\\frac{\\text{Ending Value}}{\\text{Starting Value}}\\right)^{1/n} - 1",
+              "caption": "₹1 crore to ₹1.45 crore in 7 years: 1.45^(1/7) − 1 = 5.45% a year."
+            },
+            {
+              "_key": "c4l2-006",
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "c4l2-006s1",
+                  "label": "Absolute return",
+                  "value": "45%",
+                  "context": "Over 7 years"
+                },
+                {
+                  "_key": "c4l2-006s2",
+                  "label": "Simple average",
+                  "value": "6.43% a year",
+                  "context": "45% ÷ 7, overstated"
+                },
+                {
+                  "_key": "c4l2-006s3",
+                  "label": "CAGR",
+                  "value": "5.45% a year",
+                  "context": "Correct if nothing else moved"
+                },
+                {
+                  "_key": "c4l2-006s4",
+                  "label": "Rule of 72 check",
+                  "value": "About 13 years",
+                  "context": "72 ÷ 5.45 to double"
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-007",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Calculate a CAGR",
+              "prompt": "A flat in Nagpur was bought for ₹60 lakh and sold for ₹1 crore eight years later. Ignoring all other cash flows, what was its CAGR? Round to two decimal places.",
+              "correctValue": 6.59,
+              "tolerance": 0.02,
+              "unit": "%",
+              "explanation": "CAGR = (₹1 crore ÷ ₹60 lakh)^(1/8) − 1 = 1.6667^(0.125) − 1 = 6.59% a year. The absolute return is 66.7%, and the simple average of 8.33% a year would overstate it."
+            },
+            {
+              "_key": "c4l2-008",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2-008s1",
+                  "_type": "span",
+                  "text": "Why CAGR Breaks for Real Property",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2-009s1",
+                  "_type": "span",
+                  "text": "CAGR assumes one payment in and one payment out. Real property almost never works like that:",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-010",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2-010s1",
+                  "_type": "span",
+                  "text": "Under-construction flats are paid for in instalments ",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_key": "c4l2-010s2",
+                  "_type": "span",
+                  "text": "over two to four years, so your money is not all invested from day one.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-011",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2-011s1",
+                  "_type": "span",
+                  "text": "Stamp duty, registration and GST ",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_key": "c4l2-011s2",
+                  "_type": "span",
+                  "text": "add to what you pay, at specific dates.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-012",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2-012s1",
+                  "_type": "span",
+                  "text": "Rent arrives every year ",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_key": "c4l2-012s2",
+                  "_type": "span",
+                  "text": "after possession, and running costs leave every year.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-013",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2-013s1",
+                  "_type": "span",
+                  "text": "Home loans turn one purchase into hundreds of EMIs, ",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_key": "c4l2-013s2",
+                  "_type": "span",
+                  "text": "which is the subject of the next lesson.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-014",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2-014s1",
+                  "_type": "span",
+                  "text": "If you already invest through SIPs, you have met this problem before. Your mutual fund statement does not show CAGR for a SIP, because you invested a little every month. It shows XIRR. A construction-linked payment plan is essentially a SIP into a single flat.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-015",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2-015s1",
+                  "_type": "span",
+                  "text": "What XIRR Actually Is",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-016",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c4l2-016m1",
+                  "_type": "glossaryTerm",
+                  "definition": "Extended internal rate of return: the single annual rate at which the present value of all dated cash flows, in and out, adds up to zero. Unlike IRR, it works with irregular dates."
+                },
+                {
+                  "_key": "c4l2-016m2",
+                  "_type": "glossaryTerm",
+                  "definition": "A payment schedule for under-construction property where instalments fall due as construction milestones are reached, such as plinth, each slab and possession."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c4l2-016s2",
+                  "_type": "span",
+                  "text": "XIRR",
+                  "marks": [
+                    "c4l2-016m1"
+                  ]
+                },
+                {
+                  "_key": "c4l2-016s3",
+                  "_type": "span",
+                  "text": " asks a simple question: what constant annual return would have turned all your payments into all your receipts, on their actual dates? Money you pay is entered as a negative number, money you receive as a positive number, and each gets its exact date. XIRR finds the one rate that makes the whole series balance.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-017",
+              "_type": "mathBlock",
+              "latex": "\\sum_{i} \\frac{C_i}{(1 + \\text{XIRR})^{(d_i - d_0)/365}} = 0",
+              "caption": "C = each cash flow (negative when paid, positive when received), d = its date, d₀ = the date of the first cash flow."
+            },
+            {
+              "_key": "c4l2-018",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2-018s1",
+                  "_type": "span",
+                  "text": "Worked Example: A Kharadi Flat on a Construction-Linked Plan",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-019",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2-019s1",
+                  "_type": "span",
+                  "text": "Meghna Kulkarni booked an under-construction 2BHK in Kharadi, Pune, in April 2019 for an agreement value of ₹1 crore on a ",
+                  "marks": []
+                },
+                {
+                  "_key": "c4l2-019s2",
+                  "_type": "span",
+                  "text": "construction-linked plan",
+                  "marks": [
+                    "c4l2-016m2"
+                  ]
+                },
+                {
+                  "_key": "c4l2-019s3",
+                  "_type": "span",
+                  "text": ". Each instalment carried 5% GST, and stamp duty and registration of ₹7 lakh were paid when the agreement was registered. After possession, the flat was let out, and it was sold in April 2026 for ₹1.45 crore. The seller's broker advertises it as \"5.45% CAGR\". Here is what really happened.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-020",
+              "_type": "timeline",
+              "title": "Meghna's flat: payment and income milestones",
+              "events": [
+                {
+                  "_key": "c4l2-020e1",
+                  "date": "April 2019",
+                  "title": "Booking and registration",
+                  "description": "10% of agreement value plus GST, and ₹7 lakh stamp duty and registration."
+                },
+                {
+                  "_key": "c4l2-020e2",
+                  "date": "October 2019 to April 2022",
+                  "title": "Construction instalments",
+                  "description": "Four instalments of 20% each, plus GST, as slabs are completed."
+                },
+                {
+                  "_key": "c4l2-020e3",
+                  "date": "October 2022",
+                  "title": "Possession",
+                  "description": "Final 10% plus GST. The flat is handed over and let out soon after."
+                },
+                {
+                  "_key": "c4l2-020e4",
+                  "date": "2023 to 2025",
+                  "title": "Rental years",
+                  "description": "Net rent after maintenance and running costs, received each year."
+                },
+                {
+                  "_key": "c4l2-020e5",
+                  "date": "April 2026",
+                  "title": "Sale",
+                  "description": "Sold for ₹1.45 crore, less 1% brokerage, plus rent for the first quarter of 2026."
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-021",
+              "_type": "table",
+              "caption": "Meghna's cash flows, in ₹ lakh (illustrative)",
+              "headers": [
+                "Date",
+                "Description",
+                "Cash flow (₹ lakh)"
+              ],
+              "rows": [
+                {
+                  "_key": "c4l2-021r1",
+                  "_type": "tableRow",
+                  "cells": [
+                    "01-Apr-2019",
+                    "Booking 10% + GST + stamp duty and registration",
+                    "−17.50"
+                  ]
+                },
+                {
+                  "_key": "c4l2-021r2",
+                  "_type": "tableRow",
+                  "cells": [
+                    "01-Oct-2019",
+                    "Plinth: 20% + GST",
+                    "−21.00"
+                  ]
+                },
+                {
+                  "_key": "c4l2-021r3",
+                  "_type": "tableRow",
+                  "cells": [
+                    "01-Apr-2020",
+                    "Slab stage: 20% + GST",
+                    "−21.00"
+                  ]
+                },
+                {
+                  "_key": "c4l2-021r4",
+                  "_type": "tableRow",
+                  "cells": [
+                    "01-Apr-2021",
+                    "Slab stage: 20% + GST",
+                    "−21.00"
+                  ]
+                },
+                {
+                  "_key": "c4l2-021r5",
+                  "_type": "tableRow",
+                  "cells": [
+                    "01-Apr-2022",
+                    "Finishing: 20% + GST",
+                    "−21.00"
+                  ]
+                },
+                {
+                  "_key": "c4l2-021r6",
+                  "_type": "tableRow",
+                  "cells": [
+                    "01-Oct-2022",
+                    "Possession: 10% + GST",
+                    "−10.50"
+                  ]
+                },
+                {
+                  "_key": "c4l2-021r7",
+                  "_type": "tableRow",
+                  "cells": [
+                    "31-Dec-2023",
+                    "Net rent for 2023",
+                    "+2.40"
+                  ]
+                },
+                {
+                  "_key": "c4l2-021r8",
+                  "_type": "tableRow",
+                  "cells": [
+                    "31-Dec-2024",
+                    "Net rent for 2024",
+                    "+2.52"
+                  ]
+                },
+                {
+                  "_key": "c4l2-021r9",
+                  "_type": "tableRow",
+                  "cells": [
+                    "31-Dec-2025",
+                    "Net rent for 2025",
+                    "+2.65"
+                  ]
+                },
+                {
+                  "_key": "c4l2-021r10",
+                  "_type": "tableRow",
+                  "cells": [
+                    "01-Apr-2026",
+                    "Sale ₹145 lakh − 1% brokerage + Q1 2026 rent",
+                    "+144.25"
+                  ]
+                },
+                {
+                  "_key": "c4l2-021r11",
+                  "_type": "tableRow",
+                  "cells": [
+                    "",
+                    "Total paid / total received",
+                    "−112.00 / +151.82"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-022",
+              "_type": "chart",
+              "chartType": "bar",
+              "title": "Same Flat, Four Return Numbers (% a year)",
+              "xAxisLabel": "Measure",
+              "yAxisLabel": "% per year",
+              "data": [
+                {
+                  "_key": "c4l2-022d1",
+                  "label": "Simple average (45% ÷ 7)",
+                  "value": 6.43
+                },
+                {
+                  "_key": "c4l2-022d2",
+                  "label": "Broker's CAGR (₹1 cr to ₹1.45 cr)",
+                  "value": 5.45
+                },
+                {
+                  "_key": "c4l2-022d3",
+                  "label": "XIRR with all cash flows",
+                  "value": 5.76
+                },
+                {
+                  "_key": "c4l2-022d4",
+                  "label": "XIRR ignoring rent",
+                  "value": 4.63
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-023",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2-023s1",
+                  "_type": "span",
+                  "text": "Meghna's true XIRR is 5.76% a year. That is higher than the broker's 5.45% CAGR, even though Meghna paid ₹12 lakh more than the agreement value in GST and stamp duty. Two things pushed it up: most of the money was paid years after booking, so it was invested for less time, and three years of rent came in before the sale. Strip out the rent and the XIRR falls to 4.63%. Had Meghna paid the full ₹112 lakh on the booking date instead, the return, even with the rent, would have been only about 4.44%.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-024",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why did XIRR come out higher?",
+              "question": "Meghna paid ₹112 lakh in total, more than the ₹1 crore agreement value, yet the XIRR (5.76%) is higher than the broker's CAGR of ₹1 crore growing to ₹1.45 crore (5.45%). What is the main reason?",
+              "options": [
+                "XIRR ignores stamp duty and GST",
+                "Most of the money was paid in instalments over three years, and rent was received before the sale",
+                "XIRR always gives a higher number than CAGR",
+                "The sale price was higher in the XIRR calculation"
+              ],
+              "correctIndex": 1,
+              "explanation": "XIRR rewards money that is invested later and cash that comes back sooner. Meghna's instalments were spread from 2019 to 2022, and rent arrived from 2023. XIRR is not always higher than CAGR: if the same flat had been bought outright on the booking date, or had earned no rent, XIRR would have been lower."
+            },
+            {
+              "_key": "c4l2-025",
+              "_type": "comparison",
+              "title": "CAGR vs XIRR",
+              "columns": [
+                {
+                  "_key": "c4l2-025c1",
+                  "label": "CAGR",
+                  "points": [
+                    "Needs only a start value, an end value and the number of years",
+                    "Ignores everything paid or received in between",
+                    "Right for a single lump sum held untouched, like a plot bought with cash and sold",
+                    "Easy to calculate by hand or on a phone calculator"
+                  ]
+                },
+                {
+                  "_key": "c4l2-025c2",
+                  "label": "XIRR",
+                  "points": [
+                    "Uses every cash flow with its exact date",
+                    "Captures instalments, costs, rent, EMIs and sale proceeds",
+                    "Right for almost all real property investments and SIPs",
+                    "Needs a spreadsheet or a short piece of code"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-026",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2-026s1",
+                  "_type": "span",
+                  "text": "Calculating XIRR Yourself",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-027",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2-027s1",
+                  "_type": "span",
+                  "text": "In Excel or Google Sheets, put dates in one column and cash flows in the next, with payments negative and receipts positive. Then use =XIRR(cash flow range, date range). For Meghna's flat, with dates in A2:A11 and amounts in B2:B11, the formula is =XIRR(B2:B11, A2:A11), which returns 5.76%. If you prefer Python, the same calculation takes a few lines.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-028",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "from datetime import date\n\ndef xirr(cash_flows, low=-0.99, high=1.0, iterations=200):\n    \"\"\"cash_flows: list of (date, amount). Payments negative, receipts positive.\"\"\"\n    start = cash_flows[0][0]\n\n    def npv(rate):\n        return sum(amount / (1 + rate) ** ((d - start).days / 365)\n                   for d, amount in cash_flows)\n\n    for _ in range(iterations):\n        mid = (low + high) / 2\n        if npv(mid) > 0:\n            low = mid\n        else:\n            high = mid\n    return mid\n\nmeghna = [\n    (date(2019, 4, 1), -17.50),\n    (date(2019, 10, 1), -21.00),\n    (date(2020, 4, 1), -21.00),\n    (date(2021, 4, 1), -21.00),\n    (date(2022, 4, 1), -21.00),\n    (date(2022, 10, 1), -10.50),\n    (date(2023, 12, 31), 2.40),\n    (date(2024, 12, 31), 2.52),\n    (date(2025, 12, 31), 2.65),\n    (date(2026, 4, 1), 144.25),\n]\n\nprint(f\"XIRR: {xirr(meghna):.2%}\")  # XIRR: 5.76%",
+              "caption": "A simple bisection search for the XIRR, using amounts in ₹ lakh. It works for typical property cash flows with payments first and receipts later."
+            },
+            {
+              "_key": "c4l2-029",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "Name the function",
+              "textWithBlank": "In Excel or Google Sheets, the function that calculates an annual return from cash flows on irregular dates is ___.",
+              "correctAnswers": [
+                "XIRR",
+                "=XIRR",
+                "XIRR()"
+              ],
+              "explanation": "XIRR takes a range of cash flows and a matching range of dates. The plain IRR function assumes every cash flow is exactly one period apart, which rarely fits property."
+            },
+            {
+              "_key": "c4l2-030",
+              "_type": "collapsible",
+              "title": "XIRR's limitations: what to watch for",
+              "content": [
+                {
+                  "_key": "c4l2-031",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c4l2-031s1",
+                      "_type": "span",
+                      "text": "It is a rate, not a rupee amount. ",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_key": "c4l2-031s2",
+                      "_type": "span",
+                      "text": "A 20% XIRR on ₹2 lakh held for three months matters far less than 8% on ₹1 crore held for ten years. Always look at the rupee gain alongside it.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c4l2-032",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c4l2-032s1",
+                      "_type": "span",
+                      "text": "It assumes cash earns the same rate. ",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_key": "c4l2-032s2",
+                      "_type": "span",
+                      "text": "XIRR implicitly treats rent received as if it could be reinvested at the XIRR itself, which may not be realistic.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c4l2-033",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c4l2-033s1",
+                      "_type": "span",
+                      "text": "Unusual cash flow patterns can confuse it. ",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_key": "c4l2-033s2",
+                      "_type": "span",
+                      "text": "If payments and receipts alternate several times, for example a large repair bill in the middle of rental years, there can be more than one mathematical answer. Sanity-check any result that looks strange.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c4l2-034",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c4l2-034s1",
+                      "_type": "span",
+                      "text": "Garbage in, garbage out. ",
+                      "marks": [
+                        "strong"
+                      ]
+                    },
+                    {
+                      "_key": "c4l2-034s2",
+                      "_type": "span",
+                      "text": "Forgetting stamp duty, maintenance or brokerage makes XIRR look better than reality. Its accuracy depends entirely on a complete cash flow list.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-035",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "\"Doubled in ten years\"",
+              "scenario": "Rohan Mehta bought a ready 2BHK in Mira Road on 1 January 2016 for ₹50 lakh, paying another ₹3.5 lakh in stamp duty, registration and legal fees. It was let out throughout, earning ₹1.2 lakh a year in net rent after maintenance and property tax, received at the end of each year from 2016 to 2025. On 1 January 2026 it sold for ₹1 crore, with 1% brokerage. Rohan's broker says: \"Your flat doubled in ten years. That is 10% a year.\"",
+              "prompt": "Correct the broker. Calculate the CAGR on the price alone, set up the cash flows for XIRR, and explain what the XIRR of about 8.08% means compared with inflation of about 5% a year.",
+              "modelAnswer": "1. \"10% a year\" is a simple average: 100% ÷ 10. It ignores compounding.\n2. CAGR on price alone: (₹1 crore ÷ ₹50 lakh)^(1/10) − 1 = 2^(0.1) − 1 = 7.18% a year.\n3. Cash flows for XIRR, in ₹ lakh: 01-Jan-2016: −53.5; 31-Dec-2016 to 31-Dec-2025: +1.2 each year (ten entries); 01-Jan-2026: +99.0 (₹100 lakh sale minus ₹1 lakh brokerage).\n4. XIRR with all of these is about 8.08% a year. It is higher than the price-only CAGR because ten years of rent more than offset the ₹3.5 lakh purchase costs and ₹1 lakh brokerage. Without the rent, the XIRR would be only about 6.34%.\n5. In real terms at about 5% inflation: 1.0808 ÷ 1.05 − 1 = about 2.94% a year. A genuine gain in purchasing power, but nowhere near the \"10% a year\" in the broker's pitch.\n6. Before comparing with other investments, Rohan should also check tax on the rent and on the capital gain, which the next lessons cover, since XIRR here is before tax."
+            },
+            {
+              "_key": "c4l2-036",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Calculate your property's XIRR",
+              "steps": [
+                "List every payment with its date: booking, instalments, GST, stamp duty, registration, legal fees and brokerage.",
+                "Add every running cost you paid yourself, such as maintenance during vacancy, repairs and property tax.",
+                "Add every receipt with its date: rent received and the sale proceeds after brokerage.",
+                "Enter payments as negative numbers and receipts as positive numbers.",
+                "Use =XIRR(amounts, dates) in a spreadsheet, or a short Python function.",
+                "Compare the result with the simple CAGR to see how much timing and rent changed the picture.",
+                "Convert it to a real return using inflation for the same period."
+              ]
+            },
+            {
+              "_key": "c4l2-037",
+              "_type": "flashcardSet",
+              "title": "Return Measurement Terms",
+              "cards": [
+                {
+                  "_key": "c4l2-037f1",
+                  "term": "Absolute return",
+                  "definition": "Total percentage gain over the holding period, ignoring how long it took."
+                },
+                {
+                  "_key": "c4l2-037f2",
+                  "term": "CAGR",
+                  "definition": "(Ending value ÷ starting value)^(1/years) − 1. Correct only when nothing is added or withdrawn in between."
+                },
+                {
+                  "_key": "c4l2-037f3",
+                  "term": "XIRR",
+                  "definition": "The annual rate that makes all dated cash flows, in and out, balance to zero."
+                },
+                {
+                  "_key": "c4l2-037f4",
+                  "term": "Construction-linked plan",
+                  "definition": "Paying for an under-construction property in instalments tied to construction milestones."
+                },
+                {
+                  "_key": "c4l2-037f5",
+                  "term": "Rule of 72",
+                  "definition": "72 divided by an annual return gives the approximate years needed to double money."
+                },
+                {
+                  "_key": "c4l2-037f6",
+                  "term": "Sign convention",
+                  "definition": "In XIRR, money paid out is negative and money received is positive."
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-038",
+              "_type": "keyTakeaways",
+              "points": [
+                "Absolute return ignores time, and the simple average overstates annual growth by ignoring compounding.",
+                "CAGR is right only for a single lump sum held untouched from start to finish.",
+                "Real property involves instalments, costs, rent and sale proceeds on different dates, so XIRR is the honest measure.",
+                "Meghna's Kharadi flat: broker's CAGR 5.45%, true XIRR 5.76%, and only 4.63% without the rent.",
+                "Paying later and receiving rent sooner both raise XIRR; costs and delays lower it.",
+                "Use =XIRR(amounts, dates) in Excel or Google Sheets, with payments negative and receipts positive.",
+                "Always read XIRR alongside the rupee gain, and convert it to a real return before celebrating."
+              ]
+            },
+            {
+              "_key": "c4l2-039",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment or tax advice. The people, properties, payment schedules, rents and prices shown are illustrative, and returns are calculated before tax. GST, stamp duty and payment plan terms vary by state and project, so check your own documents and consult a SEBI-registered investment adviser before making any decision."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,244 @@
+{
+  "courseSlug": "understanding-multi-asset-systematic-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 5: Carry and Cross-Asset Value Strategies",
+      "lessons": [
+        {
+          "title": "Carry in Currencies: The USD-INR Interest Rate Differential Story",
+          "slug": "carry-in-currencies-the-usd-inr-interest-rate-differential-story",
+          "body": [
+            {
+              "_key": "mac5l2b01",
+              "_type": "bigIdea",
+              "text": "Knowing that INR carry exists is not a strategy. A strategy has to answer a harder question: how much carry position to hold right now, given that the same rate differential can look attractive one month and reckless the next, purely because the volatility compensating it for has changed while the differential itself barely moved."
+            },
+            {
+              "_key": "mac5l2b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac5l2b02s1",
+                  "_type": "span",
+                  "text": "Chapter 2's currency lesson covered covered interest rate parity and the mechanics of the USD-INR carry trade in depth, including the 2013 taper tantrum's warning about tail risk. This lesson does not repeat that mechanics, it builds the actual systematic strategy: how to size a currency carry position, how to use volatility as an early-warning signal, and an honest limitation specific to trading a single currency pair rather than a global basket.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac5l2b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac5l2b03s1", "_type": "span", "text": "From Concept to Strategy: What a Systematic Currency Carry Position Actually Does", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac5l2b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac5l2b04s1",
+                  "_type": "span",
+                  "text": "A global currency carry strategy typically trades cross-sectionally, ranking many currency pairs by their interest rate differential and going long the highest-yielding currencies against the lowest-yielding ones. An India-focused systematic desk trading USD-INR does not have that luxury; there is essentially one major, liquid pair to trade, not a basket to rank. This structurally changes the strategy's design. Instead of choosing which currencies to hold, the strategy's real decision is when, and how much, of a persistently one-directional carry position, generally short USD, long INR, given India's historically higher interest rates, to actually hold at any given time.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac5l2b05",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac5l2b05s1", "_type": "span", "text": "Carry-to-Volatility: A Better Signal Than Carry Alone", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac5l2b06",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "mac5l2m01",
+                  "_type": "glossaryTerm",
+                  "definition": "The annualized carry return divided by the asset's realized volatility over some trailing window, a rough Sharpe-ratio-style measure of how well-compensated the carry opportunity currently is relative to its risk."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "mac5l2b06s1",
+                  "_type": "span",
+                  "text": "A flat, always-on carry position ignores that the same rate differential can be a genuinely attractive risk-adjusted opportunity in a calm regime and a poorly compensated one once volatility rises, even if the differential itself has barely moved. The ",
+                  "marks": []
+                },
+                { "_key": "mac5l2b06s2", "_type": "span", "text": "carry-to-volatility ratio", "marks": ["mac5l2m01"] },
+                {
+                  "_key": "mac5l2b06s3",
+                  "_type": "span",
+                  "text": " gives a systematic way to size the position based on how well-compensated the carry currently is, rather than treating carry as a fixed, always-attractive bet.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac5l2b07",
+              "_type": "mathBlock",
+              "latex": "\\text{carry-to-vol} = \\frac{\\text{annualized carry}}{\\text{realized volatility}}",
+              "caption": "A rough Sharpe-style measure of currency carry attractiveness. Position size can scale with this ratio, larger when carry is well compensated relative to volatility, smaller when volatility has risen faster than the differential itself."
+            },
+            {
+              "_key": "mac5l2b08",
+              "_type": "table",
+              "caption": "Illustrative Carry-to-Vol Ratio Through the 2013 Episode",
+              "headers": ["Period", "Annualized Carry", "Realized Volatility", "Carry-to-Vol"],
+              "rows": [
+                { "_key": "mac5l2b08r1", "_type": "tableRow", "cells": ["Calm 2012", "≈2.5%", "≈5%", "≈0.50"] },
+                { "_key": "mac5l2b08r2", "_type": "tableRow", "cells": ["Early 2013, Building Stress", "≈2.2%", "≈8%", "≈0.28"] },
+                { "_key": "mac5l2b08r3", "_type": "tableRow", "cells": ["May to Aug 2013, Taper Tantrum", "≈1.8%", "≈18%", "≈0.10"] }
+              ]
+            },
+            {
+              "_key": "mac5l2b09",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "These figures are illustrative, built to show the plausible direction of the carry-to-vol ratio's decline through 2013, not a precise computed historical series. The pattern, ratio deteriorating well before and during the sharpest depreciation, is the point, not the exact numbers."
+            },
+            {
+              "_key": "mac5l2b10",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac5l2b10s1", "_type": "span", "text": "Using Volatility as an Early Warning: Could 2013 Have Been Anticipated?", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac5l2b11",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac5l2b11s1",
+                  "_type": "span",
+                  "text": "India's currency and macro vulnerability was not entirely invisible ahead of the 2013 taper tantrum. India was one of five economies, alongside Brazil, Indonesia, South Africa, and Turkey, that Morgan Stanley labeled the \"Fragile Five\" in August 2013, flagging large current account deficits and heavy reliance on foreign capital inflows as shared structural weaknesses. Realized USD-INR volatility was already rising in the months before the sharpest depreciation, as the illustrative table above suggests. A carry-to-vol signal would not have called the top with precision, no systematic signal reliably does, but it would have mechanically reduced position size as volatility rose, cutting exposure well before the worst of the move rather than holding a full, static position straight through it.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac5l2b12",
+              "_type": "callout",
+              "type": "insight",
+              "text": "The goal of a volatility-based carry signal is not prediction. It is automatic, rules-based de-risking that happens simply because volatility rose, without requiring anyone to correctly call a specific macro event in advance. This is systematic risk management doing exactly what Chapter 1's discretionary-versus-systematic lesson argued it should: encoding a sensible response in advance, rather than relying on judgment exercised live under pressure."
+            },
+            {
+              "_key": "mac5l2b13",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac5l2b13s1", "_type": "span", "text": "Position Sizing: Applying the Same Vol-Targeting Framework as Trend", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac5l2b14",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac5l2b14s1",
+                  "_type": "span",
+                  "text": "Practically, this reuses Chapter 4's vol-targeting position-sizing formula, applied to a carry position instead of a trend position. The direction stays structurally the same, generally long INR carry, since that reflects India's persistent rate differential rather than a signal that flips sign like a trend indicator does. What changes continuously is the size: position = target volatility divided by realized volatility, shrinking automatically as realized USD-INR volatility rises, exactly the mechanism that would have reduced exposure through 2013's build-up.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac5l2b15",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac5l2b15s1", "_type": "span", "text": "The Honest Limit of Currency Carry in This Course's Framework", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac5l2b16",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac5l2b16s1",
+                  "_type": "span",
+                  "text": "Chapter 4's Fundamental Law of Active Management showed that breadth, the number of genuinely independent bets, drives a strategy's information ratio as much as skill per bet does. A global G10 currency carry basket, trading a dozen or more currency pairs, has real breadth. A single USD-INR carry position does not; it is fundamentally one bet, however well it is sized and risk-managed. This is a genuine structural limitation for an India-focused systematic desk, not a flaw in the strategy's logic, and it is exactly why this course treats currency carry as one modest component of a larger multi-asset, multi-strategy book, covered fully in Chapter 7, rather than a standalone allocation sized as though it had the breadth of a global basket.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac5l2b17",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Sizing a single-pair USD-INR carry position as though it had the diversification of a global multi-currency carry basket is a sizing mistake, not a strategy improvement. One bet is one bet, no matter how well volatility-scaled, and it should be sized accordingly within the broader multi-asset book."
+            },
+            {
+              "_key": "mac5l2b18",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "The Static Position That Never Adjusted",
+              "scenario": "A desk runs a USD-INR carry position sized once at the start of 2012 and never actively resized, reasoning that the interest rate differential remained roughly stable through 2013. As realized USD-INR volatility rose sharply through mid-2013, this desk's position remained at its original size straight through the worst of the depreciation, while a comparable desk running a carry-to-vol scaled position had already reduced its exposure meaningfully before the sharpest losses.",
+              "prompt": "Why did the static-sizing desk suffer larger losses despite trading, in principle, the same underlying carry opportunity?",
+              "modelAnswer": "The static-sizing desk correctly observed that the interest rate differential itself stayed roughly stable, but ignored that the risk being taken to earn that differential had changed dramatically as realized volatility rose through 2013. A carry-to-vol scaled position automatically shrinks as volatility rises, since the position formula divides target volatility by realized volatility, meaning the desk running that approach would have held a meaningfully smaller position by the time the sharpest depreciation hit, purely as a mechanical consequence of rising volatility, without needing to correctly predict the taper tantrum in advance. The static desk held its original, larger size straight through the entire episode, converting the same underlying carry risk into a much larger realized loss."
+            },
+            {
+              "_key": "mac5l2b19",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Computing the Carry-to-Vol Ratio",
+              "prompt": "USD-INR's current 1-year annualized carry (interest rate differential) is 1.8%. Realized USD-INR volatility over the trailing 60 days is 9%. What is the carry-to-vol ratio? Round to two decimal places.",
+              "correctValue": 0.20,
+              "tolerance": 0.02,
+              "explanation": "1.8 / 9 = 0.20. A carry-to-vol ratio of 0.20 is meaningfully lower than the calm-period illustrative figure of 0.50 in this lesson's table, signaling that current volatility is high relative to the compensation being earned, which should translate into a smaller position under a vol-scaled sizing rule."
+            },
+            {
+              "_key": "mac5l2b20",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why Single-Pair Carry Has Less Breadth Than a Global Basket",
+              "question": "Based on this lesson and Chapter 4's Fundamental Law of Active Management, why does a USD-INR-only carry strategy have a structural limitation a global G10 currency carry basket does not?",
+              "options": [
+                "Because USD-INR carry is not a real risk premium",
+                "Because a single currency pair represents essentially one bet, lacking the breadth of a basket trading many genuinely independent currency pairs, which limits achievable information ratio regardless of sizing sophistication",
+                "Because USD-INR futures are illiquid and cannot be traded systematically",
+                "Because India's interest rates are always lower than the US's"
+              ],
+              "correctIndex": 1,
+              "explanation": "The Fundamental Law of Active Management ties information ratio to breadth, the number of genuinely independent bets, alongside skill per bet. A single USD-INR position is fundamentally one bet, however well risk-managed, while a global basket spreads carry exposure across many pairs with different, more independent drivers, giving it structurally higher achievable breadth."
+            },
+            {
+              "_key": "mac5l2b21",
+              "_type": "keyTakeaways",
+              "points": [
+                "An India-focused currency carry strategy is structurally different from a global G10 carry basket: with essentially one liquid pair to trade, the key decision is sizing and timing, not cross-sectional selection",
+                "The carry-to-vol ratio, annualized carry divided by realized volatility, gives a systematic basis for sizing that a flat, always-on position lacks",
+                "India's inclusion in Morgan Stanley's 2013 \"Fragile Five\" reflected real, identifiable structural vulnerabilities, and rising realized volatility was visible before the sharpest depreciation",
+                "A volatility-scaled carry position would have mechanically reduced size ahead of and during 2013's worst losses, without needing to correctly predict the specific event",
+                "Position sizing reuses Chapter 4's vol-targeting formula, keeping direction structurally stable while size shrinks automatically as volatility rises",
+                "A single-pair carry strategy has genuinely lower breadth than a global basket, per the Fundamental Law of Active Management, and should be sized as one modest component of a larger multi-asset book rather than a standalone allocation"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

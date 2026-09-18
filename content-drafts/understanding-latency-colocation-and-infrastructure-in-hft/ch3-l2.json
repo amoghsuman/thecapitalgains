@@ -1,0 +1,170 @@
+{
+  "courseSlug": "understanding-latency-colocation-and-infrastructure-in-hft",
+  "chapters": [
+    {
+      "lessons": [
+        {
+          "title": "Kernel Bypass, FPGAs, and Why Software Is Too Slow",
+          "slug": "kernel-bypass-fpgas-and-why-software-is-too-slow",
+          "body": [
+            {
+              "_key": "b1",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "b1s1", "_type": "span", "text": "Chapter 1 introduced kernel bypass as one of the biggest levers in a firm's latency budget. This lesson goes one level deeper: not just skipping the operating system, but in some cases skipping software entirely and building the trading logic directly into a chip.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b2",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "b2s1", "_type": "span", "text": "Why a Normal Server Is Too Slow", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b3",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "md3a", "_type": "glossaryTerm", "definition": "A signal a hardware device sends to the CPU to request immediate attention, temporarily pausing whatever the CPU was doing so it can handle the device's request." }
+              ],
+              "children": [
+                { "_key": "b3s1", "_type": "span", "text": "A market data packet arriving at a normal server does not go straight to the trading application. The network card raises an ", "marks": [] },
+                { "_key": "b3s2", "_type": "span", "text": "interrupt", "marks": ["md3a"] },
+                { "_key": "b3s3", "_type": "span", "text": " to get the CPU's attention, the operating system's kernel driver picks up the packet, the kernel's network stack processes it, the data gets copied into a buffer the application can read, and only then does the application's own code actually see it. Each of those steps costs real time, and on a busy server, an interrupt might have to wait its turn behind whatever else the CPU happened to be doing.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b4",
+              "_type": "table",
+              "caption": "The normal path from wire to application",
+              "headers": ["Step", "What Happens"],
+              "rows": [
+                { "_key": "b4r1", "_type": "tableRow", "cells": ["1. NIC receives packet", "Network card raises an interrupt to signal new data has arrived"] },
+                { "_key": "b4r2", "_type": "tableRow", "cells": ["2. Kernel driver runs", "Operating system's network driver reads the packet off the card"] },
+                { "_key": "b4r3", "_type": "tableRow", "cells": ["3. Kernel network stack", "Operating system processes and routes the packet through its networking layers"] },
+                { "_key": "b4r4", "_type": "tableRow", "cells": ["4. Copy to user space", "Packet data is copied from kernel memory into a buffer the application can access"] },
+                { "_key": "b4r5", "_type": "tableRow", "cells": ["5. Application reads it", "The trading application's own code finally sees the data and can act on it"] }
+              ]
+            },
+            {
+              "_key": "b5",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "b5s1", "_type": "span", "text": "Kernel Bypass: Software Still, But a Shorter Path", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b6",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "b6s1", "_type": "span", "text": "Kernel bypass frameworks, such as the open source DPDK (Data Plane Development Kit), let the trading application talk to the network card directly from user space, skipping steps two through four of that chain entirely. The application also typically polls the network card continuously instead of waiting for an interrupt, trading a small amount of constant CPU usage for the elimination of interrupt handling delay. This is still ordinary software, running on an ordinary CPU. It is simply software that refuses to let the operating system stand in its way.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b7",
+              "_type": "keyFact",
+              "label": "Kernel Bypass Payoff",
+              "value": "Cuts network stack steps from ~5 to ~2",
+              "context": "Removes the kernel driver, kernel network stack, and user-space copy steps, leaving essentially just the NIC and the application."
+            },
+            {
+              "_key": "b8",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "b8s1", "_type": "span", "text": "FPGAs: Skipping Software Entirely", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b9",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "md9a", "_type": "glossaryTerm", "definition": "Field-Programmable Gate Array: a chip whose internal logic can be reconfigured after manufacturing, letting engineers implement custom digital circuits, including trading decision logic, directly in hardware rather than as software instructions." }
+              ],
+              "children": [
+                { "_key": "b9s1", "_type": "span", "text": "An ", "marks": [] },
+                { "_key": "b9s2", "_type": "span", "text": "FPGA", "marks": ["md9a"] },
+                { "_key": "b9s3", "_type": "span", "text": " takes the idea one step further. Instead of writing instructions for a general-purpose CPU to execute one after another, an FPGA is a chip that can be configured to implement custom digital logic directly in hardware. A firm can program an FPGA to parse an incoming market data packet and decide whether to fire an order, entirely inside the chip, without a CPU, an operating system, or even conventional software ever getting involved in that decision path. The trading logic becomes circuitry instead of code.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b10",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "b10a", "_type": "stat", "label": "Standard kernel network stack", "value": "10s of microseconds", "context": "Illustrative order-of-magnitude for an unoptimized server handling a packet through the full OS network stack" },
+                { "_key": "b10b", "_type": "stat", "label": "Kernel bypass (user-space)", "value": "Low single-digit microseconds", "context": "Illustrative order-of-magnitude once the kernel driver, network stack, and copy steps are removed" },
+                { "_key": "b10c", "_type": "stat", "label": "FPGA hardware logic", "value": "Tens to hundreds of nanoseconds", "context": "Illustrative order-of-magnitude for decision logic implemented directly as hardware circuitry" },
+                { "_key": "b10d", "_type": "stat", "label": "Speed range", "value": "~100x", "context": "Roughly how much faster FPGA hardware logic can be than an unoptimized kernel network stack, order of magnitude" }
+              ]
+            },
+            {
+              "_key": "b11",
+              "_type": "comparison",
+              "title": "Software (CPU) vs FPGA",
+              "columns": [
+                {
+                  "_key": "b11c1", "_type": "comparisonColumn", "label": "Software (CPU)",
+                  "points": [
+                    "Strategy logic can be updated and redeployed within hours, sometimes minutes",
+                    "Cheaper and faster to hire for, using mainstream programming skills",
+                    "Slower: every decision still runs as instructions on a general-purpose processor"
+                  ]
+                },
+                {
+                  "_key": "b11c2", "_type": "comparisonColumn", "label": "FPGA",
+                  "points": [
+                    "Changing the logic means redesigning and reflashing hardware circuits, often a multi-week cycle",
+                    "Requires specialised hardware description language skills that are harder to hire for",
+                    "Faster: the decision logic runs as dedicated circuitry with no software overhead at all"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "b12",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Most serious HFT infrastructure is not purely one or the other. A common pattern is to use an FPGA for the simplest, most time-critical decisions, like filtering irrelevant market data or firing a basic reactive order, while leaving more complex strategy decisions to software that can be changed quickly. Putting an entire complex strategy onto an FPGA can mean weeks of redevelopment every time the strategy needs to change, which is often not worth the latency gained."
+            },
+            {
+              "_key": "b13",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Choosing the right tier",
+              "question": "A firm needs to adjust its strategy's parameters multiple times a day in response to changing market conditions. Which approach is generally better suited to that need, and why?",
+              "options": ["FPGA, because hardware is always faster", "Software on a kernel-bypass stack, because it can be redeployed quickly", "An ASIC, because it is the most specialized option", "It does not matter, since all three update at the same speed"],
+              "correctIndex": 1,
+              "explanation": "Software running on a kernel-bypass network stack keeps most of the speed benefit of skipping the operating system while still allowing engineers to change strategy logic and redeploy within hours. FPGAs are faster still, but changing FPGA logic typically means a much slower hardware redevelopment cycle, which is a poor fit for a strategy that needs frequent adjustment."
+            },
+            {
+              "_key": "b14",
+              "_type": "bigIdea",
+              "text": "Every step below the application layer that a firm removes, the operating system, the kernel, eventually even conventional software itself, buys speed at the cost of flexibility. Where a firm draws that line depends on how fast its strategy actually needs to react, and how often that strategy needs to change."
+            },
+            {
+              "_key": "b15",
+              "_type": "keyTakeaways",
+              "points": [
+                "A normal server's network path, NIC, interrupt, kernel driver, kernel network stack, user-space copy, adds real, avoidable latency before the trading application ever sees a packet.",
+                "Kernel bypass frameworks, such as DPDK, let software talk to the network card directly from user space, skipping most of that chain while remaining ordinary software on an ordinary CPU.",
+                "FPGAs go further, implementing trading decision logic as hardware circuitry rather than software instructions, at the cost of a much slower and more specialised development cycle.",
+                "Most serious HFT setups mix tiers: FPGAs for the simplest, most time-critical decisions, and kernel-bypass software for logic that needs to change often."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

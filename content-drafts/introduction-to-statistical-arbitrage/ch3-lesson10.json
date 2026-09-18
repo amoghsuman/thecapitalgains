@@ -1,0 +1,252 @@
+{
+  "courseSlug": "introduction-to-statistical-arbitrage",
+  "chapters": [
+    {
+      "title": "Chapter 3: Cointegration — Testing Whether a Pair Really Mean-Reverts",
+      "lessons": [
+        {
+          "title": "Stationarity and the Augmented Dickey-Fuller Test",
+          "slug": "stationarity-and-the-augmented-dickey-fuller-test",
+          "body": [
+            {
+              "_key": "sa10-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa10-001s1", "_type": "span", "marks": [], "text": "Lesson 3 called something \"mean-reverting\" whenever a chart looked like it kept snapping back toward a stable level. Lesson 9 raised the bar: what a stat arb trade actually needs is for the spread to be stationary, a specific statistical property, not just a chart that looks range-bound over the window you happened to plot. This lesson introduces the standard tool for checking that property properly: the Augmented Dickey-Fuller test, universally shortened to the ADF test." }
+              ]
+            },
+            {
+              "_key": "sa10-002",
+              "_type": "bigIdea",
+              "text": "The ADF test asks one precise question: does this series behave like it has a genuine pull back toward a fixed mean, or does it behave like a random walk that could be anywhere given enough time? The answer comes out as a test statistic and a p-value, not an impression from staring at a chart."
+            },
+            {
+              "_key": "sa10-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa10-003s1", "_type": "span", "marks": [], "text": "What Stationarity Really Requires" }
+              ]
+            },
+            {
+              "_key": "sa10-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa10-004s1", "_type": "span", "marks": [], "text": "A series is (weakly) stationary if three things hold at once: its mean does not change over time, its variance does not change over time, and the way it relates to its own past, how today's value connects to yesterday's, the day before, and so on, does not change over time either. Lesson 3 already covered the first two informally: a mean-reverting series has a stable central level and bounded variance. The ADF test is built specifically to check the mean-reversion property, whether the series is genuinely pulled back toward a fixed level, in a formal, testable way." }
+              ]
+            },
+            {
+              "_key": "sa10-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa10-005s1", "_type": "span", "marks": [], "text": "The Idea Behind the Test: Random Walk vs Mean Reversion" }
+              ]
+            },
+            {
+              "_key": "sa10-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa10-006s1", "_type": "span", "marks": [], "text": "Compare two simple models for how a series might evolve. A random walk says today's value equals yesterday's value plus pure noise, with nothing pulling it back toward anywhere in particular. A mean-reverting series says today's value equals some fraction, less than 1 in magnitude, of yesterday's deviation from the mean, plus noise, which means each day's deviation is expected to shrink rather than persist. The ADF test is built by rearranging the mean-reverting model into a form where this distinction becomes a single number to test." }
+              ]
+            },
+            {
+              "_key": "sa10-007",
+              "_type": "mathBlock",
+              "latex": "y_t = \\rho\\, y_{t-1} + \\varepsilon_t \\quad\\Longrightarrow\\quad \\Delta y_t = \\gamma\\, y_{t-1} + \\varepsilon_t, \\quad \\gamma = \\rho - 1",
+              "caption": "If ρ = 1 exactly (γ = 0), the series is a random walk: a unit root, non-stationary. If ρ < 1 in magnitude (γ < 0), the series pulls back toward its mean: stationary. The ADF test is a formal test of H₀: γ = 0 against H₁: γ < 0."
+            },
+            {
+              "_key": "sa10-008",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa10-008s1", "_type": "span", "marks": [], "text": "Why \"Augmented\"?" }
+              ]
+            },
+            {
+              "_key": "sa10-009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa10-009s1", "_type": "span", "marks": [], "text": "The plain Dickey-Fuller test assumes the noise term left over after accounting for yesterday's value has no pattern of its own. Real financial series rarely cooperate; there is usually some leftover autocorrelation. The augmented version fixes this by adding several lagged difference terms to the same regression, soaking up that autocorrelation so the test on γ stays valid." }
+              ]
+            },
+            {
+              "_key": "sa10-010",
+              "_type": "mathBlock",
+              "latex": "\\Delta y_t = \\gamma\\, y_{t-1} + \\sum_{i=1}^{p} \\beta_i \\, \\Delta y_{t-i} + \\varepsilon_t",
+              "caption": "The extra lagged-difference terms (Δyₜ₋ᵢ) are the \"augmented\" part. p, the number of lags included, is usually chosen automatically by information criteria such as AIC in most software implementations."
+            },
+            {
+              "_key": "sa10-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa10-011s1", "_type": "span", "marks": [], "text": "Reading the Output: Test Statistic, P-Value, and Critical Values" }
+              ]
+            },
+            {
+              "_key": "sa10-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "sa10-012m1", "_type": "glossaryTerm", "definition": "A threshold, specific to the Dickey-Fuller distribution rather than the standard normal or t-distribution, that the test statistic is compared against to decide whether to reject the null hypothesis." }
+              ],
+              "children": [
+                { "_key": "sa10-012s1", "_type": "span", "marks": [], "text": "Running the test gives you a test statistic and a p-value, plus a set of " },
+                { "_key": "sa10-012s2", "_type": "span", "marks": ["sa10-012m1"], "text": "critical values" },
+                { "_key": "sa10-012s3", "_type": "span", "marks": [], "text": " at common significance levels. The decision rule is: reject H₀ (conclude the series is stationary) if the test statistic is more negative than the critical value at your chosen significance level, or equivalently, if the p-value is below that level, commonly 0.05. One detail trips people up the first time: Dickey-Fuller critical values are not the standard normal or t-distribution values you might expect. They come from a distribution specific to this test, and they are notably more negative." }
+              ]
+            },
+            {
+              "_key": "sa10-013",
+              "_type": "table",
+              "caption": "Commonly cited asymptotic critical values, constant-only ADF specification (illustrative, large-sample approximation)",
+              "headers": ["Significance level", "Approximate critical value"],
+              "rows": [
+                { "_key": "sa10-013r1", "_type": "tableRow", "cells": ["1%", "≈ −3.43"] },
+                { "_key": "sa10-013r2", "_type": "tableRow", "cells": ["5%", "≈ −2.86"] },
+                { "_key": "sa10-013r3", "_type": "tableRow", "cells": ["10%", "≈ −2.57"] }
+              ]
+            },
+            {
+              "_key": "sa10-014",
+              "_type": "callout",
+              "type": "insight",
+              "text": "These are large-sample approximations. Statistical software such as statsmodels adjusts the critical values slightly for your exact sample size, which matters more the smaller your dataset is, another reason a short history (recall Lesson 8's twelve-day case study) makes for an unreliable test."
+            },
+            {
+              "_key": "sa10-015",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa10-015s1", "_type": "span", "marks": [], "text": "Worked Example: Testing Two Very Different Series" }
+              ]
+            },
+            {
+              "_key": "sa10-016",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa10-016s1", "_type": "span", "marks": [], "text": "Recall Lesson 3's two illustrative series, one mean-reverting, one trending, both starting at the same point. Running the ADF test on each produces sharply different results." }
+              ]
+            },
+            {
+              "_key": "sa10-017",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "from statsmodels.tsa.stattools import adfuller\n\nresult_meanrev = adfuller(mean_reverting_series)\nresult_trending = adfuller(trending_series)\n\nprint(\"Mean-reverting series -> stat:\", round(result_meanrev[0], 2), \"p-value:\", round(result_meanrev[1], 4))\nprint(\"Trending series       -> stat:\", round(result_trending[0], 2), \"p-value:\", round(result_trending[1], 4))\n# Mean-reverting series -> stat: -3.85  p-value: 0.0025\n# Trending series       -> stat: -1.05  p-value: 0.735",
+              "caption": "Running the ADF test on the two contrasting series from Lesson 3 (illustrative output)"
+            },
+            {
+              "_key": "sa10-018",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "sa10-018s1", "label": "Mean-reverting series: ADF statistic", "value": "≈ −3.85", "context": "More negative than the 5% critical value of about −2.86" },
+                { "_key": "sa10-018s2", "label": "Mean-reverting series: p-value", "value": "≈ 0.0025", "context": "Well below 0.05; reject H₀, conclude stationary" },
+                { "_key": "sa10-018s3", "label": "Trending series: ADF statistic", "value": "≈ −1.05", "context": "Far less negative than any standard critical value" },
+                { "_key": "sa10-018s4", "label": "Trending series: p-value", "value": "≈ 0.735", "context": "Far above 0.05; fail to reject H₀, cannot conclude stationary" }
+              ]
+            },
+            {
+              "_key": "sa10-019",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This is exactly what Lesson 3's chart suggested visually, now backed by a formal test instead of an impression. The mean-reverting series clears the bar comfortably. The trending series does not come close, its ADF statistic is not even in the neighborhood of the critical values, consistent with a series that keeps drifting rather than pulling back to any fixed level."
+            },
+            {
+              "_key": "sa10-020",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa10-020s1", "_type": "span", "marks": [], "text": "What the ADF Test Does NOT Tell You" }
+              ]
+            },
+            {
+              "_key": "sa10-021",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa10-021s1", "_type": "span", "marks": [], "text": "A single ADF test, run on one series, like a regression residual spread, tells you whether that specific series is stationary. It does not, by itself, tell you the correct hedge ratio between two stocks, and running it separately on two raw, individual stock price series is not the same thing as testing whether the pair is cointegrated. Lesson 11's Engle-Granger method uses this exact ADF test as one step inside a proper two-step procedure for testing cointegration between two price series, rather than treating the ADF test alone as the finish line." }
+              ]
+            },
+            {
+              "_key": "sa10-022",
+              "_type": "callout",
+              "type": "warning",
+              "text": "The ADF test has known low power in small samples, meaning it can fail to reject the unit-root null even for a series that is genuinely mean-reverting, simply because there isn't enough data to detect it confidently. A short history (recall Lesson 8's twelve-day case study) is not just a weak z-score problem, it undermines a formal cointegration test just as much. A commonly used minimum is somewhere in the range of 60 to 250-plus observations, and even that is a rule of thumb, not a guarantee."
+            },
+            {
+              "_key": "sa10-023",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Reject or fail to reject?",
+              "question": "An ADF test on a candidate spread produces a test statistic of −3.10, compared to critical values of approximately −3.43 (1%), −2.86 (5%), and −2.57 (10%). What is the correct conclusion at the 5% significance level?",
+              "options": [
+                "Fail to reject H₀; there is not enough evidence the spread is stationary",
+                "Reject H₀ at the 5% level; the spread appears stationary",
+                "The test is inconclusive and cannot be interpreted",
+                "Reject H₀ at the 1% level; the spread is definitely stationary"
+              ],
+              "correctIndex": 1,
+              "explanation": "−3.10 is more negative than the 5% critical value of about −2.86, though not quite as negative as the 1% critical value of −3.43. So H₀ is rejected at the 5% level, supporting the spread's stationarity at that significance level, though not at the stricter 1% level."
+            },
+            {
+              "_key": "sa10-024",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "Complete the null hypothesis",
+              "textWithBlank": "The null hypothesis of the ADF test states that the series has a ___, meaning it is non-stationary.",
+              "correctAnswers": ["unit root", "unitroot"],
+              "explanation": "H₀: γ = 0 is exactly the unit root case, ρ = 1 in the original random-walk model, which corresponds to non-stationarity."
+            },
+            {
+              "_key": "sa10-025",
+              "_type": "flashcardSet",
+              "title": "The ADF Test: Core Terms",
+              "cards": [
+                { "_key": "sa10-025f1", "term": "Stationarity", "definition": "A series with a stable mean, stable variance, and a stable relationship to its own past over time. What a tradeable spread needs." },
+                { "_key": "sa10-025f2", "term": "Unit root", "definition": "The property of a series where today's value equals yesterday's value plus noise, with no pull back toward any fixed level (ρ = 1). Equivalent to non-stationarity in this context." },
+                { "_key": "sa10-025f3", "term": "Augmented Dickey-Fuller (ADF) test", "definition": "A statistical test of the null hypothesis that a series has a unit root (is non-stationary), against the alternative that it is stationary." },
+                { "_key": "sa10-025f4", "term": "Critical value", "definition": "A threshold, specific to the Dickey-Fuller distribution rather than the standard normal or t-distribution, that the test statistic is compared against to decide whether to reject the null hypothesis." }
+              ]
+            },
+            {
+              "_key": "sa10-026",
+              "_type": "keyTakeaways",
+              "points": [
+                "A stationary series has a stable mean, stable variance, and a stable relationship to its own past. This is the property a tradeable spread actually needs, not just a chart that looks range-bound.",
+                "The ADF test rewrites the mean-reversion question as a single coefficient, γ, and tests H₀: γ = 0 (unit root, non-stationary) against H₁: γ < 0 (stationary).",
+                "\"Augmented\" refers to extra lagged-difference terms added to the test regression to account for autocorrelation left in the residuals.",
+                "Reject H₀ (conclude stationary) when the test statistic is more negative than the relevant critical value, or the p-value is below your chosen significance level. Dickey-Fuller critical values are not standard t-distribution values.",
+                "The ADF test has low power in small samples and can miss genuine mean reversion if the history is too short. It tests one series at a time; testing cointegration between two price series properly is the subject of Lesson 11's Engle-Granger method."
+              ]
+            },
+            {
+              "_key": "sa10-027",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice. All test statistics, p-values, and critical values used in the worked example are illustrative and constructed for teaching purposes, not actual computed output. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "courseSlug": "understanding-capacity-constraints-and-strategy-scaling",
+  "chapters": [
+    {
+      "title": "Chapter 7: Capstone: Building and Defending a Capacity-Aware Scaling Plan",
+      "lessons": [
+        {
+          "title": "Putting It Together: A Capacity Estimation and Scaling Framework",
+          "slug": "putting-it-together-a-capacity-estimation-and-scaling-framework",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "c1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c1s1", "text": "Six chapters have each contributed one piece of a larger picture. This lesson lays out the whole picture as a single, ordered framework, the one you would actually walk through for a real strategy, before the remaining lessons stress-test and operationalize it further.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c2s1", "text": "The Eight-Step Capacity and Scaling Framework", "marks": [] }
+              ]
+            },
+            {
+              "_type": "timeline",
+              "_key": "c3",
+              "title": "From Raw Capacity Estimate to Disciplined Execution",
+              "events": [
+                { "date": "Step 1", "title": "Estimate Raw Capacity", "description": "Use ADV, a participation cap, and the square-root law to get a first-pass ceiling for a single position." },
+                { "date": "Step 2", "title": "Adjust for Turnover", "description": "Factor in how often the strategy rebuilds its book, since capacity falls with the square of turnover, not in proportion to it." },
+                { "date": "Step 3", "title": "Aggregate Across the Book", "description": "Combine per-stock capacity across all concurrent positions to get a portfolio-level ceiling." },
+                { "date": "Step 4", "title": "Apply Position Sizing Rules", "description": "Size every position against both a liquidity cap and a concentration cap, whichever binds tighter at the current AUM." },
+                { "date": "Step 5", "title": "Build In a Safety Margin", "description": "Operate meaningfully below the theoretical ceiling to leave room for ADV fluctuation, model uncertainty, decay, and crowding." },
+                { "date": "Step 6", "title": "Monitor Decay and Crowding", "description": "Track rolling IC, factor correlation, and public attention on a schedule, since capacity is a living number, not a one-time calculation." },
+                { "date": "Step 7", "title": "Diagnose and Scale", "description": "When approaching the ceiling, correctly diagnose whether turnover, universe, or instrument is the actual constraint before choosing a scaling lever, and know when to stop adding sleeves." },
+                { "date": "Step 8", "title": "Execute With Discipline", "description": "Use the right execution algorithm for the situation, benchmark against implementation shortfall, and treat execution itself as a source of return." }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "c4",
+              "caption": "Quick reference: which chapter each step comes from",
+              "headers": ["Step", "Question It Answers", "Chapter"],
+              "rows": [
+                { "cells": ["1", "How much can one position hold?", "Chapters 2 and 4"] },
+                { "cells": ["2", "How does trading frequency change that?", "Chapter 4"] },
+                { "cells": ["3", "How much can the whole book hold?", "Chapter 4"] },
+                { "cells": ["4", "How large should any one position actually be, day to day?", "Chapter 4"] },
+                { "cells": ["5", "How much of the theoretical ceiling should I actually use?", "Chapter 4"] },
+                { "cells": ["6", "Is my real capacity quietly shrinking?", "Chapter 3"] },
+                { "cells": ["7", "How do I grow past this ceiling, and when do I stop?", "Chapter 5"] },
+                { "cells": ["8", "Am I keeping as much of the edge as execution allows?", "Chapter 6"] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c5",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c5s1", "text": "The Common Thread: Every Step Answers \"How Much, and Why\"", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c6",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c6s1", "text": "None of these eight steps ask whether a strategy works. That question, whether the underlying signal has an edge, belongs to a different kind of research entirely. Every step here asks a version of a different question: how much of that edge can actually be captured, at what size, executed how, and monitored how often. Treating a strategy as a binary works-or-does-not-work proposition is exactly the trap the very first lesson of this course described, a strategy that looked spectacular on Rs 10 lakh and broke at Rs 50 crore never stopped working in the sense of having a real signal. It simply ran out of the size, discipline, and monitoring this framework is built to provide.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c7",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c7s1", "text": "A Quick Self-Test: Where Are You in the Framework?", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "c8",
+              "variant": "checklist",
+              "title": "Self-Audit Against the Eight Steps",
+              "steps": [
+                "I have a rough capacity estimate for each of my strategies, not just a sense that it should be fine",
+                "I know how turnover affects that estimate, not just the liquidity of what I trade",
+                "I size positions against both a liquidity cap and a concentration cap",
+                "I operate with a real safety margin below my theoretical ceiling",
+                "I track rolling IC or a similar decay signal on a schedule, not just overall returns",
+                "I have checked my strategies for position overlap with anything else I run",
+                "I have a clear plan for what I would do if a strategy approached its capacity ceiling",
+                "I benchmark my own execution quality, not just my strategy's raw returns"
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c9",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c9s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "c10",
+              "text": "A good signal and a good business are not the same thing. The eight steps in this framework are what turn a good signal into a strategy that can actually hold real capital, for real years, without quietly falling apart the way the very first case study in this course did."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "c11",
+              "points": [
+                "The full capacity and scaling framework has eight steps, from a raw per-position capacity estimate through turnover adjustment, aggregation, sizing discipline, safety margin, ongoing monitoring, scaling diagnosis, and execution discipline.",
+                "None of these steps evaluate whether a signal is real, they evaluate how much of a real signal can actually be captured, at what size and with what discipline.",
+                "A strategy that fails at scale has usually not stopped working in the signal sense, it has run into one or more of these eight steps never being addressed in the first place.",
+                "Running a short self-audit against all eight steps is a practical way to find the weakest link in how a strategy is currently being sized, monitored, and executed."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,425 @@
+{
+  "courseSlug": "understanding-bond-pricing-yield-to-maturity-duration-and-convexity",
+  "chapters": [
+    {
+      "title": "Chapter 3: Duration: Measuring Interest Rate Risk",
+      "lessons": [
+        {
+          "title": "Modified Duration: Estimating Price Change for a Given Rate Move",
+          "slug": "modified-duration-estimating-price-change-for-a-given-rate-move",
+          "body": [
+            {
+              "_key": "c3l3-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l3-001s1",
+                  "_type": "span",
+                  "text": "RBI's Monetary Policy Committee meets, inflation comes in hotter than expected, and the 10-year G-Sec yield jumps 25 basis points by lunch. You hold ₹10 lakh of bonds. How much did you just lose? Macaulay duration told you when your money comes back, in years. It did not tell you rupees or percentages. Modified duration does. With one division, it turns duration into a rule of thumb that bond desks, fund managers and RBI's own stress tests use every day: how much does price move for each 1% change in yield?",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l3-002",
+              "_type": "bigIdea",
+              "text": "Modified duration is the approximate percentage price change for a 1 percentage point change in yield. A bond with a modified duration of 6 loses about 6% if yields rise by 100 basis points, and gains about 6% if they fall."
+            },
+            {
+              "_key": "c3l3-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l3-003s1",
+                  "_type": "span",
+                  "text": "From Macaulay to Modified in One Step",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l3-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c3l3-004m1",
+                  "_type": "glossaryTerm",
+                  "definition": "Macaulay duration divided by (1 + yield per period). It estimates the percentage change in a bond's price for a 1 percentage point change in yield."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c3l3-004s1",
+                  "_type": "span",
+                  "text": "The conversion is simple: divide Macaulay duration by one plus the yield per coupon period. The result is ",
+                  "marks": []
+                },
+                {
+                  "_key": "c3l3-004s2",
+                  "_type": "span",
+                  "text": "modified duration",
+                  "marks": ["c3l3-004m1"]
+                },
+                {
+                  "_key": "c3l3-004s3",
+                  "_type": "span",
+                  "text": ". The small adjustment exists because yields compound: a change in the annual yield changes the per-period discount rate, and dividing by (1 + y ÷ m) converts the time measure into a price sensitivity measure.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l3-005",
+              "_type": "mathBlock",
+              "latex": "D_{\\text{Mod}} = \\frac{D_{\\text{Mac}}}{1 + y/m}",
+              "caption": "y = yield to maturity, m = coupons per year. For the 7.10% bond at 6.80% from the last lesson: 4.3003 ÷ 1.034 = 4.1589."
+            },
+            {
+              "_key": "c3l3-006",
+              "_type": "mathBlock",
+              "latex": "\\%\\,\\Delta P \\approx -D_{\\text{Mod}} \\times \\Delta y \\times 100",
+              "caption": "Δy as a decimal (50 bps = 0.005). The minus sign is the inverse relationship: yields up, price down. For a 50 bp rise: −4.1589 × 0.005 × 100 = −2.08%."
+            },
+            {
+              "_key": "c3l3-007",
+              "_type": "comparison",
+              "title": "Macaulay Duration vs Modified Duration",
+              "columns": [
+                {
+                  "_key": "c3l3-007c1",
+                  "label": "Macaulay duration",
+                  "points": [
+                    "Measured in years",
+                    "The value-weighted average time to receive cash flows",
+                    "Used to match bonds to an investment horizon",
+                    "Defines SEBI's duration-based debt fund categories",
+                    "Excel: =DURATION(...)"
+                  ]
+                },
+                {
+                  "_key": "c3l3-007c2",
+                  "label": "Modified duration",
+                  "points": [
+                    "Measured as % price change per 1% change in yield",
+                    "Always slightly smaller than Macaulay duration",
+                    "Used to estimate price and rupee risk from a yield move",
+                    "Shown on debt fund factsheets next to Macaulay duration",
+                    "Excel: =MDURATION(...)"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c3l3-008",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Convert Macaulay to modified",
+              "prompt": "An illustrative 10-year G-Sec with a 7% coupon, priced at a 7% yield, has a Macaulay duration of 7.35 years. What is its modified duration? Round to two decimal places.",
+              "correctValue": 7.10,
+              "tolerance": 0.01,
+              "unit": "",
+              "explanation": "Yield per period = 7% ÷ 2 = 3.5%. Modified duration = 7.35 ÷ 1.035 = 7.10. A 100 basis point rise in yield would cut this bond's price by roughly 7.10%."
+            },
+            {
+              "_key": "c3l3-009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l3-009s1",
+                  "_type": "span",
+                  "text": "From Percentages to Rupees",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l3-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l3-010s1",
+                  "_type": "span",
+                  "text": "Priya Sethi, a 47-year-old tax lawyer in Delhi, holds ₹10 lakh of the 7.10% G-Sec from our running example, at its ₹101.25 price. Yields rise 50 basis points after an MPC meeting. Modified duration estimates her loss in seconds, before she even opens RBI Retail Direct.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l3-011",
+              "_type": "mathBlock",
+              "latex": "\\Delta \\text{Value} \\approx -D_{\\text{Mod}} \\times \\Delta y \\times \\text{Market Value} = -4.1589 \\times 0.005 \\times 10{,}00{,}000 = -20{,}794",
+              "caption": "The estimated rupee change for a 50 basis point rise. The actual loss, from full repricing, is ₹20,535."
+            },
+            {
+              "_key": "c3l3-012",
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "c3l3-012s1",
+                  "label": "Modified duration",
+                  "value": "4.16",
+                  "context": "7.10% bond, 5 years, 6.80% yield"
+                },
+                {
+                  "_key": "c3l3-012s2",
+                  "label": "Estimated loss, +50 bps",
+                  "value": "₹20,794",
+                  "context": "−2.08% of ₹10 lakh"
+                },
+                {
+                  "_key": "c3l3-012s3",
+                  "label": "Actual loss, +50 bps",
+                  "value": "₹20,535",
+                  "context": "−2.05%, from full repricing"
+                },
+                {
+                  "_key": "c3l3-012s4",
+                  "label": "Estimation error",
+                  "value": "₹259",
+                  "context": "About 0.03% of the position"
+                }
+              ]
+            },
+            {
+              "_key": "c3l3-013",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Estimate a price move",
+              "prompt": "A gilt fund's factsheet shows a portfolio modified duration of 6.5 years. If G-Sec yields rise by 40 basis points overnight, roughly what percentage will its NAV change? Enter the answer as a negative number rounded to one decimal place.",
+              "correctValue": -2.6,
+              "tolerance": 0.05,
+              "unit": "%",
+              "explanation": "%ΔP ≈ −6.5 × 0.0040 × 100 = −2.6%. This ignores the day's accrued income and assumes the whole portfolio's yields rise by the same 40 bps."
+            },
+            {
+              "_key": "c3l3-014",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l3-014s1",
+                  "_type": "span",
+                  "text": "How Good Is the Estimate?",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l3-015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l3-015s1",
+                  "_type": "span",
+                  "text": "Modified duration treats the price-yield relationship as a straight line. The real relationship is a curve. For small moves the two are almost identical; for large moves they drift apart. Here is the 7.10% bond repriced exactly at yields from 300 basis points lower to 300 basis points higher, next to the duration estimate.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l3-016",
+              "_type": "table",
+              "caption": "7.10% G-Sec, 5 years, starting at a 6.80% yield and ₹101.25: duration estimate vs actual",
+              "headers": ["Yield change", "Duration estimate", "Actual change", "Estimate misses by"],
+              "rows": [
+                { "_key": "c3l3-016r01", "_type": "tableRow", "cells": ["−300 bps", "+12.48%", "+13.48%", "1.00% too low"] },
+                { "_key": "c3l3-016r02", "_type": "tableRow", "cells": ["−200 bps", "+8.32%", "+8.75%", "0.44% too low"] },
+                { "_key": "c3l3-016r03", "_type": "tableRow", "cells": ["−100 bps", "+4.16%", "+4.27%", "0.11% too low"] },
+                { "_key": "c3l3-016r04", "_type": "tableRow", "cells": ["−50 bps", "+2.08%", "+2.11%", "0.03% too low"] },
+                { "_key": "c3l3-016r05", "_type": "tableRow", "cells": ["−25 bps", "+1.04%", "+1.05%", "0.01% too low"] },
+                { "_key": "c3l3-016r06", "_type": "tableRow", "cells": ["+25 bps", "−1.04%", "−1.03%", "0.01% too pessimistic"] },
+                { "_key": "c3l3-016r07", "_type": "tableRow", "cells": ["+50 bps", "−2.08%", "−2.05%", "0.03% too pessimistic"] },
+                { "_key": "c3l3-016r08", "_type": "tableRow", "cells": ["+100 bps", "−4.16%", "−4.06%", "0.10% too pessimistic"] },
+                { "_key": "c3l3-016r09", "_type": "tableRow", "cells": ["+200 bps", "−8.32%", "−7.91%", "0.40% too pessimistic"] },
+                { "_key": "c3l3-016r10", "_type": "tableRow", "cells": ["+300 bps", "−12.48%", "−11.58%", "0.89% too pessimistic"] }
+              ]
+            },
+            {
+              "_key": "c3l3-017",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Actual Price vs Modified Duration Estimate (₹ per ₹100 face value)",
+              "xAxisLabel": "Market yield (%)",
+              "yAxisLabel": "Price (₹)",
+              "data": [
+                { "_key": "c3l3-017d1", "label": "3.8" },
+                { "_key": "c3l3-017d2", "label": "4.8" },
+                { "_key": "c3l3-017d3", "label": "5.8" },
+                { "_key": "c3l3-017d4", "label": "6.8" },
+                { "_key": "c3l3-017d5", "label": "7.8" },
+                { "_key": "c3l3-017d6", "label": "8.8" },
+                { "_key": "c3l3-017d7", "label": "9.8" }
+              ],
+              "series": [
+                { "_key": "c3l3-017s1", "label": "Actual price", "values": [114.90, 110.12, 105.57, 101.25, 97.15, 93.24, 89.52] },
+                { "_key": "c3l3-017s2", "label": "Duration estimate", "values": [113.89, 109.68, 105.46, 101.25, 97.04, 92.83, 88.62] }
+              ]
+            },
+            {
+              "_key": "c3l3-018",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l3-018s1",
+                  "_type": "span",
+                  "text": "Two things are worth remembering. The error is tiny for moves of 50 basis points or less, which covers most MPC days. And the error always runs the same way for an ordinary bond: duration understates the gain when yields fall and overstates the loss when yields rise. The actual price curve always sits above the duration line. That gap is convexity, and Chapter 4 uses it to fix the estimate.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l3-019",
+              "_type": "keyFact",
+              "label": "Rule of thumb for estimate accuracy",
+              "value": "Reliable up to about ±50 to 100 bps",
+              "context": "For larger moves, longer bonds or lower coupons, add a convexity adjustment or reprice the bond fully."
+            },
+            {
+              "_key": "c3l3-020",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Which way is the error?",
+              "question": "An illustrative 30-year 7% G-Sec at a 7% yield has a modified duration of about 12.47. Yields fall by 150 basis points. Duration estimates a gain of about 18.71%. What will the actual gain be?",
+              "options": [
+                "Exactly 18.71%, since duration is exact for G-Secs",
+                "Less than 18.71%, because duration overstates price changes",
+                "More than 18.71%, because duration understates gains when yields fall",
+                "It cannot be more or less; it depends on the credit rating"
+              ],
+              "correctIndex": 2,
+              "explanation": "For an ordinary bond the price curve bends above the straight duration line. When yields fall, the actual gain is larger than the estimate: about 21.92% here. If yields had risen 150 bps, the actual loss would have been about 16.19%, smaller than the 18.71% estimate. The longer the bond, the bigger this gap."
+            },
+            {
+              "_key": "c3l3-021",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Modified duration rests on three assumptions. (1) All yields move by the same amount; in reality short and long yields often move differently. (2) The move is small; large shocks need convexity. (3) The bond's cash flows do not change when yields change. That last one fails for callable bonds, including many bank Tier 2 and AT1 bonds: if yields fall, a call becomes likely and the cash flows shorten. For those, use effective duration, explained below."
+            },
+            {
+              "_key": "c3l3-022",
+              "_type": "collapsible",
+              "title": "Effective duration: the version that works for callable bonds",
+              "content": [
+                {
+                  "_key": "c3l3-023",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [
+                    {
+                      "_key": "c3l3-023m1",
+                      "_type": "glossaryTerm",
+                      "definition": "A duration measure calculated by repricing a bond at slightly lower and higher yields and measuring the actual price change, allowing cash flows to change if the bond has embedded options."
+                    }
+                  ],
+                  "children": [
+                    {
+                      "_key": "c3l3-023s1",
+                      "_type": "span",
+                      "text": "Instead of a formula based on fixed cash flows, ",
+                      "marks": []
+                    },
+                    {
+                      "_key": "c3l3-023s2",
+                      "_type": "span",
+                      "text": "effective duration",
+                      "marks": ["c3l3-023m1"]
+                    },
+                    {
+                      "_key": "c3l3-023s3",
+                      "_type": "span",
+                      "text": " simply reprices the bond at a slightly lower and a slightly higher yield, and measures how much the price actually moves. For a callable bond, each repricing uses whatever cash flows are realistic at that yield, for example the call scenario when yields fall. For an ordinary bond, it gives the same answer as modified duration.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c3l3-024",
+                  "_type": "mathBlock",
+                  "latex": "D_{\\text{Eff}} = \\frac{P_{-} - P_{+}}{2 \\times P_0 \\times \\Delta y}",
+                  "caption": "P₋ and P₊ = prices after yields fall and rise by Δy; P₀ = current price. For the 7.10% bond with Δy = 10 bps: (101.6760 − 100.8338) ÷ (2 × 101.2538 × 0.001) = 4.1589, matching modified duration."
+                },
+                {
+                  "_key": "c3l3-025",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c3l3-025s1",
+                      "_type": "span",
+                      "text": "For the callable Tier 2 bond in Chapter 2, the price rose far less than a non-callable bond's when yields fell, because buyers priced in the likely call, so P₋ is held down and effective duration comes out well below the modified duration you would calculate by assuming it runs to maturity. That lower number is the honest measure of its rate risk.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c3l3-026",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "Name the measure",
+              "textWithBlank": "The duration measure that estimates percentage price change for a 1% change in yield, calculated as Macaulay duration ÷ (1 + y ÷ m), is called ___ duration.",
+              "correctAnswers": ["modified", "mod"],
+              "explanation": "Modified duration converts Macaulay duration, a measure of time, into a measure of price sensitivity. In Excel, use =MDURATION(settlement, maturity, coupon, yield, frequency, basis)."
+            },
+            {
+              "_key": "c3l3-027",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Rajiv's long duration fund",
+              "scenario": "Rajiv Bansal, a 55-year-old exporter in Surat, moved ₹40 lakh into an illustrative long duration debt fund last year, expecting rate cuts. The latest factsheet shows a portfolio YTM of 7.10%, a Macaulay duration of 9.5 years and a modified duration of 9.2 years. A few months later, a surprise jump in global crude prices pushes Indian G-Sec yields up by 75 basis points in two weeks. Rajiv messages his adviser: \"How bad is it, and should I exit?\"",
+              "prompt": "Estimate the NAV impact in percentage and rupees, explain how much yield income offsets it over a year, and outline what Rajiv should consider before exiting.",
+              "modelAnswer": "1. Estimated NAV change: −9.2 × 0.0075 × 100 = −6.9%. On ₹40 lakh, that is roughly ₹2,76,000. Because of convexity, the actual fall will be slightly smaller.\n2. Yield income: the fund earns its portfolio yield, about 7.10% a year before expenses, and after the rise it is buying and holding bonds at yields about 75 bps higher. Over a full year, that income would roughly offset a one-time loss of this size.\n3. A quick breakeven check: yield ÷ modified duration = 7.10 ÷ 9.2 ≈ 0.77, so a one-time rise of about 77 bps would wipe out roughly one year of yield income. His 75 bp shock is close to that line. The fund's expense ratio lowers the breakeven slightly.\n4. Before exiting, Rajiv should weigh: (a) Horizon: if he can hold for several years, the higher yields now locked in will gradually rebuild returns. (b) View: exiting after a 75 bp rise crystallises the loss; if yields reverse, he would miss the recovery. (c) Fit: a modified duration of 9.2 means every future 100 bp move changes his ₹40 lakh by about ₹3.7 lakh; if that volatility is too much for a 55-year-old's plan, a shift to a shorter duration category may be sensible regardless of the recent loss. (d) Tax and exit load: check the tax treatment and any exit load before switching.\n5. The real lesson: a long duration fund is a leveraged bet on falling yields. Rajiv should have sized the ₹40 lakh with this ₹3.7 lakh per 100 bps number in mind before investing."
+            },
+            {
+              "_key": "c3l3-028",
+              "_type": "flashcardSet",
+              "title": "Modified Duration",
+              "cards": [
+                { "_key": "c3l3-028f1", "term": "Modified duration", "definition": "Macaulay duration ÷ (1 + y ÷ m). Approximate % price change per 1% change in yield." },
+                { "_key": "c3l3-028f2", "term": "Price change estimate", "definition": "%ΔP ≈ −modified duration × Δy × 100, with Δy as a decimal." },
+                { "_key": "c3l3-028f3", "term": "Rupee change estimate", "definition": "−modified duration × Δy × market value." },
+                { "_key": "c3l3-028f4", "term": "Direction of the error", "definition": "For ordinary bonds, duration understates gains when yields fall and overstates losses when they rise." },
+                { "_key": "c3l3-028f5", "term": "Effective duration", "definition": "(P₋ − P₊) ÷ (2 × P₀ × Δy). Works for bonds whose cash flows change with yields, such as callable bonds." },
+                { "_key": "c3l3-028f6", "term": "Excel MDURATION", "definition": "=MDURATION(settlement, maturity, coupon, yield, frequency, basis) returns modified duration." }
+              ]
+            },
+            {
+              "_key": "c3l3-029",
+              "_type": "keyTakeaways",
+              "points": [
+                "Modified duration = Macaulay duration ÷ (1 + y ÷ m). It turns a time measure into a price sensitivity measure.",
+                "Estimated % price change ≈ −modified duration × change in yield. A modified duration of 4.16 means about −2.08% for a 50 bp rise.",
+                "Multiply by market value for rupees: ₹10 lakh at a modified duration of 4.16 loses about ₹20,800 for a 50 bp rise.",
+                "The estimate is excellent for small moves and drifts for large ones: off by under 0.03% at ±50 bps, but up to 1% at ±300 bps.",
+                "For ordinary bonds, duration always understates gains and overstates losses. Convexity explains and corrects this.",
+                "For callable bonds, use effective duration, which reprices the bond allowing its cash flows to change."
+              ]
+            },
+            {
+              "_key": "c3l3-030",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment or tax advice. Bonds, funds, yields and investors are illustrative. Duration estimates assume parallel yield shifts and unchanged credit spreads; real portfolios can behave differently. Past rate movements do not predict future ones. Consult a SEBI-registered investment adviser before investing or switching funds."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

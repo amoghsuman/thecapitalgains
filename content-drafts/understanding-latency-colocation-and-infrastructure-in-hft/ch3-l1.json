@@ -1,0 +1,122 @@
+{
+  "courseSlug": "understanding-latency-colocation-and-infrastructure-in-hft",
+  "chapters": [
+    {
+      "lessons": [
+        {
+          "title": "Fiber vs Microwave vs Laser — The Physics of Speed",
+          "slug": "fiber-vs-microwave-vs-laser-the-physics-of-speed",
+          "body": [
+            {
+              "_key": "b1",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "b1s1", "_type": "span", "text": "Fiber optic cable looks like the obvious choice for anything data related. It is not the fastest way to move a signal between two points, and in a business built on microseconds, that gap matters enough to justify building microwave towers on rooftops across Mumbai.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b2",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "b2s1", "_type": "span", "text": "Light Is Slower in Glass Than You Think", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b3",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "md3a", "_type": "glossaryTerm", "definition": "A number describing how much slower light travels through a given medium compared to a vacuum. Speed through the medium equals c, the speed of light in vacuum, divided by the refractive index." }
+              ],
+              "children": [
+                { "_key": "b3s1", "_type": "span", "text": "Light in a vacuum travels at about 3.0 x 10^8 metres per second, the constant everyone learned in school as c. Light travelling through the glass core of a fiber optic cable does not move that fast. Glass has a ", "marks": [] },
+                { "_key": "b3s2", "_type": "span", "text": "refractive index", "marks": ["md3a"] },
+                { "_key": "b3s3", "_type": "span", "text": " of roughly 1.5, and a signal's speed through any medium equals c divided by that medium's refractive index. The result: light inside a fiber optic cable moves at only about two thirds of its vacuum speed, closer to 2.0 x 10^8 metres per second.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b4",
+              "_type": "mathBlock",
+              "latex": "v = \\dfrac{c}{n}",
+              "caption": "Signal speed through a medium with refractive index n"
+            },
+            {
+              "_key": "b5",
+              "_type": "table",
+              "caption": "Fiber, microwave, and laser compared",
+              "headers": ["Medium", "Typical Speed", "Line of Sight Needed", "Weather Sensitivity", "Typical Role"],
+              "rows": [
+                { "_key": "b5r1", "_type": "tableRow", "cells": ["Fiber optic", "~0.67c (~2.0x10^8 m/s)", "No, can follow underground ducts and cable routes", "Very low, largely weather-immune", "Primary, high-capacity, reliable backbone"] },
+                { "_key": "b5r2", "_type": "tableRow", "cells": ["Microwave (radio)", "~1c through air", "Yes, needs relay towers roughly every 50 km due to earth's curvature", "High, rain fade can degrade or drop the signal", "Latency-critical primary path, backed up by fiber"] },
+                { "_key": "b5r3", "_type": "tableRow", "cells": ["Laser (free-space optical)", "~1c through air", "Yes, and more sensitive to precise alignment than microwave", "Very high, fog and haze can block it entirely", "Short, high-latency-value hops where towers are close together"] }
+              ]
+            },
+            {
+              "_key": "b6",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "b6a", "_type": "stat", "label": "Fiber speed", "value": "~0.67c", "context": "About 2.0 x 10^8 m/s through typical glass fiber" },
+                { "_key": "b6b", "_type": "stat", "label": "Microwave / laser speed", "value": "~1c", "context": "Travelling through air, close to the vacuum speed of light, roughly 3.0 x 10^8 m/s" },
+                { "_key": "b6c", "_type": "stat", "label": "Speed advantage", "value": "~50%", "context": "Roughly how much faster a signal moves through air than through glass fiber, before accounting for route distance" }
+              ]
+            },
+            {
+              "_key": "b7",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "b7s1", "_type": "span", "text": "Why HFT Firms Still Use Microwave and Laser", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b8",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "b8s1", "_type": "span", "text": "Speed through the medium is only half the story. A fiber route between two data centres has to follow roads, ducts, and existing cable paths, which is almost always longer than the straight-line distance between them. A microwave or laser link, by contrast, can run in a straight line from rooftop to rooftop. Some infrastructure vendors offer exactly this kind of direct microwave or laser hop between NSE's and BSE's data centres in Mumbai, since the straight-line distance between the two facilities is short enough that a direct line-of-sight link offers a real, measurable edge over any fiber route forced to wind through the city.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b9",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Microwave and laser links trade reliability for speed. Rain fade can degrade a microwave signal during heavy rain, and fog or haze can block a laser link entirely. This is exactly why the redundancy principle from the previous chapter shows up again here: firms running latency-critical microwave or laser links almost always keep a fiber path as backup, accepting the fiber's slower speed in exchange for a connection that keeps working through a Mumbai monsoon."
+            },
+            {
+              "_key": "b10",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Work the route",
+              "prompt": "A fiber route between two data centres is 10 km long, since fiber must follow roads and ducts, and light travels through it at about 2.0 x 10^8 m/s. A microwave link between the same two data centres is a direct 6 km line of sight, with the signal travelling at close to the speed of light in air, about 3.0 x 10^8 m/s. Roughly how many microseconds does the microwave link save compared to the fiber route?",
+              "correctValue": 30,
+              "tolerance": 3,
+              "unit": "µs",
+              "explanation": "Fiber time equals 10,000 metres divided by 2.0 x 10^8 m/s, which is 50 microseconds. Microwave time equals 6,000 metres divided by 3.0 x 10^8 m/s, which is 20 microseconds. The microwave link saves about 30 microseconds, purely from taking a shorter, more direct path through a faster medium."
+            },
+            {
+              "_key": "b11",
+              "_type": "bigIdea",
+              "text": "In this business, the shortest path and the fastest medium are two different problems, and a firm that only solves one of them is leaving speed on the table."
+            },
+            {
+              "_key": "b12",
+              "_type": "keyTakeaways",
+              "points": [
+                "Light travels slower through fiber optic glass, about 0.67c, than through air, close to 1c, because of the medium's refractive index.",
+                "A fiber route's real disadvantage often has two parts: the slower medium, and a longer physical path forced by roads and ducts, compared to a microwave or laser link's straight line.",
+                "Microwave links need relay towers roughly every 50 km and are vulnerable to rain fade. Laser links are even more vulnerable to fog and haze.",
+                "Because of that vulnerability, firms typically run microwave or laser as the fast primary path and keep fiber as a slower, but far more reliable, backup."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

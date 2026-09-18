@@ -1,0 +1,201 @@
+{
+  "courseSlug": "introduction-to-statistical-arbitrage",
+  "chapters": [
+    {
+      "title": "Chapter 6: Risk, Costs, and Why Backtests Lie",
+      "lessons": [
+        {
+          "title": "Transaction Costs and Slippage: The Silent Killer of Stat Arb Returns",
+          "slug": "transaction-costs-and-slippage-the-silent-killer-of-stat-arb-returns",
+          "body": [
+            {
+              "_key": "sa22-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa22-001s1", "_type": "span", "marks": [], "text": "Lesson 16 ended with a caveat: the trade's +\u20b928,320 was gross profit, before brokerage, taxes, exchange charges, and slippage. It's time to actually compute those, and see what is left over." }
+              ]
+            },
+            {
+              "_key": "sa22-002",
+              "_type": "bigIdea",
+              "text": "A pairs trade has two legs, and every round trip means four separate order executions, a buy and a sell on each leg. Every per-transaction cost, brokerage, tax, exchange charges, and slippage, applies four times over, not once, which is exactly why costs bite harder on a pairs trade than on a single directional bet of the same size."
+            },
+            {
+              "_key": "sa22-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa22-003s1", "_type": "span", "marks": [], "text": "Why a Pairs Trade Pays Costs Twice" }
+              ]
+            },
+            {
+              "_key": "sa22-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa22-004s1", "_type": "span", "marks": [], "text": "A single directional trade has two transactions: one buy, one sell. A pairs trade has four: buy the long leg, sell the short leg, then later sell the long leg and buy back the short leg to close out. A multi-day pairs trade like Lesson 16's is also typically implemented through stock futures on both legs, not cash equity paired with SLB, exactly because Lesson 13's F&O-eligibility filter was chosen to make this possible cleanly. Every cost that scales with the number of transactions or the rupee value traded, which is most of them, applies across all four legs of that round trip." }
+              ]
+            },
+            {
+              "_key": "sa22-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa22-005s1", "_type": "span", "marks": [], "text": "The Five Real Costs of a Round Trip" }
+              ]
+            },
+            {
+              "_key": "sa22-006",
+              "_type": "table",
+              "caption": "Five real costs, with typical illustrative rates (verify current rates before trading)",
+              "headers": ["Cost", "What it is"],
+              "rows": [
+                { "_key": "sa22-006r1", "_type": "tableRow", "cells": ["Brokerage", "A flat fee per executed order, commonly around \u20b920 with discount brokers like Zerodha for F&O trades"] },
+                { "_key": "sa22-006r2", "_type": "tableRow", "cells": ["GST on brokerage", "18% GST applied on top of the brokerage charged"] },
+                { "_key": "sa22-006r3", "_type": "tableRow", "cells": ["STT (Securities Transaction Tax)", "A government transaction tax; for futures, currently charged only on the sell side, at rates set in the Union Budget and revised periodically"] },
+                { "_key": "sa22-006r4", "_type": "tableRow", "cells": ["Exchange, SEBI, and stamp charges", "Smaller regulatory and exchange fees, bundled here, that apply on top of brokerage and STT"] },
+                { "_key": "sa22-006r5", "_type": "tableRow", "cells": ["Slippage", "The gap between the expected fill price and the actual fill price, from the bid-ask spread and minor market impact"] }
+              ]
+            },
+            {
+              "_key": "sa22-007",
+              "_type": "callout",
+              "type": "warning",
+              "text": "STT and similar regulatory rates are not fixed forever. They have changed more than once in recent Union Budgets, including for both futures and options. Always check the current rate before relying on any specific figure for real trading; the numbers in this lesson are illustrative estimates for teaching purposes."
+            },
+            {
+              "_key": "sa22-008",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa22-008s1", "_type": "span", "marks": [], "text": "Applying This to the Bajaj Auto / Hero MotoCorp Case Study" }
+              ]
+            },
+            {
+              "_key": "sa22-009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa22-009s1", "_type": "span", "marks": [], "text": "Lesson 16's trade had four transactions: buy 87 Bajaj Auto (entry), sell 161 Hero MotoCorp (entry), sell 87 Bajaj Auto (exit), buy 161 Hero MotoCorp (exit). STT on futures applies to the two sell-side transactions only." }
+              ]
+            },
+            {
+              "_key": "sa22-010",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "entry_bajaj_value = 87 * 9000\nentry_hero_value = 161 * 4500\nexit_bajaj_value = 87 * 9270\nexit_hero_value = 161 * 4470\n\ntotal_turnover = entry_bajaj_value + entry_hero_value + exit_bajaj_value + exit_hero_value\nsell_side_turnover = entry_hero_value + exit_bajaj_value  # the two \"sell\" legs of the round trip\n\nbrokerage = 20 * 4\ngst_on_brokerage = 0.18 * brokerage\nstt = 0.0002 * sell_side_turnover\nexchange_sebi_stamp = 0.0001 * total_turnover\nslippage = 0.0005 * total_turnover\n\ntotal_costs = brokerage + gst_on_brokerage + stt + exchange_sebi_stamp + slippage\ngross_pnl = 28320\nnet_pnl = gross_pnl - total_costs\n\nprint(\"Total costs:\", round(total_costs))\nprint(\"Net P&L:\", round(net_pnl))\n# Total costs: 2220\n# Net P&L: 26100",
+              "caption": "Estimating round-trip costs for Lesson 16's trade and computing net P&L"
+            },
+            {
+              "_key": "sa22-011",
+              "_type": "table",
+              "caption": "Estimated round-trip costs (illustrative)",
+              "headers": ["Cost", "Amount"],
+              "rows": [
+                { "_key": "sa22-011r1", "_type": "tableRow", "cells": ["Brokerage (\u20b920 \u00d7 4 orders)", "\u20b980"] },
+                { "_key": "sa22-011r2", "_type": "tableRow", "cells": ["GST on brokerage", "\u20b914"] },
+                { "_key": "sa22-011r3", "_type": "tableRow", "cells": ["STT (sell side only)", "\u20b9306"] },
+                { "_key": "sa22-011r4", "_type": "tableRow", "cells": ["Exchange, SEBI, and stamp charges", "\u20b9303"] },
+                { "_key": "sa22-011r5", "_type": "tableRow", "cells": ["Slippage", "\u20b91,517"] },
+                { "_key": "sa22-011r6", "_type": "tableRow", "cells": ["Total round-trip costs", "\u20b92,220"] }
+              ]
+            },
+            {
+              "_key": "sa22-012",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "sa22-012s1", "label": "Gross P&L (Lesson 16)", "value": "+\u20b928,320", "context": "" },
+                { "_key": "sa22-012s2", "label": "Total round-trip costs", "value": "\u2248 \u20b92,220", "context": "About 7.8% of the gross profit" },
+                { "_key": "sa22-012s3", "label": "Net P&L", "value": "\u2248 +\u20b926,100", "context": "" },
+                { "_key": "sa22-012s4", "label": "Net return on capital deployed", "value": "\u2248 +1.73%", "context": "Down from a gross return of 1.88%" }
+              ]
+            },
+            {
+              "_key": "sa22-013",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa22-013s1", "_type": "span", "marks": [], "text": "Why This Matters More for Smaller Edges" }
+              ]
+            },
+            {
+              "_key": "sa22-014",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa22-014s1", "_type": "span", "marks": [], "text": "Lesson 16 was, by its own admission, one illustrative winning trade, not a representative average outcome. Costs scale mainly with transaction turnover, roughly the same \u20b92,220 regardless of how large the gross edge on a given trade happens to be, which means they consume a much bigger share of a smaller, more typical edge." }
+              ]
+            },
+            {
+              "_key": "sa22-015",
+              "_type": "callout",
+              "type": "insight",
+              "text": "If this same trade had earned a more modest, more typical 0.4% gross edge, about \u20b96,030 on the same capital, the same \u20b92,220 in costs would have consumed roughly 37% of the profit, leaving a net return of about 0.25%, not the 1.73% this particular winning trade delivered. The same absolute cost is a minor drag on a strong trade and a serious one on a mediocre trade."
+            },
+            {
+              "_key": "sa22-016",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Compute a net return",
+              "prompt": "A different trade earns a gross profit of \u20b912,500 on \u20b912,00,000 deployed. Estimated round-trip costs come to \u20b91,850. What is the net return on capital, as a percentage? (Round to two decimal places.)",
+              "correctValue": 0.89,
+              "tolerance": 0.05,
+              "explanation": "Net P&L = \u20b912,500 \u2212 \u20b91,850 = \u20b910,650. Net return = \u20b910,650 \u00f7 \u20b912,00,000 \u2248 0.89%."
+            },
+            {
+              "_key": "sa22-017",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why do costs hurt smaller-edge trades more?",
+              "question": "A pairs trade strategy deploys similar capital and incurs similar round-trip costs, in rupee terms, on each trade, but its gross edge varies from trade to trade. Why do costs erode a smaller gross edge proportionally more than a larger one?",
+              "options": [
+                "Costs are always a fixed percentage of the gross edge, so this effect doesn't actually happen",
+                "Costs scale mainly with the capital deployed and number of transactions, not with how large the gross edge happens to be, so a roughly fixed cost consumes a bigger share of a smaller profit",
+                "Smaller trades always have higher brokerage rates",
+                "STT only applies to trades with a gross edge below 1%"
+              ],
+              "correctIndex": 1,
+              "explanation": "Brokerage, STT, exchange charges, and slippage are driven by the size of the transactions, not by how much profit the trade happens to make. A roughly fixed rupee cost eats a much larger share of a small gross profit than of a large one, which is exactly why a strategy's true edge needs to be large enough, and consistent enough, to survive costs across many trades, not just the best ones."
+            },
+            {
+              "_key": "sa22-018",
+              "_type": "flashcardSet",
+              "title": "Transaction Costs: Core Terms",
+              "cards": [
+                { "_key": "sa22-018f1", "term": "Slippage", "definition": "The gap between the price a trade was expected to fill at and the price it actually filled at, arising from the bid-ask spread and market impact." },
+                { "_key": "sa22-018f2", "term": "STT (Securities Transaction Tax)", "definition": "A transaction tax levied by the Indian government on securities trades, at different rates for equity delivery, intraday, futures, and options, typically charged on the sell side for F&O. Rates are revised periodically in the Union Budget." },
+                { "_key": "sa22-018f3", "term": "Round-trip cost", "definition": "The total of all transaction costs, brokerage, taxes, exchange charges, and slippage, incurred across both the entry and exit of a trade, on both legs of a pair." }
+              ]
+            },
+            {
+              "_key": "sa22-019",
+              "_type": "keyTakeaways",
+              "points": [
+                "A pairs trade involves four separate order executions per round trip, two on each leg, so every per-transaction cost applies four times over, not once.",
+                "A multi-day pairs trade is typically implemented through stock futures on both legs, not cash equity with SLB, which is exactly why Lesson 13's F&O-eligibility filter matters in practice.",
+                "Applied to Lesson 16's Bajaj Auto and Hero MotoCorp trade, roughly \u20b92,220 in estimated round-trip costs reduced the gross profit of \u20b928,320 to a net profit of about \u20b926,100, a gross return of 1.88% becoming a net return of about 1.73%.",
+                "Costs scale mainly with transaction turnover, not with the size of the gross edge, so they consume a much larger share of a smaller-edge trade than a larger one, roughly 8% of profit on the actual trade versus an estimated 37% on a more modest, more typical 0.4% edge.",
+                "STT and other regulatory charges are revised periodically in the Union Budget. Always verify current rates before relying on any specific figure for real trading."
+              ]
+            },
+            {
+              "_key": "sa22-020",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice. Brokerage, tax, and other cost figures used here are illustrative estimates for teaching purposes and may not reflect current rates, which are revised periodically in the Union Budget and by individual brokers. Always verify current rates with your broker and the exchanges before trading. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

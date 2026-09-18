@@ -1,0 +1,321 @@
+{
+  "courseSlug": "understanding-multi-asset-systematic-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 1: The Case for Multi-Asset Systematic Investing",
+      "lessons": [
+        {
+          "title": "What \"Multi-Asset\" Really Means: Equities, Bonds, Commodities, Currencies, and Beyond",
+          "slug": "what-multi-asset-really-means-equities-bonds-commodities-currencies-and-beyond",
+          "body": [
+            {
+              "_key": "mac1l2b01",
+              "_type": "bigIdea",
+              "text": "Multi-asset does not mean owning a bit of everything you can find a price for. It means deliberately combining return streams that respond to different economic drivers, equities to earnings and risk appetite, bonds to interest rates, commodities to physical supply and demand, currencies to capital flows, so that no single macro shock can take the whole book down at once."
+            },
+            {
+              "_key": "mac1l2b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac1l2b02s1",
+                  "_type": "span",
+                  "text": "The previous lesson showed why an equity-only book, however cleverly diversified inside equities, still carries one dominant risk driver. Before this course starts combining asset classes into actual strategies, it needs a shared, precise vocabulary for what each bucket is, what drives it, and how Indian markets actually let you trade it. That is the job of this lesson. Chapter 2 goes deep on each of these as a tradable systematic instrument, data, costs, and mechanics included. This lesson stays at the level of the map before Chapter 2 zooms into each region.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac1l2b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac1l2b03s1", "_type": "span", "text": "The Four Buckets Every Systematic Book Draws From, Plus One", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac1l2b04",
+              "_type": "table",
+              "caption": "The Core Asset Classes, Their Return Drivers, and Common Indian Instruments",
+              "headers": ["Asset Class", "Primary Return Driver", "Common Indian Instrument", "Typical Annualized Volatility"],
+              "rows": [
+                { "_key": "mac1l2b04r1", "_type": "tableRow", "cells": ["Equities", "Corporate earnings growth and risk appetite", "Nifty 50 / Bank Nifty futures (NSE)", "18% to 22%"] },
+                { "_key": "mac1l2b04r2", "_type": "tableRow", "cells": ["Fixed Income", "Interest rate expectations and RBI policy", "10Y G-Sec, interest rate futures", "4% to 7%"] },
+                { "_key": "mac1l2b04r3", "_type": "tableRow", "cells": ["Commodities", "Physical supply, demand, and storage costs", "Gold, Silver, Crude (MCX)", "12% to 20%, varies widely by commodity"] },
+                { "_key": "mac1l2b04r4", "_type": "tableRow", "cells": ["Currencies", "Capital flows, current account, rate differentials", "USD-INR futures (NSE)", "6% to 9%"] },
+                { "_key": "mac1l2b04r5", "_type": "tableRow", "cells": ["Alternatives", "Rental yield, infrastructure cash flows, illiquidity premium", "REITs, InvITs (NSE-listed)", "10% to 15%"] }
+              ]
+            },
+            {
+              "_key": "mac1l2b05",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "The volatility ranges above are broad, illustrative bands meant to show relative ordering across asset classes, not precise current readings for any specific instrument. Actual volatility shifts with the regime, which is the entire subject of Chapter 3 onward."
+            },
+            {
+              "_key": "mac1l2b06",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac1l2b06s1", "_type": "span", "text": "Equities: The Growth Engine, and the Regime-Sensitive One", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac1l2b07",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac1l2b07s1",
+                  "_type": "span",
+                  "text": "Equities are the asset class most systematic desks start with, since NSE and BSE offer deep liquidity, long clean price histories, and a wide universe of single stocks and index futures to build signals on. Their defining trait for a multi-asset book is not their volatility, which is high but well understood, it is their sensitivity to risk appetite. Nifty 50 does not just track Indian corporate earnings, it tracks how willing global and domestic capital is to hold risk at all, which is exactly why equities were the asset class that broke down hardest and fastest in Lesson 1's March 2020 example.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac1l2b08",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac1l2b08s1", "_type": "span", "text": "Fixed Income: Not Just \"Safe\", but a Distinct Risk Factor", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac1l2b09",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac1l2b09s1",
+                  "_type": "span",
+                  "text": "Fixed income is driven primarily by interest rate expectations, RBI policy decisions, and inflation trajectory, not by corporate earnings at all. G-Sec prices move inversely to yields, so when the market expects the RBI to hold or cut rates, bond prices tend to rise, and when it expects hikes or sticky inflation, they tend to fall. This is a genuinely different driver from equities, which is exactly the diversification value this asset class brings. It is not automatic protection, though. Through most of 2022, rising rates hurt both Nifty and long-duration G-Secs at the same time, a reminder that \"safe\" and \"different driver\" are not the same claim.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac1l2b10",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Government bonds are not \"safe\" in the sense of never losing money. They are differently risky, driven by rates and policy rather than earnings and risk appetite. That difference in driver, not an absence of risk, is what makes them useful in a multi-asset book."
+            },
+            {
+              "_key": "mac1l2b11",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac1l2b11s1", "_type": "span", "text": "Commodities: Real Assets With Their Own Supply-Demand Logic", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac1l2b12",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac1l2b12s1",
+                  "_type": "span",
+                  "text": "Commodities on MCX, gold, silver, and crude oil most prominently, are priced off physical supply, physical demand, and the cost of storing or transporting the physical good. Gold's return driver leans toward its role as a store of value, it tends to firm up when real interest rates fall or when investors distrust currencies and financial assets broadly, which is exactly the flight-to-quality behavior this course keeps returning to. Crude behaves differently again, driven by global production decisions and industrial demand, and it matters doubly for an Indian systematic desk because India imports most of its crude, so a crude spike is also a rupee and inflation story, not a purely commodity one.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac1l2b13",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac1l2b13s1", "_type": "span", "text": "Currencies: The Asset Class Every Other Asset Class Is Priced In", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac1l2b14",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "mac1l2m01",
+                  "_type": "glossaryTerm",
+                  "definition": "The return earned from holding a currency or asset with a higher interest rate against one with a lower rate, independent of any price appreciation. Chapter 5 covers this in depth as a standalone systematic strategy."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "mac1l2b14s1",
+                  "_type": "span",
+                  "text": "USD-INR futures on NSE let a systematic desk trade the rupee directly, driven by FII and FDI flows, the current account balance, and interest rate differentials between India and the US. Currencies can be traded as a standalone systematic asset, including through ",
+                  "marks": []
+                },
+                { "_key": "mac1l2b14s2", "_type": "span", "text": "carry", "marks": ["mac1l2m01"] },
+                {
+                  "_key": "mac1l2b14s3",
+                  "_type": "span",
+                  "text": " strategies that earn the rate differential between two currencies. But currency exposure also hides inside almost every other cross-border trade an Indian desk makes, which the next callout gets specific about.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac1l2b15",
+              "_type": "callout",
+              "type": "warning",
+              "text": "If you hold gold priced in US dollars through an INR-denominated ETF, or a US equity index fund through an international investing platform, you are implicitly long USD-INR on that position whether you intended to take a currency view or not. Unhedged foreign exposure is a currency bet layered on top of whatever asset class you thought you were trading."
+            },
+            {
+              "_key": "mac1l2b16",
+              "_type": "timeline",
+              "title": "How India's Multi-Asset Toolkit Actually Came Together",
+              "events": [
+                { "_key": "mac1l2b16e1", "date": "2003", "title": "MCX Launches", "description": "Commodity futures go electronic and exchange-traded, giving gold, silver, and crude a liquid, transparent venue for systematic trading." },
+                { "_key": "mac1l2b16e2", "date": "2008", "title": "Currency Futures Launch on NSE", "description": "USD-INR futures begin trading on the exchange, making currency exposure accessible without a foreign currency bank account or an OTC forward." },
+                { "_key": "mac1l2b16e3", "date": "2009", "title": "NSE Launches Interest Rate Futures", "description": "Exchange-traded interest rate futures on G-Secs give systematic desks a standardized, liquid way to trade rate views without holding physical bonds." },
+                { "_key": "mac1l2b16e4", "date": "2019", "title": "REITs Debut on Indian Exchanges", "description": "Embassy Office Parks REIT lists, giving systematic desks an exchange-traded, liquid proxy for commercial real estate for the first time." }
+              ]
+            },
+            {
+              "_key": "mac1l2b17",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac1l2b17s1", "_type": "span", "text": "Beyond the Big Four: Alternatives in a Systematic Book", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac1l2b18",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac1l2b18s1",
+                  "_type": "span",
+                  "text": "REITs and InvITs bring rental yield and infrastructure cash flows into a portfolio, return drivers that overlap only partially with equities and almost not at all with commodities or currencies. They are genuinely useful diversifiers. They are also a much younger, thinner market in India than equities, G-Secs, or MCX commodities, with a smaller universe of listed names and a shorter price history to build and validate systematic signals on. This course's core chapters, 2 through 9, build the system around the four liquid, exchange-traded, long-history asset classes, since a systematic strategy lives or dies on execution realism and backtest depth. Alternatives get referenced where relevant but are not the backbone of the signals you will build.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac1l2b19",
+              "_type": "comparison",
+              "title": "Core Four vs Alternatives, for a Systematic Book",
+              "columns": [
+                {
+                  "_key": "mac1l2b19c1",
+                  "label": "Core Four (Equities, Fixed Income, Commodities, Currencies)",
+                  "points": [
+                    "Deep, continuous exchange liquidity on NSE, MCX",
+                    "Long, clean price history for backtesting",
+                    "Narrow bid-ask spreads and low market impact",
+                    "Well-established derivatives for hedging and leverage"
+                  ]
+                },
+                {
+                  "_key": "mac1l2b19c2",
+                  "label": "Alternatives (REITs, InvITs, and similar)",
+                  "points": [
+                    "Smaller universe, fewer listed instruments",
+                    "Shorter price history, harder to validate signals on",
+                    "Wider spreads, more sensitivity to trade size",
+                    "Limited derivatives, harder to hedge or short systematically"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "mac1l2b20",
+              "_type": "donutChart",
+              "title": "Illustrative Starting Allocation for a Multi-Asset Systematic Book",
+              "data": [
+                { "_key": "mac1l2b20d1", "label": "Equities", "value": 40 },
+                { "_key": "mac1l2b20d2", "label": "Fixed Income", "value": 25 },
+                { "_key": "mac1l2b20d3", "label": "Commodities", "value": 15 },
+                { "_key": "mac1l2b20d4", "label": "Currencies", "value": 10 },
+                { "_key": "mac1l2b20d5", "label": "Alternatives", "value": 10 }
+              ]
+            },
+            {
+              "_key": "mac1l2b21",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac1l2b21s1", "_type": "span", "text": "Why This Course Treats These as Ingredients, Not Silos", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac1l2b22",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac1l2b22s1",
+                  "_type": "span",
+                  "text": "Nothing above is a strategy yet. It is the ingredient list. Chapter 2 goes through each asset class as an actual tradable instrument, contract specifications, data sources, transaction costs, and mechanics. From Chapter 3 onward, the course stops treating these as separate silos and starts measuring how they move together, then builds trend, carry, value, and risk parity strategies that deliberately combine them. Getting the vocabulary and the drivers straight now is what makes that combination work rather than becoming another version of the concentration problem from Lesson 1, just with more asset labels attached to the same underlying risk.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac1l2b23",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "The \"Multi-Asset\" Book That Wasn't Quite",
+              "scenario": "A systematic desk based in Bengaluru builds what it calls a multi-asset book: 50% Nifty 50 futures, 30% in an INR-denominated gold ETF tracking MCX gold, and 20% in a US S&P 500 index fund accessed through an Indian broker's international investing platform. The desk head is confident the book is well diversified across equities, commodities, and geography.",
+              "prompt": "Is there a hidden, unaccounted-for asset class exposure sitting inside this book?",
+              "modelAnswer": "Yes. The S&P 500 position, despite being a different equity market from Nifty, is still equities as an asset class, and it shares much of its systemic driver, global risk appetite, with the Nifty position, especially during global shocks when developed and emerging market equities tend to sell off together. More importantly, the S&P 500 fund is denominated in US dollars and converted back to INR, so the book is implicitly long USD-INR on 20% of its capital, a currency exposure the desk head never explicitly chose or sized. A genuinely multi-asset book needs someone to deliberately decide its currency exposure, not inherit it by accident from a foreign equity position."
+            },
+            {
+              "_key": "mac1l2b24",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Identifying the Primary Driver",
+              "question": "Which of the following is the primary return driver for fixed income instruments like G-Secs, as distinct from equities?",
+              "options": [
+                "Corporate earnings growth and risk appetite",
+                "Interest rate expectations and RBI monetary policy",
+                "Physical supply, demand, and storage costs",
+                "Capital flows and the current account balance"
+              ],
+              "correctIndex": 1,
+              "explanation": "Fixed income is driven primarily by interest rate expectations and central bank policy, RBI decisions and the outlook for them in India's case, which is a genuinely different driver from the earnings and risk-appetite drivers behind equities. That difference in driver, not an absence of risk, is the source of fixed income's diversification value in a multi-asset book."
+            },
+            {
+              "_key": "mac1l2b25",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "Naming the Core Concept",
+              "textWithBlank": "A group of financial instruments that share a common set of statistical properties, primary return drivers, and typical trading venues, distinguishing it from other such groups, is called an ___.",
+              "correctAnswers": ["asset class"],
+              "explanation": "Asset class is the organizing concept behind this entire lesson. Equities, fixed income, commodities, and currencies are asset classes because each has a genuinely different primary driver, which is exactly what makes combining them useful for diversification rather than redundant."
+            },
+            {
+              "_key": "mac1l2b26",
+              "_type": "keyTakeaways",
+              "points": [
+                "Multi-asset means combining return streams with genuinely different primary drivers, not just owning more tickers",
+                "Equities are driven by earnings and risk appetite, fixed income by rates and RBI policy, commodities by physical supply and demand, currencies by capital flows and rate differentials",
+                "\"Safe\" is not the same claim as \"differently driven\": G-Secs can fall alongside equities in a rising-rate regime like 2022",
+                "Currency exposure hides inside foreign equity, gold, and crude positions even when no explicit currency trade was placed",
+                "India's exchange-traded toolkit for this, MCX commodities, NSE currency futures, interest rate futures, and REITs, built out gradually between 2003 and 2019",
+                "This course's core chapters focus on the four liquid, exchange-traded, long-history asset classes, since systematic strategies depend on execution realism and backtest depth that thinner alternative markets cannot yet fully support"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

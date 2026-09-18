@@ -1,0 +1,278 @@
+{
+  "courseSlug": "understanding-multi-asset-systematic-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 3: Correlation, Diversification, and the Multi-Asset Risk Engine",
+      "lessons": [
+        {
+          "title": "Measuring Cross-Asset Correlation: Rolling Windows and Correlation Breakdown",
+          "slug": "measuring-cross-asset-correlation-rolling-windows-and-correlation-breakdown",
+          "body": [
+            {
+              "_key": "mac3l2b01",
+              "_type": "bigIdea",
+              "text": "There is no single correct correlation between two assets, only a correlation measured over a specific window, and the window you choose quietly decides how fast you notice a regime has changed versus how much noise you mistake for signal. Getting this choice wrong is not a rounding error, it is the difference between catching a correlation spike in real time and finding out about it after the damage is done."
+            },
+            {
+              "_key": "mac3l2b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac3l2b02s1",
+                  "_type": "span",
+                  "text": "Lesson 1 established that correlation matters more than volatility and that any single correlation estimate carries real statistical uncertainty. This lesson gets practical: how rolling windows actually work, the trade-off between window length and noise, exponentially weighted correlation as a middle ground, and correlation breakdown, the specific, usable signal that appears when short-window and long-window correlation estimates start disagreeing with each other.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac3l2b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac3l2b03s1", "_type": "span", "text": "The Rolling Window: Correlation's Basic Measurement Tool", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac3l2b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac3l2b04s1",
+                  "_type": "span",
+                  "text": "A rolling correlation takes the standard sample correlation formula and applies it to a fixed trailing window of return observations, sliding that window forward one period at a time. Log returns are the standard input, not simple percentage returns, since log returns aggregate cleanly across periods and behave better statistically for this kind of calculation.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac3l2b05",
+              "_type": "mathBlock",
+              "latex": "\\rho = \\frac{\\sum_{i=1}^{n}(x_i - \\bar{x})(y_i - \\bar{y})}{\\sqrt{\\sum_{i=1}^{n}(x_i - \\bar{x})^2} \\sqrt{\\sum_{i=1}^{n}(y_i - \\bar{y})^2}}",
+              "caption": "Sample correlation over a window of n return observations for two assets, x and y. Recomputed on each new day using the trailing n observations."
+            },
+            {
+              "_key": "mac3l2b06",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac3l2b06s1", "_type": "span", "text": "The Window Length Trade-off: Noise vs Staleness", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac3l2b07",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac3l2b07s1",
+                  "_type": "span",
+                  "text": "A short window reacts quickly when correlation genuinely shifts, but Lesson 1's standard error formula applies directly here: fewer observations means a noisier estimate, one that can swing meaningfully from pure sampling variation with no real change underneath. A long window produces a statistically steadier estimate, but it blends whatever regime just started together with however many months of the old regime are still inside the window, producing a number that may not accurately describe either regime individually, and that lags a genuine shift by however long it takes the old data to roll out of the window.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac3l2b08",
+              "_type": "table",
+              "caption": "Window Length Trade-offs",
+              "headers": ["Window Length", "Estimation Noise (approx. SE)", "Responsiveness to Regime Change", "Typical Use"],
+              "rows": [
+                { "_key": "mac3l2b08r1", "_type": "tableRow", "cells": ["20-day", "≈0.24", "Fast, reacts within weeks", "Regime-shift detection, tactical signals"] },
+                { "_key": "mac3l2b08r2", "_type": "tableRow", "cells": ["60-day", "≈0.13", "Moderate", "Balanced day-to-day monitoring"] },
+                { "_key": "mac3l2b08r3", "_type": "tableRow", "cells": ["252-day", "≈0.06", "Slow, blends across regimes", "Long-run strategic allocation baseline"] }
+              ]
+            },
+            {
+              "_key": "mac3l2b09",
+              "_type": "callout",
+              "type": "warning",
+              "text": "A 252-day correlation that looks stable and low can simply mean the window still contains mostly calm-regime data, with only a few weeks of a genuine new crisis mixed in. Trusting that number as \"the correlation\" during a fast-moving event is exactly how a long-window-only risk model gets caught flat-footed."
+            },
+            {
+              "_key": "mac3l2b10",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac3l2b10s1", "_type": "span", "text": "Exponentially Weighted Correlation: A Practical Middle Ground", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac3l2b11",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "mac3l2m01",
+                  "_type": "glossaryTerm",
+                  "definition": "A parameter between 0 and 1 controlling how quickly an exponentially weighted average forgets old data. A value close to 1 weights recent and older observations similarly (slow-moving); a value further from 1 weights recent observations much more heavily (fast-moving)."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "mac3l2b11s1",
+                  "_type": "span",
+                  "text": "Rather than choosing one hard window cutoff, an exponentially weighted moving average, EWMA, updates its variance and covariance estimates continuously, weighting recent observations more heavily using a ",
+                  "marks": []
+                },
+                { "_key": "mac3l2b11s2", "_type": "span", "text": "decay factor", "marks": ["mac3l2m01"] },
+                {
+                  "_key": "mac3l2b11s3",
+                  "_type": "span",
+                  "text": ", lambda. This avoids both the abrupt drop-off of old data at a hard window edge and the need to fully commit to one window length, blending responsiveness and stability continuously instead of in discrete steps.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac3l2b12",
+              "_type": "mathBlock",
+              "latex": "\\sigma_{xy,t}^2 = \\lambda \\, \\sigma_{xy,t-1}^2 + (1-\\lambda) \\, r_{x,t} \\, r_{y,t}",
+              "caption": "EWMA covariance update. Yesterday's covariance estimate is decayed by lambda and blended with today's realized cross-product of returns. The same recursion, applied to a single asset's own return, produces EWMA variance."
+            },
+            {
+              "_key": "mac3l2b13",
+              "_type": "keyFact",
+              "label": "RiskMetrics' Published Daily Decay Factor",
+              "value": "λ = 0.94",
+              "context": "A widely referenced industry standard for daily EWMA volatility and correlation estimation, giving recent observations meaningfully more weight without discarding older data outright"
+            },
+            {
+              "_key": "mac3l2b14",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac3l2b14s1", "_type": "span", "text": "Correlation Breakdown: Spotting a Regime Shift as It Happens", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac3l2b15",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac3l2b15s1",
+                  "_type": "span",
+                  "text": "Running a short window and a long window side by side turns their disagreement into a usable signal in its own right. When a 20-day correlation spikes well above its 252-day counterpart, that gap is direct evidence something has changed recently that the longer, statistically steadier estimate has not caught up to yet. This is exactly what happened across Indian equities in March 2020, from Chapter 1's opening example: correlations that had run low and stable for months spiked sharply within weeks, visible almost immediately in a short window, and only slowly in a long one.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac3l2b16",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Illustrative Nifty-Gold Correlation: 20-Day vs 252-Day Window, Jan to Jun 2020",
+              "xAxisLabel": "Month",
+              "yAxisLabel": "Rolling Correlation",
+              "data": [
+                { "_key": "mac3l2b16d1", "label": "Jan 2020" },
+                { "_key": "mac3l2b16d2", "label": "Feb 2020" },
+                { "_key": "mac3l2b16d3", "label": "Mar 2020" },
+                { "_key": "mac3l2b16d4", "label": "Apr 2020" },
+                { "_key": "mac3l2b16d5", "label": "May 2020" },
+                { "_key": "mac3l2b16d6", "label": "Jun 2020" }
+              ],
+              "series": [
+                { "_key": "mac3l2b16s1", "label": "20-Day Rolling Correlation", "values": [0.05, 0.10, 0.55, 0.35, 0.20, 0.10] },
+                { "_key": "mac3l2b16s2", "label": "252-Day Rolling Correlation", "values": [0.08, 0.09, 0.12, 0.15, 0.17, 0.18] }
+              ]
+            },
+            {
+              "_key": "mac3l2b17",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This chart is a stylized illustration of the well-documented correlation-breakdown pattern, a sharp short-window spike well ahead of the slower long-window estimate, not an actual computed historical series."
+            },
+            {
+              "_key": "mac3l2b18",
+              "_type": "callout",
+              "type": "insight",
+              "text": "The gap between a short-window and a long-window correlation estimate is often more informative than either number alone. A widening gap is an early warning that the correlation structure your portfolio was built on may no longer describe the market you are actually in."
+            },
+            {
+              "_key": "mac3l2b19",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac3l2b19s1", "_type": "span", "text": "Data Frequency and Alignment: Practical Landmines", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac3l2b20",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac3l2b20s1",
+                  "_type": "span",
+                  "text": "Chapter 1's lesson on India's multi-asset landscape flagged that NSE, MCX, and RBI-notified fixed income sessions do not share the same trading calendar or closing time. Correlation calculations inherit that same problem directly: comparing an NSE equity return on a day MCX was closed for a commodity-specific holiday, or blending same-day closes that were actually recorded eight hours apart, quietly distorts a correlation estimate in ways that look like real signal but are actually a data alignment bug. Every correlation number in this course, and in a real systematic system, is only as trustworthy as the calendar alignment underneath it.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac3l2b21",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "The Gap That Widened Overnight",
+              "scenario": "A systematic desk monitors both 20-day and 252-day rolling correlation between its Nifty futures position and its gold futures position. For months, both estimates sit close together, around 0.10 to 0.15. Over the course of one week, the 20-day correlation jumps to 0.50 while the 252-day correlation barely moves, still reading around 0.14.",
+              "prompt": "What should the desk conclude from this gap, and what is the risk of waiting for the 252-day figure to \"confirm\" the move before acting?",
+              "modelAnswer": "The desk should treat the widening gap as a strong, real-time signal that the relationship between equities and gold has shifted recently, likely reflecting the early stage of a correlation spike associated with a systemic shock or a shift in risk appetite, exactly the pattern this lesson's chart illustrates for March 2020. Waiting for the 252-day correlation to confirm the move defeats the purpose of monitoring correlation at all: a 252-day window, by construction, takes months to meaningfully reflect a shift that just happened, since the vast majority of its observations still come from the old regime. By the time the long-window number moves enough to be reassuring or alarming, the portfolio has already lived through the regime change the short window flagged weeks earlier."
+            },
+            {
+              "_key": "mac3l2b22",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Applying the EWMA Covariance Update",
+              "prompt": "Using EWMA with decay factor λ = 0.94: yesterday's covariance estimate between Asset A and Asset B was 0.12 (in percent-squared units), and today's returns are 1.5% for Asset A and 1.0% for Asset B. Using σ²_t = λσ²_t-1 + (1-λ) × r_A × r_B, with returns entered as percent (1.5, not 0.015), what is today's updated covariance estimate? Round to two decimal places.",
+              "correctValue": 0.20,
+              "tolerance": 0.02,
+              "unit": "%²",
+              "explanation": "σ²_t = (0.94 × 0.12) + (0.06 × 1.5 × 1.0) = 0.1128 + 0.09 = 0.2028, which rounds to approximately 0.20. Note how a single day's co-movement pulled the covariance estimate up meaningfully, exactly the responsiveness EWMA is designed to provide relative to a long fixed window."
+            },
+            {
+              "_key": "mac3l2b23",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Choosing Between Window Lengths",
+              "question": "A systematic desk wants to detect a correlation regime shift as early as possible, and is willing to accept a noisier estimate in exchange for speed. Based on this lesson, what should it favor?",
+              "options": [
+                "A longer window, since longer windows are always more accurate",
+                "A shorter window, or an EWMA with a lower decay factor, both of which weight recent data more heavily at the cost of higher estimation noise",
+                "It does not matter, since all window lengths produce the same correlation estimate",
+                "A window length of exactly 252 days, the industry standard for all use cases"
+              ],
+              "correctIndex": 1,
+              "explanation": "Shorter windows and EWMA configurations with lower decay factors both react faster to genuine changes in correlation, at the direct cost of higher estimation noise, exactly the trade-off this lesson's table lays out. A desk that explicitly values speed over statistical precision should lean toward these, while a desk building a long-run strategic baseline should lean the other way."
+            },
+            {
+              "_key": "mac3l2b24",
+              "_type": "keyTakeaways",
+              "points": [
+                "There is no single correct correlation between two assets, only an estimate over a specific window, and the window length trades off responsiveness against statistical noise",
+                "Short windows react fast but are noisy; long windows are statistically steadier but blend old and new regimes together, lagging a genuine shift",
+                "EWMA correlation offers a continuous middle ground, weighting recent data more heavily via a decay factor rather than committing to one hard cutoff, with lambda = 0.94 a widely referenced daily standard",
+                "A widening gap between short-window and long-window correlation estimates, correlation breakdown, is itself a usable, real-time regime-shift signal",
+                "Waiting for a long-window correlation estimate to \"confirm\" a shift defeats the purpose, since it is structurally slow to move by design",
+                "Correlation estimates inherit the same trading-calendar and data-alignment issues covered in Chapter 1's landscape lesson; a correlation number is only as reliable as the calendar alignment feeding it"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,226 @@
+{
+  "courseSlug": "advanced-options-strategies-volatility-arbitrage-and-skew-trading",
+  "chapters": [
+    {
+      "title": "Chapter 3: Volatility Term Structure and Calendar Dynamics",
+      "lessons": [
+        {
+          "title": "Contango and Backwardation in the Volatility Term Structure",
+          "slug": "contango-and-backwardation-in-the-volatility-term-structure",
+          "body": [
+            {
+              "_key": "c3l1-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l1-001s1", "_type": "span", "text": "Chapter 1 mentioned in passing that a weekly expiry's smile is usually steeper than a monthly's. Chapter 2 warned you never to compare skew across tenors without adjusting for that. Both observations point at the same underlying object, the term structure of ATM implied volatility, and this chapter takes it out of the footnotes and makes it the main subject. Strike and delta held fixed, ATM IV as a function of time to expiry, is not flat, and its shape tells you almost as much about market conditions as the skew does.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c3l1-002",
+              "_type": "bigIdea",
+              "text": "Plot ATM implied volatility across every listed expiry on the same day and you get the term structure. Normally it slopes gently upward, contango. Ahead of a known risk event or during genuine market stress, the near end spikes above the far end, backwardation, and that inversion reliably unwinds once the immediate uncertainty resolves."
+            },
+            {
+              "_key": "c3l1-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l1-003s1", "_type": "span", "text": "Defining the Term Structure", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c3l1-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l1-004s1", "_type": "span", "text": "Take the ATM IV from every expiry NSE lists on Nifty, weekly and monthly out to several months, and plot it against days to expiry. Some exchanges list a tradable volatility future directly on their VIX-style index; Nifty options do not offer that same instrument with comparable depth, so in practice a desk builds this curve itself, straight from the ATM strike's solved IV at each listed expiry on the chain.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c3l1-005",
+              "_type": "table",
+              "caption": "Illustrative Nifty ATM term structure, a calm trading day (representative shape, not live data)",
+              "headers": ["Tenor", "ATM IV"],
+              "rows": [
+                { "_key": "c3l1-005r1", "_type": "tableRow", "cells": ["7 days", "12.6%"] },
+                { "_key": "c3l1-005r2", "_type": "tableRow", "cells": ["14 days", "12.9%"] },
+                { "_key": "c3l1-005r3", "_type": "tableRow", "cells": ["30 days", "13.2%"] },
+                { "_key": "c3l1-005r4", "_type": "tableRow", "cells": ["60 days", "13.6%"] },
+                { "_key": "c3l1-005r5", "_type": "tableRow", "cells": ["90 days", "14.0%"] }
+              ]
+            },
+            {
+              "_key": "c3l1-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l1-006s1", "_type": "span", "text": "Contango: The Normal State", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c3l1-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "c3l1-007m1", "_type": "glossaryTerm", "definition": "A term-structure state where longer-dated implied volatility sits above shorter-dated implied volatility, producing an upward-sloping curve. Named after the analogous, more familiar shape in commodity futures curves." }
+              ],
+              "children": [
+                { "_key": "c3l1-007s1", "_type": "span", "text": "The table above is a mild ", "marks": [] },
+                { "_key": "c3l1-007s2", "_type": "span", "text": "contango", "marks": ["c3l1-007m1"] },
+                { "_key": "c3l1-007s3", "_type": "span", "text": ": each longer tenor prices a slightly higher ATM IV than the one before it. This is the normal resting shape of the curve in calm markets, and it reflects mean reversion in volatility itself. If realized volatility has been unusually quiet recently, short-dated IV, closely anchored to that calm recent past, sits low. Longer-dated IV has to price in the unconditional, long-run average level of volatility, which is typically a bit higher than 'unusually quiet.' The gap between them is the market's expectation that calm periods do not last forever.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c3l1-008",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l1-008s1", "_type": "span", "text": "Backwardation: The Stress State", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c3l1-009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "c3l1-009m1", "_type": "glossaryTerm", "definition": "A term-structure state where shorter-dated implied volatility sits above longer-dated implied volatility, producing a downward-sloping or inverted curve, typically driven by an imminent event or ongoing market stress." }
+              ],
+              "children": [
+                { "_key": "c3l1-009s1", "_type": "span", "text": "Two days before a Union Budget, or during a genuine market crisis, the curve can flip into ", "marks": [] },
+                { "_key": "c3l1-009s2", "_type": "span", "text": "backwardation", "marks": ["c3l1-009m1"] },
+                { "_key": "c3l1-009s3", "_type": "span", "text": ". A known, dated source of large uncertainty sits inside the near-term expiry but not, proportionally, inside the far ones, so the front of the curve spikes while the back barely moves. This same pattern, a normally upward-sloping curve inverting under near-term stress, is a well-documented feature of volatility markets globally, most visibly in how CBOE's VIX futures curve behaves around crises. The mechanism is identical on Nifty's options-implied curve, just observed through the chain instead of a separate futures contract.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c3l1-010",
+              "_type": "table",
+              "caption": "Illustrative Nifty ATM term structure, two trading days before a Union Budget (representative shape, not live data)",
+              "headers": ["Tenor", "ATM IV"],
+              "rows": [
+                { "_key": "c3l1-010r1", "_type": "tableRow", "cells": ["7 days", "19.8%"] },
+                { "_key": "c3l1-010r2", "_type": "tableRow", "cells": ["14 days", "16.5%"] },
+                { "_key": "c3l1-010r3", "_type": "tableRow", "cells": ["30 days", "14.5%"] },
+                { "_key": "c3l1-010r4", "_type": "tableRow", "cells": ["60 days", "13.9%"] },
+                { "_key": "c3l1-010r5", "_type": "tableRow", "cells": ["90 days", "14.1%"] }
+              ]
+            },
+            {
+              "_key": "c3l1-011",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Illustrative Nifty ATM term structure: calm day vs two days before Budget",
+              "xAxisLabel": "Days to expiry",
+              "yAxisLabel": "ATM implied volatility (%)",
+              "series": [
+                { "_key": "c3l1-011se1", "label": "Calm day (contango)", "values": [12.6, 12.9, 13.2, 13.6, 14.0] },
+                { "_key": "c3l1-011se2", "label": "Two days before Budget (backwardation)", "values": [19.8, 16.5, 14.5, 13.9, 14.1] }
+              ],
+              "data": [
+                { "_key": "c3l1-011d1", "label": "7d", "value": 12.6 },
+                { "_key": "c3l1-011d2", "label": "14d", "value": 12.9 },
+                { "_key": "c3l1-011d3", "label": "30d", "value": 13.2 },
+                { "_key": "c3l1-011d4", "label": "60d", "value": 13.6 },
+                { "_key": "c3l1-011d5", "label": "90d", "value": 14.0 }
+              ]
+            },
+            {
+              "_key": "c3l1-012",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Notice the event-day curve is not uniformly higher, it is a hump concentrated at the front. The 90-day tenor barely moves, 14.0% to 14.1%, while the 7-day tenor nearly doubles, 12.6% to 19.8%. The market is not repricing its view of long-run Nifty volatility because of one Budget. It is pricing a specific, dated, front-loaded spike in uncertainty that the far tenors correctly treat as diluted across a much longer window."
+            },
+            {
+              "_key": "c3l1-013",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Sizing the inversion",
+              "prompt": "Using the two-days-before-Budget table, compute the 90-day minus 7-day term structure spread: IV(90d) − IV(7d), in percentage points.",
+              "correctValue": -5.7,
+              "tolerance": 0.1,
+              "unit": "pts",
+              "explanation": "14.1% − 19.8% = −5.7 points. A negative spread here confirms backwardation: the near tenor is priced well above the far tenor. On the calm day, the same calculation gives 14.0% − 12.6% = +1.4 points, a positive spread confirming ordinary contango."
+            },
+            {
+              "_key": "c3l1-014",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Reading the shape",
+              "question": "On a given morning, Nifty's ATM IV reads 15.5% at 7 days, 14.8% at 14 days, 13.9% at 30 days, and 13.5% at 60 days. How would you describe this term structure?",
+              "options": [
+                "Contango, upward sloping",
+                "Backwardation, downward sloping",
+                "Flat, with no meaningful shape",
+                "This pattern cannot occur in real markets"
+              ],
+              "correctIndex": 1,
+              "explanation": "IV falls steadily as tenor lengthens, 15.5% down to 13.5%, the near end priced above the far end. That is backwardation. Contango would show IV rising with tenor, as in this lesson's calm-day table."
+            },
+            {
+              "_key": "c3l1-015",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l1-015s1", "_type": "span", "text": "Why the Inversion Unwinds", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c3l1-016",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l1-016s1", "_type": "span", "text": "A front-loaded spike tied to a specific dated event has a specific dated expiration too, the event itself. Once the Budget is announced and absorbed without a crisis-sized surprise, the reason the 7-day tenor was priced at 19.8% disappears with it, and that tenor's IV tends to collapse back toward whatever the new, post-event calm level is. This is the same event-driven unwind Chapter 2 described for skew, now showing up as a term structure effect on the outright level of ATM IV rather than as a tilt between strikes. Both effects often move together around the same event, which is exactly why Chapter 2's skew read and this chapter's term structure read are meant to be used side by side, not as substitutes for each other.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c3l1-017",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "The front-loaded spike",
+              "scenario": "It is the morning of an RBI monetary policy announcement, due at 2:30 pm. Nifty's 7-day ATM IV opened the week at 13.0% and now sits at 18.5%, while the 30-day ATM IV has moved only from 13.4% to 13.7% over the same period.",
+              "prompt": "What does this pattern tell you about where the market's uncertainty is concentrated, and what would you expect to happen to the 7-day tenor specifically once the 2:30 pm announcement is out?",
+              "modelAnswer": "1. The uncertainty is heavily front-loaded and specific to this policy announcement. A 5.5-point jump in the 7-day tenor against a 0.3-point move in the 30-day tenor is a textbook backwardation signature: the market is not revising its long-run view of Nifty volatility, it is pricing a single, imminent, binary-ish information event.\n2. Once the announcement lands, the specific uncertainty it represented resolves, regardless of whether the outcome itself was hawkish, dovish or neutral. The event that justified the 18.5% front-tenor read no longer lies ahead of that expiry.\n3. Expect the 7-day tenor's IV to fall back sharply toward a level closer to the 30-day tenor, or below it, restoring something closer to normal contango, unless the announcement itself produces a genuinely large, unexpected market move that creates fresh uncertainty of its own.\n4. This is precisely the setup that motivates trading the term structure directly, being short the inflated front-tenor IV into a known event and long enough of the calmer back tenor to control risk, which is the subject of the calendar spread lesson later in this chapter.\n5. The risk in doing so is symmetrical to the reward: if the announcement itself is the surprise, a sharp unexpected rate move or guidance shift, the front tenor's IV may not collapse at all, and a short-front position sized without accounting for that tail case can lose significantly more than the small backwardation it was trying to harvest."
+            },
+            {
+              "_key": "c3l1-018",
+              "_type": "flashcardSet",
+              "title": "Term Structure Fundamentals",
+              "cards": [
+                { "_key": "c3l1-018f1", "term": "Volatility term structure", "definition": "ATM implied volatility plotted against time to expiry across all listed tenors on the same underlying and day." },
+                { "_key": "c3l1-018f2", "term": "Contango (vol term structure)", "definition": "Longer-dated IV priced above shorter-dated IV, an upward-sloping curve; the normal resting state in calm markets." },
+                { "_key": "c3l1-018f3", "term": "Backwardation (vol term structure)", "definition": "Shorter-dated IV priced above longer-dated IV, a downward-sloping or inverted curve; typical ahead of a known event or during genuine stress." },
+                { "_key": "c3l1-018f4", "term": "Mean reversion of volatility", "definition": "The tendency of realized and implied volatility to drift back toward a long-run average level, the mechanism behind ordinary term structure contango." },
+                { "_key": "c3l1-018f5", "term": "Front-loaded spike", "definition": "A near-term-only rise in ATM IV concentrated in the tenor covering a specific dated event, which typically unwinds once that event has passed." }
+              ]
+            },
+            {
+              "_key": "c3l1-019",
+              "_type": "keyTakeaways",
+              "points": [
+                "The term structure is ATM IV plotted against time to expiry; it is built directly from the options chain across listed tenors, not from a separate volatility futures contract.",
+                "Contango, longer tenors priced higher, is the normal resting shape, reflecting volatility's tendency to mean-revert toward a long-run average from a currently calm level.",
+                "Backwardation, shorter tenors priced higher, appears ahead of known dated events or during genuine stress, and shows up as a front-loaded hump rather than a uniform shift across all tenors.",
+                "A term structure inversion tied to a specific event typically unwinds once that event resolves without a crisis-sized surprise, since the reason for the spike expires with the event itself.",
+                "Skew, from Chapter 2, and term structure, from this chapter, are two different dimensions of the same surface and often move together around an event; reading only one gives an incomplete picture.",
+                "Trading a known term structure inversion carries real tail risk: if the event itself produces the surprise it was pricing, the expected collapse in front-tenor IV may not happen at all."
+              ]
+            },
+            {
+              "_key": "c3l1-020",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment or trading advice. The term structure figures shown for calm and event-driven days are illustrative teaching data, not live NSE quotes. Consult a SEBI-registered adviser before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

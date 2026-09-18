@@ -1,0 +1,258 @@
+{
+  "courseSlug": "advanced-machine-learning-techniques-for-trading-ensembles-and-deep-learning",
+  "chapters": [
+    {
+      "title": "Chapter 2: Ensemble Methods I: Bagging and Boosting",
+      "lessons": [
+        {
+          "title": "Gradient Boosting for Alpha: XGBoost and LightGBM on Indian Equities",
+          "slug": "gradient-boosting-for-alpha-xgboost-and-lightgbm-on-indian-equities",
+          "body": [
+            {
+              "_key": "amlc2l2b01",
+              "_type": "bigIdea",
+              "text": "Bagging averages independent trees and settles at a variance floor it cannot fall below. Boosting has no such floor. Every additional round is built specifically to reduce training error further, which makes it more powerful per tree than bagging and considerably more dangerous on data this thin if you let it run unsupervised."
+            },
+            {
+              "_key": "amlc2l2b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc2l2b02s1", "_type": "span", "text": "Boosting: Building an Ensemble That Corrects Its Own Mistakes", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc2l2b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "amlc2l2m01",
+                  "_type": "glossaryTerm",
+                  "definition": "An ensemble method that builds trees one at a time, sequentially, where each new tree is fit to correct the errors, specifically the gradient of the loss function, left behind by the ensemble built so far."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "amlc2l2b03s1",
+                  "_type": "span",
+                  "text": "Where bagging trains trees independently and averages them, ",
+                  "marks": []
+                },
+                { "_key": "amlc2l2b03s2", "_type": "span", "text": "gradient boosting", "marks": ["amlc2l2m01"] },
+                {
+                  "_key": "amlc2l2b03s3",
+                  "_type": "span",
+                  "text": " trains them one after another. The first tree makes a rough prediction. The second tree is fit not to the original labels, but to the direction that would most reduce the current ensemble's loss, effectively its mistakes so far. The third tree corrects what is still left over, and so on. Each tree's contribution is scaled down by a learning rate before being added in, so no single tree can swing the ensemble too far in one step.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc2l2b04",
+              "_type": "mathBlock",
+              "latex": "F_m(x) = F_{m-1}(x) + \\nu \\, h_m(x)",
+              "caption": "hₘ is a shallow tree fit to the negative gradient of the loss function evaluated at the current ensemble Fₘ₋₁, its pseudo-residuals, and ν is the learning rate (shrinkage), typically well below 1. This additive, gradient-following structure is Friedman's original gradient boosting formulation, and it is exactly why more rounds always reduce training loss further: each round is defined to do precisely that."
+            },
+            {
+              "_key": "amlc2l2b05",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc2l2b05s1", "_type": "span", "text": "XGBoost and LightGBM: Same Idea, Different Engineering", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc2l2b06",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc2l2b06s1",
+                  "_type": "span",
+                  "text": "XGBoost and LightGBM implement the same gradient boosting idea with different engineering choices that matter in practice. XGBoost grows trees level-wise, one full depth at a time, and bakes L1 and L2 regularization directly into its objective function. LightGBM grows trees leaf-wise, always splitting whichever leaf reduces loss the most next, which reaches a lower training loss faster for a given number of leaves, but can also produce deeper, more irregular trees that overfit thin-signal data faster unless leaf count is explicitly constrained.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc2l2b07",
+              "_type": "table",
+              "caption": "Two engines, same underlying algorithm",
+              "headers": ["Dimension", "XGBoost", "LightGBM"],
+              "rows": [
+                { "_key": "amlc2l2b07r1", "_type": "tableRow", "cells": ["Tree growth", "Level-wise (depth-first, symmetric)", "Leaf-wise (best-first, can be asymmetric)"] },
+                { "_key": "amlc2l2b07r2", "_type": "tableRow", "cells": ["Speed on large datasets", "Fast, especially with histogram-based splitting", "Typically faster still, built around histogram binning from the start"] },
+                { "_key": "amlc2l2b07r3", "_type": "tableRow", "cells": ["Overfitting tendency on small, noisy data", "Moderate; depth-wise growth is naturally more conservative", "Higher unless num_leaves and min_data_in_leaf are constrained explicitly"] },
+                { "_key": "amlc2l2b07r4", "_type": "tableRow", "cells": ["Common fit for this course", "A solid, slightly more forgiving default for smaller Indian equity universes", "Worth reaching for once your dataset and feature count grow large"] }
+              ]
+            },
+            {
+              "_key": "amlc2l2b08",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc2l2b08s1", "_type": "span", "text": "Why Boosting Needs More Discipline Than Bagging on This Data", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc2l2b09",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc2l2b09s1",
+                  "_type": "span",
+                  "text": "Recall the bagging variance formula from the previous lesson: as the number of trees grows, a bagged ensemble's variance settles at a floor set by the correlation between trees. It does not keep getting worse the longer you train. Boosting has no equivalent floor. Every additional round is explicitly built to reduce training loss further, so left completely unconstrained, it will keep fitting the training set more and more closely, including whatever noise is in it, for as many rounds as you let it run.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc2l2b10",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Illustrative: Training vs Walk-Forward Validation Loss Over Boosting Rounds",
+              "xAxisLabel": "Boosting Round",
+              "yAxisLabel": "Log-Loss",
+              "data": [
+                { "_key": "amlc2l2b10d1", "label": "100" },
+                { "_key": "amlc2l2b10d2", "label": "300" },
+                { "_key": "amlc2l2b10d3", "label": "500" },
+                { "_key": "amlc2l2b10d4", "label": "800" },
+                { "_key": "amlc2l2b10d5", "label": "1200" },
+                { "_key": "amlc2l2b10d6", "label": "1800" },
+                { "_key": "amlc2l2b10d7", "label": "2500" },
+                { "_key": "amlc2l2b10d8", "label": "3000" }
+              ],
+              "series": [
+                {
+                  "_key": "amlc2l2b10s1",
+                  "label": "Training Loss",
+                  "values": [0.690, 0.640, 0.600, 0.550, 0.500, 0.430, 0.360, 0.300]
+                },
+                {
+                  "_key": "amlc2l2b10s2",
+                  "label": "Walk-Forward Validation Loss",
+                  "values": [0.693, 0.670, 0.655, 0.648, 0.652, 0.668, 0.690, 0.715]
+                }
+              ]
+            },
+            {
+              "_key": "amlc2l2b11",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This is an illustrative curve built to show the shape of a typical boosting overfit, not output from an actual model run. The exact round where validation loss bottoms out varies by dataset, learning rate, and regularization settings."
+            },
+            {
+              "_key": "amlc2l2b12",
+              "_type": "callout",
+              "type": "insight",
+              "text": "In the chart above, training loss falls smoothly for all 3,000 rounds, but walk-forward validation loss bottoms out around round 800 and rises steadily after that. The model that should get deployed is the one from round 800, not round 3,000. This is the single most common mistake in applying gradient boosting to market data: training loss looking better is not the same as the model getting better."
+            },
+            {
+              "_key": "amlc2l2b13",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "from xgboost import XGBClassifier\n\n# X_train/y_train and X_val/y_val must be split chronologically:\n# every row in X_val comes strictly after every row in X_train.\n# A random split here reintroduces the same look-ahead bias\n# problem covered in Chapter 1.\nmodel = XGBClassifier(\n    n_estimators=3000,\n    learning_rate=0.02,\n    max_depth=3,\n    subsample=0.8,\n    colsample_bytree=0.8,\n    reg_lambda=1.5,\n    early_stopping_rounds=100,\n    eval_metric=\"logloss\",\n)\nmodel.fit(\n    X_train, y_train,\n    eval_set=[(X_val, y_val)],\n    verbose=False,\n)\nprint(model.best_iteration)  # the round actually used, not n_estimators",
+              "caption": "early_stopping_rounds=100 halts training once validation loss has not improved for 100 rounds, and model.best_iteration tells you which round was actually kept, exactly the round-800-not-round-3000 distinction from the chart above."
+            },
+            {
+              "_key": "amlc2l2b14",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Early stopping is only honest if the validation set it watches is chronologically after the training set. A randomly split validation set can contain rows from before, during, and after the training window, which lets the model get credit for 'generalizing' to data it has effectively already seen through overlapping features or adjacent time periods, silently defeating the entire purpose of early stopping."
+            },
+            {
+              "_key": "amlc2l2b15",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc2l2b15s1", "_type": "span", "text": "A Practical Recipe for Boosting on Indian Equity Data", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc2l2b16",
+              "_type": "table",
+              "caption": "A reasonable starting point, not a universal optimum, for triple-barrier-labeled equity data",
+              "headers": ["Setting", "Starting Value", "Why"],
+              "rows": [
+                { "_key": "amlc2l2b16r1", "_type": "tableRow", "cells": ["learning_rate", "0.01 to 0.03", "Small steps, corrected by more rounds under early stopping, generalize more conservatively than a few large ones"] },
+                { "_key": "amlc2l2b16r2", "_type": "tableRow", "cells": ["max_depth (XGBoost) / num_leaves (LightGBM)", "3 to 4 / 15 to 31", "Shallow trees per round; boosting compounds many weak trees rather than needing any one tree to be strong"] },
+                { "_key": "amlc2l2b16r3", "_type": "tableRow", "cells": ["subsample / colsample_bytree", "0.7 to 0.8", "Row and column subsampling per round, bagging's core idea borrowed inside boosting, adds back some of the noise-averaging bagging provides"] },
+                { "_key": "amlc2l2b16r4", "_type": "tableRow", "cells": ["reg_lambda", "1 to 3", "L2 regularization on leaf weights discourages any single leaf from making an extreme prediction"] },
+                { "_key": "amlc2l2b16r5", "_type": "tableRow", "cells": ["early_stopping_rounds", "50 to 150, on a chronological validation split", "The single most important control; everything else here is secondary to this"] }
+              ]
+            },
+            {
+              "_key": "amlc2l2b17",
+              "_type": "keyFact",
+              "label": "The One Setting You Cannot Skip",
+              "value": "A chronologically ordered early-stopping validation split",
+              "context": "Every other hyperparameter in the table above is a reasonable default you can tune later. Getting the early-stopping split wrong silently invalidates the entire exercise, the same way a shuffled K-Fold split does for cross-validation."
+            },
+            {
+              "_key": "amlc2l2b18",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc2l2b18s1", "_type": "span", "text": "What's Next", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc2l2b19",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc2l2b19s1",
+                  "_type": "span",
+                  "text": "A tuned gradient boosting model is still a black box unless you can see which features it is actually relying on and how. The next lesson covers SHAP values, the tool this course uses throughout the rest of its ensemble work to open that box, followed by this chapter's closing case study: a gradient-boosted momentum signal built and walk-forward tested on the Nifty 200.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc2l2b20",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Diagnosing a Boosting Overfit",
+              "scenario": "A gradient boosting model trained on triple-barrier-labeled Bank Nifty stocks was run for 3,000 boosting rounds with no early stopping and a learning rate of 0.1. Training log-loss falls smoothly and ends very low. Walk-forward validation loss falls for the first few hundred rounds, then rises steadily for the rest of training, and the final model, from round 3,000, is the one that got deployed.",
+              "prompt": "What went wrong, and what is the minimal fix?",
+              "modelAnswer": "The team deployed the model from the final round instead of the round where validation loss was lowest. Gradient boosting, unlike bagging, has no built-in variance floor: every additional round keeps reducing training loss by construction, so without a mechanism to stop early it will eventually fit noise in the training set at the direct expense of validation performance, exactly the rising validation loss shown here. The minimal fix is early stopping tied to a chronologically ordered validation split, not a random one, keeping the checkpoint from the round with the best validation loss rather than the last round trained, ideally combined with a lower learning rate and stronger row and column subsampling to slow down how fast the model can memorize training noise in the first place."
+            },
+            {
+              "_key": "amlc2l2b21",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "Bagging vs Boosting: The Core Distinction",
+              "textWithBlank": "Bagging builds trees in parallel and reduces variance by averaging; boosting builds trees ___, with each new tree correcting the errors of the ensemble built so far.",
+              "correctAnswers": ["sequentially", "in sequence", "one at a time"],
+              "explanation": "This sequential, error-correcting structure is what makes boosting more powerful per tree than bagging, and also why it has no built-in variance floor the way bagging does: without early stopping, shrinkage, and subsampling, it will keep reducing training loss, including whatever noise is in it, round after round."
+            },
+            {
+              "_key": "amlc2l2b22",
+              "_type": "keyTakeaways",
+              "points": [
+                "Gradient boosting builds trees sequentially, each one fit to the negative gradient (pseudo-residuals) of the current ensemble's loss, scaled by a learning rate",
+                "XGBoost grows trees level-wise with built-in regularization; LightGBM grows leaf-wise, reaching lower training loss faster but overfitting thin-signal data faster unless leaves are constrained",
+                "Unlike bagging, boosting has no built-in variance floor: more rounds always reduce training loss further, which makes early stopping the single most important control, not an optional one",
+                "Early stopping is only valid if its validation set is chronologically after the training set; a random split reintroduces look-ahead bias",
+                "subsample and colsample_bytree borrow bagging's row and column randomization inside boosting, adding back some noise-averaging on top of shrinkage and regularization",
+                "The next lesson opens the black box with SHAP before this chapter's case study walk-forward tests a gradient-boosted signal on the Nifty 200"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

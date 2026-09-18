@@ -1,0 +1,186 @@
+{
+  "courseSlug": "understanding-momentum-and-trend-following-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 7: Trading Momentum and Trend Strategies in India",
+      "lessons": [
+        {
+          "title": "Case Study: Setting Up a Real Systematic Trading Workflow in India",
+          "slug": "case-study-setting-up-a-real-systematic-trading-workflow-in-india",
+          "body": [
+            {
+              "_key": "m28-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m28-001s1", "_type": "span", "marks": [], "text": "Every chapter in this course built one piece of a systematic trading workflow. This closing case study puts all of them in order, stage by stage, and walks through what a real setup actually looks like end to end, from sourcing data to filing taxes on the results." }
+              ]
+            },
+            {
+              "_key": "m28-002",
+              "_type": "bigIdea",
+              "text": "A systematic trading workflow is a pipeline, not a single clever signal. Most real-world failures don't come from a bad trend or momentum idea, they come from skipping one of the less exciting stages: proper data, disciplined sizing, honest validation, legal compliance, or tax record-keeping."
+            },
+            {
+              "_key": "m28-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m28-003s1", "_type": "span", "marks": [], "text": "The Full Pipeline, Stage by Stage" }
+              ]
+            },
+            {
+              "_key": "m28-004",
+              "_type": "table",
+              "caption": "One trader's final configuration, stage by stage",
+              "headers": ["Stage", "Choice made", "Built in"],
+              "rows": [
+                { "_key": "m28-004r1", "_type": "tableRow", "cells": ["Data", "Historical and live NSE data via a broker API", "Chapter 2, 7"] },
+                { "_key": "m28-004r2", "_type": "tableRow", "cells": ["Universe", "A Nifty 200 slice, point-in-time membership", "Chapter 4, 6"] },
+                { "_key": "m28-004r3", "_type": "tableRow", "cells": ["Signal", "6-month risk-adjusted momentum score, 1-month skip", "Chapter 1, 4"] },
+                { "_key": "m28-004r4", "_type": "tableRow", "cells": ["Trend filter", "Rising 200-day SMA required for any long entry", "Chapter 2, 3"] },
+                { "_key": "m28-004r5", "_type": "tableRow", "cells": ["Rebalance", "Quarterly re-ranking and rotation", "Chapter 4"] },
+                { "_key": "m28-004r6", "_type": "tableRow", "cells": ["Sizing", "Inverse-volatility weighting across selected names", "Chapter 5"] },
+                { "_key": "m28-004r7", "_type": "tableRow", "cells": ["Exits", "3x ATR trailing stop on every position", "Chapter 5"] },
+                { "_key": "m28-004r8", "_type": "tableRow", "cells": ["Validation", "Out-of-sample and walk-forward tested, net of costs", "Chapter 6"] },
+                { "_key": "m28-004r9", "_type": "tableRow", "cells": ["Execution", "Long leg in delivery equity, short leg via F&O", "Chapter 7"] },
+                { "_key": "m28-004r10", "_type": "tableRow", "cells": ["Compliance", "Strategy registered, orders tagged with an algo ID", "Chapter 7"] },
+                { "_key": "m28-004r11", "_type": "tableRow", "cells": ["Tax", "Long and short leg tracked as separate tax categories", "Chapter 7"] }
+              ]
+            },
+            {
+              "_key": "m28-005",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Notice how much of this configuration is not the trend or momentum signal itself. The signal is one row out of eleven. Everything else, universe sourcing, sizing, exits, validation, compliance, and tax treatment, is infrastructure this course spent seven chapters building precisely because a good signal wrapped in a weak pipeline is where real systematic trading actually fails."
+            },
+            {
+              "_key": "m28-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m28-006s1", "_type": "span", "marks": [], "text": "What Breaks When a Stage Is Skipped" }
+              ]
+            },
+            {
+              "_key": "m28-007",
+              "_type": "table",
+              "caption": "Failure modes by skipped stage",
+              "headers": ["Stage skipped", "What breaks"],
+              "rows": [
+                { "_key": "m28-007r1", "_type": "tableRow", "cells": ["Point-in-time universe data", "Backtest results are biased by survivorship and look-ahead effects (Chapter 6)"] },
+                { "_key": "m28-007r2", "_type": "tableRow", "cells": ["Trend filter", "Oscillator readings get misread as reversal signals inside a real, healthy trend (Chapter 3)"] },
+                { "_key": "m28-007r3", "_type": "tableRow", "cells": ["Position sizing", "A single high-volatility name dominates portfolio risk (Chapter 5)"] },
+                { "_key": "m28-007r4", "_type": "tableRow", "cells": ["Out-of-sample validation", "Overfitting goes completely undetected until real capital is at risk (Chapter 6)"] },
+                { "_key": "m28-007r5", "_type": "tableRow", "cells": ["Transaction cost accounting", "A backtest overstates real returns, sometimes drastically for high-turnover systems (Chapter 6)"] },
+                { "_key": "m28-007r6", "_type": "tableRow", "cells": ["Broker registration and algo tagging", "The strategy cannot legally place automated orders with real capital (Chapter 7)"] },
+                { "_key": "m28-007r7", "_type": "tableRow", "cells": ["Separate tax tracking by leg", "Losses on one leg cannot offset gains on the other, an expensive surprise at filing time (Chapter 7)"] }
+              ]
+            },
+            {
+              "_key": "m28-008",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m28-008s1", "_type": "span", "marks": [], "text": "A Pre-Launch Checklist" }
+              ]
+            },
+            {
+              "_key": "m28-009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m28-009s1", "_type": "span", "marks": [], "text": "Before any version of this workflow touches real capital, work through this list honestly, not as a formality." }
+              ]
+            },
+            {
+              "_key": "m28-010",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Pre-Launch Checklist",
+              "steps": [
+                "Universe defined using point-in-time membership, not today's constituent list",
+                "Signal built with the skip-month convention and, if used, a stable trend filter",
+                "Ranking and rebalance logic fully specified, with no manual judgement calls left at execution time",
+                "Position sizing method chosen deliberately, not defaulted to equal weight without considering volatility",
+                "Exit rule defined for every position before entry, not decided in the moment",
+                "Strategy tested out-of-sample or via walk-forward validation, not judged on in-sample performance alone",
+                "Backtest results reported net of realistic transaction costs and slippage",
+                "Short-leg instrument access confirmed (F&O or SLB eligibility) for every name that might be selected",
+                "Broker-side algo registration and order tagging completed before any automated order is placed",
+                "A plan in place for tracking capital gains and business income separately for tax purposes"
+              ]
+            },
+            {
+              "_key": "m28-011",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Reading the pipeline correctly",
+              "question": "A trader has a genuinely strong, well-validated momentum signal, tested out-of-sample with realistic costs included, but has not yet registered their strategy with their broker or set up separate tax tracking for their long and short legs. Based on this lesson, are they ready to go live?",
+              "options": [
+                "Yes, a validated signal is the only thing that actually matters",
+                "No, a strong signal is only one stage of the pipeline, compliance and tax tracking are separate required stages that have not been completed",
+                "Yes, as long as the signal's Sharpe ratio is above 1.0",
+                "No, because momentum strategies are illegal in India"
+              ],
+              "correctIndex": 1,
+              "explanation": "This course's entire pipeline framing exists because a validated signal is necessary but not sufficient. Compliance (broker registration, order tagging) and tax tracking are separate, required stages, skipping either one leaves the trader exposed even with an otherwise excellent strategy."
+            },
+            {
+              "_key": "m28-012",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Diagnosing a real shortfall",
+              "scenario": "A trader's live results are noticeably worse than their backtest, even though the backtest was out-of-sample validated and included a realistic cost assumption. On investigation, the live short leg has occasionally been unable to execute at all, because some selected stocks turned out to have no F&O contract and were not checked against the SLB eligible list either.",
+              "prompt": "Which stage of the pipeline from this lesson was skipped, and how would you fix it going forward?",
+              "modelAnswer": "The execution stage's short-leg instrument access check was skipped, the ranking system was selecting stocks for the short leg without first confirming they were actually shortable via F&O or SLB, a constraint covered in Chapter 7's first lesson. The fix is to filter the ranking universe for the short leg specifically to F&O and SLB eligible names before ranking, not after, so the strategy never selects a name it cannot actually execute, rather than discovering the gap in live trading."
+            },
+            {
+              "_key": "m28-013",
+              "_type": "toolLink",
+              "label": "Start building with Kite Connect's documentation and sandbox",
+              "url": "https://kite.trade",
+              "description": "Kite Connect's documentation, referenced throughout this course, is a practical starting point for building the data and execution stages of a pipeline like the one in this case study."
+            },
+            {
+              "_key": "m28-014",
+              "_type": "flashcardSet",
+              "title": "Systematic Workflow: Core Terms",
+              "cards": [
+                { "_key": "m28-014f1", "term": "Trading pipeline", "definition": "The full ordered sequence of stages, data, signal, sizing, exits, validation, execution, compliance, and tax tracking, required to run a systematic strategy with real capital." },
+                { "_key": "m28-014f2", "term": "Pre-launch checklist", "definition": "A deliberate, itemized review of every pipeline stage before deploying real capital, designed to catch skipped or incomplete stages before they cause a live failure." }
+              ]
+            },
+            {
+              "_key": "m28-015",
+              "_type": "bigIdea",
+              "text": "This course opened by asking why stocks that have already gone up keep going up. Seven chapters later, the honest answer is: sometimes they do, sometimes they don't, and the difference between a trader who benefits from that pattern and one who is hurt by it usually comes down to everything covered after the signal itself, sizing, exits, honest validation, and the operational discipline to run it all correctly."
+            },
+            {
+              "_key": "m28-016",
+              "_type": "keyTakeaways",
+              "points": [
+                "A real systematic trading workflow is a pipeline of distinct stages, only one of which is the trend or momentum signal itself.",
+                "Skipping any single stage, from point-in-time data to tax tracking, produces a specific, predictable failure mode, not a vague general risk.",
+                "The pre-launch checklist in this lesson is a direct summary of every major lesson in this course, worth revisiting in full before deploying any version of a strategy with real capital.",
+                "Momentum and trend following are genuinely well-documented, decades-old, cross-market phenomena, not a guaranteed source of return, and the risk management and validation discipline covered in Chapters 5 and 6 exist precisely because the edge is real but modest, not effortless.",
+                "This closes the course. Building a trustworthy systematic strategy from here means applying this full pipeline, honestly, to a broad, properly sourced universe, not shortcutting to the signal alone."
+              ]
+            },
+            {
+              "_key": "m28-017",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice, legal advice, or tax advice. The configuration described is illustrative, not a specific recommended strategy. Consult a SEBI-registered investment adviser or research analyst, and a qualified tax professional, before deploying any systematic trading strategy with real capital."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

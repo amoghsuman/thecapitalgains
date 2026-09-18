@@ -1,0 +1,192 @@
+{
+  "courseSlug": "introduction-to-machine-learning-for-trading-what-actually-works",
+  "chapters": [
+    {
+      "title": "Chapter 4: From Signal to Strategy",
+      "lessons": [
+        {
+          "title": "Case Study: Building and Breaking a Simple ML Strategy on Nifty Data",
+          "slug": "case-study-building-and-breaking-a-simple-ml-strategy-on-nifty-data",
+          "body": [
+            {
+              "_key": "mlt16-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt16-001s1", "_type": "span", "marks": [], "text": "This is the final lesson, and it closes a loop this course opened in Chapter 1. Back then, an 87%-accurate model traded with a fixed position size, no confidence threshold, and no cost accounting, lost roughly ₹95,400 across 200 illustrative trading days. This lesson runs that exact same signal, the same 200 days, the same model, through the complete, correct pipeline this course has built one piece at a time, then deliberately breaks it again, one discipline at a time, to show precisely what each piece was actually protecting against." }
+              ]
+            },
+            {
+              "_key": "mlt16-002",
+              "_type": "bigIdea",
+              "text": "A trading strategy is not one decision. It is a stack of a dozen small, correct decisions: feature construction, labeling, a leak-free split, model choice validated across multiple windows, realistic fill timing, the full cost stack, and layered risk controls. Skip any single one, and a backtest can look fine right up until it does not, and it will always look better for having skipped it, never worse."
+            },
+            {
+              "_key": "mlt16-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt16-003s1", "_type": "span", "marks": [], "text": "Building It Right: The Complete Pipeline" }
+              ]
+            },
+            {
+              "_key": "mlt16-004",
+              "_type": "table",
+              "caption": "Every piece of this course, assembled into one pipeline",
+              "headers": ["Step", "What It Does", "Where It Was Built"],
+              "rows": [
+                { "_key": "mlt16-004r1", "cells": ["Point-in-time features", "Momentum, distance from moving average, relative volume", "Lesson 6"] },
+                { "_key": "mlt16-004r2", "cells": ["Deadband direction label", "Drops ambiguous, tiny moves instead of forcing every day into a bucket", "Lesson 5"] },
+                { "_key": "mlt16-004r3", "cells": ["Leak-free chronological split", "Boundary row dropped, scaler fit on training data only", "Lesson 8"] },
+                { "_key": "mlt16-004r4", "cells": ["Model, validated across 5 windows", "Random forest, average 57.2% accuracy, known instability", "Lessons 10 and 12"] },
+                { "_key": "mlt16-004r5", "cells": ["Realistic fill timing", "Signal shifted forward one bar before touching returns", "Lesson 13"] },
+                { "_key": "mlt16-004r6", "cells": ["Full current cost stack", "Brokerage, STT, stamp duty, exchange/SEBI charges, GST", "Lesson 14"] },
+                { "_key": "mlt16-004r7", "cells": ["Four-layer risk stack", "Confidence sizing, volatility sizing, per-trade stop, circuit breaker", "Lesson 15"] }
+              ]
+            },
+            {
+              "_key": "mlt16-005",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt16-005s1", "_type": "span", "marks": [], "text": "Apply just one of Lesson 15's tools, the max-loss-per-trade rule, to Chapter 1's exact scenario: 174 correct predictions at an average of +₹900 each, 20 incorrect predictions on typical days at an average of -₹1,200 each, and 6 incorrect predictions that originally landed on tail-risk days at -₹28,000 each. Cap that last group's loss at ₹5,000 per trade, the way Lesson 15 described, and leave everything else about the signal completely untouched." }
+              ]
+            },
+            {
+              "_key": "mlt16-006",
+              "_type": "codeBlock",
+              "language": "python",
+              "caption": "The same 200-day scenario from Chapter 1, with one risk control applied",
+              "code": "# Same signal, same 200 days, same model as Chapter 1's case study.\n# The only change: a Rs 5,000 max-loss-per-trade cap from Lesson 15.\ncorrect_days_pnl = 174 * 900              # unchanged: +Rs 1,56,600\ntypical_wrong_pnl = 20 * -1200            # unchanged: -Rs 24,000\ntail_wrong_pnl = 6 * max(-28_000, -5_000) # capped: -Rs 30,000, not -Rs 1,68,000\n\ngross_pnl = correct_days_pnl + typical_wrong_pnl + tail_wrong_pnl  # +Rs 1,02,600\nnet_pnl = gross_pnl - 60_000               # same Lesson 2/4-style cost estimate across 200 trades"
+            },
+            {
+              "_key": "mlt16-007",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "mlt16-007s1", "label": "Gross P&L with the max-loss-per-trade rule applied", "value": "+₹1,02,600", "context": "Versus a gross loss without it, all other numbers in the scenario are identical" },
+                { "_key": "mlt16-007s2", "label": "Net P&L after the full cost stack", "value": "+₹42,600", "context": "Same illustrative ₹60,000 cost estimate used across Lessons 2 and 4" },
+                { "_key": "mlt16-007s3", "label": "Chapter 1's original net result, same signal, no risk controls", "value": "-₹95,400", "context": "The exact starting point this course opened with" }
+              ]
+            },
+            {
+              "_key": "mlt16-008",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Same signal. Same 200 days. Same model. The only change from Chapter 1's failure is a single ₹5,000 max-loss-per-trade rule capping the six tail-day losses. That one layer turned a -₹95,400 result into a +₹42,600 one. This is not a better model. It is the exact same model, finally paired with the discipline this course has been building toward since Lesson 1."
+            },
+            {
+              "_key": "mlt16-009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt16-009s1", "_type": "span", "marks": [], "text": "Breaking It, One Piece at a Time" }
+              ]
+            },
+            {
+              "_key": "mlt16-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt16-010s1", "_type": "span", "marks": [], "text": "Take the correctly built version above and remove exactly one discipline at a time, leaving everything else in place, to see what each one was actually doing." }
+              ]
+            },
+            {
+              "_key": "mlt16-011",
+              "_type": "table",
+              "caption": "Five versions of the same strategy, one discipline removed at a time (all illustrative)",
+              "headers": ["Version", "What's Missing", "Reported Result"],
+              "rows": [
+                { "_key": "mlt16-011r1", "cells": ["0. Done correctly", "Nothing, full discipline applied", "+₹42,600 net, tail losses capped, real costs included"] },
+                { "_key": "mlt16-011r2", "cells": ["1. No risk controls", "Confidence sizing, volatility sizing, max-loss-per-trade (Lesson 15)", "-₹95,400 net, Chapter 1's original result"] },
+                { "_key": "mlt16-011r3", "cells": ["2. Shuffled, leaky split", "Chronological, leak-free validation (Lessons 3 and 8)", "Reports 74% accuracy, not the real, honest ~54-58%"] },
+                { "_key": "mlt16-011r4", "cells": ["3. Outdated or ignored cost stack", "Current STT, brokerage, and GST rates (Lesson 14)", "Reports gross P&L as if it were already net P&L"] },
+                { "_key": "mlt16-011r5", "cells": ["4. Same-bar fill assumption", "Realistic next-bar execution timing (Lesson 13)", "Reports returns computed from prices that were never actually reachable"] }
+              ]
+            },
+            {
+              "_key": "mlt16-012",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Every single shortcut in the table above makes the reported result look better, never worse. This is not a coincidence. A leak-free split, honest fill timing, current costs, and risk controls are all constraints that were holding a number down to something real. Remove any one of them and a backtest can only get more flattering, never more honest, which is exactly why each one earned its own lesson in this course."
+            },
+            {
+              "_key": "mlt16-013",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt16-013s1", "_type": "span", "marks": [], "text": "The One Lesson to Keep" }
+              ]
+            },
+            {
+              "_key": "mlt16-014",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt16-014s1", "_type": "span", "marks": [], "text": "Lesson 1 opened with Telegram channels selling 'AI trading bots' on a single smooth equity curve and a headline accuracy number. Sixteen lessons later, the honest version of that same idea, a real signal, correctly validated, correctly costed, and correctly risk-managed, produces something far less dramatic: a modest, believable, +₹42,600 result on a signal that started out losing money. That gap, between what a shortcut-laden backtest can claim and what a disciplined one actually delivers, is the entire subject of this course. Machine learning did not make this strategy work. Refusing to skip any of the twelve small decisions in the pipeline table did." }
+              ]
+            },
+            {
+              "_key": "mlt16-015",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Reading the removed-rule comparison",
+              "question": "A backtest reports a Sharpe ratio of 1.8 after removing its max-loss-per-trade rule and re-running on the same historical data, compared to 1.1 with the rule in place. What does this specific comparison most likely tell you?",
+              "options": [
+                "The version without the rule is definitely the better strategy to trade live",
+                "Removing a risk control made the backtest look better on this specific historical stretch, which is expected, since removing a constraint can only leave the strategy less protected against a future tail event it has not yet lived through",
+                "Sharpe ratio is not affected by risk controls",
+                "The max-loss-per-trade rule must have been set at the wrong level"
+              ],
+              "correctIndex": 1,
+              "explanation": "This is the exact pattern from this lesson's breaking-it table: removing a discipline improves the reported number on the specific historical data already observed, because that data happened not to punish the missing protection this particular time. It says nothing about whether the unprotected version is safer going forward, only that this specific backtest window did not happen to include the kind of event the rule was there to guard against."
+            },
+            {
+              "_key": "mlt16-016",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Your turn to be asked",
+              "scenario": "A friend, having gone through this course with you, shows you a backtest with a smooth equity curve and a strong Sharpe ratio, and asks whether it is trustworthy before either of you discusses methodology.",
+              "prompt": "List the checks from this lesson's breaking-it table you would walk through, in order, before answering.",
+              "modelAnswer": "First, check whether the train/test split was genuinely chronological and leak-free, including the boundary row and scaler discipline from Lesson 8, since a shuffled split alone can manufacture an inflated accuracy number like the 74% in this lesson's table. Second, check whether the model was validated across multiple walk-forward windows, from Lesson 12, rather than judged on a single lucky split. Third, check whether trades were filled using realistic, next-bar timing rather than the same-bar prices used to generate the signal, from Lesson 13. Fourth, check whether the full, current cost stack, brokerage, STT, stamp duty, exchange and SEBI charges, and GST, from Lesson 14, was actually subtracted before reporting P&L. Fifth, check whether any position sizing or risk controls, from Lesson 15, were applied, or whether the backtest is quietly relying on a handful of trades never hitting the market's worst days. Only once all five hold up is the smooth curve worth taking seriously."
+            },
+            {
+              "_key": "mlt16-017",
+              "_type": "flashcardSet",
+              "title": "Course Recap: One Term From Each Chapter",
+              "cards": [
+                { "_key": "mlt16-017f1", "term": "Look-ahead bias (Chapter 1)", "definition": "Using information that would not actually have been available at the time of a trading decision, the root cause behind most beginner ML-for-trading failures." },
+                { "_key": "mlt16-017f2", "term": "Leak-free chronological split (Chapter 2)", "definition": "A train/test split that preserves time order and checks the boundary itself for forward-looking labels or improperly fit scalers." },
+                { "_key": "mlt16-017f3", "term": "Walk-forward validation (Chapter 3)", "definition": "Testing a model across several rolling windows instead of one split, revealing both average performance and stability." },
+                { "_key": "mlt16-017f4", "term": "Four-layer risk stack (Chapter 4)", "definition": "Confidence-based sizing, volatility-based sizing, a max-loss-per-trade rule, and a portfolio-level circuit breaker, working together to protect a validated signal from the market's worst days." }
+              ]
+            },
+            {
+              "_key": "mlt16-018",
+              "_type": "keyTakeaways",
+              "points": [
+                "The exact same signal that lost ₹95,400 in Chapter 1's case study produced a net +₹42,600 once a single risk control, a max-loss-per-trade rule, was applied. The model never changed, the discipline did.",
+                "Removing any single piece of the pipeline, a leak-free split, realistic fill timing, current costs, or risk controls, makes a backtest look better, never worse, which is exactly why each one deserved its own lesson.",
+                "A trading strategy is a stack of small, correct decisions, not one big modeling choice, and the gap between a shortcut-laden backtest and a disciplined one is often the entire difference between a losing signal and a profitable strategy.",
+                "Machine learning for trading genuinely works when the discipline behind it is real: clean features, correctly framed labels, leak-free validation, honest costs, and layered risk controls, exactly what this course set out to teach from Lesson 1's very first warning.",
+                "The advanced sequel to this course picks up from here, ensembles, deep learning, and more rigorous labeling and interpretability techniques, once this foundation is second nature."
+              ]
+            },
+            {
+              "_key": "mlt16-019",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice. Every figure in this case study, including all P&L numbers, accuracy percentages, and cost estimates, is illustrative and constructed for teaching purposes across this course. None of it represents a real backtest or live trading result. Trading in equity and derivatives markets carries a high risk of loss. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

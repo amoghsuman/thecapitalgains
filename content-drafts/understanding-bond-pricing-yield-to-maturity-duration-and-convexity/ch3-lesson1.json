@@ -1,0 +1,395 @@
+{
+  "courseSlug": "understanding-bond-pricing-yield-to-maturity-duration-and-convexity",
+  "chapters": [
+    {
+      "title": "Chapter 3: Duration: Measuring Interest Rate Risk",
+      "lessons": [
+        {
+          "title": "Why Some Bonds Move More Than Others: Coupon, Maturity, and Yield Level",
+          "slug": "why-some-bonds-move-more-than-others-coupon-maturity-and-yield-level",
+          "body": [
+            {
+              "_key": "c3l1-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l1-001s1",
+                  "_type": "span",
+                  "text": "When RBI surprises the market and yields jump by a percentage point, a 1-year G-Sec barely moves: its price drops by under 1%. A 30-year G-Sec loses more than 11%. Both are issued by the same Government of India, both carry zero credit risk, and both will pay every rupee they promise. Yet one behaves like a savings instrument and the other like a mid-cap stock. Chapter 2 taught you what return a bond offers. This chapter is about the other side of the trade: how much a bond's price can move against you, and why.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l1-002",
+              "_type": "bigIdea",
+              "text": "Interest rate risk is about timing. The further in the future a bond's cash flows arrive, the more a change in yield changes what they are worth today, and the more the price moves."
+            },
+            {
+              "_key": "c3l1-003",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c3l1-003m1",
+                  "_type": "glossaryTerm",
+                  "definition": "The risk that a bond's price falls because market yields rise. Also called price risk or market risk in fixed income."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c3l1-003s1",
+                  "_type": "span",
+                  "text": "You already know the direction: yields up, prices down. What varies enormously from bond to bond is the size of that move, the bond's ",
+                  "marks": []
+                },
+                {
+                  "_key": "c3l1-003s2",
+                  "_type": "span",
+                  "text": "interest rate risk",
+                  "marks": ["c3l1-003m1"]
+                },
+                {
+                  "_key": "c3l1-003s3",
+                  "_type": "span",
+                  "text": ". Three features of a bond decide it: its maturity, its coupon and the level of yields it starts from. In every example below, the yield change is identical, so any difference in price change comes from the bond itself.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l1-004",
+              "_type": "mathBlock",
+              "latex": "\\%\\,\\Delta P = \\frac{P_{\\text{new}} - P_{\\text{old}}}{P_{\\text{old}}} \\times 100",
+              "caption": "All sensitivity comparisons in this lesson use percentage price change, so bonds with different prices can be compared fairly."
+            },
+            {
+              "_key": "c3l1-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l1-005s1",
+                  "_type": "span",
+                  "text": "Driver 1: Maturity",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l1-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l1-006s1",
+                  "_type": "span",
+                  "text": "Take six illustrative G-Secs, all with a 7% semi-annual coupon, all priced at par at a 7% yield, differing only in maturity. Now move every yield by one percentage point, up and down.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l1-007",
+              "_type": "table",
+              "caption": "7% coupon G-Secs at par: price change for a 100 basis point move in yield",
+              "headers": ["Years to maturity", "Price if yield rises to 8% (₹)", "Change if yield rises to 8%", "Change if yield falls to 6%"],
+              "rows": [
+                { "_key": "c3l1-007r1", "_type": "tableRow", "cells": ["1", "99.06", "−0.94%", "+0.96%"] },
+                { "_key": "c3l1-007r2", "_type": "tableRow", "cells": ["3", "97.38", "−2.62%", "+2.71%"] },
+                { "_key": "c3l1-007r3", "_type": "tableRow", "cells": ["5", "95.94", "−4.06%", "+4.27%"] },
+                { "_key": "c3l1-007r4", "_type": "tableRow", "cells": ["10", "93.20", "−6.80%", "+7.44%"] },
+                { "_key": "c3l1-007r5", "_type": "tableRow", "cells": ["20", "90.10", "−9.90%", "+11.56%"] },
+                { "_key": "c3l1-007r6", "_type": "tableRow", "cells": ["30", "88.69", "−11.31%", "+13.84%"] }
+              ]
+            },
+            {
+              "_key": "c3l1-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l1-008s1",
+                  "_type": "span",
+                  "text": "Two patterns stand out. First, longer bonds move far more: the 30-year loses twelve times as much as the 1-year. Second, the extra risk grows at a slowing rate. Going from 10 to 20 years adds about 3.1 percentage points of loss; going from 20 to 30 years adds only about 1.4. The reason is discounting: a coupon 25 years away is already worth so little today that pushing it further out changes the price only slightly.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l1-009",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Look at the last two columns. For every maturity, the gain when yields fall by 100 bps is larger than the loss when they rise by 100 bps: +13.84% versus −11.31% for the 30-year bond. This asymmetry, which works in the bondholder's favour, is convexity. Duration, which this chapter builds, ignores it; Chapter 4 adds it back."
+            },
+            {
+              "_key": "c3l1-010",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Measure a price move",
+              "prompt": "An illustrative 5-year G-Sec with a 7% semi-annual coupon trades at par (₹100) at a 7% yield. Yields rise to 7.50% and its price falls to ₹97.95. By what percentage did its price fall? Enter a positive number rounded to two decimal places.",
+              "correctValue": 2.05,
+              "tolerance": 0.02,
+              "unit": "%",
+              "explanation": "Percentage change = (97.95 − 100) ÷ 100 × 100 = −2.05%. A 50 basis point rise cost about 2%, roughly half the 4.06% loss from a 100 basis point rise on the same bond."
+            },
+            {
+              "_key": "c3l1-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l1-011s1",
+                  "_type": "span",
+                  "text": "Driver 2: Coupon",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l1-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l1-012s1",
+                  "_type": "span",
+                  "text": "Now hold maturity fixed at 10 years and vary the coupon, from a zero-coupon STRIPS to a 9% bond. All four start at a 7% yield, so their prices differ, but the yield move is the same 100 basis points.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l1-013",
+              "_type": "table",
+              "caption": "10-year bonds with different coupons: yield rises from 7% to 8%",
+              "headers": ["Coupon", "Price at 7% (₹)", "Price at 8% (₹)", "Price change"],
+              "rows": [
+                { "_key": "c3l1-013r1", "_type": "tableRow", "cells": ["0% (zero-coupon)", "50.26", "45.64", "−9.19%"] },
+                { "_key": "c3l1-013r2", "_type": "tableRow", "cells": ["5%", "85.79", "79.61", "−7.20%"] },
+                { "_key": "c3l1-013r3", "_type": "tableRow", "cells": ["7%", "100.00", "93.20", "−6.80%"] },
+                { "_key": "c3l1-013r4", "_type": "tableRow", "cells": ["9%", "114.21", "106.80", "−6.49%"] }
+              ]
+            },
+            {
+              "_key": "c3l1-014",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l1-014s1",
+                  "_type": "span",
+                  "text": "Lower coupons mean more price risk. A high-coupon bond hands back a large share of its value early, in coupons that are discounted only lightly. A zero-coupon bond hands back nothing until year ten, so all of its value is exposed to ten years of discounting. Same maturity, same issuer, but the zero moves about 40% more than the 9% bond.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l1-015",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Price Change for a 100 bp Rise in Yield (7% to 8%), by Maturity and Coupon",
+              "xAxisLabel": "Years to maturity",
+              "yAxisLabel": "Price change (%)",
+              "data": [
+                { "_key": "c3l1-015d1", "label": "1" },
+                { "_key": "c3l1-015d2", "label": "2" },
+                { "_key": "c3l1-015d3", "label": "3" },
+                { "_key": "c3l1-015d4", "label": "5" },
+                { "_key": "c3l1-015d5", "label": "7" },
+                { "_key": "c3l1-015d6", "label": "10" },
+                { "_key": "c3l1-015d7", "label": "15" },
+                { "_key": "c3l1-015d8", "label": "20" },
+                { "_key": "c3l1-015d9", "label": "30" }
+              ],
+              "series": [
+                { "_key": "c3l1-015s1", "label": "Zero-coupon", "values": [-0.96, -1.91, -2.85, -4.71, -6.52, -9.19, -13.46, -17.53, -25.11] },
+                { "_key": "c3l1-015s2", "label": "7% coupon", "values": [-0.94, -1.81, -2.62, -4.06, -5.28, -6.80, -8.65, -9.90, -11.31] },
+                { "_key": "c3l1-015s3", "label": "10% coupon", "values": [-0.94, -1.78, -2.55, -3.88, -5.00, -6.37, -8.07, -9.27, -10.77] }
+              ]
+            },
+            {
+              "_key": "c3l1-016",
+              "_type": "keyFact",
+              "label": "30-year zero-coupon vs 30-year 7% coupon bond, same 100 bp rise",
+              "value": "−25.11% vs −11.31%",
+              "context": "Without coupons, the zero's price keeps getting more sensitive as maturity lengthens. Coupons act as a brake."
+            },
+            {
+              "_key": "c3l1-017",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Which bond falls most?",
+              "question": "Yields rise from 7% to 8% across the curve. Which illustrative bond suffers the largest percentage price fall?",
+              "options": [
+                "A 5-year bond with an 8% coupon",
+                "A 15-year bond with an 8% coupon",
+                "A 15-year zero-coupon bond",
+                "All three fall by the same percentage, because the yield change is the same"
+              ],
+              "correctIndex": 2,
+              "explanation": "The 15-year zero-coupon bond falls about 13.5%, against about 8.4% for the 15-year 8% bond and about 4.0% for the 5-year 8% bond. It combines both risk drivers: a long maturity and no coupons, so all its value sits at the far end."
+            },
+            {
+              "_key": "c3l1-018",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l1-018s1",
+                  "_type": "span",
+                  "text": "Driver 3: The Starting Level of Yields",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l1-019",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l1-019s1",
+                  "_type": "span",
+                  "text": "The third driver is subtler. Take the same 10-year 7% bond and ask how much it loses from a 100 basis point rise, starting from different yield levels.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l1-020",
+              "_type": "table",
+              "caption": "10-year 7% coupon bond: a 100 bp rise from different starting yields",
+              "headers": ["Starting yield", "Price before (₹)", "Price after (₹)", "Price change"],
+              "rows": [
+                { "_key": "c3l1-020r1", "_type": "tableRow", "cells": ["5% to 6%", "115.59", "107.44", "−7.05%"] },
+                { "_key": "c3l1-020r2", "_type": "tableRow", "cells": ["7% to 8%", "100.00", "93.20", "−6.80%"] },
+                { "_key": "c3l1-020r3", "_type": "tableRow", "cells": ["9% to 10%", "86.99", "81.31", "−6.54%"] },
+                { "_key": "c3l1-020r4", "_type": "tableRow", "cells": ["11% to 12%", "76.10", "71.33", "−6.27%"] }
+              ]
+            },
+            {
+              "_key": "c3l1-021",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l1-021s1",
+                  "_type": "span",
+                  "text": "The lower the yield you start from, the more sensitive the bond. At high yields, distant cash flows are already heavily discounted, so they make up a small share of the price and a further rise changes little. At low yields, those distant cash flows carry more weight, so the price reacts more. This matters in India: the 10-year G-Sec yielded above 11% around 2000 and above 9% in 2013. At the lower yields of recent years, the same long bond carries more rate risk per basis point than it did in those periods.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l1-022",
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "c3l1-022s1",
+                  "label": "Longer maturity",
+                  "value": "More sensitive",
+                  "context": "But at a slowing rate for coupon bonds"
+                },
+                {
+                  "_key": "c3l1-022s2",
+                  "label": "Lower coupon",
+                  "value": "More sensitive",
+                  "context": "Zero-coupon bonds are the most sensitive"
+                },
+                {
+                  "_key": "c3l1-022s3",
+                  "label": "Lower starting yield",
+                  "value": "More sensitive",
+                  "context": "Distant cash flows carry more weight"
+                }
+              ]
+            },
+            {
+              "_key": "c3l1-023",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "Complete the rule",
+              "textWithBlank": "Other things equal, a bond with a lower coupon and a ___ maturity has the most interest rate risk.",
+              "correctAnswers": ["longer", "long", "later", "more distant"],
+              "explanation": "Both features push more of the bond's value into the distant future, where yield changes have the greatest effect on present value."
+            },
+            {
+              "_key": "c3l1-024",
+              "_type": "collapsible",
+              "title": "The single idea behind all three drivers",
+              "content": [
+                {
+                  "_key": "c3l1-025",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c3l1-025s1",
+                      "_type": "span",
+                      "text": "Maturity, coupon and yield level look like three separate rules, but they are one rule seen from three angles. Each describes where, on average, a bond's value sits in time. A longer maturity pushes the principal further out. A lower coupon shifts more of the value from near-term coupons to the distant principal. A lower yield increases the present-value weight of distant cash flows relative to near ones. In every case, the bond's value becomes centred later, and a bond whose value is centred later is more sensitive to yield changes.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c3l1-026",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c3l1-026s1",
+                      "_type": "span",
+                      "text": "If you could calculate that centre of value in years, you would have one number that captures all three drivers at once. That number exists. It is called Macaulay duration, and it is the subject of the next lesson.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c3l1-027",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Karan's rate-cut bet",
+              "scenario": "Karan Reddy, a 38-year-old active trader in Hyderabad, is convinced RBI will cut rates and that G-Sec yields will fall by 50 basis points within a few months. He has ₹25 lakh and is choosing between three illustrative G-Secs, all currently trading at a 7.20% yield: a 2-year 7.00% G-Sec at ₹99.63, a 10-year 6.00% G-Sec at ₹91.55, and a 30-year 7.30% G-Sec at ₹101.22.",
+              "prompt": "Rank the three by how much each gains if Karan is right, estimate the rupee gain and the rupee loss on ₹25 lakh in the 30-year bond, and point out the risks he may be underestimating.",
+              "modelAnswer": "1. If yields fall 50 bps to 6.70%: the 2-year rises to ₹100.55 (+0.92%), the 10-year 6.00% rises to ₹94.96 (+3.72%), and the 30-year rises to ₹107.72 (+6.41%). Ranking: 30-year, then 10-year, then 2-year.\n2. On ₹25 lakh in the 30-year G-Sec, a 50 bp fall produces a gain of about ₹1,60,000 plus accrued coupon income.\n3. If Karan is wrong and yields rise 50 bps to 7.70%, the 30-year falls to ₹95.34 (−5.81%), a loss of about ₹1,45,000. The same features that magnify his gains magnify his losses.\n4. Note the slight asymmetry: the 50 bp gain (6.41%) is larger than the 50 bp loss (5.81%). That is convexity, and it helps, but it does not remove the risk.\n5. Risks he may be underestimating: (a) Timing: markets often price in a rate cut before RBI announces it, so yields may already reflect his view. (b) Liquidity: long-dated G-Secs outside the benchmark issues can trade thinly for retail investors on NSE goBID or RBI Retail Direct, widening the price he gets when he sells. (c) The yield curve may not shift evenly: short yields often fall more than long yields after a cut, which could leave the 30-year bond behind. (d) Sizing: a potential ₹1.45 lakh loss on a macro call should be sized against his total portfolio, not just this trade."
+            },
+            {
+              "_key": "c3l1-028",
+              "_type": "keyTakeaways",
+              "points": [
+                "Interest rate risk is how much a bond's price moves for a given change in yield, and it varies hugely between bonds.",
+                "Longer maturity means more price risk: for a 100 bp rise, a 1-year 7% G-Sec falls 0.94% and a 30-year falls 11.31%.",
+                "Lower coupon means more price risk: a 10-year zero-coupon bond falls 9.19% against 6.49% for a 9% coupon bond.",
+                "Lower starting yields mean more price risk: the same bond loses 7.05% from a 5% start but 6.27% from an 11% start.",
+                "Price gains when yields fall are larger than losses when they rise by the same amount. That is convexity.",
+                "All three drivers describe how far into the future a bond's value is centred. Macaulay duration measures exactly that."
+              ]
+            },
+            {
+              "_key": "c3l1-029",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice. Bonds, prices, yields and investors are illustrative, and price changes assume an immediate, parallel shift in yields with no change in credit or liquidity. Trading long-dated bonds on interest rate views can cause significant losses. Consult a SEBI-registered investment adviser before investing."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

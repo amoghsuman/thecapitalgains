@@ -1,0 +1,139 @@
+{
+  "courseSlug": "understanding-mean-reversion-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 8: When Mean Reversion Fails",
+      "lessons": [
+        {
+          "title": "Key Takeaways and Building a Reversion Watchlist",
+          "slug": "key-takeaways-and-building-a-reversion-watchlist",
+          "body": [
+            {
+              "_key": "mr8l28-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr8l28-001s1", "_type": "span", "marks": [], "text": "Eight chapters ago, this course opened with the Nifty falling nearly 40% and recovering, and one stock falling 15.5% and recovering, and asked what actually made those two events the same kind of thing. Every lesson since has been building toward one working answer: a specific, calculable stretch, a plausible reason to expect it to correct, and a disciplined set of rules that survives being wrong sometimes. This closing lesson turns all of it into a single, maintainable tool, and closes the book with the ideas worth carrying forward." }
+              ]
+            },
+            {
+              "_key": "mr8l28-002",
+              "_type": "bigIdea",
+              "text": "Mean reversion is a genuine, exploitable statistical pattern across price, volatility, and valuation. It is never sufficient on its own. Every strategy in this course pairs a statistical measurement with a check on whether the underlying cause is temporary, and every failure this course studied happened when that pairing was skipped."
+            },
+            {
+              "_key": "mr8l28-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr8l28-003s1", "_type": "span", "marks": [], "text": "The Master Checklist: Every Filter, One Table" }
+              ]
+            },
+            {
+              "_key": "mr8l28-004",
+              "_type": "table",
+              "caption": "Every check built across this course, in the order a real watchlist would apply them",
+              "headers": ["Check", "What It Does", "From"],
+              "rows": [
+                { "_key": "mr8l28-004r1", "cells": ["Nifty slope and market breadth", "Steps aside entirely during a market-wide trending regime", "Chapter 8"] },
+                { "_key": "mr8l28-004r2", "cells": ["Statistical entry (z-score < -2, half-life < 10 days)", "Confirms a genuine, fast-reverting statistical stretch", "Chapter 2"] },
+                { "_key": "mr8l28-004r3", "cells": ["Moving-average slope filter", "Rejects the falling-mean, buy-the-dip trap", "Chapter 3"] },
+                { "_key": "mr8l28-004r4", "cells": ["RSI confirmation", "Confirms the stretch with a second, independent measure", "Chapter 3"] },
+                { "_key": "mr8l28-004r5", "cells": ["Rolling phi structural-break check", "Rejects a stock whose own reversion process has broken", "Chapter 8"] },
+                { "_key": "mr8l28-004r6", "cells": ["Failed-reversion tracking", "Removes repeat-offender stocks from the tradeable universe", "Chapter 8"] },
+                { "_key": "mr8l28-004r7", "cells": ["Fundamental catalyst check", "Confirms the \"why\", a human judgment no statistic replaces", "Chapter 1"] },
+                { "_key": "mr8l28-004r8", "cells": ["Risk-based position sizing", "Equalizes rupee risk across very different stocks", "Chapter 7"] },
+                { "_key": "mr8l28-004r9", "cells": ["Three-exit framework and portfolio risk cap", "Defines a complete, disciplined exit and total exposure limit", "Chapter 7"] }
+              ]
+            },
+            {
+              "_key": "mr8l28-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr8l28-005s1", "_type": "span", "marks": [], "text": "Building the Watchlist" }
+              ]
+            },
+            {
+              "_key": "mr8l28-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr8l28-006s1", "_type": "span", "marks": [], "text": "The function below runs the statistical, technical, and structural-break checks from the table above in sequence, returning a short, ranked list of candidates. It deliberately stops short of the fundamental catalyst check, since that step needs a human reading actual news and financial disclosures, exactly the judgment call Chapter 1 opened this course with. The output of this function is a shortlist for review, never an automatic trade list." }
+              ]
+            },
+            {
+              "_key": "mr8l28-007",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "import numpy as np\nimport pandas as pd\n\ndef market_regime_ok(nifty_close, window=200, slope_window=60, max_slope=0.05):\n    nifty_ma = nifty_close.rolling(window).mean()\n    slope = nifty_ma.pct_change(slope_window).iloc[-1]\n    return abs(slope) < max_slope\n\n\ndef structural_break_ok(close, ma_window=20, phi_window=60, alert_threshold=0.97):\n    ma = close.rolling(ma_window).mean()\n    deviation = (close - ma).dropna().iloc[-phi_window:]\n    x = deviation.shift(1).dropna()\n    y = deviation.loc[x.index]\n    phi = np.polyfit(x, y, 1)[0]\n    return phi < alert_threshold\n\n\ndef build_watchlist(universe, nifty_close, recent_failures,\n                     z_thresh=-2, hl_cap=10, max_ma_slope=0.03,\n                     rsi_thresh=35, max_recent_failures=2):\n    if not market_regime_ok(nifty_close):\n        return pd.DataFrame()  # step aside entirely in a trending market\n\n    candidates = []\n    for ticker, close in universe.items():\n        if recent_failures.get(ticker, 0) >= max_recent_failures:\n            continue  # this name has failed reversion too often lately\n        if not structural_break_ok(close):\n            continue  # phi has drifted toward a random walk\n\n        signals, half_life = compute_signals(close)  # Chapter 7's pipeline\n        row = signals.iloc[-1]\n\n        if pd.isna(half_life) or half_life >= hl_cap:\n            continue\n        if abs(row[\"ma_slope\"]) >= max_ma_slope:\n            continue\n        if row[\"z\"] >= z_thresh:\n            continue\n        if row[\"rsi\"] >= rsi_thresh:\n            continue\n\n        candidates.append({\"ticker\": ticker, \"z\": round(row[\"z\"], 2),\n                            \"half_life\": round(half_life, 1), \"rsi\": round(row[\"rsi\"], 1)})\n\n    # A shortlist for human review, not an automatic trade list.\n    return pd.DataFrame(candidates).sort_values(\"z\") if candidates else pd.DataFrame()",
+              "caption": "The complete watchlist builder, combining every statistical and structural-break filter from this course into one function. compute_signals is Chapter 7's combined z-score, half-life, moving-average-slope, and RSI pipeline."
+            },
+            {
+              "_key": "mr8l28-008",
+              "_type": "callout",
+              "type": "warning",
+              "text": "This function can tell you a stock is statistically stretched, fast-reverting, structurally sound by its own recent history, and operating in a range-bound market. It cannot tell you whether a credit rating was just downgraded, a promoter's shares were just pledged, or a client was just lost. Chapter 1's fundamental check is not a step this course could automate away, and it never will be. Every name this function returns still needs a human to read the news before any capital follows it."
+            },
+            {
+              "_key": "mr8l28-009",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Your Reversion Watchlist Build Checklist",
+              "steps": [
+                "Define your universe: a fixed set of liquid NSE stocks you understand well enough to judge fundamentally, not an arbitrary large list",
+                "Compute z-score and half-life for each stock in your universe (Chapter 2)",
+                "Apply the moving-average slope filter to reject the falling-mean, buy-the-dip trap (Chapter 3)",
+                "Confirm with RSI, and treat any conflicting reading as a reason to skip, not override (Chapter 3)",
+                "Re-estimate phi on a rolling basis and reject any stock whose phi has drifted toward 1 (Chapter 8)",
+                "Check the Nifty's own moving-average slope and market breadth before trusting any signal at all (Chapter 8)",
+                "Read the actual news on every remaining candidate before risking capital, no statistic replaces this step (Chapter 1)",
+                "Size every position by risk, not notional, and respect a fixed portfolio-level risk cap (Chapter 7)",
+                "Track your own win rate per stock, and remove repeat offenders from your universe going forward (Chapter 8)"
+              ]
+            },
+            {
+              "_key": "mr8l28-010",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "The one idea to keep",
+              "question": "Which single idea, if you remember nothing else from this course, should govern every mean reversion decision you make?",
+              "options": [
+                "A statistical stretch, like a large z-score, is enough on its own to justify a trade",
+                "A genuine reversion trade requires both a statistically measurable stretch and a plausible reason to believe the underlying cause is temporary, not permanent",
+                "The larger a price has fallen, the more certain its eventual reversion becomes",
+                "A strategy's backtested win rate is the only number that matters before trading it live"
+              ],
+              "correctIndex": 1,
+              "explanation": "Every chapter in this course paired a measurement of stretch, z-score, half-life, RSI, a valuation multiple, with a check on whether the cause was temporary or permanent. Alpha Industries reverted because its business hadn't changed. Yes Bank and DHFL didn't, because theirs had. The size of a fall or a favorable backtest number were never, on their own, evidence of anything."
+            },
+            {
+              "_key": "mr8l28-011",
+              "_type": "keyTakeaways",
+              "points": [
+                "Chapter 1: Mean reversion requires a defined mean to revert to, and a genuine overreaction requires a reason to believe the underlying business or index hasn't actually changed.",
+                "Chapter 2: Z-score, autocorrelation, half-life, and theta turn \"stretched\" into a precise, comparable, and speed-aware measurement, on any variable, not just price.",
+                "Chapter 3: Bollinger Bands, RSI, and moving-average reversion are all trading-floor names for the same statistical ideas, and all three fail identically when a market is trending, not range-bound.",
+                "Chapter 4: Volatility reverts more reliably than price, especially around scheduled, dated events, but an open-ended crisis has no equivalent half-life to lean on.",
+                "Chapter 5: The same z-score applies to valuation multiples over years, where a stretched P/E can close through price falling or earnings catching up, and old averages can simply become outdated.",
+                "Chapter 6: A two-asset relationship can be more robust than a single-asset bet, but correlation is not cointegration, and the full mechanics belong to a dedicated companion course.",
+                "Chapter 7: A complete system needs a precise entry, three distinct exits, risk-based position sizing, and an honest backtest free of look-ahead bias.",
+                "Chapter 8: Structural breaks and regime shifts are the permanent caveat behind every rule in this course, and a disciplined system survives them through mechanical risk management, not prediction."
+              ]
+            },
+            {
+              "_key": "mr8l28-012",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice or a recommendation to buy, sell, or hold any security. The watchlist function and all figures in this lesson use hypothetical, illustrative logic and do not represent an actual trading system. Building your own reversion watchlist requires further testing, real cost accounting, and ongoing fundamental review, and carries real risk of loss. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

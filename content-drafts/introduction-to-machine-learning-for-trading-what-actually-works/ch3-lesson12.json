@@ -1,0 +1,203 @@
+{
+  "courseSlug": "introduction-to-machine-learning-for-trading-what-actually-works",
+  "chapters": [
+    {
+      "title": "Chapter 3: Models That Are Actually Used in Practice",
+      "lessons": [
+        {
+          "title": "Case Study: Comparing a Logistic Regression and a Random Forest on the Same Signal",
+          "slug": "case-study-comparing-a-logistic-regression-and-a-random-forest-on-the-same-signal",
+          "body": [
+            {
+              "_key": "mlt12-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt12-001s1", "_type": "span", "marks": [], "text": "Lesson 8's case study built a clean, leak-free chronological split on Nifty 50 data and reported a single number: 54% out-of-sample accuracy. That number came from a logistic regression, the model from Lesson 9. It was also, deliberately, only one split, one slice of history. This case study finally does what Lesson 8 promised: checks whether that result holds up across several windows, not just one, and uses the same clean pipeline to give the random forest from Lesson 10 a fair, head-to-head comparison on the identical signal." }
+              ]
+            },
+            {
+              "_key": "mlt12-002",
+              "_type": "bigIdea",
+              "text": "A single train/test split, however cleanly built, only tells you how a model did on one slice of history. Walk-forward validation, testing across several rolling windows, reveals not just a model's average performance but how stable that performance is, and instability is itself important information a single split can hide entirely."
+            },
+            {
+              "_key": "mlt12-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt12-003s1", "_type": "span", "marks": [], "text": "Setting Up Walk-Forward Validation" }
+              ]
+            },
+            {
+              "_key": "mlt12-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "mlt12-004m1", "_type": "glossaryTerm", "definition": "A validation method that creates several sequential train/test windows, each with its own training period ending right before its own test period begins, rolling forward through history instead of relying on a single split." }
+              ],
+              "children": [
+                { "_key": "mlt12-004s1", "_type": "span", "marks": [], "text": "The mechanics stay the same as Lesson 8: chronological order, the boundary row dropped wherever a forward-looking label would otherwise reach across a split, and any scaler fit on training data only. " },
+                { "_key": "mlt12-004s2", "_type": "span", "marks": ["mlt12-004m1"], "text": "Walk-forward validation" },
+                { "_key": "mlt12-004s3", "_type": "span", "marks": [], "text": " simply repeats this five separate times across the dataset, each window with its own training period immediately followed by its own held-out test period, so that no single lucky or unlucky stretch of the market can decide the entire verdict on a model." }
+              ]
+            },
+            {
+              "_key": "mlt12-005",
+              "_type": "codeBlock",
+              "language": "python",
+              "caption": "Generating five walk-forward windows with scikit-learn",
+              "code": "from sklearn.model_selection import TimeSeriesSplit\n\ntscv = TimeSeriesSplit(n_splits=5)\n\nresults = []\nfor train_idx, test_idx in tscv.split(X):\n    X_train, X_test = X.iloc[train_idx], X.iloc[test_idx]\n    y_train, y_test = y.iloc[train_idx], y.iloc[test_idx]\n    # In each window: drop the Lesson 8 boundary row, fit the scaler on\n    # X_train only, then fit and evaluate both models on this same window"
+            },
+            {
+              "_key": "mlt12-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt12-006s1", "_type": "span", "marks": [], "text": "The Same Signal, Two Models, Five Windows" }
+              ]
+            },
+            {
+              "_key": "mlt12-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt12-007s1", "_type": "span", "marks": [], "text": "The logistic regression's 54% from Lesson 8 turns out to be right around its average across all five windows. The random forest, fit on the exact same features and label in every window, scores higher on average, but not consistently higher. All figures below are illustrative, built to demonstrate the mechanics, not a real backtest." }
+              ]
+            },
+            {
+              "_key": "mlt12-008",
+              "_type": "table",
+              "caption": "Test accuracy by walk-forward window (illustrative)",
+              "headers": ["Window", "Logistic Regression", "Random Forest"],
+              "rows": [
+                { "_key": "mlt12-008r1", "cells": ["1", "55%", "59%"] },
+                { "_key": "mlt12-008r2", "cells": ["2", "53%", "61%"] },
+                { "_key": "mlt12-008r3", "cells": ["3", "54%", "51%"] },
+                { "_key": "mlt12-008r4", "cells": ["4", "56%", "60%"] },
+                { "_key": "mlt12-008r5", "cells": ["5", "52%", "55%"] }
+              ]
+            },
+            {
+              "_key": "mlt12-009",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "mlt12-009s1", "label": "Logistic regression, average across 5 windows", "value": "54.0%", "context": "Range: 52% to 56%, a tight 4-point spread" },
+                { "_key": "mlt12-009s2", "label": "Random forest, average across 5 windows", "value": "57.2%", "context": "Range: 51% to 61%, a much wider 10-point spread" },
+                { "_key": "mlt12-009s3", "label": "Windows where the random forest underperformed logistic regression", "value": "1 out of 5 (Window 3)", "context": "A single train/test split easily could have landed on this exact window and missed the forest's advantage entirely, or landed elsewhere and missed this weakness entirely" }
+              ]
+            },
+            {
+              "_key": "mlt12-010",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Window 3 is the most important number in this table, not the averages. The random forest drops to 51%, barely better than a coin flip, and actually loses to logistic regression in that specific window. This is exactly the instability Lesson 10 and Lesson 11 warned about: a more flexible model's higher average can hide real window-to-window variability that a single split, like Lesson 8's, would never have revealed on its own."
+            },
+            {
+              "_key": "mlt12-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt12-011s1", "_type": "span", "marks": [], "text": "So Which Model Should Actually Be Used?" }
+              ]
+            },
+            {
+              "_key": "mlt12-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt12-012s1", "_type": "span", "marks": [], "text": "There is no single correct answer here, only a clearer set of trade-offs than either model's number alone would suggest. The random forest's higher average, 57.2% versus 54.0%, is a real, if modest, edge over logistic regression. Its wider range means that edge is not guaranteed window to window, and Chapter 4's position sizing and risk controls become directly relevant here: a trader could size positions down during stretches where a model's recent, rolling performance looks more like Window 3 than Window 2, rather than assuming every window will behave like the average. Logistic regression's steadier, if lower, performance and full interpretability from Lesson 9 make it easier to trust and to explain if something eventually goes wrong. Neither answer is 'better' in the abstract. The right choice depends on whether the extra average edge is worth the extra variability, and whether Chapter 4's risk tools are actually in place to manage that variability." }
+              ]
+            },
+            {
+              "_key": "mlt12-013",
+              "_type": "comparison",
+              "title": "Logistic Regression vs Random Forest, Across 5 Windows",
+              "columns": [
+                {
+                  "_key": "mlt12-013c1",
+                  "label": "Logistic Regression",
+                  "points": [
+                    "Average test accuracy: 54.0%",
+                    "Range across windows: 52% to 56%, tight and predictable",
+                    "Fully interpretable coefficients",
+                    "Lower ceiling, but very stable across time"
+                  ]
+                },
+                {
+                  "_key": "mlt12-013c2",
+                  "label": "Random Forest",
+                  "points": [
+                    "Average test accuracy: 57.2%",
+                    "Range across windows: 51% to 61%, notably wider",
+                    "Feature importances only, not full coefficient-level interpretability",
+                    "Higher ceiling, but one window actually underperformed logistic regression"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "mlt12-014",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Reading the walk-forward table",
+              "question": "Looking at the 5-window walk-forward results in this case study, what is the most important thing they reveal that a single train/test split, like the one from Lesson 8, would not have shown?",
+              "options": [
+                "That random forests always outperform logistic regression",
+                "That the random forest's performance varies far more across windows than logistic regression's, including one window where it actually underperforms, information a single split's one data point cannot reveal",
+                "That logistic regression is fundamentally broken and should never be used",
+                "That walk-forward validation always produces lower accuracy than a single split"
+              ],
+              "correctIndex": 1,
+              "explanation": "A single split gives you exactly one data point about how a model performed. This case study's five windows show that the random forest's average advantage comes bundled with real window-to-window variability, including one window where it loses to the simpler model, a pattern that is invisible from any single split, no matter how cleanly that split was built."
+            },
+            {
+              "_key": "mlt12-015",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Explaining the choice to a risk manager",
+              "scenario": "A risk manager reviewing this case study asks why the desk might still choose logistic regression over the random forest, given that the random forest scored higher on average across all 5 windows.",
+              "prompt": "What would you actually recommend, and how would you justify it using both models' stability and interpretability?",
+              "modelAnswer": "The honest answer is that the choice depends on what risk controls are already in place, not on the average number alone. If Chapter 4's position sizing and risk controls, such as scaling down exposure during periods of weaker recent model performance, are genuinely built and tested, the random forest's higher average edge is worth pursuing, with those controls acting as insurance against a repeat of Window 3. If those controls are not yet in place, the steadier, fully interpretable logistic regression is the more defensible choice for a risk manager to sign off on, since its performance is more predictable and any future underperformance is easier to diagnose from its coefficients than from the random forest's harder-to-interrogate internals."
+            },
+            {
+              "_key": "mlt12-016",
+              "_type": "flashcardSet",
+              "title": "Chapter 3 Closing Vocabulary",
+              "cards": [
+                { "_key": "mlt12-016f1", "term": "Walk-forward validation", "definition": "A validation method that creates several sequential train/test windows, each with its own training period ending right before its own test period begins, rolling forward through history instead of relying on a single split." },
+                { "_key": "mlt12-016f2", "term": "TimeSeriesSplit", "definition": "A scikit-learn tool that generates chronological, non-shuffled train/test splits for walk-forward validation." },
+                { "_key": "mlt12-016f3", "term": "Model stability", "definition": "How consistently a model performs across different time windows, as distinct from its average performance, which can hide meaningful window-to-window variation." },
+                { "_key": "mlt12-016f4", "term": "Average versus range", "definition": "Two different, both necessary, summaries of walk-forward results: the average describes typical performance, while the range across windows describes how much that performance can vary." },
+                { "_key": "mlt12-016f5", "term": "Ensembling models", "definition": "Combining predictions from more than one model, such as a logistic regression and a random forest, to potentially reduce the impact of any single model's weak window." }
+              ]
+            },
+            {
+              "_key": "mlt12-017",
+              "_type": "keyTakeaways",
+              "points": [
+                "A single train/test split, even a correctly built one, only reveals how a model performed on one slice of history. Walk-forward validation across multiple windows reveals both average performance and stability.",
+                "In this case study, the random forest scored higher on average than logistic regression, 57.2% versus 54.0%, but with a much wider range across windows, 51% to 61% versus 52% to 56%.",
+                "One walk-forward window showed the random forest actually underperforming logistic regression, a real instability that a single split could easily have hidden by chance, in either direction.",
+                "Choosing between a higher-average, less stable model and a lower-average, more stable, more interpretable one is a genuine trade-off, not a question with one universally correct answer.",
+                "That trade-off connects directly to Chapter 4: position sizing and risk controls can help manage a more variable model's weak windows, but only if they are actually built and tested first."
+              ]
+            },
+            {
+              "_key": "mlt12-018",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice. All figures in this case study, including every accuracy number, are illustrative and constructed for teaching purposes. They do not represent a real backtest or live trading result. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

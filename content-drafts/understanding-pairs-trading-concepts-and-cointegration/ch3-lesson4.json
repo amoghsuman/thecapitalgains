@@ -1,0 +1,235 @@
+{
+  "courseSlug": "understanding-pairs-trading-concepts-and-cointegration",
+  "chapters": [
+    {
+      "title": "Chapter 3: Cointegration — Testing Whether a Pair Really Mean-Reverts",
+      "lessons": [
+        {
+          "title": "The Engle-Granger Two-Step Method for Testing Cointegration",
+          "slug": "the-engle-granger-two-step-method-for-testing-cointegration",
+          "body": [
+            {
+              "_key": "p12-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p12-001s1", "_type": "span", "marks": [], "text": "You already have both pieces. Chapter 2 built a hedge ratio through OLS regression. Lesson 3 of this chapter tested a series for stationarity with the ADF test. The Engle-Granger method, named for Robert Engle and Clive Granger, whose work on this earned a share of the 2003 Nobel Prize in Economics, is simply the formal sequence of running these two steps together correctly, on the right series, using the right critical values. It is the standard, practical procedure for testing whether two stocks are cointegrated." }
+              ]
+            },
+            {
+              "_key": "p12-002",
+              "_type": "bigIdea",
+              "text": "The Engle-Granger two-step method regresses one price series on the other to get a hedge ratio and a residual series, the spread, and then runs the ADF test on that residual series. The only real complication is that because the residuals come from an estimated regression rather than being observed directly, they need their own, stricter set of critical values, not the standard ADF ones."
+            },
+            {
+              "_key": "p12-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p12-003s1", "_type": "span", "marks": [], "text": "Step 1: Estimate the Hedge Ratio" }
+              ]
+            },
+            {
+              "_key": "p12-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p12-004s1", "_type": "span", "marks": [], "text": "This is exactly the regression from Chapter 2, Lesson 1: regress Stock A's price on Stock B's price over your chosen window, giving you a hedge ratio, beta, and the resulting spread, Stock A's price minus beta times Stock B's price. If you already built a spread earlier in this course, you have already completed this step." }
+              ]
+            },
+            {
+              "_key": "p12-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p12-005s1", "_type": "span", "marks": [], "text": "Step 2: Test the Residuals for Stationarity" }
+              ]
+            },
+            {
+              "_key": "p12-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p12-006s1", "_type": "span", "marks": [], "text": "Run the ADF test from Lesson 3 on the spread itself. If the null hypothesis of a unit root is rejected, the spread is stationary, and the two stocks are considered cointegrated using the hedge ratio from Step 1. If the null cannot be rejected, the pair fails the test and should not be traded as a cointegrated pair on this basis, no matter how good the correlation or the regression fit looked." }
+              ]
+            },
+            {
+              "_key": "p12-007",
+              "_type": "table",
+              "caption": "The Engle-Granger two-step method, summarized",
+              "headers": ["Step", "What you do", "What you get"],
+              "rows": [
+                { "_key": "p12-007r1", "cells": ["1. Regression", "OLS regression of Stock A's price on Stock B's price", "A hedge ratio (β) and a residual series (the spread)"] },
+                { "_key": "p12-007r2", "cells": ["2. Stationarity test", "ADF test on the residual series from Step 1", "A test statistic and p-value, evaluated against Engle-Granger critical values"] }
+              ]
+            },
+            {
+              "_key": "p12-008",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "from statsmodels.tsa.stattools import coint\n\n# price_a, price_b: pandas Series of daily closing prices\nt_statistic, p_value, critical_values = coint(price_a, price_b)\n\nprint(f\"Engle-Granger t-statistic: {t_statistic:.2f}\")\nprint(f\"p-value: {p_value:.3f}\")\nprint(f\"Critical values (1%, 5%, 10%): {critical_values}\")",
+              "caption": "statsmodels' coint() function runs both Engle-Granger steps and applies the correct adjusted critical values automatically"
+            },
+            {
+              "_key": "p12-009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p12-009s1", "_type": "span", "marks": [], "text": "Why the Critical Values Are Different Here" }
+              ]
+            },
+            {
+              "_key": "p12-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p12-010s1", "_type": "span", "marks": [], "text": "OLS regression, by construction, finds the hedge ratio that minimizes the residual variance, the smallest possible spread of leftover error. This means the resulting residual series is mechanically nudged toward looking as stable, and therefore as stationary, as the data allows, even before you have tested it for anything. Using the standard ADF critical values from Lesson 3 on this kind of estimated residual series makes it too easy to reject the unit root null and falsely conclude the pair is cointegrated when it may not really be. Engle and Granger derived their own, stricter critical values (further from zero) specifically for testing residuals from an estimated cointegrating regression, correcting for this bias." }
+              ]
+            },
+            {
+              "_key": "p12-011",
+              "_type": "table",
+              "caption": "Standard ADF critical values vs Engle-Granger critical values (illustrative approximations, 2-variable case)",
+              "headers": ["Significance level", "Standard ADF", "Engle-Granger (stricter)"],
+              "rows": [
+                { "_key": "p12-011r1", "cells": ["1%", "-3.75", "-4.10"] },
+                { "_key": "p12-011r2", "cells": ["5%", "-3.00", "-3.34"] },
+                { "_key": "p12-011r3", "cells": ["10%", "-2.63", "-3.02"] }
+              ]
+            },
+            {
+              "_key": "p12-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p12-012s1", "_type": "span", "marks": [], "text": "Revisit the worked example from Lesson 3: a test statistic of negative 3.42. Against the plain ADF 5 percent critical value of negative 3.00, that looked like a fairly comfortable rejection of the null. Against the correct Engle-Granger 5 percent critical value of negative 3.34, negative 3.42 still clears the bar, but only just, by 0.08. The conclusion, reject the null at 5 percent, happens to still hold here, but the margin is much thinner than the plain ADF test suggested, and a slightly weaker result could easily have flipped the conclusion entirely." }
+              ]
+            },
+            {
+              "_key": "p12-013",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Never test a regression-based spread against the plain ADF critical values from Lesson 3. Always use the Engle-Granger critical values, or a function like statsmodels' coint(), which applies them for you automatically. Using the wrong table systematically makes pairs look more cointegrated than they really are."
+            },
+            {
+              "_key": "p12-014",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p12-014s1", "_type": "span", "marks": [], "text": "A Known Limitation: Which Stock Goes on Which Side" }
+              ]
+            },
+            {
+              "_key": "p12-015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p12-015s1", "_type": "span", "marks": [], "text": "Regressing Stock A on Stock B does not always give exactly the same residual series, or the same test result, as regressing Stock B on Stock A, because OLS minimizes error in only one direction at a time. In practice, this asymmetry rarely flips the overall conclusion for a genuinely strong pair, but it is worth testing both directions and using the one that gives the more negative, more significant test statistic, or picking the direction with clearer economic reasoning behind it, for example putting the less liquid or smaller-cap stock on the dependent side. More advanced methods, such as the Johansen test, handle this symmetrically and can test more than two series at once, but they sit beyond the scope of this course." }
+              ]
+            },
+            {
+              "_key": "p12-016",
+              "_type": "comparison",
+              "title": "What the full Engle-Granger process adds over earlier chapters",
+              "columns": [
+                {
+                  "_key": "p12-016c1",
+                  "label": "Correlation + regression alone (Chapters 1–2)",
+                  "points": [
+                    "Confirms the two stocks tend to move together",
+                    "Produces a hedge ratio and a spread series",
+                    "Cannot distinguish a genuinely mean-reverting spread from a coincidentally correlated, trending one",
+                    "Vulnerable to the spurious regression trap from Lesson 1"
+                  ]
+                },
+                {
+                  "_key": "p12-016c2",
+                  "label": "Full Engle-Granger method (this lesson)",
+                  "points": [
+                    "Formally tests the spread itself for stationarity",
+                    "Uses critical values corrected for the fact the spread comes from an estimated regression",
+                    "Gives a specific, probabilistic answer: reject or fail to reject the unit root null",
+                    "The actual pre-trade bar a pair needs to clear before being traded on a z-score"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "p12-017",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "p12-017s1", "label": "Step 1", "value": "OLS regression", "context": "Produces the hedge ratio and the residual (spread) series, already covered in Chapter 2" },
+                { "_key": "p12-017s2", "label": "Step 2", "value": "ADF test on the residuals", "context": "Using Engle-Granger's own, stricter critical values, not the plain ADF ones" },
+                { "_key": "p12-017s3", "label": "Why critical values differ", "value": "OLS mechanically minimizes residual variance", "context": "Which biases plain ADF critical values toward too easily finding stationarity" },
+                { "_key": "p12-017s4", "label": "Known limitation", "value": "Direction of the regression can matter", "context": "Testing both directions, or using economic reasoning, is the practical fix" }
+              ]
+            },
+            {
+              "_key": "p12-018",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Which critical values to use",
+              "question": "You have built a spread from an OLS regression of Stock A on Stock B and want to test it for stationarity. Which critical values should you use?",
+              "options": [
+                "The standard ADF critical values from Lesson 3, since the ADF test itself has not changed",
+                "The stricter Engle-Granger critical values, since the spread is a residual from an estimated regression, not an independently observed series",
+                "Either set works equally well, since both test the same null hypothesis",
+                "No critical values are needed if the correlation coefficient was already above 0.7"
+              ],
+              "correctIndex": 1,
+              "explanation": "Because the spread's hedge ratio was itself estimated by OLS, which mechanically minimizes residual variance, standard ADF critical values are too lenient when applied to it. The Engle-Granger critical values are specifically adjusted for this and are the correct choice for a regression-based spread."
+            },
+            {
+              "_key": "p12-019",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "A borderline result",
+              "scenario": "Testing a candidate spread with the Engle-Granger method gives a test statistic of -3.10. The Engle-Granger 5% critical value is -3.34, and the 10% critical value is -3.02.",
+              "prompt": "What can you conclude at the 5% level and at the 10% level, and what would you realistically do with this pair?",
+              "modelAnswer": "At the 5% level, -3.10 is less negative than the -3.34 critical value, so the null hypothesis of a unit root cannot be rejected at 5%. At the 10% level, -3.10 is more negative than the -3.02 critical value, so the null can be rejected at the weaker 10% level. This is a genuinely borderline result: there is some evidence of cointegration, but not enough to meet the conventional 5% bar. A disciplined approach would be to treat this as inconclusive rather than tradeable, perhaps retesting with a longer data window or looking for a stronger candidate pair, rather than trading on a result this close to the edge."
+            },
+            {
+              "_key": "p12-020",
+              "_type": "flashcardSet",
+              "title": "The Engle-Granger Method: Core Terms",
+              "cards": [
+                { "_key": "p12-020f1", "term": "Engle-Granger two-step method", "definition": "The standard procedure for testing cointegration: (1) OLS regression to estimate a hedge ratio and residual spread, (2) an ADF test on that spread using critical values adjusted for the fact it comes from an estimated regression." },
+                { "_key": "p12-020f2", "term": "Engle-Granger critical values", "definition": "A stricter, adjusted set of critical values used when testing residuals from an estimated cointegrating regression, correcting for the bias introduced by OLS minimizing residual variance." },
+                { "_key": "p12-020f3", "term": "Generated regressor bias", "definition": "The tendency of standard statistical critical values to be too lenient when applied to a series (like OLS residuals) that was itself estimated from the data, rather than observed directly." },
+                { "_key": "p12-020f4", "term": "Johansen test", "definition": "A more advanced cointegration test that handles the choice-of-direction issue symmetrically and can test more than two series at once. Beyond the scope of this course." }
+              ]
+            },
+            {
+              "_key": "p12-021",
+              "_type": "keyTakeaways",
+              "points": [
+                "The Engle-Granger method is simply the regression from Chapter 2 followed by the ADF test from Lesson 3, run in sequence on the right series.",
+                "Because OLS regression mechanically minimizes residual variance, the resulting spread needs stricter, specifically adjusted Engle-Granger critical values, not the plain ADF critical values.",
+                "Using the wrong critical value table makes pairs look more cointegated than they really are, a subtle but important mistake to avoid.",
+                "Regressing Stock A on Stock B versus Stock B on Stock A can give different residuals and, occasionally, different test conclusions, a known limitation of this method.",
+                "A borderline test result, close to the critical value, is a signal to treat the pair as inconclusive rather than to trade it, not a reason to round up to \"probably fine.\"",
+                "Passing the Engle-Granger test is the actual pre-trade bar this course has been building toward since Chapter 1. Lesson 5 runs this full process end to end on a real pair in Python."
+              ]
+            },
+            {
+              "_key": "p12-022",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice or a recommendation to buy, sell, or short any security named here. All test statistics, critical values, and figures shown are illustrative and do not represent an actual statistical test on real market data. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

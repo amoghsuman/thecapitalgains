@@ -1,0 +1,112 @@
+{
+  "courseSlug": "understanding-latency-colocation-and-infrastructure-in-hft",
+  "chapters": [
+    {
+      "lessons": [
+        {
+          "title": "The Latency Budget — Where the Time Actually Goes",
+          "slug": "the-latency-budget-where-the-time-actually-goes",
+          "body": [
+            {
+              "_key": "b1",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "b1s1", "_type": "span", "text": "Ask an HFT engineer where their microseconds go and you rarely get a single number. You get a list. Latency is not one measurement, it is a budget spent across five or six different stops between a price tick leaving the exchange and a firm's order landing back on it. Understanding that budget matters more than knowing any single headline latency figure.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b2",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "b2s1", "_type": "span", "text": "Breaking Down the Round Trip", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b3",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "md3a", "_type": "glossaryTerm", "definition": "A technique where an application reads and writes network packets directly from the network card's memory, skipping the operating system's normal network stack to cut processing time." }
+              ],
+              "children": [
+                { "_key": "b3s1", "_type": "span", "text": "Once a firm has paid for colocation, physical distance stops being the main problem. What is left is a chain of software and hardware stops inside the firm's own server, and each one eats into the tick-to-trade budget. One of the biggest levers here is ", "marks": [] },
+                { "_key": "b3s2", "_type": "span", "text": "kernel bypass", "marks": ["md3a"] },
+                { "_key": "b3s3", "_type": "span", "text": ": letting the trading application talk to the network card directly instead of routing every packet through the operating system's standard network stack.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b4",
+              "_type": "table",
+              "caption": "Illustrative latency budget for a colocated strategy, before optimization",
+              "headers": ["Stage", "What Happens", "Illustrative Share"],
+              "rows": [
+                { "_key": "b4r1", "_type": "tableRow", "cells": ["Network propagation", "Signal travels the physical distance between racks and to the exchange gateway", "~15%"] },
+                { "_key": "b4r2", "_type": "tableRow", "cells": ["NIC and OS network stack", "The network card and operating system move the packet into and out of application memory", "~25%"] },
+                { "_key": "b4r3", "_type": "tableRow", "cells": ["Strategy logic", "The trading application decides whether and how to respond", "~20%"] },
+                { "_key": "b4r4", "_type": "tableRow", "cells": ["Order gateway and risk checks", "The firm's own pre-trade risk controls validate the order before it leaves the firm's network", "~20%"] },
+                { "_key": "b4r5", "_type": "tableRow", "cells": ["Exchange-side processing", "The exchange's gateway and matching engine receive, validate, and acknowledge the order", "~20%"] }
+              ]
+            },
+            {
+              "_key": "b5",
+              "_type": "donutChart",
+              "title": "Illustrative Latency Budget (Colocated, Before Optimization)",
+              "data": [
+                { "_key": "b5d1", "_type": "donutSlice", "label": "Network propagation", "value": 15 },
+                { "_key": "b5d2", "_type": "donutSlice", "label": "NIC and OS network stack", "value": 25 },
+                { "_key": "b5d3", "_type": "donutSlice", "label": "Strategy logic", "value": 20 },
+                { "_key": "b5d4", "_type": "donutSlice", "label": "Order gateway and risk checks", "value": 20 },
+                { "_key": "b5d5", "_type": "donutSlice", "label": "Exchange-side processing", "value": 20 }
+              ]
+            },
+            {
+              "_key": "b6",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Colocation buys proximity. It does not automatically buy speed. Two firms sitting in racks a few metres apart inside the same exchange data centre can have very different tick-to-trade numbers, because the difference now lives entirely in how each one has engineered its own software and hardware stack."
+            },
+            {
+              "_key": "b7",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "A Latency Audit Checklist",
+              "steps": [
+                "Timestamp every hop with a hardware clock, not just application-level software time.",
+                "Move the trading application off the kernel's standard network stack wherever the risk framework allows it.",
+                "Pin latency-critical threads to isolated CPU cores so the operating system scheduler cannot interrupt them.",
+                "Profile the strategy logic path end to end, not just its average case.",
+                "Measure order gateway and pre-trade risk check time separately from the exchange's own matching engine time."
+              ]
+            },
+            {
+              "_key": "b8",
+              "_type": "keyFact",
+              "label": "Network Propagation Inside a Colo Facility",
+              "value": "~1-2 microseconds",
+              "context": "Time for a signal to travel a few hundred metres of fibre within the exchange's own data centre. Effectively fixed once a firm is colocated, which is why the fight moves to hardware and software."
+            },
+            {
+              "_key": "b9",
+              "_type": "bigIdea",
+              "text": "Once you are colocated, the exchange stops being the bottleneck. Your own server becomes one."
+            },
+            {
+              "_key": "b10",
+              "_type": "keyTakeaways",
+              "points": [
+                "Tick-to-trade latency is not one number, it is a budget spent across network propagation, NIC and kernel processing, strategy logic, order gateway checks, and exchange-side processing.",
+                "Colocation mainly buys down network propagation delay to a near-fixed, very small number. It does not by itself buy down the rest of the budget.",
+                "Kernel bypass, hardware timestamping, and core pinning are software and hardware techniques used to shrink the largest remaining chunks of the budget.",
+                "The next two chapters cover the two big levers for shrinking this budget: colocation itself (Chapter 2) and the network and hardware choices firms make once they are inside it (Chapter 3)."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

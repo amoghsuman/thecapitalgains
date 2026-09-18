@@ -1,0 +1,237 @@
+{
+  "courseSlug": "understanding-momentum-and-trend-following-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 2: Measuring Trend - Moving Averages and Crossovers",
+      "lessons": [
+        {
+          "title": "The Golden Cross and Death Cross as Trend Signals",
+          "slug": "the-golden-cross-and-death-cross-as-trend-signals",
+          "body": [
+            {
+              "_key": "m6-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m6-001s1", "_type": "span", "marks": [], "text": "Turn on any Indian business news channel during a sharp market move and you will hear the same two phrases within minutes of each other: \"golden cross\" when things are turning up, \"death cross\" when things are turning down. Both refer to the same underlying event, a crossover between two moving averages of different lengths, most commonly the 50-day and 200-day simple moving averages built in the last lesson. This lesson defines both signals precisely, tests them against a real Nifty 50 episode, and is honest about their biggest weakness: they are, by construction, late." }
+              ]
+            },
+            {
+              "_key": "m6-002",
+              "_type": "bigIdea",
+              "text": "A golden cross occurs when a shorter moving average crosses above a longer one, read as a signal that a new uptrend has taken hold. A death cross is the opposite: a shorter moving average crossing below a longer one, read as a signal that a new downtrend has taken hold. The most widely watched version uses the 50-day and 200-day SMA, but the same logic applies to any pair of lengths."
+            },
+            {
+              "_key": "m6-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m6-003s1", "_type": "span", "marks": [], "text": "Defining the Golden Cross and Death Cross" }
+              ]
+            },
+            {
+              "_key": "m6-004",
+              "_type": "mathBlock",
+              "latex": "\\text{Golden Cross at } t: \\; SMA_{50}(t) > SMA_{200}(t) \\text{ and } SMA_{50}(t-1) \\le SMA_{200}(t-1)",
+              "caption": "A golden cross is not just the 50-day SMA being above the 200-day SMA, it is the specific moment the 50-day crosses from at-or-below to above."
+            },
+            {
+              "_key": "m6-005",
+              "_type": "mathBlock",
+              "latex": "\\text{Death Cross at } t: \\; SMA_{50}(t) < SMA_{200}(t) \\text{ and } SMA_{50}(t-1) \\ge SMA_{200}(t-1)",
+              "caption": "A death cross is the mirror image: the specific moment the 50-day SMA crosses from at-or-above to below the 200-day SMA."
+            },
+            {
+              "_key": "m6-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m6-006s1", "_type": "span", "marks": [], "text": "This distinction matters. A stock can trade with its 50-day SMA above its 200-day SMA for months without a fresh signal firing, the cross event is the specific day the relationship flips, and it is that one day traders and algorithms react to, not the ongoing state." }
+              ]
+            },
+            {
+              "_key": "m6-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m6-007s1", "_type": "span", "marks": [], "text": "Why 50 and 200? The Convention's Origins" }
+              ]
+            },
+            {
+              "_key": "m6-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m6-008s1", "_type": "span", "marks": [], "text": "There is nothing mathematically special about 50 and 200. The 200-day window is a rough proxy for one trading year, the NSE runs close to 250 trading sessions annually, and the 50-day window is a rough proxy for one trading quarter. Neither number was derived from an optimization study. They became standard simply because enough traders, analysts, and eventually algorithms adopted them decades ago that they turned into a shared convention, which is itself part of why the signal has some real effect: when a large fraction of the market is watching the same two lines, the crossover event can genuinely attract fresh buying or selling around it, a self-reinforcing effect on top of whatever trend information the crossover carries." }
+              ]
+            },
+            {
+              "_key": "m6-009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m6-009s1", "_type": "span", "marks": [], "text": "Case Study: The Nifty 50's Death Cross and Golden Cross of 2020" }
+              ]
+            },
+            {
+              "_key": "m6-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m6-010s1", "_type": "span", "marks": [], "text": "The Nifty 50's 2020 round trip, covered in Chapter 1's case study, produced both signals in the same year. As the index fell sharply from its January 2020 peak, the 50-day SMA dropped fast enough to cross below the 200-day SMA around early-to-mid March 2020, a death cross widely reported in the financial press right as the crash was already well underway. As the index recovered through the following months, the 50-day SMA climbed back and crossed above the 200-day SMA again several months later, a golden cross reported as a bullish signal even though, by that point, the index had already recovered a large part of its losses from the March low." }
+              ]
+            },
+            {
+              "_key": "m6-011",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Illustrative 50-day and 200-day SMA around the Nifty 50's 2020 round trip (approximate, rounded)",
+              "xAxisLabel": "2020",
+              "yAxisLabel": "Index level (approx.)",
+              "data": [
+                { "_key": "m6-011d1", "label": "Jan" },
+                { "_key": "m6-011d2", "label": "Feb" },
+                { "_key": "m6-011d3", "label": "Mar" },
+                { "_key": "m6-011d4", "label": "Apr" },
+                { "_key": "m6-011d5", "label": "May" },
+                { "_key": "m6-011d6", "label": "Jun" },
+                { "_key": "m6-011d7", "label": "Jul" },
+                { "_key": "m6-011d8", "label": "Aug" },
+                { "_key": "m6-011d9", "label": "Sep" }
+              ],
+              "series": [
+                { "_key": "m6-011se1", "label": "Nifty 50 (approx.)", "values": [12400, 11200, 7500, 9000, 9500, 10300, 11000, 11400, 11600] },
+                { "_key": "m6-011se2", "label": "50-day SMA (approx.)", "values": [12200, 12000, 11000, 10200, 9700, 9600, 9900, 10400, 10900] },
+                { "_key": "m6-011se3", "label": "200-day SMA (approx.)", "values": [11800, 11850, 11700, 11500, 11200, 10900, 10800, 10700, 10650] }
+              ]
+            },
+            {
+              "_key": "m6-012",
+              "_type": "callout",
+              "type": "insight",
+              "text": "In this illustrative picture, the death cross fires around March, right at the bottom of the crash, not before it, giving almost no advance warning. The golden cross fires around September, roughly six months after the actual low in March, well after most of the initial recovery had already happened. Both signals confirmed a trend that was already underway rather than predicting one in advance."
+            },
+            {
+              "_key": "m6-013",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m6-013s1", "_type": "span", "marks": [], "text": "The Lag Problem: Late Signals by Design" }
+              ]
+            },
+            {
+              "_key": "m6-014",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m6-014s1", "_type": "span", "marks": [], "text": "The lag is not a flaw in the implementation, it is a direct consequence of how the 200-day SMA is built. A 200-day average of prices cannot turn decisively until enough new data has accumulated to outweigh the old prices still sitting in its window, which by construction takes months for a signal built on months of data. The same logic that makes the SMA smooth and resistant to whipsaws, discussed in the last lesson, is exactly what makes it slow to confirm a genuine change in trend. A trader who waits for the golden cross to buy, or the death cross to sell, is deliberately trading a portion of the move away in exchange for a higher-confidence signal." }
+              ]
+            },
+            {
+              "_key": "m6-015",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "m6-015s1", "label": "Typical lag after a real turning point", "value": "Roughly 2 to 6+ months", "context": "Varies significantly by episode, how sharp the reversal is and how far price had drifted from the 200-day SMA beforehand" },
+                { "_key": "m6-015s2", "label": "What the signal confirms", "value": "A trend already underway", "context": "Not a prediction of a trend about to begin" },
+                { "_key": "m6-015s3", "label": "Main weakness in sideways markets", "value": "Repeated false crossovers", "context": "When price chops around both averages, the 50-day and 200-day SMA can cross back and forth with no real trend behind it" },
+                { "_key": "m6-015s4", "label": "Most common pairing", "value": "50-day / 200-day SMA", "context": "Other pairs, such as 20-day / 50-day, are used for faster, shorter-horizon versions of the same idea" }
+              ]
+            },
+            {
+              "_key": "m6-016",
+              "_type": "callout",
+              "type": "warning",
+              "text": "In a genuinely range-bound market, price can drift back and forth across both moving averages repeatedly, firing a golden cross, then a death cross, then another golden cross within weeks, each one wrong. A crossover system without any additional filter is especially exposed to this kind of whipsaw, a problem addressed directly in the next lesson."
+            },
+            {
+              "_key": "m6-017",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m6-017s1", "_type": "span", "marks": [], "text": "Does the Golden Cross Actually Work?" }
+              ]
+            },
+            {
+              "_key": "m6-018",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m6-018s1", "_type": "span", "marks": [], "text": "The honest answer is mixed. On its own, buying every golden cross and selling every death cross, with no other filter, has not reliably beaten a simple buy-and-hold approach across long stretches of index history, precisely because of the lag and whipsaw issues above. What the signal is genuinely useful for is as a coarse, low-frequency confirmation of the broader trend regime, a way of asking \"is the intermediate-term trend still aligned with the long-term trend\" rather than as a precise entry or exit timing tool by itself. Used this way, often alongside other filters covered in the next lesson, it earns its place as one input into a trend-following system rather than a standalone strategy." }
+              ]
+            },
+            {
+              "_key": "m6-019",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Reading the crossover correctly",
+              "question": "A stock's 50-day SMA has been above its 200-day SMA for the last four months, with no new crossing event in that time. Did a golden cross fire recently?",
+              "options": [
+                "Yes, because the 50-day SMA is currently above the 200-day SMA",
+                "No, the golden cross fired whenever the 50-day SMA first crossed above the 200-day SMA, four months ago or earlier, not today",
+                "Yes, because both averages are rising",
+                "It is impossible to tell without knowing the stock's price today"
+              ],
+              "correctIndex": 1,
+              "explanation": "A golden cross is the specific crossing event, the day the 50-day SMA moves from at-or-below to above the 200-day SMA. The ongoing state of one average being above the other, without a fresh cross, does not mean a new signal just fired."
+            },
+            {
+              "_key": "m6-020",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Was the golden cross actually useful here?",
+              "scenario": "A trader waits for a golden cross before buying a stock. By the time it fires, the stock has already risen 35% from its low. The trader buys anyway, and the stock rises a further 10% before entering a long sideways range.",
+              "prompt": "Based on this lesson, was the golden cross a failure here, or did it do what it is actually designed to do?",
+              "modelAnswer": "It did what it is designed to do: confirm that a trend was underway, not call the exact bottom. The trader captured the final 10% of the move by waiting for confirmation rather than trying to guess the bottom in real time, at the cost of missing the first 35%. Whether that trade-off was worth it depends on the trader's goals, a lower-confidence but earlier entry captures more of the move but risks buying into a move that reverses, while the crossover trades some of the move away for a higher-confidence signal. Neither choice is free of a cost, the two approaches simply pay for confidence in different currencies, missed gains versus false signals."
+            },
+            {
+              "_key": "m6-021",
+              "_type": "toolLink",
+              "label": "Overlay 50-day and 200-day SMA crossovers on TradingView",
+              "url": "https://www.tradingview.com",
+              "description": "TradingView's free charting tools make it straightforward to plot both moving averages on any NSE or BSE stock and visually scan its crossover history before building a rule around it."
+            },
+            {
+              "_key": "m6-022",
+              "_type": "flashcardSet",
+              "title": "Golden Cross and Death Cross: Core Terms",
+              "cards": [
+                { "_key": "m6-022f1", "term": "Golden cross", "definition": "The event of a shorter moving average crossing above a longer one, most commonly the 50-day SMA crossing above the 200-day SMA, read as a bullish trend confirmation." },
+                { "_key": "m6-022f2", "term": "Death cross", "definition": "The event of a shorter moving average crossing below a longer one, most commonly the 50-day SMA crossing below the 200-day SMA, read as a bearish trend confirmation." },
+                { "_key": "m6-022f3", "term": "Lagging indicator", "definition": "A signal that confirms a trend after it has already begun, as opposed to a leading indicator that attempts to anticipate a trend before it starts." },
+                { "_key": "m6-022f4", "term": "Whipsaw (crossover)", "definition": "A false, repeated back-and-forth crossing of two moving averages during a sideways market, generating signals with no real trend behind them." }
+              ]
+            },
+            {
+              "_key": "m6-023",
+              "_type": "keyTakeaways",
+              "points": [
+                "A golden cross is the specific event of a shorter moving average crossing above a longer one, most commonly the 50-day SMA above the 200-day SMA. A death cross is the mirror image, crossing below.",
+                "50 and 200 are conventions, not mathematically optimal numbers, but their wide adoption itself creates a real, self-reinforcing effect around the crossover event.",
+                "The Nifty 50's 2020 death cross fired close to the actual market bottom, while its golden cross fired months after the recovery was already well underway, illustrating the signal's inherent lag.",
+                "The lag exists because a 200-day average cannot turn quickly, it needs months of new data to outweigh what is already in its window, the same property that makes it smooth also makes it slow.",
+                "In a sideways, range-bound market, the crossover can whipsaw back and forth repeatedly, firing false signals, a problem the next lesson addresses by building a more complete crossover trading rule."
+              ]
+            },
+            {
+              "_key": "m6-024",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice. All index levels, moving average values, and dates referenced for the Nifty 50's 2020 crossovers are rounded and illustrative approximations, not exact historical data. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

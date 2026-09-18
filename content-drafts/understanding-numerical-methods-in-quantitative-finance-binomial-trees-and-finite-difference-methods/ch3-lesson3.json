@@ -1,0 +1,224 @@
+{
+  "courseSlug": "understanding-numerical-methods-in-quantitative-finance-binomial-trees-and-finite-difference-methods",
+  "chapters": [
+    {
+      "title": "Chapter 3: American Options, Convergence, and Tree Limitations",
+      "lessons": [
+        {
+          "title": "Convergence to Black-Scholes: How Many Steps Are Enough?",
+          "slug": "convergence-to-black-scholes-how-many-steps-are-enough",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "m1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "m1s1", "text": "Chapter 1, Lesson 3 showed an illustrative chart of a tree price converging toward Black-Scholes, deliberately flagged as not computed from any real option, with a promise that this chapter would run the actual numbers. This is that lesson. It also finally settles a question Chapter 2, Lesson 5 left open: that six-step Nifty call priced at ₹848.23, how close was it really to the truth?", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "m2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "m2s1", "text": "The Target: Black-Scholes as Ground Truth", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "m3",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "m3s1", "text": "Convergence only makes sense to check against Black-Scholes for a European option, an American option has no closed-form price at all to converge toward, which is exactly why this course exists. Take Chapter 2, Lesson 5's exact European call, S0 = K = 24,000, sigma = 14%, T = 0.25 years, r = 6.5%, and compute its true Black-Scholes price directly from the formula in Chapter 1, Lesson 1.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "keyFact",
+              "_key": "m4",
+              "label": "Black-Scholes price for this exact setup",
+              "value": "₹875.93",
+              "context": "Computed directly from the closed-form formula, no tree involved"
+            },
+            {
+              "_type": "block",
+              "_key": "m5",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "m5s1", "text": "How Far Off Was Chapter 2's Six-Step Answer?", "marks": [] }
+              ]
+            },
+            {
+              "_type": "statGrid",
+              "_key": "m6",
+              "stats": [
+                { "label": "Chapter 2's six-step tree price", "value": "₹848.23", "context": "The exact result from Lesson 5" },
+                { "label": "True Black-Scholes price", "value": "₹875.93", "context": "Computed above" },
+                { "label": "Error at N = 6", "value": "−₹27.70, about −3.2%", "context": "Six steps was chosen for a presentable lattice, not for precision" }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "m7",
+              "type": "warning",
+              "text": "Every step of Chapter 2's six-step calculation was correct. No-arbitrage held, the calibration followed CRR exactly, backward induction was applied properly. A 3.2% error at N = 6 is not a mistake anywhere in the method, it is simply what six steps buys you. More steps is the only lever left to pull."
+            },
+            {
+              "_type": "block",
+              "_key": "m8",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "m8s1", "text": "Tracking Convergence as N Grows", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "m9",
+              "caption": "The same option, priced on trees of increasing N",
+              "headers": ["Steps (N)", "Tree Price", "Error vs Black-Scholes"],
+              "rows": [
+                { "cells": ["1", "₹1,026.31", "+₹150.38"] },
+                { "cells": ["5", "₹906.96", "+₹31.03"] },
+                { "cells": ["6", "₹848.23", "−₹27.70"] },
+                { "cells": ["10", "₹859.12", "−₹16.81"] },
+                { "cells": ["20", "₹867.47", "−₹8.47"] },
+                { "cells": ["50", "₹872.53", "−₹3.40"] },
+                { "cells": ["100", "₹874.23", "−₹1.70"] },
+                { "cells": ["200", "₹875.08", "−₹0.85"] },
+                { "cells": ["500", "₹875.59", "−₹0.34"] },
+                { "cells": ["1,000", "₹875.76", "−₹0.17"] }
+              ]
+            },
+            {
+              "_type": "chart",
+              "_key": "m10",
+              "chartType": "line",
+              "title": "Tree Price Converging Toward the Black-Scholes Price (Rs 875.93)",
+              "xAxisLabel": "Number of steps (N)",
+              "yAxisLabel": "Computed call price (Rs)",
+              "data": [
+                { "label": "1", "value": 1026.31 },
+                { "label": "5", "value": 906.96 },
+                { "label": "6", "value": 848.23 },
+                { "label": "10", "value": 859.12 },
+                { "label": "20", "value": 867.47 },
+                { "label": "50", "value": 872.53 },
+                { "label": "100", "value": 874.23 },
+                { "label": "200", "value": 875.08 },
+                { "label": "500", "value": 875.59 },
+                { "label": "1000", "value": 875.76 }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "m11",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "m11s1", "text": "The Oscillation Pattern", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "m12",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "m12s1", "text": "Look closely at N = 5 versus N = 6 in the table, one sits above the true price, the next sits below it, before both settle into the same steady overshoot pattern from N = 10 onward. This is a well-documented feature of CRR trees, not noise. Whether a given N puts a lattice node exactly on the strike price or straddles it on either side shifts which direction the discrete approximation errs in, particularly for at-the-money options like this one. The pattern is real, and it is also why judging a tree's accuracy from a single N in isolation, rather than a trend across several, can be misleading.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "m13",
+              "type": "insight",
+              "text": "Practitioners have techniques to smooth this out, averaging the prices from two adjacent step counts, or extrapolating the trend the way N = 100, 200, 500, and 1,000 already do above, being common ones. Those refinements sit outside this course's scope, but they exist precisely because this oscillation is a known, predictable feature of the method, not a flaw to work around blindly."
+            },
+            {
+              "_type": "block",
+              "_key": "m14",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "m14s1", "text": "How Many Steps Are Actually Enough?", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "m15",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "m15s1", "text": "From N = 100 onward, the pattern in the error column is unmistakable. Doubling N roughly halves the error, every single time.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "m16",
+              "caption": "Doubling N roughly halves the error",
+              "headers": ["N", "Error"],
+              "rows": [
+                { "cells": ["100", "₹1.70"] },
+                { "cells": ["200", "₹0.85"] },
+                { "cells": ["500", "₹0.34"] },
+                { "cells": ["1,000", "₹0.17"] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "m17",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "m17s1", "text": "This is CRR's well-known convergence rate, error shrinking roughly in proportion to 1 over N. It sets a practical rule of thumb: getting a tenth of the current error takes roughly ten times the steps, not ten times the effort in any other sense, since recombination from Chapter 2 keeps even a thousand-step tree computationally cheap. The real trade-off from Chapter 1, Lesson 3 returns here, a live quoting engine tolerates a few tenths of a rupee of error for speed, an overnight risk report can afford a thousand steps or more for precision no one will feel in real time.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "m18",
+              "variant": "quiz",
+              "title": "Quick Check",
+              "question": "Based on the roughly 1-over-N convergence pattern confirmed in the table above, if the error at N = 1,000 is about ₹0.17, what would you expect the error to be at N = 2,000?",
+              "options": [
+                "About ₹0.17, unchanged",
+                "About ₹0.085, roughly half",
+                "About ₹0.34, roughly double",
+                "Exactly ₹0.00"
+              ],
+              "correctIndex": 1,
+              "explanation": "The table shows the error halving every time N doubles, from 1.70 at N=100 down to 0.85, 0.34, and 0.17 at N=200, 500, and 1,000. That pattern predicts roughly 0.085 at N = 2,000, consistent with CRR's known 1-over-N convergence rate. It will not hit exactly zero, a binomial tree only approaches the continuous Black-Scholes price, it never reaches it at any finite N."
+            },
+            {
+              "_type": "exercise",
+              "_key": "m19",
+              "variant": "scenario",
+              "title": "Checking the Wrong Thing",
+              "scenario": "A colleague, impressed by this lesson, suggests checking Chapter 3, Lesson 2's American put on Reliance Industries against its own Black-Scholes price the same way, to see how many steps that tree needs for comparable accuracy.",
+              "prompt": "What is wrong with this plan?",
+              "modelAnswer": "There is no Black-Scholes price for an American put to check against in the first place. Black-Scholes only has a closed-form solution for European options, this lesson's entire convergence check only worked because Chapter 2, Lesson 5's option was European. Chapter 3's American put has no equivalent ground truth to converge toward, which is precisely the gap this whole course exists to fill. The honest way to gauge how many steps the Reliance case study needs is to do what this lesson did structurally, run it at increasing N and watch the price stabilize, just without a closed-form answer waiting at the end to confirm it landed in the right place."
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "m20",
+              "text": "A binomial tree does not become exact with more steps, it becomes close, at a predictable, roughly 1-over-N rate. Knowing that rate, not just trusting a single N, is what turns 'more steps' from a guess into an engineering decision."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "m21",
+              "points": [
+                "Convergence can only be checked against Black-Scholes for European options, American options have no closed-form price to converge toward at all.",
+                "Chapter 2, Lesson 5's six-step Nifty call, ₹848.23, was about 3.2% below the true Black-Scholes price of ₹875.93, not from any error in the method, simply the cost of using only six steps.",
+                "CRR tree prices oscillate above and below the true price at low N, a documented feature tied to how the strike aligns with the lattice at a given N, before settling into steady convergence.",
+                "From N = 100 onward, doubling the number of steps roughly halves the error, CRR's well-known 1-over-N convergence rate, confirmed directly in this lesson's own computed numbers.",
+                "How many steps are enough depends entirely on the use case, a handful for a fast live quote, hundreds or thousands when precision matters more than speed, the same trade-off Chapter 1, Lesson 3 first raised."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,298 @@
+{
+  "courseSlug": "understanding-commodity-futures-and-hedging-mechanisms",
+  "chapters": [
+    {
+      "title": "Hedging with Commodity Futures",
+      "lessons": [
+        {
+          "title": "Long Hedge vs Short Hedge — Mechanics and Payoff",
+          "slug": "long-hedge-vs-short-hedge-mechanics-and-payoff",
+          "body": [
+            {
+              "_key": "cfh-c3l2-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "cfh-c3l2-001s1",
+                  "_type": "span",
+                  "text": "The previous lesson showed a jeera-growing FPO selling futures and a jewellery exporter buying futures, both calling it a hedge. That is not a contradiction, it is the entire logic of hedging in one contrast. The direction of your hedge is dictated by one question alone: are you going to sell this commodity later, or buy it later? Get that answer right, and the correct trade follows automatically.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c3l2-002",
+              "_type": "bigIdea",
+              "text": "A short hedge means selling futures to lock in a price for something you will sell later; it protects you against prices falling. A long hedge means buying futures to lock in a price for something you will buy later; it protects you against prices rising. The rule is always: take the opposite position in futures to the position you already, naturally hold in the physical market."
+            },
+            {
+              "_key": "cfh-c3l2-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "cfh-c3l2-003s1",
+                  "_type": "span",
+                  "text": "The Rule: Hedge Opposite to Your Natural Exposure",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c3l2-004",
+              "_type": "table",
+              "caption": "Working out which hedge you need",
+              "headers": ["Your natural position", "What hurts you", "Futures action needed", "Hedge name"],
+              "rows": [
+                {
+                  "_key": "cfh-c3l2-004r1",
+                  "_type": "tableRow",
+                  "cells": ["You will sell the commodity later (farmer, producer, stockist)", "Prices falling before you sell", "Sell (go short) futures now", "Short hedge"]
+                },
+                {
+                  "_key": "cfh-c3l2-004r2",
+                  "_type": "tableRow",
+                  "cells": ["You will buy the commodity later (manufacturer, processor, importer)", "Prices rising before you buy", "Buy (go long) futures now", "Long hedge"]
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c3l2-005",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Name the hedge",
+              "question": "A copper wire manufacturer has confirmed a large order and will need to buy 20 tonnes of copper in six weeks to fulfil it. To protect against copper prices rising before then, what should the manufacturer do?",
+              "options": [
+                "Sell copper futures: a short hedge",
+                "Buy copper futures: a long hedge",
+                "Do nothing, since futures cannot help with a future purchase",
+                "Buy copper options only, since futures cannot be used by consumers"
+              ],
+              "correctIndex": 1,
+              "explanation": "The manufacturer will buy copper later, so rising prices are the risk. Buying futures now locks in today's price for that future purchase. This is a textbook long hedge."
+            },
+            {
+              "_key": "cfh-c3l2-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "cfh-c3l2-006s1",
+                  "_type": "span",
+                  "text": "Payoff Diagrams: Seeing the Trade-off Visually",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c3l2-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "cfh-c3l2-007s1",
+                  "_type": "span",
+                  "text": "Unlike an option, a futures position's payoff is a simple straight line: your gain or loss moves rupee for rupee with the price, in one direction for a long position and the opposite direction for a short one.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c3l2-008",
+              "_type": "payoffDiagram",
+              "instrumentType": "futures",
+              "position": "long",
+              "strikePrice": 60000,
+              "spotPriceRange": {"min": 50000, "max": 70000},
+              "caption": "A long futures position entered at ₹60,000: it gains as the price rises above ₹60,000 and loses as it falls below, in a straight line with no cap either way."
+            },
+            {
+              "_key": "cfh-c3l2-009",
+              "_type": "payoffDiagram",
+              "instrumentType": "futures",
+              "position": "short",
+              "strikePrice": 21500,
+              "spotPriceRange": {"min": 15000, "max": 28000},
+              "caption": "A short futures position entered at ₹21,500: the mirror image of the long payoff. It gains as the price falls below ₹21,500 and loses as it rises above."
+            },
+            {
+              "_key": "cfh-c3l2-010",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "cfh-c3l2-010s1",
+                  "_type": "span",
+                  "text": "Combining Physical and Futures: The Hedged Line Goes Flat",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c3l2-011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "cfh-c3l2-011s1",
+                  "_type": "span",
+                  "text": "A hedge works because your physical position and your futures position are mirror images of each other. Take the FPO from the previous lesson, holding jeera it plans to sell, with a short futures position layered on top. As price moves away from the ₹21,500 entry point in either direction, the physical leg and the futures leg move by equal and opposite amounts. Add them together, and the combined outcome barely moves at all.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c3l2-012",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Physical vs futures vs combined: the FPO's short hedge, per quintal",
+              "xAxisLabel": "Spot price at harvest (₹/quintal)",
+              "yAxisLabel": "Gain or loss vs the ₹21,500 locked price (₹/quintal)",
+              "data": [
+                {"label": "18,000", "value": -3500},
+                {"label": "19,500", "value": -2000},
+                {"label": "21,500", "value": 0},
+                {"label": "23,500", "value": 2000},
+                {"label": "25,000", "value": 3500}
+              ],
+              "series": [
+                {"label": "Physical (unhedged)", "values": [-3500, -2000, 0, 2000, 3500]},
+                {"label": "Short futures position", "values": [3500, 2000, 0, -2000, -3500]},
+                {"label": "Combined (hedged)", "values": [0, 0, 0, 0, 0]}
+              ]
+            },
+            {
+              "_key": "cfh-c3l2-013",
+              "_type": "callout",
+              "type": "insight",
+              "text": "The 'Combined' line sitting flat at zero is the entire point of hedging drawn as a picture. Whatever the spot price does, the FPO's total outcome barely changes from the ₹21,500 it locked in. This is what a full, well-matched hedge looks like: it doesn't make you money, it makes your outcome boring and predictable, on purpose."
+            },
+            {
+              "_key": "cfh-c3l2-014",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "cfh-c3l2-014s1",
+                  "_type": "span",
+                  "text": "How Many Lots? Matching the Hedge to Your Exposure",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c3l2-015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "cfh-c3l2-015m1",
+                  "_type": "glossaryTerm",
+                  "definition": "The proportion of your actual physical exposure that you cover with futures. A hedge ratio of 1, or 100%, means your futures position matches your physical quantity exactly."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "cfh-c3l2-015s1",
+                  "_type": "span",
+                  "text": "A hedge only lines up as neatly as the earlier chart if your futures quantity actually matches your physical exposure, which is a question of picking the right ",
+                  "marks": []
+                },
+                {
+                  "_key": "cfh-c3l2-015s2",
+                  "_type": "span",
+                  "text": "hedge ratio",
+                  "marks": ["cfh-c3l2-015m1"]
+                },
+                {
+                  "_key": "cfh-c3l2-015s3",
+                  "_type": "span",
+                  "text": " and the right number of lots. Since futures trade in whole lots, your hedge will rarely be exact.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c3l2-016",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Sizing a chana hedge",
+              "prompt": "An FPO expects to harvest and sell 850 quintals of chana in four months. NCDEX Chana futures trade in lots of 100 quintals (10 tonnes). To hedge without selling more futures than the FPO actually has chana to deliver, what is the maximum whole number of lots it should sell?",
+              "correctValue": 8,
+              "tolerance": 0,
+              "unit": "lots",
+              "explanation": "850 ÷ 100 = 8.5. Since you cannot trade half a lot, and selling 9 lots would mean hedging 900 quintals against only 850 quintals of actual chana (over-hedging, effectively taking on a small speculative short position), the FPO should sell 8 lots, covering 800 of its 850 quintals and leaving 50 quintals unhedged."
+            },
+            {
+              "_key": "cfh-c3l2-017",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Over-hedging, taking a futures position larger than your actual physical exposure, quietly turns part of your 'hedge' into a speculative bet in the opposite direction. If the FPO above sold 9 lots against only 850 quintals of chana, the extra 50 quintals of futures exposure would gain or lose money with no physical position behind it to offset."
+            },
+            {
+              "_key": "cfh-c3l2-018",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Long or short, and how much?",
+              "scenario": "A solar panel manufacturer needs 12 tonnes of copper wire input in three months for a confirmed government tender it has already won at a fixed price. Copper futures on MCX trade in lots of 1 tonne (assume this for the exercise).",
+              "prompt": "Should the manufacturer take a long or short hedge, and how many lots would fully hedge its exposure?",
+              "modelAnswer": "The manufacturer will buy copper later to fulfil an already fixed-price tender, so rising copper prices are the risk. This calls for a long hedge: buying copper futures now. To fully hedge 12 tonnes at a 1-tonne lot size, it should buy 12 lots, matching its physical requirement exactly with no over- or under-hedging."
+            },
+            {
+              "_key": "cfh-c3l2-019",
+              "_type": "flashcardSet",
+              "title": "Long Hedge vs Short Hedge: Core Terms",
+              "cards": [
+                {
+                  "_key": "cfh-c3l2-019f1",
+                  "term": "Short hedge",
+                  "definition": "Selling futures to lock in a price for a commodity you will sell later, protecting against a price fall."
+                },
+                {
+                  "_key": "cfh-c3l2-019f2",
+                  "term": "Long hedge",
+                  "definition": "Buying futures to lock in a price for a commodity you will buy later, protecting against a price rise."
+                },
+                {
+                  "_key": "cfh-c3l2-019f3",
+                  "term": "Hedge ratio",
+                  "definition": "The proportion of actual physical exposure covered by a futures position; 1 (100%) means an exact match."
+                },
+                {
+                  "_key": "cfh-c3l2-019f4",
+                  "term": "Over-hedging",
+                  "definition": "Taking a larger futures position than your actual physical exposure, which converts the excess into an unhedged speculative position."
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c3l2-020",
+              "_type": "keyTakeaways",
+              "points": [
+                "The direction of a hedge always opposes your natural exposure: sell futures if you will sell the physical commodity later (short hedge), buy futures if you will buy it later (long hedge).",
+                "A futures payoff is a straight line with no cap, unlike an option: a long position gains as price rises and loses as it falls, and a short position is the mirror image.",
+                "A well-matched hedge combines an opposing physical and futures payoff so the net outcome barely moves with price, which is the goal, not a flaw.",
+                "Because futures trade in whole lots, a hedge is rarely perfectly sized. Rounding down avoids over-hedging, which turns the excess quantity into an unintended speculative position.",
+                "Sizing a hedge is a deliberate calculation: physical quantity divided by lot size, rounded to protect against taking on more futures exposure than you actually have physical exposure to offset."
+              ]
+            },
+            {
+              "_key": "cfh-c3l2-021",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice. Lot sizes used in the copper example are illustrative and simplified; always confirm actual exchange contract specifications before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

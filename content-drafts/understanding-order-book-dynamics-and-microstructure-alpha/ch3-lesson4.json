@@ -1,0 +1,276 @@
+{
+  "courseSlug": "understanding-order-book-dynamics-and-microstructure-alpha",
+  "chapters": [
+    {
+      "title": "Chapter 3: Order Flow and Price Impact",
+      "lessons": [
+        {
+          "title": "Case Study: Detecting Order Flow Imbalance Ahead of a Nifty Breakout",
+          "slug": "case-study-detecting-order-flow-imbalance-ahead-of-a-nifty-breakout",
+          "body": [
+            {
+              "_key": "obc3l4b01",
+              "_type": "bigIdea",
+              "text": "Order flow imbalance, trade classification, and Kyle's lambda are not three separate tools. Read together across a single session, they can show buying pressure building against a resistance level well before price actually breaks it, and explain mechanically why the break happens when it does."
+            },
+            {
+              "_key": "obc3l4b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obc3l4b02s1",
+                  "_type": "span",
+                  "text": "Setting Up the Case Study",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obc3l4b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obc3l4b03s1",
+                  "_type": "span",
+                  "text": "Consider an illustrative session in Nifty 50 index futures. Through the morning and into early afternoon, the index trades in a tight range roughly between 24,795 and 24,822, repeatedly probing the top of that range and failing to close above it, the kind of behavior a technical trader would simply mark as resistance. By 14:00 it breaks cleanly above 24,822 and continues higher, reaching 24,950 by 14:30. The question this case study asks is whether order flow imbalance, signed volume, and Kyle's lambda, read together, would have flagged that this break was building well before price itself confirmed it.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obc3l4b04",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Illustrative Nifty Level Through the Session",
+              "xAxisLabel": "Time",
+              "yAxisLabel": "Index Level",
+              "data": [
+                { "_key": "obc3l4b04d1", "label": "09:20", "value": 24802 },
+                { "_key": "obc3l4b04d2", "label": "10:00", "value": 24795 },
+                { "_key": "obc3l4b04d3", "label": "10:45", "value": 24810 },
+                { "_key": "obc3l4b04d4", "label": "11:30", "value": 24805 },
+                { "_key": "obc3l4b04d5", "label": "12:15", "value": 24815 },
+                { "_key": "obc3l4b04d6", "label": "13:00", "value": 24818 },
+                { "_key": "obc3l4b04d7", "label": "13:30", "value": 24822 },
+                { "_key": "obc3l4b04d8", "label": "14:00", "value": 24865 },
+                { "_key": "obc3l4b04d9", "label": "14:30", "value": 24950 }
+              ]
+            },
+            {
+              "_key": "obc3l4b05",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This entire case study is a stylized, illustrative narrative built to demonstrate how order flow imbalance, signed volume, and Kyle's lambda fit together, not a record of an actual trading day or a claim that this exact pattern reliably precedes breakouts. Chapter 4 covers the proper backtesting discipline needed before treating any pattern like this as a real signal."
+            },
+            {
+              "_key": "obc3l4b06",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obc3l4b06s1",
+                  "_type": "span",
+                  "text": "Reading the Setup: Cumulative OFI Building While Price Sits Still",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obc3l4b07",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obc3l4b07s1",
+                  "_type": "span",
+                  "text": "Tracking cumulative order flow imbalance, from Lesson 1, and 5-minute signed volume, classified using the Lee-Ready style rules from Lesson 2, tells a very different story from the price chart alone.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obc3l4b08",
+              "_type": "table",
+              "caption": "Nifty level against cumulative OFI and signed volume through the session",
+              "headers": ["Time", "Nifty Level", "Cumulative OFI (contracts)", "5-min Signed Volume (contracts)"],
+              "rows": [
+                { "_key": "obc3l4b08r1", "_type": "tableRow", "cells": ["09:20", "24,802", "0", "+180"] },
+                { "_key": "obc3l4b08r2", "_type": "tableRow", "cells": ["10:00", "24,795", "+420", "+150"] },
+                { "_key": "obc3l4b08r3", "_type": "tableRow", "cells": ["10:45", "24,810", "+980", "+310"] },
+                { "_key": "obc3l4b08r4", "_type": "tableRow", "cells": ["11:30", "24,805", "+1,540", "+260"] },
+                { "_key": "obc3l4b08r5", "_type": "tableRow", "cells": ["12:15", "24,815", "+2,260", "+380"] },
+                { "_key": "obc3l4b08r6", "_type": "tableRow", "cells": ["13:00", "24,818", "+3,100", "+420"] },
+                { "_key": "obc3l4b08r7", "_type": "tableRow", "cells": ["13:30", "24,822", "+3,850", "+390"] },
+                { "_key": "obc3l4b08r8", "_type": "tableRow", "cells": ["14:00", "24,865", "+4,900", "+610"] },
+                { "_key": "obc3l4b08r9", "_type": "tableRow", "cells": ["14:30", "24,950", "+5,700", "+480"] }
+              ]
+            },
+            {
+              "_key": "obc3l4b09",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obc3l4b09s1",
+                  "_type": "span",
+                  "text": "For roughly four hours, from 09:20 to 13:30, the index goes essentially nowhere net, drifting inside a 27-point range, while cumulative order flow imbalance climbs from 0 to +3,850 contracts and every 5-minute bucket of signed volume stays positive. Price is not confirming this buildup at all. Left on its own, this is already a meaningful divergence, exactly the pattern Lesson 1's discussion of OFI leading price would flag, but it does not yet explain why price was holding, only that pressure was accumulating.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obc3l4b10",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [
+                {
+                  "_key": "obc3l4m01",
+                  "_type": "glossaryTerm",
+                  "definition": "A price level where a large amount of resting liquidity, often from one or a few large participants, sits ready to absorb incoming order flow without letting price move through. Mechanically, what a chart calls resistance is very often just a liquidity wall."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "obc3l4b10s1",
+                  "_type": "span",
+                  "text": "Confirming With Lambda: Is There a Liquidity Wall?",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obc3l4b11",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obc3l4b11s1",
+                  "_type": "span",
+                  "text": "Estimating Kyle's lambda, from Lesson 3, over rolling windows through the same session fills in the missing piece. If price is not moving despite strongly positive order flow, one explanation is a ",
+                  "marks": []
+                },
+                {
+                  "_key": "obc3l4b11s2",
+                  "_type": "span",
+                  "text": "liquidity wall",
+                  "marks": ["obc3l4m01"]
+                },
+                {
+                  "_key": "obc3l4b11s3",
+                  "_type": "span",
+                  "text": ", enough resting supply parked near 24,820 to absorb the buying without letting price through, which would show up as a falling lambda even as order flow keeps climbing.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obc3l4b12",
+              "_type": "table",
+              "caption": "Rolling Kyle's lambda estimated over successive windows through the session",
+              "headers": ["Window", "Rolling λ (index points per 1,000 contracts)"],
+              "rows": [
+                { "_key": "obc3l4b12r1", "_type": "tableRow", "cells": ["09:20 to 10:45", "0.08"] },
+                { "_key": "obc3l4b12r2", "_type": "tableRow", "cells": ["10:45 to 12:15", "0.06"] },
+                { "_key": "obc3l4b12r3", "_type": "tableRow", "cells": ["12:15 to 13:30", "0.05"] },
+                { "_key": "obc3l4b12r4", "_type": "tableRow", "cells": ["13:30 to 14:00", "0.22"] },
+                { "_key": "obc3l4b12r5", "_type": "tableRow", "cells": ["14:00 to 14:30", "0.15"] }
+              ]
+            },
+            {
+              "_key": "obc3l4b13",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obc3l4b13s1",
+                  "_type": "span",
+                  "text": "Lambda falls steadily through the morning and into early afternoon, from 0.08 down to 0.05, exactly while cumulative order flow imbalance is climbing fastest. That combination, rising positive order flow paired with falling price impact, is the signature of resting supply patiently absorbing buying pressure: the same net order flow is moving price less and less, because there is more and more resting size soaking it up at that level. Then, in the 13:30 to 14:00 window, lambda jumps to 0.22, nearly four and a half times its low, right as price finally breaks above 24,822. That is the liquidity wall being consumed: once the resting supply near that level is exhausted, the book behind it is far thinner, so the same order flow that previously moved price almost nothing suddenly moves it a great deal.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obc3l4b14",
+              "_type": "callout",
+              "type": "insight",
+              "text": "A falling lambda alongside rising order flow imbalance is not the market going quiet, it is liquidity actively fighting the flow. A subsequent spike in lambda is the signature of that fight ending, not starting, which is exactly why the breakout accelerates rather than fading once it clears the level."
+            },
+            {
+              "_key": "obc3l4b15",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obc3l4b15s1",
+                  "_type": "span",
+                  "text": "Why This Is Not, on Its Own, a Trading Signal",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obc3l4b16",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obc3l4b16s1",
+                  "_type": "span",
+                  "text": "It is tempting to read this single session as proof of a reliable pattern, sustained positive OFI plus falling lambda predicts a breakout, and start trading it. Resist that temptation. Far more often, order flow imbalance builds against a level and then simply fades without any breakout at all, the resting supply outlasts the buying pressure and price rolls back over. This case study demonstrates the mechanics clearly with one cooperative, illustrative example, not that the pattern has a positive expected value once transaction costs, false positives, and regime dependence are accounted for. Establishing that requires exactly the rigorous backtesting discipline Chapter 4 builds, on real historical order book data, across many sessions and many stocks, not a single narrative walkthrough.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obc3l4b17",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "A Different Combination of Signals",
+              "scenario": "On a separate day, you observe cumulative order flow imbalance rising steadily for 90 minutes in a different stock, but this time rolling lambda is also rising throughout that same window, rather than falling first, and price is drifting slowly higher rather than staying pinned in a tight range.",
+              "prompt": "How does this pattern differ mechanically from the case study above, and what does it suggest about this stock's liquidity compared to the liquidity-wall scenario just covered?",
+              "modelAnswer": "In the case study, falling lambda alongside rising OFI signaled a specific concentration of resting supply absorbing flow at one level, holding price in place until that supply was exhausted. Here, lambda rising throughout means there is no comparable wall doing the absorbing, each additional unit of buying pressure is moving price somewhat more than the last from the start, consistent with a book that is thinner or less competitively supplied overall, closer to Chapter 2's illiquid small cap profile than to a liquid large cap temporarily capped by one large resting order. The slow, steady price drift instead of a sharp break is consistent with this too: there is no single level being defended and then suddenly cleared, just gradually thinning liquidity letting price walk higher in smaller steps the whole way."
+            },
+            {
+              "_key": "obc3l4b18",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "What a Falling Lambda With Rising OFI Means",
+              "question": "During a session, cumulative order flow imbalance is strongly positive and climbing, while rolling Kyle's lambda is falling and price is barely moving. What does this combination most directly indicate?",
+              "options": [
+                "The order flow imbalance calculation is malfunctioning, since price should already be moving",
+                "Resting liquidity is absorbing the buying pressure efficiently, keeping price impact low despite strong net flow",
+                "The stock has become more illiquid, since lambda is a direct measure of liquidity depletion",
+                "There is no meaningful information in this combination, since OFI and lambda measure the same thing"
+              ],
+              "correctIndex": 1,
+              "explanation": "A falling lambda means the same amount of net order flow is producing less and less price movement, which happens when resting liquidity is deep and competitive enough to absorb that flow, exactly Chapter 2's picture of a well-supplied book. Combined with strongly positive OFI, it shows real buying pressure being met, and matched, by real selling interest at that level, not an error in either calculation and not two measures of the identical thing, OFI measures the pressure itself while lambda measures how much of that pressure translates into price movement."
+            },
+            {
+              "_key": "obc3l4b19",
+              "_type": "keyTakeaways",
+              "points": [
+                "Order flow imbalance, signed volume from trade classification, and Kyle's lambda answer different questions and are most informative read together, not separately",
+                "Sustained positive order flow with price staying flat is a genuine divergence worth investigating, not necessarily a broken signal",
+                "A falling lambda alongside rising order flow imbalance is the signature of resting liquidity absorbing pressure at a level, a liquidity wall, mechanically what a chart calls resistance",
+                "A sharp rise in lambda right as price breaks a level is the signature of that resting liquidity being consumed, not a new phenomenon starting from nothing",
+                "The same combination of signals can look very different across stocks: a level being defended and then cleared versus a generally thin book letting price drift steadily",
+                "One illustrative session demonstrates mechanics, not a validated edge; Chapter 4 builds the rigorous backtesting discipline needed before treating any pattern like this as a real, tradeable signal"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

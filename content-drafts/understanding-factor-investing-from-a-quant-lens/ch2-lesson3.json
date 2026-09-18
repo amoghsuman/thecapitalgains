@@ -1,0 +1,200 @@
+{
+  "courseSlug": "understanding-factor-investing-from-a-quant-lens",
+  "chapters": [
+    {
+      "title": "Chapter 2: The Core Factor Zoo",
+      "lessons": [
+        {
+          "title": "The Size Factor: The Small-Cap Premium and Why It's Fragile",
+          "slug": "the-size-factor-the-small-cap-premium-and-why-its-fragile",
+          "body": [
+            {
+              "_key": "f2l3b01",
+              "_type": "bigIdea",
+              "text": "The size factor is the oldest documented anomaly in this course, and arguably the shakiest. It has weakened since its own discovery, concentrates suspiciously in a few weeks of the calendar, disappears when you strip out low-quality companies, and is hardest to actually trade in exactly the stocks where it looks strongest on paper."
+            },
+            {
+              "_key": "f2l3b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "f2l3b02s1", "_type": "span", "text": "Rolf Banz's 1981 finding that small-cap stocks earn higher risk-adjusted returns than large-cap stocks of the same beta was one of the two anomalies that broke CAPM and helped motivate the Fama-French three-factor model, as covered in Chapter 1. Of the five factors in this course, though, size has aged the least gracefully. This lesson looks at four separate reasons quant researchers now treat the size premium with more caution than value, momentum, or quality, and what that means for actually running a size strategy on NSE-listed stocks.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f2l3b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "f2l3b03s1", "_type": "span", "text": "Reason 1: The Premium Has Weakened Since Its Own Discovery", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f2l3b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "f2l3m01",
+                  "_type": "glossaryTerm",
+                  "definition": "The tendency of a documented return anomaly to weaken or disappear after academic publication, as more capital and attention gets directed at exploiting the same pattern, competing away the excess return."
+                }
+              ],
+              "children": [
+                { "_key": "f2l3b04s1", "_type": "span", "text": "R. David McLean and Jeffrey Pontiff published a widely cited 2016 study asking a direct question: does academic research destroy the very return predictability it documents? Studying a large set of published anomalies, they found returns to many of them, including size, were noticeably weaker in the years after publication than before it, consistent with a ", "marks": [] },
+                { "_key": "f2l3b04s2", "_type": "span", "text": "post-publication decay", "marks": ["f2l3m01"] },
+                { "_key": "f2l3b04s3", "_type": "span", "text": " effect. Once Banz's 1981 paper told the world small caps were underpriced, a growing amount of capital had every incentive to buy them, and that buying pressure itself is exactly the mechanism that should shrink the premium going forward. This is the alpha decay logic from Chapter 1, playing out over decades rather than weeks.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f2l3b05",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "f2l3b05s1", "_type": "span", "text": "Reason 2: The January Effect, a Clue About What Was Really Driving It", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f2l3b06",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "f2l3b06s1", "_type": "span", "text": "Donald Keim's 1983 study found something odd: a disproportionate share of the small-cap premium in US data was concentrated in the first few trading days of January. The leading explanation is tax-loss selling: investors sell losing, often small and illiquid, positions in December to book a tax loss, mechanically depressing small-cap prices into year-end, followed by a rebound in January as that selling pressure disappears. If a meaningful chunk of a factor's historical premium is really a calendar-driven tax-trading artifact rather than a persistent risk or behavioral effect, that is a very different, and much less reassuring, story than a clean, evenly distributed premium.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f2l3b07",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "f2l3b07s1", "_type": "span", "text": "This raises a natural question for an Indian quant researcher: if a tax-driven calendar effect exists in Indian small-cap data, it should logically cluster around India's fiscal year end, 31 March, when individual and institutional investors realising capital losses for tax purposes would sell, rather than around the calendar year end in December that drives the US January effect. This is a hypothesis worth testing on Indian data with the tools from Chapter 3, not an established, published finding for the NSE, and it should be treated as exactly that, a reasoned hypothesis to test, not an assumed fact.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f2l3b08",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "f2l3b08s1", "_type": "span", "text": "Reason 3: It May Not Be Size, It May Be Junk", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f2l3b09",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "f2l3b09s1", "_type": "span", "text": "Clifford Asness, Andrea Frazzini, Ronen Israel, Tobias Moskowitz, and Lasse Pedersen published a pointed 2018 paper titled 'Size Matters, If You Control Your Junk.' Their finding: a naive small-cap versus large-cap sort is dominated by a subset of genuinely low-quality small companies, weak profitability, high leverage, poor earnings quality, that drag down the average return of the small-cap bucket as a whole. Once you compare small-cap stocks only against large-cap stocks of similar quality, controlling for the junk, a more robust and stable size premium reappears. In other words, the size factor on its own may be a weaker, muddier version of a real effect that only shows up cleanly once combined with a quality filter, a direct preview of why Chapter 3 spends real time on combining factors rather than running any single one in isolation.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f2l3b10",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "f2l3b10s1", "_type": "span", "text": "Reason 4: It Is Hardest to Trade Exactly Where It Looks Strongest", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f2l3b11",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "f2l3b11s1", "_type": "span", "text": "Even a clean, published size premium faces a final, purely mechanical problem on the NSE and BSE: the smallest, most microcap names, exactly the ones that typically show the largest paper premium in a backtest, tend to have thin free float, low average daily traded volume, and wide bid-ask spreads. A strategy that looks attractive on a spreadsheet using closing prices can lose a substantial part of its edge, sometimes all of it, once realistic impact cost is applied to actually buying and selling in size, since moving a meaningful position in a thinly traded microcap can itself push the price against you.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f2l3b12",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "f2l3b12s1", "label": "Post-publication decay", "value": "Documented, 2016", "context": "McLean and Pontiff found size premium weakened after Banz's 1981 paper" },
+                { "_key": "f2l3b12s2", "label": "Calendar concentration", "value": "Early January (US)", "context": "Keim (1983): a large share of the historical premium clustered right after year-end" },
+                { "_key": "f2l3b12s3", "label": "Quality dependence", "value": "Reappears if junk-controlled", "context": "Asness et al. (2018): a naive size sort is dragged down by low-quality small caps" },
+                { "_key": "f2l3b12s4", "label": "Tradability", "value": "Capacity-constrained", "context": "Thin liquidity in microcaps erodes much of the paper premium in real execution" }
+              ]
+            },
+            {
+              "_key": "f2l3b13",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Of the four reasons in this lesson, notice that only the first, post-publication decay, is really an argument that the size premium is gone. The other three are arguments that a naive, single-signal size strategy is measuring the wrong thing, mixing in a calendar artifact, mixing in junk, or ignoring trading frictions, rather than that a size effect does not exist at all. That distinction matters enormously for how you would actually try to harvest it."
+            },
+            {
+              "_key": "f2l3b14",
+              "_type": "table",
+              "caption": "Large-cap vs small-cap liquidity characteristics on the NSE, in general terms",
+              "headers": ["Characteristic", "Large-Cap (e.g. Nifty 50)", "Small-Cap / Microcap"],
+              "rows": [
+                { "_key": "f2l3b14r1", "_type": "tableRow", "cells": ["Typical bid-ask spread", "Narrow, often a few basis points", "Can be materially wider, sometimes multiple percentage points for the least liquid names"] },
+                { "_key": "f2l3b14r2", "_type": "tableRow", "cells": ["Free float and average daily volume", "High, supports large position sizes with limited market impact", "Often thin, a sizeable order can visibly move the price"] },
+                { "_key": "f2l3b14r3", "_type": "tableRow", "cells": ["Institutional research coverage", "Extensive, information gets priced in quickly", "Sparse or absent for many names, information can be priced in slowly"] },
+                { "_key": "f2l3b14r4", "_type": "tableRow", "cells": ["Capacity for a systematic strategy", "High, can absorb significant institutional capital", "Low, a strategy's own trading can meaningfully erode its backtested edge"] }
+              ]
+            },
+            {
+              "_key": "f2l3b15",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Critiquing a Small-Cap Backtest",
+              "scenario": "A junior quant analyst presents a backtest showing that buying the smallest decile of NSE-listed stocks by market capitalisation, rebalanced monthly, would have outperformed the Nifty 50 by a wide margin over the last ten years. The backtest uses unadjusted closing prices and assumes the full position could always be bought or sold at that closing price with no cost.",
+              "prompt": "Using the four reasons from this lesson, what should you ask the analyst before trusting this result, and what is the single biggest risk to the backtest's realism?",
+              "modelAnswer": "You should ask whether the smallest decile is being driven by a handful of genuinely low-quality, junk companies rather than a broad, clean size effect, whether any of the outperformance concentrates suspiciously around a particular calendar window, and critically, whether the backtest accounts for realistic transaction costs and market impact. The single biggest risk is the assumption of trading at unadjusted closing prices with no cost: the smallest decile of NSE stocks is exactly where bid-ask spreads are widest and liquidity is thinnest, so a strategy that looks strong on paper can see much or all of its apparent edge disappear once realistic impact costs from actually buying and selling in that segment are applied."
+            },
+            {
+              "_key": "f2l3b16",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Test Yourself: What Asness et al. (2018) Actually Found",
+              "question": "According to 'Size Matters, If You Control Your Junk' (Asness, Frazzini, Israel, Moskowitz, and Pedersen, 2018), what happens to the size premium once you control for company quality?",
+              "options": [
+                "It disappears entirely, proving size was never a real effect",
+                "It becomes stronger and more robust, suggesting a naive size sort was being dragged down by low-quality small companies",
+                "It reverses sign, meaning large-cap stocks then outperform small-cap stocks",
+                "It has no relationship to quality at all"
+              ],
+              "correctIndex": 1,
+              "explanation": "The paper found that a naive small-cap versus large-cap sort mixes in a large amount of low-quality, 'junk' small-cap stocks that drag the average down. Once you compare small and large caps of similar quality, a more robust size premium reappears, suggesting the raw size premium understates the effect for good-quality small companies."
+            },
+            {
+              "_key": "f2l3b17",
+              "_type": "flashcardSet",
+              "title": "Vocabulary Check: Terms From This Lesson",
+              "cards": [
+                { "_key": "f2l3b17c1", "term": "Post-publication decay", "definition": "The tendency of a documented anomaly's returns to weaken after academic publication, as capital flows in to exploit the same pattern (McLean and Pontiff, 2016)." },
+                { "_key": "f2l3b17c2", "term": "January effect", "definition": "The concentration of historical small-cap outperformance in the first few trading days of January, linked to December tax-loss selling and its January reversal (Keim, 1983)." },
+                { "_key": "f2l3b17c3", "term": "Junk-controlled size premium", "definition": "The finding that the size premium is stronger and more stable once small and large caps are compared within similar quality bands, rather than mixing in low-quality small companies (Asness et al., 2018)." },
+                { "_key": "f2l3b17c4", "term": "Capacity constraint", "definition": "The limit on how much capital a strategy can deploy before its own trading erodes the edge it is trying to capture, especially severe for thinly traded small and microcap stocks." }
+              ]
+            },
+            {
+              "_key": "f2l3b18",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "The suggestion of a possible March fiscal-year-end effect in Indian markets is presented as a hypothesis worth testing, not an established or verified finding, and nothing in this lesson is a recommendation to trade any specific small-cap or microcap stock. Always account for realistic transaction costs and liquidity constraints before drawing conclusions from any backtest."
+            },
+            {
+              "_key": "f2l3b19",
+              "_type": "keyTakeaways",
+              "points": [
+                "The size premium documented by Banz (1981) has weakened since publication, consistent with the post-publication decay pattern McLean and Pontiff found across many anomalies in 2016",
+                "A meaningful share of the historical US size premium concentrated in early January, tied to December tax-loss selling (Keim, 1983), suggesting part of it was a calendar artifact rather than a clean, evenly distributed effect",
+                "Whether a similar fiscal-year-end pattern exists around India's 31 March year-end is an open, testable hypothesis, not a proven fact",
+                "Asness, Frazzini, Israel, Moskowitz, and Pedersen (2018) found that controlling for company quality, size mixed with junk, produces a more robust size premium, previewing why combining factors matters",
+                "Small and microcap NSE stocks carry wide bid-ask spreads and thin liquidity, meaning much of a paper backtest's size premium can be eroded by realistic transaction and impact costs",
+                "Of the size factor's four weaknesses, only post-publication decay argues the premium is gone; the other three suggest a naive, single-signal size strategy is simply measuring the wrong thing"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

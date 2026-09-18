@@ -1,0 +1,224 @@
+{
+  "courseSlug": "understanding-pairs-trading-concepts-and-cointegration",
+  "chapters": [
+    {
+      "title": "Chapter 3: Cointegration — Testing Whether a Pair Really Mean-Reverts",
+      "lessons": [
+        {
+          "title": "Case Study: Testing an NSE Pair for Cointegration in Python",
+          "slug": "case-study-testing-an-nse-pair-for-cointegration-in-python",
+          "body": [
+            {
+              "_key": "p13-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p13-001s1", "_type": "span", "marks": [], "text": "Chapter 1's case study on HDFC Bank and ICICI Bank ended deliberately unfinished. It reasoned through shared exposure, checked a correlation number, and sized a rupee-neutral position, but it explicitly stopped short of any formal test, on purpose, to show what a pairs trade looks like before the statistical rigor of this chapter is applied. This lesson finally closes that loop, running the complete Engle-Granger pipeline on the same pair, end to end, in Python." }
+              ]
+            },
+            {
+              "_key": "p13-002",
+              "_type": "bigIdea",
+              "text": "Testing a real candidate pair means running the full sequence in order: check correlation to screen the pair, estimate a hedge ratio through regression, and formally test the resulting spread for stationarity using Engle-Granger critical values. Only a pair that clears all three steps has earned the right to be traded on a z-score."
+            },
+            {
+              "_key": "p13-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p13-003s1", "_type": "span", "marks": [], "text": "Step 1: Data and Correlation" }
+              ]
+            },
+            {
+              "_key": "p13-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p13-004s1", "_type": "span", "marks": [], "text": "Pulling 180 days of NSE closing prices for HDFC Bank and ICICI Bank and computing the return correlation gives the same illustrative figure used in Chapter 1: about 0.70. That clears the initial screen. It is worth restating what Chapter 3 has spent four lessons establishing: this number alone says nothing about whether the two stocks' price levels maintain a stable relationship. It only justifies moving on to the next step instead of dropping the pair immediately." }
+              ]
+            },
+            {
+              "_key": "p13-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p13-005s1", "_type": "span", "marks": [], "text": "Step 2: The Regression Hedge Ratio" }
+              ]
+            },
+            {
+              "_key": "p13-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p13-006s1", "_type": "span", "marks": [], "text": "This repeats the regression from Chapter 2, Lesson 1: HDFC Bank's price regressed on ICICI Bank's price over the same 180-day window gives a hedge ratio, beta, of 1.28, and a spread built from that ratio. That spread is the same series Chapter 2 walked through in detail, with an illustrative mean of about ₹107.6 and a standard deviation of about ₹14.3. Everything up to this point has already been done. What is new in this lesson is the final step: testing whether that spread is actually stationary." }
+              ]
+            },
+            {
+              "_key": "p13-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p13-007s1", "_type": "span", "marks": [], "text": "Step 3: The Engle-Granger Cointegration Test" }
+              ]
+            },
+            {
+              "_key": "p13-008",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "import pandas as pd\nfrom statsmodels.tsa.stattools import coint\n\n# hdfc_bank, icici_bank: pandas Series of 180 daily NSE closing prices\ncorrelation = hdfc_bank.pct_change().corr(icici_bank.pct_change())\n\nt_statistic, p_value, critical_values = coint(hdfc_bank, icici_bank)\n\nprint(f\"180-day return correlation: {correlation:.2f}\")\nprint(f\"Engle-Granger t-statistic: {t_statistic:.2f}\")\nprint(f\"p-value: {p_value:.3f}\")\nprint(f\"Critical values (1%, 5%, 10%): {critical_values}\")",
+              "caption": "The full pipeline: correlation screen, then a single call to statsmodels' coint() for the Engle-Granger test"
+            },
+            {
+              "_key": "p13-009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p13-009s1", "_type": "span", "marks": [], "text": "Running this on the illustrative dataset gives an Engle-Granger t-statistic of negative 3.85 and a p-value of 0.021, against critical values of negative 4.10 at the 1 percent level, negative 3.34 at the 5 percent level, and negative 3.02 at the 10 percent level. Negative 3.85 is more negative than the 5 percent critical value, and the p-value clears the conventional 0.05 bar comfortably. The null hypothesis of a unit root is rejected at the 5 percent level, with a healthier margin, 0.51, than the borderline example worked through in Lesson 4." }
+              ]
+            },
+            {
+              "_key": "p13-010",
+              "_type": "table",
+              "caption": "Engle-Granger test result for HDFC Bank / ICICI Bank (illustrative)",
+              "headers": ["Item", "Value", "Conclusion"],
+              "rows": [
+                { "_key": "p13-010r1", "cells": ["Engle-Granger t-statistic", "-3.85", "More negative than the 5% critical value, by a margin of 0.51"] },
+                { "_key": "p13-010r2", "cells": ["5% critical value", "-3.34", "-3.85 < -3.34 → reject H₀ at 5%"] },
+                { "_key": "p13-010r3", "cells": ["1% critical value", "-4.10", "-3.85 > -4.10 → cannot reject H₀ at 1%"] },
+                { "_key": "p13-010r4", "cells": ["p-value", "0.021", "Below the conventional 0.05 bar"] }
+              ]
+            },
+            {
+              "_key": "p13-011",
+              "_type": "callout",
+              "type": "insight",
+              "text": "HDFC Bank and ICICI Bank clear the Engle-Granger bar at the 5 percent level in this illustration, with a more comfortable margin than the borderline case in Lesson 4, though still short of the stricter 1 percent level. This is the formal verdict Chapter 1 deliberately postponed: a statistically grounded reason, not just an intuitive one, to trust the spread's z-score as a real trading signal."
+            },
+            {
+              "_key": "p13-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p13-012s1", "_type": "span", "marks": [], "text": "What This Verdict Actually Changes" }
+              ]
+            },
+            {
+              "_key": "p13-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p13-013s1", "_type": "span", "marks": [], "text": "With cointegration confirmed at the 5 percent level, the z-score built on this spread in Chapter 2 now has real statistical grounding behind it. A reading of plus or minus 2 is no longer just a number that happened to look interesting on a chart, it is a genuinely rare deviation from a spread that has been shown, formally, to have a stable long-run mean. This is the missing piece from both of this course's earlier case studies: Chapter 1's intuitive walkthrough and Chapter 2's Axis Bank / Kotak Mahindra Bank pipeline, which stopped, by design, at exactly this point." }
+              ]
+            },
+            {
+              "_key": "p13-014",
+              "_type": "callout",
+              "type": "warning",
+              "text": "A cointegration test result is a statement about the historical window it was run on, not a permanent guarantee. The relationship between HDFC Bank and ICICI Bank should be retested periodically as new data comes in, and a pair that was cointegrated a year ago can stop being cointegrated after a structural change, such as a major merger or a shift in market share. Passing this test also does not remove the need for the position sizing, screening discipline, and risk management covered in Chapter 4, it only confirms the statistical basis for trading the spread in the first place."
+            },
+            {
+              "_key": "p13-015",
+              "_type": "comparison",
+              "title": "Chapter 1's case study vs this chapter's verdict",
+              "columns": [
+                {
+                  "_key": "p13-015c1",
+                  "label": "Chapter 1: intuitive walkthrough",
+                  "points": [
+                    "Identified a shared exposure story between HDFC Bank and ICICI Bank",
+                    "Checked a correlation number as an informal screen",
+                    "Sized a rupee-neutral position using a naive hedge ratio",
+                    "Deliberately stopped before any formal statistical test"
+                  ]
+                },
+                {
+                  "_key": "p13-015c2",
+                  "label": "Chapter 3: formal verdict",
+                  "points": [
+                    "Same correlation check, now the first of three explicit steps",
+                    "A regression-based hedge ratio, not a naive price ratio",
+                    "A specific, testable hypothesis about the spread's stationarity",
+                    "A statistically grounded reject-or-fail-to-reject conclusion, not a guess"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "p13-016",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "p13-016s1", "label": "Correlation (screen)", "value": "≈ 0.70", "context": "180-day daily return correlation, consistent with Chapter 1" },
+                { "_key": "p13-016s2", "label": "Regression hedge ratio", "value": "1.28", "context": "OLS beta, consistent with Chapter 2, Lesson 1" },
+                { "_key": "p13-016s3", "label": "Engle-Granger t-statistic", "value": "-3.85", "context": "Rejects the unit root null at the 5% level, not quite at 1%" },
+                { "_key": "p13-016s4", "label": "Verdict", "value": "Cointegrated at 5%", "context": "The formal basis Chapter 1 deliberately left out, now in place" }
+              ]
+            },
+            {
+              "_key": "p13-017",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "What the verdict confirms",
+              "question": "Now that HDFC Bank and ICICI Bank have passed the Engle-Granger test at the 5% level in this case study, what can be concluded?",
+              "options": [
+                "The pair is guaranteed to be profitable on every future trade",
+                "The spread has statistical grounding as a mean-reverting series, which justifies trusting its z-score as a trading signal, subject to ongoing retesting and risk management",
+                "No further testing or monitoring of this pair is ever needed again",
+                "The correlation coefficient is now irrelevant and can be discarded from the analysis"
+              ],
+              "correctIndex": 1,
+              "explanation": "A cointegration test result is statistical evidence, not a guarantee, and applies to the historical window tested. It justifies trusting the z-score as a genuine signal rather than an arbitrary pattern, but the pair still needs periodic retesting and the position sizing and risk controls covered in Chapter 4."
+            },
+            {
+              "_key": "p13-018",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Retesting after a year",
+              "scenario": "A year after this case study, you retest HDFC Bank and ICICI Bank using the same Engle-Granger method on updated data, and the new t-statistic is -2.40, against a 5% critical value of -3.34.",
+              "prompt": "What should you conclude, and what would you do differently now compared to right after the original test?",
+              "modelAnswer": "A t-statistic of -2.40 is less negative than the -3.34 critical value, so the null hypothesis of a unit root can no longer be rejected at the 5% level. This means the pair no longer shows statistical evidence of cointegration on the updated data, even though it did a year earlier. The correct response is to stop trusting this pair's z-score as a trading signal and investigate why the relationship may have changed, rather than continuing to trade it on the strength of a result that is now a year out of date. This is exactly why Lesson 5's warning about periodic retesting matters in practice."
+            },
+            {
+              "_key": "p13-019",
+              "_type": "flashcardSet",
+              "title": "Chapter 3 Recap: Core Terms",
+              "cards": [
+                { "_key": "p13-019f1", "term": "Cointegration", "definition": "A property where a fixed linear combination (the spread) of two non-stationary price series is itself stationary, giving it a stable, mean-reverting long-run relationship." },
+                { "_key": "p13-019f2", "term": "Stationary series", "definition": "A series with a stable mean it consistently returns to, as opposed to a random walk, which has no fixed anchor and can drift indefinitely." },
+                { "_key": "p13-019f3", "term": "Augmented Dickey-Fuller (ADF) test", "definition": "A statistical test for a unit root (non-stationarity) in a series, extended with lagged terms to remain valid on real-world data." },
+                { "_key": "p13-019f4", "term": "Engle-Granger two-step method", "definition": "Regress one price series on the other to get a hedge ratio and spread, then run the ADF test on that spread using stricter, adjusted critical values." },
+                { "_key": "p13-019f5", "term": "Engle-Granger critical values", "definition": "Critical values stricter than standard ADF values, correcting for the bias introduced by testing residuals from an estimated regression rather than an observed series." }
+              ]
+            },
+            {
+              "_key": "p13-020",
+              "_type": "keyTakeaways",
+              "points": [
+                "This case study finally completes the pipeline Chapter 1 deliberately left open: correlation, regression hedge ratio, and now a formal cointegration verdict.",
+                "HDFC Bank and ICICI Bank reject the unit root null hypothesis at the 5% level in this illustration, giving statistical grounding to trust their spread's z-score as a trading signal.",
+                "A cointegration result applies to the specific historical window tested. It is not permanent, and pairs should be retested periodically as new data comes in.",
+                "Passing this test does not remove the need for careful position sizing, entry and exit discipline, or risk management, it only confirms the statistical basis for the trade.",
+                "Across this chapter: correlation screens for candidates (Chapter 1), stationarity describes the property a spread needs (Lesson 2), the ADF test measures it (Lesson 3), and Engle-Granger applies that test correctly to a regression-based spread (Lesson 4).",
+                "Chapter 4 picks up from here: screening a wider universe of candidate pairs, sizing and managing a live position, and handling the real-world costs and risks of trading a pair like this one."
+              ]
+            },
+            {
+              "_key": "p13-021",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This case study is for educational purposes only and is not investment advice or a recommendation to buy, sell, or short any security named here. All prices, correlation figures, hedge ratios, test statistics, and critical values are illustrative and do not represent an actual statistical test on real market data. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

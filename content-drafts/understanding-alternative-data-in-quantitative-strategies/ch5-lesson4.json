@@ -1,0 +1,342 @@
+{
+  "courseSlug": "understanding-alternative-data-in-quantitative-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 5: Signal Research and Alpha Construction",
+      "lessons": [
+        {
+          "title": "Case Study: Building a Web-Traffic Signal for Indian E-Commerce and Retail Stocks",
+          "slug": "case-study-building-a-web-traffic-signal-for-indian-e-commerce-and-retail-stocks",
+          "body": [
+            {
+              "_key": "c5l4k001",
+              "_type": "bigIdea",
+              "text": "This case study is not new material. It is every lesson so far, run once, end to end, on one realistic idea."
+            },
+            {
+              "_key": "c5l4k002",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l4k002s1",
+                  "_type": "span",
+                  "text": "This closing lesson of Chapter 5 walks a single idea, using web traffic to gauge demand for listed Indian e-commerce and retail companies, through every step covered so far: hypothesis, sourcing, entity resolution, point-in-time alignment, statistical validation, and combination with a traditional factor. Nothing here is a live, verified strategy, it is a worked illustration of the full pipeline this course has built lesson by lesson.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l4k003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l4k003s1",
+                  "_type": "span",
+                  "text": "Step 1: The Hypothesis",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l4k004",
+              "_type": "table",
+              "caption": "A fully specified hypothesis, following the five elements from Chapter 5, Lesson 1",
+              "headers": ["Element", "This Case Study"],
+              "rows": [
+                {
+                  "_key": "c5l4k004r1",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Target variable",
+                    "20-trading-day forward excess return versus a listed retail and e-commerce peer group"
+                  ]
+                },
+                {
+                  "_key": "c5l4k004r2",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Feature",
+                    "Month-on-month growth in estimated website and app traffic, cross-sectionally z-scored against the peer group"
+                  ]
+                },
+                {
+                  "_key": "c5l4k004r3",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Universe",
+                    "Listed Indian retail and e-commerce companies with a meaningful online sales channel, such as FSN E-Commerce Ventures (Nykaa), Trent, and Aditya Birla Fashion and Retail"
+                  ]
+                },
+                {
+                  "_key": "c5l4k004r4",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Horizon",
+                    "Two to four weeks, ahead of the next monthly or quarterly disclosure"
+                  ]
+                },
+                {
+                  "_key": "c5l4k004r5",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Economic rationale",
+                    "Rising site and app traffic plausibly reflects rising order volume ahead of the company's own disclosure of that volume, information the market has not yet priced in"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c5l4k005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l4k005s1",
+                  "_type": "span",
+                  "text": "Step 2: Sourcing the Data",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l4k006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l4k006s1",
+                  "_type": "span",
+                  "text": "Chapter 3's build-vs-buy category defaults called web and app data a mixed case: build for narrow, targeted scraping, buy for broad usage estimation. This universe is narrow, a handful of companies, which might suggest building, but reliable app and web traffic estimation still benefits from a vendor's larger underlying panel, exactly the estimation reliability issue from Chapter 2's web data lesson. The practical choice here is a mid-tier commercial web analytics subscription rather than a full custom scrape, run through the same five-step vendor search process from Chapter 3, including an India-specific trial sample and a check on the vendor's own longevity.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l4k007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l4k007s1",
+                  "_type": "span",
+                  "text": "Step 3: Cleaning and Entity Resolution",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l4k008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l4k008s1",
+                  "_type": "span",
+                  "text": "The vendor's data arrives labelled 'nykaa.com,' the consumer brand name, exactly the entity resolution problem from Chapter 4's cleaning lesson. It has to be mapped to the correct listed entity, FSN E-Commerce Ventures Limited, trading on NSE under the ticker NYKAA, through a maintained, versioned mapping table rather than a one-time hard-coded guess.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l4k009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l4k009s1",
+                  "_type": "span",
+                  "text": "Step 4: Point-in-Time Alignment and Feature Engineering",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l4k010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l4k010s1",
+                  "_type": "span",
+                  "text": "Each monthly traffic estimate is stored with its own knowledge date, illustratively about a week after month end once the vendor finishes processing, never assumed to be known on the last day of the month itself, following Chapter 4's point-in-time discipline. The raw estimate is converted to a year-on-year growth feature to cancel out seasonal shopping patterns, such as festive-season spikes, then cross-sectionally z-scored against the peer group. Finally, every knowledge date is resolved to its earliest actionable NSE and BSE trading date, using a verified trading calendar rather than a simple weekday assumption.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l4k011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l4k011s1",
+                  "_type": "span",
+                  "text": "Step 5: Statistical Validation",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l4k012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l4k012s1",
+                  "_type": "span",
+                  "text": "Applying the Information Coefficient methodology from Chapter 5, Lesson 2, this hypothetical test produces a mean IC of 0.04 and a standard deviation of IC of 0.10, an illustrative result for this teaching example, not a verified finding.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l4k013",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Calculate This Signal's ICIR",
+              "prompt": "Using a mean IC of 0.04 and a standard deviation of IC of 0.10 for this illustrative test, what is the signal's ICIR?",
+              "correctValue": 0.4,
+              "tolerance": 0.02,
+              "unit": "",
+              "explanation": "ICIR = 0.04 / 0.10 = 0.4. By the rule of thumb table from Lesson 2, a mean IC of 0.04 sits in the 'usable' 0.02 to 0.05 band, and an ICIR of 0.4 suggests a reasonably, though not perfectly, consistent signal."
+            },
+            {
+              "_key": "c5l4k014",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Stylized IC decay curve for this case study's web-traffic signal",
+              "xAxisLabel": "Forward return horizon (trading days)",
+              "yAxisLabel": "Mean IC",
+              "data": [
+                { "_key": "c5l4k014d0", "label": "5", "value": 0.015 },
+                { "_key": "c5l4k014d1", "label": "10", "value": 0.030 },
+                { "_key": "c5l4k014d2", "label": "15", "value": 0.040 },
+                { "_key": "c5l4k014d3", "label": "20", "value": 0.038 },
+                { "_key": "c5l4k014d4", "label": "30", "value": 0.020 },
+                { "_key": "c5l4k014d5", "label": "40", "value": 0.008 }
+              ]
+            },
+            {
+              "_key": "c5l4k015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l4k015s1",
+                  "_type": "span",
+                  "text": "This stylized curve peaks around 15 to 20 trading days, roughly three to four weeks, which lines up closely with the two-to-four-week horizon written into the hypothesis before any testing began. A decay curve that peaks where the pre-registered hypothesis expected it to is a meaningful piece of supporting evidence in itself, since it suggests the result is not simply an artifact of scanning many horizons until one looked good.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l4k016",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l4k016s1",
+                  "_type": "span",
+                  "text": "Step 6: Combining With a Traditional Factor",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l4k017",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l4k017s1",
+                  "_type": "span",
+                  "text": "A traditional Quality composite, built from reported ROE and margin stability, has an illustrative ICIR of 0.4 for this same universe, and its correlation with the web-traffic signal is a low 0.05, consistent with Chapter 5, Lesson 3's expectation that a backward-looking accounting factor and a forward-looking activity signal should be largely independent.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l4k018",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Calculate the Combined ICIR",
+              "prompt": "Using ICIR_combined = ICIR x sqrt(2 / (1 + rho)), with each individual signal's ICIR at 0.4 and a correlation of 0.05 between them, what is the combined ICIR, to two decimal places?",
+              "correctValue": 0.55,
+              "tolerance": 0.02,
+              "unit": "",
+              "explanation": "ICIR_combined = 0.4 x sqrt(2 / 1.05) = 0.4 x sqrt(1.905) = 0.4 x 1.380 = 0.552, which rounds to 0.55. Combining the web-traffic signal with the largely uncorrelated Quality composite pushes the combined ICIR meaningfully above either individual signal's 0.4, exactly the diversification payoff this chapter has been building toward."
+            },
+            {
+              "_key": "c5l4k019",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c5l4k019s1",
+                  "_type": "span",
+                  "text": "Step 7: What Still Has to Be Checked Before Going Live",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c5l4k020",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "The Full Pipeline, One Last Time",
+              "steps": [
+                "Confirm the data source passes the UPSI compliance test from Chapter 1, independently reproducible by any paying subscriber, not dependent on an insider",
+                "Score the vendor on the six-dimension framework from Chapter 1 and assess its longevity risk from Chapter 3",
+                "Verify the entity resolution mapping table is current and has an owner responsible for catching renames or structural changes",
+                "Confirm every observation carries both a period date and a knowledge date, and that the trading calendar alignment respects real NSE and BSE holidays, including edge cases like Muhurat trading",
+                "Confirm the hypothesis was pre-registered before testing, with a research log entry, not adjusted after seeing favourable results",
+                "Check correlation against existing factors before finalizing any combination weight",
+                "Before allocating real capital, run the strategy through Chapter 6's full backtesting rigor, look-ahead bias, survivorship bias, and overfitting checks, none of which this lesson has covered yet"
+              ]
+            },
+            {
+              "_key": "c5l4k021",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Notice what this case study did not need: a single moment of brilliance. It needed a hypothesis written down first, a vendor evaluated on real criteria, an entity mapped correctly, dates handled with discipline, a result checked honestly, and a combination chosen for independence rather than raw strength. That is the actual craft this course has been teaching."
+            },
+            {
+              "_key": "c5l4k022",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This entire case study, including all company names, figures, correlations, and results, is a constructed teaching illustration for demonstrating the pipeline end to end. It is not a verified strategy, not investment research, and not a recommendation to trade any security."
+            },
+            {
+              "_key": "c5l4k023",
+              "_type": "keyTakeaways",
+              "points": [
+                "This case study is a synthesis, not new material: hypothesis (Chapter 5.1), sourcing (Chapter 3), entity resolution and point-in-time alignment (Chapter 4), statistical validation (Chapter 5.2), and combination with a traditional factor (Chapter 5.3), applied to one realistic idea end to end",
+                "A narrow universe does not automatically mean building in-house is the right call, estimation reliability from a larger vendor panel can still outweigh the appeal of a custom scrape",
+                "A decay curve that peaks near the horizon specified in the pre-registered hypothesis is itself supporting evidence, since it suggests the result was not found by scanning many horizons after the fact",
+                "Combining a forward-looking activity signal with a backward-looking accounting factor, expected and confirmed to be low-correlation, produced a combined ICIR of about 0.55 from two individually modest 0.4 ICIR signals",
+                "Every step in this pipeline traces back to a specific earlier lesson, which is the point: none of these disciplines work in isolation, they compound into a genuinely defensible research process",
+                "This case study is not yet ready for live capital, it still needs the full backtesting rigor from Chapter 6 before that conversation can even begin"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,831 @@
+{
+  "courseSlug": "introduction-to-business-valuation-for-founders-and-managers",
+  "chapters": [
+    {
+      "title": "Chapter 4: Valuing a Business on Its Own Cash Flows",
+      "lessons": [
+        {
+          "title": "Time Value of Money and Discounting Without the Jargon",
+          "slug": "time-value-of-money-and-discounting-without-the-jargon",
+          "body": [
+            {
+              "_key": "k2",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k1",
+                  "_type": "span",
+                  "text": "A customer offers you a choice: ₹5 crore paid today, or ₹6 crore paid three years from now. The second number is bigger. Most people still take the first, and they are right to, for a reason worth being precise about. That precision is the whole engineering behind a discounted cash flow, and it takes about twenty minutes to learn.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "bigIdea",
+              "text": "Money has a date attached to it. ₹100 in 2029 is not the same thing as ₹100 today, and adding them together is like adding kilometres to kilograms. Discounting is simply the exchange rate between future rupees and present rupees.",
+              "_key": "k3"
+            },
+            {
+              "_key": "k5",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k4",
+                  "_type": "span",
+                  "text": "Why a Future Rupee Is Worth Less",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k7",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k6",
+                  "_type": "span",
+                  "text": "Three reasons stack on top of each other, and only the third is about risk.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k10",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k8",
+                  "_type": "span",
+                  "text": "Opportunity.",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_key": "k9",
+                  "_type": "span",
+                  "text": " Money in hand can be put to work. Left in a public provident fund account it earns 7.1% a year, and in a 10 year government security about 7.0%. Waiting three years for the same rupee means giving up whatever it would have earned.",
+                  "marks": []
+                }
+              ],
+              "markDefs": [],
+              "listItem": "bullet",
+              "level": 1
+            },
+            {
+              "_key": "k13",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k11",
+                  "_type": "span",
+                  "text": "Inflation.",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_key": "k12",
+                  "_type": "span",
+                  "text": " CPI inflation was 4.82% in August 2026. Even a rupee that arrives on time buys less when it gets there.",
+                  "marks": []
+                }
+              ],
+              "markDefs": [],
+              "listItem": "bullet",
+              "level": 1
+            },
+            {
+              "_key": "k16",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k14",
+                  "_type": "span",
+                  "text": "Risk.",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_key": "k15",
+                  "_type": "span",
+                  "text": " A promised payment may shrink or never arrive. The less certain the promise, the more compensation you demand for waiting.",
+                  "marks": []
+                }
+              ],
+              "markDefs": [],
+              "listItem": "bullet",
+              "level": 1
+            },
+            {
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "k17",
+                  "label": "PPF",
+                  "value": "7.1%",
+                  "context": "Unchanged since April 2020, reconfirmed for July to September 2026"
+                },
+                {
+                  "_key": "k18",
+                  "label": "10 year G-sec",
+                  "value": "About 7.0%",
+                  "context": "As at 11 September 2026"
+                },
+                {
+                  "_key": "k19",
+                  "label": "One year bank FD",
+                  "value": "Around 6.5%",
+                  "context": "Large bank rates for the general public, September 2026"
+                }
+              ],
+              "_key": "k20"
+            },
+            {
+              "_type": "callout",
+              "type": "insight",
+              "text": "Notice that the first two reasons apply even to a completely safe payment. This is why a discount rate always sits above zero even for government cash flows, and why the risk-free rate is the floor from which every other rate is built.",
+              "_key": "k21"
+            },
+            {
+              "_key": "k23",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k22",
+                  "_type": "span",
+                  "text": "Forward and Backward: Compounding and Discounting",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k25",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k24",
+                  "_type": "span",
+                  "text": "Compounding takes money forward in time. Discounting brings it back. They are the same equation read in opposite directions.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "mathBlock",
+              "latex": "\\text{Future value} = \\text{Present value} \\times (1 + r)^t",
+              "caption": "Growing money forward: ₹100 at 10% becomes ₹110 after one year and ₹121 after two",
+              "_key": "k26"
+            },
+            {
+              "_type": "mathBlock",
+              "latex": "\\text{Present value} = \\frac{\\text{Future value}}{(1 + r)^t}",
+              "caption": "Bringing money back: what a future amount is worth in today's rupees",
+              "_key": "k27"
+            },
+            {
+              "_key": "k32",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k28",
+                  "_type": "span",
+                  "text": "The fraction on the right is the ",
+                  "marks": []
+                },
+                {
+                  "_key": "k30",
+                  "_type": "span",
+                  "text": "discount factor",
+                  "marks": [
+                    "k29"
+                  ]
+                },
+                {
+                  "_key": "k31",
+                  "_type": "span",
+                  "text": ". Compute it once for each year and every valuation becomes multiplication.",
+                  "marks": []
+                }
+              ],
+              "markDefs": [
+                {
+                  "_key": "k29",
+                  "_type": "glossaryTerm",
+                  "definition": "The multiplier that converts one rupee received in a future year into today's rupees. It is always less than one, and it shrinks as the year gets further away or the rate rises."
+                }
+              ]
+            },
+            {
+              "_type": "table",
+              "caption": "Discount factors at 10%: what ₹1 received in each year is worth today",
+              "headers": [
+                "Year",
+                "Discount factor",
+                "Value of ₹1 crore received that year"
+              ],
+              "rows": [
+                {
+                  "_key": "k33",
+                  "_type": "tableRow",
+                  "cells": [
+                    "1",
+                    "0.909",
+                    "₹90.9 lakh"
+                  ]
+                },
+                {
+                  "_key": "k34",
+                  "_type": "tableRow",
+                  "cells": [
+                    "2",
+                    "0.826",
+                    "₹82.6 lakh"
+                  ]
+                },
+                {
+                  "_key": "k35",
+                  "_type": "tableRow",
+                  "cells": [
+                    "3",
+                    "0.751",
+                    "₹75.1 lakh"
+                  ]
+                },
+                {
+                  "_key": "k36",
+                  "_type": "tableRow",
+                  "cells": [
+                    "4",
+                    "0.683",
+                    "₹68.3 lakh"
+                  ]
+                },
+                {
+                  "_key": "k37",
+                  "_type": "tableRow",
+                  "cells": [
+                    "5",
+                    "0.621",
+                    "₹62.1 lakh"
+                  ]
+                },
+                {
+                  "_key": "k38",
+                  "_type": "tableRow",
+                  "cells": [
+                    "10",
+                    "0.386",
+                    "₹38.6 lakh"
+                  ]
+                }
+              ],
+              "_key": "k39"
+            },
+            {
+              "_type": "chart",
+              "chartType": "line",
+              "title": "What ₹100 received in a future year is worth today, discounted at 12%",
+              "xAxisLabel": "Year the money arrives",
+              "yAxisLabel": "₹ today",
+              "data": [
+                {
+                  "_key": "k40",
+                  "label": "Year 1",
+                  "value": 89.29
+                },
+                {
+                  "_key": "k41",
+                  "label": "Year 3",
+                  "value": 71.18
+                },
+                {
+                  "_key": "k42",
+                  "label": "Year 5",
+                  "value": 56.74
+                },
+                {
+                  "_key": "k43",
+                  "label": "Year 10",
+                  "value": 32.2
+                }
+              ],
+              "_key": "k44"
+            },
+            {
+              "_type": "callout",
+              "type": "warning",
+              "text": "Look at year 10: ₹100 promised then is worth about ₹32 today at a 12% rate. This is why the far end of any forecast matters far less than the next three years, and why a business plan that only works in year eight is really a bet, not a plan.",
+              "_key": "k45"
+            },
+            {
+              "_key": "k47",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k46",
+                  "_type": "span",
+                  "text": "Back to the Two Offers",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k49",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k48",
+                  "_type": "span",
+                  "text": "Now answer the question at the top. You judge the customer's three year promise to be worth discounting at 11%, given the credit risk. The present value of ₹6 crore received in three years is ₹6 crore ÷ 1.11 cubed, which is about ₹4.39 crore. Less than ₹5 crore, so take the money today.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Bring it back to today",
+              "prompt": "A customer will pay you ₹10 lakh four years from now. You judge 9% to be the right rate for that promise. What is it worth today, in ₹ lakh? Round to two decimals.",
+              "correctValue": 7.08,
+              "tolerance": 0.05,
+              "unit": "₹ lakh",
+              "explanation": "₹10 lakh ÷ (1.09)^4 = ₹10 lakh ÷ 1.4116 = about ₹7.08 lakh. Nearly ₹3 lakh of the headline disappears purely because of the four year wait. If you were quoting for this order, that is the discount you should have built into the price.",
+              "_key": "k50"
+            },
+            {
+              "_type": "collapsible",
+              "title": "The rule of 72, for doing this in your head",
+              "content": [
+                {
+                  "_key": "k52",
+                  "_type": "block",
+                  "style": "normal",
+                  "children": [
+                    {
+                      "_key": "k51",
+                      "_type": "span",
+                      "text": "Divide 72 by the annual rate and you get roughly the number of years for money to double.",
+                      "marks": []
+                    }
+                  ],
+                  "markDefs": []
+                },
+                {
+                  "_key": "k54",
+                  "_type": "block",
+                  "style": "normal",
+                  "children": [
+                    {
+                      "_key": "k53",
+                      "_type": "span",
+                      "text": "At 8%: 72 ÷ 8 = 9 years to double",
+                      "marks": []
+                    }
+                  ],
+                  "markDefs": [],
+                  "listItem": "bullet",
+                  "level": 1
+                },
+                {
+                  "_key": "k56",
+                  "_type": "block",
+                  "style": "normal",
+                  "children": [
+                    {
+                      "_key": "k55",
+                      "_type": "span",
+                      "text": "At 12%: 72 ÷ 12 = 6 years to double",
+                      "marks": []
+                    }
+                  ],
+                  "markDefs": [],
+                  "listItem": "bullet",
+                  "level": 1
+                },
+                {
+                  "_key": "k58",
+                  "_type": "block",
+                  "style": "normal",
+                  "children": [
+                    {
+                      "_key": "k57",
+                      "_type": "span",
+                      "text": "At 7.1%, the PPF rate: about 10 years to double",
+                      "marks": []
+                    }
+                  ],
+                  "markDefs": [],
+                  "listItem": "bullet",
+                  "level": 1
+                },
+                {
+                  "_key": "k60",
+                  "_type": "block",
+                  "style": "normal",
+                  "children": [
+                    {
+                      "_key": "k59",
+                      "_type": "span",
+                      "text": "Run it backwards too. If a founder tells you the business will be worth four times as much in six years, that is two doublings in six years, which means a doubling every three years, which is a growth rate of about 24% a year sustained throughout. Now the claim is testable instead of impressive.",
+                      "marks": []
+                    }
+                  ],
+                  "markDefs": []
+                }
+              ],
+              "_key": "k61"
+            },
+            {
+              "_key": "k63",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k62",
+                  "_type": "span",
+                  "text": "Discounting a Stream: Net Present Value",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k65",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k64",
+                  "_type": "span",
+                  "text": "Real decisions involve a series of cash flows, not one payment. Discount each year separately and add them up. Subtract what you have to spend today and you have the net present value.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "mathBlock",
+              "latex": "\\text{NPV} = -C_0 + \\sum_{t=1}^{n} \\frac{CF_t}{(1 + r)^t}",
+              "caption": "C0 is the investment today, CF is the cash flow in each later year",
+              "_key": "k66"
+            },
+            {
+              "_key": "k68",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k67",
+                  "_type": "span",
+                  "text": "A fictional example. Konkan Ceramics is considering a second kiln costing ₹100 crore today, which will generate these cash flows over five years. The company's cost of capital is 12%.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "table",
+              "caption": "Net present value of the kiln (₹ crore)",
+              "headers": [
+                "Year",
+                "Cash flow",
+                "Discount factor at 12%",
+                "Present value"
+              ],
+              "rows": [
+                {
+                  "_key": "k69",
+                  "_type": "tableRow",
+                  "cells": [
+                    "0",
+                    "(100.00)",
+                    "1.000",
+                    "(100.00)"
+                  ]
+                },
+                {
+                  "_key": "k70",
+                  "_type": "tableRow",
+                  "cells": [
+                    "1",
+                    "25.00",
+                    "0.893",
+                    "22.32"
+                  ]
+                },
+                {
+                  "_key": "k71",
+                  "_type": "tableRow",
+                  "cells": [
+                    "2",
+                    "30.00",
+                    "0.797",
+                    "23.92"
+                  ]
+                },
+                {
+                  "_key": "k72",
+                  "_type": "tableRow",
+                  "cells": [
+                    "3",
+                    "35.00",
+                    "0.712",
+                    "24.91"
+                  ]
+                },
+                {
+                  "_key": "k73",
+                  "_type": "tableRow",
+                  "cells": [
+                    "4",
+                    "40.00",
+                    "0.636",
+                    "25.42"
+                  ]
+                },
+                {
+                  "_key": "k74",
+                  "_type": "tableRow",
+                  "cells": [
+                    "5",
+                    "45.00",
+                    "0.567",
+                    "25.53"
+                  ]
+                },
+                {
+                  "_key": "k75",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Total present value of inflows",
+                    "",
+                    "",
+                    "122.1"
+                  ]
+                },
+                {
+                  "_key": "k76",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Net present value",
+                    "",
+                    "",
+                    "22.1"
+                  ]
+                }
+              ],
+              "_key": "k77"
+            },
+            {
+              "_type": "callout",
+              "type": "insight",
+              "text": "The kiln returns ₹175 crore of undiscounted cash on a ₹100 crore investment, which sounds like a 75% gain. After discounting at 12% the gain is about ₹22.1 crore. Both numbers are true. Only the second one accounts for the fact that shareholders could have earned 12% elsewhere while waiting.",
+              "_key": "k78"
+            },
+            {
+              "_key": "k80",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k79",
+                  "_type": "span",
+                  "text": "The internal rate of return is the same calculation asked backwards: the discount rate at which NPV would be exactly zero. For this kiln it is about 19.7%. Since that comfortably exceeds the 12% cost of capital, the project creates value. Push the required return up to 20% and the NPV turns negative, at about minus ₹0.7 crore.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Two projects, one budget",
+              "question": "Project A returns ₹120 crore in total over three years on a ₹100 crore investment, with most of the cash arriving in year 3. Project B returns ₹115 crore in total over the same three years on the same investment, with most arriving in year 1. The cost of capital is 12%. Which is more likely to have the higher NPV?",
+              "options": [
+                "Project A, because it returns more money in total",
+                "Project B, because its cash arrives earlier and earlier rupees are discounted less",
+                "They must be identical, since both invest ₹100 crore",
+                "Neither, because NPV ignores timing"
+              ],
+              "correctIndex": 1,
+              "explanation": "Timing is exactly what NPV measures. At 12%, a rupee in year 1 is worth about 89 paise today while a rupee in year 3 is worth about 71 paise. Project B's smaller total can easily be worth more once each year is discounted. This is also why buyers dislike earnouts and back-ended payments, and why sellers should price that dislike in.",
+              "_key": "k81"
+            },
+            {
+              "_key": "k83",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k82",
+                  "_type": "span",
+                  "text": "Where This Shows Up in Your Week",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "table",
+              "caption": "Everyday decisions that are really discounting problems",
+              "headers": [
+                "Situation",
+                "The question being asked",
+                "What to discount"
+              ],
+              "rows": [
+                {
+                  "_key": "k84",
+                  "_type": "tableRow",
+                  "cells": [
+                    "A customer asks for 90 day credit instead of 30",
+                    "What is the extra 60 day wait worth?",
+                    "The invoice value, over the extra period, at your cost of capital"
+                  ]
+                },
+                {
+                  "_key": "k85",
+                  "_type": "tableRow",
+                  "cells": [
+                    "A supplier offers 2% off for immediate payment",
+                    "Is the discount worth more than the cash?",
+                    "Compare the annualised saving against your cost of funds"
+                  ]
+                },
+                {
+                  "_key": "k86",
+                  "_type": "tableRow",
+                  "cells": [
+                    "A buyer proposes an earnout payable in year 2",
+                    "What is the deferred portion really worth?",
+                    "The expected payment, discounted, and probability weighted"
+                  ]
+                },
+                {
+                  "_key": "k87",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Leasing a warehouse instead of buying it",
+                    "Which option costs less in today's rupees?",
+                    "Every lease payment across the term, plus the purchase alternative"
+                  ]
+                },
+                {
+                  "_key": "k88",
+                  "_type": "tableRow",
+                  "cells": [
+                    "An employee asks for a joining bonus instead of a retention bonus in year 3",
+                    "Are the two equivalent?",
+                    "The year 3 amount, brought back to today"
+                  ]
+                }
+              ],
+              "_key": "k89"
+            },
+            {
+              "_type": "calculator",
+              "calculatorType": "sip",
+              "_key": "k90"
+            },
+            {
+              "_key": "k92",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k91",
+                  "_type": "span",
+                  "text": "Play with the calculator above. It compounds a monthly investment forward, which is the same arithmetic as discounting, run in the opposite direction. Set a 10% return and a 10 year horizon and notice how much of the final amount comes from the compounding rather than from the money you put in.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "The deferred payment proposal",
+              "scenario": "You run a ₹250 crore revenue engineering company. Your largest customer, a listed infrastructure group, proposes changing terms on a ₹40 crore order: instead of 30 day credit, it will pay ₹44 crore, 18 months after delivery. Your cost of capital is 13%. The customer has paid on time for six years, but its sector is cyclical and its own receivables are stretched.",
+              "prompt": "How do you evaluate the proposal, and what do you counter with?",
+              "modelAnswer": "The arithmetic first:\n1. ₹44 crore received in 18 months, discounted at 13%, is about ₹36.7 crore in today's rupees. Against ₹40 crore payable in 30 days, which is worth about ₹39.6 crore today, the proposal makes us roughly ₹2.9 crore worse off before any risk adjustment.\n2. The implied annual return on waiting is about 6.6% over 18 months, well below our 13% cost of capital. We would be lending to a listed company at a rate no lender would accept.\n\nThe risk next:\n3. Eighteen months of unsecured exposure to a cyclical sector is a credit decision, not a sales decision. Six years of good history is comfort, not security.\n4. The order also consumes working capital for 18 months, which either constrains other business or gets funded on our own credit lines at a real interest cost.\n\nWhat I counter with:\n5. Price the wait properly. At 13%, ₹40 crore payable in 18 months needs to be about ₹48 crore to leave us where we started, and more once credit risk is priced.\n6. Offer alternatives that reduce the risk rather than the price: milestone payments, a bank guarantee, or a letter of credit. If the customer's objection is cash timing, a structure often solves it more cheaply than a discount does.\n7. Be clear internally that accepting this is a financing decision. If we do it for relationship reasons, record it as the cost of that relationship rather than pretending it is a normal sale.",
+              "_key": "k93"
+            },
+            {
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "Name the rate",
+              "textWithBlank": "The discount rate at which a project's net present value equals exactly zero is called the internal rate of ___.",
+              "correctAnswers": [
+                "return"
+              ],
+              "explanation": "The internal rate of return is compared against the cost of capital. Above it, the project creates value. Below it, the project destroys value even if the total cash received exceeds the investment.",
+              "_key": "k94"
+            },
+            {
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Any discounting calculation, checked in six steps",
+              "steps": [
+                "Write each cash flow against the year it actually arrives, not the year it is earned",
+                "State the discount rate and where it came from",
+                "Check that the rate matches the cash flows: post-tax rate for post-tax flows, rupee rate for rupee flows",
+                "Compute the discount factor for each year rather than applying one average factor",
+                "Subtract the amount invested today to get NPV, and compute the IRR as a cross-check",
+                "Test what happens if the rate rises by two percentage points, and if the last two years of cash flow never arrive"
+              ],
+              "_key": "k95"
+            },
+            {
+              "_type": "toolLink",
+              "label": "RBI: current interest rates and policy",
+              "url": "https://www.rbi.org.in/",
+              "description": "Check the prevailing policy rate and government security yields before setting a discount rate. Any rate used in a valuation should be traceable to a published benchmark on a stated date.",
+              "_key": "k96"
+            },
+            {
+              "_type": "flashcardSet",
+              "title": "Discounting Vocabulary",
+              "cards": [
+                {
+                  "_key": "k97",
+                  "term": "Present value",
+                  "definition": "What a future amount is worth in today's rupees."
+                },
+                {
+                  "_key": "k98",
+                  "term": "Future value",
+                  "definition": "What an amount today grows to by a future date at a given rate."
+                },
+                {
+                  "_key": "k99",
+                  "term": "Discount factor",
+                  "definition": "The multiplier that converts one future rupee into today's rupees. Always less than one."
+                },
+                {
+                  "_key": "k100",
+                  "term": "Net present value",
+                  "definition": "The present value of all future cash flows, less the amount invested today."
+                },
+                {
+                  "_key": "k101",
+                  "term": "Internal rate of return",
+                  "definition": "The discount rate at which net present value equals zero."
+                },
+                {
+                  "_key": "k102",
+                  "term": "Rule of 72",
+                  "definition": "Divide 72 by the rate to approximate the years needed for money to double."
+                },
+                {
+                  "_key": "k103",
+                  "term": "Cost of capital",
+                  "definition": "The return the providers of capital require, and therefore the rate used for discounting."
+                }
+              ],
+              "_key": "k104"
+            },
+            {
+              "_type": "keyTakeaways",
+              "points": [
+                "Every rupee carries a date. Rupees from different years cannot be added until they are discounted to the same date.",
+                "Money is worth less in future for three reasons: opportunity, inflation and risk. The first two apply even to riskless cash.",
+                "At 10%, ₹1 received in year 5 is worth about ₹0.621 today, and in year 10 about ₹0.386.",
+                "₹6 crore promised in three years, discounted at 11%, is worth about ₹4.39 crore, which is less than ₹5 crore today.",
+                "NPV discounts a whole stream and subtracts the investment: the kiln generated ₹175 crore of raw cash but only about ₹22.1 crore of value after a 12% cost of capital.",
+                "IRR is the rate at which NPV is zero, about 19.7% for that kiln, and it must be compared against the cost of capital to mean anything.",
+                "Credit terms, earnouts, lease versus buy and deferred bonuses are all discounting problems wearing different clothes."
+              ],
+              "_key": "k105"
+            },
+            {
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice. Konkan Ceramics and the engineering company are fictional. Interest rates quoted are as at September 2026 and change regularly, with bank deposit rates varying by bank, tenure and amount. Always use current published rates in live work.",
+              "_key": "k106"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

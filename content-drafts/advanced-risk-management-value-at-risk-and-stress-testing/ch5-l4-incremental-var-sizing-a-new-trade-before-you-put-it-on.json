@@ -1,0 +1,195 @@
+{
+  "courseSlug": "advanced-risk-management-value-at-risk-and-stress-testing",
+  "chapters": [
+    {
+      "title": "Chapter 5: Portfolio Risk Decomposition (Marginal, Component, and Incremental VaR)",
+      "lessons": [
+        {
+          "title": "Incremental VaR: Sizing a New Trade Before You Put It On",
+          "slug": "incremental-var-sizing-a-new-trade-before-you-put-it-on",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "r1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "r1s1", "text": "Marginal VaR tells you the cost of the next infinitesimal rupee. Real trades are not infinitesimal. Incremental VaR asks the blunter, more directly useful question a trader actually faces before putting on a new position: exactly how much will total portfolio VaR change if I add this specific trade, at its actual full size, right now?", "marks": [] }
+              ]
+            },
+            {
+              "_type": "keyFact",
+              "_key": "r2",
+              "label": "Incremental VaR",
+              "value": "The exact change in total portfolio VaR from adding or removing a specific position at its full size",
+              "context": "Computed by fully revaluing portfolio VaR with and without the position, then taking the difference. Not an approximation."
+            },
+            {
+              "_type": "mathBlock",
+              "_key": "r3",
+              "latex": "\\text{Incremental VaR} = \\text{VaR}(P + \\text{new position}) - \\text{VaR}(P)",
+              "caption": "A straightforward difference, but it requires two full portfolio VaR calculations, not a shortcut formula."
+            },
+            {
+              "_type": "block",
+              "_key": "r4",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "r4s1", "text": "Why Marginal VaR Can Mislead for a Real-Sized Trade", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "r5",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "r5s1", "text": "Marginal VaR times full position size, the shortcut used to build Component VaR in the last lesson, is only exact for positions already in the portfolio, because Euler's theorem applies to the portfolio as it currently stands. For a brand new position being added, that same shortcut is only a linear approximation, and portfolio volatility is not actually linear in position size, it is a square root of a quadratic function of all the position sizes together. The approximation ignores the new position's own variance term entirely, which barely matters for a tiny trade and matters increasingly as the trade gets larger.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "r6",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "r6s1", "text": "Worked Example: Adding an IT Sector Position", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "r7",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "r7s1", "text": "Starting from the three-position portfolio from the last two lessons, Nifty, Gold, Bank Nifty, total 99% VaR Rs 2,08,174, a desk considers adding Rs 15,00,000 of Nifty IT sector futures, daily volatility 1.3%, correlated 0.40 with Nifty, -0.05 with gold, and 0.30 with Bank Nifty.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "r8",
+              "caption": "Two ways to estimate the risk cost of adding the new IT position",
+              "headers": ["Method", "How it's computed", "Result"],
+              "rows": [
+                { "cells": ["Linear approximation (marginal VaR x size)", "Marginal VaR of the IT position, computed at the margin of the existing 3-asset portfolio, times its full Rs 15,00,000 size", "Rs 15,964"] },
+                { "cells": ["Exact Incremental VaR", "Full 4-asset portfolio VaR (Rs 2,28,123) minus the original 3-asset portfolio VaR (Rs 2,08,174)", "Rs 19,949"] }
+              ]
+            },
+            {
+              "_type": "statGrid",
+              "_key": "r9",
+              "stats": [
+                { "label": "Understatement from the linear approximation", "value": "Rs 3,985", "context": "Exact incremental VaR minus the linear approximation" },
+                { "label": "As a percentage of the linear estimate", "value": "~25%", "context": "The shortcut understated the true risk cost of this trade by about a quarter" },
+                { "label": "Standalone VaR of the IT position alone", "value": "Rs 45,357", "context": "For comparison, the position's risk if held with nothing else" }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "r10",
+              "type": "warning",
+              "text": "The linear approximation, using marginal VaR as a shortcut, understated this trade's true risk cost by roughly 25%. That gap is not a rounding error, it comes directly from ignoring the new position's own variance contribution, which only stays negligible for genuinely small trades. Before finalizing the size of a real new position, a risk desk needs the exact incremental VaR, the full before-and-after portfolio calculation, not an extrapolated marginal figure."
+            },
+            {
+              "_type": "callout",
+              "_key": "r11",
+              "type": "insight",
+              "text": "At the same time, notice the exact incremental VaR, Rs 19,949, is still far below the position's standalone VaR of Rs 45,357, a 56% discount. Diversification is still doing real work here, the position's moderate positive correlation with the existing book means it adds meaningfully less risk than it would carry on its own. The lesson is not that diversification stopped mattering, it is that the shortcut used to quantify it, marginal VaR extrapolated linearly, understates the true number for anything beyond a small trade."
+            },
+            {
+              "_type": "block",
+              "_key": "r12",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "r12s1", "text": "When Is the Linear Approximation Good Enough?", "marks": [] }
+              ]
+            },
+            {
+              "_type": "comparison",
+              "_key": "r13",
+              "title": "Marginal VaR Shortcut vs Full Incremental VaR Calculation",
+              "columns": [
+                {
+                  "label": "Marginal VaR Shortcut Is Fine",
+                  "points": [
+                    "Small, gradual position size changes to an existing holding",
+                    "Fast, routine intraday risk checks where speed matters more than exactness",
+                    "Ranking many small candidate trades quickly by rough risk cost"
+                  ]
+                },
+                {
+                  "label": "Full Incremental VaR Is Required",
+                  "points": [
+                    "A genuinely new position being added to the book",
+                    "Any trade large enough that its own variance meaningfully affects total portfolio variance",
+                    "Final sign-off on trade size before committing real capital"
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "r14",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "r14s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "r15",
+              "variant": "quiz",
+              "title": "Quick Check",
+              "question": "Why does the marginal-VaR-based linear approximation understate the exact Incremental VaR for a large new trade?",
+              "options": [
+                "Marginal VaR always uses the wrong confidence level",
+                "The linear approximation ignores the new position's own variance term, which only stays negligible for small trades relative to the rest of the portfolio",
+                "Incremental VaR is calculated using Historical Simulation, while marginal VaR uses Monte Carlo",
+                "The linear approximation only works for equity positions, not futures"
+              ],
+              "correctIndex": 1,
+              "explanation": "Portfolio volatility is the square root of a quadratic function of all position sizes. Marginal VaR captures the correct sensitivity at the current point, but extrapolating that sensitivity linearly across a full-sized new trade ignores the new position's own variance contribution, an omission that grows with trade size."
+            },
+            {
+              "_type": "exercise",
+              "_key": "r16",
+              "variant": "scenario",
+              "title": "Approving a New Trade",
+              "scenario": "A trader requests approval for a new position and presents only the marginal-VaR-based estimate of its risk cost, arguing it is close enough and saves time versus a full portfolio revaluation. The risk manager needs to decide whether to approve based on that estimate alone.",
+              "prompt": "Based on this lesson's worked example, is it reasonable to approve a new trade based on the marginal VaR shortcut alone? What would you ask for instead?",
+              "modelAnswer": "No, not for a trade of meaningful size. The worked example showed the marginal VaR shortcut understating a real trade's true risk cost by about 25%, purely because it ignored the new position's own variance. A risk manager should require the exact Incremental VaR, the full before-and-after portfolio VaR calculation, before approving any trade large enough to matter, reserving the marginal VaR shortcut for quick, rough comparisons between many small candidate trades rather than as the basis for final sign-off."
+            },
+            {
+              "_type": "block",
+              "_key": "r17",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "r17s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "r18",
+              "text": "Marginal VaR is the right tool for a small nudge. Incremental VaR is the right tool for an actual trade. Using the first one where the second one is needed quietly understates exactly the decision that matters most, whether to put the trade on at all."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "r19",
+              "points": [
+                "Incremental VaR is the exact change in portfolio VaR from adding or removing a full-sized position, computed as a before-and-after difference, not a shortcut formula.",
+                "The marginal-VaR-based linear approximation understated this lesson's worked example by about 25%, because it ignores the new position's own variance contribution, which only stays small for genuinely small trades.",
+                "Even the exact incremental VaR was still far below the position's standalone VaR, confirming diversification still matters, just less generously than a naive linear extrapolation would suggest.",
+                "Use marginal VaR for fast, routine comparisons of small changes, but require full Incremental VaR before finalizing the size of any real new trade.",
+                "This closes the risk decomposition toolkit for this course: Marginal VaR for per-rupee sensitivity, Component VaR for an exact additive risk budget across existing positions, and Incremental VaR for sizing a genuinely new trade. The next chapter turns to a different gap entirely, liquidity risk, what it costs to actually exit a position under stress."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,234 @@
+{
+  "courseSlug": "understanding-implied-volatility-and-the-volatility-surface",
+  "chapters": [
+    {
+      "title": "Chapter 4: Building and Reading the Volatility Surface",
+      "lessons": [
+        {
+          "title": "How Desks Interpolate and Use the Surface in Practice",
+          "slug": "how-desks-interpolate-and-use-the-surface-in-practice",
+          "body": [
+            {
+              "_key": "k1",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                { "_key": "k1s", "_type": "span", "text": "Two Interpolation Problems, Not One", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k2",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                { "_key": "k2s1", "_type": "span", "text": "Last lesson's grid only has values exactly where strikes and expiries actually trade. Filling the gaps is really two separate problems: interpolating across strikes within a single expiry, to fill in the skew, and interpolating across expiries at a fixed moneyness, to fill in the term structure. Both need care, and both are commonly done wrong.", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k3",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                { "_key": "k3s", "_type": "span", "text": "Interpolating Across Strikes: From Connecting Dots to Fitting a Curve", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k4",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                { "_key": "k4s1", "_type": "span", "text": "The simplest approach, drawing a straight line between each pair of adjacent listed strikes, is quick but creates a curve with visible kinks at every data point, and it extrapolates badly beyond the outermost strikes you actually have. A cubic spline smooths those kinks out. The approach most institutional desks actually rely on goes further still: fit a single, smooth parametric formula through the entire expiry's skew at once. The most widely used version of this is SVI (Stochastic Volatility Inspired), introduced by quant researcher Jim Gatheral.", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "mathBlock",
+              "latex": "w(k) = a + b\\left[\\rho (k-m) + \\sqrt{(k-m)^2 + \\sigma^2}\\right]",
+              "caption": "w(k) is the total implied variance (IV squared times T) at log-moneyness k, the log of strike divided by forward price. Five parameters get fitted to the market: a (overall level), b (wing steepness), rho (skew, or rotation, between -1 and 1), m (horizontal shift), and sigma (curvature at the vertex). This raw SVI form is one of the most widely used ways to fit a smooth, well-behaved curve through one expiry's skew.",
+              "_key": "k5"
+            },
+            {
+              "_key": "k6",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                { "_key": "k6s1", "_type": "span", "text": "Calibrating SVI, choosing the five parameters that best match the actual quoted strikes, is itself a numerical fitting exercise, the same spirit as Chapter 1's Newton-Raphson solve, just fitting an entire curve's shape at once instead of solving for a single IV.", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "callout",
+              "type": "insight",
+              "text": "SVI is not a theory about why skew looks the way it does. It is a flexible, well-tested functional shape that happens to fit real equity index skews extremely well, which is exactly why it became the industry standard rather than something more theoretically elegant but harder to calibrate reliably.",
+              "_key": "k7"
+            },
+            {
+              "_key": "k8",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                { "_key": "k8s", "_type": "span", "text": "Interpolating Across Time: Variance, Not Volatility, Again", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k9",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                { "_key": "k9s1", "_type": "span", "text": "Chapter 3's event-variance stripping made a point of not subtracting IV percentages directly, because variance adds across time and volatility does not. The exact same discipline applies here. To interpolate ATM IV for an expiry that falls between two listed ones, the standard approach interpolates total variance, IV squared times T, linearly across the two known expiries, then converts the result back into an equivalent annualized IV by dividing by the target T and taking a square root.", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k10",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                { "_key": "k10s1", "_type": "span", "text": "See how much this can matter with a genuinely steep curve: a 7-day ATM IV of 18.00% (an event week, as in Chapter 3) and a 30-day ATM IV of 13.00%, and you need a synthetic 14-day figure in between.", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "table",
+              "caption": "Two ways to interpolate a 14-day IV between a 7-day 18.00% and a 30-day 13.00%",
+              "headers": ["Method", "Basis", "Interpolated 14-Day IV"],
+              "rows": [
+                { "_key": "r1", "_type": "tableRow", "cells": ["Naive linear IV interpolation", "Straight-line interpolation of the IV percentages themselves", "16.48%"] },
+                { "_key": "r2", "_type": "tableRow", "cells": ["Total-variance interpolation (standard practice)", "Linear interpolation of IV² × T, converted back to an equivalent IV", "14.93%"] }
+              ],
+              "_key": "k11"
+            },
+            {
+              "_key": "k12",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                { "_key": "k12s1", "_type": "span", "text": "A 1.55 percentage point gap between two entirely reasonable-looking methods, on the exact same two input numbers. The naive method overstates the interpolated figure here because it fails to account for how much of the 7-day expiry's elevated IV is concentrated in the event day itself rather than spread evenly across the whole period, the identical logic from Chapter 3's variance-stripping lesson, now applied to interpolation instead of subtraction.", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k13",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                { "_key": "k13s", "_type": "span", "text": "No-Arbitrage Constraints: Not Every Shape Is Allowed", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k14",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                { "_key": "k14s1", "_type": "span", "text": "A fitted or interpolated surface cannot take on just any shape and still be economically sound. Two constraints matter most. Calendar consistency requires total variance, IV squared times T, to never decrease as you move to a later expiry at the same moneyness; if it did, you could construct a theoretically costless position that profits with no risk. Butterfly consistency requires the skew within one expiry to avoid curving too sharply; an excessively convex shape can imply a negative probability for some outcome, which cannot correspond to any valid probability distribution at all. Plain linear interpolation can accidentally violate either constraint, especially near the edges of the traded strikes or expiries, which is the main reason serious desks prefer a properly calibrated parametric fit like SVI over connecting the dots by hand.", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "callout",
+              "type": "warning",
+              "text": "An interpolated IV that silently violates calendar or butterfly consistency will not announce itself as wrong. It will just quietly feed a bad number into every price and every Greek computed from it downstream, which is exactly why a naive connect-the-dots approach is risky for anything beyond a quick, rough read of the chain.",
+              "_key": "k15"
+            },
+            {
+              "_key": "k16",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                { "_key": "k16s", "_type": "span", "text": "What the Finished Surface Actually Gets Used For", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k17",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                { "_key": "k17s1", "_type": "span", "text": "A properly interpolated surface answers Lesson 1's structured products question directly: read off a defensible IV for any strike and expiry, listed or not, and feed it into a pricing model. It also makes Chapter 2's risk management point concrete rather than conceptual: you can now shock the whole surface, or just its slope near specific strikes, and reprice an entire book against a realistic, shape-aware scenario, not just a flat level bump. It also lets a desk manage the second-order Greeks properly, vanna from Chapter 2, and its counterpart volga (how much vega itself changes as volatility changes), both of which are really statements about how a position's risk moves as the surface, not just the spot price, shifts underneath it. Finally, it enables relative-value screening: comparing a specific quoted option's IV against where the smooth fitted surface says it should sit, to flag strikes that look meaningfully rich or cheap relative to their neighbors.", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why the two interpolation methods disagree",
+              "question": "Interpolating IV for a 14-day expiry between a 7-day IV of 18.00% and a 30-day IV of 13.00%, why does linearly interpolating the IV percentages directly (about 16.48%) differ from linearly interpolating total variance, IV squared times T, and converting back (about 14.93%)?",
+              "options": [
+                "They should never differ; any gap between the two methods is a calculation error",
+                "Volatility does not combine additively across time the way variance does, the same principle behind Chapter 3's event-variance stripping; interpolating IV percentages directly ignores this and distorts the result, especially when the two endpoints are far apart, as they are here",
+                "The naive method is always the more accurate one for short-dated options specifically",
+                "Total-variance interpolation is only valid for index options, never for single stocks"
+              ],
+              "correctIndex": 1,
+              "explanation": "Total variance is the quantity that behaves additively and interpolates sensibly across time; volatility itself does not. The wider the gap between the two known points, and the steeper the curve between them, the more a naive linear-IV interpolation diverges from the theoretically sound total-variance approach.",
+              "_key": "k18"
+            },
+            {
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "One outlier on an otherwise clean fit",
+              "scenario": "A quant analyst fits a smooth SVI curve to Nifty's weekly skew. Every strike's quoted IV sits within 0.1 to 0.2 points of the fitted curve, except the 24,900 strike, whose quoted Call IV shows 14.20%, nearly 4 points above where the fitted curve says it should sit, roughly 10.40%, in line with its neighbors.",
+              "prompt": "What are the two competing explanations for this single outlier, and how should the analyst decide between them before trading on it?",
+              "modelAnswer": "One possibility is that this is a genuine, tradeable mispricing that the smooth fit has correctly flagged. The other, and by far the more common explanation in practice, is a data problem specific to that one strike: a stale last traded price, thin volume, or an unusually wide bid-ask spread, exactly the failure mode from Chapter 1's Priya scenario and the stale-print row in the Chapter 1 option chain. Before trading on it, the analyst should run the same checklist from earlier in the course: check today's volume and open interest specifically on the 24,900 strike, check its bid-ask width, and cross-check the reading against NSE's own site or a second data source. Only if the number still looks genuinely live and liquid after that check does it become a real relative-value opportunity rather than a data artefact.",
+              "_key": "k19"
+            },
+            {
+              "_type": "comparison",
+              "title": "Connecting the Dots vs Fitting a Parametric Curve",
+              "columns": [
+                {
+                  "_key": "c1",
+                  "label": "Simple / linear interpolation",
+                  "points": [
+                    "Fast and easy to compute",
+                    "Creates visible kinks at each grid point",
+                    "No real arbitrage guarantee; can accidentally violate calendar or butterfly consistency",
+                    "Extrapolates poorly beyond the outermost traded strikes or expiries"
+                  ]
+                },
+                {
+                  "_key": "c2",
+                  "label": "Parametric fit (e.g. SVI)",
+                  "points": [
+                    "Requires a numerical calibration step, echoing Chapter 1's Newton-Raphson, now fitting a whole curve instead of one point",
+                    "Produces a smooth curve through noisy market data, not a rigid connect-the-dots line",
+                    "Can be constructed to respect no-arbitrage constraints within its valid parameter range",
+                    "The industry-standard approach on institutional desks, for exactly these reasons"
+                  ]
+                }
+              ],
+              "_key": "k20"
+            },
+            {
+              "_type": "bigIdea",
+              "text": "A discrete grid of solved IV points is not yet a surface, it is just data. Turning it into something you can query anywhere, price against, and stress-test safely takes a genuine mathematical commitment: interpolate variance, not volatility, respect the no-arbitrage constraints, and prefer a properly fitted curve over connecting the dots by hand.",
+              "_key": "k21"
+            },
+            {
+              "_type": "keyTakeaways",
+              "points": [
+                "Two separate interpolation problems exist: across strikes within one expiry, to fill in the skew, and across expiries at a fixed moneyness, to fill in the term structure.",
+                "Parametric models like SVI, raw form w(k) = a + b[rho(k-m) + sqrt((k-m)^2 + sigma^2)], introduced by Jim Gatheral, fit a smooth curve through an entire expiry's skew using five calibrated parameters, rather than connecting individual points.",
+                "Interpolating across time should use total variance (IV squared times T), not IV percentages directly, the same variance-adds-volatility-doesn't principle from Chapter 3; naive IV interpolation can diverge meaningfully from the correct answer, especially across steep curves.",
+                "A valid surface must respect calendar consistency (total variance non-decreasing with time) and butterfly consistency (the skew cannot imply a negative probability); naive interpolation can accidentally violate either.",
+                "The finished surface prices custom strike and expiry combinations, enables shape-aware risk stress tests, and supports relative-value screening for options that sit meaningfully off the fitted curve, usually a data problem, and occasionally a genuine opportunity."
+              ],
+              "_key": "k22"
+            },
+            {
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice. The interpolation comparison table and the analyst scenario are hypothetical and illustrative, continuing the running Nifty example from earlier chapters, and do not represent live NSE data or any specific firm's actual models. Always check live prices and IV on NSE or your broker's terminal before trading, and consult a SEBI-registered advisor for personalised advice.",
+              "_key": "k23"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

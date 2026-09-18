@@ -1,0 +1,250 @@
+{
+  "courseSlug": "understanding-multi-asset-systematic-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 5: Carry and Cross-Asset Value Strategies",
+      "lessons": [
+        {
+          "title": "Combining Carry and Trend: Why the Two Together Beat Either Alone",
+          "slug": "combining-carry-and-trend-why-the-two-together-beat-either-alone",
+          "body": [
+            {
+              "_key": "mac5l5b01",
+              "_type": "bigIdea",
+              "text": "Trend and carry have been described as complementary throughout this chapter, but complementary is a claim that can actually be measured, not just asserted. Combined properly, using the same risk-weighting logic Chapter 3 built for assets, two mediocre strategy sleeves can produce a meaningfully better combined result than either delivers alone, provided their returns are genuinely, not just plausibly, uncorrelated."
+            },
+            {
+              "_key": "mac5l5b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac5l5b02s1",
+                  "_type": "span",
+                  "text": "Chapter 4 built trend-following. This chapter built carry and cross-asset value. Each has been described as complementary to the others, based on when it wins and when it fails. This closing lesson makes that combination concrete: the correct way to weight strategy sleeves against each other, why naive averaging leaves real value on the table, and an honest look at where this combination logic can still fail.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac5l5b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac5l5b03s1", "_type": "span", "text": "Why Naive Averaging Isn't Enough", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac5l5b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac5l5b04s1",
+                  "_type": "span",
+                  "text": "Lesson 3 warned against netting a carry signal and a trend signal on the same instrument with no explicit rule. Combining trend and carry as whole strategy sleeves needs the same rigor Chapter 3 applied to individual assets: it is not enough to know that they tend to fail under different conditions, the actual correlation between their return streams determines exactly how much combining them helps, using precisely the portfolio variance mathematics Chapter 1 and Chapter 3 already built, just applied one level up, to strategy returns instead of asset returns.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac5l5b05",
+              "_type": "mathBlock",
+              "latex": "\\sigma_{combined}^2 = w_{trend}^2\\sigma_{trend}^2 + w_{carry}^2\\sigma_{carry}^2 + 2w_{trend}w_{carry}\\rho\\,\\sigma_{trend}\\sigma_{carry}",
+              "caption": "The identical two-asset variance formula from Chapter 1's opening lesson, applied here to two strategy sleeves' return streams rather than two assets. Rho is the correlation between the trend sleeve's and carry sleeve's own returns, not the correlation between the underlying assets."
+            },
+            {
+              "_key": "mac5l5b06",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac5l5b06s1", "_type": "span", "text": "Risk-Weighting Strategy Sleeves, Not Just Assets", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac5l5b07",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac5l5b07s1",
+                  "_type": "span",
+                  "text": "Chapter 3's closing lesson showed that equal capital weight does not produce equal risk, and the fix there was risk contribution, not capital, as the sizing target. The identical logic applies to combining strategy sleeves: scale each sleeve, trend and carry, to a common volatility target first, using each sleeve's own vol-scaling from Chapter 4 and this chapter, then combine them at equal risk weight rather than arbitrary capital allocation. This is the same multi-asset risk engine from Chapter 3, applied recursively, first to size positions within a strategy, now to size strategies within a book.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac5l5b08",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This is not a new idea, it is the same idea from Chapter 3 showing up again at a different level of the system. Whether you are combining Nifty and Gold into a portfolio, combining four look-back windows into one trend signal, or combining a trend sleeve and a carry sleeve into one strategy book, the underlying question is always the same: how correlated are the things you are combining, and how should that correlation determine their relative weight?"
+            },
+            {
+              "_key": "mac5l5b09",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac5l5b09s1", "_type": "span", "text": "A Concrete Illustration: Trend Sharpe 0.35, Carry Sharpe 0.40, Combined...", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac5l5b10",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac5l5b10s1",
+                  "_type": "span",
+                  "text": "Take a trend sleeve with an illustrative Sharpe ratio of 0.35 and a carry sleeve with a Sharpe ratio of 0.40, each scaled to the same volatility target, combined at equal risk weight, with a return correlation of -0.2 between the two sleeves, plausible given their genuinely opposite failure conditions covered throughout Chapters 4 and 5.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac5l5b11",
+              "_type": "keyFact",
+              "label": "Combined Sharpe Ratio, Equal Risk-Weighted, ρ = -0.2",
+              "value": "≈0.59",
+              "context": "Above both individual sleeves (0.35 trend, 0.40 carry) and meaningfully above their simple average of 0.375"
+            },
+            {
+              "_key": "mac5l5b12",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "These Sharpe ratios and the correlation figure are illustrative, chosen to demonstrate the combination mechanics clearly, not the output of an actual backtest on real trend and carry sleeves."
+            },
+            {
+              "_key": "mac5l5b13",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac5l5b13s1", "_type": "span", "text": "Adding Value as a Third Sleeve", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac5l5b14",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac5l5b14s1",
+                  "_type": "span",
+                  "text": "The same mechanics extend directly to a three-sleeve combination, trend, carry, and Lesson 4's cross-asset value, each vol-scaled to a common target and combined by their pairwise correlations rather than equal capital. Value's distinct failure conditions, sustained trending markets, give it plausibly low or negative correlation to both trend and carry as well, which is exactly the kind of genuine diversification this course has looked for at every level, from individual assets in Chapter 3 to look-back windows in Chapter 4, and now strategy sleeves here. Chapter 7 builds this full multi-strategy combination properly; this lesson establishes the two-sleeve mechanics that scale directly to three or more.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac5l5b15",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac5l5b15s1", "_type": "span", "text": "The Honest Limits of This Combination Logic", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac5l5b16",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac5l5b16s1",
+                  "_type": "span",
+                  "text": "Strategy sleeve correlation is not fixed any more than asset correlation was in Chapter 3, or trend signal correlation across assets was in Chapter 4's closing lesson. A sudden, severe enough crisis can push trend and carry returns toward the same direction, both losing simultaneously, exactly the correlated-whipsaw risk Chapter 4 already flagged, now potentially affecting carry as well if the same shock forces both a trend reversal and a sharp carry unwind at once. A historically favorable -0.2 correlation between sleeves is a real, measured starting point, not a permanent guarantee.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac5l5b17",
+              "_type": "callout",
+              "type": "warning",
+              "text": "No combination of strategies is a free lunch that removes risk entirely. It is a genuine, measurable diversification benefit under typical conditions, built on a correlation estimate that, like every correlation this course has covered, can move against you specifically during the tail events that matter most. Chapter 9's risk management exists precisely because this combination logic, however carefully built, is not a substitute for explicit drawdown controls."
+            },
+            {
+              "_key": "mac5l5b18",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac5l5b18s1", "_type": "span", "text": "Closing Out Chapter 5, and What's Next", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac5l5b19",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac5l5b19s1",
+                  "_type": "span",
+                  "text": "Chapters 4 and 5 together have built three genuinely distinct return-driver strategies: trend, carry, and value, each with its own failure conditions and each generalized across this course's core asset classes. Chapter 6 turns to the harder allocation question this lesson only sketched, how much capital and risk each strategy, and each underlying asset within it, should actually receive, using formal risk parity. Chapter 7 then combines everything, every asset, every strategy, into one coherent multi-asset, multi-strategy book.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac5l5b20",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "The Correlation That Held, Until One Week It Didn't",
+              "scenario": "A desk has run a trend and carry sleeve combination for three years, with measured return correlation between the two sleeves consistently around -0.15 to -0.25, close to this lesson's illustrative assumption. During one particularly severe, fast-moving global risk-off week, both sleeves post losses simultaneously, and the measured correlation for that specific week spikes to +0.6.",
+              "prompt": "Does this single week invalidate the desk's combination strategy? How should the desk think about and respond to this event?",
+              "modelAnswer": "A single extreme week does not invalidate the strategy's historical correlation estimate, which remains a reasonable description of typical conditions; it confirms this lesson's explicit warning that sleeve correlation, like asset correlation in Chapter 3, is not fixed and can spike during genuine tail events, particularly ones severe and fast-moving enough to force both a trend reversal and a carry unwind at the same time. The desk should not abandon the combination logic, since -0.15 to -0.25 remains the far more representative typical-conditions estimate, but should treat this event as exactly the kind of scenario Chapter 9's risk management, position size caps, drawdown circuit breakers, and correlation-breakdown monitoring applied to strategy returns rather than just asset returns, is built to bound. The correct response is to review whether existing risk controls actually triggered as designed during this event, not to conclude the underlying diversification logic was flawed from a single, extreme observation."
+            },
+            {
+              "_key": "mac5l5b21",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Computing a Second Combined Sharpe Ratio",
+              "prompt": "A trend sleeve has a Sharpe ratio of 0.30 and a value sleeve has a Sharpe ratio of 0.25, both vol-scaled to the same target and combined at equal risk weight, with a return correlation of -0.3 between them. Using SR_combined = (0.5×SR1 + 0.5×SR2) / √(0.5×(1+ρ)), what is the combined Sharpe ratio? Round to two decimal places.",
+              "correctValue": 0.46,
+              "tolerance": 0.02,
+              "explanation": "Numerator: 0.5×0.30 + 0.5×0.25 = 0.275. Denominator: √(0.5×(1-0.3)) = √(0.5×0.7) = √0.35 ≈ 0.592. Combined Sharpe ≈ 0.275 / 0.592 ≈ 0.46, above both individual sleeves and above their simple average of 0.275, the same pattern this lesson's headline example showed."
+            },
+            {
+              "_key": "mac5l5b22",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why Negative Correlation Amplifies the Combined Sharpe",
+              "question": "Based on this lesson's combination formula, why does a negative correlation between two strategy sleeves produce a combined Sharpe ratio meaningfully above the simple average of the two individual Sharpe ratios?",
+              "options": [
+                "Because negative correlation increases the numerator (combined return) directly",
+                "Because negative correlation reduces the denominator (combined volatility) without reducing the numerator (combined return), so the same average return is achieved with less total risk",
+                "Because negative correlation has no mathematical effect on the combined Sharpe ratio",
+                "Because negative correlation only matters for asset combinations, not strategy combinations"
+              ],
+              "correctIndex": 1,
+              "explanation": "The combined return in the numerator is simply the risk-weighted average of the two sleeves' returns, unaffected by their correlation. The combined volatility in the denominator, however, shrinks as correlation falls, per the variance formula from Chapter 1 and Chapter 3. Lower combined volatility for the same combined return directly produces a higher Sharpe ratio, which is exactly why genuinely uncorrelated or negatively correlated strategies combine to something better than their average."
+            },
+            {
+              "_key": "mac5l5b23",
+              "_type": "keyTakeaways",
+              "points": [
+                "Combining strategy sleeves properly uses the identical portfolio variance mathematics from Chapter 1 and Chapter 3, applied to strategy returns rather than asset returns",
+                "Sleeves should be vol-scaled to a common target and combined at equal risk weight, the same risk-contribution logic Chapter 3 applied to assets, applied recursively one level up",
+                "In this lesson's illustrative example, a 0.35 Sharpe trend sleeve and a 0.40 Sharpe carry sleeve, combined at -0.2 correlation, produced a combined Sharpe of roughly 0.59, above both individual sleeves and above their simple average",
+                "The same mechanics extend to a three-sleeve combination including value, which Chapter 7 builds out fully",
+                "Strategy sleeve correlation is not fixed, and can spike during severe, fast-moving crises exactly as asset correlation does, which is why this combination logic is a genuine diversification benefit under typical conditions, not a guarantee under all conditions",
+                "Chapter 6 addresses formal risk parity for capital allocation, and Chapter 7 combines every asset and every strategy from Chapters 2 through 5 into one coherent multi-asset, multi-strategy book"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

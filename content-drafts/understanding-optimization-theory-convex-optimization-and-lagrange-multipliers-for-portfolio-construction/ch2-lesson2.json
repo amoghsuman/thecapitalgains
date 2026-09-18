@@ -1,0 +1,283 @@
+{
+  "courseSlug": "understanding-optimization-theory-convex-optimization-and-lagrange-multipliers-for-portfolio-construction",
+  "chapters": [
+    {
+      "title": "Chapter 2: Convexity: The Property That Makes Optimization Tractable",
+      "lessons": [
+        {
+          "title": "Convex Functions: Definition, Intuition, and the Second-Derivative Test",
+          "slug": "convex-functions-definition-intuition-and-the-second-derivative-test",
+          "body": [
+            {
+              "_key": "oc2l2-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l2-001s1", "_type": "span", "marks": [], "text": "Ananya's colleague made a claim last lesson: portfolio variance is a convex function. She cannot check that claim yet, because she has only defined convexity for sets, not for functions. A set is a shape. A function is a rule that turns inputs into outputs, and it has its own, related but distinct, notion of convexity. This lesson builds that definition properly, on functions of a single variable first, before the next lesson applies it directly to wᵀΣw." }
+              ]
+            },
+            {
+              "_key": "oc2l2-002",
+              "_type": "bigIdea",
+              "text": "A convex function curves upward like a bowl. Draw a straight line, a chord, connecting any two points on its graph. If the function's actual value between those two points never rises above that chord, the function is convex."
+            },
+            {
+              "_key": "oc2l2-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l2-003s1", "_type": "span", "marks": [], "text": "The Formal Definition of a Convex Function" }
+              ]
+            },
+            {
+              "_key": "oc2l2-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "oc2l2-004m1", "_type": "glossaryTerm", "definition": "A function f defined on a convex set, such that for any two points x and y in that set and any t between 0 and 1, f(tx + (1-t)y) is less than or equal to t f(x) + (1-t) f(y). The function's actual value never rises above the straight line connecting any two of its points." }
+              ],
+              "children": [
+                { "_key": "oc2l2-004s1", "_type": "span", "marks": [], "text": "A " },
+                { "_key": "oc2l2-004s2", "_type": "span", "marks": ["oc2l2-004m1"], "text": "convex function" },
+                { "_key": "oc2l2-004s3", "_type": "span", "marks": [], "text": " must be defined on a convex set (the domain has to have no dents either, or the comparison does not make sense), and it must satisfy one inequality for every pair of points in that domain." }
+              ]
+            },
+            {
+              "_key": "oc2l2-005",
+              "_type": "mathBlock",
+              "latex": "f(tx + (1-t)y) \\; \\leq \\; t\\,f(x) + (1-t)\\,f(y) \\quad \\text{for all } x, y \\text{ in the domain, } t \\in [0,1]",
+              "caption": "Left side: the function's actual value at the blended point. Right side: the straight-line blend of the function's two endpoint values. Convex means left is never bigger."
+            },
+            {
+              "_key": "oc2l2-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l2-006s1", "_type": "span", "marks": [], "text": "The Chord Test: Seeing Convexity on a Graph" }
+              ]
+            },
+            {
+              "_key": "oc2l2-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l2-007s1", "_type": "span", "marks": [], "text": "Sketch the function's curve, pick any two points on it, and draw a straight chord connecting them. If that chord always sits on or above the curve between the two points, no matter which two points you picked, the function is convex. If the curve ever pokes above the chord anywhere, it is not." }
+              ]
+            },
+            {
+              "_key": "oc2l2-008",
+              "_type": "table",
+              "caption": "The chord test on familiar functions",
+              "headers": ["Function", "Domain", "Convex?"],
+              "rows": [
+                { "_key": "oc2l2-008r1", "_type": "tableRow", "cells": ["f(x) = x²", "All real numbers", "Yes"] },
+                { "_key": "oc2l2-008r2", "_type": "tableRow", "cells": ["f(x) = eˣ", "All real numbers", "Yes"] },
+                { "_key": "oc2l2-008r3", "_type": "tableRow", "cells": ["f(x) = |x|", "All real numbers", "Yes"] },
+                { "_key": "oc2l2-008r4", "_type": "tableRow", "cells": ["f(x) = ax + b (any line)", "All real numbers", "Yes (also concave)"] },
+                { "_key": "oc2l2-008r5", "_type": "tableRow", "cells": ["f(x) = ln(x)", "x > 0", "No (concave)"] },
+                { "_key": "oc2l2-008r6", "_type": "tableRow", "cells": ["f(x) = √x", "x ≥ 0", "No (concave)"] },
+                { "_key": "oc2l2-008r7", "_type": "tableRow", "cells": ["f(x) = sin(x)", "All real numbers", "No (neither, globally)"] }
+              ]
+            },
+            {
+              "_key": "oc2l2-009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l2-009s1", "_type": "span", "marks": [], "text": "Concave Functions: The Mirror Image" }
+              ]
+            },
+            {
+              "_key": "oc2l2-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "oc2l2-010m1", "_type": "glossaryTerm", "definition": "A function f such that -f is convex. Its graph curves downward like a dome instead of upward like a bowl. Chords connecting any two of its points sit on or below the curve, never above." }
+              ],
+              "children": [
+                { "_key": "oc2l2-010s1", "_type": "span", "marks": [], "text": "A " },
+                { "_key": "oc2l2-010s2", "_type": "span", "marks": ["oc2l2-010m1"], "text": "concave function" },
+                { "_key": "oc2l2-010s3", "_type": "span", "marks": [], "text": " is simply a convex function flipped upside down. ln(x) and √x from the table are both concave, curving like domes rather than bowls." }
+              ]
+            },
+            {
+              "_key": "oc2l2-011",
+              "_type": "keyFact",
+              "label": "f is concave",
+              "value": "if and only if -f is convex",
+              "context": "This is the same maximize-equals-minimize-the-negative idea from Chapter 1, now applied to the shape of the function itself. Maximizing a concave function is exactly as tractable as minimizing a convex one."
+            },
+            {
+              "_key": "oc2l2-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l2-012s1", "_type": "span", "marks": [], "text": "The Second-Derivative Test: A Practical Shortcut" }
+              ]
+            },
+            {
+              "_key": "oc2l2-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l2-013s1", "_type": "span", "marks": [], "text": "Checking the chord inequality directly for every pair of points is not something you do by hand for every new function. For a smooth, twice-differentiable function, there is a shortcut: check the sign of the second derivative instead." }
+              ]
+            },
+            {
+              "_key": "oc2l2-014",
+              "_type": "mathBlock",
+              "latex": "f \\text{ is convex on an interval} \\iff f''(x) \\geq 0 \\text{ for every } x \\text{ in that interval}",
+              "caption": "The second derivative measures how the slope itself is changing. Non-negative everywhere means the curve never bends downward."
+            },
+            {
+              "_key": "oc2l2-015",
+              "_type": "mathBlock",
+              "latex": "f(x) = x^2 \\; \\Rightarrow \\; f'(x) = 2x \\; \\Rightarrow \\; f''(x) = 2 \\geq 0 \\text{ everywhere}",
+              "caption": "Confirms x² is convex on all real numbers, matching the table above."
+            },
+            {
+              "_key": "oc2l2-016",
+              "_type": "mathBlock",
+              "latex": "f(x) = x^3 \\; \\Rightarrow \\; f''(x) = 6x \\quad \\text{negative for } x < 0, \\; \\text{positive for } x > 0",
+              "caption": "x³ is NOT convex over all real numbers, but it IS convex if you restrict the domain to x ≥ 0. Convexity depends on the domain, not just the formula."
+            },
+            {
+              "_key": "oc2l2-017",
+              "_type": "callout",
+              "type": "insight",
+              "text": "f(x) = |x| is convex by the chord definition, but it has no derivative at all at x = 0, the sharp corner, so the second-derivative test cannot even be applied there. The second-derivative test is a convenient shortcut for smooth functions. The chord inequality from the formal definition is the real thing it is shortcutting, and it still applies even where derivatives do not exist."
+            },
+            {
+              "_key": "oc2l2-018",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l2-018s1", "_type": "span", "marks": [], "text": "Generalizing to Many Variables: A Preview of the Hessian" }
+              ]
+            },
+            {
+              "_key": "oc2l2-019",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l2-019s1", "_type": "span", "marks": [], "text": "Portfolio variance is not a function of one number, it is a function of every weight at once, w1 through wN. A single second derivative cannot capture how the function curves in every direction simultaneously. The tool that generalizes f''(x) to many variables is a matrix, built from every second-order partial derivative, called the Hessian." }
+              ]
+            },
+            {
+              "_key": "oc2l2-020",
+              "_type": "keyFact",
+              "label": "f''(x) ≥ 0 generalizes to",
+              "value": "The Hessian matrix is positive semi-definite",
+              "context": "Chapter 3 defines the Hessian precisely and shows exactly what positive semi-definite means. The next lesson in this chapter uses this idea directly to prove portfolio variance is convex."
+            },
+            {
+              "_key": "oc2l2-021",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc2l2-021s1", "_type": "span", "marks": [], "text": "Why Convexity of the Objective Matters" }
+              ]
+            },
+            {
+              "_key": "oc2l2-022",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This is the piece that makes Chapter 1's convex QP claim precise. A convex objective function, minimized over a convex feasible region, is exactly the combination that guarantees the problem is solvable reliably: no getting trapped at a local minimum that is not the true global one. Chapter 2's final lesson makes that guarantee explicit and proves it."
+            },
+            {
+              "_key": "oc2l2-023",
+              "_type": "comparison",
+              "title": "Convex vs Non-Convex Objectives in Portfolio Work",
+              "columns": [
+                {
+                  "_key": "oc2l2-023c1",
+                  "label": "Convex (This Course's Territory)",
+                  "points": [
+                    "Portfolio variance, wᵀΣw",
+                    "Sum of squared transaction costs or turnover penalties",
+                    "Tracking error against a benchmark",
+                    "Any linear objective, like expected return"
+                  ]
+                },
+                {
+                  "_key": "oc2l2-023c2",
+                  "label": "Not Directly Convex (Needs Reformulation or Different Tools)",
+                  "points": [
+                    "The Sharpe ratio, a ratio of a linear and a nonlinear term",
+                    "Value at Risk, under many real return distributions",
+                    "Objectives with satiation or reversing preferences",
+                    "Anything built on cardinality or combinatorial rules"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "oc2l2-024",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Apply the second-derivative test",
+              "question": "Is f(x) = x⁴ - 2x² convex over all real numbers?",
+              "options": [
+                "Yes, because the highest power term is x⁴ with a positive coefficient",
+                "No, because f''(x) = 12x² - 4 is negative for x between roughly -0.577 and 0.577",
+                "Yes, because f(x) is symmetric around x = 0",
+                "Cannot be determined without more information"
+              ],
+              "correctIndex": 1,
+              "explanation": "The leading term's sign alone does not guarantee convexity everywhere. f''(x) = 12x² - 4 dips negative whenever x² is less than 1/3, roughly between -0.577 and 0.577. In that middle region the function curves downward like a hill, not a bowl, which is why it actually has two separate local minima instead of one global one. This is exactly the kind of function convex optimization theory is built to rule out."
+            },
+            {
+              "_key": "oc2l2-025",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Determine convexity from a description",
+              "scenario": "A risk model's turnover penalty charges zero cost for portfolio turnover up to 5%, then charges a cost proportional to the square of turnover beyond that 5% threshold.",
+              "prompt": "Without computing any derivatives, would you expect this penalty function to be convex? Why or why not?",
+              "modelAnswer": "Yes, this is a classic convex shape: flat, which is a straight line with zero slope, up to the threshold, then curving upward like a bowl beyond it. A flat piece joined smoothly to an upward-curving piece, matching slope at the kink, is a standard way to build a convex function. Real transaction-cost and turnover-penalty models are frequently constructed this way precisely because it keeps the overall portfolio optimization problem convex and solvable."
+            },
+            {
+              "_key": "oc2l2-026",
+              "_type": "flashcardSet",
+              "title": "Convex Functions: Core Terms",
+              "cards": [
+                { "_key": "oc2l2-026f1", "term": "Convex function", "definition": "A function where the chord between any two points on its graph never dips below the actual curve between them; equivalently, f(tx + (1-t)y) ≤ t f(x) + (1-t) f(y)." },
+                { "_key": "oc2l2-026f2", "term": "Concave function", "definition": "A function f where -f is convex. Curves downward like a dome instead of upward like a bowl." },
+                { "_key": "oc2l2-026f3", "term": "Chord test", "definition": "Drawing a straight line between two points on a function's graph and checking whether the curve stays on or below it between those points." },
+                { "_key": "oc2l2-026f4", "term": "Second-derivative test", "definition": "For a smooth function, checking whether f''(x) ≥ 0 everywhere on the domain of interest, a shortcut for confirming convexity." },
+                { "_key": "oc2l2-026f5", "term": "Hessian (preview)", "definition": "The many-variable generalization of the second derivative, a matrix of every second-order partial derivative. Defined precisely in Chapter 3." }
+              ]
+            },
+            {
+              "_key": "oc2l2-027",
+              "_type": "keyTakeaways",
+              "points": [
+                "A convex function's chords never dip below its actual curve; formally, f(tx + (1-t)y) ≤ t f(x) + (1-t) f(y) for every pair of points in its domain.",
+                "A concave function is a convex function flipped upside down: f is concave exactly when -f is convex.",
+                "The second-derivative test, f''(x) ≥ 0, is a practical shortcut for smooth functions, but convexity depends on the domain too, as x³ shows: not convex over all reals, but convex when restricted to x ≥ 0.",
+                "The chord definition applies even where a function has no derivative, like |x| at its corner, which the second-derivative test alone cannot handle.",
+                "For functions of many variables, like portfolio variance, the second derivative generalizes to a matrix called the Hessian, and the convexity condition becomes positive semi-definiteness, covered starting in Chapter 3.",
+                "A convex objective minimized over a convex feasible region is exactly the combination that guarantees a solvable problem with no false local minima, the subject of this chapter's final lesson."
+              ]
+            },
+            {
+              "_key": "oc2l2-028",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to buy or sell any security. Function examples are mathematical illustrations, not descriptions of any specific fund's actual risk model. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

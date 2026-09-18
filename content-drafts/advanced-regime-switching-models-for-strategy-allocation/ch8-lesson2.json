@@ -1,0 +1,211 @@
+{
+  "courseSlug": "advanced-regime-switching-models-for-strategy-allocation",
+  "chapters": [
+    {
+      "title": "Chapter 8: Risk Management Through Regime Transitions",
+      "lessons": [
+        {
+          "title": "Transition Risk: Position Sizing During Ambiguous Regimes",
+          "slug": "transition-risk-position-sizing-during-ambiguous-regimes",
+          "body": [
+            {
+              "_key": "rswc8l2b01",
+              "_type": "bigIdea",
+              "text": "Chapter 6's confidence scaling reduces size when you are unsure which regime you are in. It does not address a separate, sneakier problem: the days right after a regime flip are exactly when your fitted regime parameters themselves are least proven."
+            },
+            {
+              "_key": "rswc8l2b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc8l2b02s1",
+                  "_type": "span",
+                  "text": "Chapter 6's confidence formula assumes the fitted Calm and Stressed parameters, mu and sigma-squared for each, are trustworthy, and only discounts for uncertainty about which of them currently applies. This lesson asks a different question: right after a genuine transition, are those historical parameters even the right ones to be trusting at all?",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc8l2b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc8l2b03s1",
+                  "_type": "span",
+                  "text": "A Second Source of Uncertainty: Parameter Risk",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc8l2b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc8l2b04s1",
+                  "_type": "span",
+                  "text": "The Stressed state's fitted mean and variance came from historical stressed periods, 2008, 2020, 2022, in this course's recurring examples. A brand new stress episode is not guaranteed to behave like the average of those historical ones; it may have a different trigger, different participants, and different dynamics entirely. Trusting the historical Stressed parameters fully, the moment a new transition begins, quietly assumes the new episode will resemble the old ones closely enough for those numbers to still apply. That assumption is weakest exactly when it matters most: in the first few days after a genuine shift, before there is any new data to confirm or contradict it.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc8l2b05",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc8l2b05s1",
+                  "_type": "span",
+                  "text": "A Practical Fix: A Transition Penalty",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc8l2b06",
+              "_type": "mathBlock",
+              "latex": "\\text{transition\\_penalty}(t) = \\min\\!\\left(1, \\frac{\\text{days since last flip}}{N}\\right)",
+              "caption": "A simple linear ramp: full discount right after a flip, fading to no discount after N days of the new regime holding"
+            },
+            {
+              "_key": "rswc8l2b07",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc8l2b07s1",
+                  "_type": "span",
+                  "text": "Apply this as one more multiplicative discount, on top of everything Chapter 6 already built: final position = fractional Kelly x blended Kelly fraction x confidence x transition penalty. With N = 10 trading days, a position is sized at only 10% of what confidence scaling alone would suggest on the first day after a flip, ramping linearly back to full size only after ten days of the new regime proving itself.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc8l2b08",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc8l2b08s1",
+                  "_type": "span",
+                  "text": "Applying This to Chapter 6's Case Study",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc8l2b09",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc8l2b09s1",
+                  "_type": "span",
+                  "text": "Chapter 6's Lesson 4 tracked a 10-day drift where the position sign flipped between Day 3 and Day 4. Treat Day 4 as day 1 of the new regime and layer a 10-day transition penalty on top of that lesson's own position sizes.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc8l2b10",
+              "_type": "table",
+              "caption": "Chapter 6's positions, with a transition penalty layered on top (N = 10)",
+              "headers": ["Day", "Original Position (Ch 6)", "Days Since Flip", "Transition Penalty", "Adjusted Position"],
+              "rows": [
+                {
+                  "_key": "rswc8l2b10r1",
+                  "_type": "tableRow",
+                  "cells": ["4", "-5.25%", "1", "0.10", "-0.53%"]
+                },
+                {
+                  "_key": "rswc8l2b10r2",
+                  "_type": "tableRow",
+                  "cells": ["5", "0.0%", "2", "0.20", "0.00%"]
+                },
+                {
+                  "_key": "rswc8l2b10r3",
+                  "_type": "tableRow",
+                  "cells": ["6", "-10.5%", "3", "0.30", "-3.15%"]
+                },
+                {
+                  "_key": "rswc8l2b10r4",
+                  "_type": "tableRow",
+                  "cells": ["7", "-24.4%", "4", "0.40", "-9.76%"]
+                },
+                {
+                  "_key": "rswc8l2b10r5",
+                  "_type": "tableRow",
+                  "cells": ["8", "-40.6%", "5", "0.50", "-20.30%"]
+                },
+                {
+                  "_key": "rswc8l2b10r6",
+                  "_type": "tableRow",
+                  "cells": ["9", "-49.3%", "6", "0.60", "-29.58%"]
+                },
+                {
+                  "_key": "rswc8l2b10r7",
+                  "_type": "tableRow",
+                  "cells": ["10", "-58.4%", "7", "0.70", "-40.88%"]
+                }
+              ]
+            },
+            {
+              "_key": "rswc8l2b11",
+              "_type": "callout",
+              "type": "insight",
+              "text": "By Day 10, only 7 days into the new regime, the transition penalty is still discounting the position by 30%, and the full-size position Chapter 6 computed is not reached within this entire 10-day window at all. This is not double-counting Chapter 6's confidence discount. Confidence answers 'how sure are we this is the right regime label.' The transition penalty answers a different question entirely: 'even if the label is right, how much do we trust the historical parameters attached to it, this early into a fresh instance of that regime.' Both discounts can and should apply at once, because they address genuinely different risks."
+            },
+            {
+              "_key": "rswc8l2b12",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Applying the Transition Penalty",
+              "prompt": "A position's size before the transition penalty is -30%. It has been 4 trading days since the last regime flip, using a 10-day linear ramp. What is the transition-penalty-adjusted position?",
+              "correctValue": -12,
+              "tolerance": 0.5,
+              "unit": "%",
+              "explanation": "Transition penalty = min(1, 4/10) = 0.40. Adjusted position = -30% x 0.40 = -12%."
+            },
+            {
+              "_key": "rswc8l2b13",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Two Different Discounts",
+              "question": "How does the transition penalty in this lesson differ from Chapter 6's confidence scaling?",
+              "options": [
+                "They are the same discount described two different ways, and applying both would double-count the same risk",
+                "Confidence scaling discounts for uncertainty about which regime currently applies; the transition penalty separately discounts for how proven the historical parameters attached to that regime are, this early into a fresh instance of it",
+                "The transition penalty replaces confidence scaling entirely and should be used instead of it",
+                "The transition penalty only applies to options strategies, not directional ones"
+              ],
+              "correctIndex": 1,
+              "explanation": "Confidence scaling can be high, meaning the model is quite sure which regime is live, at the exact same moment the transition penalty is low, because the regime has only just begun and its historical parameters have not had a chance to prove themselves against fresh data. These are genuinely different sources of risk, which is why they multiply together rather than substituting for each other."
+            },
+            {
+              "_key": "rswc8l2b14",
+              "_type": "keyTakeaways",
+              "points": [
+                "Confidence scaling from Chapter 6 discounts for uncertainty about which regime applies, but assumes the historical parameters attached to each regime are trustworthy",
+                "A new transition's true dynamics may not resemble historical instances of the same regime closely enough for those parameters to fully apply, especially in the first few days",
+                "A transition penalty, a simple linear ramp from a heavy discount right after a flip to no discount after N days, addresses this separate parameter-risk problem directly",
+                "Layered onto Chapter 6's case study, the transition penalty keeps positions meaningfully smaller than confidence scaling alone would suggest for the first several days after a flip",
+                "Confidence scaling and the transition penalty address genuinely different risks and should be applied together, multiplicatively, not treated as redundant with each other"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

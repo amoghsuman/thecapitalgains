@@ -1,0 +1,294 @@
+{
+  "courseSlug": "understanding-position-sizing-and-the-kelly-criterion",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Position Sizing Is the Real Edge",
+      "lessons": [
+        {
+          "title": "Why Two Traders With the Same Edge Get Different Results",
+          "slug": "why-two-traders-with-the-same-edge-get-different-results",
+          "body": [
+            {
+              "_key": "c1l1-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l1-001s1", "_type": "span", "marks": [], "text": "Rohan and Priya both trade out of Pune. In early 2024 they find the same setup on a Nifty options screener: a weekly strategy that has won 55 out of every 100 trades over three years of backtested data, with wins and losses of roughly similar size. They agree it is a genuine edge, not noise. Six months later, Rohan's account is up nicely. Priya's account is down to a tenth of what she started with. Same strategy, same win rate, same broker, same market. The only thing that differed was how much of their capital each of them put on the line per trade." }
+              ]
+            },
+            {
+              "_key": "c1l1-002",
+              "_type": "bigIdea",
+              "text": "An edge tells you what to trade. Position sizing decides whether that edge ever gets the chance to show up in your account, or whether you are wiped out before it does."
+            },
+            {
+              "_key": "c1l1-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l1-003s1", "_type": "span", "marks": [], "text": "The Trade Everyone Forgets to Make" }
+              ]
+            },
+            {
+              "_key": "c1l1-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l1-004s1", "_type": "span", "marks": [], "text": "Ask most retail traders what they spend their time on and the answer is almost always the same: finding the setup. Screening on screener.in for cheap quality stocks, backtesting an RSI crossover on five years of Nifty data, reading a Sensibull payoff chart before selling a strangle. All of that effort goes into one question: what should I buy or sell?" }
+              ]
+            },
+            {
+              "_key": "c1l1-005",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l1-005s1", "_type": "span", "marks": [], "text": "Almost nobody spends the same effort on the second question: how much of my capital should this one idea get? That second question is position sizing, and it is not a minor detail you bolt on after the real work is done. It decides whether a good idea compounds into real wealth, survives a losing streak intact, or ends the account in a single bad month." }
+              ]
+            },
+            {
+              "_key": "c1l1-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l1-006s1", "_type": "span", "marks": [], "text": "A Simple Edge, Defined Precisely" }
+              ]
+            },
+            {
+              "_key": "c1l1-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l1-007s1", "_type": "span", "marks": [], "text": "To see what sizing actually does, strip a trading system down to its simplest possible form: a bet that wins 55% of the time, where a win and a loss are roughly the same size. This is a deliberate simplification. Real Nifty option trades rarely have an exact 1:1 payoff, and Chapter 4 deals with that complexity directly. For now, the simple version makes the effect of sizing impossible to miss." }
+              ]
+            },
+            {
+              "_key": "c1l1-008",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "c1l1-008s1", "label": "Win rate", "value": "55%", "context": "Backtested over 3 years" },
+                { "_key": "c1l1-008s2", "label": "Payoff ratio", "value": "1:1", "context": "Average win ≈ average loss" },
+                { "_key": "c1l1-008s3", "label": "Expected edge", "value": "+10%", "context": "Per rupee risked, per trade" },
+                { "_key": "c1l1-008s4", "label": "Trades compared", "value": "200", "context": "Across three sizing choices" }
+              ]
+            },
+            {
+              "_key": "c1l1-009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l1-009s1", "_type": "span", "marks": [], "text": "Same Edge, Three Sizing Choices" }
+              ]
+            },
+            {
+              "_key": "c1l1-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l1-010s1", "_type": "span", "marks": [], "text": "Give this exact edge to three traders, each starting with ₹1,00,000. Each one risks a fixed percentage of their current capital on every trade: 5%, 10% or 30%. Nothing else changes. The chart below tracks the expected value of each account through 200 trades. It is a smoothed curve built from the mathematics of compounding, not one lucky or unlucky sequence, so treat it as the average path each sizing choice tends toward rather than a guarantee for any single trader's actual run." }
+              ]
+            },
+            {
+              "_key": "c1l1-011",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "₹1,00,000 compounded at three position sizes, same 55%/1:1 edge",
+              "xAxisLabel": "Trades completed",
+              "yAxisLabel": "Account value (₹)",
+              "data": [
+                { "_key": "c1l1-011d1", "label": "0" },
+                { "_key": "c1l1-011d2", "label": "50" },
+                { "_key": "c1l1-011d3", "label": "100" },
+                { "_key": "c1l1-011d4", "label": "150" },
+                { "_key": "c1l1-011d5", "label": "200" }
+              ],
+              "series": [
+                {
+                  "_key": "c1l1-011se1",
+                  "label": "5% per trade",
+                  "values": [100000, 120600, 145500, 175600, 211800]
+                },
+                {
+                  "_key": "c1l1-011se2",
+                  "label": "10% per trade",
+                  "values": [100000, 128500, 165000, 212000, 272300]
+                },
+                {
+                  "_key": "c1l1-011se3",
+                  "label": "30% per trade",
+                  "values": [100000, 44500, 19800, 8800, 3900]
+                }
+              ]
+            },
+            {
+              "_key": "c1l1-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l1-012s1", "_type": "span", "marks": [], "text": "All three traders had the exact same edge. Two of them made money. One of them, betting the most aggressively on the strategy they were most confident in, lost 96% of their capital. Nothing about the strategy changed between the three accounts. The only variable was the size of the bet relative to capital, and that one variable was enough to turn a genuine 10% edge into a near wipeout." }
+              ]
+            },
+            {
+              "_key": "c1l1-013",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This is not a quirk of one simulation. Bet too large relative to an edge and the mathematics of compounding works against you, even though every single trade still has positive expected value on its own. There is a specific number that maximises long-run growth for a given edge, and a formula for finding it. That formula is the Kelly Criterion, and Chapter 2 derives it from scratch."
+            },
+            {
+              "_key": "c1l1-014",
+              "_type": "table",
+              "caption": "Same edge, same 200 trades, three outcomes",
+              "headers": ["Size per trade", "Ending capital", "Result"],
+              "rows": [
+                { "_key": "c1l1-014r1", "_type": "tableRow", "cells": ["5%", "₹2,11,800", "More than doubled, smoothest ride"] },
+                { "_key": "c1l1-014r2", "_type": "tableRow", "cells": ["10%", "₹2,72,300", "Grew fastest of the three"] },
+                { "_key": "c1l1-014r3", "_type": "tableRow", "cells": ["30%", "₹3,900", "Lost 96% despite a real, positive edge"] }
+              ]
+            },
+            {
+              "_key": "c1l1-015",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Measure the damage",
+              "prompt": "The trader risking 30% per trade started with ₹1,00,000 and ended with ₹3,900 after 200 trades. What was the percentage drawdown from peak (the starting capital) to this ending value?",
+              "correctValue": 96.1,
+              "tolerance": 0.5,
+              "unit": "%",
+              "explanation": "(₹1,00,000 minus ₹3,900) ÷ ₹1,00,000 = 96.1%. A 96% drawdown needs a gain of roughly 2,464% just to get back to even. This is why oversizing is far more dangerous than an equivalent-looking loss on paper suggests: the math of recovering from a large drawdown is brutally asymmetric."
+            },
+            {
+              "_key": "c1l1-016",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l1-016s1", "_type": "span", "marks": [], "text": "Why This Isn't Just an F&O Problem" }
+              ]
+            },
+            {
+              "_key": "c1l1-017",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l1-017s1", "_type": "span", "marks": [], "text": "It is tempting to file this under \"derivatives traders take too much leverage\" and move on. Sizing risk shows up just as much in plain equity investing. An investor who does careful, genuine research on a small-cap stock and then puts 80% of their net worth into it has made the same mistake as Priya, just spread across months instead of weeks. The research can be excellent and the position can still be wrong for the portfolio, because no single idea, however well researched, deserves a bet size that can end the game if it fails." }
+              ]
+            },
+            {
+              "_key": "c1l1-018",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Leverage from your broker makes oversized bets look survivable in the short run. SEBI's peak margin framework and exchange-mandated margins on Nifty and Bank Nifty F&O still allow enough leverage that a short string of losses sized like Priya's can erase an account in days, not months. Margin availability is not the same as a bet being sized correctly."
+            },
+            {
+              "_key": "c1l1-019",
+              "_type": "comparison",
+              "title": "Two different jobs, often confused as one",
+              "columns": [
+                {
+                  "_key": "c1l1-019c1",
+                  "label": "What your edge decides",
+                  "points": [
+                    "Whether a strategy makes money on average, over many trades",
+                    "Which setups, stocks or option structures are worth trading at all",
+                    "The win rate and the payoff ratio of each individual bet"
+                  ]
+                },
+                {
+                  "_key": "c1l1-019c2",
+                  "label": "What your position size decides",
+                  "points": [
+                    "Whether you survive the losing streaks a real edge will still produce",
+                    "How fast the edge compounds into actual wealth",
+                    "Whether one bad stretch can end the account regardless of the edge"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c1l1-020",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l1-020s1", "_type": "span", "marks": [], "text": "What Position Sizing Means, Precisely" }
+              ]
+            },
+            {
+              "_key": "c1l1-021",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "c1l1-021m1", "_type": "glossaryTerm", "definition": "The share of your total tradeable capital that is genuinely at risk on one position, measured against the amount you could lose, not the notional value of what you have bought." }
+              ],
+              "children": [
+                { "_key": "c1l1-021s1", "_type": "span", "marks": [], "text": "Position sizing is " },
+                { "_key": "c1l1-021s2", "_type": "span", "marks": ["c1l1-021m1"], "text": "the fraction of your capital genuinely at risk" },
+                { "_key": "c1l1-021s3", "_type": "span", "marks": [], "text": " on a single trade or idea. Notice this is not the same as how many shares or lots you bought. With leverage, the notional value of a position can be several times the capital actually at risk, which is exactly why F&O accounts blow up faster than cash equity ones for the same percentage-of-capital mistake." }
+              ]
+            },
+            {
+              "_key": "c1l1-022",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l1-022s1", "_type": "span", "marks": [], "text": "The rest of this course builds toward a disciplined answer to \"how much.\" Chapter 2 derives the Kelly Criterion, the formula that found the 10% figure used in this lesson's chart. Chapter 3 covers why full Kelly is still too aggressive for most real trading and how fractional Kelly fixes that. Chapter 4 applies all of it to Nifty and Bank Nifty options, futures and multi-stock portfolios. Chapter 5 covers where Kelly's assumptions break down and what to use instead." }
+              ]
+            },
+            {
+              "_key": "c1l1-023",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Advise a friend",
+              "scenario": "A friend has backtested a Bank Nifty options strategy on Opstra: it wins 60% of the time, with an average win of ₹8,000 and an average loss of ₹6,000, on a ₹5,00,000 trading account. He wants to risk ₹1,50,000, or 30% of the account, on the next trade, arguing that \"the edge is strong enough to justify it.\"",
+              "prompt": "Using what this lesson showed, what would you tell him, and what evidence would you point to?",
+              "modelAnswer": "A strong edge is a reason to trade the strategy repeatedly, not a reason to bet a large fraction of capital on one trade. This lesson's simulation used an even better-than-average edge and showed that a 30% bet size turned a 10% per-trade edge into a 96% loss over time, while a far smaller size compounded the same edge into solid growth. Edge quality and bet size are two separate decisions. Before sizing this trade, work out the strategy's actual optimal fraction using the payoff numbers, which Chapter 2 shows how to do, rather than picking 30% because the edge feels strong."
+            },
+            {
+              "_key": "c1l1-024",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Check your understanding",
+              "question": "In the three-trader example, what was different about the account that lost 96% of its capital?",
+              "options": [
+                "It used a strategy with a lower win rate",
+                "It used a strategy with a negative expected edge",
+                "It risked a larger fraction of capital on every trade, with the same edge as the other two accounts",
+                "It traded a different underlying, Bank Nifty instead of Nifty"
+              ],
+              "correctIndex": 2,
+              "explanation": "All three accounts traded the identical 55%-win-rate, 1:1-payoff edge. The only variable was the fraction of capital risked per trade: 5%, 10% and 30%. The 30% account lost money not because the edge failed, but because the bet size was too large for that edge to survive on."
+            },
+            {
+              "_key": "c1l1-025",
+              "_type": "keyTakeaways",
+              "points": [
+                "An edge only shows up in your account if your position sizing lets it survive long enough to compound.",
+                "Identical edges produced wildly different outcomes across three sizing choices: 5%, 10% and 30% of capital per trade.",
+                "Betting too large relative to an edge can turn a genuinely positive-expectancy strategy into a near wipeout, even though each individual trade still has positive expected value.",
+                "This applies to concentrated equity positions, not just leveraged F&O trades.",
+                "Broker leverage and exchange margin limits allow you to oversize a position; they do not tell you the position is sized correctly.",
+                "Position size is the fraction of capital genuinely at risk, not the number of shares or lots bought, which matters most once leverage is involved."
+              ]
+            },
+            {
+              "_key": "c1l1-026",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment or trading advice. The traders, strategies and figures described are illustrative and simplified to demonstrate a mathematical principle, not a recommendation to trade Nifty or Bank Nifty options. Trading in derivatives carries substantial risk of loss. Consult a SEBI-registered investment adviser before making trading or investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

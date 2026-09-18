@@ -1,0 +1,229 @@
+{
+  "courseSlug": "understanding-reinforcement-learning-applications-in-trading",
+  "chapters": [
+    {
+      "title": "Chapter 3: Building a Trading Environment",
+      "lessons": [
+        {
+          "title": "Building a Gym-Style Trading Environment in Python on Nifty 50 Data",
+          "slug": "building-a-gym-style-trading-environment-in-python-on-nifty-50-data",
+          "body": [
+            {
+              "_key": "rl3l3b01",
+              "_type": "bigIdea",
+              "text": "Everything this course has described conceptually, state, action, reward, episode, needs to run as actual code before any algorithm can train against it. This lesson writes that code, once, in a form that plugs into any standard RL library instead of needing a bespoke training loop."
+            },
+            {
+              "_key": "rl3l3b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl3l3b02s1", "_type": "span", "text": "Why Build to the Gymnasium Interface", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl3l3b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl3l3b03s1",
+                  "_type": "span",
+                  "text": "The standard way to package a trading environment in Python is to build it to the Gymnasium interface, the actively maintained successor to OpenAI's original Gym library. Gymnasium defines a small, strict contract: an environment exposes an action_space, an observation_space, a reset() method that starts a new episode, and a step() method that takes an action and returns the next state, reward, and whether the episode has ended. Building to this contract, rather than inventing a bespoke interface, means this environment can plug directly into existing, well-tested algorithm implementations, DQN, PPO, and the rest, instead of needing custom training code written from scratch for every algorithm tried.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl3l3b04",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl3l3b04s1", "_type": "span", "text": "Setting Up the Environment: Action Space, Observation Space, Initialization", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl3l3b05",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl3l3b05s1",
+                  "_type": "span",
+                  "text": "Initialization defines the two spaces this chapter has been building toward: a discrete action space with three choices, sell, hold, buy, from Chapter 1's simplified design, and an observation space sized to match the lookback-window state vector from the previous lesson.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl3l3b06",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "import numpy as np\nimport gymnasium as gym\nfrom gymnasium import spaces\n\n\nclass NiftyFuturesEnv(gym.Env):\n    def __init__(\n        self, price_data, lookback=10, lot_size=50,\n        cost_per_lot=50.0, dd_penalty=1000.0, starting_capital=100_000.0,\n    ):\n        super().__init__()\n        self.prices = price_data[\"close\"].values\n        self.volumes = price_data[\"volume\"].values\n        self.lookback = lookback\n        self.lot_size = lot_size\n        self.cost_per_lot = cost_per_lot\n        self.dd_penalty = dd_penalty\n        self.starting_capital = starting_capital\n\n        # 0 = sell (go short 1 lot), 1 = hold, 2 = buy (go long 1 lot)\n        self.action_space = spaces.Discrete(3)\n\n        state_dim = 2 * lookback + 2  # returns + volume z-scores + position + unrealized P&L\n        self.observation_space = spaces.Box(\n            low=-np.inf, high=np.inf, shape=(state_dim,), dtype=np.float32\n        )",
+              "caption": "price_data is expected to be one trading day's minute bars, with close and volume columns, so a full episode naturally corresponds to one NSE session. action_space and observation_space are exactly what any Gymnasium-compatible algorithm implementation expects to find."
+            },
+            {
+              "_key": "rl3l3b07",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl3l3b07s1", "_type": "span", "text": "Reset and State Construction", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl3l3b08",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl3l3b08s1",
+                  "_type": "span",
+                  "text": "reset() starts a fresh episode, flat, with no position and no accumulated equity. _get_state() rebuilds the lookback-window state vector from the previous lesson, in code rather than in isolation.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl3l3b09",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "    def reset(self, seed=None, options=None):\n        super().reset(seed=seed)\n        self.t = self.lookback\n        self.position = 0          # lots held: -1, 0, or +1 in this simplified version\n        self.entry_price = None\n        self.equity = self.starting_capital\n        self.peak_equity = self.starting_capital\n        return self._get_state(), {}\n\n    def _get_state(self):\n        window_prices = self.prices[self.t - self.lookback : self.t + 1]\n        returns = np.diff(window_prices) / window_prices[:-1]\n\n        window_volumes = self.volumes[self.t - self.lookback : self.t]\n        volume_z = (window_volumes - window_volumes.mean()) / (window_volumes.std() + 1e-8)\n\n        unrealized_pnl = self.position * (\n            self.prices[self.t] - (self.entry_price or self.prices[self.t])\n        ) * self.lot_size\n\n        state = np.concatenate([returns, volume_z, [self.position, unrealized_pnl]])\n        return state.astype(np.float32)",
+              "caption": "This is the same lookback-window construction from the previous lesson, now living inside the environment itself so every reset() and step() call produces a state built exactly the same way, in training and, eventually, live."
+            },
+            {
+              "_key": "rl3l3b10",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl3l3b10s1", "_type": "span", "text": "The Step Function: Where Reward Actually Gets Computed", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl3l3b11",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl3l3b11s1",
+                  "_type": "span",
+                  "text": "step() is where every design choice from this chapter comes together: the action changes the position, the position change determines the transaction cost, and the reward is computed using exactly the formula the previous lesson built, P&L minus cost minus a drawdown penalty.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl3l3b12",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "    def step(self, action):\n        prev_price = self.prices[self.t]\n        target_position = {0: -1, 1: self.position, 2: 1}[action]\n        trade_size = abs(target_position - self.position)\n\n        if target_position != self.position:\n            self.entry_price = prev_price  # fresh cost basis on any position change\n        self.position = target_position\n\n        self.t += 1\n        new_price = self.prices[self.t]\n\n        pnl_change = self.position * (new_price - prev_price) * self.lot_size\n        transaction_cost = trade_size * self.cost_per_lot\n\n        self.equity += pnl_change - transaction_cost\n        self.peak_equity = max(self.peak_equity, self.equity)\n        drawdown = max(0.0, (self.peak_equity - self.equity) / self.peak_equity)\n\n        reward = pnl_change - transaction_cost - self.dd_penalty * drawdown\n\n        done = self.t >= len(self.prices) - 1\n        return self._get_state(), reward, done, False, {}",
+              "caption": "reward here is exactly r_t = ΔPnL_t − c·|Δposition_t| − β·DD_t from the previous lesson, with cost_per_lot standing in for c and dd_penalty standing in for β. done becomes True once the price data runs out, so passing in one day's minute bars makes each episode naturally equal to one 375-minute NSE session, the same episode boundary Chapter 2 used to reason about the discount factor."
+            },
+            {
+              "_key": "rl3l3b13",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl3l3b13s1", "_type": "span", "text": "Sanity-Checking the Environment Before Training Anything", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl3l3b14",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl3l3b14s1",
+                  "_type": "span",
+                  "text": "Before training anything, the only thing worth checking is whether the environment runs at all: correct shapes, no crashes, a reward that comes out as a plain number. A rollout of entirely random actions is the standard way to check this.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl3l3b15",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "env = NiftyFuturesEnv(one_day_of_minute_bars)\nstate, info = env.reset()\ndone = False\ntotal_reward = 0.0\n\nwhile not done:\n    action = env.action_space.sample()  # random action, sanity check only\n    state, reward, done, truncated, info = env.step(action)\n    total_reward += reward\n\nprint(f\"Episode finished. Steps: {env.t}. Total reward: {total_reward:.2f}\")",
+              "caption": "This confirms the environment behaves correctly. It says nothing about whether the strategy is any good, since ε = 1.0 random actions are exactly the fully-exploratory case Chapter 2 described, not a trained policy."
+            },
+            {
+              "_key": "rl3l3b16",
+              "_type": "callout",
+              "type": "warning",
+              "text": "It is easy to glance at a sanity-check rollout's total reward and read meaning into it, positive looks encouraging, negative looks concerning. Resist this. A random policy's reward here is not a baseline for anything except confirming the environment runs; the actual training and evaluation this environment was built for comes next, once an algorithm from Chapter 2 is actually learning from it rather than acting at random."
+            },
+            {
+              "_key": "rl3l3b17",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl3l3b17s1", "_type": "span", "text": "What Comes Next: Plugging Into a Training Algorithm", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl3l3b18",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl3l3b18s1",
+                  "_type": "span",
+                  "text": "With reset() and step() implemented to the Gymnasium contract, this environment is ready to be handed to an off-the-shelf algorithm implementation. Libraries like Stable-Baselines3 provide tested implementations of DQN, PPO, and the actor-critic methods Chapter 2 introduced, built specifically to consume exactly this interface. None of the algorithm-level code needs to know anything about Nifty 50 futures, lots, or drawdown penalties; all of that is already encapsulated inside the environment built in this lesson.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl3l3b19",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Spotting a Broken Episode Boundary",
+              "scenario": "A colleague adapts this environment to run on a continuous multi-day price series instead of one day's minute bars, without changing anything else, and is confused that a single training episode now runs for tens of thousands of steps instead of 375.",
+              "prompt": "What in the environment's design causes this, and is it necessarily a problem?",
+              "modelAnswer": "The done condition, done = self.t >= len(self.prices) - 1, only ends an episode when the price data itself runs out. Feeding in a multi-day, continuous price series rather than one day's bars means the environment has no internal concept of a trading day boundary at all, so it simply keeps running until the entire multi-day series is exhausted. Whether this is a problem depends on intent: if the goal is genuinely an intraday strategy that squares off daily under MIS-style rules, this is a real bug, since the agent is now training on episodes that silently span multiple sessions with no square-off logic, and any discount factor or reward tuned around a 375-step day, per Chapter 2, no longer means what it was designed to mean. If a multi-day, positional strategy is what was actually intended, the fix is not to revert to daily data but to add explicit episode-length logic, such as ending the episode after a fixed holding horizon, rather than relying on the data simply running out."
+            },
+            {
+              "_key": "rl3l3b20",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Reading the step() Method",
+              "question": "In the step() method above, when is a new entry_price recorded?",
+              "options": [
+                "Every single step, regardless of whether the position changed",
+                "Only when the agent chooses action 2 (buy)",
+                "Whenever the target position differs from the current position, meaning any trade occurred, including a flip from long to short or back to flat",
+                "Never; entry_price is set once in reset() and never updated again"
+              ],
+              "correctIndex": 2,
+              "explanation": "The line checking target_position != self.position fires whenever the action causes an actual position change, whether that is opening a new position from flat, flipping from long to short, or closing back to flat. This keeps the cost basis used in unrealized_pnl accurate to whatever the most recent trade actually was, rather than stale from an earlier position."
+            },
+            {
+              "_key": "rl3l3b21",
+              "_type": "keyTakeaways",
+              "points": [
+                "Building a trading environment to the Gymnasium interface, action_space, observation_space, reset(), step(), lets it plug directly into existing, tested RL algorithm implementations instead of requiring custom training code for every algorithm",
+                "reset() starts a flat episode and rebuilds the lookback-window state vector from the previous lesson; step() applies the action, computes the exact reward formula, P&L minus transaction cost minus drawdown penalty, from the reward design lesson, and checks for episode end",
+                "Feeding the environment one trading day's minute bars at a time makes each episode naturally correspond to one 375-minute NSE session, the same episode boundary Chapter 2 used when reasoning about the discount factor",
+                "A random-action rollout is a sanity check for whether the environment runs correctly, not a meaningful baseline for strategy performance; it is literally the ε = 1.0 fully-exploratory case from Chapter 2's exploration lesson",
+                "Episode boundaries are a design decision, not something that takes care of itself; feeding in continuous multi-day data without adding explicit episode-length logic silently changes what an episode means, and breaks any discount factor or reward weight tuned around a specific episode length",
+                "With this environment built, everything from Chapters 1 and 2, state design, reward design, MDP formalism, model-free algorithms, is ready to be trained against real data using standard RL libraries"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

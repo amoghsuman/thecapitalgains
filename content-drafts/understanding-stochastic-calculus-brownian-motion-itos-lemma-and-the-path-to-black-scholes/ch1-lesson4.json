@@ -1,0 +1,275 @@
+{
+  "courseSlug": "understanding-stochastic-calculus-brownian-motion-itos-lemma-and-the-path-to-black-scholes",
+  "chapters": [
+    {
+      "title": "Chapter 1: The Wiener Process: From Random Walks to Brownian Motion",
+      "lessons": [
+        {
+          "title": "Quadratic Variation: The Property That Breaks Ordinary Calculus",
+          "slug": "quadratic-variation-the-property-that-breaks-ordinary-calculus",
+          "body": [
+            {
+              "_key": "c1l4-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l4-001s1", "_type": "span", "marks": [], "text": "\"Fine,\" says Rohan's interviewer, \"the slope doesn't exist anywhere. So chop the path into a thousand tiny pieces, square each little wiggle, and add up all thousand squares. What does that total come to?\" Rohan's calculus instincts say the answer should shrink to zero, the way it would for any smooth curve chopped up the same way. He is wrong, and the size of his error is exactly the idea this lesson is built around: quadratic variation, the single most important technical fact in this entire course." }
+              ]
+            },
+            {
+              "_key": "c1l4-002",
+              "_type": "bigIdea",
+              "text": "For a smooth function, the sum of squared increments over a fine partition shrinks to zero, which is why ordinary calculus safely ignores second-order terms. For Brownian motion, that same sum does not shrink to zero. It converges to exactly t, a fixed, non-random number, no matter how the partition is chosen. This one fact is the entire reason Ito's lemma, in the next chapter, carries an extra term that ordinary calculus does not."
+            },
+            {
+              "_key": "c1l4-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l4-003s1", "_type": "span", "marks": [], "text": "Defining Quadratic Variation" }
+              ]
+            },
+            {
+              "_key": "c1l4-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l4-004s1", "_type": "span", "marks": [], "text": "Chop the interval [0, t] into n equal pieces, each of length Δt = t/n, at points t_0 = 0, t_1, t_2, all the way to t_n = t. For any process X(t), the quadratic variation over this partition is the sum of the squared changes across each piece. As n grows and Δt shrinks, this sum approaches a limit, called the quadratic variation of the process over [0, t]." }
+              ]
+            },
+            {
+              "_key": "c1l4-005",
+              "_type": "mathBlock",
+              "latex": "Q_n = \\sum_{i=1}^{n} \\big[W(t_i) - W(t_{i-1})\\big]^2, \\qquad t_i = i \\cdot \\Delta t, \\quad \\Delta t = \\frac{t}{n}",
+              "caption": "Quadratic variation of W over a partition of [0, t] into n pieces"
+            },
+            {
+              "_key": "c1l4-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l4-006s1", "_type": "span", "marks": [], "text": "Why Smooth Functions Have Zero Quadratic Variation" }
+              ]
+            },
+            {
+              "_key": "c1l4-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l4-007s1", "_type": "span", "marks": [], "text": "For an ordinary smooth function f, like f(t) = t^2 or any curve you would draw by hand, each increment over a small step is approximately f'(t_{i-1}) times Δt, since f is locally almost a straight line. Squaring that increment gives something of size Δt^2. Add up n of these, where n = t/Δt, and the total is n times Δt^2, which equals t times Δt. As Δt shrinks toward zero, this total shrinks toward zero as well. This is exactly why a standard calculus course never has to worry about a squared-increment term: for any smooth function, it is always negligible in the limit." }
+              ]
+            },
+            {
+              "_key": "c1l4-008",
+              "_type": "mathBlock",
+              "latex": "\\sum_{i=1}^{n} \\big[f(t_i)-f(t_{i-1})\\big]^2 \\approx \\sum_{i=1}^{n} \\big[f'(t_{i-1})\\,\\Delta t\\big]^2 = n\\,(\\Delta t)^2 = t\\,\\Delta t \\ \\xrightarrow[\\Delta t \\to 0]{} \\ 0",
+              "caption": "Quadratic variation of any smooth function is zero"
+            },
+            {
+              "_key": "c1l4-009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l4-009s1", "_type": "span", "marks": [], "text": "Why Brownian Motion Refuses to Follow That Pattern" }
+              ]
+            },
+            {
+              "_key": "c1l4-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l4-010s1", "_type": "span", "marks": [], "text": "A Wiener process increment does not shrink like Δt. From Property 3 in the previous chapter's second lesson, W(t_i) - W(t_{i-1}) ~ N(0, Δt), so its typical size is the square root of Δt, one entire order larger than a smooth function's Δt-sized increment. Square that increment, and you get something of size Δt, not Δt^2. Add up n of these Δt-sized terms, where n = t/Δt, and the n and the Δt cancel exactly, leaving t. Nothing shrinks away." }
+              ]
+            },
+            {
+              "_key": "c1l4-011",
+              "_type": "mathBlock",
+              "latex": "E\\big[(\\Delta W_i)^2\\big] = \\Delta t \\quad \\Rightarrow \\quad E[Q_n] = n \\cdot \\Delta t = t",
+              "caption": "The expected quadratic variation equals t, for every n"
+            },
+            {
+              "_key": "c1l4-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l4-012s1", "_type": "span", "marks": [], "text": "That E[Q_n] = t exactly, for every single n, is already striking. What makes it a genuine limit, and not just a coincidence of averages, is that the spread around that average also vanishes as the partition gets finer. For a normal random variable X with variance σ^2, the variance of X^2 works out to 2σ^4. Applying that here, with σ^2 = Δt for each increment, and adding up n independent squared increments:" }
+              ]
+            },
+            {
+              "_key": "c1l4-013",
+              "_type": "mathBlock",
+              "latex": "\\text{Var}\\big((\\Delta W_i)^2\\big) = 2(\\Delta t)^2 \\quad \\Rightarrow \\quad \\text{Var}(Q_n) = n \\cdot 2(\\Delta t)^2 = 2t\\,\\Delta t \\ \\xrightarrow[\\Delta t \\to 0]{} \\ 0",
+              "caption": "The variance of Qn shrinks to zero as the partition gets finer"
+            },
+            {
+              "_key": "c1l4-014",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l4-014s1", "_type": "span", "marks": [], "text": "A quantity whose mean sits fixed at t and whose variance shrinks to zero converges, as the partition gets finer, to the constant t itself, not to some random number. This convergence result has a name: the quadratic variation of a standard Wiener process over [0, t] equals t. It is a deterministic fact about the path, even though the path itself is entirely random." }
+              ]
+            },
+            {
+              "_key": "c1l4-015",
+              "_type": "table",
+              "caption": "Why squared increments behave differently: smooth functions vs Brownian motion",
+              "headers": ["", "Smooth function f(t)", "Brownian motion W(t)"],
+              "rows": [
+                { "_key": "c1l4-015r1", "_type": "tableRow", "cells": ["Typical size of one increment", "order Δt", "order √Δt"] },
+                { "_key": "c1l4-015r2", "_type": "tableRow", "cells": ["Typical size of one squared increment", "order (Δt)^2", "order Δt"] },
+                { "_key": "c1l4-015r3", "_type": "tableRow", "cells": ["Sum of n = t/Δt squared increments", "n × (Δt)^2 = t·Δt, shrinks to 0", "n × Δt = t, stays fixed at t"] }
+              ]
+            },
+            {
+              "_key": "c1l4-016",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "c1l4-016s1", "label": "E[Qn], any partition size n", "value": "t", "context": "The average is exactly t regardless of how fine the partition is" },
+                { "_key": "c1l4-016s2", "label": "Var(Qn) as Δt → 0", "value": "→ 0", "context": "The spread around t vanishes as the partition gets finer" },
+                { "_key": "c1l4-016s3", "label": "Limit of Qn", "value": "t (deterministic)", "context": "Quadratic variation is a fixed number, not a random variable" }
+              ]
+            },
+            {
+              "_key": "c1l4-017",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l4-017s1", "_type": "span", "marks": [], "text": "A Curious Companion Fact: Infinite Length, Finite Quadratic Variation" }
+              ]
+            },
+            {
+              "_key": "c1l4-018",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l4-018s1", "_type": "span", "marks": [], "text": "If you instead summed the absolute values of the increments, rather than their squares, a quantity called total variation, the result behaves in the opposite way. Because each increment is order √Δt, summing n = t/Δt of them gives a total of order n × √Δt = (t/Δt) × √Δt = t / √Δt, which grows without bound as Δt shrinks. A Wiener process path has infinite length over any interval, no matter how short, even though it stays within a finite range of values the whole time. It is squaring the increments, not just adding their sizes, that tames the sum down to something finite." }
+              ]
+            },
+            {
+              "_key": "c1l4-019",
+              "_type": "keyFact",
+              "label": "Total variation of W over [0, t]",
+              "value": "Infinite",
+              "context": "Summing |ΔWi| instead of (ΔWi)^2 diverges as the partition gets finer; the path has unbounded length"
+            },
+            {
+              "_key": "c1l4-020",
+              "_type": "keyFact",
+              "label": "Quadratic variation of W over [0, t]",
+              "value": "t (finite)",
+              "context": "Summing (ΔWi)^2 converges to exactly t; squaring is what tames the sum"
+            },
+            {
+              "_key": "c1l4-021",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l4-021s1", "_type": "span", "marks": [], "text": "Simulating the Convergence" }
+              ]
+            },
+            {
+              "_key": "c1l4-022",
+              "_type": "codeBlock",
+              "language": "python",
+              "caption": "Simulating Qn for growing n, watching it converge to t = 1",
+              "code": "import numpy as np\n\ndef simulate_quadratic_variation(T=1.0, n_steps=100):\n    dt = T / n_steps\n    increments = np.random.normal(0, np.sqrt(dt), n_steps)\n    return np.sum(increments**2)\n\nfor n in [10, 100, 1_000, 10_000, 100_000]:\n    Qn = simulate_quadratic_variation(T=1.0, n_steps=n)\n    print(f\"n = {n:>7}: Qn = {Qn:.4f}\")\n\n# Sample output (yours will differ slightly, since this is random):\n# n =      10: Qn = 1.3521\n# n =     100: Qn = 0.9214\n# n =    1000: Qn = 1.0312\n# n =   10000: Qn = 0.9951\n# n =  100000: Qn = 1.0008"
+            },
+            {
+              "_key": "c1l4-023",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Simulated Qn converging to t = 1 as the partition gets finer",
+              "xAxisLabel": "Number of partition steps, n",
+              "yAxisLabel": "Qn (simulated)",
+              "data": [
+                { "_key": "c1l4-023d1", "label": "10", "value": 1.352 },
+                { "_key": "c1l4-023d2", "label": "100", "value": 0.921 },
+                { "_key": "c1l4-023d3", "label": "1,000", "value": 1.031 },
+                { "_key": "c1l4-023d4", "label": "10,000", "value": 0.995 },
+                { "_key": "c1l4-023d5", "label": "100,000", "value": 1.001 }
+              ]
+            },
+            {
+              "_key": "c1l4-024",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This lesson's result is usually compressed into a single, deliberately loose piece of shorthand you will see throughout Chapter 2 and beyond: (dW)^2 = dt. Read literally, that equation is nonsense, dW is random and dt is not. Read as shorthand for what this lesson actually proved, that the accumulated sum of squared increments behaves exactly like accumulated time, it is the single most useful mnemonic in stochastic calculus. Every time Ito's lemma looks like it is breaking the ordinary chain rule, it is really just this substitution at work."
+            },
+            {
+              "_key": "c1l4-025",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Do not confuse quadratic variation with the variance of W(t) from the previous lesson. They happen to share the same value, t, for a standard Wiener process, which is a genuine and important fact, but they are conceptually different quantities. Var(W(t)) = t describes how spread out the random value W(t) is across many different possible paths at a single point in time. Quadratic variation Qn → t describes a sum computed along a single path, and it converges to the same fixed number t on almost every path, not just on average across paths. One is a statement about a snapshot; the other is a statement about a path's accumulated wiggle."
+            },
+            {
+              "_key": "c1l4-026",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Test the quadratic variation result",
+              "question": "As the partition of [0, t] gets finer and finer (n → ∞, Δt → 0), what does the sum of squared increments, Qn, of a standard Wiener process converge to?",
+              "options": [
+                "0, the same as it would for any smooth function",
+                "Infinity, since the path has infinite length",
+                "t, a fixed, non-random number, regardless of how the partition is chosen",
+                "A random variable with the same distribution as W(t) itself"
+              ],
+              "correctIndex": 2,
+              "explanation": "E[Qn] = t for every partition size, and Var(Qn) = 2tΔt shrinks to 0 as the partition gets finer. A quantity with a fixed mean and vanishing variance converges to that fixed mean, so Qn converges to the deterministic constant t, not to zero, not to infinity, and not to a random variable."
+            },
+            {
+              "_key": "c1l4-027",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Apply the result to a 4-year horizon",
+              "prompt": "For a standard Wiener process observed over 4 years (t = 4), using a partition with n = 2,000 equal steps, what is E[Qn], the expected quadratic variation? (Recall: E[Qn] = t, for any partition size n.)",
+              "correctValue": 4,
+              "tolerance": 0.01,
+              "explanation": "E[Qn] = t regardless of how many partition steps n you use, since the n and Δt always cancel to leave exactly t. Here t = 4 years, so E[Qn] = 4, whether you use 2,000 steps, 2 million steps, or any other partition size. Only the variance around that average depends on n, and it shrinks as n grows."
+            },
+            {
+              "_key": "c1l4-028",
+              "_type": "flashcardSet",
+              "title": "Core Terms From This Lesson",
+              "cards": [
+                { "_key": "c1l4-028f1", "term": "Quadratic variation", "definition": "The limit, as a partition of [0, t] gets arbitrarily fine, of the sum of squared increments of a process over that partition. For a standard Wiener process, this limit equals t." },
+                { "_key": "c1l4-028f2", "term": "Total variation", "definition": "The limit of the sum of absolute values (not squares) of increments over a fine partition. For a standard Wiener process, this is infinite over any interval." },
+                { "_key": "c1l4-028f3", "term": "(dW)^2 = dt", "definition": "Shorthand notation summarizing this lesson's result: accumulated squared Brownian increments behave exactly like accumulated time. Central to how Ito's lemma is applied in the next chapter." },
+                { "_key": "c1l4-028f4", "term": "Partition / mesh", "definition": "A division of a time interval [0, t] into smaller subintervals, used to define both quadratic variation and the Riemann-style sums of ordinary calculus." }
+              ]
+            },
+            {
+              "_key": "c1l4-029",
+              "_type": "keyTakeaways",
+              "points": [
+                "Quadratic variation is the limit of the sum of squared increments of a process over an increasingly fine partition of [0, t].",
+                "For any smooth function, this sum shrinks to zero, since increments are order Δt and squared increments are order (Δt)^2; this is why ordinary calculus never needs a second-order correction term.",
+                "For a standard Wiener process, increments are order √Δt, so squared increments are order Δt, and summing n = t/Δt of them gives exactly t, with no shrinkage.",
+                "The quadratic variation of W over [0, t] converges to the deterministic constant t: E[Qn] = t exactly for every n, and Var(Qn) → 0 as the partition gets finer.",
+                "Brownian motion paths have infinite total variation (infinite length) but finite quadratic variation, t; squaring the increments, not just summing their sizes, is what makes the quantity finite.",
+                "This result is the origin of the shorthand (dW)^2 = dt, the single most-used substitution rule in Ito's lemma, covered in the next chapter."
+              ]
+            },
+            {
+              "_key": "c1l4-030",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to buy, sell, or hold any security or contract named here. Nothing in this lesson reflects live market data. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

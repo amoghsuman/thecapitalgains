@@ -1,0 +1,204 @@
+{
+  "courseSlug": "understanding-mean-reversion-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 1: The Logic of Mean Reversion",
+      "lessons": [
+        {
+          "title": "Case Study: Nifty 50's Post-Crash Reversions vs Stocks That Never Came Back",
+          "slug": "case-study-nifty-50s-post-crash-reversions-vs-stocks-that-never-came-back",
+          "body": [
+            {
+              "_key": "mr1l4-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr1l4-001s1", "_type": "span", "marks": [], "text": "In March 2020, the Nifty 50 fell close to 40 percent in about five weeks as the Covid-19 pandemic shut down the Indian economy. In the same month, Yes Bank's stock collapsed even harder, after years of aggressive corporate lending finally caught up with it and the Reserve Bank of India stepped in with a reconstruction scheme. Within a year, the Nifty had not just recovered, it had climbed to fresh all-time highs. Yes Bank never got anywhere close to its old levels. Same crisis, same month, same stock market. Two completely different endings. This case study puts the last three lessons to work on real, dated events, and shows you exactly how to tell, in advance, which kind of fall you are looking at." }
+              ]
+            },
+            {
+              "_key": "mr1l4-002",
+              "_type": "bigIdea",
+              "text": "A broad index reverts after a crash because what it measures, the combined earning power of dozens of diversified, mostly unrelated businesses in a growing economy, keeps growing, and because the index itself quietly sheds its failures and replaces them with new leaders over time. A single stock has no such safety net. Its mean is only ever as durable as that one company's ability to keep generating profit."
+            },
+            {
+              "_key": "mr1l4-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr1l4-003s1", "_type": "span", "marks": [], "text": "The Index Side: Two Crashes, Two Recoveries" }
+              ]
+            },
+            {
+              "_key": "mr1l4-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr1l4-004s1", "_type": "span", "marks": [], "text": "The 2008 global financial crisis remains the deepest drawdown in the Sensex's modern history. From a peak near 21,000 in January 2008, it fell to roughly 8,000 by March 2009, a fall of over 60 percent, as the crisis exposed how much of the preceding rally had been built on cheap global credit. It took about six years, until 2014, for the Sensex to decisively reclaim that old peak. Twelve years later, the 2020 Covid-19 crash was faster and shallower by comparison. The Nifty 50 fell from an intraday high near 12,430 on 14 January 2020 to an intraday low near 7,511 on 24 March 2020, then recovered to a fresh all-time high within about ten months, helped by unprecedented global monetary stimulus and a sharp rebound in corporate earnings once lockdowns eased. Both were genuine, broad-based, economy-wide shocks. Both eventually reverted, because the thing being measured, aggregate corporate earning power across dozens of companies, was dented but not destroyed." }
+              ]
+            },
+            {
+              "_key": "mr1l4-005",
+              "_type": "table",
+              "caption": "Two Indian index crashes, both eventually reverted",
+              "headers": ["", "2008 Global Financial Crisis", "2020 Covid-19 Crash"],
+              "rows": [
+                { "_key": "mr1l4-005r1", "cells": ["Trigger", "Global credit crisis, forced deleveraging", "Pandemic lockdowns, global demand shock"] },
+                { "_key": "mr1l4-005r2", "cells": ["Approximate peak-to-trough fall", "Over 60% (Sensex)", "Close to 40% (Nifty 50)"] },
+                { "_key": "mr1l4-005r3", "cells": ["Time to a fresh all-time high", "About 6 years", "About 10 months"] },
+                { "_key": "mr1l4-005r4", "cells": ["What ultimately reverted", "Aggregate corporate earnings and investor risk appetite", "Aggregate corporate earnings and investor risk appetite"] }
+              ]
+            },
+            {
+              "_key": "mr1l4-006",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Index recovery pattern after a broad crash (illustrative, indexed to 100 at the pre-crash peak)",
+              "xAxisLabel": "Months from pre-crash peak",
+              "yAxisLabel": "Indexed level (peak = 100)",
+              "data": [
+                { "_key": "mr1l4-006d1", "label": "0" },
+                { "_key": "mr1l4-006d2", "label": "2" },
+                { "_key": "mr1l4-006d3", "label": "4" },
+                { "_key": "mr1l4-006d4", "label": "6" },
+                { "_key": "mr1l4-006d5", "label": "8" },
+                { "_key": "mr1l4-006d6", "label": "10" },
+                { "_key": "mr1l4-006d7", "label": "12" }
+              ],
+              "series": [
+                { "_key": "mr1l4-006se1", "label": "Broad index (illustrative path)", "values": [100, 68, 61, 74, 85, 96, 103] }
+              ]
+            },
+            {
+              "_key": "mr1l4-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr1l4-007s1", "_type": "span", "marks": [], "text": "Why the Index Comes Back: Diversification and Reconstitution" }
+              ]
+            },
+            {
+              "_key": "mr1l4-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr1l4-008s1", "_type": "span", "marks": [], "text": "The first reason is simple diversification. The Nifty 50 spreads its weight across banks, IT services, energy, consumer goods, and more. A crisis that badly hurts lenders and hospitality does far less damage to an IT exporter billing in dollars or a consumer staples company selling everyday essentials. Individual company blowups get averaged out across forty-nine other stories." }
+              ]
+            },
+            {
+              "_key": "mr1l4-009",
+              "_type": "callout",
+              "type": "insight",
+              "text": "The second reason is less obvious and matters more than most traders realize: the index itself is not a fixed basket. Index committees periodically remove constituents that have become too small, too illiquid, or fundamentally broken, and replace them with growing, more relevant businesses. Over enough years, the Nifty 50 you are looking at today is not literally the same 50 companies it held a decade ago. This reconstitution means the index has a self-cleaning mechanism no single stock has. A share of a company that goes into insolvency does not get quietly swapped out for a healthier one. It just stays broken."
+            },
+            {
+              "_key": "mr1l4-010",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr1l4-010s1", "_type": "span", "marks": [], "text": "The Stock Side: When the Fall Is the New Normal" }
+              ]
+            },
+            {
+              "_key": "mr1l4-011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr1l4-011s1", "_type": "span", "marks": [], "text": "Yes Bank's collapse in March 2020 looked, on a chart, like it happened in the same window as the broader market crash. It was not the same kind of event. Years of aggressive corporate lending to stressed groups had left the bank with a bad loan book the market had been steadily losing confidence in since 2018. In March 2020, the Reserve Bank of India placed the bank under a moratorium and pushed through a reconstruction scheme led by a consortium of other banks. The stock lost the overwhelming majority of its value within days, and even years later it traded at a small fraction of its pre-crisis price. This was not a temporary overreaction to a macro shock. It was the market correctly, if belatedly, pricing in a genuine, near-total loss of shareholder value in the original entity." }
+              ]
+            },
+            {
+              "_key": "mr1l4-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mr1l4-012s1", "_type": "span", "marks": [], "text": "Two other names from the same stretch make the same point. Dewan Housing Finance Corporation (DHFL) defaulted on its debt obligations in 2019 as the broader NBFC liquidity crisis, triggered by IL&FS's default in 2018, made it impossible for highly leveraged housing financiers to roll over funding. It later went through insolvency resolution, with the Piramal Group acquiring the business in 2021 while existing equity shareholders were left with next to nothing. Jet Airways grounded its entire fleet in April 2019 after running out of cash to pay lessors, fuel suppliers, and staff, and spent years afterward in insolvency proceedings without resuming full commercial operations. In all three cases, the fall was not a stretched deviation from a healthy mean waiting to be corrected. The fall was the market recognizing that the company's capacity to generate future profit, or in some cases to continue operating as a going concern at all, had been permanently and severely impaired." }
+              ]
+            },
+            {
+              "_key": "mr1l4-013",
+              "_type": "timeline",
+              "title": "2019 to 2021: One Index, Three Broken Companies",
+              "events": [
+                { "_key": "mr1l4-013e1", "date": "2019", "title": "DHFL defaults", "description": "DHFL defaults on debt obligations amid the broader NBFC liquidity crisis that followed IL&FS's 2018 default." },
+                { "_key": "mr1l4-013e2", "date": "April 2019", "title": "Jet Airways grounded", "description": "Jet Airways suspends all flights after running out of cash to pay lessors and fuel suppliers, entering insolvency proceedings soon after." },
+                { "_key": "mr1l4-013e3", "date": "March 2020", "title": "Nifty crashes, Yes Bank is reconstructed", "description": "The Nifty 50 falls close to 40% in five weeks on Covid-19 fears. In the same month, the RBI places Yes Bank under a moratorium and pushes through a reconstruction scheme." },
+                { "_key": "mr1l4-013e4", "date": "Late 2020 / Early 2021", "title": "Nifty 50 reclaims fresh highs", "description": "The Nifty recovers to a new all-time high within about ten months of its Covid-19 low, its aggregate earnings power intact once the economy reopens." },
+                { "_key": "mr1l4-013e5", "date": "2021", "title": "DHFL's equity is wiped out", "description": "The Piramal Group completes its acquisition of DHFL through the insolvency process, with pre-existing equity shareholders left with negligible value." }
+              ]
+            },
+            {
+              "_key": "mr1l4-014",
+              "_type": "table",
+              "caption": "Why one reverted and the others didn't",
+              "headers": ["", "Nifty 50 (2020 crash)", "Yes Bank / DHFL / Jet Airways"],
+              "rows": [
+                { "_key": "mr1l4-014r1", "cells": ["Nature of the shock", "Broad, macro, temporary demand shock", "Company-specific solvency or going-concern crisis"] },
+                { "_key": "mr1l4-014r2", "cells": ["Diversification", "Losses in some sectors offset by others", "Single point of failure, no offsetting exposure"] },
+                { "_key": "mr1l4-014r3", "cells": ["Self-correcting mechanism", "Weak constituents periodically replaced by index reconstitution", "None. The same shares represent the same impaired company"] },
+                { "_key": "mr1l4-014r4", "cells": ["Outcome", "Fresh all-time highs within about 10 months", "Value permanently impaired or effectively wiped out for equity holders"] }
+              ]
+            },
+            {
+              "_key": "mr1l4-015",
+              "_type": "callout",
+              "type": "warning",
+              "text": "This is the structural break from Lesson 3, playing out with real names and real dates. The fall in Yes Bank, DHFL, and Jet Airways looked, in the first few days, statistically similar to any other sharp drawdown. What made it different was never visible in the price chart alone. It required knowing that the underlying cause was a going-concern or solvency problem, not a liquidity-driven overreaction. Chapter 8 returns to this exact distinction with a dedicated framework for telling the two apart before you risk capital on it."
+            },
+            {
+              "_key": "mr1l4-016",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Sizing the Covid-19 crash",
+              "prompt": "The Nifty 50 fell from an intraday high near 12,430 (14 January 2020) to an intraday low near 7,511 (24 March 2020). What was the approximate peak-to-trough percentage fall?",
+              "correctValue": 39.6,
+              "tolerance": 3,
+              "unit": "%",
+              "explanation": "(12,430 minus 7,511) divided by 12,430 is approximately 0.396, or a fall of close to 40%. This is the kind of broad, index-wide drawdown that historically has reverted, given enough time, because it reflects a temporary shock to sentiment and near-term earnings rather than a permanent loss of aggregate earning power."
+            },
+            {
+              "_key": "mr1l4-017",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Overreaction or impairment?",
+              "question": "A bank's stock falls 70% in a week after regulators announce a moratorium and a forced reconstruction due to a multi-year bad loan crisis that had already been flagged by analysts for two years. Is this the kind of fall a mean reversion strategy should expect to correct?",
+              "options": [
+                "Yes, any fall this large is automatically an overreaction and a buying opportunity",
+                "No, this reflects a genuine, previously-flagged solvency problem, not a temporary sentiment-driven overreaction",
+                "Yes, because regulators always restore full shareholder value after intervening",
+                "It depends only on how large the Nifty 50's fall was in the same week"
+              ],
+              "correctIndex": 1,
+              "explanation": "A regulator-forced reconstruction following a multi-year, previously flagged bad loan crisis is evidence of a genuine, ongoing deterioration in the company's fundamentals, not a short-term overreaction to a single piece of news. The size of the fall alone tells you nothing about whether it will revert. What matters is whether the cause is temporary sentiment or a permanent impairment, exactly the distinction covered in Lesson 1 and developed fully in Chapter 8."
+            },
+            {
+              "_key": "mr1l4-018",
+              "_type": "keyTakeaways",
+              "points": [
+                "Both the 2008 global financial crisis and the 2020 Covid-19 crash produced severe, broad-based falls in Indian indices, and both eventually reverted to fresh all-time highs, because the aggregate earning power they measure was dented but not destroyed.",
+                "Indices revert more reliably than single stocks for two reasons: diversification across many independent businesses, and periodic reconstitution that quietly replaces weak or delisted constituents with stronger ones.",
+                "Yes Bank, DHFL, and Jet Airways all fell sharply around the same 2019 to 2020 stretch as the broader market, but for company-specific solvency or going-concern reasons that had been building for years, not a temporary macro overreaction.",
+                "A large percentage fall, on its own, tells you nothing about whether a price will revert. What matters is whether the underlying cause is temporary and sentiment-driven, or permanent and fundamental.",
+                "Chapter 8 builds a dedicated framework for distinguishing a genuine reversion candidate from a structural break before committing capital, using exactly this kind of real, dated case."
+              ]
+            },
+            {
+              "_key": "mr1l4-019",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice or a recommendation to buy, sell, or hold any security. All figures relating to the Sensex, the Nifty 50, Yes Bank, DHFL, and Jet Airways describe general, publicly documented historical events and are presented as rounded approximations for teaching purposes, not precise data. The chart in this lesson is an illustrative simplification and does not represent actual historical index values. Current prices, listing status, and corporate outcomes for any security named here may have changed since publication and should be independently verified. Past events do not guarantee future outcomes. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

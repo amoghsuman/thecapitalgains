@@ -1,0 +1,193 @@
+{
+  "courseSlug": "advanced-risk-management-value-at-risk-and-stress-testing",
+  "chapters": [
+    {
+      "title": "Chapter 7: Extreme Value Theory for Tail Risk",
+      "lessons": [
+        {
+          "title": "Why Even Fat-Tailed Normal Models Aren't Enough",
+          "slug": "why-even-fat-tailed-normal-models-arent-enough",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "w1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "w1s1", "text": "Chapter 2 fixed the normal distribution's fat-tails problem by swapping in a Student-t distribution for Monte Carlo simulation. That felt like a reasonable answer at the time. This lesson asks a harder follow-up question: is any single global distribution, however fat-tailed, actually trustworthy at the truly extreme confidence levels, 99.9% and beyond, that Basel's Expected Shortfall framework and serious stress testing care about? The honest answer is no, and the reason why is the whole motivation for Extreme Value Theory.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "keyFact",
+              "_key": "w2",
+              "label": "The Tail Model Problem",
+              "value": "A distribution fit to an entire dataset is dominated by its ordinary, non-extreme observations, even though what matters most for deep-tail VaR is accuracy specifically in the extreme region",
+              "context": "Two distributions that look almost identical in the bulk of the data can imply wildly different extreme-tail risk."
+            },
+            {
+              "_type": "block",
+              "_key": "w3",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "w3s1", "text": "The Tail Is a Power Law, and the Exponent Is Everything", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "w4",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "w4s1", "text": "A Student-t distribution with nu degrees of freedom has a mathematically precise tail behavior: for large values of x, the probability of exceeding x decays as a power law, proportional to x raised to the power of minus nu. Fewer degrees of freedom means slower decay, a fatter tail. This single parameter, nu, controls the tail's thickness entirely, and it turns out to matter far more than it looks like it should when you are just eyeballing how well a distribution fits the bulk of ordinary trading days.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "mathBlock",
+              "_key": "w5",
+              "latex": "P(|T| > x) \\sim C_\\nu \\cdot x^{-\\nu} \\quad \\text{as } x \\to \\infty",
+              "caption": "The Student-t distribution's power-law tail. Smaller nu means a slower decay rate, and therefore a fatter tail."
+            },
+            {
+              "_type": "block",
+              "_key": "w6",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "w6s1", "text": "Two 'Reasonable' Choices, Wildly Different Extreme Tails", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "w7",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "w7s1", "text": "Take two Student-t distributions, one with 3 degrees of freedom, one with 5, both commonly used choices, and both capable of looking like a perfectly reasonable fit to a year of ordinary daily returns. Now compare how much more likely an extreme value is under the fatter-tailed (nu = 3) choice versus the thinner-tailed (nu = 5) choice, at increasingly extreme points on the standardized shock scale.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "w8",
+              "caption": "How much more likely an extreme shock is under nu = 3 versus nu = 5, computed by direct numerical integration of both distributions' tails",
+              "headers": ["Extreme point (standardized units)", "Ratio, nu=3 probability vs nu=5"],
+              "rows": [
+                { "cells": ["10", "12.4x more likely"] },
+                { "cells": ["20", "47.3x more likely"] },
+                { "cells": ["50", "291x more likely"] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "w9",
+              "type": "warning",
+              "text": "The gap between these two 'reasonable' choices does not stay fixed, it explodes as you move deeper into the tail, from about 12 times more likely at a moderately extreme point to nearly 300 times more likely at a genuinely extreme one. Both distributions could pass an ordinary goodness-of-fit test on the bulk of a return series with flying colors, the difference only reveals itself exactly where it matters most for extreme VaR and Expected Shortfall, in the region a standard fit barely constrains at all."
+            },
+            {
+              "_type": "block",
+              "_key": "w10",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "w10s1", "text": "Why This Is a Genuine Problem, Not Just a Modeling Nuisance", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "w11",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "w11s1", "text": "A standard model-fitting procedure, maximum likelihood estimation across an entire dataset, is dominated by whichever observations there are the most of, which is always the ordinary, non-extreme days. Out of, say, 1,250 trading days over five years, there might be only 10 to 20 days severe enough to count as genuinely extreme. That handful of days carries almost no statistical weight in a whole-sample fit, yet it is precisely what should determine your choice of nu if you actually care about the tail. Two analysts, each honestly fitting the same historical data, could land on meaningfully different degrees of freedom and both claim a good overall fit, while their 99.9% VaR estimates differ by a wide margin for reasons neither of their fit statistics would ever flag.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "w12",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "w12s1", "text": "A Different Philosophy: Extreme Value Theory", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "w13",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "w13s1", "text": "Extreme Value Theory takes a fundamentally different approach. Instead of fitting one global distribution to the entire dataset and trusting it to extrapolate correctly into the tail, EVT only looks at the extreme observations themselves, everything beyond a high threshold, and fits a model specifically to those. This is not an arbitrary choice of technique, it rests on a mathematical theorem that guarantees a specific family of distributions correctly describes exceedances beyond a sufficiently high threshold, regardless of what the underlying parent distribution actually looks like, normal, Student-t, or anything else with reasonably well-behaved tails.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "w14",
+              "type": "insight",
+              "text": "This result, formalized by the Pickands-Balkema-de Haan theorem building on earlier Fisher-Tippett extreme value theory, plays a role for tail modeling analogous to what the Central Limit Theorem plays for averages: just as the Central Limit Theorem guarantees that averages of many independent variables converge toward a normal distribution regardless of the original data's shape, this theorem guarantees that exceedances beyond a high enough threshold converge toward a specific distributional family, the Generalized Pareto Distribution, regardless of the original data's shape. The next lesson builds this into a working method."
+            },
+            {
+              "_type": "block",
+              "_key": "w15",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "w15s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "w16",
+              "variant": "numericInput",
+              "title": "Applying the Power-Law Approximation",
+              "prompt": "Using the leading-order power-law approximation from this lesson, ratio is approximately x raised to the power of (nu2 minus nu1), estimate the probability ratio between the nu=3 and nu=5 distributions at an extreme point of x=8.",
+              "correctValue": 64,
+              "tolerance": 2,
+              "unit": "x",
+              "explanation": "x^(5-3) = 8^2 = 64, using the leading-order approximation. But direct numerical integration of the actual two distributions at x=8 gives a true ratio of only about 8.3x, far smaller than 64x. The pure-exponent shortcut significantly overstates the ratio at moderate extremes, since it ignores the amplitude constants multiplying each power law, constants that only stop mattering as x grows very large. The lesson here is double-edged: the exponent explains the explosive growth in divergence qualitatively, but an actual number requires the real fitted distributions, exactly what the Generalized Pareto Distribution method in the next lesson is built to provide precisely."
+            },
+            {
+              "_type": "exercise",
+              "_key": "w17",
+              "variant": "quiz",
+              "title": "Quick Check",
+              "question": "Why can't you simply fix the extreme-tail modeling problem by fitting a Student-t distribution to your entire historical dataset and trusting its degrees-of-freedom parameter?",
+              "options": [
+                "Student-t distributions cannot be fit to financial return data at all",
+                "The whole-sample fit is dominated by ordinary, non-extreme observations, giving very little statistical power to pin down the tail-thickness parameter that matters most for extreme confidence levels",
+                "Student-t distributions do not have tails at all",
+                "This approach only fails for equity data, not for bonds or currencies"
+              ],
+              "correctIndex": 1,
+              "explanation": "A dataset with a handful of truly extreme observations out of thousands of ordinary ones cannot statistically distinguish between competing tail-thickness assumptions using a whole-sample fit, even though those assumptions produce wildly different extreme-tail probabilities. This is exactly the gap Extreme Value Theory is built to close by focusing only on the extreme observations themselves."
+            },
+            {
+              "_type": "block",
+              "_key": "w18",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "w18s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "w19",
+              "text": "A single global distribution fit to your whole dataset is only as trustworthy in the extreme tail as the handful of extreme observations that barely influence the fit. Extreme Value Theory stops pretending the bulk of the data can tell you about the tail, and looks at the tail directly instead."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "w20",
+              "points": [
+                "A Student-t distribution's tail follows a power law with exponent equal to its degrees of freedom, and this exponent controls extreme-tail probability far more than it affects how well the distribution fits ordinary, non-extreme data.",
+                "Two 'reasonable' choices of degrees of freedom, 3 versus 5, produced tail probability ratios that grew from about 12x to nearly 300x as the extreme point moved further out, verified by direct numerical integration.",
+                "Whole-sample model fitting, like maximum likelihood estimation across an entire dataset, is dominated by ordinary days and has very little power to distinguish between competing tail-thickness assumptions.",
+                "Extreme Value Theory fits a model specifically to exceedances beyond a high threshold, grounded in a theorem, the Pickands-Balkema-de Haan theorem, that guarantees a specific distributional family describes those exceedances regardless of the parent distribution's overall shape.",
+                "The next lesson formalizes this into a working method, the Generalized Pareto Distribution and the Peaks-Over-Threshold approach, the practical tools this chapter builds toward."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

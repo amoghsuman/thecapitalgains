@@ -1,0 +1,240 @@
+{
+  "courseSlug": "understanding-pairs-trading-concepts-and-cointegration",
+  "chapters": [
+    {
+      "title": "Chapter 2: The Spread and the Z-Score",
+      "lessons": [
+        {
+          "title": "The Z-Score: Measuring How Stretched a Spread Really Is",
+          "slug": "the-z-score-measuring-how-stretched-a-spread-really-is",
+          "body": [
+            {
+              "_key": "p6-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p6-001s1", "_type": "span", "marks": [], "text": "Lesson 1 left you with the HDFC Bank / ICICI Bank spread swinging between roughly ₹82 and ₹128 over twelve weeks. Is ₹82 stretched, or is that a perfectly normal week for this spread? A raw rupee number cannot answer that on its own. ₹82 might be an extreme, rare low point for this particular pair, or it might be well within its usual range. To trade the spread, you need to convert it into a number that says how unusual today's value is, relative to its own history. That number is the z-score." }
+              ]
+            },
+            {
+              "_key": "p6-002",
+              "_type": "bigIdea",
+              "text": "The z-score converts a raw spread value into a measure of how many standard deviations it sits away from its own historical average. A z-score near zero means the spread is behaving normally. A large positive or negative z-score means the spread has stretched unusually far from where it typically sits, which is precisely the condition a pairs trade is designed to bet against."
+            },
+            {
+              "_key": "p6-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p6-003s1", "_type": "span", "marks": [], "text": "The Z-Score Formula" }
+              ]
+            },
+            {
+              "_key": "p6-004",
+              "_type": "mathBlock",
+              "latex": "z_t = \\frac{\\text{Spread}_t - \\mu}{\\sigma}",
+              "caption": "μ is the mean of the spread over your lookback window, σ is its standard deviation over the same window."
+            },
+            {
+              "_key": "p6-005",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "p6-005m1", "_type": "glossaryTerm", "definition": "A measure of how spread out a set of values is around its average. A small standard deviation means values cluster tightly around the mean; a large one means they are widely scattered." }
+              ],
+              "children": [
+                { "_key": "p6-005s1", "_type": "span", "marks": [], "text": "You compute the mean and " },
+                { "_key": "p6-005s2", "_type": "span", "marks": ["p6-005m1"], "text": "standard deviation" },
+                { "_key": "p6-005s3", "_type": "span", "marks": [], "text": " of the spread over the same lookback window you used to estimate the hedge ratio in Lesson 1, commonly 90 to 180 trading days, and update them as new data comes in, typically using a rolling window so old, stale data eventually drops out. Subtracting the mean from today's spread and dividing by the standard deviation rescales the spread into units where 0 means \"exactly average\" and every whole number away from 0 means one standard deviation of historical movement." }
+              ]
+            },
+            {
+              "_key": "p6-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p6-006s1", "_type": "span", "marks": [], "text": "Worked Example: Turning Lesson 1's Spread Series Into Z-Scores" }
+              ]
+            },
+            {
+              "_key": "p6-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p6-007s1", "_type": "span", "marks": [], "text": "Taking the twelve weekly spread values from Lesson 1, ₹128 down to ₹82 and back up to ₹114, gives a mean of about ₹107.6 and a standard deviation of about ₹14.3 over that window. Week 6, where the spread hit its low of ₹82, converts to a z-score of (82 minus 107.6) divided by 14.3, which is about negative 1.79. Week 1, at ₹128, converts to (128 minus 107.6) divided by 14.3, about positive 1.43. The rupee numbers alone did not tell you which extreme was more unusual relative to this spread's own behavior. The z-scores do: Week 6 was the more stretched point of the two." }
+              ]
+            },
+            {
+              "_key": "p6-008",
+              "_type": "table",
+              "caption": "Spread and z-score across the twelve-week window (illustrative, μ ≈ ₹107.6, σ ≈ ₹14.3)",
+              "headers": ["Week", "Spread (₹)", "Z-score"],
+              "rows": [
+                { "_key": "p6-008r1", "cells": ["1", "128", "+1.43"] },
+                { "_key": "p6-008r2", "cells": ["2", "122", "+1.01"] },
+                { "_key": "p6-008r3", "cells": ["3", "115", "+0.52"] },
+                { "_key": "p6-008r4", "cells": ["4", "98", "-0.67"] },
+                { "_key": "p6-008r5", "cells": ["5", "88", "-1.37"] },
+                { "_key": "p6-008r6", "cells": ["6", "82", "-1.79"] },
+                { "_key": "p6-008r7", "cells": ["7", "91", "-1.16"] },
+                { "_key": "p6-008r8", "cells": ["8", "102", "-0.39"] },
+                { "_key": "p6-008r9", "cells": ["9", "112", "+0.31"] },
+                { "_key": "p6-008r10", "cells": ["10", "118", "+0.73"] },
+                { "_key": "p6-008r11", "cells": ["11", "121", "+0.94"] },
+                { "_key": "p6-008r12", "cells": ["12", "114", "+0.45"] }
+              ]
+            },
+            {
+              "_key": "p6-009",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Z-score of the HDFC Bank / ICICI Bank spread (illustrative)",
+              "xAxisLabel": "Trading week",
+              "yAxisLabel": "Z-score",
+              "data": [
+                { "_key": "p6-009d1", "label": "1", "value": 1.43 },
+                { "_key": "p6-009d2", "label": "2", "value": 1.01 },
+                { "_key": "p6-009d3", "label": "3", "value": 0.52 },
+                { "_key": "p6-009d4", "label": "4", "value": -0.67 },
+                { "_key": "p6-009d5", "label": "5", "value": -1.37 },
+                { "_key": "p6-009d6", "label": "6", "value": -1.79 },
+                { "_key": "p6-009d7", "label": "7", "value": -1.16 },
+                { "_key": "p6-009d8", "label": "8", "value": -0.39 },
+                { "_key": "p6-009d9", "label": "9", "value": 0.31 },
+                { "_key": "p6-009d10", "label": "10", "value": 0.73 },
+                { "_key": "p6-009d11", "label": "11", "value": 0.94 },
+                { "_key": "p6-009d12", "label": "12", "value": 0.45 }
+              ]
+            },
+            {
+              "_key": "p6-010",
+              "_type": "callout",
+              "type": "insight",
+              "text": "The z-score series oscillates around zero and crosses back through it between Week 8 and Week 9, right as the spread itself passes back through its own mean. This is exactly the behavior a pairs trader is looking for: the z-score swinging out to an extreme and then reverting, which is what Lesson 3 turns into concrete entry and exit rules."
+            },
+            {
+              "_key": "p6-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p6-011s1", "_type": "span", "marks": [], "text": "What a Z-Score Actually Tells You" }
+              ]
+            },
+            {
+              "_key": "p6-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p6-012s1", "_type": "span", "marks": [], "text": "If the spread's historical values were perfectly normally distributed, a z-score of plus or minus 1 would be a fairly common occurrence, roughly a third of all readings fall outside that range, while a z-score of plus or minus 2 would be genuinely rare, only about 1 in 20 readings. This is the intuition behind why plus or minus 2 is such a widely used entry threshold in pairs trading, covered in Lesson 3: it marks a point the spread has historically visited rarely, making a bet on reversion statistically more interesting than it would be at plus or minus 0.5, which the spread visits routinely." }
+              ]
+            },
+            {
+              "_key": "p6-013",
+              "_type": "callout",
+              "type": "warning",
+              "text": "The z-score's usefulness depends entirely on the spread actually being mean-reverting in the first place. If the underlying relationship between the two stocks is not stable, a z-score of negative 2 does not mean the spread is likely to revert, it can simply keep drifting to negative 3, negative 4, and beyond, because there was never a stable mean to revert to. Chapter 3's cointegration test is what tells you whether the spread you built here is the kind of series a z-score can be trusted on."
+            },
+            {
+              "_key": "p6-014",
+              "_type": "comparison",
+              "title": "Raw spread vs z-score for decision-making",
+              "columns": [
+                {
+                  "_key": "p6-014c1",
+                  "label": "Raw spread (₹)",
+                  "points": [
+                    "Tells you the current rupee gap between the two legs",
+                    "Cannot tell you, on its own, whether today's value is unusual",
+                    "Not comparable across different pairs, since spreads are in different units and ranges",
+                    "Useful for sizing the trade once you have already decided to enter"
+                  ]
+                },
+                {
+                  "_key": "p6-014c2",
+                  "label": "Z-score",
+                  "points": [
+                    "Tells you how unusual today's spread is relative to its own history",
+                    "Directly comparable across different pairs, since it is always in standard deviation units",
+                    "The basis for concrete, rule-based entry and exit thresholds",
+                    "Only meaningful if the spread is genuinely mean-reverting"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "p6-015",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "p6-015s1", "label": "Z-score of 0", "value": "Spread at its average", "context": "No edge to trade, the relationship is behaving exactly as expected" },
+                { "_key": "p6-015s2", "label": "Z-score of ±1", "value": "Fairly common", "context": "Roughly a third of readings fall outside this range under a normal distribution assumption" },
+                { "_key": "p6-015s3", "label": "Z-score of ±2", "value": "Historically rare", "context": "Roughly 1 in 20 readings fall outside this range, a widely used entry threshold, covered in Lesson 3" },
+                { "_key": "p6-015s4", "label": "Precondition for trusting the z-score", "value": "A mean-reverting spread", "context": "Confirmed through the cointegration test in Chapter 3, not assumed" }
+              ]
+            },
+            {
+              "_key": "p6-016",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Calculate a z-score",
+              "prompt": "A spread has a historical mean of ₹250 and a standard deviation of ₹40. Today's spread value is ₹170. What is today's z-score?",
+              "correctValue": -2,
+              "tolerance": 0.05,
+              "unit": "",
+              "explanation": "z = (170 − 250) / 40 = −80 / 40 = −2. This is a fairly extreme reading, at the commonly used −2 entry threshold covered in Lesson 3."
+            },
+            {
+              "_key": "p6-017",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Comparing spreads across pairs",
+              "question": "Pair A has a spread of ₹40 with a historical mean of ₹30 and standard deviation of ₹5. Pair B has a spread of ₹400 with a historical mean of ₹300 and standard deviation of ₹200. Which pair's spread is currently more stretched?",
+              "options": [
+                "Pair B, because ₹400 minus ₹300 is a bigger rupee gap than ₹40 minus ₹30",
+                "Pair A, because its z-score of +2 is larger than Pair B's z-score of +0.5",
+                "They are equally stretched, since both spreads are above their historical mean",
+                "This cannot be determined without knowing the hedge ratio for each pair"
+              ],
+              "correctIndex": 1,
+              "explanation": "Pair A's z-score is (40−30)/5 = +2. Pair B's z-score is (400−300)/200 = +0.5. Despite Pair B having a much larger rupee gap, its spread is far less unusual relative to its own history. The z-score, not the raw rupee gap, is what makes the two pairs comparable."
+            },
+            {
+              "_key": "p6-018",
+              "_type": "flashcardSet",
+              "title": "The Z-Score: Core Terms",
+              "cards": [
+                { "_key": "p6-018f1", "term": "Z-score", "definition": "The number of standard deviations a value sits away from its historical mean, calculated as (value − mean) ÷ standard deviation." },
+                { "_key": "p6-018f2", "term": "Standard deviation", "definition": "A measure of how spread out a set of values is around its average, used as the denominator when calculating a z-score." },
+                { "_key": "p6-018f3", "term": "Rolling window", "definition": "A fixed-length historical period, such as the trailing 90 or 180 trading days, used to compute a mean, standard deviation, or hedge ratio, updated as new data replaces old data." },
+                { "_key": "p6-018f4", "term": "Mean reversion", "definition": "The tendency of a series to move back toward its historical average after drifting away from it, the statistical behavior a pairs trade is designed to profit from." }
+              ]
+            },
+            {
+              "_key": "p6-019",
+              "_type": "keyTakeaways",
+              "points": [
+                "A raw spread value cannot tell you whether today's reading is unusual. The z-score, (spread − mean) ÷ standard deviation, can.",
+                "The z-score rescales the spread into standard deviation units, where 0 means exactly average and larger magnitudes mean increasingly unusual.",
+                "Z-scores make different pairs directly comparable, even when their raw spreads are in completely different rupee ranges.",
+                "Plus or minus 2 is a commonly used threshold because, under a normal distribution assumption, it marks a historically rare reading, roughly 1 in 20.",
+                "The z-score is only trustworthy if the spread is genuinely mean-reverting. A spread that is not mean-reverting can keep drifting to more extreme z-scores with no reversion at all.",
+                "Chapter 3's cointegration test is what formally confirms whether a spread is mean-reverting enough for its z-score to be a meaningful trading signal."
+              ]
+            },
+            {
+              "_key": "p6-020",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice or a recommendation to buy, sell, or short any security named here. All spread values, means, standard deviations, and z-scores are illustrative and do not represent actual historical data. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

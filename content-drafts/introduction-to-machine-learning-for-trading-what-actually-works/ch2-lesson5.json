@@ -1,0 +1,201 @@
+{
+  "courseSlug": "introduction-to-machine-learning-for-trading-what-actually-works",
+  "chapters": [
+    {
+      "title": "Chapter 2: Framing Trading as a Machine Learning Problem",
+      "lessons": [
+        {
+          "title": "Features vs Labels: What Are You Actually Predicting?",
+          "slug": "features-vs-labels-what-are-you-actually-predicting",
+          "body": [
+            {
+              "_key": "mlt5-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt5-001s1", "_type": "span", "marks": [], "text": "Two quant analyst aspirants build a classifier on the exact same three years of Reliance Industries daily data, using the exact same set of features, moving averages, volatility, relative strength versus the Nifty. One reports 51% test accuracy and gives up on the idea. The other reports 68% accuracy on a smaller set of predictions and builds a strategy around it. Nothing about their models was different. The only thing that changed was the label, the specific question each of them asked the model to answer. This lesson is about that question, because getting it wrong quietly wastes more beginner ML-for-trading effort than any modeling mistake." }
+              ]
+            },
+            {
+              "_key": "mlt5-002",
+              "_type": "bigIdea",
+              "text": "Features are the inputs a model is allowed to look at: past returns, volume, volatility, and similar descriptions of market state. The label is the exact question you are asking the model to answer. Two researchers can use identical features and still get wildly different, non-comparable results, because how you define the label matters more than which model you choose to predict it."
+            },
+            {
+              "_key": "mlt5-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt5-003s1", "_type": "span", "marks": [], "text": "Features: What the Model Is Allowed to Look At" }
+              ]
+            },
+            {
+              "_key": "mlt5-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt5-004s1", "_type": "span", "marks": [], "text": "A feature is a single column of information describing market state at a given point in time, built only from data available up to that point, the discipline from Lesson 3's look-ahead bias warning. In practice, most trading features for Indian equities fall into a handful of categories: price-based features like a stock's return over the past 5, 10, or 20 trading days, volume-based features like today's volume relative to its 20-day average, volatility-based features like a rolling standard deviation of daily returns, technical indicators like RSI or the distance between two moving averages, and cross-sectional features that compare a stock to its peers or to the Nifty, such as a stock's return minus the Nifty's return over the same window." }
+              ]
+            },
+            {
+              "_key": "mlt5-005",
+              "_type": "table",
+              "caption": "Common feature categories for Indian equity data",
+              "headers": ["Category", "Example Feature", "What It Captures"],
+              "rows": [
+                { "_key": "mlt5-005r1", "cells": ["Price-based", "5-day, 10-day, 20-day past returns", "Recent momentum or reversal"] },
+                { "_key": "mlt5-005r2", "cells": ["Volume-based", "Today's volume relative to its 20-day average", "Unusual interest or participation"] },
+                { "_key": "mlt5-005r3", "cells": ["Volatility-based", "Rolling standard deviation of daily returns", "How turbulent recent trading has been"] },
+                { "_key": "mlt5-005r4", "cells": ["Technical indicator", "RSI, or distance between two moving averages", "Standard trader heuristics, encoded numerically"] },
+                { "_key": "mlt5-005r5", "cells": ["Cross-sectional", "Stock's return minus the Nifty's return over the same window", "Relative strength versus the broader market"] }
+              ]
+            },
+            {
+              "_key": "mlt5-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt5-006s1", "_type": "span", "marks": [], "text": "Labels: The Exact Question You Are Asking the Model" }
+              ]
+            },
+            {
+              "_key": "mlt5-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "mlt5-007m1", "_type": "glossaryTerm", "definition": "The target value a model is trained to predict, such as whether a stock's price rises over the next period, as opposed to a feature, which is an input the model is allowed to use to make that prediction." }
+              ],
+              "children": [
+                { "_key": "mlt5-007s1", "_type": "span", "marks": [], "text": "The " },
+                { "_key": "mlt5-007s2", "_type": "span", "marks": ["mlt5-007m1"], "text": "label" },
+                { "_key": "mlt5-007s3", "_type": "span", "marks": [], "text": " is the answer key, the value the model is trained to predict. The most common beginner mistake is the naive label: mark a day '1' if the next day's close is even marginally higher than today's, and '0' otherwise. This treats a stock closing 0.02 percent higher identically to one closing 3 percent higher, and forces every single day into an up or down bucket, including the days where the move was so small it is really just noise around zero. A model trained on this label spends much of its effort learning to classify coin-flip noise, and its accuracy number reflects that." }
+              ]
+            },
+            {
+              "_key": "mlt5-008",
+              "_type": "codeBlock",
+              "language": "python",
+              "caption": "A naive label versus a deadband label on the same data",
+              "code": "import numpy as np\n\n# Label construction only, this column is never used as a feature (see Lesson 3)\ndf[\"fwd_return\"] = df[\"close\"].shift(-1) / df[\"close\"] - 1\n\n# Naive label: every day gets forced into up or down, even a 0.02% move\ndf[\"label_naive\"] = (df[\"fwd_return\"] > 0).astype(int)\n\n# Deadband label: only label clear moves, drop the ambiguous middle\nthreshold = 0.003  # 0.3%, roughly in line with round-trip trading costs\ndf[\"label_deadband\"] = np.select(\n    [df[\"fwd_return\"] > threshold, df[\"fwd_return\"] < -threshold],\n    [1, 0],\n    default=np.nan,  # dropped from training: not a clear enough move to be worth trading\n)"
+            },
+            {
+              "_key": "mlt5-009",
+              "_type": "callout",
+              "type": "insight",
+              "text": "The 0.3% threshold in the example above is not arbitrary, it is set in the same neighbourhood as realistic round-trip trading costs from Lesson 2: brokerage, Securities Transaction Tax, exchange charges, and slippage. A label that only fires on moves large enough to plausibly clear those costs is already a step closer to a tradeable signal, rather than a purely statistical curiosity."
+            },
+            {
+              "_key": "mlt5-010",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt5-010s1", "_type": "span", "marks": [], "text": "Why the Label Definition Matters More Than the Model" }
+              ]
+            },
+            {
+              "_key": "mlt5-011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt5-011s1", "_type": "span", "marks": [], "text": "Go back to the two researchers from the opening of this lesson. The one who reported 51% accuracy used the naive label, every single day, noise included. The one who reported 68% accuracy used a deadband label, training on far fewer examples, only the days with a sufficiently clear move, and reporting accuracy only on that smaller, cleaner set. Neither number is wrong, but they are not measuring the same thing, and only one of them is answering a question close to what a real trader actually needs: not 'will this stock move at all', but 'will this stock make a move worth trading'. This is a Lesson 2 idea in a new costume: a raw prediction only becomes a useful signal once it is asking a question that survives contact with real trading costs and real conviction levels." }
+              ]
+            },
+            {
+              "_key": "mlt5-012",
+              "_type": "comparison",
+              "title": "Naive Label vs Deadband Label",
+              "columns": [
+                {
+                  "_key": "mlt5-012c1",
+                  "label": "Naive: Any Up Move = 1",
+                  "points": [
+                    "Every single day gets a label, even a 0.02% move",
+                    "Near 50/50 class balance looks reassuring, but partly reflects coin-flip noise near zero",
+                    "A reported accuracy number can hide poor performance on the moves that actually matter",
+                    "The model spends real capacity learning to classify noise"
+                  ]
+                },
+                {
+                  "_key": "mlt5-012c2",
+                  "label": "Deadband: Clear Moves Only",
+                  "points": [
+                    "Ambiguous, tiny moves are dropped, not forced into a bucket",
+                    "Fewer labeled examples, but each one represents a real, plausibly tradeable move",
+                    "Threshold set with realistic transaction costs in mind, as in Lesson 2",
+                    "A more advanced version of this idea, the triple-barrier method, is covered in this course's advanced sequel"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "mlt5-013",
+              "_type": "keyFact",
+              "label": "A label threshold set near zero",
+              "value": "mostly measures noise",
+              "context": "If the average day's move is smaller than your realistic trading costs, labeling every tiny wiggle as up or down teaches the model patterns that are not economically meaningful."
+            },
+            {
+              "_key": "mlt5-014",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Feature or label?",
+              "question": "A researcher wants to predict whether Infosys stock will rise by more than 1% over the next 3 trading days. Which of the following is the label, not a feature?",
+              "options": [
+                "Infosys stock's 10-day rolling volatility",
+                "Whether Infosys stock's return over the next 3 trading days exceeds 1%",
+                "Infosys stock's trading volume relative to its 20-day average",
+                "Infosys stock's return relative to the Nifty IT index over the past 5 days"
+              ],
+              "correctIndex": 1,
+              "explanation": "The label is the exact thing being predicted, here, whether the 3-day forward return exceeds 1%. The other three options all describe market state up to today, information the model is allowed to use as an input, which makes them features, not labels."
+            },
+            {
+              "_key": "mlt5-015",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Fixing a noisy label",
+              "scenario": "A beginner labels a stock '1' if its next-day close is even ₹0.05 higher than today's close, and '0' otherwise, across 3 years of NSE daily data. The resulting model reports 51% accuracy, and the researcher is confused why it performs so poorly live despite technically being 'right' more than half the time.",
+              "prompt": "What is wrong with this label, and how would you fix it?",
+              "modelAnswer": "A ₹0.05 move on most NSE stocks is well within ordinary noise, smaller than typical bid-ask spreads and far smaller than round-trip trading costs, so this label is forcing essentially random, economically meaningless daily wiggles into an up or down bucket. The 51% accuracy is barely different from a coin flip because a large share of the labeled examples are, in practice, coin flips. The fix is to introduce a deadband: define a minimum percentage move, set in the neighbourhood of realistic trading costs, and only label days that clear that threshold in either direction, dropping the ambiguous middle from training entirely rather than forcing it into a bucket."
+            },
+            {
+              "_key": "mlt5-016",
+              "_type": "flashcardSet",
+              "title": "Features and Labels: Core Terms",
+              "cards": [
+                { "_key": "mlt5-016f1", "term": "Feature", "definition": "A single input describing market state at a given point in time, built only from data available up to that point." },
+                { "_key": "mlt5-016f2", "term": "Label", "definition": "The target value a model is trained to predict, such as whether a stock's price rises over the next period." },
+                { "_key": "mlt5-016f3", "term": "Deadband labeling", "definition": "A labeling approach that drops ambiguous, small price moves instead of forcing them into an up or down bucket, usually by setting a minimum move threshold." },
+                { "_key": "mlt5-016f4", "term": "Class imbalance", "definition": "A situation where one label value (such as 'up') occurs far more often than another in the training data, which can distort accuracy and other metrics if not accounted for." },
+                { "_key": "mlt5-016f5", "term": "Triple-barrier method", "definition": "A more advanced labeling technique that assigns a label based on which of three outcomes, an upper barrier, a lower barrier, or a time limit, is hit first, covered fully in the advanced sequel to this course." }
+              ]
+            },
+            {
+              "_key": "mlt5-017",
+              "_type": "keyTakeaways",
+              "points": [
+                "A feature is an input describing market state, built only from data available at that point in time. A label is the exact question the model is being trained to answer.",
+                "Identical features can produce wildly different, non-comparable results depending entirely on how the label is defined.",
+                "A naive label, marking every day up or down regardless of how small the move was, forces the model to spend effort classifying noise near zero.",
+                "A deadband label drops ambiguous, tiny moves and only labels days with a sufficiently clear move, ideally set relative to realistic trading costs.",
+                "Getting the label right is a framing decision, not a modeling decision, and it matters more to a strategy's real-world usefulness than which algorithm is chosen to predict it."
+              ]
+            },
+            {
+              "_key": "mlt5-018",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice. Code examples are simplified for illustration and are not production-ready. All figures and accuracy numbers referenced are illustrative and do not represent real backtested results. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

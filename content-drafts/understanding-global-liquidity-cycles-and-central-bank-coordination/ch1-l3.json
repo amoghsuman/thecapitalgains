@@ -1,0 +1,177 @@
+{
+  "courseSlug": "understanding-global-liquidity-cycles-and-central-bank-coordination",
+  "chapters": [
+    {
+      "title": "Chapter 1: What \"Global Liquidity\" Actually Means",
+      "lessons": [
+        {
+          "title": "Measuring Liquidity: The Proxies That Actually Move Markets",
+          "slug": "measuring-liquidity-the-proxies-that-actually-move-markets",
+          "body": [
+            {
+              "_key": "b01",
+              "_type": "bigIdea",
+              "text": "Professionals do not wait for a headline to tell them liquidity is loose or tight. They track a handful of specific series, from net dollar liquidity to funding spreads to FPI flow data, that tend to move before the Nifty or the S&P do."
+            },
+            {
+              "_key": "b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "b02s1",
+                  "_type": "span",
+                  "text": "The retail heuristic is simple: if markets are going up, liquidity must be good. That reasoning runs backwards. Liquidity conditions tend to shift first in funding markets and central bank balance sheets, and only later show up as a rally or a selloff in equities. A top-down investor who wants to be early, rather than reactive, needs a small set of proxies that lead price action instead of confirming it after the fact.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "b03",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "b03s1", "_type": "span", "text": "Net Liquidity: The Single Most Watched Proxy", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b04",
+              "_type": "mathBlock",
+              "latex": "\\text{Net Liquidity} = \\text{Fed Balance Sheet} - \\text{TGA} - \\text{RRP}",
+              "caption": "The most widely cited practitioner proxy for dollar liquidity actually available to markets, not just sitting on the Fed's books."
+            },
+            {
+              "_key": "b05",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "b05s1",
+                  "_type": "span",
+                  "text": "The Fed's balance sheet alone overstates usable liquidity, because two accounts pull money out of the system even when the balance sheet itself is flat. The Treasury General Account (TGA) is the US government's own checking account at the Fed. When the Treasury sells bonds and the TGA balance rises, cash leaves the banking system. The Reverse Repo Facility (RRP) is where money market funds and other institutions park cash overnight at the Fed instead of lending it into markets. When RRP balances rise, that cash is effectively parked, not circulating. A rising Fed balance sheet with a rising TGA and rising RRP can still mean tightening net liquidity, which is exactly the kind of divergence a headline about \"the Fed's balance sheet\" alone will miss.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "b06",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Compute Net Liquidity",
+              "prompt": "Fed Balance Sheet = $7.2 trillion, TGA = $0.7 trillion, RRP = $0.5 trillion. What is Net Liquidity, in trillions of dollars?",
+              "correctValue": 6.0,
+              "tolerance": 0.1,
+              "unit": "$ trillion",
+              "explanation": "Net Liquidity = 7.2 - 0.7 - 0.5 = $6.0 trillion. Notice that if the TGA or RRP rise even while the Fed balance sheet stays flat, net liquidity available to markets falls, which is why watching the balance sheet alone can be misleading."
+            },
+            {
+              "_key": "b07",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "US Federal Reserve Balance Sheet, Year-End (Illustrative)",
+              "xAxisLabel": "Year",
+              "yAxisLabel": "US$ trillions",
+              "data": [
+                { "_key": "b07d1", "_type": "chartPoint", "label": "2019", "value": 4.2 },
+                { "_key": "b07d2", "_type": "chartPoint", "label": "2020", "value": 7.4 },
+                { "_key": "b07d3", "_type": "chartPoint", "label": "2021", "value": 8.8 },
+                { "_key": "b07d4", "_type": "chartPoint", "label": "2022", "value": 8.6 },
+                { "_key": "b07d5", "_type": "chartPoint", "label": "2023", "value": 7.7 },
+                { "_key": "b07d6", "_type": "chartPoint", "label": "2024", "value": 7.2 }
+              ]
+            },
+            {
+              "_key": "b08",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "The chart above uses rounded, approximate year-end figures to illustrate the shape of the cycle (COVID-era expansion followed by quantitative tightening), not precise data. For exact figures, use the Fed's own H.4.1 weekly release."
+            },
+            {
+              "_key": "b09",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "b09s1", "_type": "span", "text": "The Full Proxy Toolkit", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b10",
+              "_type": "table",
+              "caption": "Liquidity Proxies Professionals Actually Track",
+              "headers": ["Proxy", "What It Signals When Liquidity Tightens", "Where to Track It"],
+              "rows": [
+                { "_key": "b10r1", "_type": "tableRow", "cells": ["Net Liquidity (Fed BS minus TGA minus RRP)", "Falls", "Fed's weekly H.4.1 release, Treasury statements"] },
+                { "_key": "b10r2", "_type": "tableRow", "cells": ["Global M2 (major economies, aggregated)", "Growth slows or turns negative", "IMF and national central bank data"] },
+                { "_key": "b10r3", "_type": "tableRow", "cells": ["US Dollar Index (DXY)", "Rises", "Any market data terminal or financial site"] },
+                { "_key": "b10r4", "_type": "tableRow", "cells": ["US High Yield Credit Spread (OAS)", "Widens", "FRED (ICE BofA US High Yield Index)"] },
+                { "_key": "b10r5", "_type": "tableRow", "cells": ["FRA-OIS Spread", "Widens", "Bloomberg or Reuters terminals"] },
+                { "_key": "b10r6", "_type": "tableRow", "cells": ["FPI/FII net flows into India", "Turns negative (net outflows)", "NSDL and NSE FPI data"] },
+                { "_key": "b10r7", "_type": "tableRow", "cells": ["RBI forex reserves", "Falls, especially if the RBI is defending the rupee", "RBI Weekly Statistical Supplement"] },
+                { "_key": "b10r8", "_type": "tableRow", "cells": ["Banking system liquidity (LAF)", "Moves from surplus toward deficit", "RBI daily Liquidity Adjustment Facility data"] }
+              ]
+            },
+            {
+              "_key": "b11",
+              "_type": "callout",
+              "type": "insight",
+              "text": "No single proxy is sufficient on its own. Net liquidity can dip for a technical reason (a large Treasury bond auction settling) without signaling a genuine regime shift. Professionals look for confirmation across several proxies together, for example DXY rising, FRA-OIS widening, and FPI outflows from India all showing up in the same window, before concluding that global liquidity has actually turned."
+            },
+            {
+              "_key": "b12",
+              "_type": "keyFact",
+              "label": "FRA-OIS Spread, Late 2008 Peak",
+              "value": "~360 basis points",
+              "context": "Normally near zero, the FRA-OIS spread (a gauge of stress in dollar funding markets, distinct from ordinary credit risk) blew out during the depths of the Global Financial Crisis, a widely cited approximate peak that signaled acute funding stress ahead of the equity market bottom."
+            },
+            {
+              "_key": "b13",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "b13s1",
+                  "_type": "span",
+                  "text": "The India-specific proxies deserve the same discipline a fundamental investor applies on screener.in when checking a company's numbers before buying. FPI flow data from NSDL tells you whether foreign capital is entering or leaving Indian equities and debt on a given day. The RBI's Weekly Statistical Supplement tracks forex reserves, which fall when the RBI sells dollars to slow rupee depreciation, itself a sign that the rupee is under pressure from tightening global liquidity. The RBI's daily Liquidity Adjustment Facility (LAF) data shows whether the domestic banking system itself is flush with cash or short of it. A top-down investor who tracks only the Fed and ignores these three domestic gauges will misread how much of a global liquidity shock has actually reached Indian markets.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "b14",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "Name the Spread",
+              "textWithBlank": "The ___ spread is the proxy most specifically used to measure stress in dollar funding markets, as distinct from ordinary corporate credit risk.",
+              "correctAnswers": ["FRA-OIS", "FRA-OIS spread", "FRA OIS", "FRA OIS spread"],
+              "explanation": "The FRA-OIS spread compares a forward rate agreement to the overnight indexed swap rate. Because OIS reflects the expected path of the policy rate with almost no credit risk, a widening FRA-OIS spread isolates funding and liquidity stress specifically, which is why it is watched separately from credit spreads like High Yield OAS."
+            },
+            {
+              "_key": "b15",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Three Proxies, One Story",
+              "scenario": "Over the same two-week window, you observe: the Dollar Index (DXY) rising steadily, the FRA-OIS spread widening from near zero to a visibly elevated level, and NSDL data showing consistent net FPI outflows from Indian equities.",
+              "prompt": "As a fund manager reading these three proxies together, what would you conclude about the state of the global liquidity cycle, and how confident would you be compared to seeing just one of these signals alone?",
+              "modelAnswer": "Taken together, these three signals point toward a genuine tightening in global liquidity rather than noise in any single series. A rising DXY suggests dollar demand is increasing, often because global liquidity is becoming scarcer and investors want the safety and yield of dollar assets. A widening FRA-OIS spread confirms that the tightening is showing up specifically as dollar funding stress, not just normal rate moves. Consistent FPI outflows from India confirm the tightening is actually reaching emerging market risk assets, not staying confined to funding markets. Seeing all three together justifies much higher confidence than any one signal alone, since each one rules out a purely technical or one-off explanation for the others."
+            },
+            {
+              "_key": "b16",
+              "_type": "keyTakeaways",
+              "points": [
+                "Net Liquidity (Fed Balance Sheet minus TGA minus RRP) is the single most watched practitioner proxy for usable dollar liquidity, and can diverge from the headline balance sheet number.",
+                "A basket of proxies, including DXY, FRA-OIS, High Yield credit spreads, and Global M2, gives a fuller and earlier read than any one series alone.",
+                "India-specific proxies, FPI/FII flow data from NSDL, RBI forex reserves, and RBI's LAF data, are essential for judging how much of a global liquidity shock has actually reached Indian markets.",
+                "Confirmation across multiple proxies moving together is far more reliable than reacting to a single data point."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

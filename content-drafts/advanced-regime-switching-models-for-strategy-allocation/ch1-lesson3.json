@@ -1,0 +1,273 @@
+{
+  "courseSlug": "advanced-regime-switching-models-for-strategy-allocation",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Markets Have Regimes",
+      "lessons": [
+        {
+          "title": "Regimes in Indian Markets: 2008, 2020, and the 2022 Rate-Hike Cycle",
+          "slug": "regimes-in-indian-markets-2008-2020-and-the-2022-rate-hike-cycle",
+          "body": [
+            {
+              "_key": "rswc1l3b01",
+              "_type": "bigIdea",
+              "text": "History does not repeat regimes exactly, but it repeats their shape. 2008, 2020, and 2022 all sent Nifty into a drawdown, and treating them as the same regime is the fastest way to misread the next one."
+            },
+            {
+              "_key": "rswc1l3b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc1l3b02s1",
+                  "_type": "span",
+                  "text": "You now have a three-dimensional way to read a regime: trend, volatility, and correlation. This lesson applies it to three real drawdowns in Indian markets, the 2008 global financial crisis, the 2020 COVID crash, and the 2022 rate-hike cycle. All three are commonly lumped together in conversation as 'the market fell hard.' Read through the three dimensions, they are three genuinely different regimes, and knowing the difference is what separates a useful regime model from one that just detects 'the index went down.'",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l3b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc1l3b03s1",
+                  "_type": "span",
+                  "text": "Three Drawdowns, Laid Out in Sequence",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l3b04",
+              "_type": "timeline",
+              "title": "Three Regime Shifts in Indian Equities",
+              "events": [
+                {
+                  "_key": "rswc1l3b04e1",
+                  "date": "January 2008",
+                  "title": "Nifty and Sensex near record highs",
+                  "description": "The tail end of a multi-year bull run, with heavy retail and FII participation. Valuations are stretched, but the trend is still firmly up."
+                },
+                {
+                  "_key": "rswc1l3b04e2",
+                  "date": "September 2008",
+                  "title": "Lehman Brothers collapses",
+                  "description": "Global credit markets freeze. FIIs pull capital out of every emerging market simultaneously, India included, regardless of domestic fundamentals."
+                },
+                {
+                  "_key": "rswc1l3b04e3",
+                  "date": "October to November 2008",
+                  "title": "Nifty and Sensex bottom",
+                  "description": "Indian indices fall more than 60% from the January 2008 peak over roughly ten months, the deepest of the three drawdowns in this lesson."
+                },
+                {
+                  "_key": "rswc1l3b04e4",
+                  "date": "2009",
+                  "title": "Global liquidity floods in, recovery begins",
+                  "description": "Coordinated central bank easing worldwide, including RBI rate cuts, drives a sharp multi-year recovery in Indian equities."
+                },
+                {
+                  "_key": "rswc1l3b04e5",
+                  "date": "January 2020",
+                  "title": "Nifty near then record highs above 12,000",
+                  "description": "A calm uptrend, low India VIX, business as usual, weeks before the first COVID-19 lockdowns."
+                },
+                {
+                  "_key": "rswc1l3b04e6",
+                  "date": "23 March 2020",
+                  "title": "Nifty bottoms near its COVID low",
+                  "description": "A fall of roughly 38% from the January peak in barely two months, the fastest onset of the three drawdowns, with India VIX spiking above 80 intraday."
+                },
+                {
+                  "_key": "rswc1l3b04e7",
+                  "date": "2020 to late 2021",
+                  "title": "V-shaped recovery, then a new bull run",
+                  "description": "Unprecedented RBI rate cuts and global stimulus drive a rapid recovery. Nifty more than doubles off the March 2020 low by late 2021."
+                },
+                {
+                  "_key": "rswc1l3b04e8",
+                  "date": "May to June 2022",
+                  "title": "RBI hikes rates in a fast, unscheduled sequence",
+                  "description": "Inflation runs hot after the Russia-Ukraine war, and RBI begins an aggressive hiking cycle. Nifty falls about 17% from its January 2022 peak, the shallowest of the three drawdowns."
+                },
+                {
+                  "_key": "rswc1l3b04e9",
+                  "date": "Rest of 2022",
+                  "title": "Domestic buying offsets record FII selling",
+                  "description": "Mutual funds, insurers, and other domestic institutions buy aggressively through the year, more than offsetting heavy FII outflows, and Nifty recovers most of its mid-year fall by December."
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l3b05",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc1l3b05s1",
+                  "_type": "span",
+                  "text": "The Same Framework, Three Different Readings",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l3b06",
+              "_type": "table",
+              "caption": "2008, 2020, and 2022 read through the trend, volatility, and correlation framework",
+              "headers": ["Episode", "Trend (Peak to Trough)", "Volatility Regime", "Correlation Regime", "Distinguishing Feature"],
+              "rows": [
+                {
+                  "_key": "rswc1l3b06r1",
+                  "_type": "tableRow",
+                  "cells": ["2008 Global Financial Crisis", "Down more than 60%, over about 10 months", "Extreme and sustained for months", "Very high; a true global contagion event", "Deepest and slowest-developing of the three"]
+                },
+                {
+                  "_key": "rswc1l3b06r2",
+                  "_type": "tableRow",
+                  "cells": ["2020 COVID Crash", "Down about 38%, over about 2 months", "Extreme, but brief; India VIX above 80 intraday", "Very high; near-total contagion across assets", "Fastest onset and fastest recovery of the three"]
+                },
+                {
+                  "_key": "rswc1l3b06r3",
+                  "_type": "tableRow",
+                  "cells": ["2022 Rate-Hike Cycle", "Down about 17%, over about 5 months", "Elevated, not extreme; India VIX mostly in the 20s", "Partially decoupled from the global selloff", "Domestic buying offset FII selling, muting the drawdown"]
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l3b07",
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "rswc1l3b07st1",
+                  "label": "FII Net Selling, CY2022 (approx.)",
+                  "value": "~₹1.2 lakh crore",
+                  "context": "Illustrative, rounded calendar-year figure"
+                },
+                {
+                  "_key": "rswc1l3b07st2",
+                  "label": "DII Net Buying, CY2022 (approx.)",
+                  "value": "~₹2.7 lakh crore",
+                  "context": "Illustrative, rounded calendar-year figure, more than offsetting FII selling"
+                },
+                {
+                  "_key": "rswc1l3b07st3",
+                  "label": "Nifty Full-Year Return, 2022",
+                  "value": "Roughly flat to modestly positive",
+                  "context": "Despite the mid-year drawdown, one of the tougher years for global equities in a decade"
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l3b08",
+              "_type": "callout",
+              "type": "insight",
+              "text": "By trend alone, all three episodes look the same: 'the market fell.' Read the other two dials and 2022 stops looking like 2008 or 2020. It is a shallower, less volatile, partially decoupled drawdown, closer to a Volatile Whipsaw than a Panic Selloff in the archetype table from the previous lesson. A regime classifier that cannot tell these apart is not reading the regime, it is just reading the sign of the return."
+            },
+            {
+              "_key": "rswc1l3b09",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc1l3b09s1",
+                  "_type": "span",
+                  "text": "What a True Panic Regime Looks Like on a Chart",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l3b10",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc1l3b10s1",
+                  "_type": "span",
+                  "text": "The 2008 and 2020 episodes shared a visual signature that 2022 never developed: repeated gap-down opens, wide daily trading ranges, and at least one violent single-day reversal in the middle of the fall, as short covering and panic buying collide with continued selling. The stylized week below is not tied to any specific real trading week; it is built to show that pattern in isolation, the way it would look on a systematic desk's intraday monitor.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l3b11",
+              "_type": "candlestickChart",
+              "title": "Stylized Panic-Regime Week (Illustrative, Not an Actual Trading Week)",
+              "data": [
+                { "_key": "rswc1l3b11d1", "date": "Day 1", "open": 100.0, "high": 100.5, "low": 93.0, "close": 94.0 },
+                { "_key": "rswc1l3b11d2", "date": "Day 2", "open": 91.0, "high": 92.5, "low": 85.0, "close": 86.5 },
+                { "_key": "rswc1l3b11d3", "date": "Day 3", "open": 84.0, "high": 91.0, "low": 82.5, "close": 90.0 },
+                { "_key": "rswc1l3b11d4", "date": "Day 4", "open": 88.0, "high": 89.0, "low": 80.0, "close": 81.5 },
+                { "_key": "rswc1l3b11d5", "date": "Day 5", "open": 79.0, "high": 84.0, "low": 77.5, "close": 83.0 }
+              ]
+            },
+            {
+              "_key": "rswc1l3b12",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc1l3b12s1",
+                  "_type": "span",
+                  "text": "Notice Day 3 and Day 5: sharp intraday reversals that close well off the day's low, the kind of price action that stops out short-term trend followers and pairs traders alike before the fall resumes. A regime detector built only on closing prices, like a simple moving average crossover, misses this entirely. Chapter 2 introduces volatility and gap-based signals precisely to catch this signature earlier than a lagging trend filter can.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc1l3b13",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Three episodes is not a statistically rich sample. It is tempting to build a regime classifier that perfectly explains 2008, 2020, and 2022 in hindsight and call it validated. Chapter 7 covers exactly why that is a trap: a model tuned to fit three known crises has learned three specific stories, not the general shape of a regime shift."
+            },
+            {
+              "_key": "rswc1l3b14",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Classifying an Unfamiliar Shock",
+              "scenario": "Assume a new geopolitical shock hits global markets. In the first month, Nifty falls 12% from its recent high. India VIX rises from 14 to 28. Pairwise correlations across Nifty 50 constituents rise from about 0.35 to about 0.55, a real increase, but nowhere near the 0.75 to 0.85 range seen in a full panic. Domestic mutual fund inflows stay positive through the month even as FIIs sell.",
+              "prompt": "Using the trend, volatility, and correlation framework and the three historical episodes above, which regime does this most resemble, and which strategies from the comparison table two lessons ago would you expect to hold up best?",
+              "modelAnswer": "This resembles the 2022 rate-hike cycle far more than 2008 or 2020: a real but moderate trend down, elevated but not extreme volatility, and only a partial rise in correlation rather than a collapse toward 1. It looks closer to a Volatile Whipsaw than a true Panic Selloff. In that regime, a pure trend-following system is likely to get whipsawed by the sharp initial move without a sustained follow-through, while mean-reversion and pairs strategies retain more of their edge than they would in a genuine panic, since correlation structure has not fully broken down. Short-volatility strategies should be sized more cautiously than in a calm regime, since 28 is a real increase in India VIX, but this is not the extreme, sustained volatility regime of March 2020."
+            },
+            {
+              "_key": "rswc1l3b15",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why 2022 Was Not 2008 or 2020",
+              "question": "What was the single biggest structural difference that made the 2022 drawdown behave differently from 2008 and 2020, despite all three being described in the media as 'market crashes'?",
+              "options": [
+                "Nifty fell by a larger percentage in 2022 than in 2008 or 2020",
+                "India VIX reached its highest ever level in 2022",
+                "Domestic institutional buying largely offset FII selling in 2022, which was not the case in 2008 or 2020",
+                "There was no interest rate response from RBI in 2022"
+              ],
+              "correctIndex": 2,
+              "explanation": "In 2008 and 2020, domestic and foreign flows moved in the same direction, heavy, near-simultaneous selling that drove correlations toward 1. In 2022, FIIs sold heavily but domestic mutual funds and insurers bought through the year, cushioning the index and keeping the correlation and volatility dimensions well short of a true panic, even though the trend dimension was genuinely negative for several months."
+            },
+            {
+              "_key": "rswc1l3b16",
+              "_type": "keyTakeaways",
+              "points": [
+                "2008, 2020, and 2022 were all Nifty drawdowns, but they were three different regimes once read through trend, volatility, and correlation",
+                "2008 was the deepest and slowest-developing drawdown; 2020 was the fastest onset and fastest recovery; 2022 was the shallowest and least volatile of the three",
+                "Sustained domestic institutional buying in 2022 partially decoupled the correlation dimension from the global rate-hike selloff, something that did not happen in 2008 or 2020",
+                "A true panic regime tends to show repeated gap-down opens and violent single-day reversals, a signature a simple trend filter on closing prices will miss",
+                "Building a regime model that perfectly explains three known historical crises is not the same as building one that generalizes to the next unfamiliar shock",
+                "Classifying a new shock requires reading all three dimensions together, not just checking whether the index is falling"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

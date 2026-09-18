@@ -1,0 +1,312 @@
+{
+  "courseSlug": "understanding-the-risk-return-profile-of-alternative-assets-vs-traditional-assets",
+  "chapters": [
+    {
+      "title": "Chapter 4: Profiling the Alternatives",
+      "lessons": [
+        {
+          "title": "Private Credit, P2P Lending and Structured Debt: High Coupons, Real Default Risk",
+          "slug": "private-credit-p2p-lending-and-structured-debt-high-coupons-real-default-risk",
+          "body": [
+            {
+              "_key": "c4l4-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l4-001s1", "_type": "span", "marks": [], "text": "Imagine two investors each putting ₹10 lakh into the same fast-growing mid-sized company. One buys its shares. The other lends to it at 12% a year. If the company triples in value, the shareholder makes ₹20 lakh and the lender still makes ₹1.2 lakh. If the company collapses, the shareholder loses everything, and the lender may lose most of it too. That lopsided deal sits under every private credit fund, P2P app, invoice discounting platform and high-yield NCD. A 12 to 14% coupon feels like fixed income. It is really a promise with capped upside and real downside, and understanding that shape is the key to this entire corner of alternatives." }
+              ]
+            },
+            {
+              "_key": "c4l4-002",
+              "_type": "bigIdea",
+              "text": "A lender's best case is getting exactly what was promised. Everything else is a loss of some size. High-coupon credit is not safer equity. It is a bet that nothing goes wrong, and the bill for when things do go wrong tends to arrive all at once, in bad years."
+            },
+            {
+              "_key": "c4l4-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l4-003s1", "_type": "span", "marks": [], "text": "The Lopsided Payoff of Lending" }
+              ]
+            },
+            {
+              "_key": "c4l4-004",
+              "_type": "table",
+              "caption": "₹10 lakh in the same company, one year later: shareholder vs lender at 12% (illustrative)",
+              "headers": ["What happens to the company", "Shareholder", "Lender"],
+              "rows": [
+                { "_key": "c4l4-004r1", "_type": "tableRow", "cells": ["Triples in value", "+₹20 lakh", "+₹1.2 lakh"] },
+                { "_key": "c4l4-004r2", "_type": "tableRow", "cells": ["Grows modestly", "+₹1 lakh", "+₹1.2 lakh"] },
+                { "_key": "c4l4-004r3", "_type": "tableRow", "cells": ["Struggles but survives", "−₹4 lakh", "+₹1.2 lakh"] },
+                { "_key": "c4l4-004r4", "_type": "tableRow", "cells": ["Defaults, 40% recovered", "−₹10 lakh", "−₹6 lakh"] }
+              ]
+            },
+            {
+              "_key": "c4l4-005",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "c4l4-005m1", "_type": "glossaryTerm", "definition": "A return pattern with many small, steady gains and occasional large losses. The average can look healthy, but the bad outcomes are much bigger than the good ones." }
+              ],
+              "children": [
+                { "_key": "c4l4-005s1", "_type": "span", "marks": [], "text": "In three out of four outcomes, the lender looks like a genius: steady 12%. In the fourth, the lender gives back five years' worth of interest in one go. This return pattern is called " },
+                { "_key": "c4l4-005s2", "_type": "span", "marks": ["c4l4-005m1"], "text": "negative skew" },
+                { "_key": "c4l4-005s3", "_type": "span", "marks": [], "text": ". It is the opposite of the startup power law in the previous lesson, and it is dangerous for a different reason: years of smooth returns build confidence right up until the loss arrives." }
+              ]
+            },
+            {
+              "_key": "c4l4-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l4-006s1", "_type": "span", "marks": [], "text": "Normal Years vs Stress Years" }
+              ]
+            },
+            {
+              "_key": "c4l4-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l4-007s1", "_type": "span", "marks": [], "text": "Defaults are not spread evenly over time. They cluster when the economy slows, interest rates rise or credit markets freeze. Using the expected-loss approach from Chapter 1 (gross yield minus probability of default × loss given default, minus fees), here is how the credit ladder holds up in a normal year and a stress year." }
+              ]
+            },
+            {
+              "_key": "c4l4-008",
+              "_type": "chart",
+              "chartType": "bar",
+              "title": "Expected net return in a normal year vs a stress year (%, illustrative, before tax)",
+              "xAxisLabel": "Type of lending",
+              "yAxisLabel": "Expected net return (%)",
+              "data": [
+                { "_key": "c4l4-008d1", "label": "AAA bond" },
+                { "_key": "c4l4-008d2", "label": "AA bond" },
+                { "_key": "c4l4-008d3", "label": "Private credit fund" },
+                { "_key": "c4l4-008d4", "label": "P2P lending" }
+              ],
+              "series": [
+                { "_key": "c4l4-008x1", "label": "Normal year", "values": [6.95, 8.25, 10, 8] },
+                { "_key": "c4l4-008x2", "label": "Stress year", "values": [6.75, 7.5, 6, 0.8] }
+              ]
+            },
+            {
+              "_key": "c4l4-009",
+              "_type": "collapsible",
+              "title": "Show me the assumptions behind the chart",
+              "content": [
+                {
+                  "_key": "c4l4-010",
+                  "_type": "table",
+                  "caption": "Illustrative inputs: gross yield, default rate (PD), loss given default (LGD) and fees",
+                  "headers": ["Type", "Gross yield", "Fees", "Normal PD / LGD", "Stress PD / LGD", "Net: normal / stress"],
+                  "rows": [
+                    { "_key": "c4l4-010r1", "_type": "tableRow", "cells": ["AAA bond", "7%", "0%", "0.1% / 50%", "0.5% / 50%", "6.95% / 6.75%"] },
+                    { "_key": "c4l4-010r2", "_type": "tableRow", "cells": ["AA bond", "8.5%", "0%", "0.5% / 50%", "2% / 50%", "8.25% / 7.5%"] },
+                    { "_key": "c4l4-010r3", "_type": "tableRow", "cells": ["Private credit fund", "14%", "2%", "5% / 40%", "10% / 60%", "10% / 6%"] },
+                    { "_key": "c4l4-010r4", "_type": "tableRow", "cells": ["P2P lending", "12%", "1%", "4% / 75%", "12% / 85%", "8% / 0.8%"] }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c4l4-011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l4-011s1", "_type": "span", "marks": [], "text": "In a normal year, higher coupons win. In a stress year, the ranking flips: the AAA bond barely notices, while unsecured P2P lending earns close to nothing. The stress year is also exactly when equities are falling, which is why lower-quality credit fails as a diversifier when you need one." }
+              ]
+            },
+            {
+              "_key": "c4l4-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l4-012s1", "_type": "span", "marks": [], "text": "Where You Stand in the Queue: Seniority and Security" }
+              ]
+            },
+            {
+              "_key": "c4l4-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "c4l4-013m1", "_type": "glossaryTerm", "definition": "The order in which a failed borrower's money is paid out: secured senior lenders first, then unsecured lenders, then subordinated lenders, and shareholders last." }
+              ],
+              "children": [
+                { "_key": "c4l4-013s1", "_type": "span", "marks": [], "text": "When a borrower fails, its remaining assets are paid out in a strict order, often called the " },
+                { "_key": "c4l4-013s2", "_type": "span", "marks": ["c4l4-013m1"], "text": "waterfall" },
+                { "_key": "c4l4-013s3", "_type": "span", "marks": [], "text": ". Two loans with the same 12% coupon can have completely different risk depending on where they sit in that queue and whether they are backed by specific assets." }
+              ]
+            },
+            {
+              "_key": "c4l4-014",
+              "_type": "table",
+              "caption": "A failed company's assets sell for ₹60 crore: who gets what (illustrative)",
+              "headers": ["Claim, in order of priority", "Amount owed", "Amount recovered", "Recovery rate"],
+              "rows": [
+                { "_key": "c4l4-014r1", "_type": "tableRow", "cells": ["Secured senior lenders", "₹50 crore", "₹50 crore", "100%"] },
+                { "_key": "c4l4-014r2", "_type": "tableRow", "cells": ["Unsecured lenders", "₹30 crore", "₹10 crore", "33%"] },
+                { "_key": "c4l4-014r3", "_type": "tableRow", "cells": ["Subordinated lenders", "₹10 crore", "₹0", "0%"] },
+                { "_key": "c4l4-014r4", "_type": "tableRow", "cells": ["Shareholders", "Residual claim", "₹0", "0%"] }
+              ]
+            },
+            {
+              "_key": "c4l4-015",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Run the waterfall",
+              "prompt": "Using the same claims as the table (₹50 crore secured senior, ₹30 crore unsecured, ₹10 crore subordinated), suppose the assets sell for ₹70 crore instead. What percentage of their claim do the unsecured lenders recover? Round to one decimal place.",
+              "correctValue": 66.7,
+              "tolerance": 0.2,
+              "unit": "%",
+              "explanation": "Secured senior lenders take their full ₹50 crore first, leaving ₹20 crore. Unsecured lenders are owed ₹30 crore, so they recover ₹20 crore ÷ ₹30 crore ≈ 66.7%. Subordinated lenders and shareholders still get nothing. A ₹10 crore change in asset value doubled the unsecured recovery, which is how sensitive junior lenders are."
+            },
+            {
+              "_key": "c4l4-016",
+              "_type": "keyFact",
+              "label": "Recovery under India's Insolvency and Bankruptcy Code",
+              "value": "Roughly a third of admitted claims, on average",
+              "context": "Across resolved cases since the IBC came into force in 2016, creditors have recovered only around a third of what they claimed, often after years of proceedings. Unsecured and junior creditors typically recover far less than that average."
+            },
+            {
+              "_key": "c4l4-017",
+              "_type": "collapsible",
+              "title": "When a household name's NCDs went bad: DHFL",
+              "content": [
+                {
+                  "_key": "c4l4-018",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    { "_key": "c4l4-018s1", "_type": "span", "marks": [], "text": "Dewan Housing Finance Corporation (DHFL) was one of India's largest housing finance companies. It raised large amounts from retail investors through public NCD issues and deposits, marketed as high-quality, well-rated fixed income. After the 2018 IL&FS crisis froze credit markets, DHFL began defaulting in 2019, and in late 2019 it became the first financial services company referred for insolvency under the IBC. It was eventually taken over by Piramal Group in 2021, with creditors as a group recovering well under half of what they were owed." }
+                  ]
+                },
+                {
+                  "_key": "c4l4-019",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    { "_key": "c4l4-019s1", "_type": "span", "marks": [], "text": "The pattern is the one this lesson describes: years of steady coupons, a credit event triggered by the wider market, and a loss far larger than all the extra interest earned." }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c4l4-020",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l4-020s1", "_type": "span", "marks": [], "text": "The Retail Credit Menu" }
+              ]
+            },
+            {
+              "_key": "c4l4-021",
+              "_type": "table",
+              "caption": "High-yield credit products offered to Indian retail investors (general features, check each product)",
+              "headers": ["Product", "What you are exposed to", "Liquidity", "Key watch-outs"],
+              "rows": [
+                { "_key": "c4l4-021r1", "_type": "tableRow", "cells": ["Listed NCDs from public issues", "One issuer, often an NBFC", "Listed, but trading is often thin", "Credit rating, seniority, whether secured, issuer concentration"] },
+                { "_key": "c4l4-021r2", "_type": "tableRow", "cells": ["Corporate bonds via online bond platforms", "One issuer per bond; SEBI regulates the platforms", "Limited secondary market", "Lower-rated issuers offering the highest yields"] },
+                { "_key": "c4l4-021r3", "_type": "tableRow", "cells": ["P2P lending", "Many small unsecured loans to individuals or small businesses", "Money returns only as borrowers repay", "RBI caps exposure at ₹50 lakh across platforms and ₹50,000 per borrower"] },
+                { "_key": "c4l4-021r4", "_type": "tableRow", "cells": ["Invoice discounting and lease financing platforms", "Often a single company's payment obligation", "Until the invoice or lease ends", "Regulatory oversight varies by structure; concentration on one counterparty"] },
+                { "_key": "c4l4-021r5", "_type": "tableRow", "cells": ["Market-linked debentures", "The issuer's credit plus a market-linked payoff", "Limited", "Taxed at slab rates since April 2023; complex payoffs"] },
+                { "_key": "c4l4-021r6", "_type": "tableRow", "cells": ["Private credit AIF", "A portfolio of corporate or real estate loans", "Locked for the fund's life", "₹1 crore minimum, manager skill, fees, valuation"] }
+              ]
+            },
+            {
+              "_key": "c4l4-022",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Diversification in lending only works across many unrelated borrowers. Twenty invoices from the same company, or ten NCDs from NBFCs lending to the same kind of borrower, can all fail together. And diversification cannot protect you from a stress year that hits every borrower at once."
+            },
+            {
+              "_key": "c4l4-023",
+              "_type": "comparison",
+              "title": "What the coupon promises vs what decides your return",
+              "columns": [
+                {
+                  "_key": "c4l4-023c1",
+                  "label": "The headline",
+                  "points": [
+                    "A fixed rate, such as 12 to 14%",
+                    "Monthly or quarterly payouts",
+                    "A clear maturity date",
+                    "Language like \"secured\", \"rated\" or \"asset-backed\""
+                  ]
+                },
+                {
+                  "_key": "c4l4-023c2",
+                  "label": "What actually decides your return",
+                  "points": [
+                    "How many borrowers default, especially in a bad year",
+                    "How much is recovered, and how long it takes",
+                    "Where you rank in the waterfall",
+                    "Fees, tax at slab rates and whether you can exit early"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c4l4-024",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Same coupon, different risk",
+              "question": "Two NCDs from the same NBFC both pay 11%. One is secured and senior. The other is unsecured and subordinated. What is the most accurate conclusion?",
+              "options": [
+                "They carry identical risk because the issuer and coupon are the same",
+                "The unsecured subordinated NCD is riskier, and at the same coupon it pays nothing extra for that risk",
+                "The subordinated NCD is safer because it is repaid first",
+                "Neither can lose money because both are rated"
+              ],
+              "correctIndex": 1,
+              "explanation": "In a default, secured senior holders are paid before unsecured and subordinated holders. The subordinated NCD should pay a noticeably higher coupon for that extra risk. At the same 11%, it is simply the worse deal."
+            },
+            {
+              "_key": "c4l4-025",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "Name the queue",
+              "textWithBlank": "The strict order in which a failed borrower's creditors and shareholders are paid is often called the ___.",
+              "correctAnswers": ["waterfall", "priority waterfall", "payment waterfall"],
+              "explanation": "Secured senior lenders sit at the top of the waterfall and shareholders at the bottom. Where you sit decides your recovery rate, and recovery rate decides your loss."
+            },
+            {
+              "_key": "c4l4-026",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Dr Menon's 13% app",
+              "scenario": "Dr Menon, 49, a surgeon in Kochi, has ₹1.2 crore in investments, mostly equity mutual funds and FDs. A colleague shows him an invoice discounting app offering \"13% fixed returns, 90-day tenure, backed by invoices from large companies.\" He is thinking of moving ₹40 lakh of FDs into it, spread across about eight invoices, most of them from two well-known companies' suppliers.",
+              "prompt": "Using the ideas in this lesson, what should Dr Menon check and consider before he moves the money?",
+              "modelAnswer": "1. Understand the payoff. The best case is 13%. The downside is losing a large part of the invoice value if a company does not pay or the platform's structure fails. That is negative skew, not fixed income.\n\n2. Check concentration. Eight invoices tied mostly to two companies is not real diversification. If either company delays payments in a stress year, several invoices can fail together.\n\n3. Check seniority and legal structure. Who exactly owes him money: the large company, the supplier, or a special purpose vehicle? Is his claim secured? What happens if the platform itself shuts down?\n\n4. Check regulation. Oversight of invoice discounting products sold to retail investors varies by structure. He should confirm which regulator, if any, oversees this specific product.\n\n5. Compare with the anchor. 13% against FDs at about 7% is a 6-point spread, taxed at his 30% slab. After even modest expected losses, the real pickup is much smaller.\n\n6. Size it. Moving ₹40 lakh, a third of his investments, would replace his safest assets with some of his riskiest. If he wants exposure, a small slice spread across many unrelated counterparties is more prudent, with his FDs left as the anchor."
+            },
+            {
+              "_key": "c4l4-027",
+              "_type": "keyTakeaways",
+              "points": [
+                "Lending has capped upside and large downside: the best case is getting what was promised, and a default can wipe out years of interest.",
+                "This negative skew produces smooth returns for years, which builds false confidence before losses arrive.",
+                "Defaults cluster in stress years: in the illustration, P2P lending falls from about 8% to under 1% net, while a AAA bond barely moves.",
+                "Seniority and security decide recovery: in the ₹60 crore example, secured lenders get 100%, unsecured 33% and subordinated nothing.",
+                "Under India's IBC, creditors have recovered only around a third of admitted claims on average, often after years.",
+                "For any high-coupon product, check concentration, seniority, legal structure, regulator, tax and exit before comparing it with an FD."
+              ]
+            },
+            {
+              "_key": "c4l4-028",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to invest in any NCD, bond, platform, fund or company named here. Default rates, recoveries and returns are illustrative. Regulations and tax rules change, and the features of individual products vary. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

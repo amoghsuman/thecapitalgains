@@ -1,0 +1,286 @@
+{
+  "courseSlug": "understanding-cap-tables-and-equity-dilution-for-founders",
+  "chapters": [
+    {
+      "title": "Chapter 1: Cap Table Basics for Founders",
+      "lessons": [
+        {
+          "title": "Authorised Capital, Issued Shares and Face Value: The Company Law Basics",
+          "slug": "authorised-capital-issued-shares-and-face-value-the-company-law-basics",
+          "body": [
+            {
+              "_key": "c1", "_type": "block", "style": "normal", "markDefs": [],
+              "children": [
+                { "_key": "c1s1", "_type": "span", "marks": [], "text": "The TiffinBox angel round is agreed. Money is ready to transfer. Then the company secretary sends one line that stops everything: \"Your authorised capital is only ₹1 lakh. You cannot allot these shares.\" The round is not dead, but it is now delayed by a board meeting, a shareholder resolution, an MCA filing and a fee. This lesson covers the four capital numbers every founder is expected to know, and the one number that confuses founders most: face value." }
+              ]
+            },
+            {
+              "_key": "c2", "_type": "bigIdea",
+              "text": "Authorised capital is the ceiling your company may issue up to. Issued capital is what actually exists. Face value is an accounting label, not a price. Confusing these three is the most common reason a first round gets delayed."
+            },
+            {
+              "_key": "c3", "_type": "block", "style": "h2", "markDefs": [],
+              "children": [ { "_key": "c3s1", "_type": "span", "marks": [], "text": "The Four Capital Numbers" } ]
+            },
+            {
+              "_key": "c4", "_type": "block", "style": "normal",
+              "markDefs": [
+                { "_key": "cg1", "_type": "glossaryTerm", "definition": "The maximum amount of share capital a company may issue, as stated in the capital clause of its memorandum of association. Raising it requires a shareholder resolution and a filing with the Registrar of Companies." }
+              ],
+              "children": [
+                { "_key": "c4s1", "_type": "span", "marks": [], "text": "Your memorandum of association states an " },
+                { "_key": "c4s2", "_type": "span", "marks": ["cg1"], "text": "authorised capital" },
+                { "_key": "c4s3", "_type": "span", "marks": [], "text": ". Everything else flows from it. Here are the four numbers, applied to TiffinBox on the day it was incorporated with 10,000 shares of ₹10 each, fully paid." }
+              ]
+            },
+            {
+              "_key": "c5", "_type": "table",
+              "caption": "The four capital numbers, defined and applied",
+              "headers": ["Number", "What it means", "TiffinBox at incorporation"],
+              "rows": [
+                { "_key": "c5r1", "_type": "tableRow", "cells": ["Authorised capital", "The maximum share capital the company may issue, set in the memorandum of association", "₹1,00,000 (10,000 shares × ₹10)"] },
+                { "_key": "c5r2", "_type": "tableRow", "cells": ["Issued capital", "The portion of authorised capital the company has actually offered to shareholders", "₹1,00,000 (10,000 shares)"] },
+                { "_key": "c5r3", "_type": "tableRow", "cells": ["Subscribed capital", "The portion of issued capital that shareholders have agreed to take up", "₹1,00,000 (all shares taken by the two founders)"] },
+                { "_key": "c5r4", "_type": "tableRow", "cells": ["Paid-up capital", "The amount shareholders have actually paid in against the shares they subscribed", "₹1,00,000 (fully paid)"] }
+              ]
+            },
+            {
+              "_key": "c6", "_type": "block", "style": "normal", "markDefs": [],
+              "children": [
+                { "_key": "c6s1", "_type": "span", "marks": [], "text": "In most Indian startups, issued, subscribed and paid-up capital are the same number, because shares are allotted only when the money arrives in full. Authorised capital is the one that sits above them, usually with unused headroom. Since the Companies (Amendment) Act, 2015, there is no minimum paid-up capital requirement for a private limited company, which is why many are incorporated with just ₹1 lakh of authorised capital." }
+              ]
+            },
+            {
+              "_key": "c7", "_type": "callout", "type": "warning",
+              "text": "A company cannot allot shares beyond its authorised capital. Not with board approval, not with investor consent, not \"subject to regularisation later\". If your authorised capital is ₹1 lakh and your round needs ₹1.13 lakh of share capital, the allotment cannot legally happen until the ceiling is raised. Check this at term sheet stage, not on the day of closing."
+            },
+            {
+              "_key": "c8", "_type": "block", "style": "h2", "markDefs": [],
+              "children": [ { "_key": "c8s1", "_type": "span", "marks": [], "text": "Face Value Is Not Price" } ]
+            },
+            {
+              "_key": "c9", "_type": "block", "style": "normal", "markDefs": [],
+              "children": [
+                { "_key": "c9s1", "_type": "span", "marks": [], "text": "Face value, also called nominal or par value, is the value printed on a share. It is set by the company, typically ₹10, ₹1 or ₹100, and it has almost nothing to do with what a share is worth. Founders trip on this when angels agree to pay ₹4,000 for a share whose face value is ₹10. Both numbers are correct, and they do different jobs." }
+              ]
+            },
+            {
+              "_key": "c10", "_type": "comparison",
+              "title": "Face value vs issue price",
+              "columns": [
+                {
+                  "_key": "c10c1", "label": "Face value",
+                  "points": [
+                    "Fixed by the company in its memorandum of association",
+                    "Used to calculate authorised, issued and paid-up capital",
+                    "Changes only through a stock split or consolidation",
+                    "Common values in India: ₹1, ₹2, ₹5, ₹10",
+                    "Tells you nothing about what the business is worth"
+                  ]
+                },
+                {
+                  "_key": "c10c2", "label": "Issue price",
+                  "points": [
+                    "Negotiated with investors, based on the agreed valuation",
+                    "Face value plus securities premium",
+                    "Changes with every round, up or down",
+                    "TiffinBox angel round: ₹4,000 per share",
+                    "This is the number that determines dilution and what you raise"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c11", "_type": "mathBlock",
+              "latex": "\\text{Securities premium per share} = \\text{Issue price} - \\text{Face value}",
+              "caption": "Everything above face value goes to the securities premium account, not to share capital"
+            },
+            {
+              "_key": "c12", "_type": "block", "style": "normal", "markDefs": [],
+              "children": [
+                { "_key": "c12s1", "_type": "span", "marks": [], "text": "When the angels put ₹50 lakh into TiffinBox for 1,250 shares at ₹4,000 each, only ₹10 per share is share capital. The other ₹3,990 per share is securities premium. Both sit in shareholders' funds on the balance sheet, but they are recorded separately and the law treats them differently." }
+              ]
+            },
+            {
+              "_key": "c13", "_type": "statGrid",
+              "stats": [
+                { "_key": "c13s1", "label": "Angel cheque", "value": "₹50,00,000", "context": "1,250 shares × ₹4,000" },
+                { "_key": "c13s2", "label": "Added to share capital", "value": "₹12,500", "context": "1,250 × ₹10 face value" },
+                { "_key": "c13s3", "label": "Added to securities premium", "value": "₹49,87,500", "context": "1,250 × ₹3,990" },
+                { "_key": "c13s4", "label": "Issued capital after the round", "value": "₹1,12,500", "context": "11,250 shares × ₹10" }
+              ]
+            },
+            {
+              "_key": "c14", "_type": "collapsible",
+              "title": "Show me the math",
+              "content": [
+                {
+                  "_key": "c14p1", "_type": "block", "style": "normal", "markDefs": [],
+                  "children": [
+                    { "_key": "c14p1s1", "_type": "span", "marks": [], "text": "Premium per share = ₹4,000 minus ₹10 = ₹3,990. Total premium = 1,250 × ₹3,990 = ₹49,87,500. Total share capital raised = 1,250 × ₹10 = ₹12,500. Check: ₹49,87,500 + ₹12,500 = ₹50,00,000, the full angel cheque." }
+                  ]
+                },
+                {
+                  "_key": "c14p2", "_type": "block", "style": "normal", "markDefs": [],
+                  "children": [
+                    { "_key": "c14p2s1", "_type": "span", "marks": [], "text": "Issued capital after the round = (10,000 + 1,250) × ₹10 = ₹1,12,500. That is above the ₹1,00,000 authorised ceiling, which is exactly why TiffinBox has to raise its authorised capital before the allotment can happen. Note that the 1,000-share ESOP pool is not issued capital yet, because options become shares only when employees exercise them. The authorised ceiling must eventually cover those too." }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c15", "_type": "callout", "type": "insight",
+              "text": "Securities premium is not free cash to spend as you like. Section 52 of the Companies Act, 2013 restricts how the securities premium account can be applied, for example towards issuing bonus shares, writing off the expenses of a share issue, or buying back shares. The money raised is available to run the business, but the accounting entry sits in a restricted reserve rather than in free reserves available for dividends."
+            },
+            {
+              "_key": "c16", "_type": "block", "style": "h2", "markDefs": [],
+              "children": [ { "_key": "c16s1", "_type": "span", "marks": [], "text": "Face Value in the Listed Market" } ]
+            },
+            {
+              "_key": "c17", "_type": "block", "style": "normal", "markDefs": [],
+              "children": [
+                { "_key": "c17s1", "_type": "span", "marks": [], "text": "The same logic runs through every company on the NSE and BSE. Face values differ, market prices are unrelated to them, and neither tells you whether a stock is cheap. Look up any company on screener.in and the face value sits in its basic details." }
+              ]
+            },
+            {
+              "_key": "c18", "_type": "table",
+              "caption": "Face values of some well-known listed Indian companies",
+              "headers": ["Company", "Face value", "What it tells you about the share price"],
+              "rows": [
+                { "_key": "c18r1", "_type": "tableRow", "cells": ["Reliance Industries", "₹10", "Nothing"] },
+                { "_key": "c18r2", "_type": "tableRow", "cells": ["Infosys", "₹5", "Nothing"] },
+                { "_key": "c18r3", "_type": "tableRow", "cells": ["Tata Consultancy Services", "₹1", "Nothing"] },
+                { "_key": "c18r4", "_type": "tableRow", "cells": ["MRF", "₹10", "Nothing, despite one of the highest share prices on the NSE"] }
+              ]
+            },
+            {
+              "_key": "c19", "_type": "keyFact",
+              "label": "Stock splits change face value, not value",
+              "value": "A ₹10 share split into ten ₹1 shares",
+              "context": "The shareholder ends up with ten times the shares at roughly one-tenth the price. The value of the holding is unchanged on the day of the split, and Nifty and Sensex levels are adjusted so the index does not jump."
+            },
+            {
+              "_key": "c20", "_type": "exercise", "variant": "numericInput",
+              "title": "Calculate the securities premium",
+              "prompt": "A Hyderabad SaaS startup with a face value of ₹10 per share issues 2,000 shares to a seed fund at ₹2,500 per share. How much goes into the securities premium account, in rupees?",
+              "correctValue": 4980000, "tolerance": 1, "unit": "₹",
+              "explanation": "Premium per share = ₹2,500 minus ₹10 = ₹2,490. Total premium = 2,000 × ₹2,490 = ₹49,80,000. Only 2,000 × ₹10 = ₹20,000 is added to share capital, even though the company received ₹50,00,000 in total."
+            },
+            {
+              "_key": "c21", "_type": "block", "style": "h2", "markDefs": [],
+              "children": [ { "_key": "c21s1", "_type": "span", "marks": [], "text": "Raising Your Authorised Capital" } ]
+            },
+            {
+              "_key": "c22", "_type": "block", "style": "normal", "markDefs": [],
+              "children": [
+                { "_key": "c22s1", "_type": "span", "marks": [], "text": "This is routine work, but it takes time you may not have in the final week of a round. Section 61 of the Companies Act, 2013 allows a limited company with share capital to increase its authorised capital if its articles of association permit it. The steps are predictable." }
+              ]
+            },
+            {
+              "_key": "c23", "_type": "timeline",
+              "title": "Increasing authorised capital: the sequence",
+              "events": [
+                { "_key": "c23e1", "date": "Step 1", "title": "Check the articles", "description": "The articles of association must permit an increase. If they do not, they have to be amended first by special resolution, which adds time." },
+                { "_key": "c23e2", "date": "Step 2", "title": "Board meeting", "description": "The board approves the increase and calls a general meeting of shareholders." },
+                { "_key": "c23e3", "date": "Step 3", "title": "Shareholder approval", "description": "Shareholders pass an ordinary resolution increasing authorised capital and amending the capital clause of the memorandum of association." },
+                { "_key": "c23e4", "date": "Step 4", "title": "File Form SH-7", "description": "Notice of the alteration of share capital goes to the Registrar of Companies within 30 days of the resolution, with the fee and applicable stamp duty. Fees depend on the capital slab and stamp duty varies by state." },
+                { "_key": "c23e5", "date": "Step 5", "title": "Then allot", "description": "Only once the higher ceiling is on record can the new shares be allotted, followed by Form PAS-3, the return of allotment." }
+              ]
+            },
+            {
+              "_key": "c24", "_type": "chart", "chartType": "bar",
+              "title": "TiffinBox capital after raising the ceiling (₹)",
+              "xAxisLabel": "Capital type", "yAxisLabel": "Amount (₹)",
+              "data": [
+                { "_key": "c24d1", "label": "Authorised", "value": 200000 },
+                { "_key": "c24d2", "label": "Issued and paid-up", "value": 112500 },
+                { "_key": "c24d3", "label": "Headroom left", "value": 87500 }
+              ]
+            },
+            {
+              "_key": "c25", "_type": "block", "style": "normal", "markDefs": [],
+              "children": [
+                { "_key": "c25s1", "_type": "span", "marks": [], "text": "TiffinBox raises its authorised capital to ₹2,00,000, which is 20,000 shares of ₹10. That covers the 11,250 shares now issued, the 1,000 shares the ESOP pool will need when options are exercised, and leaves room for the next round. Headroom costs a filing fee and stamp duty. Running out mid-round costs weeks." }
+              ]
+            },
+            {
+              "_key": "c26", "_type": "exercise", "variant": "quiz",
+              "title": "Which number limits you?",
+              "question": "A Jaipur startup has authorised capital of ₹5,00,000 with a face value of ₹10 per share, and has already issued 40,000 shares. A seed fund wants to buy 15,000 new shares at ₹600 each. What happens?",
+              "options": [
+                "The allotment is fine, because the ₹90 lakh raised is well within the authorised capital",
+                "The allotment cannot go ahead until authorised capital is increased, because 55,000 shares would need ₹5,50,000 of authorised capital",
+                "The allotment is fine, because authorised capital applies only to the face value the founders paid",
+                "The allotment is fine, but only if the securities premium is refunded"
+              ],
+              "correctIndex": 1,
+              "explanation": "Authorised capital is measured at face value, not at the price investors pay. The company would have 40,000 + 15,000 = 55,000 shares, needing ₹5,50,000 of authorised capital against a ceiling of ₹5,00,000. The ₹90 lakh raised is mostly securities premium and does not count towards the ceiling. The company must first pass an ordinary resolution and file Form SH-7."
+            },
+            {
+              "_key": "c27", "_type": "exercise", "variant": "fillInTheBlank",
+              "title": "Name the account",
+              "textWithBlank": "When shares with a face value of ₹10 are issued at ₹4,000, the ₹3,990 difference per share is credited to the ___ account.",
+              "correctAnswers": ["securities premium", "securities premium account", "share premium"],
+              "explanation": "Under the Companies Act, 2013 this is the securities premium account. Its use is restricted by Section 52, so it is not treated like ordinary free reserves."
+            },
+            {
+              "_key": "c28", "_type": "exercise", "variant": "scenario",
+              "title": "Five days to closing",
+              "scenario": "You are the founder of a Kochi hardware startup. Authorised capital is ₹1,00,000, all 10,000 shares issued at ₹10 face value. A seed fund has signed a term sheet to invest ₹3 crore for 4,000 new shares at ₹7,500 each. Closing is in five days. Your articles of association do permit an increase in authorised capital. Your CA mentions in passing that the cap table shows an ESOP pool of 1,500 shares approved by the board last year, of which 900 options are already granted.",
+              "prompt": "What capital-side work must be done before the allotment, and what authorised capital would you set?",
+              "modelAnswer": "Work needed before allotment:\n1. Authorised capital must rise. After the round, issued shares would be 10,000 + 4,000 = 14,000, needing ₹1,40,000 of authorised capital against a ₹1,00,000 ceiling.\n2. Board meeting to approve the increase and call a general meeting of shareholders.\n3. Shareholders pass an ordinary resolution increasing authorised capital and amending the capital clause of the memorandum of association.\n4. File Form SH-7 with the Registrar of Companies within 30 days of the resolution, with the fee and state stamp duty.\n5. Only then allot the shares and file Form PAS-3, the return of allotment.\n\nWhat ceiling to set:\nDo not stop at ₹1,40,000. Cover the issued shares (14,000), the full ESOP pool including the 600 ungranted options (1,500 in total) and headroom for the next round. A ceiling of ₹2,50,000 or ₹3,00,000, meaning 25,000 to 30,000 shares, costs a little more in fees and stamp duty now and avoids repeating this exercise at Series A.\n\nOne more check: only ₹40,000 of the ₹3 crore is share capital. The remaining ₹2,99,60,000 is securities premium, which does not count towards the authorised ceiling at all."
+            },
+            {
+              "_key": "c29", "_type": "exercise", "variant": "checklist",
+              "title": "Capital health check before any round",
+              "steps": [
+                "Note your current authorised capital and face value from the memorandum of association.",
+                "Count issued shares today and confirm they match your latest PAS-3 filings.",
+                "Add the shares the new round will create, plus every ungranted option in the ESOP pool.",
+                "Multiply the total by face value and compare it with the authorised ceiling.",
+                "If the total exceeds the ceiling, start the SH-7 process at term sheet stage, not at closing.",
+                "Confirm the articles of association permit an increase, or budget extra time for a special resolution to amend them.",
+                "Split the round amount into share capital and securities premium so your accounts are right from day one."
+              ]
+            },
+            {
+              "_key": "c30", "_type": "toolLink",
+              "label": "screener.in company page",
+              "url": "https://www.screener.in",
+              "description": "Check any listed Indian company's face value alongside its market price, to see for yourself how unrelated the two numbers are."
+            },
+            {
+              "_key": "c31", "_type": "flashcardSet",
+              "title": "Company Law Capital Terms",
+              "cards": [
+                { "_key": "c31c1", "term": "Authorised capital", "definition": "The maximum share capital a company may issue, stated in the capital clause of its memorandum of association." },
+                { "_key": "c31c2", "term": "Issued capital", "definition": "The part of authorised capital the company has actually offered to shareholders." },
+                { "_key": "c31c3", "term": "Paid-up capital", "definition": "The amount shareholders have actually paid against the shares they subscribed." },
+                { "_key": "c31c4", "term": "Face value", "definition": "The nominal value of a share set by the company, used to measure share capital. It is not a price." },
+                { "_key": "c31c5", "term": "Securities premium", "definition": "The amount received above face value on a share issue, credited to a restricted reserve under Section 52 of the Companies Act, 2013." },
+                { "_key": "c31c6", "term": "Form SH-7", "definition": "The notice filed with the Registrar of Companies for an alteration of share capital, such as increasing authorised capital, within 30 days of the resolution." },
+                { "_key": "c31c7", "term": "Stock split", "definition": "Dividing each share into a larger number of shares with a lower face value. Share count rises, price per share falls, total value is unchanged." }
+              ]
+            },
+            {
+              "_key": "c32", "_type": "keyTakeaways",
+              "points": [
+                "Authorised capital is the ceiling, issued capital is what has been offered, subscribed is what was taken up and paid-up is what has actually been paid.",
+                "Shares cannot be allotted beyond authorised capital, so check the ceiling at term sheet stage.",
+                "Authorised capital is measured at face value only. The premium investors pay does not count towards it.",
+                "Face value is an accounting label set by the company. Issue price is negotiated and reflects valuation.",
+                "Anything paid above face value goes to the securities premium account, whose use is restricted by Section 52 of the Companies Act, 2013.",
+                "Raising the ceiling needs a board meeting, an ordinary resolution, an amended memorandum of association and Form SH-7 within 30 days, followed by Form PAS-3 for the allotment.",
+                "Set a ceiling with headroom for the next round and the full ESOP pool, so you do not repeat the exercise every year."
+              ]
+            },
+            {
+              "_key": "c33", "_type": "callout", "type": "disclaimer",
+              "text": "This lesson is for education only and is not legal, tax or investment advice. TiffinBox Foods and the other startups described are fictional. Face values of listed companies are given as illustrations and can change after a stock split or consolidation, so verify current details on screener.in or the NSE and BSE websites. Filing requirements, fees and stamp duty vary by state and change over time. Work with a qualified company secretary or chartered accountant before altering share capital or allotting shares."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

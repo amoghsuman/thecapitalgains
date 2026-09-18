@@ -1,0 +1,204 @@
+{
+  "courseSlug": "introduction-to-portfolio-optimization-markowitz-and-beyond",
+  "chapters": [
+    {
+      "title": "Chapter 3: The Markowitz Mean-Variance Framework",
+      "lessons": [
+        {
+          "title": "The Efficient Frontier: Plotting Risk Against Return",
+          "slug": "the-efficient-frontier-plotting-risk-against-return",
+          "body": [
+            {
+              "_key": "poc3l2-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc3l2-001s1", "_type": "span", "marks": [], "text": "Chapter 2 closed by scanning Nifty IT and Nifty Bank across every weight from 0% to 100% and recording each combination's risk. That table already contains an efficient frontier. It just needs one more column, return, and Lesson 1's vocabulary, to see it." }
+              ]
+            },
+            {
+              "_key": "poc3l2-002",
+              "_type": "bigIdea",
+              "text": "Plot every possible weight combination of two assets by its risk and return, and you get a curve. Only PART of that curve is efficient. The other part sits on the exact same curve, uses the exact same two assets, and is still fully dominated."
+            },
+            {
+              "_key": "poc3l2-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc3l2-003s1", "_type": "span", "marks": [], "text": "Adding Return to the Risk Table" }
+              ]
+            },
+            {
+              "_key": "poc3l2-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc3l2-004s1", "_type": "span", "marks": [], "text": "Return needs no new formula, only Lesson 3 of Chapter 1: a straight weighted average of Nifty IT's 14.0% and Nifty Bank's 15.0% annualized returns. Risk is carried over exactly from the Chapter 2 case study. The last column marks whether each portfolio is efficient, in the exact sense defined in Lesson 1: no other row beats it in one dimension without losing in the other." }
+              ]
+            },
+            {
+              "_key": "poc3l2-005",
+              "_type": "table",
+              "caption": "Every weight combination of Nifty IT and Nifty Bank, risk and return together",
+              "headers": ["Weight: Nifty IT / Nifty Bank", "Return", "Risk", "Efficient?"],
+              "rows": [
+                { "_key": "poc3l2-005r1", "_type": "tableRow", "cells": ["0% / 100%", "15.0%", "18.55%", "Yes"] },
+                { "_key": "poc3l2-005r2", "_type": "tableRow", "cells": ["10% / 90%", "14.9%", "18.16%", "Yes"] },
+                { "_key": "poc3l2-005r3", "_type": "tableRow", "cells": ["20% / 80%", "14.8%", "17.93%", "Yes"] },
+                { "_key": "poc3l2-005r4", "_type": "tableRow", "cells": ["30% / 70%", "14.7%", "17.87%", "Yes (minimum variance)"] },
+                { "_key": "poc3l2-005r5", "_type": "tableRow", "cells": ["40% / 60%", "14.6%", "17.99%", "No"] },
+                { "_key": "poc3l2-005r6", "_type": "tableRow", "cells": ["50% / 50%", "14.5%", "18.27%", "No"] },
+                { "_key": "poc3l2-005r7", "_type": "tableRow", "cells": ["60% / 40%", "14.4%", "18.71%", "No"] },
+                { "_key": "poc3l2-005r8", "_type": "tableRow", "cells": ["70% / 30%", "14.3%", "19.31%", "No"] },
+                { "_key": "poc3l2-005r9", "_type": "tableRow", "cells": ["80% / 20%", "14.2%", "20.04%", "No"] },
+                { "_key": "poc3l2-005r10", "_type": "tableRow", "cells": ["90% / 10%", "14.1%", "20.89%", "No"] },
+                { "_key": "poc3l2-005r11", "_type": "tableRow", "cells": ["100% / 0%", "14.0%", "21.86%", "No"] }
+              ]
+            },
+            {
+              "_key": "poc3l2-006",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Return and risk as the Nifty IT weight changes",
+              "xAxisLabel": "Weight in Nifty IT",
+              "yAxisLabel": "Percent (%)",
+              "data": [
+                { "_key": "poc3l2-006d1", "label": "0%" },
+                { "_key": "poc3l2-006d2", "label": "10%" },
+                { "_key": "poc3l2-006d3", "label": "20%" },
+                { "_key": "poc3l2-006d4", "label": "30%" },
+                { "_key": "poc3l2-006d5", "label": "40%" },
+                { "_key": "poc3l2-006d6", "label": "50%" },
+                { "_key": "poc3l2-006d7", "label": "60%" },
+                { "_key": "poc3l2-006d8", "label": "70%" },
+                { "_key": "poc3l2-006d9", "label": "80%" },
+                { "_key": "poc3l2-006d10", "label": "90%" },
+                { "_key": "poc3l2-006d11", "label": "100%" }
+              ],
+              "series": [
+                { "_key": "poc3l2-006se1", "label": "Return", "values": [15.0, 14.9, 14.8, 14.7, 14.6, 14.5, 14.4, 14.3, 14.2, 14.1, 14.0] },
+                { "_key": "poc3l2-006se2", "label": "Risk", "values": [18.55, 18.16, 17.93, 17.87, 17.99, 18.27, 18.71, 19.31, 20.04, 20.89, 21.86] }
+              ]
+            },
+            {
+              "_key": "poc3l2-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc3l2-007s1", "_type": "span", "marks": [], "text": "Reading the Shape: Why Half This Curve Is Dominated" }
+              ]
+            },
+            {
+              "_key": "poc3l2-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc3l2-008s1", "_type": "span", "marks": [], "text": "Look at the chart from right to left, starting at 100% Nifty IT. As the weight in Nifty IT falls toward 30%, both lines move in your favor at once: risk falls, from 21.86% down to 17.87%, AND return rises, from 14.0% up to 14.7%. That is not a trade-off. That is a straight improvement in both dimensions, which is only possible because Nifty Bank happens to carry both a higher individual return and a lower individual risk than Nifty IT in this dataset. Every portfolio with more than 30% in Nifty IT is dominated by the 30% portfolio itself: strictly more risk, for strictly less return." }
+              ]
+            },
+            {
+              "_key": "poc3l2-009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc3l2-009s1", "_type": "span", "marks": [], "text": "Now continue past 30%, toward 0% Nifty IT. Here the two lines finally move in opposite directions, the pattern that actually defines a genuine trade-off: risk keeps rising, from 17.87% to 18.55%, but so does return, from 14.7% to 15.0%. To capture more return in this segment, you genuinely have to accept more risk. That is the efficient frontier: the stretch of the curve where improving one dimension always costs you something in the other." }
+              ]
+            },
+            {
+              "_key": "poc3l2-010",
+              "_type": "callout",
+              "type": "insight",
+              "text": "The full curve, all eleven points, uses the same two assets and the same formula throughout. What splits it into an efficient half and a dominated half is nothing about the assets changing character. It is simply whether moving along the curve costs you something in return, or gives you a strict improvement for free. The minimum-variance portfolio, 30% Nifty IT here, is the hinge point where the curve turns from a free improvement into a real trade-off."
+            },
+            {
+              "_key": "poc3l2-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc3l2-011s1", "_type": "span", "marks": [], "text": "From a Curve to a Region: What Changes With More Than Two Assets" }
+              ]
+            },
+            {
+              "_key": "poc3l2-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc3l2-012s1", "_type": "span", "marks": [], "text": "Two assets have exactly one free number, the weight in one of them, since the other weight is whatever is left over. Every possible portfolio is forced to sit on a single curve, and the efficient frontier is simply the upper-left stretch of it, as seen above. Add a third asset, and there are now two free weights, and the set of every possible portfolio fills an entire two-dimensional region of the risk-return plane, not just a line. The efficient frontier for N assets is the upper-left boundary of that whole region: still the set of portfolios where you cannot improve return without accepting more risk, but now traced out from far more possible combinations than eleven weight steps along one line." }
+              ]
+            },
+            {
+              "_key": "poc3l2-013",
+              "_type": "keyFact",
+              "label": "Free weights for N assets",
+              "value": "N minus 1",
+              "context": "With N assets, N minus 1 weights can be chosen freely, since all weights must sum to 1. Two assets: one free weight, a curve. Five assets: four free weights, a region. Lesson 5 of this chapter builds the region for five real Nifty 50 stocks."
+            },
+            {
+              "_key": "poc3l2-014",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Quantify the free improvement",
+              "prompt": "An investor holding 100% Nifty IT (return 14.0%, risk 21.86%) is told she can switch to 100% Nifty Bank (return 15.0%, risk 18.55%) instead. By how many percentage points does her risk fall if she makes this switch?",
+              "correctValue": 3.31,
+              "tolerance": 0.1,
+              "unit": "pts",
+              "explanation": "21.86% - 18.55% = 3.31 percentage points of risk reduction. Her expected return also rises, from 14.0% to 15.0%. This is a pure improvement in both dimensions at once, exactly why 100% Nifty IT is dominated and never belongs on the efficient frontier here."
+            },
+            {
+              "_key": "poc3l2-015",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Identify the efficient portfolio",
+              "question": "Three portfolios: P has return 9% and risk 14%. Q has return 11% and risk 14%. R has return 11% and risk 17%. Which one is efficient?",
+              "options": [
+                "P, because it has the lowest risk of the three",
+                "Q, because no other portfolio here offers equal or better return at equal or lower risk",
+                "R, because it has the highest risk and therefore the most potential upside",
+                "All three are efficient, since each has a different combination of risk and return"
+              ],
+              "correctIndex": 1,
+              "explanation": "Q dominates P outright: same risk (14%), but more return (11% vs 9%). Q also dominates R: same return (11%), but less risk (14% vs 17%). Only Q survives as efficient. P and R are both dominated, even though all three portfolios are genuinely different combinations."
+            },
+            {
+              "_key": "poc3l2-016",
+              "_type": "flashcardSet",
+              "title": "Efficient Frontier: Core Terms",
+              "cards": [
+                { "_key": "poc3l2-016f1", "term": "Efficient frontier (two assets)", "definition": "The stretch of the risk-return curve running from the minimum-variance portfolio to the higher-returning individual asset, where every improvement in return genuinely costs additional risk." },
+                { "_key": "poc3l2-016f2", "term": "Minimum-variance portfolio", "definition": "The single point on the risk-return curve with the lowest possible risk. It marks the boundary between the efficient and dominated portions of a two-asset frontier." },
+                { "_key": "poc3l2-016f3", "term": "Feasible set", "definition": "The full collection of every portfolio achievable from a given set of assets and weights. A curve for two assets, a filled region for three or more." }
+              ]
+            },
+            {
+              "_key": "poc3l2-017",
+              "_type": "keyTakeaways",
+              "points": [
+                "Plotting risk against return for every weight combination of two assets traces a single curve, the full feasible set for that pair.",
+                "Only part of that curve is efficient: the stretch from the minimum-variance portfolio to the higher-returning individual asset, where more return genuinely requires more risk.",
+                "The rest of the curve, beyond the minimum-variance point toward the lower-returning, higher-risk asset, is fully dominated by the minimum-variance portfolio itself.",
+                "In this lesson's example, holding 100% Nifty IT was dominated outright by 100% Nifty Bank: lower risk AND higher return, a free improvement with no trade-off at all.",
+                "With N assets, N minus 1 weights are free to choose, turning the feasible set from a curve (two assets) into a filled two-dimensional region (three or more assets).",
+                "The efficient frontier for any number of assets is always the upper-left boundary of the feasible set: the portfolios where improving return is only possible by accepting more risk."
+              ]
+            },
+            {
+              "_key": "poc3l2-018",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to buy or sell any index fund, ETF, or security named here. All returns, risk, and correlation figures used in this lesson are illustrative, not live or historical market data. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

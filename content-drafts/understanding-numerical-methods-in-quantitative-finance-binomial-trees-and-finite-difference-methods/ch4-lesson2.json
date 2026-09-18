@@ -1,0 +1,197 @@
+{
+  "courseSlug": "understanding-numerical-methods-in-quantitative-finance-binomial-trees-and-finite-difference-methods",
+  "chapters": [
+    {
+      "title": "Chapter 4: Finite Difference Methods for Option Pricing",
+      "lessons": [
+        {
+          "title": "Setting Up the Grid: Discretizing Price and Time",
+          "slug": "setting-up-the-grid-discretizing-price-and-time",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "q1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "q1s1", "text": "Lesson 1 handed over the equation and the conditions that pin down its one true solution. Before any of it can actually be solved, the continuous plane of price and time it lives on needs to become a finite, computable grid of points, the direct counterpart to Chapter 2's lattice, built on a completely different shape.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "q2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "q2s1", "text": "The Grid: Rows of Price, Columns of Time", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "q3",
+              "style": "normal",
+              "markDefs": [ { "_type": "glossaryTerm", "_key": "gt6", "definition": "A grid point representing the option's value at price level i (i steps of size delta-S above zero) and time step j (j steps of size delta-t after today). i ranges from 0 to N, j ranges from 0 to M." } ],
+              "children": [
+                { "_type": "span", "_key": "q3s1", "text": "Split the price axis into N steps of size delta-S, from S equals 0 up to a chosen maximum, Smax. Split the time axis into M steps of size delta-t, from today, t equals 0, to expiry, t equals T. Every intersection of a price row and a time column is a grid point, written ", "marks": [] },
+                { "_type": "span", "_key": "q3s2", "text": "f sub i, j", "marks": ["gt6"] },
+                { "_type": "span", "_key": "q3s3", "text": ", the option's value at price level i and time step j.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "q4",
+              "type": "insight",
+              "text": "This is a genuinely different shape from Chapter 2's tree. A tree only ever contains the specific prices the stock could actually reach given u and d, growing outward from S0. A finite difference grid instead covers a full, fixed range of prices, from 0 to Smax, at every single time step, regardless of whether the stock could realistically move that far. Nothing about the grid depends on u, d, or p at all."
+            },
+            {
+              "_type": "block",
+              "_key": "q5",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "q5s1", "text": "Choosing Smax: A Practical Boundary, Not an Infinite One", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "q6",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "q6s1", "text": "Lesson 1's boundary condition was written as S approaching infinity, which a computer cannot represent directly. The standard practical fix is to pick Smax several multiples of the strike, far enough out that the option's true behaviour there is already well described by the analytical boundary formula, and treat that as good enough. This is an honest approximation, not a shortcut hidden from view, choosing Smax too close to the strike introduces real error, covered in this lesson's scenario exercise below.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "q7",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "q7s1", "text": "Placing the Known Conditions on the Grid's Edges", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "q8",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "q8s1", "text": "Three edges of the grid can be filled in directly from Lesson 1, no PDE approximation needed there at all, exactly the way a tree's terminal nodes needed nothing but the payoff formula.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "q9",
+              "caption": "The grid's three known edges",
+              "headers": ["Edge", "Where", "Filled From"],
+              "rows": [
+                { "cells": ["Top (expiry)", "j = M, every i", "The terminal condition, the payoff formula, applied at every price level"] },
+                { "cells": ["Left (S = 0)", "i = 0, every j", "The boundary condition at S = 0"] },
+                { "cells": ["Right (S = Smax)", "i = N, every j", "The boundary condition at S = Smax"] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "q10",
+              "type": "warning",
+              "text": "That leaves the entire interior of the grid, every i between 1 and N minus 1, every j between 0 and M minus 1, genuinely unknown. Filling it in is exactly what Chapter 4's remaining lessons build, three different schemes for using the PDE itself to work inward and backward from these three known edges toward today's price at i corresponding to S0, j = 0."
+            },
+            {
+              "_type": "block",
+              "_key": "q11",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "q11s1", "text": "Worked Example: Setting Up the Grid for the Familiar Nifty Call", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "q12",
+              "caption": "Grid setup for Chapter 2, Lesson 5's exact call, S0 = K = 24,000, sigma = 14%, T = 0.25, r = 6.5%",
+              "headers": ["Choice", "Value"],
+              "rows": [
+                { "cells": ["Smax", "₹96,000 (4 × K)"] },
+                { "cells": ["Price steps, N", "40"] },
+                { "cells": ["delta-S", "₹2,400"] },
+                { "cells": ["Time steps, M", "50"] },
+                { "cells": ["delta-t", "0.005 years, about 1.25 trading days"] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "q13",
+              "caption": "Top edge: terminal payoffs at j = M (expiry), a few representative i",
+              "headers": ["i", "Stock Price", "Payoff"],
+              "rows": [
+                { "cells": ["5", "₹12,000", "₹0"] },
+                { "cells": ["10", "₹24,000", "₹0"] },
+                { "cells": ["11", "₹26,400", "₹2,400"] },
+                { "cells": ["15", "₹36,000", "₹12,000"] },
+                { "cells": ["20", "₹48,000", "₹24,000"] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "q14",
+              "caption": "Left and right edges: boundary values at a few j",
+              "headers": ["j", "f at S = 0 (left edge)", "f at S = Smax (right edge)"],
+              "rows": [
+                { "cells": ["0 (today)", "₹0", "₹72,386.85"] },
+                { "cells": ["25 (midway)", "₹0", "₹72,194.21"] },
+                { "cells": ["50 (expiry)", "₹0", "₹72,000.00"] }
+              ]
+            },
+            {
+              "_type": "keyFact",
+              "_key": "q15",
+              "label": "Total grid points",
+              "value": "(N + 1) × (M + 1) = 41 × 51 = 2,091",
+              "context": "Of these, only the three edges above, 41 + 51 + 51, with the two shared corners counted once each, 141 points, are known outright. The remaining 1,950 interior points are what the next three lessons solve for"
+            },
+            {
+              "_type": "exercise",
+              "_key": "q16",
+              "variant": "quiz",
+              "title": "Quick Check",
+              "question": "In the grid above, f(0, 25) equals ₹0 for every j, while f(40, 25) equals ₹72,194.21. Why does the left edge stay exactly ₹0 across every single time step?",
+              "options": [
+                "Because the risk-free rate is 0% at S = 0",
+                "Because a call option on a stock worth nothing is worth nothing, regardless of how much time remains",
+                "Because delta-t is too small to register a change",
+                "Because i = 0 is outside the grid's valid range"
+              ],
+              "correctIndex": 1,
+              "explanation": "The boundary condition at S = 0 for a call is f = 0 at every point in time, not just at expiry. If the stock is worth nothing, the right to buy it for a fixed strike is worth nothing too, no amount of remaining time changes that. The right edge, by contrast, does change with time, because it reflects the present value of a strike payment still owed at expiry, and that present value shifts as the remaining time to expiry shrinks."
+            },
+            {
+              "_type": "exercise",
+              "_key": "q17",
+              "variant": "scenario",
+              "title": "Choosing Smax Too Small",
+              "scenario": "A quant, trying to save computation, sets Smax to just 1.1 times the strike instead of 4 times the strike, reasoning that the option is unlikely to move that far in 3 months anyway.",
+              "prompt": "What goes wrong with this choice, even if the stock genuinely never approaches that level during the option's real life?",
+              "modelAnswer": "The problem isn't whether the stock ever actually reaches Smax, it's that the boundary formula at S = Smax is only a good approximation of the true option value when Smax is far enough into deep-in-the-money territory that the analytical boundary condition, S minus the present value of the strike, is essentially exact. At just 1.1 times the strike, that boundary value is imposed on a price level where the true option value still has meaningful curvature and time value the simple boundary formula doesn't capture, so the right edge itself is now wrong. Because Chapter 4's solving methods build the interior grid outward from these edges, that error at the boundary can propagate inward and distort prices near S0 too, not just near the edge itself."
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "q18",
+              "text": "A finite difference grid trades a tree's narrow lattice of reachable prices for a fixed, full range covering every price from 0 to a practical maximum, at every point in time. Three edges of that grid come free from Lesson 1's terminal and boundary conditions. Everything else, the entire interior, is what the rest of this chapter exists to fill in."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "q19",
+              "points": [
+                "A finite difference grid discretizes price into N steps and time into M steps, covering the full range from S = 0 to a chosen Smax at every single time step, unlike a tree's narrower lattice of reachable prices.",
+                "Smax is a practical, finite stand-in for Lesson 1's S-approaching-infinity boundary condition, usually several multiples of the strike, chosen so the analytical boundary formula there is a good approximation.",
+                "Three edges of the grid, the top (expiry, the terminal condition) and the two sides (S = 0 and S = Smax, the boundary conditions), are known directly from Lesson 1, no PDE approximation needed.",
+                "Everything inside those three edges, the grid's entire interior, is unknown and unresolved by setup alone, exactly what Chapter 4's remaining lessons solve for.",
+                "On the running Nifty call example, a 41-by-51 grid has 2,091 total points, of which only the edges are known outright, leaving 1,950 interior points still to be solved."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,412 @@
+{
+  "courseSlug": "advanced-geopolitical-risk-modeling-for-investment-decisions",
+  "chapters": [
+    {
+      "title": "Chapter 2: Quantitative Frameworks for Geopolitical Risk",
+      "lessons": [
+        {
+          "title": "Geopolitical Risk and Volatility: Reading India VIX and Nifty Drawdowns",
+          "slug": "geopolitical-risk-and-volatility-reading-india-vix-and-nifty-drawdowns",
+          "body": [
+            {
+              "_key": "c2l3k001",
+              "_type": "bigIdea",
+              "text": "India VIX is the options market's own real-time geopolitical risk index, built from actual money at stake rather than fundamental data. Reading it alongside the GRI from Lesson 1 tells you something neither number can tell you alone."
+            },
+            {
+              "_key": "c2l3k002",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l3k002s1",
+                  "_type": "span",
+                  "text": "The last two lessons built a model: a composite GRI from four channel indicators, then a stress test translating a GRI-style shock into a projected portfolio impact. Both are built from fundamentals, freight rates, crude prices, currency volatility, FPI flows. This lesson closes the chapter by turning to a different kind of signal entirely: India VIX, a number derived not from economic data but directly from what options traders are willing to pay for protection, right now. Comparing what the model says to what the options market says turns out to be one of the more useful habits in this entire course.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3k003",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l3k003s1",
+                  "_type": "span",
+                  "text": "What India VIX Actually Measures",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3k004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c2l3k004md1",
+                  "_type": "glossaryTerm",
+                  "definition": "The volatility a market is pricing in, backed out from options premiums, as opposed to volatility calculated from past price movements. Implied volatility is forward-looking by construction; it reflects what traders expect, not what already happened."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c2l3k004s1",
+                  "_type": "span",
+                  "text": "India VIX is computed and published by the NSE, adapting the methodology CBOE built for the original US VIX. It uses the live order book of Nifty index options across the near and next-month expiries to back out the market's ",
+                  "marks": []
+                },
+                {
+                  "_key": "c2l3k004s2",
+                  "_type": "span",
+                  "text": "implied volatility",
+                  "marks": ["c2l3k004md1"]
+                },
+                {
+                  "_key": "c2l3k004s3",
+                  "_type": "span",
+                  "text": ", expressed as an annualised percentage covering the next 30 calendar days. It is not a directional signal; a high VIX does not say whether Nifty will rise or fall, only that option buyers expect the move, whichever direction it goes, to be a large one. That distinction matters: VIX is a magnitude gauge, not a forecast of direction.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3k005",
+              "_type": "mathBlock",
+              "latex": "\\sigma^2 \\approx \\frac{2}{T}\\sum_i \\frac{\\Delta K_i}{K_i^2} e^{RT} Q(K_i) - \\frac{1}{T}\\left(\\frac{F}{K_0}-1\\right)^2",
+              "caption": "The standard variance-swap replication logic behind CBOE-style VIX methodology, which NSE adapts for Nifty options: a weighted sum across out-of-the-money option prices Q(Ki) at each strike Ki. This is a simplified representation for intuition, not the full formula; NSE's published India VIX methodology document has the exact specification."
+            },
+            {
+              "_key": "c2l3k006",
+              "_type": "table",
+              "caption": "Illustrative reference bands for India VIX (not an official NSE classification)",
+              "headers": ["VIX Range", "Read", "What It Typically Reflects"],
+              "rows": [
+                {
+                  "_key": "c2l3k006r1",
+                  "_type": "tableRow",
+                  "cells": ["Below 13", "Complacent", "Very calm pricing; option-based hedges are historically inexpensive here"]
+                },
+                {
+                  "_key": "c2l3k006r2",
+                  "_type": "tableRow",
+                  "cells": ["13 to 18", "Normal", "The typical range for most of Nifty's trading history"]
+                },
+                {
+                  "_key": "c2l3k006r3",
+                  "_type": "tableRow",
+                  "cells": ["18 to 25", "Watchful", "Meaningful uncertainty being priced in; usually a live, identifiable headline is driving it"]
+                },
+                {
+                  "_key": "c2l3k006r4",
+                  "_type": "tableRow",
+                  "cells": ["25 to 35", "Stressed", "Levels historically seen during sustained geopolitical or macro stress episodes"]
+                },
+                {
+                  "_key": "c2l3k006r5",
+                  "_type": "tableRow",
+                  "cells": ["Above 35", "Crisis", "Levels historically reserved for the most extreme episodes, such as the Covid-19 crash from Chapter 1"]
+                }
+              ]
+            },
+            {
+              "_key": "c2l3k007",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l3k007s1",
+                  "_type": "span",
+                  "text": "The Expected Move: Turning a VIX Level Into a Number You Can Use",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3k008",
+              "_type": "mathBlock",
+              "latex": "\\text{Expected Move} \\approx VIX \\times \\sqrt{\\frac{T}{365}}",
+              "caption": "The standard way volatility desks scale an annualised VIX reading down to a shorter horizon T (in days), using the square-root-of-time rule from Brownian motion. The result is roughly the market's one-standard-deviation expected move over that horizon."
+            },
+            {
+              "_key": "c2l3k009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l3k009s1",
+                  "_type": "span",
+                  "text": "This is more useful than it looks. If India VIX is at 15, the 30-day expected move works out to roughly 15 multiplied by the square root of 30 divided by 365, about 4.3%. That single number gives a fund manager a rough, market-implied sense of how far Nifty could plausibly move in either direction over the next month, useful for sizing a hedge, setting a stop-loss band, or simply deciding whether a live geopolitical scenario's projected impact from the previous lesson looks large or small relative to what the options market is already pricing in.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3k010",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l3k010s1",
+                  "_type": "span",
+                  "text": "VIX Around Geopolitical Shocks: Spike and Mean Reversion",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3k011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l3k011s1",
+                  "_type": "span",
+                  "text": "Volatility has a statistical property price levels do not: it is mean-reverting. A geopolitical shock typically produces a sharp VIX spike as uncertainty peaks, followed by a decay back toward the index's longer-run average as the event resolves, one way or another, and the market recalibrates around the new information. Chapter 1's episodes all show this shape, just at different amplitudes: Balakot's VIX tick-up faded within about a week, Covid's record spike took longer to fully normalise, and the Russia-Ukraine war produced a more moderate, extended elevation as the war itself dragged on.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3k012",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Stylised India VIX Path Around a Geopolitical Shock (Illustrative, Not a Specific Episode)",
+              "xAxisLabel": "Trading Day",
+              "yAxisLabel": "India VIX",
+              "data": [
+                { "_key": "c2l3k012d1", "label": "Day -5", "value": 14 },
+                { "_key": "c2l3k012d2", "label": "Day -1", "value": 14 },
+                { "_key": "c2l3k012d3", "label": "Day 0 (Shock)", "value": 26 },
+                { "_key": "c2l3k012d4", "label": "Day 2", "value": 24 },
+                { "_key": "c2l3k012d5", "label": "Day 5", "value": 20 },
+                { "_key": "c2l3k012d6", "label": "Day 10", "value": 17 },
+                { "_key": "c2l3k012d7", "label": "Day 20", "value": 15 }
+              ]
+            },
+            {
+              "_key": "c2l3k013",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Mean reversion cuts both ways for how this gets used. Many volatility desks treat a VIX spike well above its historical range as, on balance, more often a fading opportunity to sell rich option premium than a reason to keep buying more protection at an already-elevated price, purely as a probabilistic tendency built on this mean-reverting pattern, not a guarantee for any single episode. The practical implication for hedging: the cheapest time to buy protection is usually before a shock, when VIX sits in its Normal band, not after it has already spiked."
+            },
+            {
+              "_key": "c2l3k014",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l3k014s1",
+                  "_type": "span",
+                  "text": "VIX vs GRI: What Agreement and Divergence Tell You",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3k015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l3k015s1",
+                  "_type": "span",
+                  "text": "The GRI from Lesson 1 and India VIX are built from entirely different inputs, one from freight rates, crude prices, currency volatility, and FPI flows, the other from live options premiums. When they move together, that is a strong, cross-validated signal. When they diverge, the divergence itself is informative.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3k016",
+              "_type": "table",
+              "caption": "Reading the GRI and India VIX together",
+              "headers": ["GRI Reading", "VIX Reading", "What It Suggests"],
+              "rows": [
+                {
+                  "_key": "c2l3k016r1",
+                  "_type": "tableRow",
+                  "cells": ["Low", "Low (Complacent/Normal)", "Genuine calm; both the fundamental channels and the options market agree there is little live stress"]
+                },
+                {
+                  "_key": "c2l3k016r2",
+                  "_type": "tableRow",
+                  "cells": ["Elevated or Severe", "Low", "Fundamentals are stressed but options markets have not caught up; historically a setup for comparatively cheap hedges, though it can also mean the market judges this stress unlikely to reach equities"]
+                },
+                {
+                  "_key": "c2l3k016r3",
+                  "_type": "tableRow",
+                  "cells": ["Low", "Watchful or higher", "Options are pricing fear from something outside the four geopolitical channels entirely, an earnings season, a domestic political event, or a global macro data release; check what is actually driving option demand"]
+                },
+                {
+                  "_key": "c2l3k016r4",
+                  "_type": "tableRow",
+                  "cells": ["Elevated or Severe", "Watchful or higher", "Both signals agree; the highest-confidence read that a real, priced repricing is underway, the pattern this course's own Russia-Ukraine and Covid case studies both showed"]
+                }
+              ]
+            },
+            {
+              "_key": "c2l3k017",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l3k017s1",
+                  "_type": "span",
+                  "text": "Nifty Drawdowns: The Other Side of the Same Coin",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3k018",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l3k018s1",
+                  "_type": "span",
+                  "text": "India VIX is often called a fear gauge precisely because it tends to move inversely with Nifty: sharp VIX spikes and sharp Nifty drawdowns are, empirically, close to the same event viewed from two different markets, options and the underlying index. Reading drawdown statistics as their own lens, separate from any single VIX reading, gives useful context for how unusual a current move actually is.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3k019",
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "c2l3k019s1",
+                  "label": "Frequency of 10%+ Corrections",
+                  "value": "~Most years",
+                  "context": "Nifty has recorded at least one intra-year correction of 10% or more in most calendar years since 2000, a widely cited rule of thumb, approximate"
+                },
+                {
+                  "_key": "c2l3k019s2",
+                  "label": "Frequency of 20%+ Bear Markets",
+                  "value": "~Every 4 to 5 years",
+                  "context": "Considerably rarer than short corrections; approximate historical frequency"
+                },
+                {
+                  "_key": "c2l3k019s3",
+                  "label": "Typical Recovery Time From a 20%+ Drawdown",
+                  "value": "~6 to 12 months",
+                  "context": "Highly episode-dependent; Covid recovered in about 8 months, per Chapter 1, while slower structural bear markets have taken considerably longer"
+                }
+              ]
+            },
+            {
+              "_key": "c2l3k020",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l3k020s1",
+                  "_type": "span",
+                  "text": "Trading and Hedging Volatility Directly",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3k021",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l3k021s1",
+                  "_type": "span",
+                  "text": "India VIX derivatives have had a mixed liquidity history on the NSE; always check current derivatives availability before assuming a direct volatility hedge is accessible the way it commonly is on US markets through CBOE VIX futures and options. The far more liquid and widely used route for Indian investors and fund managers is an indirect one: buying Nifty index put options as portfolio protection, sized using exactly the expected-move calculation from earlier in this lesson.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3k022",
+              "_type": "callout",
+              "type": "warning",
+              "text": "A single VIX reading is a snapshot, not a strategy. Protective puts cost real premium and lose value to time decay even if nothing happens, so sizing a hedge off one elevated reading without a view on how long the stress will persist can be expensive. And because VIX and Nifty are not perfectly inversely correlated at all times, treating VIX as a precise, tradeable proxy for Nifty risk, rather than a useful but imperfect gauge, is a common and avoidable mistake."
+            },
+            {
+              "_key": "c2l3k023",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Interpret a GRI and VIX Divergence",
+              "scenario": "Your GRI reading this morning is 1.4, Elevated, driven mainly by a sharp freight-rate spike and a moderate FPI outflow over the past week. India VIX, however, is quoted at 14, squarely in the Normal band, and has barely moved.",
+              "prompt": "Using the GRI-vs-VIX table from this lesson, what does this specific divergence suggest, and what would you check before deciding whether to act on it?",
+              "modelAnswer": "This is the Elevated-GRI, Low-VIX combination: fundamentals in the trade and capital-flow channels are showing real stress, but the options market has not yet priced in meaningful fear. That combination historically suggests either an early, comparatively inexpensive window to buy protection before the options market catches up, or a signal that traders currently expect this specific stress, freight and moderate FPI selling, not to meaningfully dent equity earnings or sentiment. Before acting, check which sectors are most exposed to the freight and capital-flow channels specifically, using the sensitivity table from the previous lesson, watch whether VIX starts moving over the next few sessions as the market digests the same news, and check whether the FPI outflow is broad-based emerging-market selling or something India-specific, since that changes how much weight to put on the GRI reading."
+            },
+            {
+              "_key": "c2l3k024",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Check Your Understanding",
+              "question": "Why does India VIX tend to spike sharply during a geopolitical shock and then decay back toward its long-run average afterward, rather than staying elevated indefinitely?",
+              "options": [
+                "Because the NSE resets the VIX calculation methodology after every major event",
+                "Because volatility is a mean-reverting statistical property, and uncertainty collapses back toward normal once an event resolves and the market recalibrates around the new information",
+                "Because Nifty always recovers to its pre-shock level within a fixed number of trading days",
+                "Because FPIs are legally required to stop selling once VIX crosses a certain threshold"
+              ],
+              "correctIndex": 1,
+              "explanation": "Mean reversion is a genuine statistical property of volatility, distinct from price levels, which do not have to revert to anything. As a shock resolves and uncertainty about the outcome collapses, whether that resolution is good or bad for markets, the options market recalibrates and implied volatility fades back toward its historical range. None of the other options describe a real mechanism; NSE's methodology does not reset, Nifty recovery time varies widely by episode as Chapter 1 showed, and there is no such FPI rule."
+            },
+            {
+              "_key": "c2l3k025",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Compute an Expected Move",
+              "prompt": "India VIX is quoted at 18. Using the expected-move formula from this lesson, what is the market's implied one-standard-deviation Nifty move over the next 30 days, in percent?",
+              "correctValue": 5.16,
+              "tolerance": 0.1,
+              "unit": "%",
+              "explanation": "Expected Move = VIX x sqrt(T / 365) = 18 x sqrt(30 / 365) = 18 x 0.287 = 5.16%. A VIX of 18 sits at the top of this lesson's Normal band, and a 5.16% expected move is a useful reference point for sizing a hedge or judging whether a specific scenario's projected impact, from the previous lesson's stress test, looks large or small relative to what the market is already pricing in."
+            },
+            {
+              "_key": "c2l3k026",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Close Out Chapter 2: A Weekly Volatility-Aware Review",
+              "steps": [
+                "Note today's India VIX level and which reference band it falls into",
+                "Compute the 30-day expected move from that VIX reading using this lesson's formula",
+                "Compare today's composite GRI reading, from the tracker you built in Lesson 1, against today's VIX band using this lesson's four-quadrant table",
+                "If they diverge, write down which of the four quadrant explanations best fits, and what you would check next",
+                "Keep this weekly habit running; Chapter 3 turns to how specific sectors and asset classes respond differently to the same shock, building directly on the sensitivity table from Lesson 2"
+              ]
+            },
+            {
+              "_key": "c2l3k027",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "The VIX bands, the stylised shock chart, and the drawdown frequency statistics in this lesson are illustrative approximations built for teaching purposes, not official NSE classifications or verified historical statistics. The variance-swap formula shown is simplified for intuition; consult NSE's published India VIX methodology for the exact specification. This is educational content, not investment advice, and nothing here is a recommendation to trade options or size a specific hedge."
+            },
+            {
+              "_key": "c2l3k028",
+              "_type": "keyTakeaways",
+              "points": [
+                "India VIX is a market-implied, forward-looking measure of expected Nifty volatility over the next 30 days, derived from Nifty options prices, distinct from and complementary to the fundamentals-based GRI built in Lesson 1",
+                "The expected-move formula, VIX times the square root of the time horizon divided by 365, converts an abstract VIX level into a concrete percentage move usable for sizing hedges and judging scenario impacts",
+                "Volatility is mean-reverting: a geopolitical shock typically produces a spike followed by decay back toward the historical average, which is also why hedges are usually cheapest before a shock, not after",
+                "Comparing GRI and VIX readings together is more informative than either alone; agreement signals high-confidence stress, while divergence points to either an early opportunity or a non-geopolitical driver of fear",
+                "Chapter 2 closes here having built three layers: a quantitative index, a portfolio stress test, and a volatility lens; Chapter 3 now applies all three to how specific sectors and asset classes actually respond to geopolitical stress"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

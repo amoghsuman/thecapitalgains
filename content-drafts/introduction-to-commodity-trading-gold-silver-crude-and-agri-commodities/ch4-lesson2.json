@@ -1,0 +1,904 @@
+{
+  "courseSlug": "introduction-to-commodity-trading-gold-silver-crude-and-agri-commodities",
+  "chapters": [
+    {
+      "title": "Chapter 4: Crude Oil and Energy",
+      "lessons": [
+        {
+          "title": "Trading MCX Crude Oil and Natural Gas: Contract Specs, Timings and Volatility",
+          "slug": "trading-mcx-crude-oil-and-natural-gas-contract-specs-timings-and-volatility",
+          "body": [
+            {
+              "_key": "c4l2-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2-001s1",
+                  "_type": "span",
+                  "text": "At 8:00 pm on a Wednesday, while most of India is having dinner, MCX crude oil can move ₹100 a barrel in two minutes. That is when the US government releases its weekly oil inventory data. On Thursdays at the same hour, natural gas can drop 5% on a storage report about American gas stocks. Energy is the busiest segment on MCX, and it runs to US hours and US data. By the end of this lesson you will know the MCX crude oil and natural gas contracts in detail, how their prices are built from NYMEX and the rupee, the scheduled events that move them in Indian Standard Time, and how to size positions in two of the most volatile contracts you can trade in India.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-002",
+              "_type": "bigIdea",
+              "text": "MCX crude oil and natural gas are rupee versions of American benchmarks. They trade on US news, react to US data releases in the Indian evening, and can gap when US markets move after MCX closes. Trade them on their clock, not yours."
+            },
+            {
+              "_key": "c4l2-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2-003s1",
+                  "_type": "span",
+                  "text": "The Contracts",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-004",
+              "_type": "table",
+              "caption": "MCX energy futures at a glance (confirm current specifications on the MCX website)",
+              "headers": [
+                "Contract",
+                "Lot size",
+                "Quoted as",
+                "Tick size",
+                "Tick value",
+                "Settlement"
+              ],
+              "rows": [
+                {
+                  "_key": "c4l2-004r1",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Crude Oil",
+                    "100 barrels",
+                    "₹ per barrel",
+                    "₹1",
+                    "₹100",
+                    "Cash, linked to NYMEX WTI"
+                  ]
+                },
+                {
+                  "_key": "c4l2-004r2",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Crude Oil Mini",
+                    "10 barrels",
+                    "₹ per barrel",
+                    "₹1",
+                    "₹10",
+                    "Cash, linked to NYMEX WTI"
+                  ]
+                },
+                {
+                  "_key": "c4l2-004r3",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Natural Gas",
+                    "1,250 mmBtu",
+                    "₹ per mmBtu",
+                    "₹0.10",
+                    "₹125",
+                    "Cash, linked to NYMEX Henry Hub"
+                  ]
+                },
+                {
+                  "_key": "c4l2-004r4",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Natural Gas Mini",
+                    "250 mmBtu",
+                    "₹ per mmBtu",
+                    "₹0.10",
+                    "₹25",
+                    "Cash, linked to NYMEX Henry Hub"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-005",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c4l2-005m1",
+                  "_type": "glossaryTerm",
+                  "definition": "Million British thermal units, the standard energy unit for pricing natural gas. The US benchmark Henry Hub is quoted in US dollars per mmBtu."
+                },
+                {
+                  "_key": "c4l2-005m2",
+                  "_type": "glossaryTerm",
+                  "definition": "A natural gas pipeline hub in Louisiana that serves as the delivery point and price benchmark for NYMEX natural gas futures."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c4l2-005s1",
+                  "_type": "span",
+                  "text": "Natural gas is measured in ",
+                  "marks": []
+                },
+                {
+                  "_key": "c4l2-005s2",
+                  "_type": "span",
+                  "text": "mmBtu",
+                  "marks": [
+                    "c4l2-005m1"
+                  ]
+                },
+                {
+                  "_key": "c4l2-005s3",
+                  "_type": "span",
+                  "text": ", million British thermal units, a measure of energy content. The US benchmark is ",
+                  "marks": []
+                },
+                {
+                  "_key": "c4l2-005s4",
+                  "_type": "span",
+                  "text": "Henry Hub",
+                  "marks": [
+                    "c4l2-005m2"
+                  ]
+                },
+                {
+                  "_key": "c4l2-005s5",
+                  "_type": "span",
+                  "text": ", a pipeline hub in Louisiana.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-006",
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "c4l2-006s1",
+                  "label": "Trading hours",
+                  "value": "9:00 am to 11:30 pm",
+                  "context": "Extends to 11:55 pm when the US is not on daylight saving time"
+                },
+                {
+                  "_key": "c4l2-006s2",
+                  "label": "Contract months",
+                  "value": "Monthly",
+                  "context": "Each expires shortly before its related NYMEX contract"
+                },
+                {
+                  "_key": "c4l2-006s3",
+                  "label": "Settlement",
+                  "value": "Cash",
+                  "context": "No physical delivery of oil or gas"
+                },
+                {
+                  "_key": "c4l2-006s4",
+                  "label": "Options",
+                  "value": "Also available",
+                  "context": "Options on crude oil and natural gas futures are among MCX's most actively traded products"
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2-007s1",
+                  "_type": "span",
+                  "text": "How MCX Energy Prices Are Built",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2-008s1",
+                  "_type": "span",
+                  "text": "Because these contracts settle against NYMEX prices, MCX crude and natural gas track the US contracts converted into rupees. Arbitrage by large participants keeps them closely aligned.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-009",
+              "_type": "mathBlock",
+              "latex": "\\text{MCX price} \\approx \\text{NYMEX price in USD} \\times \\text{USD/INR}",
+              "caption": "A close approximation. Small differences arise from contract timing, the exchange rate used and local demand and supply in the order book."
+            },
+            {
+              "_key": "c4l2-010",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2-010s1",
+                  "_type": "span",
+                  "text": "WTI at $70 a barrel with USD/INR at 84: MCX crude near ₹5,880 per barrel. One Crude Oil lot is worth about ₹5,88,000.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-011",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2-011s1",
+                  "_type": "span",
+                  "text": "Henry Hub at $3.00 per mmBtu with USD/INR at 84: MCX natural gas near ₹252. One Natural Gas lot is worth about ₹3,15,000.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2-012s1",
+                  "_type": "span",
+                  "text": "This means you carry two exposures in one trade: the energy price and the rupee. You can be right about oil and still lose if the rupee moves against you.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-013",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Right on oil, hurt by the rupee",
+              "prompt": "Nikhil buys one lot of MCX Crude Oil (100 barrels) when WTI is $70 and USD/INR is 84. A week later WTI has risen to $72, but the rupee has strengthened to 82.5. Using the approximation, what is his profit or loss in rupees?",
+              "correctValue": 6000,
+              "tolerance": 0,
+              "unit": "₹",
+              "explanation": "Entry ≈ $70 × 84 = ₹5,880. Exit ≈ $72 × 82.5 = ₹5,940. Gain = ₹60 per barrel × 100 barrels = ₹6,000. WTI rose about 2.9%, but because the rupee strengthened by about 1.8%, the MCX price rose only about 1%."
+            },
+            {
+              "_key": "c4l2-014",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2-014s1",
+                  "_type": "span",
+                  "text": "Crude Oil vs Natural Gas",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-015",
+              "_type": "comparison",
+              "title": "What drives each contract",
+              "columns": [
+                {
+                  "_key": "c4l2-015c1",
+                  "label": "Crude oil (WTI-linked)",
+                  "points": [
+                    "A global market driven by OPEC+, geopolitics and world demand",
+                    "US inventory data every Wednesday",
+                    "Very sensitive to Middle East events and sanctions",
+                    "Highly volatile, with multi-percent daily moves common in stressed periods"
+                  ]
+                },
+                {
+                  "_key": "c4l2-015c2",
+                  "label": "Natural gas (Henry Hub-linked)",
+                  "points": [
+                    "A mostly US market driven by US weather, storage and LNG exports",
+                    "US storage data every Thursday",
+                    "Very sensitive to weather forecasts, winter cold and summer heat",
+                    "Typically even more volatile than crude, with large daily swings"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-016",
+              "_type": "keyFact",
+              "label": "How far natural gas can move",
+              "value": "Henry Hub fell from about $9.7 to below $2 in roughly 18 months",
+              "context": "US natural gas peaked near $9.7 per mmBtu in August 2022 during the European energy crisis, then fell below $2 in early 2024 as mild winters and record US production filled storage. That is a fall of more than 80%."
+            },
+            {
+              "_key": "c4l2-017",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Natural gas is not \"cheap crude\". Its low price per unit and small Mini lot attract beginners, but it is one of the most volatile commodities traded anywhere. Weather forecast changes over a weekend can move it sharply by Monday morning."
+            },
+            {
+              "_key": "c4l2-018",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2-018s1",
+                  "_type": "span",
+                  "text": "The Energy Calendar in Indian Time",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-019",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2-019s1",
+                  "_type": "span",
+                  "text": "US data releases happen during the Indian evening session. Times shift by one hour when US daylight saving time begins and ends, usually in March and November.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-020",
+              "_type": "table",
+              "caption": "Key scheduled events for MCX energy traders (Indian Standard Time)",
+              "headers": [
+                "Event",
+                "US time",
+                "IST during US daylight saving",
+                "IST otherwise",
+                "Moves"
+              ],
+              "rows": [
+                {
+                  "_key": "c4l2-020r1",
+                  "_type": "tableRow",
+                  "cells": [
+                    "API weekly crude inventory estimate",
+                    "Tuesday 4:30 pm ET",
+                    "Wednesday 2:00 am",
+                    "Wednesday 3:00 am",
+                    "Crude, after MCX has closed"
+                  ]
+                },
+                {
+                  "_key": "c4l2-020r2",
+                  "_type": "tableRow",
+                  "cells": [
+                    "EIA Weekly Petroleum Status Report",
+                    "Wednesday 10:30 am ET",
+                    "Wednesday 8:00 pm",
+                    "Wednesday 9:00 pm",
+                    "Crude"
+                  ]
+                },
+                {
+                  "_key": "c4l2-020r3",
+                  "_type": "tableRow",
+                  "cells": [
+                    "EIA Weekly Natural Gas Storage Report",
+                    "Thursday 10:30 am ET",
+                    "Thursday 8:00 pm",
+                    "Thursday 9:00 pm",
+                    "Natural gas"
+                  ]
+                },
+                {
+                  "_key": "c4l2-020r4",
+                  "_type": "tableRow",
+                  "cells": [
+                    "US non-farm payrolls (usually first Friday)",
+                    "Friday 8:30 am ET",
+                    "Friday 6:00 pm",
+                    "Friday 7:00 pm",
+                    "Both, via the dollar and growth outlook"
+                  ]
+                },
+                {
+                  "_key": "c4l2-020r5",
+                  "_type": "tableRow",
+                  "cells": [
+                    "US Federal Reserve rate decision",
+                    "2:00 pm ET on decision day",
+                    "11:30 pm, right at MCX close",
+                    "12:30 am, after MCX close",
+                    "Both, via the dollar"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-021",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Mark your calendar",
+              "question": "During US daylight saving time, at what time in India is the EIA Weekly Petroleum Status Report released?",
+              "options": [
+                "Wednesday 10:30 am IST",
+                "Wednesday 3:00 pm IST",
+                "Wednesday 8:00 pm IST",
+                "Thursday 2:00 am IST"
+              ],
+              "correctIndex": 2,
+              "explanation": "The report comes out at 10:30 am US Eastern Time. During US daylight saving, Eastern Time is 9 hours 30 minutes behind IST, so it is 8:00 pm IST. Outside daylight saving, the gap is 10 hours 30 minutes, making it 9:00 pm IST."
+            },
+            {
+              "_key": "c4l2-027",
+              "_type": "collapsible",
+              "title": "Why some news hits after MCX closes",
+              "content": [
+                {
+                  "_key": "c4l2-022",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c4l2-022s1",
+                      "_type": "span",
+                      "text": "NYMEX energy futures trade almost around the clock on weekdays, but MCX closes at 11:30 pm or 11:55 pm IST. Anything that happens after that shows up as a gap when MCX opens at 9:00 am.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c4l2-023",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c4l2-023s1",
+                      "_type": "span",
+                      "text": "The API inventory estimate on Tuesday evenings US time lands around 2:00 am to 3:00 am IST.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c4l2-024",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c4l2-024s1",
+                      "_type": "span",
+                      "text": "Fed decisions can land right at or after the MCX close.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c4l2-025",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c4l2-025s1",
+                      "_type": "span",
+                      "text": "Weekend events, such as OPEC+ announcements, geopolitical escalation or a big weather forecast shift for natural gas, show up on Monday morning.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c4l2-026",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c4l2-026s1",
+                      "_type": "span",
+                      "text": "A stop-loss order on MCX cannot protect you inside a gap. If the market opens beyond your stop price, your order executes at the first available price, which can be far worse.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-028",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2-028s1",
+                  "_type": "span",
+                  "text": "Volatility in Practice: A Week in Natural Gas",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-029",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2-029s1",
+                  "_type": "span",
+                  "text": "Here is an illustrative week in MCX natural gas that includes a bearish Thursday storage report and a cold weather forecast over the weekend.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-030",
+              "_type": "candlestickChart",
+              "title": "MCX Natural Gas, illustrative week (₹ per mmBtu)",
+              "data": [
+                {
+                  "_key": "c4l2-030d1",
+                  "date": "Mon",
+                  "open": 250,
+                  "high": 258.4,
+                  "low": 247.1,
+                  "close": 256.9
+                },
+                {
+                  "_key": "c4l2-030d2",
+                  "date": "Tue",
+                  "open": 257.5,
+                  "high": 262,
+                  "low": 249.3,
+                  "close": 251.2
+                },
+                {
+                  "_key": "c4l2-030d3",
+                  "date": "Wed",
+                  "open": 251,
+                  "high": 255.6,
+                  "low": 248.2,
+                  "close": 251.2
+                },
+                {
+                  "_key": "c4l2-030d4",
+                  "date": "Thu",
+                  "open": 251.2,
+                  "high": 253.8,
+                  "low": 234.6,
+                  "close": 236.4
+                },
+                {
+                  "_key": "c4l2-030d5",
+                  "date": "Fri",
+                  "open": 235,
+                  "high": 241.7,
+                  "low": 231.2,
+                  "close": 240.3
+                },
+                {
+                  "_key": "c4l2-030d6",
+                  "date": "Next Mon",
+                  "open": 248.8,
+                  "high": 256.6,
+                  "low": 247.9,
+                  "close": 255
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-031",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2-031s1",
+                  "_type": "span",
+                  "text": "Thursday: ",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_key": "c4l2-031s2",
+                  "_type": "span",
+                  "text": "storage data shows a bigger build than expected. Price falls from ₹251.2 to close at ₹236.4, a drop of about 5.9% in one session.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-032",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2-032s1",
+                  "_type": "span",
+                  "text": "Next Monday: ",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_key": "c4l2-032s2",
+                  "_type": "span",
+                  "text": "a colder forecast over the weekend. The market opens at ₹248.8, about 3.5% above Friday's close of ₹240.3, with no chance to trade in between.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-033",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Thursday's damage",
+              "prompt": "A trader was long one lot of MCX Natural Gas (1,250 mmBtu) from Wednesday's close at ₹251.2. What was the loss at Thursday's close of ₹236.4, in rupees? Enter the loss as a negative number.",
+              "correctValue": -18500,
+              "tolerance": 0,
+              "unit": "₹",
+              "explanation": "Price change = ₹236.4 minus ₹251.2 = minus ₹14.8 per mmBtu. × 1,250 mmBtu = minus ₹18,500 in one session. On Natural Gas Mini (250 mmBtu), the same move would cost ₹3,700."
+            },
+            {
+              "_key": "c4l2-034",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2-034s1",
+                  "_type": "span",
+                  "text": "Sizing Positions in Volatile Contracts",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-035",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l2-035s1",
+                  "_type": "span",
+                  "text": "In energy, position sizing matters more than entry price. A practical method is to decide how much of your capital you are willing to lose on one trade, then work backwards to the number of lots.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-036",
+              "_type": "mathBlock",
+              "latex": "\\text{Lots} = \\frac{\\text{Capital} \\times \\text{Risk per trade \\%}}{\\text{Stop distance in price} \\times \\text{Lot size} \\div \\text{Quotation unit}}",
+              "caption": "Round down to a whole number of lots. Remember that gaps can make actual losses larger than planned."
+            },
+            {
+              "_key": "c4l2-042",
+              "_type": "collapsible",
+              "title": "Show me the math: sizing a crude trade",
+              "content": [
+                {
+                  "_key": "c4l2-037",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c4l2-037s1",
+                      "_type": "span",
+                      "text": "Fatima, a trader in Hyderabad, has ₹5,00,000 of trading capital and risks 1% per trade, which is ₹5,000. She plans to buy Crude Oil Mini with a stop ₹60 below her entry.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c4l2-038",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c4l2-038s1",
+                      "_type": "span",
+                      "text": "Loss per Mini lot if stopped out: ₹60 × 10 barrels = ₹600",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c4l2-039",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c4l2-039s1",
+                      "_type": "span",
+                      "text": "Lots: ₹5,000 ÷ ₹600 = 8.33, rounded down to 8 lots",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c4l2-040",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c4l2-040s1",
+                      "_type": "span",
+                      "text": "Planned maximum loss: 8 × ₹600 = ₹4,800",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c4l2-041",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c4l2-041s1",
+                      "_type": "span",
+                      "text": "If she used the full Crude Oil contract instead, one lot would risk ₹6,000, already above her ₹5,000 limit. The Mini contract lets her follow her own rule.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-043",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Size a natural gas trade",
+              "prompt": "Capital is ₹4,00,000 and you risk 1% per trade. You plan to buy Natural Gas Mini (250 mmBtu) with a stop ₹8 below entry. How many whole lots can you trade within your risk limit?",
+              "correctValue": 2,
+              "tolerance": 0,
+              "unit": "lots",
+              "explanation": "Risk budget = 1% × ₹4,00,000 = ₹4,000. Loss per Mini lot = ₹8 × 250 = ₹2,000. ₹4,000 ÷ ₹2,000 = 2 lots. One full Natural Gas lot would risk ₹8 × 1,250 = ₹10,000, more than double your limit."
+            },
+            {
+              "_key": "c4l2-044",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Experienced energy traders often reduce size or stay flat into major data releases and over weekends. Missing a move costs nothing. Being on the wrong side of a gap can cost many times your planned risk."
+            },
+            {
+              "_key": "c4l2-045",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "The gas benchmark",
+              "textWithBlank": "MCX natural gas futures are cash settled against the NYMEX ___ Hub natural gas price.",
+              "correctAnswers": [
+                "Henry",
+                "henry"
+              ],
+              "explanation": "Henry Hub in Louisiana is the delivery point and benchmark for US natural gas futures, so MCX natural gas behaves like Henry Hub converted into rupees."
+            },
+            {
+              "_key": "c4l2-046",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "The weekend hold",
+              "scenario": "Imran, a 30-year-old bank employee in Lucknow, trades MCX natural gas in the evenings after work. On Friday night he is short 3 lots of the full Natural Gas contract, with a stop-loss ₹6 above his entry. Weather models are showing a possible cold snap in the US for the following week, but he thinks the forecasts are exaggerated. He goes to bed without closing the position.",
+              "prompt": "What are the risks Imran is taking, and how could he have managed this better?",
+              "modelAnswer": "The risks:\n1. Gap risk. If the cold forecast firms up over the weekend, natural gas can open sharply higher on Monday. His stop at ₹6 above entry only triggers once MCX opens, at whatever price is available.\n2. Size. Each full lot is 1,250 mmBtu, so his planned risk is ₹6 × 1,250 × 3 = ₹22,500. A Monday gap of ₹15 would mean a loss of about ₹56,250, two and a half times his plan.\n3. Weather is the core driver of natural gas, and forecasts can shift significantly in 48 hours. He is taking a directional bet on something he cannot monitor or react to.\n\nBetter approaches:\n1. Close or reduce the position before the weekend when a major weather or news risk is known.\n2. Use Natural Gas Mini to keep planned and gap losses within his risk budget.\n3. If he wants to hold a view over a weekend, consider defined-risk options instead, where the maximum loss is the premium.\n4. Size positions assuming gaps can be two to three times the stop distance."
+            },
+            {
+              "_key": "c4l2-047",
+              "_type": "toolLink",
+              "label": "US EIA Weekly Petroleum Status Report",
+              "url": "https://www.eia.gov/petroleum/supply/weekly/",
+              "description": "The official weekly US crude oil and product inventory data that moves crude prices every Wednesday."
+            },
+            {
+              "_key": "c4l2-048",
+              "_type": "flashcardSet",
+              "title": "MCX Energy Trading",
+              "cards": [
+                {
+                  "_key": "c4l2-048f1",
+                  "term": "Crude Oil lot",
+                  "definition": "100 barrels, quoted in ₹ per barrel, ₹100 per ₹1 move. Mini: 10 barrels."
+                },
+                {
+                  "_key": "c4l2-048f2",
+                  "term": "Natural Gas lot",
+                  "definition": "1,250 mmBtu, ₹0.10 tick worth ₹125. Mini: 250 mmBtu, tick worth ₹25."
+                },
+                {
+                  "_key": "c4l2-048f3",
+                  "term": "mmBtu",
+                  "definition": "Million British thermal units, the energy unit for natural gas pricing."
+                },
+                {
+                  "_key": "c4l2-048f4",
+                  "term": "Henry Hub",
+                  "definition": "The Louisiana hub that is the US natural gas benchmark and MCX natural gas reference."
+                },
+                {
+                  "_key": "c4l2-048f5",
+                  "term": "MCX energy pricing",
+                  "definition": "Approximately NYMEX price × USD/INR, so both oil or gas and the rupee matter."
+                },
+                {
+                  "_key": "c4l2-048f6",
+                  "term": "EIA petroleum report",
+                  "definition": "Wednesday, 8:00 pm IST during US daylight saving; moves crude."
+                },
+                {
+                  "_key": "c4l2-048f7",
+                  "term": "EIA gas storage report",
+                  "definition": "Thursday, 8:00 pm IST during US daylight saving; moves natural gas."
+                },
+                {
+                  "_key": "c4l2-048f8",
+                  "term": "Gap risk",
+                  "definition": "The risk that price opens far beyond your stop after a close, so your loss exceeds your plan."
+                }
+              ]
+            },
+            {
+              "_key": "c4l2-049",
+              "_type": "keyTakeaways",
+              "points": [
+                "MCX Crude Oil (100 barrels) and Natural Gas (1,250 mmBtu) have Mini versions of 10 barrels and 250 mmBtu, and all four are cash settled against NYMEX.",
+                "MCX energy prices are roughly NYMEX prices × USD/INR, so the rupee is part of every trade.",
+                "Crude responds to global supply, OPEC+ and geopolitics; natural gas mainly to US weather, storage and LNG exports.",
+                "Key US data lands in the Indian evening: crude inventories on Wednesday and gas storage on Thursday, 8:00 pm IST during US daylight saving.",
+                "News after MCX closes creates gaps that stop-loss orders cannot protect against.",
+                "Size positions from your risk budget: lots = capital × risk % ÷ (stop distance × lot multiplier), and prefer Mini contracts when in doubt."
+              ]
+            },
+            {
+              "_key": "c4l2-050",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice. Contract specifications, trading hours and data release schedules can change; confirm current details with MCX and the relevant agencies. Prices in examples are illustrative except where stated as historical. Commodity derivatives are leveraged and can cause losses larger than your initial margin."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,300 @@
+{
+  "courseSlug": "understanding-risk-parity-and-advanced-portfolio-construction",
+  "chapters": [
+    {
+      "title": "Chapter 3: Advanced Risk Parity Techniques",
+      "lessons": [
+        {
+          "title": "Hierarchical Risk Parity: A Machine Learning Approach to Allocation",
+          "slug": "hierarchical-risk-parity-a-machine-learning-approach-to-allocation",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "b1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b1s1", "text": "Everything since chapter 2 has treated the full covariance matrix as one object to be solved jointly, whether that meant inverting it, as mean-variance optimization does, or running a convex solver over it, as Spinu's equal risk contribution formulation does. Marcos Lopez de Prado's 2016 paper, 'Building Diversified Portfolios that Outperform Out-of-Sample,' introduced a genuinely different idea: Hierarchical Risk Parity, or HRP, which never treats the full matrix as one object at all. It borrows a technique straight out of machine learning, hierarchical clustering, and uses it to allocate risk down a tree instead.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b2s1", "text": "Why Look Beyond ERC: The N vs T Problem Returns", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b3",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b3s1", "text": "Chapter 1 showed that a covariance matrix for N assets needs N(N+1)/2 estimated parameters, and that this can outrun your available return history once N gets into the dozens or hundreds, a real quant universe rather than this course's illustrative three or five asset examples. Every method covered so far, even equal risk contribution solved through Spinu's well-behaved convex objective, still evaluates the full N by N matrix at every step. If that matrix is poorly estimated, ill-conditioned, or close to singular, the optimization can converge slowly or unreliably, no matter how elegant the objective function is. HRP's proposition is to sidestep this entirely: never require the full matrix to be jointly well-behaved. Break the problem into a hierarchy of small sub-problems, each built from variances of small groups of assets, which are always simple, always well-defined, no matter how badly conditioned the full matrix is.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b4",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b4s1", "text": "Step 1: Tree Clustering, Turning Correlation Into Distance", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b5",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b5s1", "text": "HRP starts by converting the correlation matrix into a proper distance matrix, since standard clustering algorithms need a distance, not a correlation.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "mathBlock",
+              "_key": "b6",
+              "latex": "d_{ij} = \\sqrt{\\tfrac{1}{2}(1 - \\rho_{ij})}",
+              "caption": "The correlation-distance metric. When correlation is +1, distance is 0 (identical assets). When correlation is -1, distance is 1, the maximum possible. This is proportional to the ordinary Euclidean distance between two standardized (z-scored) return series."
+            },
+            {
+              "_type": "callout",
+              "_key": "b7",
+              "type": "warning",
+              "text": "Read that range carefully: a correlation of -1 gives the maximum possible distance, 1.0, the same conceptual territory as two assets that are barely related at all. HRP's clustering step does not treat strongly negatively correlated assets as 'close' or 'natural portfolio partners.' It treats them as maximally dissimilar in terms of return pattern. This is a genuine, easy-to-miss subtlety: HRP clusters by statistical similarity of return behaviour, not by diversification value the way risk parity's own risk contribution logic does."
+            },
+            {
+              "_type": "block",
+              "_key": "b8",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b8s1", "text": "With the distance matrix built, standard agglomerative clustering, using single linkage as in Lopez de Prado's original paper, repeatedly merges whichever two clusters currently have the smallest distance between any pair of their members, until every asset has been folded into one root cluster. This produces a dendrogram, a tree that records which assets are most alike and in what order they were grouped.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b9",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b9s1", "text": "Step 2: Quasi-Diagonalization, Reordering the Matrix", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b10",
+              "style": "normal",
+              "markDefs": [
+                { "_type": "glossaryTerm", "_key": "gt1", "definition": "Reordering the rows and columns of a covariance matrix so that highly correlated assets sit next to each other, making the matrix approximately block-diagonal without changing any of its values." }
+              ],
+              "children": [
+                { "_type": "span", "_key": "b10s1", "text": "Read the dendrogram's leaves in order, and use that order to reorder the rows and columns of the covariance matrix. Nothing about the data changes, only the arrangement, but the result is ", "marks": [] },
+                { "_type": "span", "_key": "b10s2", "text": "quasi-diagonalization", "marks": ["gt1"] },
+                { "_type": "span", "_key": "b10s3", "text": ": similar assets end up sitting next to each other, and the large covariance entries cluster visually along the diagonal instead of being scattered across the matrix. This is purely a setup step for the next one, it makes the tree's structure explicit as a simple ordered list.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b11",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b11s1", "text": "Step 3: Recursive Bisection, Allocating Down the Tree", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b12",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b12s1", "text": "Starting from the full quasi-diagonalized list, split it into two contiguous halves. Compute each half's combined variance, treating it as its own small inverse-variance-weighted portfolio, then split the available weight between the two halves in inverse proportion to those variances: the calmer half gets more weight. Recurse into each half, splitting again, until every asset is on its own.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "mathBlock",
+              "_key": "b13",
+              "latex": "\\tilde{V}_c = w_c^{T} \\Sigma_c w_c, \\quad w_c \\propto \\frac{1}{\\text{diag}(\\Sigma_c)}, \\qquad \\alpha = 1 - \\frac{\\tilde{V}_0}{\\tilde{V}_0 + \\tilde{V}_1}",
+              "caption": "The cluster variance for a group c, computed using inverse-variance weights within that group, and the split ratio alpha between two sibling clusters 0 and 1. Cluster 0 receives alpha of the available weight, cluster 1 receives the rest. No matrix inversion appears anywhere in this step, every quantity is a variance of a small, always well-behaved sub-group."
+            },
+            {
+              "_type": "block",
+              "_key": "b14",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b14s1", "text": "Case Study: Clustering Nifty 50, Nifty Bank, Nifty IT, G-Sec, and Gold", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b15",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b15s1", "text": "Widen the universe to five assets, two sector indices alongside the broad Nifty 50, to give the clustering step something real to do. Illustrative volatilities: Nifty 50 14%, Nifty Bank 18%, Nifty IT 17%, the 10-year G-Sec 5%, gold 12%. Illustrative correlations: Nifty 50 to Nifty Bank 0.85, Nifty 50 to Nifty IT 0.75, Nifty Bank to Nifty IT 0.55, each equity index to the G-Sec between -0.05 and -0.08, each equity index to gold between 0.02 and 0.05, and G-Sec to gold at 0.00.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b16",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b16s1", "text": "Single-linkage clustering on this set merges Nifty 50 and Nifty Bank first, the closest pair by far, then folds Nifty IT into that group, forming a tight equity supercluster. Here is where the distance metric's earlier warning becomes concrete: gold merges into the equity supercluster next, before the G-Sec does, even though gold is supposed to be the better diversifier. Gold's correlation with equity is mildly positive, around 0.02 to 0.05, which puts it at a moderate distance from equity. The G-Sec's correlation with equity is mildly negative, around -0.05 to -0.08, which, under this metric, actually places it slightly further away than gold, not closer. The G-Sec only joins at the very last merge, forming the root.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "b17",
+              "caption": "Quasi-diagonal order after clustering: G-Sec joins last, gold second-to-last",
+              "headers": ["Position", "Asset", "Merge distance at which it joined the growing cluster"],
+              "rows": [
+                { "cells": ["1", "10-year G-Sec", "0.707 (joins the root, last)"] },
+                { "cells": ["2", "Gold", "0.689 (joins the equity supercluster)"] },
+                { "cells": ["3", "Nifty IT", "0.354 (joins Nifty 50 / Nifty Bank)"] },
+                { "cells": ["4", "Nifty 50", "0.274 (merges with Nifty Bank, first)"] },
+                { "cells": ["5", "Nifty Bank", "0.274 (merges with Nifty 50, first)"] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b18",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b18s1", "text": "Running recursive bisection down this tree produces HRP's final weights. The table below puts them next to 1/N and this course's true ERC solution for the same five assets, so you can see exactly how differently each method answers the allocation question.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "b19",
+              "caption": "1/N vs true ERC vs HRP, five-asset universe (illustrative)",
+              "headers": ["Asset", "1/N weight", "True ERC weight", "HRP weight", "HRP risk contribution"],
+              "rows": [
+                { "cells": ["Nifty 50", "20.0%", "10.5%", "3.3%", "2.5%"] },
+                { "cells": ["Nifty Bank", "20.0%", "8.8%", "2.0%", "1.8%"] },
+                { "cells": ["Nifty IT", "20.0%", "9.7%", "4.0%", "3.9%"] },
+                { "cells": ["10-year G-Sec", "20.0%", "51.4%", "77.3%", "77.6%"] },
+                { "cells": ["Gold", "20.0%", "19.6%", "13.4%", "14.2%"] }
+              ]
+            },
+            {
+              "_type": "chart",
+              "_key": "b20",
+              "chartType": "bar",
+              "title": "Portfolio weight by method, five-asset universe (illustrative)",
+              "xAxisLabel": "Asset",
+              "yAxisLabel": "Weight (%)",
+              "data": [
+                { "label": "Nifty 50", "value": 20 },
+                { "label": "Nifty Bank", "value": 20 },
+                { "label": "Nifty IT", "value": 20 },
+                { "label": "10Y G-Sec", "value": 20 },
+                { "label": "Gold", "value": 20 }
+              ],
+              "series": [
+                { "label": "1/N", "values": [20, 20, 20, 20, 20] },
+                { "label": "True ERC", "values": [10.5, 8.8, 9.7, 51.4, 19.6] },
+                { "label": "HRP", "values": [3.3, 2.0, 4.0, 77.3, 13.4] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "b21",
+              "type": "warning",
+              "text": "Notice what HRP did not do: it did not produce equal risk contribution. Its risk contribution shares, roughly 77.6% G-Sec, 14.2% gold, and single digits for the three equity indices, are far more concentrated than true ERC's exact 20% each. This is expected, not a bug. HRP's top-level split pits a calm two-asset cluster (G-Sec and gold, cluster volatility around 4.6%) against a volatile, still highly intercorrelated three-asset equity cluster (around 15% cluster volatility even after internal diversification), and the recursive bisection allocates by variance ratio at every level, compounding the tilt toward the calmer side at each step down the tree. HRP optimizes for something different from equal risk contribution: structural robustness to a badly estimated covariance matrix, not an exactly balanced risk budget."
+            },
+            {
+              "_type": "block",
+              "_key": "b22",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b22s1", "text": "When HRP Actually Earns Its Keep", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b23",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b23s1", "text": "Five assets is not where HRP's real advantage shows up, true ERC handles five assets just fine. The advantage grows with N. Lopez de Prado's own simulations, and a number of follow-up studies, found HRP producing lower out-of-sample variance than both classic mean-variance optimization and naive risk-parity-style methods, specifically as the number of assets grew large relative to the length of usable return history, exactly the N approaching T scenario from chapter 1. A quant researcher building a signal across, say, 200 NSE-listed stocks with three years of daily history has nowhere near enough data to estimate a well-conditioned 200 by 200 covariance matrix. HRP never asks that matrix to be well-conditioned as a whole. It only ever asks small sub-groups, pairs and clusters of a handful of assets at a time, to have sensible variances, which is a far easier bar to clear.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b24",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b24s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "codeBlock",
+              "_key": "b25",
+              "language": "python",
+              "code": "import numpy as np\n\ndef hrp_weights(cov, corr):\n    n = cov.shape[0]\n    dist = np.sqrt(0.5 * (1 - corr))\n\n    # single-linkage agglomerative clustering\n    members = {i: [i] for i in range(n)}\n    active = list(range(n))\n    next_id = n\n    merges = {}\n    while len(active) > 1:\n        best, best_d = None, None\n        for a_idx in range(len(active)):\n            for b_idx in range(a_idx + 1, len(active)):\n                a, b = active[a_idx], active[b_idx]\n                d = min(dist[i, j] for i in members[a] for j in members[b])\n                if best_d is None or d < best_d:\n                    best_d, best = d, (a, b)\n        a, b = best\n        members[next_id] = members[a] + members[b]\n        merges[next_id] = (a, b)\n        active.remove(a); active.remove(b); active.append(next_id)\n        next_id += 1\n\n    def leaf_order(cid):\n        if cid < n:\n            return [cid]\n        a, b = merges[cid]\n        return leaf_order(a) + leaf_order(b)\n\n    order = leaf_order(next_id - 1)\n\n    # recursive bisection\n    def cluster_var(items):\n        sub = cov[np.ix_(items, items)]\n        ivp = 1 / np.diag(sub)\n        ivp = ivp / ivp.sum()\n        return ivp @ sub @ ivp\n\n    weights = {i: 1.0 for i in order}\n    clusters = [order]\n    while True:\n        new_clusters = []\n        for c in clusters:\n            if len(c) > 1:\n                mid = len(c) // 2\n                new_clusters.append(c[:mid])\n                new_clusters.append(c[mid:])\n        if not new_clusters:\n            break\n        for i in range(0, len(new_clusters), 2):\n            c0, c1 = new_clusters[i], new_clusters[i + 1]\n            v0, v1 = cluster_var(c0), cluster_var(c1)\n            alpha = 1 - v0 / (v0 + v1)\n            for a in c0: weights[a] *= alpha\n            for a in c1: weights[a] *= (1 - alpha)\n        clusters = new_clusters\n\n    w = np.array([weights[i] for i in range(n)])\n    return w / w.sum()\n\n# Replace with your own volatility and correlation estimates\nvol = np.array([0.14, 0.18, 0.17, 0.05, 0.12])\ncorr = np.array([\n    [1.00, 0.85, 0.75, -0.08, 0.05],\n    [0.85, 1.00, 0.55, -0.05, 0.03],\n    [0.75, 0.55, 1.00, -0.05, 0.02],\n    [-0.08, -0.05, -0.05, 1.00, 0.00],\n    [0.05, 0.03, 0.02, 0.00, 1.00],\n])\ncov = np.outer(vol, vol) * corr\nprint('HRP weights:', np.round(hrp_weights(cov, corr) * 100, 2))",
+              "caption": "This is a simplified educational implementation to show the three steps clearly. For production use, mature open-source implementations exist (such as the hierarchical risk parity function in the PyPortfolioOpt library) with additional numerical safeguards."
+            },
+            {
+              "_type": "exercise",
+              "_key": "b26",
+              "variant": "scenario",
+              "title": "Choosing Between ERC and HRP",
+              "scenario": "A quant researcher is building a systematic allocation model across 150 NSE-listed midcap and smallcap stocks, using two years of daily returns, roughly 500 observations, to estimate volatility and correlation.",
+              "prompt": "Using what you learned in chapter 1 about the N vs T problem, would you recommend true ERC (via Spinu's convex solver) or HRP for this universe, and why?",
+              "modelAnswer": "HRP is the safer choice here. With 150 assets, the covariance matrix needs 150*151/2, over 11,000, estimated parameters, from only about 500 return observations. That is a deeply under-determined estimation problem, and the resulting covariance matrix is likely to be poorly conditioned or effectively singular. Spinu's ERC solver still evaluates that full, poorly estimated matrix at every iteration, which can produce unstable or unreliable weights. HRP never needs the full matrix to be well-conditioned, since every step only touches variances of small sub-clusters, so it degrades far more gracefully under exactly this kind of severe N-vs-T pressure."
+            },
+            {
+              "_type": "exercise",
+              "_key": "b27",
+              "variant": "quiz",
+              "title": "Quick Check",
+              "question": "In the case study, why did gold merge into the equity supercluster in the dendrogram before the G-Sec did, even though the G-Sec's correlation with equity is more negative than gold's?",
+              "options": [
+                "Because the clustering algorithm made an error",
+                "Because the distance metric d = sqrt(0.5(1-correlation)) treats strongly negative correlation as maximally dissimilar (large distance), so gold's mildly positive correlation with equity actually places it closer, in this metric, than the G-Sec's mildly negative correlation does",
+                "Because gold and equity have identical volatility",
+                "Because the G-Sec was excluded from the clustering step entirely"
+              ],
+              "correctIndex": 1,
+              "explanation": "This is the central subtlety of HRP's distance metric: it measures similarity of return pattern, where distance shrinks toward 0 as correlation approaches +1 and grows toward its maximum as correlation approaches -1. A mildly negative correlation is treated as more distant than a mildly positive one, which is the opposite of how a diversification-focused method like ERC would treat the same two numbers."
+            },
+            {
+              "_type": "block",
+              "_key": "b28",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b28s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "b29",
+              "text": "Hierarchical Risk Parity solves a different problem than true ERC solves. It does not target exactly equal risk contribution, and in this lesson's own case study it produced a more concentrated portfolio than ERC did. What it targets instead is structural robustness: by clustering assets and allocating recursively down a tree, using only variances of small, always well-behaved sub-groups, it never requires the full covariance matrix to be jointly well-conditioned, which is exactly the property that breaks down for MVO and can strain even ERC as the number of assets grows large relative to your data history."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "b30",
+              "points": [
+                "HRP has three steps: convert correlation to distance and run single-linkage clustering to build a dendrogram, quasi-diagonalize the covariance matrix by reordering it to the clustering's leaf order, then recursively bisect the ordered list, allocating weight between sibling clusters inversely to their combined variance.",
+                "The distance metric d = sqrt(0.5(1-correlation)) treats strongly negatively correlated assets as maximally dissimilar, not as close, which is the opposite of how a diversification-value lens would rank them. In the case study, this caused gold to cluster with equity before the G-Sec did.",
+                "HRP never inverts, or requires well-conditioning of, the full covariance matrix. Every calculation touches only the variance of a small sub-group of assets, which stays well-defined even when N approaches or exceeds the length of your return history.",
+                "HRP does not target equal risk contribution. In the five-asset case study it produced a more concentrated allocation (roughly 77.6% risk contribution in the G-Sec) than true ERC's exact 20% each, because its recursive, variance-ratio-driven splits compound down the tree.",
+                "HRP's real edge shows up as the number of assets grows large relative to available history, where Lopez de Prado's original research and follow-up studies found it more robust out-of-sample than both mean-variance optimization and naive risk-parity methods.",
+                "The next lesson covers factor risk parity, which shifts the unit of risk allocation again, from individual assets to underlying risk factors that cut across multiple assets at once."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

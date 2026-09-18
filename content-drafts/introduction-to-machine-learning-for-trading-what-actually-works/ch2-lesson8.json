@@ -1,0 +1,220 @@
+{
+  "courseSlug": "introduction-to-machine-learning-for-trading-what-actually-works",
+  "chapters": [
+    {
+      "title": "Chapter 2: Framing Trading as a Machine Learning Problem",
+      "lessons": [
+        {
+          "title": "Case Study: Building a Clean Train/Test Split on Nifty 50 Data Without Cheating",
+          "slug": "case-study-building-a-clean-traintest-split-on-nifty-50-data-without-cheating",
+          "body": [
+            {
+              "_key": "mlt8-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt8-001s1", "_type": "span", "marks": [], "text": "This chapter has built the pieces: point-in-time features from price and volume in Lesson 6, and a properly framed label in Lessons 5 and 7. This case study assembles them into one clean pipeline on Nifty 50 data, and does the one step most tutorials get quietly wrong: splitting the data into a training period and a test period without leaking one into the other. The gap between a split that looks correct and one that actually is correct is smaller, and more dangerous, than most beginners expect." }
+              ]
+            },
+            {
+              "_key": "mlt8-002",
+              "_type": "bigIdea",
+              "text": "A train/test split for market data is not just cutting a dataframe in two at some date. Every feature's backward-looking window and every label's forward-looking window has to be checked against the split boundary itself, because that seam is exactly where leakage likes to hide."
+            },
+            {
+              "_key": "mlt8-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt8-003s1", "_type": "span", "marks": [], "text": "Step 1: Assemble the Features and the Label" }
+              ]
+            },
+            {
+              "_key": "mlt8-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt8-004s1", "_type": "span", "marks": [], "text": "Take daily OHLCV data for the Nifty 50 index, build the point-in-time features from Lesson 6, momentum, distance from a moving average, relative volume, and attach the direction label with a deadband from Lesson 5. Every feature and the label are built with the same discipline established across this chapter: features only ever look backward from today, and the label is clearly marked as looking forward." }
+              ]
+            },
+            {
+              "_key": "mlt8-005",
+              "_type": "codeBlock",
+              "language": "python",
+              "caption": "The assembled feature set and label, in one place",
+              "code": "import numpy as np\n\n# Features: all backward-looking, built in Lesson 6\ndf[\"mom_20d\"] = df[\"close\"].shift(1) / df[\"close\"].shift(21) - 1\ndf[\"dist_from_ma20\"] = df[\"close\"] / df[\"close\"].rolling(20).mean() - 1\ndf[\"rel_volume\"] = df[\"volume\"] / df[\"volume\"].rolling(20).mean()\n\n# Label: forward-looking, built in Lesson 5\nfwd_return = df[\"close\"].shift(-1) / df[\"close\"] - 1\nthreshold = 0.003\ndf[\"label\"] = np.select(\n    [fwd_return > threshold, fwd_return < -threshold],\n    [1, 0],\n    default=np.nan,\n)\n\ndf = df.dropna(subset=[\"mom_20d\", \"dist_from_ma20\", \"rel_volume\", \"label\"])"
+            },
+            {
+              "_key": "mlt8-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt8-006s1", "_type": "span", "marks": [], "text": "Step 2: The Wrong Way, a Random Split" }
+              ]
+            },
+            {
+              "_key": "mlt8-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt8-007s1", "_type": "span", "marks": [], "text": "Lesson 3 named this mistake: scikit-learn's train_test_split with shuffle set to true, or standard k-fold cross-validation, both scramble the chronological order before splitting. On this assembled Nifty 50 dataset, that random split reports a strong-looking accuracy, purely illustrative here, because the model has effectively been allowed to train on days that come after some of the days it is tested on." }
+              ]
+            },
+            {
+              "_key": "mlt8-008",
+              "_type": "keyFact",
+              "label": "Reported accuracy with a random, shuffled split (illustrative)",
+              "value": "74%",
+              "context": "Impressive on paper, and meaningless, because the chronology that real trading depends on was destroyed before the model ever saw the data."
+            },
+            {
+              "_key": "mlt8-009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt8-009s1", "_type": "span", "marks": [], "text": "Step 3: The Right Way, a Chronological Split" }
+              ]
+            },
+            {
+              "_key": "mlt8-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt8-010s1", "_type": "span", "marks": [], "text": "The fix is to pick a cutoff date and let every row before it be training data, every row on or after it be test data, in the exact order the market actually produced them. This alone removes the random-shuffle leak. It does not yet remove every leak, which is the point of the next step." }
+              ]
+            },
+            {
+              "_key": "mlt8-011",
+              "_type": "codeBlock",
+              "language": "python",
+              "caption": "A chronological split by cutoff date",
+              "code": "cutoff_date = \"2023-01-01\"\n\ntrain = df[df[\"date\"] < cutoff_date].copy()\ntest = df[df[\"date\"] >= cutoff_date].copy()"
+            },
+            {
+              "_key": "mlt8-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt8-012s1", "_type": "span", "marks": [], "text": "Step 4: The Boundary Problem Nobody Warns You About" }
+              ]
+            },
+            {
+              "_key": "mlt8-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt8-013s1", "_type": "span", "marks": [], "text": "A chronological split alone is not the finish line. The label is a 1-day forward return, built with shift(-1) in Step 1, which means the very last row of the training set, December 29 or 30, 2022, has a label that was calculated using the closing price from the first trading day on or after January 1, 2023, the first day of the test period. That single training row has already quietly seen one day into the future test window. It needs to be dropped. Backward-looking features do not have this problem in the other direction: a 20-day momentum feature on the first row of the test set only ever looks at earlier, already-known prices, even if some of those prices technically fall on dates that make up the training period. The risk only runs one way, from a forward-looking label reaching across the boundary into the future." }
+              ]
+            },
+            {
+              "_key": "mlt8-014",
+              "_type": "codeBlock",
+              "language": "python",
+              "caption": "Dropping the one training row whose label leaks across the boundary",
+              "code": "# The label used shift(-1), so train's LAST row has a label computed\n# from test's FIRST row's price. That row has already seen into the test period.\ntrain = train.iloc[:-1]\n\n# No equivalent fix is needed on the test side: backward-looking features\n# on test's first row only ever use earlier, already-known prices."
+            },
+            {
+              "_key": "mlt8-015",
+              "_type": "callout",
+              "type": "warning",
+              "text": "This boundary row is easy to miss because it is exactly one row, in a dataset of thousands, and dropping it changes almost nothing about the reported metrics either way. What it protects against is not a large accuracy inflation, it is a matter of doing the split correctly on principle, since the same mistake compounds badly once you move to walk-forward validation with many rolling boundaries, the subject Lesson 3 flagged for Chapter 3 and Chapter 4."
+            },
+            {
+              "_key": "mlt8-016",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt8-016s1", "_type": "span", "marks": [], "text": "Step 5: Fit the Scaler on Training Data Only" }
+              ]
+            },
+            {
+              "_key": "mlt8-017",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt8-017s1", "_type": "span", "marks": [], "text": "The last step is the scaler discipline from Lesson 6: fit any normalization on train only, after the boundary row has been dropped, then apply those exact parameters to test without ever re-fitting on it. With all of this done, chronological order preserved, the boundary row dropped, and the scaler fit only on training data, the model's reported accuracy on this same Nifty 50 dataset drops noticeably." }
+              ]
+            },
+            {
+              "_key": "mlt8-018",
+              "_type": "keyFact",
+              "label": "Reported accuracy with a correct, leak-free chronological split (illustrative)",
+              "value": "54%",
+              "context": "Lower than the random-split number, and the only one of the two that means anything about how this model would actually have performed trading forward in time."
+            },
+            {
+              "_key": "mlt8-019",
+              "_type": "callout",
+              "type": "insight",
+              "text": "54% might look disappointing next to 74%, but only one of these numbers means anything. A 54% out-of-sample accuracy, if it holds up across multiple test windows using the walk-forward approach Chapter 3 builds properly, is a specific, real number worth building a signal on. A 74% number built on a leaking split will not survive contact with live trading, it will just take real capital to find that out the hard way."
+            },
+            {
+              "_key": "mlt8-020",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Finding the boundary risk",
+              "question": "A dataset's label is a 1-day forward return, built using shift(-1). After splitting the data chronologically at a cutoff date, which row is at risk of leaking test-period information into the training set?",
+              "options": [
+                "The first row of the test set, because its features look backward",
+                "The last row of the training set, because its forward-looking label was computed using the first test-period day's price",
+                "Every row in the training set is equally at risk",
+                "There is no risk once the split is chronological"
+              ],
+              "correctIndex": 1,
+              "explanation": "A chronological split fixes the random-shuffle leak from Lesson 3, but the forward-looking label creates a new, narrower risk exactly at the seam: the training set's last row was labeled using a price from the test period's first day. Backward-looking features do not create this risk in the other direction."
+            },
+            {
+              "_key": "mlt8-021",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "A colleague's split, two mistakes",
+              "scenario": "A colleague builds a feature set with a 20-day momentum feature and a 1-day forward-return label. He fits a StandardScaler on the entire dataset before splitting, then uses every row up to and including February 28, 2024, as training data and every row from March 1, 2024, onward as test data, without checking anything else, and reports a strong out-of-sample result.",
+              "prompt": "Identify two separate mistakes in this description and explain the fix for each.",
+              "modelAnswer": "First, the StandardScaler was fit on the entire dataset, including the test period, before the split, the exact scaler leak from Lesson 6. The scaler's mean and standard deviation are already quietly informed by test-period data. The fix is to fit the scaler only on the training data and apply those same saved parameters, unchanged, to the test data. Second, the training set's last row, February 28, 2024, has a label built from a 1-day forward return, meaning it was computed using March 1, 2024's price, the very first day of the test period. This is the boundary leak this lesson covers. The fix is to drop that last training row, or more generally, any training row whose label calculation reaches across the split boundary into the test period."
+            },
+            {
+              "_key": "mlt8-022",
+              "_type": "flashcardSet",
+              "title": "Chapter 2 Closing Vocabulary",
+              "cards": [
+                { "_key": "mlt8-022f1", "term": "Chronological split", "definition": "A train/test split that preserves time order, using only earlier dates for training and only later dates for testing, instead of shuffling data before splitting." },
+                { "_key": "mlt8-022f2", "term": "Boundary leak", "definition": "A data leak that occurs when a forward-looking label near the end of the training period was computed using data from the very start of the test period." },
+                { "_key": "mlt8-022f3", "term": "Split cutoff date", "definition": "The specific date chosen to divide a chronologically split dataset into a training period before it and a test period on or after it." },
+                { "_key": "mlt8-022f4", "term": "Point-in-time correctness", "definition": "The property that every feature and label in a dataset uses only information that would genuinely have been available at that historical point in time." },
+                { "_key": "mlt8-022f5", "term": "Leak-free pipeline", "definition": "A full feature, label, split, and scaling process in which no step allows information from the future to influence training, so reported performance reflects what a live strategy could actually have achieved." }
+              ]
+            },
+            {
+              "_key": "mlt8-023",
+              "_type": "keyTakeaways",
+              "points": [
+                "A train/test split for market data is not just cutting a dataframe at a date; every feature's backward-looking window and every label's forward-looking window must be checked against the split boundary.",
+                "A random or shuffled split, including standard k-fold cross-validation, allows a model to train on data that comes after some of what it is tested on, inflating reported accuracy in a way that does not survive live trading.",
+                "A chronological split fixes the shuffle leak, but a forward-looking label can still leak across the boundary itself: the training set's last row may have been labeled using the test period's first data point.",
+                "Backward-looking features do not create this same boundary risk; the danger runs only in the forward direction, from labels reaching into the future.",
+                "Once the split is chronological, the boundary row is dropped, and the scaler is fit on training data only, the resulting accuracy is typically lower than a leaky split would report, and it is the only number that means anything about real, forward-looking performance."
+              ]
+            },
+            {
+              "_key": "mlt8-024",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice. Code examples are simplified for illustration and are not production-ready. All accuracy figures cited are illustrative and do not represent real backtested results. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,138 @@
+{
+  "courseSlug": "understanding-latency-colocation-and-infrastructure-in-hft",
+  "chapters": [
+    {
+      "lessons": [
+        {
+          "title": "What Colocation Is and Why It Exists",
+          "slug": "what-colocation-is-and-why-it-exists",
+          "body": [
+            {
+              "_key": "b1",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "b1s1", "_type": "span", "text": "A colocation contract does not buy a trading edge, or at least not the kind most people imagine. It buys real estate: a rack, in a specific room, inside a building the exchange itself owns. Everything else in this chapter follows from that one fact.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b2",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "b2s1", "_type": "span", "text": "What Colocation Actually Buys You", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b3",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "md3a", "_type": "glossaryTerm", "definition": "Renting physical rack space inside, or immediately adjacent to, the exchange's own data centre, so a firm's trading servers sit as close as possible to the exchange's matching engine." }
+              ],
+              "children": [
+                { "_key": "b3s1", "_type": "span", "text": "Colocation", "marks": ["md3a"] },
+                { "_key": "b3s2", "_type": "span", "text": " means renting physical rack space inside, or immediately adjacent to, the exchange's own data centre, so a firm's trading servers sit as close as possible to the exchange's matching engine. NSE offers this at its data centre, and BSE offers an equivalent service at its own facility. Either way, the product being sold is proximity, not information and not priority.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b4",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "b4s1", "_type": "span", "text": "A firm that colocates does not connect to the exchange over the public internet, or even over a leased line from across the city. It runs a dedicated cross-connect, a short physical cable, from its own rack straight into the exchange's network. That single choice removes almost all of the network propagation delay that a firm sitting anywhere else in Mumbai, or in another city entirely, would otherwise have to pay in milliseconds instead of microseconds.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b5",
+              "_type": "comparison",
+              "title": "Off-Colo vs Colocated: Where the Latency Chain Starts",
+              "columns": [
+                {
+                  "_key": "b5c1", "_type": "comparisonColumn", "label": "Off-Colo Firm",
+                  "points": [
+                    "Connects over a leased line or the internet, adding milliseconds of propagation delay before a packet even reaches the exchange's network",
+                    "Lower fixed cost, no rack rental or cross-connect charges",
+                    "Latency is dominated by distance and the quality of its network link"
+                  ]
+                },
+                {
+                  "_key": "b5c2", "_type": "comparisonColumn", "label": "Colocated Firm",
+                  "points": [
+                    "Connects via a dedicated cross-connect inside the exchange's own data centre, cutting propagation delay to a handful of microseconds",
+                    "Higher fixed cost: rack rental, cross-connect fees, power, and market data feed charges",
+                    "Latency is now dominated by its own hardware and software stack, not the network"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "b6",
+              "_type": "keyFact",
+              "label": "Cost of Colocation",
+              "value": "Runs into lakhs of rupees a month",
+              "context": "Combines rack rental, cross-connect, power, and market data feed charges. Exact NSE and BSE tariffs are revised periodically via exchange circulars, so treat this as an order of magnitude, not a quote."
+            },
+            {
+              "_key": "b7",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "b7s1", "_type": "span", "text": "Why Exchanges Sell This At All", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b8",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "b8s1", "_type": "span", "text": "Exchanges are commercial entities, and colocation is a service line, priced and published, open to any trading member willing to pay for it. NSE and BSE earn recurring revenue from rack rental, cross-connect fees, and colocated market data feeds. In return, the firms that buy in are almost always proprietary trading desks, market-making firms, and some large brokers running strategies on behalf of institutional clients, all of whom need the tick-to-trade numbers discussed in Chapter 1 to run their strategies at all.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b9",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "Buying colocation is a legal, exchange-provided infrastructure service in India, published and available to any member who pays the listed fees. This course treats it as market infrastructure, the same way it treats a broker's terminal or a market data subscription. The next lesson looks specifically at how SEBI regulates fairness among the firms that do colocate, which is a different question from whether colocation itself is permitted."
+            },
+            {
+              "_key": "b10",
+              "_type": "flashcardSet",
+              "title": "Colocation Vocabulary",
+              "cards": [
+                { "_key": "b10a", "_type": "flashcard", "term": "Colocation", "definition": "Renting rack space inside or next to an exchange's data centre for proximity to the matching engine." },
+                { "_key": "b10b", "_type": "flashcard", "term": "Cross-connect", "definition": "A dedicated physical cable connecting a firm's rack directly to the exchange's network, bypassing the public internet." },
+                { "_key": "b10c", "_type": "flashcard", "term": "Rack space", "definition": "The physical unit of space, measured in server rack units, that a firm rents inside the exchange's data centre." },
+                { "_key": "b10d", "_type": "flashcard", "term": "Colocated market data feed", "definition": "A market data feed delivered directly within the colocation facility, distinct from the public tick-by-tick feed available outside it." }
+              ]
+            },
+            {
+              "_key": "b11",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "A New Desk's Question",
+              "scenario": "A newly launched proprietary trading desk is deciding whether colocation at NSE is worth the cost. Their strategy currently runs from a server in their own office in Mumbai, about 15 kilometres from NSE's data centre, connected over a leased line.",
+              "prompt": "Based on what you have read so far, what would you tell them to check before signing a colocation contract?",
+              "modelAnswer": "First, whether their strategy is actually latency-sensitive enough to need microsecond-level tick-to-trade times, since colocation is a large fixed cost that only pays off if speed is the binding constraint on their edge. Second, whether their own software and hardware stack, the latency budget covered in Chapter 1, is already optimized, since colocation only fixes network propagation delay. Signing a colocation contract while running an unoptimized application stack wastes most of the benefit."
+            },
+            {
+              "_key": "b12",
+              "_type": "keyTakeaways",
+              "points": [
+                "Colocation means renting rack space inside or next to the exchange's own data centre and connecting via a dedicated cross-connect, not a public internet or leased line connection.",
+                "It is a published, paid service open to any trading member, sold by NSE and BSE as a commercial revenue line, not a hidden or preferential arrangement.",
+                "Colocation mainly removes network propagation delay. It does not by itself fix the rest of the latency budget covered in Chapter 1.",
+                "Colocation being legal and open to all payers is a separate question from whether SEBI's fairness rules for firms that do colocate are followed, which is covered next."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

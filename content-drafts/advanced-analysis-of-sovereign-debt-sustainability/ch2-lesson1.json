@@ -1,0 +1,311 @@
+{
+  "courseSlug": "advanced-analysis-of-sovereign-debt-sustainability",
+  "chapters": [
+    {
+      "title": "Chapter 2: Reading Sovereign Risk Through Market Signals",
+      "lessons": [
+        {
+          "title": "Sovereign Bond Yields and Spreads: What the Market Is Pricing In",
+          "slug": "sovereign-bond-yields-and-spreads-what-the-market-is-pricing-in",
+          "body": [
+            {
+              "_key": "c2l1k001",
+              "_type": "bigIdea",
+              "text": "A sovereign bond yield is never just 'the interest rate'. It is the market's running vote on inflation, currency risk, default risk, and liquidity, all bundled into one number, and pulling that bundle apart is the entire skill this chapter builds."
+            },
+            {
+              "_key": "c2l1k002",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l1k002s1",
+                  "_type": "span",
+                  "text": "The first chapter built the analytical machinery, the debt dynamics identity, the IMF's DSA, and the fiscal reaction function, from the inside: government data, budget documents, official projections. This chapter flips the vantage point to the outside: what is the market itself telling you, every single trading day, through the price it puts on a sovereign's bonds? This lesson starts with the most basic and most misread signal of all, the yield itself, and the spread it trades at over a benchmark. The next two lessons in this chapter build on it: credit default swaps formalise the same information into an implied default probability, and rating agencies translate it into a letter grade. All three are reading the same underlying risk; they just each distort it in different, specific ways.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l1k003",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l1k003s1", "_type": "span", "text": "Decomposing a Sovereign Bond Yield", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l1k004",
+              "_type": "mathBlock",
+              "latex": "y = r^{*} + \\pi^{e} + \\tau + s + \\ell",
+              "caption": "y = nominal bond yield, r* = real risk-free rate, πe = expected inflation, τ = term premium, s = sovereign credit spread, ℓ = liquidity premium"
+            },
+            {
+              "_key": "c2l1k005",
+              "_type": "table",
+              "caption": "Five components hiding inside a single quoted yield",
+              "headers": ["Component", "What Drives It", "How to Isolate It"],
+              "rows": [
+                {
+                  "_key": "c2l1k005r1",
+                  "_type": "tableRow",
+                  "cells": ["r* (real risk-free rate)", "Global monetary policy stance, chiefly the US Fed's real policy rate", "Compare against the real yield on an inflation-protected benchmark, such as US TIPS"]
+                },
+                {
+                  "_key": "c2l1k005r2",
+                  "_type": "tableRow",
+                  "cells": ["πe (expected inflation)", "Domestic inflation expectations over the bond's remaining life", "Compare the nominal G-Sec yield to an inflation-indexed bond, or to survey-based inflation expectations"]
+                },
+                {
+                  "_key": "c2l1k005r3",
+                  "_type": "tableRow",
+                  "cells": ["τ (term premium)", "Compensation for duration risk and uncertainty over a longer holding period", "Compare short- versus long-maturity yields along the same risk-free curve"]
+                },
+                {
+                  "_key": "c2l1k005r4",
+                  "_type": "tableRow",
+                  "cells": ["s (sovereign credit spread)", "The market-perceived probability and severity of default or restructuring", "For hard-currency debt, the spread over a maturity-matched US Treasury; this is what the JPMorgan EMBI tracks"]
+                },
+                {
+                  "_key": "c2l1k005r5",
+                  "_type": "tableRow",
+                  "cells": ["ℓ (liquidity premium)", "How easily the bond can be bought or sold without moving its price", "Compare a heavily traded benchmark bond to an off-the-run bond of similar maturity and credit quality"]
+                }
+              ]
+            },
+            {
+              "_key": "c2l1k006",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l1k006s1", "_type": "span", "text": "Hard Currency vs Local Currency: Why the Spread Means Different Things", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l1k007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l1k007s1",
+                  "_type": "span",
+                  "text": "The JPMorgan EMBI Global Diversified, the standard benchmark for emerging-market sovereign risk, tracks USD-denominated bonds specifically because the currency is matched to the US Treasury benchmark. Strip out the currency and what is left in that spread is close to pure credit and liquidity risk. A local-currency bond is a different instrument entirely. Its yield differential over a comparable benchmark also embeds the market's expected currency depreciation, an uncovered interest rate parity relationship, so a wide gap between, say, an Indonesian rupiah G-bond yield and a US Treasury yield is telling you about expected rupiah weakness as much as it is telling you about Indonesian credit risk. Conflating the two is one of the most common errors in cross-country spread comparisons.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l1k008",
+              "_type": "comparison",
+              "title": "Hard-Currency vs Local-Currency Sovereign Bonds",
+              "columns": [
+                {
+                  "_key": "c2l1k008c1",
+                  "label": "Hard-Currency (USD) Bonds",
+                  "points": [
+                    "Spread over US Treasuries is close to a pure read on credit and liquidity risk, since currency is matched",
+                    "Tracked by the JPMorgan EMBI Global Diversified index",
+                    "The sovereign bears all the currency risk; a weaker local currency makes USD debt service harder, not the bond's price directly"
+                  ]
+                },
+                {
+                  "_key": "c2l1k008c2",
+                  "label": "Local-Currency Bonds",
+                  "points": [
+                    "Yield gap over a benchmark embeds both credit risk and expected currency depreciation",
+                    "Tracked by the JPMorgan GBI-EM Global Diversified index",
+                    "The foreign investor bears the currency risk; the sovereign's debt service is unaffected by exchange rate moves"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c2l1k009",
+              "_type": "callout",
+              "type": "insight",
+              "text": "India deliberately issues almost no sovereign debt in foreign currency, relying instead on a deep domestic rupee market, a policy choice that removes currency mismatch risk from the government's balance sheet entirely. The RBI's Fully Accessible Route (FAR), introduced in March 2020, removed the foreign-ownership cap entirely on a specified set of G-Secs, precisely the pool of securities that made India's inclusion in the JPMorgan GBI-EM Global Diversified index possible, phased in from June 2024 and rising toward the index's maximum country weight, around 10%, by early 2025."
+            },
+            {
+              "_key": "c2l1k010",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l1k010s1", "_type": "span", "text": "Reading the Term Structure of Sovereign Risk", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l1k011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l1k011s1",
+                  "_type": "span",
+                  "text": "A healthy sovereign yield curve slopes upward: longer maturities carry more term premium and more uncertainty, so they yield more. A sovereign heading toward distress often shows the opposite shape. When markets expect a restructuring, they price the near-term bonds, the ones most likely to be caught in it or to face an imminent redemption the government cannot fund, far more harshly than distant maturities, which at least have time for a recovery or a restructuring to play out before they come due. An inverted sovereign curve, short yields far above long yields, is one of the sharpest, fastest-moving distress signals available, well before a rating agency downgrade or an IMF program announcement.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l1k012",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Stylised Sovereign Yield Curves: Stable vs Distressed (illustrative, not live market data)",
+              "xAxisLabel": "Maturity",
+              "yAxisLabel": "Yield (%)",
+              "data": [
+                { "_key": "c2l1k012d1", "label": "1Y", "value": 0 },
+                { "_key": "c2l1k012d2", "label": "3Y", "value": 0 },
+                { "_key": "c2l1k012d3", "label": "5Y", "value": 0 },
+                { "_key": "c2l1k012d4", "label": "10Y", "value": 0 },
+                { "_key": "c2l1k012d5", "label": "30Y", "value": 0 }
+              ],
+              "series": [
+                { "_key": "c2l1k012ser1", "label": "Stable EM Sovereign", "values": [5.5, 6.0, 6.3, 6.7, 7.0] },
+                { "_key": "c2l1k012ser2", "label": "Distressed Sovereign, Pre-Restructuring", "values": [45, 30, 22, 18, 16] }
+              ]
+            },
+            {
+              "_key": "c2l1k013",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Pakistan's USD bonds showed exactly this inverted shape at several points in 2022 and early 2023, with the shortest-dated maturities trading at deep distress-level yields while longer bonds priced in some chance of an eventual recovery. Reading only a single headline yield or a single spread number, instead of the full curve, would have missed the clearest signal available: the market was pricing a near-term liquidity and restructuring event specifically, not a slow, even deterioration in creditworthiness across the whole curve. Pakistan avoided default via an IMF Stand-By Arrangement in mid-2023."
+            },
+            {
+              "_key": "c2l1k014",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l1k014s1", "_type": "span", "text": "Global Risk-Off vs Idiosyncratic Risk: Decomposing a Spread Move", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l1k015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l1k015s1",
+                  "_type": "span",
+                  "text": "Sovereign spreads move for two very different reasons, and mistaking one for the other is a common and costly analytical error. A systemic, or beta, component moves nearly every emerging-market spread together, driven by US Fed policy surprises, a stronger dollar, or a spike in the VIX; this is risk aversion being repriced globally, largely unrelated to any single country's fiscal trajectory. An idiosyncratic, or alpha, component is specific to one country: an election result, a rating action, a finance minister's resignation, a fiscal reaction function visibly breaking down. Before treating a widening spread as a verdict on a specific country's fiscal path, the first question is always whether every other emerging market widened by a similar amount on the same day.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l1k016",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Systemic or Idiosyncratic?",
+              "scenario": "Over one trading week, India's 10-year G-Sec yield rises 15 basis points, while over the same week Indonesia's, Brazil's, and South Africa's local-currency 10-year yields rise by a similar 12 to 18 basis points each. The US 10-year Treasury yield rose 20 basis points over the same week after a hawkish Fed statement.",
+              "prompt": "Is this move telling you something specific about India's fiscal trajectory? What would change your answer?",
+              "modelAnswer": "On this evidence alone, no. A near-uniform move across India, Indonesia, Brazil, and South Africa, alongside a comparable rise in US Treasury yields following a hawkish Fed statement, points overwhelmingly to a systemic, beta-driven repricing of global risk-free rates and risk appetite, not an India-specific credit event. What would change the answer is a divergence: if India's yield rose 40 basis points while peers rose only 10 to 15, or if India's move persisted for weeks after the global rates move had already stabilised, that residual, idiosyncratic component would be worth investigating on its own terms."
+            },
+            {
+              "_key": "c2l1k017",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l1k017s1", "_type": "span", "text": "India's G-Sec Market: The Numbers Worth Knowing", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l1k018",
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "c2l1k018s1",
+                  "label": "10-Year G-Sec Yield (approx.)",
+                  "value": "~7.0%",
+                  "context": "The marginal yield on new benchmark issuance; not the same as the effective rate on the whole debt stock covered in Chapter 1"
+                },
+                {
+                  "_key": "c2l1k018s2",
+                  "label": "Average G-Sec Maturity",
+                  "value": "Close to 12 years",
+                  "context": "One reason India's effective interest rate reprices slowly after a yield shock"
+                },
+                {
+                  "_key": "c2l1k018s3",
+                  "label": "Fully Accessible Route (FAR)",
+                  "value": "No foreign ownership cap",
+                  "context": "Introduced March 2020, on a specified set of benchmark G-Secs; the general FPI route still caps foreign ownership of other G-Secs"
+                },
+                {
+                  "_key": "c2l1k018s4",
+                  "label": "GBI-EM Index Weight",
+                  "value": "Phasing to ~10% (max)",
+                  "context": "India's inclusion in JPMorgan's local-currency EM index began June 2024"
+                }
+              ]
+            },
+            {
+              "_key": "c2l1k019",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Check Your Understanding",
+              "question": "A sovereign's USD-denominated bond curve suddenly inverts: 2-year bonds yield 35%, while 10-year bonds yield only 14%. What does this shape most likely signal?",
+              "options": [
+                "The country's long-run growth outlook has improved significantly relative to the near term",
+                "The market expects a near-term default or restructuring event, and is pricing a much higher loss probability into the bonds that would be caught in it",
+                "The bond is simply illiquid and the pricing should be ignored",
+                "Interest rates globally are expected to fall sharply over the next two years"
+              ],
+              "correctIndex": 1,
+              "explanation": "An inverted sovereign credit curve, extreme short-dated yields far above long-dated ones, is the market's way of pricing a near-term restructuring or default event much more heavily than distant maturities, which have time for a recovery or a restructuring to resolve before they come due. This is exactly the shape seen in Pakistan's USD bonds at points in 2022 and early 2023, and in most sovereigns in the run-up to a default."
+            },
+            {
+              "_key": "c2l1k020",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l1k020s1", "_type": "span", "text": "A Field Checklist for Reading Any Sovereign Yield or Spread", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c2l1k021",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Before You Draw a Conclusion From a Sovereign Bond Yield",
+              "steps": [
+                "Identify whether you are looking at a hard-currency bond (spread over UST, close to pure credit and liquidity risk) or a local-currency bond (yield gap also embeds expected currency depreciation)",
+                "Pull the full curve across maturities, not just one headline yield; check specifically for inversion at the short end",
+                "Compare the move against a basket of peer sovereigns and the relevant risk-free benchmark on the same day, to separate systemic from idiosyncratic moves",
+                "Check whether the bond is a benchmark, heavily-traded issue or an off-the-run issue, since illiquidity alone can widen a quoted spread",
+                "Note any FPI or foreign-ownership restrictions on the specific bond, since a capped, less accessible market can trade at a different, less globally-arbitraged level",
+                "Cross-reference the yield-implied read against the CDS market and the credit rating, covered in the next two lessons, rather than relying on the bond market alone"
+              ]
+            },
+            {
+              "_key": "c2l1k022",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson explains how to read sovereign bond yields and spreads for educational purposes. It is not investment advice. Yield levels, index weights, and inclusion timelines cited here are approximate and change frequently; always verify against current RBI, JPMorgan index, and live market data before using a specific figure professionally."
+            },
+            {
+              "_key": "c2l1k023",
+              "_type": "keyTakeaways",
+              "points": [
+                "A nominal sovereign yield bundles five distinct components: the real risk-free rate, expected inflation, a term premium, a sovereign credit spread, and a liquidity premium",
+                "Hard-currency bond spreads (tracked by the EMBI) isolate credit and liquidity risk since the currency is matched; local-currency bond yields (tracked by the GBI-EM) also embed expected currency depreciation",
+                "An inverted sovereign yield curve, short yields far above long yields, is one of the fastest-moving signals of an expected near-term default or restructuring",
+                "Spread moves have both a systemic (global risk-off) and an idiosyncratic (country-specific) component; always check peer sovereigns before reading a widening spread as a verdict on one country alone",
+                "India runs an almost entirely rupee-denominated sovereign debt stock, and its Fully Accessible Route and 2024 JPMorgan GBI-EM inclusion are the specific mechanics behind its growing foreign local-currency investor base"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

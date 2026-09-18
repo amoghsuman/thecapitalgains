@@ -1,0 +1,215 @@
+{
+  "courseSlug": "understanding-optimization-theory-convex-optimization-and-lagrange-multipliers-for-portfolio-construction",
+  "chapters": [
+    {
+      "title": "Chapter 3: Unconstrained Optimization: Gradients, Hessians, and Critical Points",
+      "lessons": [
+        {
+          "title": "The Hessian Matrix and Second-Order Conditions",
+          "slug": "the-hessian-matrix-and-second-order-conditions",
+          "body": [
+            {
+              "_key": "oc3l3-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc3l3-001s1", "_type": "span", "marks": [], "text": "Last lesson classified two critical points informally, by eyeballing a diagonal Hessian and noticing a negative entry. Real objectives rarely arrive that conveniently. This lesson turns that eyeballing into an exact test: build the Hessian matrix properly, from any function with any number of cross terms, and read off whether a critical point is a minimum, a maximum, or a saddle, with no guessing involved." }
+              ]
+            },
+            {
+              "_key": "oc3l3-002",
+              "_type": "bigIdea",
+              "text": "The Hessian is the matrix of every second-order partial derivative. Its shape, whether it is positive definite, negative definite, or neither, tells you conclusively whether a critical point is a minimum, a maximum, or a saddle."
+            },
+            {
+              "_key": "oc3l3-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc3l3-003s1", "_type": "span", "marks": [], "text": "Building the Hessian Matrix" }
+              ]
+            },
+            {
+              "_key": "oc3l3-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc3l3-004s1", "_type": "span", "marks": [], "text": "The Hessian collects every second-order partial derivative of f into a single matrix. Entry (i, j) is the derivative of the gradient's i-th entry with respect to variable j. For any reasonably smooth function, the order of differentiation does not matter, the derivative with respect to x1 then x2 equals the derivative with respect to x2 then x1, which is exactly why the Hessian always comes out symmetric." }
+              ]
+            },
+            {
+              "_key": "oc3l3-005",
+              "_type": "mathBlock",
+              "latex": "H_f(\\mathbf{x})_{ij} = \\frac{\\partial^2 f}{\\partial x_i \\, \\partial x_j}",
+              "caption": "The general definition. An n-variable function has an n by n Hessian, always symmetric."
+            },
+            {
+              "_key": "oc3l3-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc3l3-006s1", "_type": "span", "marks": [], "text": "Every Hessian used so far in this course happened to be diagonal, with zero cross terms. That is a special case, not the general rule. Here is a function where the variables genuinely interact, f(x1, x2) = x1² + x1x2 + x2² - 3x1 - 3x2." }
+              ]
+            },
+            {
+              "_key": "oc3l3-007",
+              "_type": "mathBlock",
+              "latex": "\\frac{\\partial f}{\\partial x_1} = 2x_1 + x_2 - 3, \\qquad \\frac{\\partial f}{\\partial x_2} = x_1 + 2x_2 - 3",
+              "caption": "First-order conditions. Each partial derivative now involves both variables."
+            },
+            {
+              "_key": "oc3l3-008",
+              "_type": "mathBlock",
+              "latex": "2x_1 + x_2 = 3, \\quad x_1 + 2x_2 = 3 \\quad \\Rightarrow \\quad x_1 = 1, \\; x_2 = 1",
+              "caption": "Solving the two equations simultaneously gives the critical point (1, 1)."
+            },
+            {
+              "_key": "oc3l3-009",
+              "_type": "mathBlock",
+              "latex": "H_f = \\begin{bmatrix} 2 & 1 \\\\ 1 & 2 \\end{bmatrix}",
+              "caption": "Second derivatives: ∂²f/∂x1² = 2, ∂²f/∂x1∂x2 = 1, ∂²f/∂x2² = 2. Symmetric, as expected."
+            },
+            {
+              "_key": "oc3l3-010",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc3l3-010s1", "_type": "span", "marks": [], "text": "Classifying Critical Points via the Hessian's Definiteness" }
+              ]
+            },
+            {
+              "_key": "oc3l3-011",
+              "_type": "table",
+              "caption": "Hessian shape determines the critical point's identity",
+              "headers": ["Hessian Type", "2x2 Test (a = H11, det = H11H22 - H12²)", "Critical Point Is"],
+              "rows": [
+                { "_key": "oc3l3-011r1", "_type": "tableRow", "cells": ["Positive definite", "det > 0 and a > 0", "Local minimum"] },
+                { "_key": "oc3l3-011r2", "_type": "tableRow", "cells": ["Negative definite", "det > 0 and a < 0", "Local maximum"] },
+                { "_key": "oc3l3-011r3", "_type": "tableRow", "cells": ["Indefinite", "det < 0", "Saddle point"] },
+                { "_key": "oc3l3-011r4", "_type": "tableRow", "cells": ["Semi-definite (not definite)", "det = 0", "Inconclusive from this test alone"] }
+              ]
+            },
+            {
+              "_key": "oc3l3-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc3l3-012s1", "_type": "span", "marks": [], "text": "The Practical Determinant Test, Applied" }
+              ]
+            },
+            {
+              "_key": "oc3l3-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc3l3-013s1", "_type": "span", "marks": [], "text": "Apply the table above to the worked example's Hessian, [[2, 1], [1, 2]]." }
+              ]
+            },
+            {
+              "_key": "oc3l3-014",
+              "_type": "mathBlock",
+              "latex": "\\det(H_f) = (2)(2) - (1)^2 = 3 > 0, \\quad a = 2 > 0 \\quad \\Rightarrow \\quad \\text{positive definite} \\Rightarrow \\text{local minimum}",
+              "caption": "(1, 1) is confirmed as a local minimum by the determinant test."
+            },
+            {
+              "_key": "oc3l3-015",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Because this Hessian is a constant matrix, the same [[2, 1], [1, 2]] everywhere, this function is convex over its entire domain, not just locally near (1, 1). By Chapter 2's theorem, that local minimum is therefore also the global minimum, exactly the same pattern seen with portfolio variance's constant Hessian, 2Σ."
+            },
+            {
+              "_key": "oc3l3-016",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc3l3-016s1", "_type": "span", "marks": [], "text": "Revisiting Last Lesson's Saddle Point, Formally" }
+              ]
+            },
+            {
+              "_key": "oc3l3-017",
+              "_type": "mathBlock",
+              "latex": "H_f = \\begin{bmatrix} 2 & 0 \\\\ 0 & -2 \\end{bmatrix} \\quad \\Rightarrow \\quad \\det(H_f) = (2)(-2) - 0^2 = -4 < 0 \\quad \\Rightarrow \\quad \\text{indefinite} \\Rightarrow \\text{saddle point}",
+              "caption": "For f(x1, x2) = x1² - x2² from the previous lesson. The determinant test confirms, rather than just eyeballs, that the origin is a saddle."
+            },
+            {
+              "_key": "oc3l3-018",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc3l3-018s1", "_type": "span", "marks": [], "text": "Why This Confirms, Rather Than Replaces, Chapter 2's Convexity Test" }
+              ]
+            },
+            {
+              "_key": "oc3l3-019",
+              "_type": "callout",
+              "type": "insight",
+              "text": "For a function already known to be convex everywhere, like portfolio variance, this lesson's local test is not strictly necessary at each critical point, Chapter 2 already guarantees any critical point found is the global minimum. This test earns its keep for functions whose convexity is not already established globally, or as an exact, formal way to confirm what Chapter 2's guarantee predicted. Either way, the two chapters check the same underlying fact from two directions: a constant, positive semi-definite Hessian everywhere means convex everywhere means every critical point is global."
+            },
+            {
+              "_key": "oc3l3-020",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Classify the critical point",
+              "question": "A critical point has Hessian H = [[1, 3], [3, 1]]. What kind of critical point is this?",
+              "options": [
+                "Local minimum, since both diagonal entries are positive",
+                "Local maximum, since the off-diagonal entries are large",
+                "Saddle point, since the determinant, (1)(1) - (3)(3) = -8, is negative",
+                "Cannot be determined without knowing the function's values nearby"
+              ],
+              "correctIndex": 2,
+              "explanation": "The determinant test: det(H) = (1)(1) - (3)(3) = 1 - 9 = -8, negative. A negative determinant means the Hessian is indefinite, regardless of what the diagonal entries look like on their own, and an indefinite Hessian at a critical point always signals a saddle point. Positive diagonal entries alone are not enough to guarantee a minimum."
+            },
+            {
+              "_key": "oc3l3-021",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Full classification, start to finish",
+              "scenario": "You are given an unconstrained research objective: f(x1, x2) = 2x1² + 2x1x2 + 3x2² - 4x1 - 10x2.",
+              "prompt": "Find the critical point using the first-order conditions, then classify it using the Hessian determinant test.",
+              "modelAnswer": "First-order conditions: ∂f/∂x1 = 4x1 + 2x2 - 4 = 0 and ∂f/∂x2 = 2x1 + 6x2 - 10 = 0. Solving simultaneously gives x1 = 0.2 and x2 = 1.6. The Hessian is [[4, 2], [2, 6]], constant since this is a quadratic function. Its determinant is (4)(6) - (2)(2) = 24 - 4 = 20, positive, and the top-left entry, 4, is also positive, so the Hessian is positive definite. The critical point (0.2, 1.6) is a local minimum, and since the Hessian is constant and positive definite everywhere, it is the global minimum too."
+            },
+            {
+              "_key": "oc3l3-022",
+              "_type": "flashcardSet",
+              "title": "The Hessian and Second-Order Conditions: Core Terms",
+              "cards": [
+                { "_key": "oc3l3-022f1", "term": "Hessian matrix", "definition": "The matrix of every second-order partial derivative of a function. Always symmetric for smooth functions." },
+                { "_key": "oc3l3-022f2", "term": "Positive definite", "definition": "xᵀHx > 0 for every non-zero vector x. At a critical point, signals a local (and for globally convex functions, global) minimum." },
+                { "_key": "oc3l3-022f3", "term": "Negative definite", "definition": "xᵀHx < 0 for every non-zero vector x. At a critical point, signals a local maximum." },
+                { "_key": "oc3l3-022f4", "term": "Indefinite", "definition": "xᵀHx is positive for some x and negative for others. At a critical point, signals a saddle point." },
+                { "_key": "oc3l3-022f5", "term": "2x2 determinant test", "definition": "For H = [[a, b], [b, d]]: det(H) = ad - b². det > 0 with a > 0 gives positive definite (minimum); det > 0 with a < 0 gives negative definite (maximum); det < 0 gives indefinite (saddle)." }
+              ]
+            },
+            {
+              "_key": "oc3l3-023",
+              "_type": "keyTakeaways",
+              "points": [
+                "The Hessian is built from every second-order partial derivative, H_ij = ∂²f/∂xi∂xj, and is always symmetric for smooth functions.",
+                "For a 2x2 Hessian, the determinant and the sign of the top-left entry together classify a critical point exactly: positive definite means minimum, negative definite means maximum, indefinite (negative determinant) means saddle.",
+                "A constant Hessian that is positive definite everywhere means the function is convex everywhere, so any critical point is automatically the global minimum, tying directly back to Chapter 2's central guarantee.",
+                "Positive diagonal entries alone do not guarantee a minimum. The determinant must also be checked, since large off-diagonal terms can flip a Hessian to indefinite.",
+                "Chapter 3 has now built the full unconstrained toolkit: gradients, first-order conditions, and second-order conditions via the Hessian. Chapter 4 adds the missing piece, constraints, starting with Lagrange multipliers."
+              ]
+            },
+            {
+              "_key": "oc3l3-024",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to buy or sell any security. The functions used in the worked examples are mathematical illustrations for practicing the Hessian classification method, not real portfolio models. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

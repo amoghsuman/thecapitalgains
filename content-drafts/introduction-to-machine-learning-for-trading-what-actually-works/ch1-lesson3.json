@@ -1,0 +1,195 @@
+{
+  "courseSlug": "introduction-to-machine-learning-for-trading-what-actually-works",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Most \"ML for Trading\" Content Gets It Wrong",
+      "lessons": [
+        {
+          "title": "Data Leakage and Look-Ahead Bias: The Silent Killer of ML Trading Models",
+          "slug": "data-leakage-and-look-ahead-bias-the-silent-killer-of-ml-trading-models",
+          "body": [
+            {
+              "_key": "mlt3-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt3-001s1", "_type": "span", "marks": [], "text": "A quant researcher builds a model that predicts whether an NSE-listed stock will jump after its quarterly results, using reported EPS as a feature. In backtesting, it is spectacular, matching each quarter's EPS to that quarter's calendar end date and predicting the following price move with striking accuracy. He deploys it live and it performs no better than a coin flip. The bug took him a week to find: he had matched each quarter's EPS to the last calendar date of that quarter, not to the date the result was actually announced. Indian listed companies can report results up to 45 days after a quarter ends, and up to 60 days after the financial year ends, under Regulation 33 of SEBI's LODR Regulations, 2015. For weeks after each quarter closed, his model was training on an EPS figure that would not become public until much later. It was not predicting the future. It had simply been shown the answer before the test." }
+              ]
+            },
+            {
+              "_key": "mlt3-002",
+              "_type": "bigIdea",
+              "text": "Data leakage happens when information that would not actually have been available at the moment of a trading decision sneaks into your training or feature data. A leaky model does not look broken, it looks brilliant. Backtest accuracy climbs, the equity curve looks smooth, and everything about the code runs without error. The leak only reveals itself once the model trades on real, unseen data, where the future information it was quietly relying on is no longer available." }
+            ,
+            {
+              "_key": "mlt3-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt3-003s1", "_type": "span", "marks": [], "text": "Look-Ahead Bias: Using Information You Didn't Have Yet" }
+              ]
+            },
+            {
+              "_key": "mlt3-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "mlt3-004m1", "_type": "glossaryTerm", "definition": "A form of data leakage where a feature or label is built using information that would not actually have been publicly available at the historical point in time it is assigned to." }
+              ],
+              "children": [
+                { "_key": "mlt3-004s1", "_type": "span", "marks": [], "text": "The EPS example above is a textbook case of " },
+                { "_key": "mlt3-004s2", "_type": "span", "marks": ["mlt3-004m1"], "text": "look-ahead bias" },
+                { "_key": "mlt3-004s3", "_type": "span", "marks": [], "text": ": data is timestamped by the period it describes rather than the date it actually became public. Fundamental data is the most common place this happens in Indian markets, since results, credit rating changes, and corporate announcements all have a public disclosure date that lags the period they describe, sometimes by weeks. But it also shows up in price data. Free sources like yfinance and NSEpy typically serve adjusted closing prices, retroactively corrected for stock splits and bonus issues across the entire historical series. That adjustment is genuinely useful for calculating long-run returns correctly, but if you are not careful about when a split or bonus was actually announced versus applying the adjustment silently to bars from before that announcement, a feature can end up encoding a corporate action the market did not know about yet." }
+              ]
+            },
+            {
+              "_key": "mlt3-005",
+              "_type": "callout",
+              "type": "warning",
+              "text": "The rule that catches most look-ahead bias: every feature must be timestamped by the date the information became public, not the date or period it describes. If you cannot say precisely when a data point would have been known to a trader sitting at their desk that day, you cannot safely use it as a feature for that day."
+            },
+            {
+              "_key": "mlt3-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt3-006s1", "_type": "span", "marks": [], "text": "Target Leakage: When a Feature Secretly Contains the Answer" }
+              ]
+            },
+            {
+              "_key": "mlt3-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "mlt3-007m1", "_type": "glossaryTerm", "definition": "A form of data leakage where a feature is built, directly or indirectly, from the same future information the model is trying to predict, so the model appears to learn a pattern when it has really just been given the answer." }
+              ],
+              "children": [
+                { "_key": "mlt3-007s2", "_type": "span", "marks": ["mlt3-007m1"], "text": "Target leakage" },
+                { "_key": "mlt3-007s3", "_type": "span", "marks": [], "text": " is more subtle. It happens when a feature is calculated using data from the same bar, or a later bar, than the one the label describes. The obvious version, using tomorrow's trading volume as a feature to predict tomorrow's price move, is easy to catch once you know to look for it. The subtle version is a rolling calculation done carelessly. A 5-day moving average computed with a centered window uses two bars before and two bars after the point in question, quietly baking a small amount of the future into what looks like an ordinary historical indicator. It passes every visual sanity check on a chart and still leaks." }
+              ]
+            },
+            {
+              "_key": "mlt3-008",
+              "_type": "codeBlock",
+              "language": "python",
+              "caption": "A centered rolling window is a common, easy-to-miss leak",
+              "code": "import pandas as pd\n\n# df has one row per NSE trading day, sorted by date, with a 'close' column\n\n# LEAKY: a centered window uses 2 bars from the future on every calculation\ndf[\"leaky_ma5\"] = df[\"close\"].rolling(5, center=True).mean()\n\n# LEAKY: the label for 'tomorrow's return' accidentally used as a feature\ndf[\"future_close\"] = df[\"close\"].shift(-1)\ndf[\"target_return\"] = df[\"future_close\"] / df[\"close\"] - 1\n# using df[\"future_close\"] anywhere in your feature set leaks the label directly\n\n# SAFE: only ever use data up to and including today\ndf[\"safe_ma5\"] = df[\"close\"].rolling(5).mean().shift(1)\n# the .shift(1) ensures today's row only sees data through yesterday's close"
+            },
+            {
+              "_key": "mlt3-009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt3-009s1", "_type": "span", "marks": [], "text": "Survivorship Bias: Backtesting Only the Winners" }
+              ]
+            },
+            {
+              "_key": "mlt3-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt3-010s1", "_type": "span", "marks": [], "text": "Pull today's list of Nifty 50 constituents and backtest a strategy on those 50 stocks over the past ten years, and you have already leaked information: you selected the universe using knowledge of which companies survived and stayed large enough to remain in the index. Companies that were removed from the Nifty 50 over that decade, whether from poor performance, a scam coming to light, or simply falling below the index's size and liquidity cutoffs, are silently excluded. Since removal from a major index is correlated with bad stock performance, this quietly deletes many of the worst outcomes from your historical data before your model ever sees them, inflating backtested returns. A properly built backtest uses point-in-time index membership, the actual constituent list as it existed on each historical date, including stocks that later got delisted or dropped out." }
+              ]
+            },
+            {
+              "_key": "mlt3-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt3-011s1", "_type": "span", "marks": [], "text": "The k-Fold Trap: Why Random Cross-Validation Breaks on Time Series" }
+              ]
+            },
+            {
+              "_key": "mlt3-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt3-012s1", "_type": "span", "marks": [], "text": "Most introductory ML courses teach you to split data randomly into train and test sets, or to use k-fold cross-validation, which also shuffles data before splitting it into folds. Applied to time-ordered market data, this is a leak by construction. A random split can easily put a Tuesday from March in the training set and the preceding Monday in the test set, meaning the model is allowed to train on the future and then get evaluated on predicting the past, something no live trading strategy could ever do. The validation score this produces is not just optimistic, it is measuring a task that does not correspond to real trading at all. The fix, and the entire subject of Chapter 2 of this course, is to always split and validate time series data in chronological order, using tools built for this such as scikit-learn's TimeSeriesSplit, or a full walk-forward validation setup." }
+              ]
+            },
+            {
+              "_key": "mlt3-013",
+              "_type": "table",
+              "caption": "Four leakage traps and how to close them",
+              "headers": ["Leakage Type", "What Goes Wrong", "The Fix"],
+              "rows": [
+                { "_key": "mlt3-013r1", "cells": ["Look-ahead bias", "A feature uses data not yet public at the decision date, such as EPS matched to quarter-end instead of the announcement date", "Timestamp every feature by when it actually became public, not the period it describes"] },
+                { "_key": "mlt3-013r2", "cells": ["Target leakage", "A feature is derived from or overlaps with the same or a future bar as the label", "Trace every feature's calculation back to confirm it uses only past and present bars, never future ones"] },
+                { "_key": "mlt3-013r3", "cells": ["Survivorship bias", "The backtest universe is built from today's index constituents, silently excluding delisted or dropped stocks", "Use point-in-time index membership and include delisted stocks in the historical universe"] },
+                { "_key": "mlt3-013r4", "cells": ["Random k-fold leakage", "Shuffling time-ordered data before splitting lets the model train on the future and get tested on the past", "Use time-ordered splits only: TimeSeriesSplit or walk-forward validation"] }
+              ]
+            },
+            {
+              "_key": "mlt3-014",
+              "_type": "keyFact",
+              "label": "How many of these four traps typically throw a code error",
+              "value": "Zero",
+              "context": "The code runs fine every time. None of these leaks announce themselves, they just quietly inflate your backtest until live results tell the truth."
+            },
+            {
+              "_key": "mlt3-015",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Naming the leak",
+              "question": "A researcher builds a feature called quarter_eps by matching each trading day to that quarter's reported EPS, using the value as of the quarter's calendar end date rather than the date the result was actually announced. What is the primary risk here?",
+              "options": [
+                "None, EPS is a legitimate fundamental feature",
+                "Look-ahead bias, since Indian listed companies can report results up to 45 days after a quarter ends under SEBI LODR Regulation 33, meaning the model sees the number before it was ever public",
+                "Survivorship bias, since EPS only exists for currently listed companies",
+                "Target leakage, since EPS is identical to the model's prediction target"
+              ],
+              "correctIndex": 1,
+              "explanation": "This is look-ahead bias. The feature is timestamped by the period it describes (the quarter) rather than the date it actually became public (up to 45 days later under SEBI's LODR framework). For weeks after each quarter, the model is trained on a number that a real trader at their desk on that date would not have had access to."
+            },
+            {
+              "_key": "mlt3-016",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Spot the leak in this validation setup",
+              "scenario": "A trader builds a classifier on five years of daily NSE stock data and validates it using scikit-learn's train_test_split with shuffle=True, getting 74% validation accuracy. Live, the same model performs close to random.",
+              "prompt": "What is wrong with this validation approach, and what should replace it?",
+              "modelAnswer": "Shuffling time-ordered data before splitting breaks the chronology: some training rows end up dated after some test rows, so the model can effectively train on the future and get evaluated on predicting the past. This inflates validation accuracy in a way that has nothing to do with real predictive skill, because a live strategy can never see tomorrow's data while trading today. The fix is to always split time series data chronologically, training only on earlier dates and testing only on strictly later dates, using a tool like scikit-learn's TimeSeriesSplit or a full walk-forward validation setup, so the validation process mirrors how the model would actually be used."
+            },
+            {
+              "_key": "mlt3-017",
+              "_type": "flashcardSet",
+              "title": "Data Leakage: Core Terms",
+              "cards": [
+                { "_key": "mlt3-017f1", "term": "Data leakage", "definition": "Any situation where information that would not actually have been available at the time of a trading decision ends up influencing a model's training or features, inflating backtest performance in a way that does not survive live trading." },
+                { "_key": "mlt3-017f2", "term": "Look-ahead bias", "definition": "A form of data leakage where a feature or label is built using information that would not actually have been publicly available at the historical point in time it is assigned to." },
+                { "_key": "mlt3-017f3", "term": "Target leakage", "definition": "A form of data leakage where a feature is built, directly or indirectly, from the same future information the model is trying to predict." },
+                { "_key": "mlt3-017f4", "term": "Survivorship bias", "definition": "Backtesting on only the securities that still exist or remain in an index today, silently excluding the historical failures and delistings that would have dragged down real historical performance." },
+                { "_key": "mlt3-017f5", "term": "Walk-forward validation", "definition": "A testing method that trains a model on one period, tests it only on the following unseen period, then rolls the window forward and repeats, closely mimicking real trading." }
+              ]
+            },
+            {
+              "_key": "mlt3-018",
+              "_type": "keyTakeaways",
+              "points": [
+                "Data leakage is information that would not actually have been available at the time of a trading decision, quietly influencing a model's training or features.",
+                "A leaky model does not look broken. It looks excellent, right up until it trades on genuinely unseen, live data.",
+                "Look-ahead bias comes from timestamping data by the period it describes instead of the date it actually became public, fundamental data like quarterly EPS is especially prone to this given India's up to 45-day results reporting window under SEBI's LODR Regulation 33.",
+                "Target leakage comes from features that are built, directly or subtly, from the same or future bars as the label, centered rolling windows are a classic, easy-to-miss example.",
+                "Survivorship bias comes from backtesting only stocks that still exist or remain in an index today, silently excluding the historical failures that would have dragged down real performance.",
+                "Shuffling time-ordered data before a train-test split, including standard k-fold cross-validation, lets a model train on the future and get tested on the past. Always validate market data in chronological order."
+              ]
+            },
+            {
+              "_key": "mlt3-019",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice. Code examples are simplified for illustration and are not production-ready. Regulatory timelines cited, such as SEBI's LODR results reporting windows, are presented as publicly reported and are subject to amendment; always verify current requirements against SEBI's official regulations before relying on them. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

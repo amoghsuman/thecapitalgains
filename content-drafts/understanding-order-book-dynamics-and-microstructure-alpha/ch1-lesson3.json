@@ -1,0 +1,289 @@
+{
+  "courseSlug": "understanding-order-book-dynamics-and-microstructure-alpha",
+  "chapters": [
+    {
+      "title": "Chapter 1: Foundations of the Limit Order Book",
+      "lessons": [
+        {
+          "title": "Order Types on NSE and BSE and How Each One Interacts With the Book",
+          "slug": "order-types-on-nse-and-bse-and-how-each-one-interacts-with-the-book",
+          "body": [
+            {
+              "_key": "obl3b01",
+              "_type": "bigIdea",
+              "text": "Choosing an order type is not just choosing buy or sell. It is choosing whether you take liquidity from the book or add to it, whether you control price or control certainty of fill, and that choice changes your cost on every single trade."
+            },
+            {
+              "_key": "obl3b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obl3b02s1",
+                  "_type": "span",
+                  "text": "Two Kinds of Orders: Aggressive and Passive",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obl3b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "obl3m01",
+                  "_type": "glossaryTerm",
+                  "definition": "An order that immediately crosses the spread and removes resting liquidity from the book, guaranteeing a fill but not a price. Market orders and marketable limit orders are both aggressive."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "obl3b03s1",
+                  "_type": "span",
+                  "text": "Every order you place on the NSE or BSE falls into one of two roles relative to the book from the last lesson. An ",
+                  "marks": []
+                },
+                {
+                  "_key": "obl3b03s2",
+                  "_type": "span",
+                  "text": "aggressive order",
+                  "marks": ["obl3m01"]
+                },
+                {
+                  "_key": "obl3b03s3",
+                  "_type": "span",
+                  "text": " crosses the spread and takes whatever is resting on the opposite side, immediately, at the cost of giving up price control. A passive order rests on the book at a price you choose, waiting for someone else's aggressive order to come and fill it, at the cost of giving up certainty that it fills at all. Every order type NSE and BSE support is really just a different combination of these two roles, plus rules about when the order activates and how long it stays alive.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obl3b04",
+              "_type": "table",
+              "caption": "How each order type behaves relative to the book",
+              "headers": ["Order Type", "Price Control", "Fill Certainty", "Role in the Book"],
+              "rows": [
+                { "_key": "obl3b04r1", "_type": "tableRow", "cells": ["Market", "None", "High, limited only by available depth", "Aggressive, removes liquidity"] },
+                { "_key": "obl3b04r2", "_type": "tableRow", "cells": ["Limit (not marketable)", "Full", "Conditional on price being reached", "Passive, adds liquidity"] },
+                { "_key": "obl3b04r3", "_type": "tableRow", "cells": ["SL-M", "None once triggered", "High once triggered", "Dormant, then aggressive"] },
+                { "_key": "obl3b04r4", "_type": "tableRow", "cells": ["SL (Stop-Loss Limit)", "Full once triggered", "Conditional once triggered", "Dormant, then passive or aggressive"] },
+                { "_key": "obl3b04r5", "_type": "tableRow", "cells": ["IOC", "Full", "Partial or none, unfilled part cancels", "Aggressive only, never rests"] }
+              ]
+            },
+            {
+              "_key": "obl3b05",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obl3b05s1",
+                  "_type": "span",
+                  "text": "Market Orders and Limit Orders, Revisited",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obl3b06",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obl3b06s1",
+                  "_type": "span",
+                  "text": "A market order is the purest aggressive order: no price is specified, it simply takes the best available price and keeps walking the book until the full quantity is filled, exactly the mechanism that produced the slippage in the earlier Reliance example. A limit order is the purest passive order when it is not marketable, meaning its price does not cross the current spread. A buy limit at ₹2,449.90, below the best ask in the previous lesson's snapshot, does not fill immediately. It joins the bid side of the book at that price, behind every other order already resting there at ₹2,449.90 or better.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obl3b07",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "obl3m02",
+                  "_type": "glossaryTerm",
+                  "definition": "The rule NSE and BSE use to decide which resting order gets filled first when a new aggressive order arrives at a given price: better prices are matched first, and among orders at the same price, whichever arrived earliest is matched first."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "obl3b07s1",
+                  "_type": "span",
+                  "text": "Where exactly that order sits in the queue at ₹2,449.90 matters, because Indian exchanges fill resting orders using strict ",
+                  "marks": []
+                },
+                {
+                  "_key": "obl3b07s2",
+                  "_type": "span",
+                  "text": "price-time priority",
+                  "marks": ["obl3m02"]
+                },
+                {
+                  "_key": "obl3b07s3",
+                  "_type": "span",
+                  "text": ": better prices are always matched first, and among orders sitting at the identical price, whichever order arrived first is filled first. A limit order placed a fraction of a second after another trader's identical order queues strictly behind it, and gets nothing until that earlier order is fully filled or cancelled. This is a large part of why speed matters even to participants who are not doing anything that looks like high-frequency trading, simply being earlier in the queue at a good price changes your odds of getting filled at all.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obl3b08",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obl3b08s1",
+                  "_type": "span",
+                  "text": "Stop-Loss Orders: Dormant Until Triggered",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obl3b09",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obl3b09s1",
+                  "_type": "span",
+                  "text": "A stop-loss order sits outside the book entirely until the market touches a trigger price you set, then converts into either a market order, called SL-M on NSE, or a limit order at a price you also set, called SL on NSE and shown as Stop Loss on most broker terminals including Kite. The order type you choose here has real consequences. An SL-M order guarantees it will activate and fill once triggered, but in a fast-moving or thin stock the fill price after activation can be meaningfully worse than the trigger price itself, since by the time the order reaches the book as a market order, the price may already have moved further. An SL limit order caps how bad that fill can be, at the real risk that if the price gaps straight past your limit, the order never fills at all and the position stays open.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obl3b10",
+              "_type": "callout",
+              "type": "warning",
+              "text": "A stop-loss order is not a guarantee of the price you will exit at, it is a guarantee of when the order activates. In an illiquid stock that gaps down sharply, an SL-M order can fill several percent below the trigger price, and an SL limit order can fail to fill at all. Position sizing and stock selection for liquidity both matter more than the stop-loss order type itself."
+            },
+            {
+              "_key": "obl3b11",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obl3b11s1",
+                  "_type": "span",
+                  "text": "IOC and Disclosed Quantity: Controlling How Much the Book Sees",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obl3b12",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obl3b12s1",
+                  "_type": "span",
+                  "text": "A regular limit order defaults to Day validity on NSE and BSE, meaning it stays on the book until filled or cancelled or the trading session ends, whichever comes first. An IOC, Immediate or Cancel, order instead demands to be matched the instant it reaches the exchange, fills whatever quantity it can against the resting book, and automatically cancels anything left unfilled rather than letting it rest even for a moment. Algorithmic and prop desks use IOC heavily precisely because it never exposes resting size to the rest of the market, which matters when the fact that you are trying to buy or sell at all is itself information other participants could act on.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obl3b13",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "obl3b13s1",
+                  "_type": "span",
+                  "text": "A disclosed quantity, or DQ, order solves a related problem for a genuinely large order that does need to rest. Instead of showing the full size to every other participant reading the depth screen, a DQ order on NSE reveals only a portion, by exchange rule at least 10% of the total order quantity, and automatically refreshes that visible slice from the hidden remainder as each disclosed portion gets filled. This is India's native version of what global markets call an iceberg order, the exact behavior flagged as a risk to watch for in the previous lesson: what you see resting in the book is sometimes only a fraction of what is actually there.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "obl3b14",
+              "_type": "flashcardSet",
+              "title": "Order Type Quick Reference",
+              "cards": [
+                {
+                  "_key": "obl3b14c1",
+                  "term": "Market Order",
+                  "definition": "Buys or sells immediately at the best available price. Guarantees a fill, not a price; walks the book if size exceeds top-level depth."
+                },
+                {
+                  "_key": "obl3b14c2",
+                  "term": "Limit Order",
+                  "definition": "Buys at or below, or sells at or above, a set price. Guarantees a price if filled; rests on the book in price-time priority if not immediately marketable."
+                },
+                {
+                  "_key": "obl3b14c3",
+                  "term": "SL-M (Stop-Loss Market)",
+                  "definition": "Dormant until the trigger price is touched, then becomes a market order. Guarantees activation and a fill, not the fill price."
+                },
+                {
+                  "_key": "obl3b14c4",
+                  "term": "SL (Stop-Loss Limit)",
+                  "definition": "Dormant until triggered, then becomes a limit order at a price you set. Caps the fill price, at the risk of not filling if price gaps past it."
+                },
+                {
+                  "_key": "obl3b14c5",
+                  "term": "IOC (Immediate or Cancel)",
+                  "definition": "Fills whatever it can immediately and cancels the rest instantly rather than resting. Never exposes size to the book."
+                },
+                {
+                  "_key": "obl3b14c6",
+                  "term": "Disclosed Quantity (DQ) Order",
+                  "definition": "A large limit order that shows only part, at least 10% on NSE, of its size at a time, refreshing the visible slice as it fills. India's native iceberg order."
+                }
+              ]
+            },
+            {
+              "_key": "obl3b15",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Picking the Right Order Type",
+              "question": "You are holding a position in a fast-moving, moderately liquid stock and want an exit order that is certain to activate the instant your stop level is touched, even if that means accepting a worse fill price during a sharp move. Which order type fits best?",
+              "options": [
+                "A plain limit order at your stop level",
+                "SL-M (Stop-Loss Market)",
+                "SL (Stop-Loss Limit) at your exact stop level",
+                "An IOC order placed manually once the stop level is touched"
+              ],
+              "correctIndex": 1,
+              "explanation": "SL-M guarantees activation at the trigger and converts to a market order, which will fill even through a sharp move, at the cost of price control. A plain limit order never triggers at all. An SL limit order can fail to fill if price gaps past the limit, which directly contradicts the requirement to be certain the exit activates. Manually placing an IOC order depends on the trader reacting in time, which defeats the purpose of an automated stop."
+            },
+            {
+              "_key": "obl3b16",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "The Gap-Down Stop-Loss",
+              "scenario": "A trader holds a position in a mid-cap NSE stock with an SL-M order set to trigger if the price falls to ₹410. Overnight, unexpected negative news breaks, and the stock opens the next session at ₹385, already well below the trigger level, in a thin book with wide gaps between price levels.",
+              "prompt": "What will the SL-M order actually do in this situation, and roughly what fill price should the trader expect? Would an SL limit order at ₹410 have produced a better outcome here?",
+              "modelAnswer": "Since the stock opens below ₹410, the SL-M order triggers immediately at the open and becomes a market order, which then walks whatever thin book exists near the ₹385 open, likely filling at or even somewhat below ₹385 rather than anywhere near the ₹410 trigger. The order guaranteed activation and a fill, exactly as designed, but not a price anywhere close to the intended stop level. An SL limit order at ₹410 would not have helped here and would likely have been worse: since the stock never traded anywhere near ₹410 after the gap, the limit order would simply never fill, leaving the trader still holding the position with no protection at all. The real lesson is that no order type protects against an overnight gap through a stop level, only position sizing and avoiding excessive overnight exposure in thin names do that."
+            },
+            {
+              "_key": "obl3b17",
+              "_type": "keyTakeaways",
+              "points": [
+                "Every order type is a combination of an aggressive or passive role in the book, plus rules for when it activates and how long it stays live",
+                "Market orders guarantee a fill, not a price; limit orders guarantee a price if filled, not that they fill at all",
+                "Price-time priority means being earlier in the queue at a given price genuinely improves your odds of getting filled, independent of price",
+                "SL-M guarantees activation and eventual fill after triggering but not the fill price; SL limit caps the fill price at the risk of never filling",
+                "No stop-loss order type protects against an overnight gap through the trigger level, since the order can only act on prices the market actually reaches",
+                "IOC orders never rest and never expose size; disclosed quantity orders reveal only a required minimum slice of a large resting order, India's version of an iceberg order"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

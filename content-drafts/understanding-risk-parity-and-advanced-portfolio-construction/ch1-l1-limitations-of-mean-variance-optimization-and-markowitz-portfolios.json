@@ -1,0 +1,336 @@
+{
+  "courseSlug": "understanding-risk-parity-and-advanced-portfolio-construction",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Traditional Portfolio Construction Fails",
+      "lessons": [
+        {
+          "title": "Limitations of Mean-Variance Optimization and Markowitz Portfolios",
+          "slug": "limitations-of-mean-variance-optimization-and-markowitz-portfolios",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "b1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b1s1", "text": "If you have worked through Markowitz mean-variance optimization before, you know the pitch. Feed the optimizer your expected returns, your variances, and your covariances, and it hands back the one portfolio on the efficient frontier that gives you the most return for a given level of risk. It sounds like a solved problem. It is not. This lesson is about why the cleanest idea in portfolio theory is also, in practice, one of the most fragile, and why an entire branch of portfolio construction, risk parity, exists specifically to route around its weakest point.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b2s1", "text": "The Promise: An Optimizer That Knows Best", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b3",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b3s1", "text": "The Markowitz problem is a clean piece of mathematics. You choose portfolio weights that minimize variance for a target level of expected return, or equivalently, that maximize a risk-adjusted objective balancing return against variance. Every input feels reasonable to ask for: how much do you expect each asset to return, how volatile is each asset, and how do assets move together.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "mathBlock",
+              "_key": "b4",
+              "latex": "\\max_{w} \\; w^{T}\\mu - \\frac{\\lambda}{2} w^{T}\\Sigma w \\quad \\text{subject to} \\quad \\sum_i w_i = 1",
+              "caption": "The mean-variance objective. w is the vector of portfolio weights, mu is the vector of expected returns, Sigma is the covariance matrix, and lambda controls how much the optimizer penalizes risk relative to return."
+            },
+            {
+              "_type": "block",
+              "_key": "b5",
+              "style": "normal",
+              "markDefs": [
+                { "_type": "glossaryTerm", "_key": "gt1", "definition": "A vector or matrix input to a model whose true value is unknown and must be estimated from historical data." }
+              ],
+              "children": [
+                { "_type": "span", "_key": "b5s1", "text": "Everything about this equation is exact once you know mu and Sigma. The problem, and it is not a small one, is that you never know them. You only ever have ", "marks": [] },
+                { "_type": "span", "_key": "b5s2", "text": "estimates", "marks": ["gt1"] },
+                { "_type": "span", "_key": "b5s3", "text": " of them, built from a finite, noisy slice of NSE trading history. Everything that follows in this lesson is about what happens when you feed a mathematically precise optimizer statistically imprecise inputs.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b6",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b6s1", "text": "Error Maximization: Why the Optimizer Amplifies Your Mistakes", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b7",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b7s1", "text": "The finance researcher Richard Michaud called mean-variance optimizers 'estimation-error maximizers,' and the label has stuck for good reason. An optimizer does not know which of your inputs are reliable and which are noise. It treats every number you give it as gospel truth. So if a stock's expected return is overestimated even slightly, and its risk or correlation with the rest of the portfolio is underestimated even slightly, the optimizer does not shrug that off. It leans into the mistake and piles weight into exactly that stock, because on paper, that stock now looks like the best risk-adjusted bet in the portfolio.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "b8",
+              "type": "insight",
+              "text": "A widely cited study by Chopra and Ziemba (1993) found that errors in expected return assumptions hurt realized portfolio performance roughly ten times more than similarly sized errors in variance estimates, and roughly twenty times more than errors in covariance estimates. The part of mean-variance optimization that is hardest to estimate accurately, expected returns, is also the part the optimizer is most sensitive to."
+            },
+            {
+              "_type": "statGrid",
+              "_key": "b9",
+              "stats": [
+                { "label": "Relative damage from a return-estimate error", "value": "~10x", "context": "Compared to a similarly sized error in variance, per Chopra and Ziemba (1993)" },
+                { "label": "Relative damage from a covariance-estimate error", "value": "~20x less", "context": "Covariance errors matter, but far less than return errors" },
+                { "label": "Inputs an N-asset MVO problem needs", "value": "N means + N(N+1)/2 covariances", "context": "For 20 assets, that is 20 return forecasts and 210 covariance terms, every one of them estimated" }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b10",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b10s1", "text": "Case Study: A Small Nudge, a Completely Different Portfolio", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b11",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b11s1", "text": "Here is an illustrative example built to show the mechanism, not a real backtest. Say you run an unconstrained mean-variance optimization across five Nifty 50 names: Reliance Industries, HDFC Bank, Infosys, TCS, and ICICI Bank, using five years of estimated volatility and correlation and a set of expected annual return assumptions you built from your own research.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "b12",
+              "caption": "Illustrative MVO weights, run 1 (original return assumptions)",
+              "headers": ["Stock", "Assumed expected return", "Optimizer weight"],
+              "rows": [
+                { "cells": ["Reliance Industries", "13.0%", "18%"] },
+                { "cells": ["HDFC Bank", "15.0%", "22%"] },
+                { "cells": ["Infosys", "14.0%", "15%"] },
+                { "cells": ["TCS", "12.5%", "10%"] },
+                { "cells": ["ICICI Bank", "14.5%", "35%"] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b13",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b13s1", "text": "Now nudge just one assumption. You revise HDFC Bank's expected return upward by half a percentage point, from 15.0% to 15.5%, because a recent management commentary made you slightly more optimistic. Every other input, every variance, every correlation, every other stock's expected return, stays exactly the same.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "b14",
+              "caption": "Illustrative MVO weights, run 2 (HDFC Bank's assumed return nudged from 15.0% to 15.5%, nothing else changed)",
+              "headers": ["Stock", "Assumed expected return", "Optimizer weight"],
+              "rows": [
+                { "cells": ["Reliance Industries", "13.0%", "5%"] },
+                { "cells": ["HDFC Bank", "15.5%", "61%"] },
+                { "cells": ["Infosys", "14.0%", "8%"] },
+                { "cells": ["TCS", "12.5%", "4%"] },
+                { "cells": ["ICICI Bank", "14.5%", "22%"] }
+              ]
+            },
+            {
+              "_type": "chart",
+              "_key": "b15",
+              "chartType": "bar",
+              "title": "Weight swing from a 50 basis point nudge to one return assumption (illustrative)",
+              "xAxisLabel": "Stock",
+              "yAxisLabel": "Optimizer weight (%)",
+              "data": [
+                { "label": "Reliance", "value": 18 },
+                { "label": "HDFC Bank", "value": 22 },
+                { "label": "Infosys", "value": 15 },
+                { "label": "TCS", "value": 10 },
+                { "label": "ICICI Bank", "value": 35 }
+              ],
+              "series": [
+                { "label": "Run 1 (original)", "values": [18, 22, 15, 10, 35] },
+                { "label": "Run 2 (HDFC Bank +50bps)", "values": [5, 61, 8, 4, 22] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "b16",
+              "type": "disclaimer",
+              "text": "The weights above are a constructed teaching example designed to demonstrate optimizer sensitivity, not a real backtest or a recommendation on any of the named stocks. The direction of the effect, small input change, large weight swing, is the real and well documented phenomenon. The exact numbers are illustrative."
+            },
+            {
+              "_type": "block",
+              "_key": "b17",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b17s1", "text": "HDFC Bank's weight nearly tripled. Reliance Industries and TCS were cut by more than half, even though nothing about their own return, risk, or correlation assumptions changed at all. A half percentage point revision to one input, well within the range of normal estimation noise, reshuffled the entire portfolio. If your annual return forecast for a large-cap bank could plausibly be off by half a percentage point in either direction, and it almost certainly could be, then this instability is not an edge case. It is the typical behaviour of the model.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b18",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b18s1", "text": "Corner Solutions: When the Optimizer Bets the House", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b19",
+              "style": "normal",
+              "markDefs": [
+                { "_type": "glossaryTerm", "_key": "gt2", "definition": "An optimization outcome where the solution sits at the edge of the allowed range, such as a portfolio weight hitting 0% or a maximum cap, rather than settling at an interior value." }
+              ],
+              "children": [
+                { "_type": "span", "_key": "b19s1", "text": "Left unconstrained, mean-variance optimizers routinely produce ", "marks": [] },
+                { "_type": "span", "_key": "b19s2", "text": "corner solutions", "marks": ["gt2"] },
+                { "_type": "span", "_key": "b19s3", "text": ": large positive weights in a handful of names the model considers 'best,' large negative (short) weights in names it considers 'worst,' and near-zero weights everywhere else. That is a mathematically valid answer to the equation. It is not a portfolio a real risk desk would run, and it is definitely not what a retail investor building a diversified core holding wants.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b20",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b20s1", "text": "The standard fix is to add constraints: no short selling, a cap on any single position, sector limits. That does make the output more usable, but it does not fix the underlying problem, it just hides it. The optimizer still wants the extreme, concentrated answer. Constraints stop it from fully expressing that preference, but the weights still tend to pile up against whichever caps you set, and a small change in return assumptions can still flip which names hit those caps.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "comparison",
+              "_key": "b21",
+              "title": "Unconstrained vs Constrained Mean-Variance Optimization",
+              "columns": [
+                {
+                  "label": "Unconstrained MVO",
+                  "points": [
+                    "Can produce large short positions and extreme concentration",
+                    "Mathematically 'optimal' given the inputs, practically unusable for most portfolios",
+                    "Fully exposes how sensitive the solution is to estimation error"
+                  ]
+                },
+                {
+                  "label": "Constrained MVO (no shorts, position caps, sector limits)",
+                  "points": [
+                    "Produces a portfolio that is at least implementable",
+                    "Still tends to pile weight against whichever caps you impose",
+                    "Masks the estimation-error problem rather than solving it"
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b22",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b22s1", "text": "The N vs T Problem: Running Out of History to Estimate a Big Covariance Matrix", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b23",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b23s1", "text": "There is a second, purely statistical problem sitting underneath the return-forecasting one. A covariance matrix for N assets has N(N+1)/2 distinct entries: N variances plus all the pairwise covariances. For 50 stocks, that is 1,275 numbers you need to estimate, every one of them from historical data that itself contains estimation noise.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "keyFact",
+              "_key": "b24",
+              "label": "Covariance parameters needed for a 50-stock Nifty portfolio",
+              "value": "1,275",
+              "context": "N(N+1)/2 with N=50. Five years of daily NSE trading gives you roughly 1,225 return observations, fewer data points than parameters you are trying to estimate."
+            },
+            {
+              "_type": "block",
+              "_key": "b25",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b25s1", "text": "When the number of parameters you are estimating starts to approach or exceed the number of observations you have, the estimated covariance matrix becomes numerically unstable, and in the extreme case, it can become singular, meaning it cannot even be inverted, which the optimizer's solution requires. Widening the estimation window to get more data points helps, but only by trading one problem for another: older return data is less relevant to how the stock behaves today, especially for anything that has gone through a business model shift, a promoter change, or simply years of India's own market structure evolving.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b26",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b26s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "codeBlock",
+              "_key": "b27",
+              "language": "python",
+              "code": "import numpy as np\n\n# Illustrative 3-asset example. Replace with your own NSE daily return series.\ncov = np.array([\n    [0.040, 0.015, 0.010],\n    [0.015, 0.035, 0.012],\n    [0.010, 0.012, 0.030],\n])\n\ndef mvo_weights(mu, cov):\n    # Unconstrained tangency-style weights, normalized to sum to 1.\n    # Normalizing cancels out the risk-aversion scale factor, so it\n    # never needs to be passed in explicitly.\n    inv_cov = np.linalg.inv(cov)\n    ones = np.ones(len(mu))\n    raw = inv_cov @ mu\n    return raw / (ones @ raw)\n\nmu_original = np.array([0.13, 0.15, 0.145])\nmu_nudged   = np.array([0.13, 0.155, 0.145])  # only the middle asset moved, by 50bps\n\nw1 = mvo_weights(mu_original, cov)\nw2 = mvo_weights(mu_nudged, cov)\n\nprint('Weights before nudge:', np.round(w1, 3))\nprint('Weights after nudge: ', np.round(w2, 3))\nprint('Max absolute weight change:', np.round(np.max(np.abs(w2 - w1)), 3))",
+              "caption": "Run this with your own covariance matrix estimated from real NSE daily returns, and try nudging just one expected return by 0.5%. You will consistently see weight swings far larger than the size of the nudge itself, which is the estimation-error maximization problem showing up directly in your own numbers."
+            },
+            {
+              "_type": "exercise",
+              "_key": "b28",
+              "variant": "scenario",
+              "title": "The Intern's Dilemma",
+              "scenario": "You are interning on a prop desk. You run an unconstrained mean-variance optimization on a 15-stock NSE universe using your own return forecasts, and the optimizer returns a portfolio with a 45% weight in a single midcap stock and small negative weights in three large-cap names. Your desk head asks whether this is a portfolio worth deploying capital into.",
+              "prompt": "What would you check before answering, and what does this lesson suggest is actually going wrong here?",
+              "modelAnswer": "The 45% concentration in one midcap name and the short positions in large caps are classic corner-solution symptoms of an unconstrained MVO reacting to estimation error, not a genuine, robust insight about that midcap stock. Before deploying anything, you would want to check how sensitive that 45% weight is to small perturbations in your return forecast for that one stock (if a 20 to 50 basis point change flips the portfolio, the signal is not reliable), examine whether the covariance matrix is well conditioned given how much history you used relative to the number of assets, and consider whether a constrained or risk-based approach would produce a more stable, deployable answer."
+            },
+            {
+              "_type": "exercise",
+              "_key": "b29",
+              "variant": "quiz",
+              "title": "Quick Check",
+              "question": "Why did nudging HDFC Bank's expected return by just 0.5% in the case study cause Reliance Industries' weight to fall from 18% to 5%, even though nothing about Reliance's own inputs changed?",
+              "options": [
+                "Reliance Industries and HDFC Bank are in the same sector, so the optimizer applies an automatic sector cap",
+                "The optimizer reallocates capital across the whole portfolio to rebalance toward whichever asset now looks best on a risk-adjusted basis, which can move every other weight even when only one input changed",
+                "Rounding errors in the calculation caused the discrepancy",
+                "SEBI position limits forced the reduction in Reliance Industries' weight"
+              ],
+              "correctIndex": 1,
+              "explanation": "Mean-variance optimization is a joint, whole-portfolio calculation. Because weights must sum to 100%, making one asset look more attractive necessarily means every other asset's optimal weight is recalculated relative to it, even assets whose own inputs never changed. This interconnectedness is exactly what makes the optimizer so sensitive to small errors in any single input."
+            },
+            {
+              "_type": "block",
+              "_key": "b30",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b30s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "b31",
+              "text": "Mean-variance optimization is not broken math, it is exact math fed inexact inputs. Expected returns are the hardest input to estimate and the one the optimizer is most sensitive to, which is why small, ordinary forecasting errors can produce wildly different, unstable, and often unusable portfolios. Every alternative in this course, starting with risk parity, is best understood as a specific strategy for reducing how much the portfolio depends on getting expected returns right in the first place."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "b32",
+              "points": [
+                "Mean-variance optimization needs N expected returns and N(N+1)/2 covariance terms, and every one of them is an estimate, not a known truth.",
+                "Michaud's 'estimation-error maximizer' critique holds up empirically: Chopra and Ziemba (1993) found return-estimate errors hurt realized performance roughly ten times more than variance errors and roughly twenty times more than covariance errors.",
+                "A change in a single return assumption, well within normal forecasting noise, can dramatically reshuffle every weight in the portfolio, not just the weight of the asset that changed.",
+                "Unconstrained optimizers tend toward corner solutions: concentrated longs and short positions. Constraints make the output usable but do not fix the underlying instability, they just hide it behind position caps.",
+                "With many assets and limited return history, the number of covariance parameters to estimate can approach or exceed the number of data points available, making the matrix itself statistically unstable.",
+                "The next lesson introduces risk budgeting, the first step toward portfolio construction methods, including risk parity, that reduce or eliminate the need to forecast returns at all."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

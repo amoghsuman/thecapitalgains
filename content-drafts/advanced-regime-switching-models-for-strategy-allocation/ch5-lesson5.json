@@ -1,0 +1,220 @@
+{
+  "courseSlug": "advanced-regime-switching-models-for-strategy-allocation",
+  "chapters": [
+    {
+      "title": "Chapter 5: Regime-Conditional Strategy Design",
+      "lessons": [
+        {
+          "title": "Building a Regime-Strategy Compatibility Matrix",
+          "slug": "building-a-regime-strategy-compatibility-matrix",
+          "body": [
+            {
+              "_key": "rswc5l5b01",
+              "_type": "bigIdea",
+              "text": "One matrix, one lookup, four strategy weights. Everything this chapter has built collapses into a single reference table that answers 'what deserves weight right now' for any regime reading."
+            },
+            {
+              "_key": "rswc5l5b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc5l5b02s1",
+                  "_type": "span",
+                  "text": "Lesson 1 diagnosed the conflict between momentum and mean reversion. Lesson 2 resolved it with a trend-based blend. Lesson 3 tested that blend against the familiar 2020 to 2022 arc. Lesson 4 applied the identical logic to options selling and buying, driven by the volatility dimension instead. This lesson combines both into one compatibility matrix, using Chapter 2's own regime grid as the backbone.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc5l5b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc5l5b03s1",
+                  "_type": "span",
+                  "text": "Combining Two Dimensions Into One Matrix",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc5l5b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc5l5b04s1",
+                  "_type": "span",
+                  "text": "Chapter 2's Lesson 1 built a regime grid from a trend flag and a volatility flag: Calm Uptrend, Volatile Whipsaw, Range-Bound Chop, and Panic Selloff. Every strategy weight in this chapter has quietly been keyed to one or the other of those two flags: momentum and mean reversion track the trend flag, options selling and buying track the volatility flag. Laying all four strategies against all four regimes in a single table makes that structure explicit.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc5l5b05",
+              "_type": "table",
+              "caption": "The regime-strategy compatibility matrix, combining Lessons 2 and 4",
+              "headers": ["Regime", "Momentum", "Mean Reversion", "Vol Selling", "Vol Buying"],
+              "rows": [
+                {
+                  "_key": "rswc5l5b05r1",
+                  "_type": "tableRow",
+                  "cells": ["Calm Uptrend", "0.85", "0.15", "0.90", "0.10"]
+                },
+                {
+                  "_key": "rswc5l5b05r2",
+                  "_type": "tableRow",
+                  "cells": ["Volatile Whipsaw", "0.45", "0.55", "0.30", "0.70"]
+                },
+                {
+                  "_key": "rswc5l5b05r3",
+                  "_type": "tableRow",
+                  "cells": ["Range-Bound Chop", "0.20", "0.80", "0.75", "0.25"]
+                },
+                {
+                  "_key": "rswc5l5b05r4",
+                  "_type": "tableRow",
+                  "cells": ["Panic Selloff", "0.70", "0.30", "0.10", "0.90"]
+                }
+              ]
+            },
+            {
+              "_key": "rswc5l5b06",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc5l5b06s1",
+                  "_type": "span",
+                  "text": "Read down any column and you are reading one strategy's weight across all four regimes. Read across any row and you are reading a full regime's strategy mix. Both views matter: the columns tell a strategy owner when their edge should be running hot or cold, the rows tell a portfolio manager how to allocate across the whole book on any given day.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc5l5b07",
+              "_type": "chart",
+              "chartType": "bar",
+              "title": "Strategy Weights During a Panic Selloff Regime",
+              "xAxisLabel": "Strategy",
+              "yAxisLabel": "Weight",
+              "data": [
+                { "_key": "rswc5l5b07d1", "label": "Momentum", "value": 0.70 },
+                { "_key": "rswc5l5b07d2", "label": "Mean Reversion", "value": 0.30 },
+                { "_key": "rswc5l5b07d3", "label": "Vol Selling", "value": 0.10 },
+                { "_key": "rswc5l5b07d4", "label": "Vol Buying", "value": 0.90 }
+              ]
+            },
+            {
+              "_key": "rswc5l5b08",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc5l5b08s1",
+                  "_type": "span",
+                  "text": "Reading the Matrix: Four Strategies, Not One Winner",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc5l5b09",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc5l5b09s1",
+                  "_type": "span",
+                  "text": "Notice that no cell in the matrix goes to zero, and no regime hands 100% of the book to a single strategy. Even in a Panic Selloff, momentum still carries a real 0.70 weight, because a confirmed panic is itself a strong trend, just a downward one, and vol buying dominates without erasing everything else. The matrix does not pick a winner for each regime. It sets a weighting vector across the entire strategy book, which is a fundamentally different, more robust object than a switch that flips between four discrete states.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc5l5b10",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This is the real deliverable of Chapter 5. Not four separate strategies plus a rule for picking one, but a single, continuously updating weighting vector across all four, driven by two independent regime signals the previous chapters already know how to estimate."
+            },
+            {
+              "_key": "rswc5l5b11",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc5l5b11s1",
+                  "_type": "span",
+                  "text": "What's Still Missing: Total Capital, Not Just Mix",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc5l5b12",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc5l5b12s1",
+                  "_type": "span",
+                  "text": "This matrix answers how to split capital across four strategies within a regime. It does not answer how much total capital to deploy across all of them in the first place. Lesson 2's confidence-scaled exposure rule made a start on that question for a single dimension. Chapter 6 builds the full answer: dynamic leverage, risk budgeting across strategies that may draw on shared capital, and what happens when several strategies want to size up or down at the same time.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc5l5b13",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Building Your Own Compatibility Matrix",
+              "steps": [
+                "List every strategy currently running in your book and identify which regime dimension, trend or volatility, its edge primarily depends on",
+                "For each strategy, estimate a rough weight at the two extremes of its relevant dimension, for example 'near-zero in a panic, near-full size in a calm trend'",
+                "Interpolate a reasonable weight for the intermediate regimes, using Lesson 2's linear blending logic as a starting template rather than inventing a new rule for each cell",
+                "Cross-check every row: does any regime accidentally hand 100% weight to one strategy, or zero weight to all of them? Both are signs the matrix needs revisiting",
+                "Treat the resulting matrix as a hypothesis, not a conclusion, and route it through Chapter 7's backtesting discipline before sizing real positions off it"
+              ]
+            },
+            {
+              "_key": "rswc5l5b14",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why No Cell Goes to Zero",
+              "question": "In this lesson's compatibility matrix, why does momentum still receive a 0.70 weight during a Panic Selloff, rather than being switched off in favor of a pure vol-buying stance?",
+              "options": [
+                "It is a copying error; momentum should be zero during any panic",
+                "A confirmed panic selloff is itself a strong downward trend, so momentum, expressed as short exposure betting on continuation, still has a real edge; the matrix blends strategies rather than switching between them",
+                "Momentum weights never change regardless of regime, by construction",
+                "Vol buying and momentum are actually the same strategy in disguise"
+              ],
+              "correctIndex": 1,
+              "explanation": "The matrix reuses Lesson 2's insight from the momentum-versus-mean-reversion table: a confirmed panic decline is a genuine trend, and momentum, meaning trend-following short exposure, tends to fare better than early mean reversion in that setting. The matrix's job is to weight, not to switch, which is exactly why no cell collapses to zero."
+            },
+            {
+              "_key": "rswc5l5b15",
+              "_type": "keyTakeaways",
+              "points": [
+                "The compatibility matrix combines the trend-based weighting from Lessons 2 and 3 with the volatility-based weighting from Lesson 4 into a single reference table keyed to Chapter 2's four-regime grid",
+                "Reading down a column shows one strategy's weight across regimes; reading across a row shows a full regime's strategy mix",
+                "No regime in the matrix hands full weight to a single strategy, reflecting that regime probabilities are estimates, not certainties, and that momentum still has a real edge even in a confirmed downward trend like Panic Selloff",
+                "The matrix answers strategy mix within a regime, not total capital deployed across the book, which Chapter 6 addresses directly",
+                "A compatibility matrix built this way is a hypothesis about strategy fit, not a validated allocation rule, and needs the same backtesting discipline as any other component of this course before it drives real capital"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

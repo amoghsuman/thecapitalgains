@@ -1,0 +1,285 @@
+{
+  "courseSlug": "understanding-pairs-trading-concepts-and-cointegration",
+  "chapters": [
+    {
+      "title": "Chapter 1: The Idea of Pairs Trading",
+      "lessons": [
+        {
+          "title": "What Is Pairs Trading? Betting on a Relationship, Not a Direction",
+          "slug": "what-is-pairs-trading-betting-on-a-relationship-not-a-direction",
+          "body": [
+            {
+              "_key": "p1-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p1-001s1", "_type": "span", "marks": [], "text": "HDFC Bank and ICICI Bank sit near the top of the Nifty 50 by weight. Both take deposits from the same Indian household base, lend into the same corporate and retail credit cycle, and reprice their books off the same RBI repo rate. On most days their share prices drift in the same direction, for the same broad reasons. Then, every so often, they do not. HDFC Bank slides on a one-off provisioning surprise while ICICI Bank barely moves, or a large FII block deal hits one stock and leaves the other untouched. A pairs trader watching that moment is not trying to guess whether HDFC Bank recovers, or whether the Nifty rallies next week. She is asking one narrow question: will the usual tight relationship between these two banks reassert itself? That question, not a forecast of the market, is what pairs trading is built around." }
+              ]
+            },
+            {
+              "_key": "p1-002",
+              "_type": "bigIdea",
+              "text": "Pairs trading is not a bet on whether a stock or the market goes up or down. It is a bet that two related securities, whose prices normally move together, will snap back to their usual relationship after a temporary gap opens between them. One leg is bought, the other is sold short, so that a broad market move affects both sides in a similar way and mostly cancels out."
+            },
+            {
+              "_key": "p1-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p1-003s1", "_type": "span", "marks": [], "text": "Two Legs, One Trade: The Basic Structure" }
+              ]
+            },
+            {
+              "_key": "p1-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "p1-004m1", "_type": "glossaryTerm", "definition": "A position built from offsetting long and short holdings, so its return depends on the relationship between the two positions rather than on the direction of the broader market." }
+              ],
+              "children": [
+                { "_key": "p1-004s1", "_type": "span", "marks": [], "text": "A pairs trade always has two legs. You go long the stock you expect to outperform and short the stock you expect to underperform, sized so that the rupee exposure on each side is roughly equal. This makes the position " },
+                { "_key": "p1-004s2", "_type": "span", "marks": ["p1-004m1"], "text": "market neutral" },
+                { "_key": "p1-004s3", "_type": "span", "marks": [], "text": ": if the Nifty rallies 2 percent tomorrow, both legs tend to rise together and the gain on the long roughly offsets the loss on the short. Your profit or loss instead comes from the gap between the two stocks narrowing or widening, which is a much narrower and more specific bet than \"the market goes up\" or \"the market goes down.\"" }
+              ]
+            },
+            {
+              "_key": "p1-005",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p1-005s1", "_type": "span", "marks": [], "text": "This is fundamentally different from how most retail investing is taught. Value investing, momentum investing, and most technical analysis strategies are directional: you form a view on where a single stock or the index is headed, and you buy or sell accordingly. Get the direction right and you make money; get it wrong and you lose money, regardless of how sound your reasoning was. A pairs trade sidesteps that question almost entirely. You do not need to know whether banking stocks as a sector go up or down over the next month. You only need the gap between two specific, related banks to close." }
+              ]
+            },
+            {
+              "_key": "p1-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p1-006s1", "_type": "span", "marks": [], "text": "Why HDFC Bank and ICICI Bank Move Together" }
+              ]
+            },
+            {
+              "_key": "p1-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p1-007s1", "_type": "span", "marks": [], "text": "Both stocks belong to the Nifty Bank index and are held in overwhelming numbers by the same mutual funds, insurance companies, and FIIs. Both are private sector lenders competing for the same urban retail deposit and credit card customer, exposed to the same RBI monetary policy cycle, and reporting quarterly results that the market reads as a signal for the whole private banking space. When one reports a strong quarter, analysts often revisit their estimates for the other on the same day. This shared exposure is why their prices have historically tracked each other closely over long stretches, and why a pairs trader treats them as a natural candidate pair, rather than picking two unrelated stocks like a pharma company and a cement maker." }
+              ]
+            },
+            {
+              "_key": "p1-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p1-008s1", "_type": "span", "marks": [], "text": "The relationship is never perfectly stable day to day. A surprise in asset quality at one bank, a management commentary that spooks the street, or a large block deal can push one stock ahead of the other for a few days or weeks without the underlying shared story actually changing. A pairs trader tracks the size of this gap, usually as a price ratio or a regression-based spread (the exact construction is covered in Chapter 2), and looks for moments when it has stretched unusually wide relative to its own recent history." }
+              ]
+            },
+            {
+              "_key": "p1-009",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "HDFC Bank vs ICICI Bank, indexed prices (illustrative)",
+              "xAxisLabel": "Trading week",
+              "yAxisLabel": "Indexed price (Week 1 = 100)",
+              "data": [
+                { "_key": "p1-009d1", "label": "1" },
+                { "_key": "p1-009d2", "label": "2" },
+                { "_key": "p1-009d3", "label": "3" },
+                { "_key": "p1-009d4", "label": "4" },
+                { "_key": "p1-009d5", "label": "5" },
+                { "_key": "p1-009d6", "label": "6" },
+                { "_key": "p1-009d7", "label": "7" },
+                { "_key": "p1-009d8", "label": "8" },
+                { "_key": "p1-009d9", "label": "9" },
+                { "_key": "p1-009d10", "label": "10" },
+                { "_key": "p1-009d11", "label": "11" },
+                { "_key": "p1-009d12", "label": "12" }
+              ],
+              "series": [
+                {
+                  "_key": "p1-009se1",
+                  "label": "HDFC Bank (indexed)",
+                  "values": [100, 99, 97, 93, 90, 88, 90, 93, 96, 98, 99, 100]
+                },
+                {
+                  "_key": "p1-009se2",
+                  "label": "ICICI Bank (indexed)",
+                  "values": [100, 100, 101, 101, 102, 103, 102, 101, 101, 100, 100, 100]
+                }
+              ]
+            },
+            {
+              "_key": "p1-010",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Notice HDFC Bank drifts well below ICICI Bank between Week 3 and Week 6, then closes most of the gap by Week 11. A pairs trade opened near Week 5, long HDFC Bank and short ICICI Bank, would have profited mainly from that gap narrowing, regardless of whether the Nifty itself rose or fell over those twelve weeks."
+            },
+            {
+              "_key": "p1-011",
+              "_type": "keyFact",
+              "label": "A simple ₹10 lakh pairs trade",
+              "value": "₹5 lakh long HDFC Bank, ₹5 lakh short ICICI Bank",
+              "context": "Sized so a 1% move in the Nifty affects both legs by a similar rupee amount, leaving the P&L driven mainly by the gap between the two bank stocks, not by the market"
+            },
+            {
+              "_key": "p1-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p1-012s1", "_type": "span", "marks": [], "text": "Pairs Trading vs a Directional Bet" }
+              ]
+            },
+            {
+              "_key": "p1-013",
+              "_type": "comparison",
+              "title": "Buying Nifty futures vs a pairs trade",
+              "columns": [
+                {
+                  "_key": "p1-013c1",
+                  "label": "Directional trade: long Nifty futures",
+                  "points": [
+                    "Profits only if the index rises",
+                    "A broad market fall loses money even if your sector view was correct",
+                    "Requires a view on interest rates, FII flows, global cues, and dozens of other market-wide factors",
+                    "Simple to execute, but exposed to everything happening in the market at once"
+                  ]
+                },
+                {
+                  "_key": "p1-013c2",
+                  "label": "Pairs trade: long HDFC Bank, short ICICI Bank",
+                  "points": [
+                    "Profits if the gap between the two banks narrows, in a rising, falling, or flat market",
+                    "Broad market moves largely cancel out between the two legs",
+                    "Requires a narrower view: that this specific relationship has stretched and should revert",
+                    "Needs two legs, a hedge ratio, and ongoing monitoring of the spread"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "p1-014",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p1-014s1", "_type": "span", "marks": [], "text": "Why the Relationship Can Break, Not Just Bend" }
+              ]
+            },
+            {
+              "_key": "p1-015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p1-015s1", "_type": "span", "marks": [], "text": "Nothing forces two stocks to keep moving together. HDFC Bank and ICICI Bank have tracked each other for years, but a permanent shift, such as one bank losing meaningful market share in retail credit cards, or a large-scale merger changing one company's balance sheet structure entirely (as happened when HDFC Bank merged with its parent HDFC Ltd in 2023), can change the relationship for good. A pairs trade is a probability-weighted bet that a historically observed pattern continues to hold. It is not a guaranteed profit the way true arbitrage, buying gold in one city and simultaneously selling it in another at a higher price net of costs, would be." }
+              ]
+            },
+            {
+              "_key": "p1-016",
+              "_type": "callout",
+              "type": "warning",
+              "text": "The single biggest way a pairs trade loses money is not the market falling. It is the gap continuing to widen after you have already entered the trade, or the relationship breaking down permanently instead of reverting. Chapter 3 covers how to formally test whether a relationship is strong enough to trade in the first place, using cointegration, and Chapter 4 covers what to do when a position moves against you."
+              }
+            ,
+            {
+              "_key": "p1-017",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p1-017s1", "_type": "span", "marks": [], "text": "What You Need Before You Trade a Pair" }
+              ]
+            },
+            {
+              "_key": "p1-018",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p1-018s1", "_type": "span", "marks": [], "text": "Running a pairs trade used to require an institutional desk and a direct market access line. That barrier has fallen. Broker APIs such as Zerodha's Kite Connect give retail traders and prop desks programmatic access to live NSE and BSE data and order placement, and free historical price data makes it possible to test a relationship before risking capital. A site like screener.in is a practical way to shortlist same-sector stocks, such as private banks or FMCG names, as candidate pairs. What has not changed is the regulatory boundary: SEBI's algorithmic trading framework requires order-placing strategies above certain thresholds to be tagged, and in many cases approved, through your broker, a topic covered in Chapter 4. Over the next three chapters, you will build a spread and a trading signal out of two stocks (Chapter 2), learn the formal statistical test, cointegration, that separates a real pairs trade from two stocks that just happened to move together for a while (Chapter 3), and then screen for, size, and manage a live pair from entry to exit (Chapter 4)." }
+              ]
+            },
+            {
+              "_key": "p1-019",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "p1-019s1", "label": "Legs in a classic pairs trade", "value": "2 (one long, one short)", "context": "The simplest market-neutral structure. Some desks extend this to baskets of many pairs" },
+                { "_key": "p1-019s2", "label": "Net market exposure of a well-hedged pair", "value": "~0 beta", "context": "The long and short legs are sized so a broad Nifty move affects both sides similarly and cancels out" },
+                { "_key": "p1-019s3", "label": "What actually breaks the trade", "value": "Relationship divergence", "context": "Not a market crash. A pair can lose money in a flat or rising market if the gap keeps widening" },
+                { "_key": "p1-019s4", "label": "What is needed before trading a pair", "value": "A formally tested relationship", "context": "Correlation alone is not enough. Chapter 3 covers cointegration testing, the real bar for tradeability" }
+              ]
+            },
+            {
+              "_key": "p1-020",
+              "_type": "toolLink",
+              "label": "Screen NSE stocks by sector on screener.in",
+              "url": "https://www.screener.in",
+              "description": "A practical starting point for shortlisting same-sector stocks (private banks, FMCG, autos) as candidate pairs, before testing them formally in Chapter 3."
+            },
+            {
+              "_key": "p1-021",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Directional or market neutral?",
+              "question": "A trader buys 100 shares of Reliance Industries on NSE because she expects the Nifty 50 to rally over the next month. Is this a pairs trade?",
+              "options": [
+                "Yes, because it involves a large, liquid NSE stock",
+                "No, because it is a directional bet on the market's direction, not a relationship between two securities",
+                "Yes, because Reliance is a heavyweight in the Nifty 50 index",
+                "No, because pairs trades can only be built using futures and options"
+              ],
+              "correctIndex": 1,
+              "explanation": "A pairs trade requires a market-neutral structure built from a long position and an offsetting short position in two related securities, so that broad market direction cancels out. A single directional stock purchase, however well reasoned, is a directional trade, not a pairs trade."
+            },
+            {
+              "_key": "p1-022",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Is this actually a pairs trade?",
+              "scenario": "A friend tells you he is \"pairs trading\" because he buys Nifty Bank futures whenever the index looks oversold on the RSI, and exits once it recovers.",
+              "prompt": "Is this actually a pairs trade? What is missing from his description of the strategy?",
+              "modelAnswer": "No, this is a directional, mean-reversion trade on a single index using a technical indicator, not a pairs trade. It has no offsetting short leg in a second, related security, so his returns depend entirely on the direction of the Nifty Bank index. A real pairs trade needs two related instruments, held long and short in a sized ratio, so the profit comes from the gap between them narrowing, not from either one moving up or down on its own."
+            },
+            {
+              "_key": "p1-023",
+              "_type": "flashcardSet",
+              "title": "Pairs Trading: Core Terms",
+              "cards": [
+                { "_key": "p1-023f1", "term": "Pairs trade", "definition": "A market-neutral trade that goes long one stock and short a related stock, aiming to profit when a temporarily stretched relationship between the two converges back to normal." },
+                { "_key": "p1-023f2", "term": "Market neutral", "definition": "A position built from offsetting long and short holdings so its return depends on the relationship between the positions, not on the direction of the broader market." },
+                { "_key": "p1-023f3", "term": "Spread", "definition": "The measured gap, often a price ratio or a regression-based difference, between two related securities that a pairs trader tracks for divergence and convergence." },
+                { "_key": "p1-023f4", "term": "Candidate pair", "definition": "Two stocks, usually from the same sector or with shared economic exposure, that a trader shortlists for further statistical testing before trading them as a pair." },
+                { "_key": "p1-023f5", "term": "Divergence risk", "definition": "The risk that a spread widens further after a trade is entered, or that the underlying relationship breaks down permanently instead of converging." }
+              ]
+            },
+            {
+              "_key": "p1-024",
+              "_type": "keyTakeaways",
+              "points": [
+                "Pairs trading is a market-neutral strategy: long one stock, short a related stock, sized so broad market moves largely cancel out.",
+                "The profit comes from the gap between two related stocks, like HDFC Bank and ICICI Bank, narrowing back toward its usual relationship, not from predicting market direction.",
+                "This is fundamentally different from directional strategies like buying Nifty futures, which need the whole market or sector to move a certain way to profit.",
+                "Two stocks move together because of shared exposure, sector, interest rate cycle, investor base, not because of any guarantee that the relationship holds forever.",
+                "The biggest risk is not a market crash. It is the gap continuing to widen, or the relationship breaking down for good, which is why Chapter 3 introduces cointegration, the formal test for whether a relationship is strong enough to trade.",
+                "Broker APIs like Zerodha's Kite Connect and screening tools like screener.in have made pairs trading far more accessible, but SEBI's algorithmic trading framework still governs how these strategies can be run in India."
+              ]
+            },
+            {
+              "_key": "p1-025",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice or a recommendation to buy, sell, or short any security named here. All price figures and charts are illustrative and do not represent actual historical data. Pairs trading carries real risk of loss and requires compliance with SEBI's algorithmic trading regulations before being deployed with real capital. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

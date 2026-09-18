@@ -1,0 +1,210 @@
+{
+  "courseSlug": "introduction-to-statistical-arbitrage",
+  "chapters": [
+    {
+      "title": "Chapter 7: From Pairs to Factors",
+      "lessons": [
+        {
+          "title": "What Is a Factor? From Single Pairs to Systematic Signals",
+          "slug": "what-is-a-factor-from-single-pairs-to-systematic-signals",
+          "body": [
+            {
+              "_key": "sa25-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa25-001s1", "_type": "span", "marks": [], "text": "Every pair in this course, Maruti Suzuki and Mahindra & Mahindra, HDFC Bank and ICICI Bank, ACC and Ambuja Cements, Bajaj Auto and Hero MotoCorp, was chosen by hand, tested individually, and traded as a single relationship. That is a completely reasonable way to run a small, carefully curated book. It is not how systematic quant desks actually operate at scale. This lesson makes the conceptual jump from one hand-picked pair to the broader idea sitting underneath it the whole time: the factor." }
+              ]
+            },
+            {
+              "_key": "sa25-002",
+              "_type": "bigIdea",
+              "text": "A pairs trade is really a special case of a broader idea: a factor, a systematic rule that assigns a numeric score to every stock, or every relationship, in a universe, based on some measurable characteristic believed to predict relative performance. Scaling from one scored relationship to many, all at once, is what turns a hand-picked trade into a systematic strategy."
+            },
+            {
+              "_key": "sa25-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa25-003s1", "_type": "span", "marks": [], "text": "The Pair Was Always a Special Case" }
+              ]
+            },
+            {
+              "_key": "sa25-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa25-004s1", "_type": "span", "marks": [], "text": "Every z-score this course has computed was, underneath the specific mechanics, doing one job: assigning a single number to a relationship, describing how stretched it currently is relative to its own history. Nothing about that job description actually requires there to be only one pair. The same underlying logic, score something, rank it, act on the extremes, generalizes cleanly to many stocks or many pairs scored at once, which is exactly what a factor is." }
+              ]
+            },
+            {
+              "_key": "sa25-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa25-005s1", "_type": "span", "marks": [], "text": "What a Factor Actually Is" }
+              ]
+            },
+            {
+              "_key": "sa25-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "sa25-006m1", "_type": "glossaryTerm", "definition": "A systematic rule for scoring every stock in a universe on some characteristic, and then acting on the ranking, typically going long the stocks that score well and short the ones that score poorly." }
+              ],
+              "children": [
+                { "_key": "sa25-006s1", "_type": "span", "marks": [], "text": "In the broader quant equity world, a " },
+                { "_key": "sa25-006s2", "_type": "span", "marks": ["sa25-006m1"], "text": "factor" },
+                { "_key": "sa25-006s3", "_type": "span", "marks": [], "text": " is a systematic rule for scoring every stock in a universe on some characteristic, and then acting on the ranking, typically going long the stocks that score well and short the ones that score poorly, or the reverse, depending on what the factor is designed to capture. Several factor families are well established." }
+              ]
+            },
+            {
+              "_key": "sa25-007",
+              "_type": "table",
+              "caption": "Well-known factor families",
+              "headers": ["Factor", "What it scores stocks on"],
+              "rows": [
+                { "_key": "sa25-007r1", "_type": "tableRow", "cells": ["Value", "How cheap a stock is relative to its fundamentals (earnings, book value, cash flow)"] },
+                { "_key": "sa25-007r2", "_type": "tableRow", "cells": ["Momentum", "Whether a stock's recent price trend has been strongly positive or negative"] },
+                { "_key": "sa25-007r3", "_type": "tableRow", "cells": ["Quality", "Profitability, balance sheet strength, and earnings stability"] },
+                { "_key": "sa25-007r4", "_type": "tableRow", "cells": ["Size", "Market capitalization, smaller vs larger companies"] },
+                { "_key": "sa25-007r5", "_type": "tableRow", "cells": ["Relative value / mean-reversion", "How stretched a stock's price is relative to a peer group or historical pattern, the family this entire course has been building"] }
+              ]
+            },
+            {
+              "_key": "sa25-008",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa25-008s1", "_type": "span", "marks": [], "text": "From One Pair to a Sector-Wide Reversion Score" }
+              ]
+            },
+            {
+              "_key": "sa25-009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa25-009s1", "_type": "span", "marks": [], "text": "Instead of regressing one stock's price against one hand-picked partner, the same idea extends to regressing a stock against a whole basket of sector peers, producing a \"fair value\" implied by the group rather than by a single relationship. The resulting deviation, standardized the same way Lesson 7 built a z-score, becomes a reversion score computed for every stock in the sector at once, not just one pair." }
+              ]
+            },
+            {
+              "_key": "sa25-010",
+              "_type": "table",
+              "caption": "Illustrative sector-wide reversion scores, five private banks",
+              "headers": ["Stock", "Reversion score (z, illustrative)", "Position"],
+              "rows": [
+                { "_key": "sa25-010r1", "_type": "tableRow", "cells": ["Kotak Mahindra Bank", "-2.1", "Long (cheapest relative to peers)"] },
+                { "_key": "sa25-010r2", "_type": "tableRow", "cells": ["IndusInd Bank", "-1.4", "Long"] },
+                { "_key": "sa25-010r3", "_type": "tableRow", "cells": ["ICICI Bank", "-0.2", "No position (near neutral)"] },
+                { "_key": "sa25-010r4", "_type": "tableRow", "cells": ["HDFC Bank", "+0.3", "No position (near neutral)"] },
+                { "_key": "sa25-010r5", "_type": "tableRow", "cells": ["Axis Bank", "+1.8", "Short (most expensive relative to peers)"] }
+              ]
+            },
+            {
+              "_key": "sa25-011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa25-011s1", "_type": "span", "marks": [], "text": "The trading rule generalizes just as cleanly: go long the most negative scorers, cheap relative to peers, and short the most positive scorers, expensive relative to peers, sized so the combined long and short legs are roughly balanced, the same market-neutral structure Lesson 1 introduced, just applied across several stocks simultaneously instead of two." }
+              ]
+            },
+            {
+              "_key": "sa25-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa25-012s1", "_type": "span", "marks": [], "text": "Why Scale Up at All? Diversification" }
+              ]
+            },
+            {
+              "_key": "sa25-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa25-013s1", "_type": "span", "marks": [], "text": "Lesson 15 already made the case for not putting all capital into one pair, and Lesson 21 showed how a single pair's relationship can break for reasons that have nothing to do with the trading logic itself. A factor built across many stocks or pairs at once directly addresses both: no single structural break can do much damage to a book spread across dozens of positions, and the law of large numbers tends to smooth out the bumpy, unpredictable path any one relationship takes into something closer to a steady, if smaller, edge." }
+              ]
+            },
+            {
+              "_key": "sa25-014",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa25-014s1", "_type": "span", "marks": [], "text": "A Note on Scope: Baskets Are Their Own Deep Topic" }
+              ]
+            },
+            {
+              "_key": "sa25-015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa25-015s1", "_type": "span", "marks": [], "text": "Properly extending a two-stock cointegration test to many stocks at once, testing whether an entire basket shares a genuine long-run equilibrium rather than just two, is a substantial topic in its own right, formally handled by multivariate methods like the Johansen test briefly mentioned in Lesson 11, and deserves its own dedicated treatment beyond this course. What the remaining lessons here focus on instead is the conceptual bridge: how this course's mean-reversion factor relates to other well-known factors like value and momentum, and how multiple factors get combined sensibly, without accidentally betting on the same underlying idea twice." }
+              ]
+            },
+            {
+              "_key": "sa25-016",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Which banks would this factor trade?",
+              "scenario": "Using the illustrative reversion scores in this lesson's table, a systematic rule says: go long the two most negative scorers, short the two most positive scorers, and take no position in stocks scoring between -1 and +1.",
+              "prompt": "Based on the table, which two stocks would this rule go long, which two would it go short, and which stock gets no position?",
+              "modelAnswer": "Long: Kotak Mahindra Bank (-2.1) and IndusInd Bank (-1.4), the two most negative scores. Short: Axis Bank (+1.8) and HDFC Bank (+0.3), the two most positive scores. No position: ICICI Bank (-0.2), which falls inside the -1 to +1 neutral band."
+            },
+            {
+              "_key": "sa25-017",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "What makes something a 'factor'?",
+              "question": "Which of the following best describes what turns a single pairs trade idea into a \"factor\" in the broader quant sense?",
+              "options": [
+                "Trading only stocks with very high trading volume",
+                "Applying the same systematic scoring rule across many stocks or relationships at once, rather than to a single hand-picked pair",
+                "Using options instead of futures to implement the trade",
+                "Only trading stocks that pay a dividend"
+              ],
+              "correctIndex": 1,
+              "explanation": "A factor is fundamentally about scale and systematization: the same rule that scored one pair's spread can be applied to score many stocks or pairs simultaneously, turning a single hand-picked trade into a broader, more diversified systematic strategy."
+            },
+            {
+              "_key": "sa25-018",
+              "_type": "flashcardSet",
+              "title": "Factors: Core Terms",
+              "cards": [
+                { "_key": "sa25-018f1", "term": "Factor", "definition": "A systematic rule for scoring every stock (or relationship) in a universe on some characteristic believed to predict relative performance, used to rank and select positions." },
+                { "_key": "sa25-018f2", "term": "Long-short factor portfolio", "definition": "A portfolio built by going long the stocks or relationships that score well on a factor and short the ones that score poorly, generalizing a single pair's long-short structure across many positions at once." },
+                { "_key": "sa25-018f3", "term": "Factor family", "definition": "A group of related factors capturing a similar underlying idea, such as value, momentum, quality, size, or relative value and mean-reversion." }
+              ]
+            },
+            {
+              "_key": "sa25-019",
+              "_type": "keyTakeaways",
+              "points": [
+                "Every pair traded in this course was really computing a factor score for a single relationship. A factor generalizes this same logic, score, rank, act on the extremes, across many stocks or relationships at once.",
+                "Well-known factor families include value, momentum, quality, and size. This entire course has been building one member of the relative value and mean-reversion family.",
+                "Extending a single pair's regression to a sector-wide reversion score, deviation from a peer-group-implied fair price rather than one partner stock, produces a comparable score for every stock in a sector, enabling a long-short position across several stocks at once.",
+                "Scaling from one pair to many addresses two problems directly: no single structural break can badly damage a diversified book, and results become smoother and more consistent through the law of large numbers.",
+                "Properly testing multi-stock baskets for cointegration is a substantial topic of its own, using methods like the Johansen test. The remaining lessons here instead focus on how this course's mean-reversion factor relates to other factors and how multiple factors combine sensibly."
+              ]
+            },
+            {
+              "_key": "sa25-020",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice. The five-bank reversion scores in this lesson are illustrative and hypothetical, not actual calculated values. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

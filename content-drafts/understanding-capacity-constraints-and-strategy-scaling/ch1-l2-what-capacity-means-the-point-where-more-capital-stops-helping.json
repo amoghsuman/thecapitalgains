@@ -1,0 +1,203 @@
+{
+  "courseSlug": "understanding-capacity-constraints-and-strategy-scaling",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Capacity Is the Silent Constraint on Every Strategy",
+      "lessons": [
+        {
+          "title": "What Capacity Means: The Point Where More Capital Stops Helping",
+          "slug": "what-capacity-means-the-point-where-more-capital-stops-helping",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "c1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c1s1", "text": "The last lesson used capacity loosely: the point at which a strategy's returns start to degrade as more capital gets thrown at it. That is good enough for intuition, but not good enough to work with. This lesson pins the definition down properly, because the rest of this course, estimating capacity, deciding how to scale, choosing when to stop, only makes sense once you know exactly what you are measuring.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c2s1", "text": "Defining Capacity Precisely", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c3",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c3s1", "text": "Capacity is not the AUM level at which a strategy's returns hit exactly zero. Almost nobody waits that long to act. In practice, capacity is the AUM level at which risk-adjusted returns fall below whatever threshold you consider acceptable, most often measured as a meaningful decline in Sharpe ratio rather than raw return. A fund running at a Sharpe of 1.8 on Rs 15 crore might define its practical capacity as the AUM at which that Sharpe drops to 1.2, long before returns actually go negative.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "keyFact",
+              "_key": "c4",
+              "label": "Practical Capacity",
+              "value": "AUM at an acceptable Sharpe decline",
+              "context": "Not the AUM where returns hit zero, but the point where risk-adjusted returns cross a threshold you are no longer comfortable with"
+            },
+            {
+              "_type": "block",
+              "_key": "c5",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c5s1", "text": "Not Every Strategy Has the Same Capacity", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c6",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c6s1", "text": "An index fund tracking the Nifty 50, run by an AMC like ICICI Prudential, HDFC, or Nippon India, can absorb enormous daily inflows without any meaningful capacity problem. It is not searching for a scarce mispricing, it is buying a fixed basket in proportion to the index, spread across the most liquid stocks on the NSE. Compare that to a systematic strategy picking small-cap stocks off a value or momentum screen. That strategy is exploiting a mispricing that a small number of market participants have noticed and a small amount of liquidity can absorb. The moment its own buying becomes a meaningful fraction of daily turnover in those names, it starts eroding the very mispricing it was built to capture.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "comparison",
+              "_key": "c7",
+              "title": "High-Capacity vs Low-Capacity Strategy Traits",
+              "columns": [
+                {
+                  "label": "High-Capacity Strategy",
+                  "points": [
+                    "Trades highly liquid instruments, such as Nifty or Bank Nifty futures, or large-cap NSE stocks",
+                    "Return does not depend on being first, many participants can hold the same view without destroying it",
+                    "Long holding periods reduce how often the strategy needs to trade its full size",
+                    "Edge comes from broad, structural factors rather than a narrow, easily crowded signal"
+                  ]
+                },
+                {
+                  "label": "Low-Capacity Strategy",
+                  "points": [
+                    "Trades illiquid instruments, such as small-cap or micro-cap stocks with thin order books",
+                    "Return depends heavily on being early, the edge shrinks as more capital chases the same trade",
+                    "Short holding periods or high turnover mean the strategy repeatedly re-crosses the same liquidity constraint",
+                    "Edge comes from a narrow, specific mispricing that a limited pool of capital can exploit before it closes"
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "c8",
+              "caption": "Illustrative, order-of-magnitude capacity ranges by strategy type, not precise figures for any specific fund",
+              "headers": ["Strategy Type", "Typical Capacity Range"],
+              "rows": [
+                { "cells": ["Nifty 50 index fund or ETF investing", "Effectively unbounded for practical purposes"] },
+                { "cells": ["Nifty or Bank Nifty futures trend following", "High, often hundreds of crore or more"] },
+                { "cells": ["Statistical arbitrage across Nifty 500 pairs", "Moderate, often tens of crore"] },
+                { "cells": ["Small-cap value or momentum stock picking", "Low, often single-digit to low double-digit crore"] },
+                { "cells": ["High-frequency market making, per strategy", "Very low individually, scaled by running many strategies in parallel"] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c9",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c9s1", "text": "The Three Regions of a Capacity Curve", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c10",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c10s1", "text": "The decay curve from the last lesson has three distinct regions, and it helps to name them. In the linear region, at small AUM, added capital scales returns almost proportionally because your orders are too small to move anything. In the diminishing region, orders start to represent a real fraction of available liquidity, and each additional rupee of capital earns a smaller marginal return than the one before it. In the breakdown region, the strategy's own trading is large enough relative to liquidity that it actively works against itself, and marginal returns can turn negative even though the strategy still shows a positive return in aggregate.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "collapsible",
+              "_key": "c11",
+              "title": "Show me the math intuition",
+              "content": [
+                {
+                  "_type": "block",
+                  "_key": "c11a",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    { "_type": "span", "_key": "c11as1", "text": "A simplified sketch: net return as a function of AUM is gross alpha minus a cost term that grows with position size relative to liquidity.", "marks": [] }
+                  ]
+                },
+                {
+                  "_type": "mathBlock",
+                  "_key": "c11b",
+                  "latex": "R_{net}(AUM) \\approx R_{gross} - c \\cdot \\left(\\frac{AUM}{ADV}\\right)^{1/2}",
+                  "caption": "Gross alpha (R_gross) stays roughly fixed as AUM grows, but the cost term grows with the square root of position size relative to average daily volume (ADV). Chapter 2 derives this properly as the square-root law of market impact."
+                },
+                {
+                  "_type": "block",
+                  "_key": "c11c",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    { "_type": "span", "_key": "c11cs1", "text": "Because the cost term grows faster than linearly once AUM is large relative to ADV, net return eventually falls even though gross alpha never changed. This is the entire mechanism behind the three regions above, dressed up in one equation.", "marks": [] }
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c12",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c12s1", "text": "A Common Mistake: Confusing Capacity With an AUM Target", "marks": [] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "c13",
+              "type": "warning",
+              "text": "Fee revenue for a fund manager scales with AUM, not with the strategy's actual capacity. That creates a real incentive to keep raising capital past the point a strategy can healthily absorb it. A rising AUM number on a fund factsheet tells you the manager is raising money. It tells you nothing about whether the strategy can still deliver the same risk-adjusted return at that size, and those are two very different questions."
+            },
+            {
+              "_type": "exercise",
+              "_key": "c14",
+              "variant": "scenario",
+              "title": "A Fund Raising Beyond Its Capacity",
+              "scenario": "A systematic equity fund in India has been running a small-cap momentum strategy for three years. Its historical Sharpe ratio is 1.8 at Rs 15 crore AUM. The fund has just closed a fresh capital raise taking AUM to Rs 80 crore, mostly because the marketing team wanted a bigger headline number for the next fundraising round. No new capacity analysis was done before accepting the extra capital.",
+              "prompt": "As an analyst reviewing this fund, what would you flag as the key risk, and what would you want to see before trusting its future performance numbers?",
+              "modelAnswer": "Flag that AUM has grown roughly five times over with no capacity analysis behind the decision, meaning the additional Rs 65 crore is likely trading the same illiquid small-cap names the original Rs 15 crore used, at much larger order sizes. Before trusting future numbers, ask for post-raise transaction cost analysis, evidence that position sizing was adjusted for the new AUM, and a comparison of realized slippage before and after the raise. A Sharpe ratio computed without accounting for the increased market impact at Rs 80 crore is not comparable to the Rs 15 crore track record, and treating it as such would be a mistake."
+            },
+            {
+              "_type": "block",
+              "_key": "c15",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c15s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "c16",
+              "text": "Capacity is not where a strategy's return hits zero. It is where the marginal rupee of capital stops earning what the first rupee earned. Confusing capacity with an AUM target is how good strategies quietly turn into mediocre ones."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "c17",
+              "points": [
+                "Capacity is best defined as the AUM at which risk-adjusted returns, typically measured via Sharpe ratio, decline past an acceptable threshold, not the AUM at which returns hit zero.",
+                "Capacity varies enormously by strategy type: broad, liquid, structural strategies like Nifty index investing or futures trend following have far higher capacity than narrow, illiquid, crowding-prone strategies like small-cap stock picking.",
+                "A capacity curve has three regions: linear at small size, diminishing as orders become a meaningful fraction of liquidity, and breakdown once the strategy's own trading works against itself.",
+                "Fee incentives push fund managers to raise AUM regardless of capacity, so a rising AUM figure alone says nothing about whether a strategy can still deliver its historical risk-adjusted return."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,279 @@
+{
+  "courseSlug": "understanding-pairs-trading-concepts-and-cointegration",
+  "chapters": [
+    {
+      "title": "Chapter 1: The Idea of Pairs Trading",
+      "lessons": [
+        {
+          "title": "Why Two Stocks Move Together: Correlation, Sector Ties, and Common Risk Factors",
+          "slug": "why-two-stocks-move-together-correlation-sector-ties-and-common-risk-factors",
+          "body": [
+            {
+              "_key": "p2-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p2-001s1", "_type": "span", "marks": [], "text": "TCS and Infosys report earnings within days of each other, and their share prices usually react to macro news, such as a weak US technology spending outlook, in the same direction on the same day. TCS and an unrelated stock like UltraTech Cement almost never move together for a reason you could actually explain. This is not a coincidence you have to take on faith. Two stocks move together because they share real, identifiable exposures: the same business, the same macro sensitivities, or the same set of investors buying and selling them. Before you can find a tradeable pair, you need to know exactly what kind of shared exposure you are looking for." }
+              ]
+            },
+            {
+              "_key": "p2-002",
+              "_type": "bigIdea",
+              "text": "Two stocks move together because of a shared underlying exposure, not by chance. Every strong candidate pair falls into one of three buckets: shared business exposure, shared macro or risk-factor exposure, or a shared investor base and flow pattern. Identifying which bucket a pair belongs to tells you why the relationship might hold, and gives you a reason to expect it to keep holding."
+            },
+            {
+              "_key": "p2-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p2-003s1", "_type": "span", "marks": [], "text": "Three Reasons Two Stocks Move Together" }
+              ]
+            },
+            {
+              "_key": "p2-004",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "p2-004s1", "_type": "span", "marks": [], "text": "1. Shared Business Exposure" }
+              ]
+            },
+            {
+              "_key": "p2-005",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p2-005s1", "_type": "span", "marks": [], "text": "TCS and Infosys sell largely the same service, IT outsourcing and consulting, to overlapping sets of US and European clients, and bill a large share of revenue in USD. A weakening rupee helps both. A slowdown in US corporate technology budgets hurts both. Wage inflation for engineers in Bengaluru and Pune raises costs at both companies at once. This is the most intuitive and most durable source of co-movement: two companies selling similar products into similar markets, facing similar costs." }
+              ]
+            },
+            {
+              "_key": "p2-006",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "p2-006s1", "_type": "span", "marks": [], "text": "2. Shared Macro or Risk-Factor Exposure" }
+              ]
+            },
+            {
+              "_key": "p2-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "p2-007m1", "_type": "glossaryTerm", "definition": "A broad, systematic driver, such as interest rates, oil prices, or the USD-INR exchange rate, that moves many stocks in the same direction at once, regardless of what sector they belong to." }
+              ],
+              "children": [
+                { "_key": "p2-007s1", "_type": "span", "marks": [], "text": "Bajaj Finance and Cholamandalam Investment and Finance are not in the same business in a narrow sense, one leans consumer lending, the other vehicle and SME finance, but both are NBFCs that borrow wholesale and lend it out at a spread. Both are hit the same way when the RBI raises the repo rate and their cost of funds rises, and both are hit the same way when bond market liquidity tightens and wholesale borrowing gets harder. This is a " },
+                { "_key": "p2-007s2", "_type": "span", "marks": ["p2-007m1"], "text": "risk factor" },
+                { "_key": "p2-007s3", "_type": "span", "marks": [], "text": " link rather than a product link: two companies that are exposed to the same macro lever, even if what they actually sell looks quite different up close." }
+              ]
+            },
+            {
+              "_key": "p2-008",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "p2-008s1", "_type": "span", "marks": [], "text": "3. Shared Investor Base and Flow Effects" }
+              ]
+            },
+            {
+              "_key": "p2-009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p2-009s1", "_type": "span", "marks": [], "text": "HDFC Bank and ICICI Bank are both large constituents of the Nifty Bank index. Every index fund and ETF tracking Nifty Bank buys and sells both stocks together, in fixed proportion, whenever money flows in or out of the index. A large FII allocation decision to add exposure to Indian financials often moves both stocks the same week, not because of any company-specific news, but because both sit in the same basket that the FII is buying. This is a purely mechanical source of co-movement: it exists because of who holds the stock and how they trade it, not because of the underlying business at all." }
+              ]
+            },
+            {
+              "_key": "p2-010",
+              "_type": "table",
+              "caption": "Three sources of co-movement, with example pairs",
+              "headers": ["Source", "Why it links two stocks", "Example pair"],
+              "rows": [
+                { "_key": "p2-010r1", "cells": ["Shared business exposure", "Same product, same customers, same input costs", "TCS and Infosys"] },
+                { "_key": "p2-010r2", "cells": ["Shared macro/risk-factor exposure", "Same sensitivity to rates, currency, or credit cycles", "Bajaj Finance and Cholamandalam Investment and Finance"] },
+                { "_key": "p2-010r3", "cells": ["Shared investor base and flows", "Same index membership or FII/DII ownership overlap", "HDFC Bank and ICICI Bank"] }
+              ]
+            },
+            {
+              "_key": "p2-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p2-011s1", "_type": "span", "marks": [], "text": "Measuring It: The Correlation Coefficient" }
+              ]
+            },
+            {
+              "_key": "p2-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "p2-012m1", "_type": "glossaryTerm", "definition": "A number between -1 and +1 that measures how closely two variables move together. +1 means they move in perfect lockstep, -1 means they move in exact opposite directions, and 0 means there is no linear relationship between them." }
+              ],
+              "children": [
+                { "_key": "p2-012s1", "_type": "span", "marks": [], "text": "The " },
+                { "_key": "p2-012s2", "_type": "span", "marks": ["p2-012m1"], "text": "correlation coefficient" },
+                { "_key": "p2-012s3", "_type": "span", "marks": [], "text": " turns \"these two stocks seem to move together\" into a number. In practice, you compute it on daily percentage returns, not raw prices, usually over a lookback window such as the last 90 or 180 trading days. Pull the closing prices for both stocks from NSE's historical data, convert each day's price into a percentage change from the previous day, and calculate the correlation between the two return series. This is a two-line calculation in Python using pandas, or a single CORREL formula in Excel. Most stocks in the same Nifty sectoral index will show a correlation somewhere between 0.5 and 0.85 on daily returns. Two stocks from unrelated sectors typically sit closer to 0." }
+              ]
+            },
+            {
+              "_key": "p2-013",
+              "_type": "keyFact",
+              "label": "90-day return correlation, TCS vs Infosys",
+              "value": "≈ 0.75 (illustrative)",
+              "context": "A high correlation like this reflects genuine shared exposure, both bill largely in USD, sell into the same client base, and report results in the same week"
+            },
+            {
+              "_key": "p2-014",
+              "_type": "chart",
+              "chartType": "bar",
+              "title": "90-day return correlation across example NSE pairs (illustrative)",
+              "xAxisLabel": "Pair",
+              "yAxisLabel": "Correlation coefficient",
+              "data": [
+                { "_key": "p2-014d1", "label": "TCS / Infosys", "value": 0.75 },
+                { "_key": "p2-014d2", "label": "HDFC Bank / ICICI Bank", "value": 0.70 },
+                { "_key": "p2-014d3", "label": "Bajaj Finance / Cholamandalam", "value": 0.62 },
+                { "_key": "p2-014d4", "label": "Asian Paints / Berger Paints", "value": 0.58 },
+                { "_key": "p2-014d5", "label": "Reliance / ITC", "value": 0.14 }
+              ]
+            },
+            {
+              "_key": "p2-015",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Same-sector pairs cluster in the 0.55 to 0.75 range, while two large but fundamentally unrelated businesses like Reliance and ITC sit close to zero. A near-zero correlation is a clear signal to move on. A high correlation is only the start of the screening process, not the end of it."
+            },
+            {
+              "_key": "p2-016",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p2-016s1", "_type": "span", "marks": [], "text": "Correlation Is a Screen, Not a Green Light" }
+              ]
+            },
+            {
+              "_key": "p2-017",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p2-017s1", "_type": "span", "marks": [], "text": "A high correlation number tells you two return series have moved in the same direction on the same days, historically. It does not tell you that the gap between their prices reverts to a stable long-run relationship, which is the actual requirement for a pairs trade to work. Two stocks can be highly correlated day to day and still drift permanently apart in price over months, in which case a pairs trade built on them would simply lose money as the gap widens and never closes. Chapter 3 introduces cointegration, a stricter statistical test that checks for exactly this: whether the price relationship itself, not just the daily returns, is stable enough to trade." }
+              ]
+            },
+            {
+              "_key": "p2-018",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Watch for spurious correlation. If you scan hundreds of NSE stocks for pairs with high correlation, some pairs will show strong correlation purely by chance, with no real shared exposure behind it. Always be able to explain why a pair is correlated, shared business, shared risk factor, or shared flows, before treating the number as meaningful."
+            },
+            {
+              "_key": "p2-019",
+              "_type": "comparison",
+              "title": "Good screening candidate vs weak screening candidate",
+              "columns": [
+                {
+                  "_key": "p2-019c1",
+                  "label": "Strong candidate pair",
+                  "points": [
+                    "High correlation you can explain with a specific shared exposure",
+                    "Same sector, similar business model, or a clear common risk factor",
+                    "Relationship has held across more than one market cycle",
+                    "Both stocks are liquid enough on NSE to enter and exit without heavy slippage"
+                  ]
+                },
+                {
+                  "_key": "p2-019c2",
+                  "label": "Weak candidate pair",
+                  "points": [
+                    "High correlation with no clear business or macro story behind it",
+                    "Correlation only shows up in a short, recent window",
+                    "One leg is thinly traded, making the hedge hard to execute cleanly",
+                    "The businesses have started to diverge structurally, e.g. one is losing market share"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "p2-020",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "p2-020s1", "label": "Typical same-sector correlation", "value": "0.5 to 0.85", "context": "On 90 to 180-day daily return windows for NSE large caps in the same sectoral index" },
+                { "_key": "p2-020s2", "label": "Correlation range", "value": "-1 to +1", "context": "0 means no linear relationship; negative correlation means the two move in opposite directions" },
+                { "_key": "p2-020s3", "label": "What correlation does NOT confirm", "value": "Price-level reversion", "context": "High return correlation can still coexist with prices drifting permanently apart, covered in Chapter 3" }
+              ]
+            },
+            {
+              "_key": "p2-021",
+              "_type": "toolLink",
+              "label": "Download historical NSE price data",
+              "url": "https://www.nseindia.com/all-reports",
+              "description": "NSE's historical data and bhavcopy reports are the standard free source for the daily closing prices used to compute correlation between candidate pairs."
+            },
+            {
+              "_key": "p2-022",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Reading a correlation number",
+              "question": "You compute a 90-day return correlation of 0.05 between Sun Pharma and Tata Steel. What should you conclude?",
+              "options": [
+                "This is a strong candidate pair because both are large NSE-listed companies",
+                "This is a weak candidate pair, since there is almost no linear relationship between their daily returns",
+                "The correlation should be recalculated using monthly instead of daily prices to fix the low number",
+                "A correlation of 0.05 means the two stocks always move in opposite directions"
+              ],
+              "correctIndex": 1,
+              "explanation": "A correlation near 0 means there is essentially no linear relationship between the two return series. Sun Pharma (pharmaceuticals) and Tata Steel (metals) have no meaningful shared business or macro exposure, so a near-zero correlation is expected, not a data problem, and this pair should be dropped as a candidate."
+            },
+            {
+              "_key": "p2-023",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Explaining the exposure",
+              "scenario": "You find that Maruti Suzuki and Eicher Motors have a 90-day return correlation of 0.68, higher than you expected given that one sells cars and the other sells motorcycles and commercial vehicles.",
+              "prompt": "Which of the three sources of co-movement, shared business exposure, shared macro/risk-factor exposure, or shared investor base and flows, most plausibly explains this correlation, and why?",
+              "modelAnswer": "Most plausibly a mix of shared business exposure and shared macro/risk-factor exposure. Both are auto manufacturers exposed to the same Indian auto demand cycle, the same input costs (steel, aluminium, semiconductors), and the same RBI rate cycle that affects vehicle financing and EMIs for buyers. They also likely share overlapping index membership (both are Nifty constituents) and similar FII/DII interest in the auto sector, adding a flow-based component on top of the business link."
+            },
+            {
+              "_key": "p2-024",
+              "_type": "flashcardSet",
+              "title": "Correlation and Co-Movement: Core Terms",
+              "cards": [
+                { "_key": "p2-024f1", "term": "Correlation coefficient", "definition": "A number from -1 to +1 measuring how closely two return series move together. Typically computed on daily percentage returns over a fixed lookback window." },
+                { "_key": "p2-024f2", "term": "Shared business exposure", "definition": "Co-movement caused by two companies selling similar products to similar customers, facing similar costs and demand drivers." },
+                { "_key": "p2-024f3", "term": "Risk factor", "definition": "A broad, systematic driver such as interest rates, currency, or credit conditions that moves many stocks in the same direction regardless of sector." },
+                { "_key": "p2-024f4", "term": "Flow effect", "definition": "Co-movement caused by index membership or overlapping institutional ownership, where stocks are bought and sold together mechanically rather than for company-specific reasons." },
+                { "_key": "p2-024f5", "term": "Spurious correlation", "definition": "A correlation that appears strong by chance, with no real underlying shared exposure, especially likely to show up when screening large numbers of stock pairs at once." }
+              ]
+            },
+            {
+              "_key": "p2-025",
+              "_type": "keyTakeaways",
+              "points": [
+                "Two stocks move together for identifiable reasons: shared business exposure, shared macro or risk-factor exposure, or a shared investor base and flow pattern.",
+                "TCS and Infosys share business exposure, Bajaj Finance and Cholamandalam share risk-factor exposure, and HDFC Bank and ICICI Bank share flow effects through common index membership, though most real pairs combine more than one source.",
+                "The correlation coefficient, computed on daily returns over a lookback window such as 90 or 180 days, turns co-movement into a measurable number between -1 and +1.",
+                "Same-sector NSE pairs typically show correlations of 0.5 to 0.85, while unrelated businesses sit close to zero.",
+                "A high correlation is a screening filter, not proof that a pair is tradeable. Prices can be highly correlated day to day and still drift permanently apart, which is why Chapter 3 introduces cointegration as the stricter test.",
+                "Always be able to explain why a pair is correlated. Correlation found by scanning many stocks without a business or macro reason behind it is at high risk of being spurious."
+              ]
+            },
+            {
+              "_key": "p2-026",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice or a recommendation to buy, sell, or short any security named here. All correlation figures and charts are illustrative and do not represent actual historical data. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

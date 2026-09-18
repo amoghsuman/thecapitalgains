@@ -1,0 +1,547 @@
+{
+  "courseSlug": "understanding-bond-pricing-yield-to-maturity-duration-and-convexity",
+  "chapters": [
+    {
+      "title": "Chapter 1: Pricing a Bond from Its Cash Flows",
+      "lessons": [
+        {
+          "title": "Clean Price, Dirty Price, and Accrued Interest on NSE and RBI Retail Direct",
+          "slug": "clean-price-dirty-price-and-accrued-interest-on-nse-and-rbi-retail-direct",
+          "body": [
+            {
+              "_key": "c1l3-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-001s1",
+                  "_type": "span",
+                  "text": "Place an order for a G-Sec quoted at ₹103.73 and your settlement amount will not be ₹103.73 per unit. It will be higher. First-time bond buyers often assume a hidden charge; it is not one. It is accrued interest, the share of the next coupon that the seller has already earned but will not be around to receive. Every real bond trade happens between coupon dates, so unless you understand clean price, dirty price and accrued interest, you cannot check a single contract note. This lesson fixes that.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-002",
+              "_type": "bigIdea",
+              "text": "The price on the screen is the clean price. The money that leaves your account is the dirty price. The difference is accrued interest, and it is not a cost: you get it back in full on the next coupon date."
+            },
+            {
+              "_key": "c1l3-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-003s1",
+                  "_type": "span",
+                  "text": "Why Accrued Interest Exists",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c1l3-004m1",
+                  "_type": "glossaryTerm",
+                  "definition": "The coupon interest earned by the seller from the last coupon date up to the settlement date. The buyer pays it to the seller as part of the trade."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c1l3-004s1",
+                  "_type": "span",
+                  "text": "A coupon is paid in one lump every six months, but it is earned a little every day. Suppose you hold a bond for five of the six months and then sell it. On the next coupon date the issuer pays the full coupon to whoever holds the bond then, which is the buyer. Without an adjustment, you would lose five months of interest and the buyer would get a windfall. So the buyer compensates you at settlement by paying ",
+                  "marks": []
+                },
+                {
+                  "_key": "c1l3-004s2",
+                  "_type": "span",
+                  "text": "accrued interest",
+                  "marks": ["c1l3-004m1"]
+                },
+                {
+                  "_key": "c1l3-004s3",
+                  "_type": "span",
+                  "text": " on top of the quoted price. When the coupon arrives, the buyer recovers that amount and keeps only the interest for the days they actually held the bond.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-005",
+              "_type": "mathBlock",
+              "latex": "\\text{Dirty Price} = \\text{Clean Price} + \\text{Accrued Interest}",
+              "caption": "Also called the full price or invoice price. Accrued interest = Annual coupon × (Days since last coupon ÷ Days in the year, by the bond's day count convention)."
+            },
+            {
+              "_key": "c1l3-006",
+              "_type": "comparison",
+              "title": "Clean Price vs Dirty Price",
+              "columns": [
+                {
+                  "_key": "c1l3-006c1",
+                  "label": "Clean price",
+                  "points": [
+                    "Excludes accrued interest",
+                    "The price quoted on RBI Retail Direct, NDS-OM and the NSE and BSE RFQ platforms",
+                    "Moves only when market yields move (plus a slow drift towards ₹100)",
+                    "Lets you compare prices of different bonds, and the same bond on different days, fairly"
+                  ]
+                },
+                {
+                  "_key": "c1l3-006c2",
+                  "label": "Dirty price",
+                  "points": [
+                    "Includes accrued interest",
+                    "The amount you actually pay or receive at settlement",
+                    "Rises a little every day, then drops by the full coupon on the coupon date",
+                    "Equals the present value of all remaining cash flows"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-007s1",
+                  "_type": "span",
+                  "text": "Day Count Conventions: How India Counts the Days",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c1l3-008m1",
+                  "_type": "glossaryTerm",
+                  "definition": "The rule that decides how days between two dates are counted, and how many days make up a year, when calculating interest."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c1l3-008s1",
+                  "_type": "span",
+                  "text": "\"Days since the last coupon\" sounds simple, but markets need an exact rule, called a ",
+                  "marks": []
+                },
+                {
+                  "_key": "c1l3-008s2",
+                  "_type": "span",
+                  "text": "day count convention",
+                  "marks": ["c1l3-008m1"]
+                },
+                {
+                  "_key": "c1l3-008s3",
+                  "_type": "span",
+                  "text": ". Indian government securities and listed corporate bonds use different ones, and using the wrong one gives you a wrong settlement amount.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-009",
+              "_type": "table",
+              "caption": "Day count conventions in the Indian bond market",
+              "headers": ["Instrument", "Convention", "How it works"],
+              "rows": [
+                { "_key": "c1l3-009r1", "_type": "tableRow", "cells": ["G-Secs and SDLs", "30/360", "Every month counts as 30 days and every year as 360 days. A six-month coupon period is always 180 days."] },
+                { "_key": "c1l3-009r2", "_type": "tableRow", "cells": ["Listed corporate bonds and NCDs", "Actual/Actual", "Actual calendar days elapsed, divided by 365, or 366 if the period includes 29 February. Standardised by SEBI."] },
+                { "_key": "c1l3-009r3", "_type": "tableRow", "cells": ["Treasury bills", "Actual/365", "No coupon, so no accrued interest. Actual days are used only to annualise the discount yield."] }
+              ]
+            },
+            {
+              "_key": "c1l3-010",
+              "_type": "mathBlock",
+              "latex": "\\text{Days}_{30/360} = 360 \\times (Y_2 - Y_1) + 30 \\times (M_2 - M_1) + (D_2 - D_1)",
+              "caption": "Where a day of the month is 31, it is treated as 30. From 14 August to 15 September: 30 × 1 + (15 − 14) = 31 days."
+            },
+            {
+              "_key": "c1l3-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-011s1",
+                  "_type": "span",
+                  "text": "Worked Example: Kavita's G-Sec Contract Note",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-012s1",
+                  "_type": "span",
+                  "text": "Back to Kavita Iyer from Lesson 1. She buys ₹1 lakh face value (1,000 units) of the 7.18% GS 2033 on RBI Retail Direct, settling on 15 September 2026, when the bond is trading at a 6.50% yield. The last coupon was paid on 14 August 2026, and the next is due on 14 February 2027.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-013",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "number",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-013s1",
+                  "_type": "span",
+                  "text": "Days accrued (30/360): ",
+                  "marks": ["strong"]
+                },
+                {
+                  "_key": "c1l3-013s2",
+                  "_type": "span",
+                  "text": "14 August to 15 September = 31 days.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-014",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "number",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-014s1",
+                  "_type": "span",
+                  "text": "Accrued interest per ₹100: ",
+                  "marks": ["strong"]
+                },
+                {
+                  "_key": "c1l3-014s2",
+                  "_type": "span",
+                  "text": "₹7.18 × 31 ÷ 360 = ₹0.6183.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-015",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "number",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-015s1",
+                  "_type": "span",
+                  "text": "Dirty price per ₹100: ",
+                  "marks": ["strong"]
+                },
+                {
+                  "_key": "c1l3-015s2",
+                  "_type": "span",
+                  "text": "discount all 14 remaining cash flows at 3.25% per half-year. The first coupon is only 149 of 180 days away, so each exponent is reduced by 31 ÷ 180. The total is ₹104.3492.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-016",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "number",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-016s1",
+                  "_type": "span",
+                  "text": "Clean price per ₹100: ",
+                  "marks": ["strong"]
+                },
+                {
+                  "_key": "c1l3-016s2",
+                  "_type": "span",
+                  "text": "₹104.3492 − ₹0.6183 = ₹103.7309, quoted on screen as ₹103.73.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-017",
+              "_type": "mathBlock",
+              "latex": "P_{\\text{dirty}} = \\sum_{k=0}^{n-1} \\frac{CF_{k+1}}{(1 + y/2)^{\\,k + w}}, \\qquad w = \\frac{\\text{Days to next coupon}}{\\text{Days in coupon period}}",
+              "caption": "For Kavita: w = 149 ÷ 180 = 0.8278, n = 14, y/2 = 3.25%. The price is discounted to the settlement date, not to a coupon date."
+            },
+            {
+              "_key": "c1l3-018",
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "c1l3-018s1",
+                  "label": "Clean consideration",
+                  "value": "₹1,03,730.94",
+                  "context": "₹103.7309 × 1,000 units"
+                },
+                {
+                  "_key": "c1l3-018s2",
+                  "label": "Accrued interest",
+                  "value": "₹618.28",
+                  "context": "31 days of the 7.18% coupon on ₹1 lakh"
+                },
+                {
+                  "_key": "c1l3-018s3",
+                  "label": "Total settlement amount",
+                  "value": "₹1,04,349.22",
+                  "context": "Dirty price × 1,000 units, before any charges"
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-019",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Kavita's ₹618.28 is not lost. On 14 February 2027 she receives the full ₹3,590 coupon, even though she held the bond for only 149 of the 180 days. ₹618.28 of that simply repays what she advanced to the seller, and the remaining ₹2,971.72 is the interest she actually earned."
+            },
+            {
+              "_key": "c1l3-020",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Calculate accrued interest on a G-Sec",
+              "prompt": "You buy ₹5 lakh face value of an illustrative 7.26% G-Sec that pays coupons on 6 February and 6 August. Your trade settles on 20 October 2026. Using the 30/360 convention, how much accrued interest do you pay the seller? Round to the nearest rupee.",
+              "correctValue": 7462,
+              "tolerance": 1,
+              "unit": "₹",
+              "explanation": "Days (30/360) from 6 August to 20 October = 30 × 2 + (20 − 6) = 74 days. Accrued interest = ₹5,00,000 × 7.26% × 74 ÷ 360 = ₹7,461.67, or about ₹7,462. You will get this back as part of the ₹18,150 coupon on 6 February 2027."
+            },
+            {
+              "_key": "c1l3-021",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-021s1",
+                  "_type": "span",
+                  "text": "Corporate Bonds: Actual/Actual in Practice",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-022",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-022s1",
+                  "_type": "span",
+                  "text": "Rahul Menon buys one privately placed PSU bond on the NSE RFQ platform: ₹10,000 face value, 8.00% coupon paid annually on 25 March, settling on 16 September 2026. The last coupon was on 25 March 2026. Counting actual calendar days: 6 days left in March, then 30 + 31 + 30 + 31 + 31 for April to August, plus 16 days in September, gives 175 days. The coupon year from 25 March 2026 to 25 March 2027 has no 29 February, so the denominator is 365.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-023",
+              "_type": "keyFact",
+              "label": "Rahul's accrued interest per bond",
+              "value": "₹383.56",
+              "context": "₹10,000 × 8.00% × 175 ÷ 365. On 30/360 it would have been ₹10,000 × 8.00% × 171 ÷ 360 = ₹380.00, so the convention matters."
+            },
+            {
+              "_key": "c1l3-024",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-024s1",
+                  "_type": "span",
+                  "text": "The Saw-Tooth: Why Markets Quote Clean",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-025",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-025s1",
+                  "_type": "span",
+                  "text": "Take the 7.10% bond from the last lesson, with five years left, and assume its yield stays fixed at 6.80% for a full year. Its dirty price climbs steadily as interest accrues, then drops by ₹3.55 the moment each coupon is paid. Its clean price barely moves. If the market quoted dirty prices, a trader would see the bond \"fall\" 3.4% on every coupon date even though nothing had changed. Quoting clean strips out that noise, so any change in the clean price reflects a genuine change in yield.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-026",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Clean vs Dirty Price over One Year at a Constant 6.80% Yield (₹ per ₹100)",
+              "xAxisLabel": "Months after a coupon date",
+              "yAxisLabel": "Price (₹)",
+              "data": [
+                { "_key": "c1l3-026d01", "label": "0" },
+                { "_key": "c1l3-026d02", "label": "1" },
+                { "_key": "c1l3-026d03", "label": "2" },
+                { "_key": "c1l3-026d04", "label": "3" },
+                { "_key": "c1l3-026d05", "label": "4" },
+                { "_key": "c1l3-026d06", "label": "5" },
+                { "_key": "c1l3-026d07", "label": "6 (before coupon)" },
+                { "_key": "c1l3-026d08", "label": "6 (after coupon)" },
+                { "_key": "c1l3-026d09", "label": "7" },
+                { "_key": "c1l3-026d10", "label": "8" },
+                { "_key": "c1l3-026d11", "label": "9" },
+                { "_key": "c1l3-026d12", "label": "10" },
+                { "_key": "c1l3-026d13", "label": "11" },
+                { "_key": "c1l3-026d14", "label": "12 (before coupon)" },
+                { "_key": "c1l3-026d15", "label": "12 (after coupon)" }
+              ],
+              "series": [
+                {
+                  "_key": "c1l3-026s1",
+                  "label": "Dirty price",
+                  "values": [101.25, 101.82, 102.39, 102.96, 103.54, 104.11, 104.70, 101.15, 101.71, 102.28, 102.85, 103.43, 104.00, 104.59, 101.04]
+                },
+                {
+                  "_key": "c1l3-026s2",
+                  "label": "Clean price",
+                  "values": [101.25, 101.23, 101.21, 101.19, 101.17, 101.16, 101.15, 101.15, 101.12, 101.10, 101.08, 101.06, 101.05, 101.04, 101.04]
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-027",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-027s1",
+                  "_type": "span",
+                  "text": "Look at the clean price line: with the yield unchanged, it slips from ₹101.25 to ₹101.04 over the year. That is not noise. A bond priced above ₹100 must end at exactly ₹100 on maturity, so its clean price drifts towards par as time passes. This pull to par is the subject of the next lesson.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-028",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Read the screen correctly",
+              "question": "On RBI Retail Direct, a G-Sec shows a price of ₹98.40 on the day before its coupon date, and ₹98.41 the day after. What most likely happened?",
+              "options": [
+                "The bond crashed by nearly the full coupon, but the platform hid it",
+                "Nothing much: the quote is a clean price, so the coupon payment does not show up as a price drop",
+                "The yield rose sharply after the coupon was paid",
+                "The platform switched from dirty to clean pricing overnight"
+              ],
+              "correctIndex": 1,
+              "explanation": "Quoted prices are clean. The dirty price did fall by roughly the coupon amount when the coupon was paid, but the clean price is unaffected by coupon payments. A tiny move like ₹0.01 reflects the pull to par or a small change in yield."
+            },
+            {
+              "_key": "c1l3-029",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "Complete the identity",
+              "textWithBlank": "Dirty price = clean price + ___.",
+              "correctAnswers": ["accrued interest", "accrued", "interest accrued", "AI"],
+              "explanation": "The dirty (full or invoice) price is what you pay at settlement: the clean price quoted on screen plus the coupon interest accrued since the last coupon date."
+            },
+            {
+              "_key": "c1l3-030",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-030s1",
+                  "_type": "span",
+                  "text": "Checking It in Excel",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-031",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3-031s1",
+                  "_type": "span",
+                  "text": "Excel's PRICE function returns the clean price between coupon dates, and ACCRINT returns the accrued interest. The last argument, basis, sets the day count: use 4 (European 30/360) for G-Secs and 1 (Actual/Actual) for corporate bonds. For Kavita's bond: =PRICE(DATE(2026,9,15), DATE(2033,8,14), 7.18%, 6.5%, 100, 2, 4) returns about 103.73. Add the accrued interest of 7.18 × 31 ÷ 360 = 0.6183 to get the dirty price.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3-032",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "\"Am I losing my coupon if I sell now?\"",
+              "scenario": "Anil Joshi, a retired bank officer in Pune, holds ₹2 lakh face value (2,000 units) of the 7.18% GS 2033. He needs cash for his daughter's wedding and plans to sell with settlement on 20 January 2027. His friend warns him: \"Wait until after 14 February, or you will lose the whole ₹7,180 coupon you have been waiting six months for.\"",
+              "prompt": "Explain to Anil what actually happens to his coupon if he sells now. Calculate the accrued interest he will receive, and what the buyer really earns from the February coupon.",
+              "modelAnswer": "1. Anil does not lose the interest he has earned. The buyer pays him the clean price plus accrued interest at settlement.\n2. Days accrued (30/360) from 14 August 2026 to 20 January 2027: 30 × 5 + (20 − 14) = 156 days.\n3. Accrued interest = ₹2,00,000 × 7.18% × 156 ÷ 360 = ₹6,222.67. This is added to his sale proceeds on 20 January.\n4. On 14 February 2027 the buyer receives the full coupon of 2,000 × ₹3.59 = ₹7,180.\n5. Of that, ₹6,222.67 just repays what the buyer advanced to Anil. The buyer's own interest is ₹957.33, which is exactly 24 days (20 January to 14 February, 30/360) of coupon: ₹2,00,000 × 7.18% × 24 ÷ 360.\n6. Anil's friend is wrong. Whether Anil should wait depends only on where he thinks yields and the clean price are heading, not on the coupon date. One caution: very close to a coupon date the bond may pass its record date, so he should check that before trading."
+            },
+            {
+              "_key": "c1l3-033",
+              "_type": "flashcardSet",
+              "title": "Pricing Between Coupon Dates",
+              "cards": [
+                { "_key": "c1l3-033f1", "term": "Clean price", "definition": "The quoted bond price, excluding accrued interest." },
+                { "_key": "c1l3-033f2", "term": "Dirty price", "definition": "Clean price plus accrued interest. The amount actually paid at settlement. Also called full or invoice price." },
+                { "_key": "c1l3-033f3", "term": "Accrued interest", "definition": "Coupon interest earned since the last coupon date, paid by the buyer to the seller." },
+                { "_key": "c1l3-033f4", "term": "30/360", "definition": "Day count used for G-Secs and SDLs. Every month has 30 days, every year 360." },
+                { "_key": "c1l3-033f5", "term": "Actual/Actual", "definition": "Day count used for Indian listed corporate bonds. Actual days, divided by 365 or 366." },
+                { "_key": "c1l3-033f6", "term": "Saw-tooth pattern", "definition": "The dirty price rising daily and dropping by the coupon on each coupon date, which is why markets quote clean prices." }
+              ]
+            },
+            {
+              "_key": "c1l3-034",
+              "_type": "keyTakeaways",
+              "points": [
+                "Coupons are paid in lumps but earned daily, so a buyer pays the seller accrued interest at settlement.",
+                "Dirty price = clean price + accrued interest. Screens quote clean; you pay dirty.",
+                "G-Secs and SDLs use 30/360. Listed corporate bonds use Actual/Actual. The convention changes the rupee amount.",
+                "Kavita's ₹1 lakh of 7.18% GS 2033 at 6.50%: clean ₹1,03,730.94, accrued ₹618.28, total ₹1,04,349.22.",
+                "Accrued interest is recovered in full on the next coupon date. Selling before a coupon does not forfeit the interest you earned.",
+                "Dirty prices follow a saw-tooth pattern; clean prices move only with yield and a slow pull towards par.",
+                "In Excel, PRICE gives the clean price (basis 4 for G-Secs, 1 for corporate bonds) and ACCRINT gives accrued interest."
+              ]
+            },
+            {
+              "_key": "c1l3-035",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment or tax advice. Investors, bonds and yields are illustrative, and settlement amounts shown exclude brokerage, platform and stamp duty charges. Day count, quoting and record date conventions can vary by instrument and are subject to RBI and SEBI rules, so verify them on RBI Retail Direct, NSE, BSE or the issue documents. The tax treatment of accrued interest paid and received can be complex; consult a chartered accountant or a SEBI-registered investment adviser for your situation."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

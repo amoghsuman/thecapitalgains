@@ -1,0 +1,213 @@
+{
+  "courseSlug": "understanding-market-making-and-liquidity-provision-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 4: Adverse Selection and Informed Order Flow",
+      "lessons": [
+        {
+          "title": "Adverse Selection: When the Trader on the Other Side Knows More Than You",
+          "slug": "adverse-selection-when-the-trader-on-the-other-side-knows-more-than-you",
+          "body": [
+            {
+              "_key": "mmc4l1b01",
+              "_type": "bigIdea",
+              "text": "A market maker cannot ask who is on the other side of a trade before deciding whether to accept it. Every quote has to be priced as if the next order might be from someone who already knows more than the market maker does, because sometimes it is."
+            },
+            {
+              "_key": "mmc4l1b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc4l1b02s1",
+                  "_type": "span",
+                  "text": "The Core Problem: You Cannot See Who You're Trading With",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc4l1b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc4l1b03s1",
+                  "_type": "span",
+                  "text": "NSE's order book, like almost every modern exchange, is anonymous at the point of execution. A market maker sees an incoming order hit its bid or ask, but not whose order it is or why it was sent. That anonymity is not an accident or an oversight; it is exactly what makes an exchange fair and open to anyone. It also happens to be exactly what creates the adverse selection problem: a market maker cannot screen out the traders who are better informed than it is, so it has no choice but to price that risk into every quote it posts, spread across informed and uninformed traders alike, rather than charging it only to the traders who actually turn out to know something.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc4l1b04",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc4l1b04s1",
+                  "_type": "span",
+                  "text": "A Simple Model: The Glosten-Milgrom Intuition",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc4l1b05",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "mmc4l1m01",
+                  "_type": "glossaryTerm",
+                  "definition": "A classic 1985 model showing that a spread can arise purely from information asymmetry, with no inventory or order processing cost at all, simply because a market maker facing a mix of informed and uninformed traders must set its bid and ask as the expected value of the asset conditional on a sell order arriving, and conditional on a buy order arriving, respectively."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "mmc4l1b05s1",
+                  "_type": "span",
+                  "text": "Glosten and Milgrom's 1985 model makes this precise with a deliberately simple setup. Suppose a stock's true value is either ₹110 or ₹90, each equally likely, so its unconditional expected value is ₹100. A fraction of traders are informed: they know the true value and trade accordingly, buying if it is ₹110 and selling if it is ₹90. The rest are uninformed, trading randomly, buying or selling with equal probability regardless of the true value. A competitive market maker, earning zero expected profit, has to set its ask equal to the expected value of the stock given that a buy order just arrived, and its bid equal to the expected value given that a sell order just arrived. This is the ",
+                  "marks": []
+                },
+                {
+                  "_key": "mmc4l1b05s2",
+                  "_type": "span",
+                  "text": "Glosten-Milgrom model",
+                  "marks": ["mmc4l1m01"]
+                },
+                {
+                  "_key": "mmc4l1b05s3",
+                  "_type": "span",
+                  "text": ", and it produces a real spread out of pure information asymmetry, with no inventory risk and no order processing cost anywhere in the setup.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc4l1b06",
+              "_type": "table",
+              "caption": "Who buys and who sells, by trader type and true value",
+              "headers": ["Trader Type", "Action if True Value = ₹110", "Action if True Value = ₹90"],
+              "rows": [
+                { "_key": "mmc4l1b06r1", "_type": "tableRow", "cells": ["Informed (knows true value)", "Always buys", "Always sells"] },
+                { "_key": "mmc4l1b06r2", "_type": "tableRow", "cells": ["Uninformed (trades randomly)", "Buys with 50% probability", "Buys with 50% probability"] }
+              ]
+            },
+            {
+              "_key": "mmc4l1b07",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc4l1b07s1",
+                  "_type": "span",
+                  "text": "A buy order is more likely to have come from the ₹110 state than the ₹90 state, since informed traders only buy in the ₹110 state, on top of the same 50-50 random buying from uninformed traders in either state. That single fact is enough to make the expected value conditional on a buy order strictly higher than ₹100, and by the same logic, the expected value conditional on a sell order strictly lower than ₹100. The gap between the two is the spread, and it grows with exactly one thing: how large a fraction of the order flow is informed.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc4l1b08",
+              "_type": "keyFact",
+              "label": "Worked Example: 30% Informed Traders",
+              "value": "Ask ₹103, Bid ₹97, Spread ₹6",
+              "context": "With 30% of order flow informed, Bayes' rule gives E[Value | buy order] = ₹103 and E[Value | sell order] = ₹97, purely from the fact that buy orders are more likely to originate from the ₹110 state and sell orders from the ₹90 state. No inventory cost or order processing cost is needed to produce this ₹6 spread; information asymmetry alone accounts for all of it."
+            },
+            {
+              "_key": "mmc4l1b09",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Recomputing the Spread With Fewer Informed Traders",
+              "prompt": "Using the same setup, true value ₹110 or ₹90 with equal probability, but now with only 10% of order flow informed instead of 30%, working through the same Bayesian logic gives E[Value | buy order] = ₹101 and, by symmetry, E[Value | sell order] = ₹99. What is the resulting spread, in rupees?",
+              "correctValue": 2,
+              "tolerance": 0.1,
+              "unit": "₹",
+              "explanation": "Spread = ask − bid = ₹101 − ₹99 = ₹2. Cutting the informed fraction from 30% to 10% shrinks the spread from ₹6 to ₹2, which is the central result of the Glosten-Milgrom model: the spread rises and falls directly with how much of the order flow is informed, holding everything else in the setup fixed."
+            },
+            {
+              "_key": "mmc4l1b10",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This is the formal version of the intuition from Chapter 2's lesson on why Nifty options trade tighter than a small-cap stock's options. An index dilutes single-company information across fifty constituents, which is functionally the same as lowering the informed fraction in this model; a single stock concentrates it, which is functionally the same as raising it."
+            },
+            {
+              "_key": "mmc4l1b11",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc4l1b11s1",
+                  "_type": "span",
+                  "text": "Why This Component Doesn't Average Out",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc4l1b12",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc4l1b12s1",
+                  "_type": "span",
+                  "text": "A correctly priced spread makes the market maker's expected profit across all trades work out to roughly zero, or to whatever margin its order processing and inventory components are meant to earn. But that is only true on average, across a large, evenly mixed sample of trades. In practice, informed order flow is not spread evenly through the day; it clusters, often right before or during the exact events this course has referenced repeatedly, results season, RBI policy days, and sudden macro headlines like the one in the Chapter 3 case study. A market maker can go days collecting steady, close-to-riskless spread from uninformed flow, and then face a short, sharp burst where a much larger share of the flow than usual is genuinely informed, and lose disproportionately during exactly that window.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc4l1b13",
+              "_type": "callout",
+              "type": "warning",
+              "text": "It is tempting to read a bad week caused by informed flow as evidence that the model failed or that spreads were mispriced. More often, it is evidence that informed flow is bursty rather than uniform, and that a spread calibrated to an average informed fraction will still lose money during the specific windows where the true informed fraction spikes well above that average."
+            },
+            {
+              "_key": "mmc4l1b14",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Ahead of a Results Announcement",
+              "scenario": "A market maker has been quoting a stock option calmly for weeks, with spreads and P&L consistent with an estimated informed fraction of around 10%. The company's quarterly results are due after market close today, and the market maker suspects, without any direct evidence, that some of today's order flow may come from participants who have a better read on the likely outcome than the average trader.",
+              "prompt": "Using the Glosten-Milgrom logic from this lesson, what should the market maker do to its spread today, and why is this not the same adjustment covered in Chapter 2's discussion of inventory holding cost widening into events?",
+              "modelAnswer": "The market maker should widen its spread today because it now believes the effective informed fraction of order flow is higher than its usual 10% estimate, which the Glosten-Milgrom logic says directly raises the ask and lowers the bid even before any trade actually happens. This is a distinct adjustment from the inventory-cost widening covered in Chapter 2, which reacts to expected volatility and how long a resulting position might need to be held; here, the market maker is adjusting specifically because it expects a higher proportion of the people trading against it to know something it does not, which is an adverse selection cost, not an inventory cost, even though both tend to widen spreads around the same kinds of events."
+            },
+            {
+              "_key": "mmc4l1b15",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "What Actually Drives the Spread Here",
+              "question": "In the Glosten-Milgrom setup described in this lesson, which of the following, on its own, would produce a wider spread?",
+              "options": [
+                "Higher exchange transaction charges",
+                "A longer expected holding period for any resulting position",
+                "A higher fraction of order flow coming from informed traders",
+                "A larger lot size for the contract being traded"
+              ],
+              "correctIndex": 2,
+              "explanation": "The Glosten-Milgrom model isolates adverse selection specifically: the spread in this setup comes entirely from the probability that any given order originates from an informed trader, with no role at all for exchange fees, holding periods, or lot sizes, which belong to the order processing and inventory components covered in Chapter 2."
+            },
+            {
+              "_key": "mmc4l1b16",
+              "_type": "keyTakeaways",
+              "points": [
+                "Order anonymity, which is essential for a fair market, is also exactly what forces a market maker to price adverse selection risk into every quote rather than only into the trades that turn out to be informed",
+                "The Glosten-Milgrom model shows that a spread can arise purely from information asymmetry, with the ask set to E[value | buy order] and the bid set to E[value | sell order]",
+                "In a worked example with a 30% informed fraction, the model implies a ₹6 spread; cutting the informed fraction to 10% shrinks that spread to ₹2",
+                "This is the formal mechanism behind Chapter 2's observation that index products carry lower adverse selection cost than single-stock products, since dilution across constituents functionally lowers the informed fraction",
+                "Because informed order flow clusters around events rather than arriving evenly, a spread calibrated to an average informed fraction can still lose money disproportionately during the specific windows where the true informed fraction spikes",
+                "The next lesson turns this into something a market maker can actually estimate from real order flow data, using order flow toxicity and the VPIN metric"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

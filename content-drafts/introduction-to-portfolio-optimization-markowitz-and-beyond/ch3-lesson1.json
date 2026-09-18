@@ -1,0 +1,230 @@
+{
+  "courseSlug": "introduction-to-portfolio-optimization-markowitz-and-beyond",
+  "chapters": [
+    {
+      "title": "Chapter 3: The Markowitz Mean-Variance Framework",
+      "lessons": [
+        {
+          "title": "Harry Markowitz and the Birth of Modern Portfolio Theory",
+          "slug": "harry-markowitz-and-the-birth-of-modern-portfolio-theory",
+          "body": [
+            {
+              "_key": "poc3l1-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc3l1-001s1", "_type": "span", "marks": [], "text": "Everything built in Chapters 1 and 2, expected return, covariance, the portfolio variance formula, is not a modern invention. It is, give or take some notation, exactly the mathematics Harry Markowitz laid out in a 13-page paper in 1952, while still in his mid-twenties. This lesson is the pause before Chapter 3 puts that machinery to work: who Markowitz was, what his actual insight was, and the vocabulary the rest of this chapter runs on." }
+              ]
+            },
+            {
+              "_key": "poc3l1-002",
+              "_type": "bigIdea",
+              "text": "Markowitz's real contribution was not \"diversify.\" Investors already knew that. His contribution was a way to judge an entire portfolio's risk and return together, as one object, instead of judging each stock in it one at a time."
+            },
+            {
+              "_key": "poc3l1-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc3l1-003s1", "_type": "span", "marks": [], "text": "Before Markowitz: Diversification as Folk Wisdom" }
+              ]
+            },
+            {
+              "_key": "poc3l1-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc3l1-004s1", "_type": "span", "marks": [], "text": "\"Don't put all your eggs in one basket\" long predates 1952. Investment advisers in the early twentieth century routinely told clients to hold a mix of stocks, not just one. What none of them had was a formula. Nobody could say exactly how much a specific combination of specific stocks reduced risk, or which of two equally diversified-looking portfolios was actually the better one to hold. Diversification was a direction, not a number. As the story is usually told, Markowitz noticed this gap while researching his doctoral dissertation at the University of Chicago, reading investment advice that told readers to diversify without ever showing the arithmetic behind it." }
+              ]
+            },
+            {
+              "_key": "poc3l1-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc3l1-005s1", "_type": "span", "marks": [], "text": "The 1952 Paper: Judging the Whole Portfolio at Once" }
+              ]
+            },
+            {
+              "_key": "poc3l1-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc3l1-006s1", "_type": "span", "marks": [], "text": "Markowitz's paper, titled simply \"Portfolio Selection\" and published in The Journal of Finance, made one structural move that changed the question investors were asking. Before it, the implicit approach was to rank stocks one at a time by expected return and buy the best-ranked ones. Markowitz's framework asks a different question entirely: given every possible combination of assets and every possible set of weights, which combinations give you the most return for a given level of risk, considering not each asset's risk alone, but how all of them move together. That last clause is Chapter 2 in one sentence. Covariance is not a side detail in Markowitz's framework. It is the entire reason the framework needed inventing." }
+              ]
+            },
+            {
+              "_key": "poc3l1-007",
+              "_type": "comparison",
+              "title": "Stock Picking Before and After Markowitz",
+              "columns": [
+                {
+                  "_key": "poc3l1-007c1",
+                  "label": "Before: pick stocks one at a time",
+                  "points": [
+                    "Rank stocks by expected return, buy the best-looking ones",
+                    "\"Diversify\" as vague, unquantified advice",
+                    "No formal way to compare two diversified-looking portfolios",
+                    "Risk usually judged asset by asset, not as a portfolio property"
+                  ]
+                },
+                {
+                  "_key": "poc3l1-007c2",
+                  "label": "After: judge the whole portfolio",
+                  "points": [
+                    "Judge risk and return for the ENTIRE combination, at once",
+                    "Diversification benefit is a calculated number, from the covariance matrix",
+                    "Portfolios can be formally ranked, and dominated ones identified and discarded",
+                    "Risk is a property of the portfolio, shaped by how assets move together"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "poc3l1-008",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc3l1-008s1", "_type": "span", "marks": [], "text": "A Timeline" }
+              ]
+            },
+            {
+              "_key": "poc3l1-009",
+              "_type": "timeline",
+              "title": "From a 13-page paper to a Nobel Prize",
+              "events": [
+                { "_key": "poc3l1-009e1", "date": "1952", "title": "\"Portfolio Selection\" is published", "description": "Harry Markowitz's paper appears in The Journal of Finance, introducing the mean-variance framework this chapter builds." },
+                { "_key": "poc3l1-009e2", "date": "1959", "title": "The full-length book follows", "description": "\"Portfolio Selection: Efficient Diversification of Investments\" expands the original paper into a complete treatment, published via the Cowles Foundation." },
+                { "_key": "poc3l1-009e3", "date": "1960s-70s", "title": "CAPM builds on the efficient frontier", "description": "William Sharpe and others extend Markowitz's framework into the Capital Asset Pricing Model, covered later in this chapter." },
+                { "_key": "poc3l1-009e4", "date": "1990", "title": "The Nobel Memorial Prize", "description": "Markowitz shares the Nobel Memorial Prize in Economic Sciences with Merton Miller and William Sharpe, for pioneering work in the theory of financial economics." },
+                { "_key": "poc3l1-009e5", "date": "Today", "title": "Still the default logic", "description": "Portfolio optimizers, robo-advisor allocation engines, and institutional risk models, including on Indian AMC and PMS desks, still run on some variant of this same mean-variance logic." }
+              ]
+            },
+            {
+              "_key": "poc3l1-010",
+              "_type": "keyFact",
+              "label": "Nobel Memorial Prize in Economic Sciences",
+              "value": "1990, shared three ways",
+              "context": "Markowitz shared the prize with Merton Miller and William Sharpe, 38 years after the original 1952 paper."
+            },
+            {
+              "_key": "poc3l1-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc3l1-011s1", "_type": "span", "marks": [], "text": "New Vocabulary for This Chapter" }
+              ]
+            },
+            {
+              "_key": "poc3l1-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "poc3l1-012m1", "_type": "glossaryTerm", "definition": "A portfolio for which no other available portfolio offers a higher expected return without also carrying at least as much risk, and no other available portfolio offers lower risk without also carrying at least as low a return." },
+                { "_key": "poc3l1-012m2", "_type": "glossaryTerm", "definition": "A portfolio for which some other available portfolio exists that offers a higher expected return for the same or less risk, or the same or lower risk for the same or more return. A rational investor would never deliberately hold a dominated portfolio." }
+              ],
+              "children": [
+                { "_key": "poc3l1-012s1", "_type": "span", "marks": [], "text": "Two terms from Markowitz's framework do the heavy lifting for the rest of this chapter. An " },
+                { "_key": "poc3l1-012s2", "_type": "span", "marks": ["poc3l1-012m1"], "text": "efficient portfolio" },
+                { "_key": "poc3l1-012s3", "_type": "span", "marks": [], "text": " is one that cannot be improved in one dimension without giving something up in the other. A " },
+                { "_key": "poc3l1-012s4", "_type": "span", "marks": ["poc3l1-012m2"], "text": "dominated portfolio" },
+                { "_key": "poc3l1-012s5", "_type": "span", "marks": [], "text": " is one that can be, meaning a strictly better alternative already exists." }
+              ]
+            },
+            {
+              "_key": "poc3l1-013",
+              "_type": "table",
+              "caption": "Three hypothetical portfolios (illustrative)",
+              "headers": ["Portfolio", "Expected return", "Risk (standard deviation)"],
+              "rows": [
+                { "_key": "poc3l1-013r1", "_type": "tableRow", "cells": ["X", "10%", "12%"] },
+                { "_key": "poc3l1-013r2", "_type": "tableRow", "cells": ["Y", "10%", "15%"] },
+                { "_key": "poc3l1-013r3", "_type": "tableRow", "cells": ["Z", "13%", "12%"] }
+              ]
+            },
+            {
+              "_key": "poc3l1-014",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Portfolio Y is dominated twice over. X delivers the same 10% return for less risk (12% versus 15%), and Z delivers more return (13%) for that same lower 12% risk. Nobody who has seen all three would ever choose Y. Portfolio X is dominated too, by Z, since Z offers strictly more return for identical risk. Only Z survives as efficient here, at least among these three. Lesson 2 builds this exact logic across every possible portfolio, not just three, and traces out the full set of survivors: the efficient frontier."
+            },
+            {
+              "_key": "poc3l1-015",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc3l1-015s1", "_type": "span", "marks": [], "text": "Not the Final Word" }
+              ]
+            },
+            {
+              "_key": "poc3l1-016",
+              "_type": "callout",
+              "type": "warning",
+              "text": "A Nobel Prize is not the same as \"solved.\" Markowitz's framework needs estimates of every asset's expected return, variance, and every pairwise covariance, and the outputs are only as trustworthy as those inputs. Chapter 5 is dedicated to exactly where this breaks down in practice, and to the fixes, Black-Litterman, risk parity, and factor-based construction, that the industry has built on top of Markowitz's foundation since. None of that is a reason to skip the framework. It is the reason to understand it properly first, which is what the rest of this chapter does."
+            },
+            {
+              "_key": "poc3l1-017",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "What was actually new",
+              "question": "Investors already believed in diversification long before 1952. What did Markowitz's framework add that \"don't put all your eggs in one basket\" did not have?",
+              "options": [
+                "The idea that owning more than one stock reduces risk",
+                "A formal, calculable way to judge risk and return for an entire portfolio at once, using how assets move together, and to identify which portfolios are dominated",
+                "Proof that stock markets are efficient and cannot be beaten",
+                "The first recorded use of the word \"portfolio\" in finance"
+              ],
+              "correctIndex": 1,
+              "explanation": "The folk wisdom of diversification already existed. Markowitz's contribution was mathematical: a precise way to calculate a whole portfolio's risk and return together, using covariance, and to formally rank portfolios, including identifying and discarding dominated ones. That is the machinery Chapters 1 and 2 of this course already built."
+            },
+            {
+              "_key": "poc3l1-018",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Spot the pre-Markowitz mistake",
+              "scenario": "A friend describes his stock-picking process: \"I rank every stock I'm considering by its expected return, then I buy the ten with the highest numbers.\" He is proud that his top ten spans five different sectors.",
+              "prompt": "Using this lesson's vocabulary, what is his process missing, even though it looks diversified?",
+              "modelAnswer": "He is doing exactly the pre-Markowitz thing this lesson describes: ranking assets one at a time by expected return and picking the best-looking individual names, only checking sector spread informally afterward. He never actually calculates how his ten stocks move together, so he has no way of knowing whether his portfolio is efficient or dominated by some other combination, possibly one that swaps out a high-return, highly-correlated stock for a slightly lower-return one that meaningfully lowers overall portfolio risk. Spanning five sectors is a good instinct, echoing Chapter 1, but instinct is exactly what Markowitz's framework replaces with a calculation."
+            },
+            {
+              "_key": "poc3l1-019",
+              "_type": "flashcardSet",
+              "title": "Markowitz and MPT: Core Terms",
+              "cards": [
+                { "_key": "poc3l1-019f1", "term": "Modern Portfolio Theory (MPT)", "definition": "The framework Harry Markowitz introduced in 1952 for selecting portfolios based on the joint risk and return of the whole combination, using expected returns, variances, and covariances." },
+                { "_key": "poc3l1-019f2", "term": "Efficient portfolio", "definition": "A portfolio that cannot be improved in return without taking on more risk, or improved in risk without giving up return." },
+                { "_key": "poc3l1-019f3", "term": "Dominated portfolio", "definition": "A portfolio for which a strictly better alternative already exists, offering more return for the same or less risk, or less risk for the same or more return." }
+              ]
+            },
+            {
+              "_key": "poc3l1-020",
+              "_type": "keyTakeaways",
+              "points": [
+                "Markowitz's real contribution was not the idea of diversifying. It was a formal, mathematical way to judge an entire portfolio's risk and return together, built on exactly the covariance machinery from Chapter 2.",
+                "\"Portfolio Selection\" was published in 1952, followed by a full-length book in 1959, and the 1990 Nobel Memorial Prize in Economic Sciences, shared with Merton Miller and William Sharpe.",
+                "An efficient portfolio cannot be improved in one dimension, return or risk, without giving something up in the other.",
+                "A dominated portfolio has a strictly better alternative already available, and a rational investor would never deliberately choose to hold one.",
+                "This same mean-variance logic still underlies portfolio optimizers, robo-advisors, and institutional risk models today, more than seventy years later.",
+                "The framework is powerful but not complete on its own. Chapter 5 covers exactly where it runs into trouble in practice, and what the industry has built to address that."
+              ]
+            },
+            {
+              "_key": "poc3l1-021",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice. Historical and biographical details are presented as commonly documented, and figures used in illustrative examples are not live or historical market data. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,216 @@
+{
+  "courseSlug": "advanced-risk-management-value-at-risk-and-stress-testing",
+  "chapters": [
+    {
+      "title": "Chapter 2: Calculating VaR: Core Methodologies",
+      "lessons": [
+        {
+          "title": "Comparing Methods: Strengths, Weaknesses, and When to Use Each",
+          "slug": "comparing-methods-strengths-weaknesses-and-when-to-use-each",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "g1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "g1s1", "text": "Three methods, three different trade-offs. Historical Simulation trusts the data and pays for it with window dependence. Parametric VaR trusts a formula and pays for it with a normality assumption that Chapter 1 already showed does not hold for Indian equities. Monte Carlo trusts a model you choose yourself and pays for it in computing time and simulation error. None of the three is simply better than the others, and no serious risk desk picks just one and walks away. This lesson is about knowing which tool fits which job.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "g2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "g2s1", "text": "Three Methods, Side by Side", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "g3",
+              "caption": "The three VaR methods compared",
+              "headers": ["", "Historical Simulation", "Parametric", "Monte Carlo"],
+              "rows": [
+                { "cells": ["Distribution assumption", "None, uses actual historical returns", "Usually normal", "Whatever you choose, normal, Student-t, bootstrapped"] },
+                { "cells": ["Speed", "Fast once data is prepared", "Fastest, closed-form", "Slowest, especially with full revaluation"] },
+                { "cells": ["Handles options and nonlinear payoffs", "Only as well as the historical window covers similar moves", "Poorly, delta-normal misses gamma risk", "Well, if run with full revaluation"] },
+                { "cells": ["Captures fat tails", "Automatically, whatever the data shows", "No, unless modified beyond the basic version", "Yes, if a fat-tailed distribution is chosen"] },
+                { "cells": ["Main weakness", "Entirely dependent on the chosen lookback window", "Normality and stable-correlation assumptions", "Model risk, simulation error, and computational cost"] }
+              ]
+            },
+            {
+              "_type": "flashcardSet",
+              "_key": "g4",
+              "title": "The Three Methods in One Line Each",
+              "cards": [
+                { "term": "Historical Simulation", "definition": "Apply actual past returns to today's position, sort the outcomes, read off the percentile. No distribution assumed." },
+                { "term": "Parametric (Variance-Covariance)", "definition": "Assume a distribution, usually normal, and compute VaR instantly with z-score x volatility x position value." },
+                { "term": "Monte Carlo", "definition": "Simulate thousands of possible futures from a chosen model, fully revalue the portfolio on each, sort and read off the percentile." }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "g5",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "g5s1", "text": "Same Position, Different Answers", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "g6",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "g6s1", "text": "Recall the running Rs 50,00,000 Nifty-tracking position from the last two lessons, with a 1.2% daily volatility. The 1-day 99% VaR figures already computed for it are worth lining up side by side.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "statGrid",
+              "_key": "g7",
+              "stats": [
+                { "label": "Parametric VaR (99%)", "value": "Rs 1,39,560", "context": "Closed-form, normal distribution assumed" },
+                { "label": "Monte Carlo, normal draws (99%)", "value": "Rs 1,33,799", "context": "Converges close to Parametric, as expected" },
+                { "label": "Monte Carlo, Student-t draws (99%)", "value": "Rs 1,56,735", "context": "Fatter tails push the 99% figure noticeably higher" }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "g8",
+              "type": "insight",
+              "text": "A real Historical Simulation run on this same position, using two years of actual NSE data, would typically land closer to the fat-tailed Student-t figure than to the plain-normal figures, for exactly the reason Chapter 1 established: real Nifty returns carry fat tails, and Historical Simulation carries that reality through automatically, no distributional choice required. The gap between Rs 1,33,799 and Rs 1,56,735 is not noise, it is the rupee cost of ignoring fat tails on a book like this one, at this specific confidence level."
+            },
+            {
+              "_type": "block",
+              "_key": "g9",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "g9s1", "text": "A Decision Framework", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "g10",
+              "caption": "Matching the method to the job",
+              "headers": ["Situation", "Best-fit method", "Why"],
+              "rows": [
+                { "cells": ["Fast daily VaR across a large book of stocks and index futures", "Parametric", "Closed-form, updates instantly as positions change, needs only a volatility and correlation estimate"] },
+                { "cells": ["Capturing real fat tails without picking a distribution", "Historical Simulation", "Uses actual observed returns, whatever skew and kurtosis exist in the data carries through automatically"] },
+                { "cells": ["Options books or other convex, path-dependent positions", "Monte Carlo with full revaluation", "The only method here that reprices the true nonlinear payoff at every scenario instead of approximating it"] },
+                { "cells": ["Regulatory market risk capital under Basel's internal models approach", "Historical Simulation or Monte Carlo, feeding Expected Shortfall", "The Basel Committee's Fundamental Review of the Trading Book moved capital rules from 99% VaR to 97.5% Expected Shortfall, which needs a real or simulated tail, not a normal-distribution shortcut"] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "g11",
+              "type": "insight",
+              "text": "That last row is a preview of where this course is headed next. Expected Shortfall, covered in the next chapter, is not a competing fourth method, it is a different question, how bad is it in the tail, asked using the same three methods you just learned. Any of Historical Simulation, Parametric, or Monte Carlo can be adapted to compute Expected Shortfall instead of VaR."
+            },
+            {
+              "_type": "block",
+              "_key": "g12",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "g12s1", "text": "Why Real Desks Run More Than One", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "g13",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "g13s1", "text": "In practice, a risk desk rarely commits to a single method and stops checking. A common setup is Parametric VaR for a fast, intraday, position-limit check, since it recalculates instantly, alongside a slower, more rigorous Historical Simulation or Monte Carlo VaR run overnight for formal risk reporting and regulatory capital. When the two disagree by more than a small margin, that disagreement itself is useful information, it usually means the book's risk has shifted in a way the fast method's assumptions no longer capture well, options positions growing, correlations breaking down, or a genuinely new kind of tail risk building up.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "comparison",
+              "_key": "g14",
+              "title": "Speed vs Realism",
+              "columns": [
+                {
+                  "label": "Faster, More Assumptions",
+                  "points": [
+                    "Parametric VaR: instant, but leans hardest on normality and stable correlations",
+                    "Good for intraday limit checks and large linear portfolios",
+                    "Cheapest to run at scale, across hundreds of books"
+                  ]
+                },
+                {
+                  "label": "Slower, Fewer Assumptions",
+                  "points": [
+                    "Historical Simulation and Monte Carlo: capture more of the real distribution's shape",
+                    "Better for formal risk reporting, options books, and regulatory capital",
+                    "More computationally expensive, and Monte Carlo adds simulation error on top"
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "g15",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "g15s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "g16",
+              "variant": "scenario",
+              "title": "Picking a Method for a Mixed Book",
+              "scenario": "A mid-sized proprietary trading firm runs three books: a large cash equity portfolio of NSE-listed stocks rebalanced weekly, a Bank Nifty options book that is actively delta-hedged but carries meaningful gamma exposure, and a small overnight Nifty futures position used mainly for hedging the equity book.",
+              "prompt": "Which VaR method or methods would you recommend for each book, and why?",
+              "modelAnswer": "The cash equity portfolio and the Nifty futures hedge are both linear positions, so Parametric VaR is a reasonable, fast daily choice for routine monitoring, ideally cross-checked periodically against Historical Simulation to catch any fat-tail understatement. The Bank Nifty options book is the one that needs Monte Carlo with full revaluation, since its meaningful gamma exposure means a delta-normal Parametric approach would understate risk exactly during the large moves that matter most. A firm this size would typically run Parametric for speed across the whole portfolio day to day, while relying on Monte Carlo specifically for the options book's formal risk numbers."
+            },
+            {
+              "_type": "exercise",
+              "_key": "g17",
+              "variant": "quiz",
+              "title": "Quick Check",
+              "question": "Two VaR models on the same book, one Parametric and one Historical Simulation, start disagreeing by a wide margin after several months of close agreement. What is the most useful first reaction?",
+              "options": [
+                "Ignore it, VaR models always disagree by some amount",
+                "Immediately discard whichever model gives the higher number",
+                "Treat the disagreement as a signal and investigate what changed in the book or the market, such as growing options exposure or shifting correlations",
+                "Switch permanently to whichever method is fastest to compute"
+              ],
+              "correctIndex": 2,
+              "explanation": "A widening gap between two previously agreeing VaR methods is diagnostic information, not noise to be dismissed. It usually points to a specific cause, new nonlinear exposure, a correlation regime shift, or a distribution change, that is worth identifying rather than papering over by picking one number."
+            },
+            {
+              "_type": "block",
+              "_key": "g18",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "g18s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "g19",
+              "text": "There is no single correct VaR method, only a method that fits a specific book, a specific speed requirement, and a specific tolerance for the assumptions it quietly makes. Knowing which assumption you are making is more important than which formula you use."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "g20",
+              "points": [
+                "Historical Simulation, Parametric, and Monte Carlo trade off differently across speed, distributional realism, and the ability to handle nonlinear payoffs, none dominates the other two on every dimension.",
+                "On the same position, fat-tailed assumptions (Historical Simulation, or Monte Carlo with a fat-tailed distribution) tend to produce meaningfully higher VaR at high confidence levels like 99%, versus a plain normal Parametric or Monte Carlo estimate.",
+                "Options and other convex positions need full revaluation, Monte Carlo, to avoid the delta-normal understatement that comes from linear approximation.",
+                "Real desks commonly run a fast method for daily monitoring and a slower, more rigorous method for formal reporting, treating disagreement between the two as a signal worth investigating rather than noise.",
+                "Basel's Fundamental Review of the Trading Book replaced 99% VaR with 97.5% Expected Shortfall for regulatory capital, which is exactly where this course goes next."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

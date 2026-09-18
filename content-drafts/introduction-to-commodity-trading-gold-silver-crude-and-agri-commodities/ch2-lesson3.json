@@ -1,0 +1,1172 @@
+{
+  "courseSlug": "introduction-to-commodity-trading-gold-silver-crude-and-agri-commodities",
+  "chapters": [
+    {
+      "title": "Chapter 2: How Commodity Derivatives Work",
+      "lessons": [
+        {
+          "title": "Spot, Futures and Basis: Understanding Contango and Backwardation",
+          "slug": "spot-futures-and-basis-understanding-contango-and-backwardation",
+          "body": [
+            {
+              "_key": "c2l3-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l3-001s1",
+                  "_type": "span",
+                  "text": "Open the MCX gold contracts on any given day and you will usually see each later month priced a little higher than the one before it. Many beginners read that as the market predicting gold will rise. It is not. Open crude oil during a supply crunch and you may see the opposite, with later months cheaper, and that is not a forecast of falling oil either. By the end of this lesson you will know what really sets the gap between spot and futures prices, what contango and backwardation mean, why every futures price converges to spot at expiry, and how the shape of the curve quietly adds to or subtracts from your returns.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-002",
+              "_type": "bigIdea",
+              "text": "A futures price is not a forecast. It is mostly today's spot price plus the cost of holding the commodity until expiry, adjusted for how badly the market needs the physical goods right now."
+            },
+            {
+              "_key": "c2l3-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l3-003s1",
+                  "_type": "span",
+                  "text": "Spot, Futures and Basis",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c2l3-004m1",
+                  "_type": "glossaryTerm",
+                  "definition": "The price for buying or selling a commodity for immediate delivery, in the physical market today."
+                },
+                {
+                  "_key": "c2l3-004m2",
+                  "_type": "glossaryTerm",
+                  "definition": "The difference between the spot price and the futures price of a commodity. In this course, basis = spot minus futures."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c2l3-004s1",
+                  "_type": "span",
+                  "text": "The ",
+                  "marks": []
+                },
+                {
+                  "_key": "c2l3-004s2",
+                  "_type": "span",
+                  "text": "spot price",
+                  "marks": [
+                    "c2l3-004m1"
+                  ]
+                },
+                {
+                  "_key": "c2l3-004s3",
+                  "_type": "span",
+                  "text": " is what the commodity costs for immediate delivery today. The futures price is the price agreed today for delivery on a later date. The gap between them is the ",
+                  "marks": []
+                },
+                {
+                  "_key": "c2l3-004s4",
+                  "_type": "span",
+                  "text": "basis",
+                  "marks": [
+                    "c2l3-004m2"
+                  ]
+                },
+                {
+                  "_key": "c2l3-004s5",
+                  "_type": "span",
+                  "text": ".",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-005",
+              "_type": "mathBlock",
+              "latex": "\\text{Basis} = \\text{Spot price} - \\text{Futures price}",
+              "caption": "Conventions differ, and some traders define basis as futures minus spot. This course uses spot minus futures throughout."
+            },
+            {
+              "_key": "c2l3-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l3-006s1",
+                  "_type": "span",
+                  "text": "If spot gold is ₹1,00,000 per 10 grams and the December futures trade at ₹1,01,150, the basis is ₹1,00,000 minus ₹1,01,150 = minus ₹1,150. A negative basis means futures are above spot.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l3-007s1",
+                  "_type": "span",
+                  "text": "Cost of Carry: Where the Gap Comes From",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c2l3-008m1",
+                  "_type": "glossaryTerm",
+                  "definition": "The total cost of holding a physical commodity until a future date, mainly interest on the money tied up, plus storage and insurance."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c2l3-008s1",
+                  "_type": "span",
+                  "text": "Imagine you need 1 kg of gold in two months. You have two choices: buy futures now, or buy physical gold today and store it. If both routes lead to the same gold on the same date, they should cost about the same. Buying today means paying now, so you lose interest on that money, and you pay for storage and insurance. That total is the ",
+                  "marks": []
+                },
+                {
+                  "_key": "c2l3-008s2",
+                  "_type": "span",
+                  "text": "cost of carry",
+                  "marks": [
+                    "c2l3-008m1"
+                  ]
+                },
+                {
+                  "_key": "c2l3-008s3",
+                  "_type": "span",
+                  "text": ", and futures prices build it in.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-009",
+              "_type": "mathBlock",
+              "latex": "F \\approx S \\times \\left(1 + r \\times \\frac{d}{365}\\right) + \\text{Storage and insurance} - \\text{Convenience yield}",
+              "caption": "F = futures price, S = spot price, r = annual interest rate, d = days to expiry. Convenience yield is explained below."
+            },
+            {
+              "_key": "c2l3-010",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l3-010s1",
+                  "_type": "span",
+                  "text": "Worked Example: Gold",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l3-011s1",
+                  "_type": "span",
+                  "text": "Spot gold is ₹1,00,000 per 10 grams, interest is 7% a year, and the contract expires in 60 days. Gold is compact and cheap to store, so we ignore storage here.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-012",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l3-012s1",
+                  "_type": "span",
+                  "text": "Interest cost: ₹1,00,000 × 0.07 × 60 ÷ 365 = ₹1,151 (rounded)",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-013",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l3-013s1",
+                  "_type": "span",
+                  "text": "Fair futures price: ₹1,00,000 + ₹1,151 = ₹1,01,151",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-014",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l3-014s1",
+                  "_type": "span",
+                  "text": "If the futures traded far above that, arbitrageurs would buy spot and sell futures. Far below, they would do the reverse. That is the cash and carry trade you met in Chapter 1, and it keeps gold futures close to fair value.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-015",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Price a silver future",
+              "prompt": "Spot silver is ₹1,20,000 per kg. Interest is 6.5% a year, the contract expires in 90 days, and storage plus insurance costs ₹150 per kg for the period. Ignoring convenience yield, what is the fair futures price per kg, to the nearest rupee?",
+              "correctValue": 122073,
+              "tolerance": 5,
+              "unit": "₹",
+              "explanation": "Interest cost = ₹1,20,000 × 0.065 × 90 ÷ 365 = ₹1,923. Add storage of ₹150. Fair futures price = ₹1,20,000 + ₹1,923 + ₹150 = ₹1,22,073 per kg."
+            },
+            {
+              "_key": "c2l3-016",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l3-016s1",
+                  "_type": "span",
+                  "text": "Contango: The Normal Upward Slope",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-017",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c2l3-017m1",
+                  "_type": "glossaryTerm",
+                  "definition": "A market structure in which futures prices are higher than the spot price, and later-expiry contracts are priced higher than nearer ones, usually reflecting the cost of carry."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c2l3-017s1",
+                  "_type": "span",
+                  "text": "When futures trade above spot, and later months trade above earlier ones, the market is in ",
+                  "marks": []
+                },
+                {
+                  "_key": "c2l3-017s2",
+                  "_type": "span",
+                  "text": "contango",
+                  "marks": [
+                    "c2l3-017m1"
+                  ]
+                },
+                {
+                  "_key": "c2l3-017s3",
+                  "_type": "span",
+                  "text": ". For storable commodities with plentiful supply, contango is the normal state, because carrying costs are real and positive.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-018",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Illustrative gold futures curve in contango (₹ per 10 grams, 7% carry)",
+              "xAxisLabel": "Contract",
+              "yAxisLabel": "₹ per 10 grams",
+              "data": [
+                {
+                  "_key": "c2l3-018d1",
+                  "label": "Spot",
+                  "value": 100000
+                },
+                {
+                  "_key": "c2l3-018d2",
+                  "label": "30 days",
+                  "value": 100575
+                },
+                {
+                  "_key": "c2l3-018d3",
+                  "label": "90 days",
+                  "value": 101726
+                },
+                {
+                  "_key": "c2l3-018d4",
+                  "label": "150 days",
+                  "value": 102877
+                },
+                {
+                  "_key": "c2l3-018d5",
+                  "label": "210 days",
+                  "value": 104027
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-019",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l3-019s1",
+                  "_type": "span",
+                  "text": "Each point is simply spot plus seven percent a year of interest for the days to expiry. Nothing in this curve says gold will be ₹1,04,027 in seven months. It says that is what it costs to lock in gold for that date today.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-020",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l3-020s1",
+                  "_type": "span",
+                  "text": "Backwardation: When the Market Wants It Now",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-021",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c2l3-021m1",
+                  "_type": "glossaryTerm",
+                  "definition": "A market structure in which futures prices are lower than the spot price, and later-expiry contracts are cheaper than nearer ones, usually because physical supply is tight right now."
+                },
+                {
+                  "_key": "c2l3-021m2",
+                  "_type": "glossaryTerm",
+                  "definition": "The benefit of physically holding a commodity now, such as keeping a refinery or mill running during a shortage. When it is high, it can push futures below spot."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c2l3-021s1",
+                  "_type": "span",
+                  "text": "Sometimes futures trade below spot, and later months are cheaper than nearer ones. This is ",
+                  "marks": []
+                },
+                {
+                  "_key": "c2l3-021s2",
+                  "_type": "span",
+                  "text": "backwardation",
+                  "marks": [
+                    "c2l3-021m1"
+                  ]
+                },
+                {
+                  "_key": "c2l3-021s3",
+                  "_type": "span",
+                  "text": ". It seems to break the cost of carry logic, until you add the missing piece: ",
+                  "marks": []
+                },
+                {
+                  "_key": "c2l3-021s4",
+                  "_type": "span",
+                  "text": "convenience yield",
+                  "marks": [
+                    "c2l3-021m2"
+                  ]
+                },
+                {
+                  "_key": "c2l3-021s5",
+                  "_type": "span",
+                  "text": ".",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-022",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l3-022s1",
+                  "_type": "span",
+                  "text": "When supply is tight, holding the physical commodity today is valuable. A refinery that runs out of crude has to shut down. A spinning mill without cotton stops production. Those businesses will pay a premium for barrels and bales now, bidding up spot and near-month prices above later months.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-023",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Illustrative crude oil futures curve in backwardation (₹ per barrel)",
+              "xAxisLabel": "Contract",
+              "yAxisLabel": "₹ per barrel",
+              "data": [
+                {
+                  "_key": "c2l3-023d1",
+                  "label": "Spot",
+                  "value": 7000
+                },
+                {
+                  "_key": "c2l3-023d2",
+                  "label": "Month 1",
+                  "value": 6950
+                },
+                {
+                  "_key": "c2l3-023d3",
+                  "label": "Month 2",
+                  "value": 6880
+                },
+                {
+                  "_key": "c2l3-023d4",
+                  "label": "Month 3",
+                  "value": 6820
+                },
+                {
+                  "_key": "c2l3-023d5",
+                  "label": "Month 4",
+                  "value": 6770
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-024",
+              "_type": "comparison",
+              "title": "Contango vs backwardation",
+              "columns": [
+                {
+                  "_key": "c2l3-024c1",
+                  "label": "Contango",
+                  "points": [
+                    "Futures above spot; later months higher",
+                    "Basis is negative (spot minus futures)",
+                    "Usually reflects ample supply and the cost of carry",
+                    "Normal for gold and silver most of the time",
+                    "Hurts long positions that are rolled repeatedly"
+                  ]
+                },
+                {
+                  "_key": "c2l3-024c2",
+                  "label": "Backwardation",
+                  "points": [
+                    "Futures below spot; later months lower",
+                    "Basis is positive",
+                    "Usually reflects tight supply and high convenience yield",
+                    "Common in crude oil during supply crunches, and in agri contracts before a new harvest arrives",
+                    "Helps long positions that are rolled repeatedly"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-025",
+              "_type": "table",
+              "caption": "What the curve shape usually tells you (tendencies, not rules)",
+              "headers": [
+                "Commodity",
+                "Typical structure",
+                "Why"
+              ],
+              "rows": [
+                {
+                  "_key": "c2l3-025r1",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Gold",
+                    "Contango",
+                    "Huge above-ground stocks and cheap storage, so the curve mainly reflects interest rates"
+                  ]
+                },
+                {
+                  "_key": "c2l3-025r2",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Silver",
+                    "Contango",
+                    "Similar to gold, with slightly higher storage costs per rupee of value"
+                  ]
+                },
+                {
+                  "_key": "c2l3-025r3",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Crude oil",
+                    "Flips between the two",
+                    "Backwardation when supply is tight, as in 2022; steep contango when storage fills, as in 2020"
+                  ]
+                },
+                {
+                  "_key": "c2l3-025r4",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Agri (jeera, guar, cotton)",
+                    "Seasonal",
+                    "Contracts expiring before harvest can trade above those expiring after new supply arrives"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-026",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l3-026s1",
+                  "_type": "span",
+                  "text": "Convergence: Basis Goes to Zero at Expiry",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-027",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c2l3-027m1",
+                  "_type": "glossaryTerm",
+                  "definition": "Move towards the spot price as expiry approaches, until the basis is effectively zero on the expiry date."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c2l3-027s1",
+                  "_type": "span",
+                  "text": "At expiry, a futures contract becomes a contract for immediate delivery, which is exactly what spot is. So the futures price must ",
+                  "marks": []
+                },
+                {
+                  "_key": "c2l3-027s2",
+                  "_type": "span",
+                  "text": "converge",
+                  "marks": [
+                    "c2l3-027m1"
+                  ]
+                },
+                {
+                  "_key": "c2l3-027s3",
+                  "_type": "span",
+                  "text": " to the spot price. Every day that passes, there is less carrying cost left to price in.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-028",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Gold futures converging to spot (illustrative, 7% carry)",
+              "xAxisLabel": "Days to expiry",
+              "yAxisLabel": "₹ per 10 grams",
+              "data": [
+                {
+                  "_key": "c2l3-028d1",
+                  "label": "60"
+                },
+                {
+                  "_key": "c2l3-028d2",
+                  "label": "45"
+                },
+                {
+                  "_key": "c2l3-028d3",
+                  "label": "30"
+                },
+                {
+                  "_key": "c2l3-028d4",
+                  "label": "15"
+                },
+                {
+                  "_key": "c2l3-028d5",
+                  "label": "Expiry"
+                }
+              ],
+              "series": [
+                {
+                  "_key": "c2l3-028x1",
+                  "label": "Spot",
+                  "values": [
+                    100000,
+                    99600,
+                    100400,
+                    100900,
+                    101200
+                  ]
+                },
+                {
+                  "_key": "c2l3-028x2",
+                  "label": "Futures",
+                  "values": [
+                    101151,
+                    100460,
+                    100978,
+                    101190,
+                    101200
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-029",
+              "_type": "table",
+              "caption": "The shrinking basis",
+              "headers": [
+                "Days to expiry",
+                "Spot (₹)",
+                "Futures (₹)",
+                "Basis (₹)"
+              ],
+              "rows": [
+                {
+                  "_key": "c2l3-029r1",
+                  "_type": "tableRow",
+                  "cells": [
+                    "60",
+                    "1,00,000",
+                    "1,01,151",
+                    "Minus 1,151"
+                  ]
+                },
+                {
+                  "_key": "c2l3-029r2",
+                  "_type": "tableRow",
+                  "cells": [
+                    "45",
+                    "99,600",
+                    "1,00,460",
+                    "Minus 860"
+                  ]
+                },
+                {
+                  "_key": "c2l3-029r3",
+                  "_type": "tableRow",
+                  "cells": [
+                    "30",
+                    "1,00,400",
+                    "1,00,978",
+                    "Minus 578"
+                  ]
+                },
+                {
+                  "_key": "c2l3-029r4",
+                  "_type": "tableRow",
+                  "cells": [
+                    "15",
+                    "1,00,900",
+                    "1,01,190",
+                    "Minus 290"
+                  ]
+                },
+                {
+                  "_key": "c2l3-029r5",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Expiry",
+                    "1,01,200",
+                    "1,01,200",
+                    "0"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-030",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "What happens at expiry?",
+              "textWithBlank": "As a futures contract approaches expiry, its price ___ towards the spot price, and the basis shrinks to zero.",
+              "correctAnswers": [
+                "converges",
+                "moves",
+                "converge"
+              ],
+              "explanation": "At expiry, futures and spot describe the same thing: the commodity for immediate delivery. Any gap left would be free money for arbitrageurs, so it disappears."
+            },
+            {
+              "_key": "c2l3-031",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l3-031s1",
+                  "_type": "span",
+                  "text": "Roll Yield: The Hidden Return From Curve Shape",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-032",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c2l3-032m1",
+                  "_type": "glossaryTerm",
+                  "definition": "The gain or loss from futures prices converging towards spot over time, felt by traders who hold and roll positions. Negative in contango for longs, positive in backwardation for longs."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c2l3-032s1",
+                  "_type": "span",
+                  "text": "Convergence has a direct effect on anyone who holds futures for long periods by rolling. This effect is called ",
+                  "marks": []
+                },
+                {
+                  "_key": "c2l3-032s2",
+                  "_type": "span",
+                  "text": "roll yield",
+                  "marks": [
+                    "c2l3-032m1"
+                  ]
+                },
+                {
+                  "_key": "c2l3-032s3",
+                  "_type": "span",
+                  "text": ".",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-033",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l3-033s1",
+                  "_type": "span",
+                  "text": "In contango, longs lose. ",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_key": "c2l3-033s2",
+                  "_type": "span",
+                  "text": "You keep buying the next, more expensive contract, and it keeps drifting down towards spot. If spot is flat, your futures position loses money every cycle.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-034",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l3-034s1",
+                  "_type": "span",
+                  "text": "In backwardation, longs gain. ",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_key": "c2l3-034s2",
+                  "_type": "span",
+                  "text": "You keep buying the next, cheaper contract, and it drifts up towards spot. Even with flat spot prices, your position makes money.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-035",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l3-035s1",
+                  "_type": "span",
+                  "text": "For shorts, it is the reverse. ",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_key": "c2l3-035s2",
+                  "_type": "span",
+                  "text": "A short position benefits from contango and suffers in backwardation.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-041",
+              "_type": "collapsible",
+              "title": "Show me the math: a year of rolling in contango",
+              "content": [
+                {
+                  "_key": "c2l3-036",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c2l3-036s1",
+                      "_type": "span",
+                      "text": "Say spot gold stays exactly at ₹1,00,000 for a year, and each two-month contract is priced at ₹1,01,151 using 7% carry. A long trader buys each contract at ₹1,01,151 and holds it to expiry, when it converges to ₹1,00,000.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c2l3-037",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c2l3-037s1",
+                      "_type": "span",
+                      "text": "Loss per cycle: ₹1,01,151 minus ₹1,00,000 = ₹1,151 per 10 grams",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c2l3-038",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c2l3-038s1",
+                      "_type": "span",
+                      "text": "Cycles in a year: about 6",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c2l3-039",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c2l3-039s1",
+                      "_type": "span",
+                      "text": "Total drag: about ₹6,906 per 10 grams, roughly 7% of spot, even though gold did not move",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c2l3-040",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c2l3-040s1",
+                      "_type": "span",
+                      "text": "This is not a flaw in futures. The trader's margin money is not tied up in physical gold and can earn interest elsewhere, which roughly offsets the carry. But a trader who holds leveraged futures and leaves the rest of the cash idle feels only the drag. It is also why a gold ETF is often a simpler vehicle for long-term holding.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-042",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Who benefits from the curve?",
+              "question": "Crude oil is in steady backwardation, and spot prices stay flat for six months. Which trader benefits most from the curve shape alone?",
+              "options": [
+                "A trader who stays long and rolls every month",
+                "A trader who stays short and rolls every month",
+                "Both benefit equally",
+                "Neither, because spot did not move"
+              ],
+              "correctIndex": 0,
+              "explanation": "In backwardation, each new contract is bought below spot and rises towards it as expiry approaches. A long who rolls repeatedly collects that convergence as positive roll yield. A short loses it."
+            },
+            {
+              "_key": "c2l3-043",
+              "_type": "keyFact",
+              "label": "The most extreme contango on record",
+              "value": "WTI May 2020 futures settled at minus $37.63 a barrel",
+              "context": "On 20 April 2020, the COVID demand collapse filled US storage so completely that holders of the expiring contract paid to get rid of oil they could not store, while the June contract still traded around $20. Chapter 4 covers what this meant for MCX traders."
+            },
+            {
+              "_key": "c2l3-044",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l3-044s1",
+                  "_type": "span",
+                  "text": "Basis for Hedgers: Why It Matters Beyond Speculation",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-045",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l3-045s1",
+                  "_type": "span",
+                  "text": "Hedgers rarely hold futures to expiry. They close when they buy or sell the physical commodity. So their real outcome depends on the basis on the day they close, not just the futures price they locked in.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-046",
+              "_type": "mathBlock",
+              "latex": "\\text{Effective price} = \\text{Futures entry price} + \\text{Basis when hedge is closed}",
+              "caption": "Basis = spot minus futures on the day the hedge is lifted."
+            },
+            {
+              "_key": "c2l3-053",
+              "_type": "collapsible",
+              "title": "Worked example: Suresh the jeweller revisited",
+              "content": [
+                {
+                  "_key": "c2l3-047",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c2l3-047s1",
+                      "_type": "span",
+                      "text": "Suresh buys December gold futures at ₹1,01,150 per 10 grams to hedge a purchase he will make in November. In November, spot is ₹1,04,000 and the December futures trade at ₹1,04,600. He buys physical gold and closes his futures.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c2l3-048",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c2l3-048s1",
+                      "_type": "span",
+                      "text": "Futures gain: ₹1,04,600 minus ₹1,01,150 = ₹3,450",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c2l3-049",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c2l3-049s1",
+                      "_type": "span",
+                      "text": "Physical cost: ₹1,04,000",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c2l3-050",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c2l3-050s1",
+                      "_type": "span",
+                      "text": "Net effective cost: ₹1,04,000 minus ₹3,450 = ₹1,00,550",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c2l3-051",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c2l3-051s1",
+                      "_type": "span",
+                      "text": "Check with the formula: basis at close = ₹1,04,000 minus ₹1,04,600 = minus ₹600, so ₹1,01,150 + (minus ₹600) = ₹1,00,550",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c2l3-052",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c2l3-052s1",
+                      "_type": "span",
+                      "text": "His hedge locked in a price close to where he started, and the small remaining difference was the basis, not the level of gold.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-054",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Read the basis",
+              "prompt": "With 30 days to expiry, spot gold is ₹1,00,400 per 10 grams and the futures trade at ₹1,00,978. Using basis = spot minus futures, what is the basis in rupees?",
+              "correctValue": -578,
+              "tolerance": 0,
+              "unit": "₹",
+              "explanation": "₹1,00,400 minus ₹1,00,978 = minus ₹578. The negative basis shows futures above spot, which is contango. With 30 days left, it roughly matches 7% annual interest on ₹1,00,400 for 30 days."
+            },
+            {
+              "_key": "c2l3-055",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Is the curve a forecast?",
+              "scenario": "Aditya, a 26-year-old in Kochi who recently started trading, notices that the MCX crude oil contract for two months out is ₹150 per barrel below the near month. He messages his trading group: \"The market is telling us crude will fall ₹150. Easy money: short the far month and wait.\"",
+              "prompt": "What is wrong with Aditya's reasoning, and what could actually happen to his short trade?",
+              "modelAnswer": "What is wrong: a backwardated curve is not a forecast of falling prices. It usually reflects tight supply today and high convenience yield, which pushes near-month and spot prices above later months.\n\nWhat could happen: as time passes, the far contract Aditya shorted becomes the near contract, and it tends to converge towards spot. If spot stays flat, that contract rises towards spot, and his short loses money even though nothing dramatic happened. That is negative roll yield for a short in backwardation.\n\nThe better approach: form a view on crude from supply, demand and inventory, then use the curve to understand the carry cost or benefit of expressing that view. The curve shape tells you what it costs to hold a position, not where prices are going."
+            },
+            {
+              "_key": "c2l3-056",
+              "_type": "flashcardSet",
+              "title": "Spot, Futures and Basis",
+              "cards": [
+                {
+                  "_key": "c2l3-056f1",
+                  "term": "Spot price",
+                  "definition": "The price for immediate delivery of a commodity today."
+                },
+                {
+                  "_key": "c2l3-056f2",
+                  "term": "Basis",
+                  "definition": "Spot price minus futures price. Negative in contango, positive in backwardation."
+                },
+                {
+                  "_key": "c2l3-056f3",
+                  "term": "Cost of carry",
+                  "definition": "Interest, storage and insurance for holding a commodity until a future date."
+                },
+                {
+                  "_key": "c2l3-056f4",
+                  "term": "Contango",
+                  "definition": "Futures above spot, with later months priced higher. Normal for gold and silver."
+                },
+                {
+                  "_key": "c2l3-056f5",
+                  "term": "Backwardation",
+                  "definition": "Futures below spot, with later months priced lower, usually because supply is tight now."
+                },
+                {
+                  "_key": "c2l3-056f6",
+                  "term": "Convenience yield",
+                  "definition": "The benefit of physically holding a commodity now, which can push futures below spot."
+                },
+                {
+                  "_key": "c2l3-056f7",
+                  "term": "Convergence",
+                  "definition": "Futures moving towards spot as expiry approaches, until basis is zero."
+                },
+                {
+                  "_key": "c2l3-056f8",
+                  "term": "Roll yield",
+                  "definition": "Gain or loss from convergence when holding and rolling futures; negative for longs in contango."
+                }
+              ]
+            },
+            {
+              "_key": "c2l3-057",
+              "_type": "keyTakeaways",
+              "points": [
+                "A futures price is not a forecast. It is roughly spot plus cost of carry, minus convenience yield.",
+                "Basis = spot minus futures. It is negative in contango and positive in backwardation.",
+                "Contango is normal for storable, well-supplied commodities like gold. Backwardation signals tight physical supply.",
+                "Futures converge to spot at expiry, so basis shrinks to zero.",
+                "Roll yield means longs lose in contango and gain in backwardation, even when spot prices do not move.",
+                "Hedgers' effective price = futures entry price + basis on the day they close the hedge."
+              ]
+            },
+            {
+              "_key": "c2l3-058",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice. Futures curves shown are illustrative; real curves also reflect transaction costs, taxes, duties and market-specific factors. Commodity derivatives are leveraged and can cause losses larger than your initial margin."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

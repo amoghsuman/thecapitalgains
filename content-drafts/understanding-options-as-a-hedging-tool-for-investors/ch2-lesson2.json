@@ -1,0 +1,485 @@
+{
+  "courseSlug": "understanding-options-as-a-hedging-tool-for-investors",
+  "chapters": [
+    {
+      "title": "Chapter 2: Puts as Portfolio Insurance",
+      "lessons": [
+        {
+          "title": "Deductible, Premium, and Term: Mapping Insurance Language to Put Options",
+          "slug": "deductible-premium-and-term-mapping-insurance-language-to-put-options",
+          "body": [
+            {
+              "_key": "c2l2-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2-001s1",
+                  "_type": "span",
+                  "text": "Every salaried Indian already understands insurance better than they think. You know that a ₹10 lakh health cover costs more than ₹5 lakh, that a policy with a co-pay is cheaper, that a one-year term must be renewed, and that a year without a claim is good news, not wasted money. Put options run on exactly the same logic, but the jargon hides it. This lesson builds a complete translation table from insurance language to options language, then goes deep on the two dials Chapter 1 did not cover: how much to insure (the sum insured) and for how long (the term). It ends with the places where the analogy breaks, because those are where investors get hurt.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-002",
+              "_type": "bigIdea",
+              "text": "Every put hedge is an insurance policy with four dials: how much you cover, how big the deductible is, how long the term runs, and what premium you pay. Turning any one dial changes the other three."
+            },
+            {
+              "_key": "c2l2-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2-003s1",
+                  "_type": "span",
+                  "text": "The Translation Table",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-004",
+              "_type": "table",
+              "caption": "Insurance language and its put option equivalent",
+              "headers": ["Insurance term", "Put option equivalent", "Example: Nifty at 25,000"],
+              "rows": [
+                { "_key": "c2l2-004r1", "_type": "tableRow", "cells": ["Sum insured", "Notional value covered: lots × lot size × index level", "2 lots × 65 × 25,000 = ₹32,50,000"] },
+                { "_key": "c2l2-004r2", "_type": "tableRow", "cells": ["Deductible", "Gap between today's price and the strike", "24,000 strike: first 4% of the fall is yours"] },
+                { "_key": "c2l2-004r3", "_type": "tableRow", "cells": ["Premium", "Option premium, paid in full upfront", "₹250 × 130 units = ₹32,500"] },
+                { "_key": "c2l2-004r4", "_type": "tableRow", "cells": ["Policy term", "Time to expiry", "One month, three months, six months or longer"] },
+                { "_key": "c2l2-004r5", "_type": "tableRow", "cells": ["Co-pay", "Hedge ratio below 100%", "Protect ₹32.5 lakh portfolio with 1 lot: 50% covered"] },
+                { "_key": "c2l2-004r6", "_type": "tableRow", "cells": ["Claim payout", "Put's value when the market is below the strike", "Nifty at 22,000: (24,000 − 22,000) × 130 = ₹2,60,000"] },
+                { "_key": "c2l2-004r7", "_type": "tableRow", "cells": ["No-claim year", "Put expires worthless", "Nifty above 24,000 at expiry: premium spent, portfolio intact"] },
+                { "_key": "c2l2-004r8", "_type": "tableRow", "cells": ["Renewal", "Rolling: buying a new put as the old one expires", "Buy the next quarter's put in the final weeks of this one"] },
+                { "_key": "c2l2-004r9", "_type": "tableRow", "cells": ["Insurer", "Option writer, with NSE Clearing guaranteeing settlement", "You never need to know or trust the seller"] },
+                { "_key": "c2l2-004r10", "_type": "tableRow", "cells": ["Premium loading in risky times", "Higher implied volatility", "Puts cost more when India VIX is high (next lesson)"] }
+              ]
+            },
+            {
+              "_key": "c2l2-005",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Translate it",
+              "question": "An investor says: \"I renewed my Nifty insurance with a bigger deductible to save on premium.\" What did they actually do?",
+              "options": [
+                "Bought more lots of the same put at the same strike",
+                "Sold their put before expiry at a profit",
+                "Rolled into a new put with a lower strike price",
+                "Rolled into a new put with a higher strike price"
+              ],
+              "correctIndex": 2,
+              "explanation": "Renewal means rolling into a new expiry. A bigger deductible means a larger gap between the market and the strike, so the new put has a lower strike. Lower strikes are cheaper, which is where the premium saving comes from."
+            },
+            {
+              "_key": "c2l2-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2-006s1",
+                  "_type": "span",
+                  "text": "Dial 1: Sum Insured and Co-pay, or How Much to Cover",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c2l2-007m1",
+                  "_type": "glossaryTerm",
+                  "definition": "The share of a portfolio's exposure that is protected by the hedge: notional value of the options divided by portfolio value."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c2l2-007s1",
+                  "_type": "span",
+                  "text": "You do not have to insure everything. Covering part of a portfolio is the options version of a co-pay: cheaper premium, but you share more of any loss. The measure is the ",
+                  "marks": []
+                },
+                {
+                  "_key": "c2l2-007s2",
+                  "_type": "span",
+                  "text": "hedge ratio",
+                  "marks": ["c2l2-007m1"]
+                },
+                {
+                  "_key": "c2l2-007s3",
+                  "_type": "span",
+                  "text": ". Because options trade in whole lots, your choices come in steps. A ₹32.5 lakh Nifty-tracking portfolio can be 0%, 50% or 100% hedged with 0, 1 or 2 lots. Nothing in between.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-008",
+              "_type": "mathBlock",
+              "latex": "\\text{Hedge ratio} = \\frac{\\text{Lots} \\times \\text{Lot size} \\times \\text{Index level}}{\\text{Portfolio value}}",
+              "caption": "Assumes the portfolio moves in line with the index. Chapter 3 adjusts this for portfolios that do not."
+            },
+            {
+              "_key": "c2l2-009",
+              "_type": "table",
+              "caption": "₹32,50,000 Nifty-tracking portfolio, three-month 24,000 puts at ₹250, result at expiry (illustrative)",
+              "headers": ["Nifty at expiry", "No hedge (0 lots)", "50% hedge (1 lot, ₹16,250 premium)", "100% hedge (2 lots, ₹32,500 premium)"],
+              "rows": [
+                { "_key": "c2l2-009r1", "_type": "tableRow", "cells": ["20,000 (down 20%)", "−₹6,50,000 (−20%)", "−₹6,50,000 + ₹2,60,000 − ₹16,250 = −₹4,06,250 (−12.5%)", "−₹6,50,000 + ₹5,20,000 − ₹32,500 = −₹1,62,500 (−5%)"] },
+                { "_key": "c2l2-009r2", "_type": "tableRow", "cells": ["25,000 (flat)", "₹0", "−₹16,250 (−0.5%)", "−₹32,500 (−1%)"] },
+                { "_key": "c2l2-009r3", "_type": "tableRow", "cells": ["27,500 (up 10%)", "+₹3,25,000 (+10%)", "+₹3,08,750 (+9.5%)", "+₹2,92,500 (+9%)"] }
+              ]
+            },
+            {
+              "_key": "c2l2-010",
+              "_type": "chart",
+              "chartType": "bar",
+              "title": "What each level of cover does in a 20% fall and a 10% rally",
+              "xAxisLabel": "Hedge ratio",
+              "yAxisLabel": "Portfolio change (%)",
+              "data": [
+                { "_key": "c2l2-010d1", "label": "0% hedged" },
+                { "_key": "c2l2-010d2", "label": "50% hedged" },
+                { "_key": "c2l2-010d3", "label": "100% hedged" }
+              ],
+              "series": [
+                { "_key": "c2l2-010s1", "label": "Nifty down 20%", "values": [-20, -12.5, -5] },
+                { "_key": "c2l2-010s2", "label": "Nifty up 10%", "values": [10, 9.5, 9] }
+              ]
+            },
+            {
+              "_key": "c2l2-011",
+              "_type": "callout",
+              "type": "insight",
+              "text": "A 50% hedge is not a weak hedge. It turns a 20% fall into 12.5% for half the premium, and it is often the right choice when only part of a portfolio is tied to a near-term goal. Remember Meera from Chapter 1: she needed ₹12 lakh from a ₹40 lakh portfolio. Insuring the whole ₹40 lakh would have been paying for cover she did not need."
+            },
+            {
+              "_key": "c2l2-012",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Work out the hedge ratio",
+              "prompt": "Imran holds ₹48,75,000 in a Nifty 50 index fund. The Nifty is at 25,000 and the lot size is 65. He buys two lots of a Nifty put. What is his hedge ratio, in percent? (One decimal place.)",
+              "correctValue": 66.7,
+              "tolerance": 0.1,
+              "unit": "%",
+              "explanation": "Notional covered = 2 × 65 × 25,000 = ₹32,50,000. Hedge ratio = 32,50,000 ÷ 48,75,000 = 0.667, or 66.7%. His portfolio is exactly three lots, so his choices are 33.3%, 66.7% or 100%."
+            },
+            {
+              "_key": "c2l2-013",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2-013s1",
+                  "_type": "span",
+                  "text": "Dial 2: The Policy Term, or How Long to Cover",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-014",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2-014s1",
+                  "_type": "span",
+                  "text": "Here is where options insurance behaves differently from most policies. A longer term costs more in total but less per month, because the time value of an option grows roughly with the square root of time, not in a straight line. Doubling the term does not double the premium. The table shows the same 24,000 put across four terms.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-015",
+              "_type": "table",
+              "caption": "Nifty 24,000 put across different terms, Nifty at 25,000, one lot of 65 (illustrative premiums)",
+              "headers": ["Term", "Premium", "Cost per lot", "Cost per month of cover", "Yearly cost if renewed at the same price", "Yearly cost as % of ₹16,25,000"],
+              "rows": [
+                { "_key": "c2l2-015r1", "_type": "tableRow", "cells": ["1 month", "₹90", "₹5,850", "₹90", "₹70,200 (12 renewals)", "4.3%"] },
+                { "_key": "c2l2-015r2", "_type": "tableRow", "cells": ["3 months", "₹250", "₹16,250", "₹83", "₹65,000 (4 renewals)", "4.0%"] },
+                { "_key": "c2l2-015r3", "_type": "tableRow", "cells": ["6 months", "₹375", "₹24,375", "₹63", "₹48,750 (2 renewals)", "3.0%"] },
+                { "_key": "c2l2-015r4", "_type": "tableRow", "cells": ["12 months", "₹510", "₹33,150", "₹43", "₹33,150 (1 policy)", "2.0%"] }
+              ]
+            },
+            {
+              "_key": "c2l2-016",
+              "_type": "chart",
+              "chartType": "bar",
+              "title": "Yearly cost of keeping a 24,000 put in place, by term",
+              "xAxisLabel": "Term of each put",
+              "yAxisLabel": "Yearly cost (% of portfolio)",
+              "data": [
+                { "_key": "c2l2-016d1", "label": "1 month", "value": 4.3 },
+                { "_key": "c2l2-016d2", "label": "3 months", "value": 4.0 },
+                { "_key": "c2l2-016d3", "label": "6 months", "value": 3.0 },
+                { "_key": "c2l2-016d4", "label": "12 months", "value": 2.0 }
+              ]
+            },
+            {
+              "_key": "c2l2-017",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2-017s1",
+                  "_type": "span",
+                  "text": "So why doesn't everyone just buy the 12-month put? Because the cheaper per-month cost comes with three catches.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-018",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "number",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2-018s1",
+                  "_type": "span",
+                  "text": "The floor does not move with the market. ",
+                  "marks": ["strong"]
+                },
+                {
+                  "_key": "c2l2-018s2",
+                  "_type": "span",
+                  "text": "A 12-month 24,000 put protects the value you had on day one. If the Nifty rallies to 28,000 by month six, your floor is now 14% below the market, and a fall back to 24,000 wipes out all your gains with no payout. Shorter puts, renewed each time, keep resetting the floor closer to the current level.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-019",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "number",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2-019s1",
+                  "_type": "span",
+                  "text": "Longer-dated options trade thinly. ",
+                  "marks": ["strong"]
+                },
+                {
+                  "_key": "c2l2-019s2",
+                  "_type": "span",
+                  "text": "NSE lists Nifty options well beyond a year, but most trading happens in the nearest few expiries. Far-dated strikes can have wide bid-ask spreads, so you may pay noticeably more than the fair price to buy and get less to sell.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-020",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "number",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2-020s1",
+                  "_type": "span",
+                  "text": "Real renewals are not at the same price. ",
+                  "marks": ["strong"]
+                },
+                {
+                  "_key": "c2l2-020s2",
+                  "_type": "span",
+                  "text": "The yearly figures above assume every renewal costs the same. In practice, if volatility jumps in a nervous month, your next one-month renewal can cost far more. A longer term locks in today's price for the whole period.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-021",
+              "_type": "comparison",
+              "title": "Short terms renewed often vs one long term",
+              "columns": [
+                {
+                  "_key": "c2l2-021c1",
+                  "label": "Short terms (1 to 3 months), renewed",
+                  "points": [
+                    "Floor resets close to the market at each renewal, protecting recent gains",
+                    "Deep liquidity and tight spreads",
+                    "Higher total yearly cost",
+                    "Exposed to renewal prices spiking when volatility rises",
+                    "More transactions and more decisions to get right"
+                  ]
+                },
+                {
+                  "_key": "c2l2-021c2",
+                  "label": "One long term (6 to 12 months)",
+                  "points": [
+                    "Floor fixed at the starting level for the whole term",
+                    "Lower cost per month of cover",
+                    "Today's premium locked in, no renewal risk",
+                    "Thinner trading and wider spreads",
+                    "Best when the goal is to protect a specific starting amount"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-022",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "The renewal word",
+              "textWithBlank": "Replacing an expiring put with a new put on a later expiry is called ___ the hedge.",
+              "correctAnswers": ["rolling", "roll", "rolling over"],
+              "explanation": "Rolling is the options version of renewing a policy. Each roll is a fresh purchase at that day's premium, so the cost of cover can rise or fall from one roll to the next."
+            },
+            {
+              "_key": "c2l2-023",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l2-023s1",
+                  "_type": "span",
+                  "text": "Where the Insurance Analogy Breaks",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-024",
+              "_type": "table",
+              "caption": "The differences that matter",
+              "headers": ["Insurance policy", "Put option", "Why it matters to you"],
+              "rows": [
+                { "_key": "c2l2-024r1", "_type": "tableRow", "cells": ["Pays only if you actually suffer a loss", "Pays on the index price, whether or not your portfolio lost that much", "If your funds fall more than the Nifty, the put pays too little. If they fall less, it pays more than your loss"] },
+                { "_key": "c2l2-024r2", "_type": "tableRow", "cells": ["You cannot insure more than you own", "You can buy as many puts as you like", "Over-hedging is allowed, and the excess is a bet, not insurance"] },
+                { "_key": "c2l2-024r3", "_type": "tableRow", "cells": ["Premium is set by the insurer, usually yearly", "Premium is set by the market, and changes every second", "The same cover can cost double in a panic"] },
+                { "_key": "c2l2-024r4", "_type": "tableRow", "cells": ["Little or no value if you cancel early", "Can be sold at any time for its current market value", "You can take a payout mid-term without waiting for expiry"] },
+                { "_key": "c2l2-024r5", "_type": "tableRow", "cells": ["Claims involve paperwork and approval", "Payout is automatic and immediate", "No claim can be rejected, but no one checks that the hedge fits your portfolio either"] }
+              ]
+            },
+            {
+              "_key": "c2l2-025",
+              "_type": "callout",
+              "type": "warning",
+              "text": "The biggest break is the first one. Insurance compensates your actual loss. A Nifty put compensates the Nifty's loss. An investor whose portfolio is full of smallcap funds may watch it fall 25% while the Nifty falls 12% and their puts, bought 4% below, pay out on only 8%. The policy worked exactly as written. It was just the wrong policy."
+            },
+            {
+              "_key": "c2l2-026",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "One long policy or four short ones?",
+              "scenario": "Sneha, 58, a government school principal in Lucknow, has ₹32.5 lakh in a Nifty 50 index fund with the Nifty at 25,000. She retires in 12 months and needs to move at least ₹30 lakh into safer instruments at that point. She is choosing between buying two lots of a 12-month 24,000 put now for ₹33,150 per lot, or buying two lots of a three-month 24,000 put each quarter, renewing each time at a strike about 4% below wherever the Nifty is then.",
+              "prompt": "Which approach better fits Sneha's goal, and what would each approach do if the Nifty rallied to 28,000 by month six and then fell to 23,000 by month twelve?",
+              "modelAnswer": "1. Her goal is fixed in rupees: at least ₹30 lakh in 12 months. Her tolerable drawdown is 1 − 30 ÷ 32.5 = 7.69%. The 12-month 24,000 put caps her worst case at the 4% fall to the strike plus about 2% in premium, roughly 6% in total, so it guarantees the goal. It also locks in the cost at ₹66,300 for the year, with no renewal risk.\n2. The rally then fall scenario with the 12-month put: at 23,000 her fund is worth ₹29.9 lakh before the hedge. The put pays (24,000 − 23,000) × 130 = ₹1,30,000, so she ends with about ₹31.2 lakh after the hedge payout, or about ₹30.5 lakh after also counting the ₹66,300 premium. The goal is met, but all the gains from the rally are gone.\n3. With quarterly renewals: once the Nifty is near 28,000, her new puts would have strikes around 26,900. A fall to 23,000 would pay out on much more of the decline, protecting a good part of the rally gains. The catch is a higher and less predictable total cost, and the risk that renewal premiums jump if volatility spikes.\n4. For Sneha, the 12-month put fits the goal more cleanly and more cheaply. If she values protecting gains made along the way, quarterly renewals do more, at a higher cost. A sensible middle path is to use the 12-month put and, if the market rallies strongly, consider locking in gains by moving part of the money to debt early."
+            },
+            {
+              "_key": "c2l2-027",
+              "_type": "collapsible",
+              "title": "Why time value grows with the square root of time",
+              "content": [
+                {
+                  "_key": "c2l2-027a",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c2l2-027as1",
+                      "_type": "span",
+                      "text": "Market moves over time do not add up in a straight line, because up days and down days partly cancel. The typical size of the total move grows with the square root of the number of days. An option's time value tracks that typical move, so:",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c2l2-027b",
+                  "_type": "mathBlock",
+                  "latex": "\\text{Expected move} \\approx S \\times \\sigma \\times \\sqrt{T}",
+                  "caption": "σ = annual volatility, T = time in years. Four times the time gives only twice the expected move."
+                },
+                {
+                  "_key": "c2l2-027c",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c2l2-027cs1",
+                      "_type": "span",
+                      "text": "With the Nifty at 25,000 and volatility of 15%, the typical one-month move is about 25,000 × 0.15 × √(1/12) ≈ 1,083 points, while the typical 12-month move is about 25,000 × 0.15 × 1 = 3,750 points. Twelve times the time, only about 3.5 times the move. That is why long-term cover is cheaper per month. Interest rates also make longer-dated puts a little cheaper, but the square-root effect does most of the work.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c2l2-028",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Write your own policy schedule",
+              "steps": [
+                "Sum insured: which part of your portfolio needs protection, in rupees, and how many lots does that match?",
+                "Deductible: what strike keeps your maximum hedged loss within your tolerable drawdown?",
+                "Term: when does the risk end, and does one expiry cover it or will you need to roll?",
+                "Premium: what is the total cost, as a percentage of the amount covered, for the full period?",
+                "Exclusions: how closely does your portfolio actually track the index your put is on?"
+              ]
+            },
+            {
+              "_key": "c2l2-029",
+              "_type": "toolLink",
+              "label": "NSE Clearing",
+              "url": "https://www.nseclearing.in",
+              "description": "The clearing corporation that guarantees settlement of every NSE options trade, so a hedger never depends on the individual seller paying up."
+            },
+            {
+              "_key": "c2l2-030",
+              "_type": "flashcardSet",
+              "title": "Insurance Language for Put Options",
+              "cards": [
+                { "_key": "c2l2-030f1", "term": "Sum insured", "definition": "Notional value covered: lots × lot size × index level." },
+                { "_key": "c2l2-030f2", "term": "Deductible", "definition": "The gap between today's price and the put's strike, which you absorb yourself." },
+                { "_key": "c2l2-030f3", "term": "Policy term", "definition": "Time to the put's expiry. Longer terms cost more in total but less per month." },
+                { "_key": "c2l2-030f4", "term": "Hedge ratio", "definition": "Notional value of the puts divided by portfolio value. Below 100% is the options version of a co-pay." },
+                { "_key": "c2l2-030f5", "term": "Rolling", "definition": "Renewing cover by buying a put on a later expiry as the current one runs out." },
+                { "_key": "c2l2-030f6", "term": "Basis gap", "definition": "The difference between what your portfolio lost and what the index lost, which the put does not cover." }
+              ]
+            },
+            {
+              "_key": "c2l2-031",
+              "_type": "keyTakeaways",
+              "points": [
+                "Sum insured, deductible, premium, term, co-pay and renewal all have direct put option equivalents.",
+                "Hedge ratio is your co-pay. Options come in whole lots, so your choices come in steps.",
+                "A 50% hedge meaningfully cuts a crash loss for half the premium and suits goals tied to part of a portfolio.",
+                "Longer terms cost less per month because time value grows with the square root of time, but the floor stays fixed and liquidity is thinner.",
+                "Short terms renewed often protect recent gains but cost more and face renewal price risk.",
+                "Unlike insurance, a put pays on the index, not your actual loss. That mismatch is the biggest hidden risk in index hedging."
+              ]
+            },
+            {
+              "_key": "c2l2-032",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice. Premiums across terms are illustrative, and real renewal costs change with volatility and interest rates. Longer-dated options may have limited liquidity. Consult a SEBI-registered investment adviser before using options."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

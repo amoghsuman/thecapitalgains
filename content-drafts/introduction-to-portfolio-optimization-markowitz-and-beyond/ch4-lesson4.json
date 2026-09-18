@@ -1,0 +1,206 @@
+{
+  "courseSlug": "introduction-to-portfolio-optimization-markowitz-and-beyond",
+  "chapters": [
+    {
+      "title": "Chapter 4: Adding a Risk-Free Asset: The Capital Market Line",
+      "lessons": [
+        {
+          "title": "From Markowitz to CAPM: How Portfolio Theory Built Asset Pricing",
+          "slug": "from-markowitz-to-capm-how-portfolio-theory-built-asset-pricing",
+          "body": [
+            {
+              "_key": "poc4l4-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc4l4-001s1", "_type": "span", "marks": [], "text": "Lesson 3 established that the market portfolio sits at the tangency point, the single best Sharpe ratio available. This closing lesson asks what that fact implies about any ONE asset inside the market, and the answer closes a loop stretching all the way back to Chapter 1's very first lesson." }
+              ]
+            },
+            {
+              "_key": "poc4l4-002",
+              "_type": "bigIdea",
+              "text": "Only the part of an asset's risk that cannot be diversified away, its beta, determines what return it deserves. The rest of its volatility, however large, earns no extra compensation at all, because the market portfolio already eliminates it for free."
+            },
+            {
+              "_key": "poc4l4-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc4l4-003s1", "_type": "span", "marks": [], "text": "The Derivation, in Outline" }
+              ]
+            },
+            {
+              "_key": "poc4l4-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc4l4-004s1", "_type": "span", "marks": [], "text": "The market portfolio, M, sits at the tangency point, the highest Sharpe ratio achievable. Consider nudging a tiny extra weight into some individual asset i, funded by trimming M slightly. If that nudge could improve the combined Sharpe ratio, M was never truly optimal to begin with, a contradiction. So the rate of change of Sharpe ratio, with respect to that nudge, must be exactly zero at M. Working through that condition mathematically, the algebra forces every asset's risk premium to be proportional to its COVARIANCE with the market, not its own standalone variance." }
+              ]
+            },
+            {
+              "_key": "poc4l4-005",
+              "_type": "mathBlock",
+              "latex": "\\beta_i = \\frac{Cov(R_i, R_M)}{Var(R_M)}",
+              "caption": "Beta: an asset's covariance with the market, scaled by the market's own variance."
+            },
+            {
+              "_key": "poc4l4-006",
+              "_type": "mathBlock",
+              "latex": "E[R_i] = R_f + \\beta_i \\, (E[R_M] - R_f)",
+              "caption": "The Capital Asset Pricing Model (CAPM): an asset's fair expected return, built entirely from its beta."
+            },
+            {
+              "_key": "poc4l4-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc4l4-007s1", "_type": "span", "marks": [], "text": "Full Circle: Systematic Risk Finally Has a Formula" }
+              ]
+            },
+            {
+              "_key": "poc4l4-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc4l4-008s1", "_type": "span", "marks": [], "text": "Chapter 1, Lesson 1 introduced systematic and unsystematic risk in plain language, long before any of the machinery to make the distinction precise existed. Beta is that precise formula. An asset's unsystematic risk, the part uncorrelated with the market, gets diversified away for free inside the market portfolio, exactly as Chapter 1 argued. Since it costs nothing to eliminate, the market pays nothing extra to bear it. Only beta, the systematic sliver that survives diversification, earns a risk premium. A wildly volatile stock with a low beta and a much calmer stock with a high beta can trade places entirely in terms of the RETURN CAPM says each one deserves." }
+              ]
+            },
+            {
+              "_key": "poc4l4-009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc4l4-009s1", "_type": "span", "marks": [], "text": "Worked Example: Beta for Five Familiar Stocks" }
+              ]
+            },
+            {
+              "_key": "poc4l4-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc4l4-010s1", "_type": "span", "marks": [], "text": "Five real stocks are one thing, and the real Nifty 50 is another, so for this worked example, the equal-weighted combination of Chapter 3's five stocks, TCS, Maruti Suzuki, HDFC Bank, HUL, and Reliance, stands in as a small illustrative \"market,\" using the exact same covariance matrix from Chapter 3, Lesson 5. This proxy market has a return of 15.80% and a risk of 14.89%. Each stock's covariance with this proxy market, and its beta, follow directly." }
+              ]
+            },
+            {
+              "_key": "poc4l4-011",
+              "_type": "table",
+              "caption": "Beta and CAPM-required return, five stocks, against the equal-weighted proxy market",
+              "headers": ["Stock", "Beta", "CAPM required return", "Assumed expected return (Ch. 3)", "Alpha"],
+              "rows": [
+                { "_key": "poc4l4-011r1", "_type": "tableRow", "cells": ["TCS", "0.91", "14.93%", "16.00%", "+1.07%"] },
+                { "_key": "poc4l4-011r2", "_type": "tableRow", "cells": ["Maruti Suzuki", "1.32", "18.73%", "20.00%", "+1.27%"] },
+                { "_key": "poc4l4-011r3", "_type": "tableRow", "cells": ["HDFC Bank", "1.18", "17.47%", "17.00%", "-0.47%"] },
+                { "_key": "poc4l4-011r4", "_type": "tableRow", "cells": ["HUL", "0.54", "11.49%", "11.00%", "-0.49%"] },
+                { "_key": "poc4l4-011r5", "_type": "tableRow", "cells": ["Reliance", "1.06", "16.38%", "15.00%", "-1.38%"] }
+              ]
+            },
+            {
+              "_key": "poc4l4-012",
+              "_type": "callout",
+              "type": "insight",
+              "text": "HUL's beta, 0.54, is the lowest of the five, sensible for a stock whose FMCG demand barely flexes with the broader market cycle. Maruti Suzuki's beta, 1.32, is the highest, sensible for a cyclical auto stock. CAPM required return moves in lockstep with beta, not with each stock's own standalone volatility from Chapter 3, which ranked HDFC Bank and Reliance ahead of Maruti Suzuki on total risk alone."
+            },
+            {
+              "_key": "poc4l4-013",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc4l4-013s1", "_type": "span", "marks": [], "text": "Alpha: the Gap CAPM Can't Explain" }
+              ]
+            },
+            {
+              "_key": "poc4l4-014",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "poc4l4-014m1", "_type": "glossaryTerm", "definition": "The difference between an asset's actual (or assumed) expected return and the return CAPM says is fair compensation for its beta. Positive alpha means the asset appears to offer more return than its systematic risk alone would justify." }
+              ],
+              "children": [
+                { "_key": "poc4l4-014s1", "_type": "span", "marks": [], "text": "The last column in that table is " },
+                { "_key": "poc4l4-014s2", "_type": "span", "marks": ["poc4l4-014m1"], "text": "alpha" },
+                { "_key": "poc4l4-014s3", "_type": "span", "marks": [], "text": ": the assumed expected return from Chapter 3, minus what CAPM says that beta actually deserves. TCS and Maruti Suzuki both show meaningfully positive alpha, meaning Chapter 3 assumed they would return more than CAPM's fair value for their beta. Reliance shows the opposite, a negative alpha of -1.38%. If CAPM held exactly and the market were perfectly efficient, every alpha would be zero. Nonzero alpha is either a genuine mispricing waiting to be captured, or a sign that the estimates behind it, expected returns, correlations, or the beta itself, are simply imprecise." }
+              ]
+            },
+            {
+              "_key": "poc4l4-015",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Do not read these alphas as a stock recommendation. They exist here entirely because Chapter 3 assigned each stock its expected return by hand, as an illustrative teaching input, not because any real analysis suggests TCS or Maruti Suzuki are underpriced today. In practice, alpha this large, relative to how noisy return estimates actually are, is far more often measurement error than genuine opportunity."
+            },
+            {
+              "_key": "poc4l4-016",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This idea, that CAPM's beta-implied return is a reasonable neutral starting point, which an investor then adjusts using their own genuine views, is exactly where Chapter 5's Black-Litterman model begins. Instead of assuming alpha is always zero, or throwing CAPM out entirely, Black-Litterman blends the two."
+            },
+            {
+              "_key": "poc4l4-017",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Apply CAPM to a new beta",
+              "prompt": "Using this lesson's proxy market (return 15.80%, Rf = 6.5%), what is the CAPM-required return for a stock with a beta of 1.4?",
+              "correctValue": 19.52,
+              "tolerance": 0.3,
+              "unit": "%",
+              "explanation": "E[Ri] = Rf + beta x (RM - Rf) = 6.5 + 1.4 x (15.80 - 6.5) = 6.5 + 1.4 x 9.3 = 6.5 + 13.02 = 19.52%."
+            },
+            {
+              "_key": "poc4l4-018",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Total risk versus systematic risk",
+              "question": "Stock A has total volatility of 40% but a beta of only 0.3, most of its risk is company-specific. Stock B has total volatility of 25% but a beta of 1.5, most of its risk moves with the market. According to CAPM, which stock should require the HIGHER expected return?",
+              "options": [
+                "Stock A, since it has much higher total volatility",
+                "Stock B, since CAPM prices only beta, and Stock B's beta is far higher despite its lower total volatility",
+                "Both should require the same return, since average volatility across the two is similar",
+                "Neither, CAPM only applies to portfolios, not individual stocks"
+              ],
+              "correctIndex": 1,
+              "explanation": "CAPM prices only systematic risk, beta. Stock A's high total volatility is mostly unsystematic and diversifiable, so it earns no extra premium for it. Stock B's beta of 1.5 is well above Stock A's 0.3, so CAPM assigns it the higher required return, despite Stock A's much larger total volatility."
+            },
+            {
+              "_key": "poc4l4-019",
+              "_type": "flashcardSet",
+              "title": "Chapter 4: Full Recap",
+              "cards": [
+                { "_key": "poc4l4-019f1", "term": "Capital Allocation Line (CAL)", "definition": "The straight line formed by combining a risk-free asset with any single risky portfolio, whose slope equals that portfolio's Sharpe ratio." },
+                { "_key": "poc4l4-019f2", "term": "Tangency portfolio", "definition": "The unique risky portfolio maximizing the Sharpe ratio, found by wT = Sigma-inverse x (mu - Rf x 1), normalized to sum to 1." },
+                { "_key": "poc4l4-019f3", "term": "Capital Market Line (CML)", "definition": "The specific CAL built from the market portfolio, which equals the tangency portfolio when all investors share the same beliefs." },
+                { "_key": "poc4l4-019f4", "term": "Beta", "definition": "An asset's covariance with the market, divided by the market's variance. The only kind of risk CAPM compensates investors for bearing." },
+                { "_key": "poc4l4-019f5", "term": "CAPM", "definition": "E[Ri] = Rf + beta x (E[RM] - Rf). An asset's fair expected return, determined entirely by its systematic risk." },
+                { "_key": "poc4l4-019f6", "term": "Alpha", "definition": "The gap between an asset's actual or assumed expected return and its CAPM-required return, positive alpha meaning apparent outperformance relative to its beta." }
+              ]
+            },
+            {
+              "_key": "poc4l4-020",
+              "_type": "keyTakeaways",
+              "points": [
+                "CAPM falls directly out of the market portfolio being the tangency portfolio: since no small shift away from the market can improve its Sharpe ratio, every asset's fair risk premium must be proportional to its covariance with the market, not its total variance.",
+                "Beta, Cov(asset, market) divided by Var(market), measures exactly the systematic risk Chapter 1 first described in plain language. Only beta earns a risk premium under CAPM; unsystematic risk earns nothing, since it can be diversified away for free.",
+                "Applied to five familiar stocks, betas ranged from HUL's defensive 0.54 to Maruti Suzuki's cyclical 1.32, with CAPM-required returns tracking beta rather than each stock's own standalone volatility.",
+                "Alpha, the gap between an assumed expected return and its CAPM-required counterpart, is either a genuine opportunity or a sign of estimation noise, and in practice is far more often the latter.",
+                "This chapter's arc runs from Lesson 1's CAL, through Lesson 2's tangency portfolio and Lesson 3's market-portfolio equilibrium argument, to this lesson's CAPM, each result building directly on the one before it.",
+                "Chapter 5 turns to where the estimates feeding this entire framework, expected returns, variances, covariances, tend to go wrong in practice, and what the industry has built to compensate."
+              ]
+            },
+            {
+              "_key": "poc4l4-021",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to buy, sell, or hold TCS, Maruti Suzuki, HDFC Bank, HUL, Reliance Industries, or any other security named here. All beta, expected return, and alpha figures used in this lesson are illustrative teaching inputs, not live or historical market data or genuine mispricing signals. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

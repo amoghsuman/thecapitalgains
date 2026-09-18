@@ -1,0 +1,222 @@
+{
+  "courseSlug": "understanding-transaction-costs-and-slippage-in-backtests",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Backtested Returns Lie",
+      "lessons": [
+        {
+          "title": "Gross Returns vs Net Returns: Why \"Backtest First, Costs Later\" Is a Trap",
+          "slug": "gross-returns-vs-net-returns-why-backtest-first-costs-later-is-a-trap",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "d1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "d1s1", "text": "A common piece of advice among quant analyst aspirants goes something like this: build and optimize your strategy first, worry about transaction costs later, then just knock a few percentage points off the final number to be realistic. It sounds sensible and time-efficient. It is also one of the most reliable ways to end up trading the wrong strategy, because the strategy that wins a cost-blind competition is rarely the same strategy that would win a cost-aware one. This lesson is about why the order in which you introduce costs into your process matters as much as the cost model itself.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "d2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "d2s1", "text": "Two Ways to Build a Backtest, and Only One Is Safe", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "d3",
+              "style": "normal",
+              "markDefs": [
+                { "_type": "glossaryTerm", "_key": "gt1", "definition": "The frequency and volume of trading a strategy generates, typically measured as round trips per year or as a percentage of the portfolio replaced per period." }
+              ],
+              "children": [
+                { "_type": "span", "_key": "d3s1", "text": "There are two ways to fold costs into a backtest. Workflow A runs every parameter combination on gross returns, picks the best-looking candidate, and only then subtracts an estimated cost drag, usually a flat, round percentage figure. Workflow B computes net returns inside every single backtest run, using a cost model sensitive to each candidate's actual ", "marks": [] },
+                { "_type": "span", "_key": "d3s2", "text": "turnover", "marks": ["gt1"] },
+                { "_type": "span", "_key": "d3s3", "text": ", so the ranking that emerges already reflects what each strategy would really deliver. Workflow A is faster to run. Workflow B is the only one that gives you a trustworthy answer.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "comparison",
+              "_key": "d4",
+              "title": "Backtest First, Costs Later vs Costs In the Loop",
+              "columns": [
+                {
+                  "_type": "comparisonColumn",
+                  "_key": "d4c1",
+                  "label": "Workflow A: Backtest First, Costs Later",
+                  "points": [
+                    "Optimizer selects the winner using gross returns alone",
+                    "A single flat cost estimate is subtracted after the winner is chosen",
+                    "Assumes every candidate has roughly the same trading cost",
+                    "Fast, but the ranking can never change once the winner is picked"
+                  ]
+                },
+                {
+                  "_type": "comparisonColumn",
+                  "_key": "d4c2",
+                  "label": "Workflow B: Costs In the Loop",
+                  "points": [
+                    "Every candidate's net return is computed with its own turnover-aware cost",
+                    "The optimizer selects the winner using net returns directly",
+                    "High-turnover candidates are penalized exactly where they should be",
+                    "Slower to run, but the ranking reflects what you can actually trade"
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "d5",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "d5s1", "text": "Why a Flat Haircut Cannot Fix a Bad Ranking", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "d6",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "d6s1", "text": "Here is the part that is easy to miss: subtracting the same flat percentage from every candidate's return cannot change their relative order. If candidate A beats candidate B on gross returns by 8 percentage points, subtracting 3 points from both still leaves A ahead by 8 points. A flat haircut is a parallel shift, not a re-ranking tool. That would be harmless if every candidate cost roughly the same to trade. It is not harmless when the candidates differ wildly in turnover, which is exactly what an optimizer searching over parameters like rebalancing frequency or signal sensitivity tends to produce.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "d7",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "d7s1", "text": "Case in Point: Optimizing a Mean-Reversion Threshold", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "d8",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "d8s1", "text": "Suppose you are tuning the z-score threshold that triggers entries for a mean-reversion strategy on NSE mid-cap stocks. A tight threshold of 0.5 fires on almost every small wobble, generating far more trades than a loose threshold of 1.5, which waits for a genuine dislocation before acting. Using the round-trip cost of about 0.22% established in Lesson 2, and a simple approximation of cost drag as round trips per year multiplied by cost per round trip, the three candidates look like this.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "d9",
+              "caption": "Three threshold candidates, gross vs two different ways of accounting for cost",
+              "headers": ["Candidate", "Gross CAGR", "Round Trips/Year", "Net CAGR: Flat 3-pt Haircut", "Net CAGR: Turnover-Aware Cost"],
+              "rows": [
+                { "cells": ["A: Threshold 0.5 (tight)", "32%", "240", "29%", "-20.8%"] },
+                { "cells": ["B: Threshold 1.0 (moderate)", "24%", "90", "21%", "4.2%"] },
+                { "cells": ["C: Threshold 1.5 (loose)", "17%", "30", "14%", "10.4%"] }
+              ]
+            },
+            {
+              "_type": "chart",
+              "_key": "d10",
+              "chartType": "bar",
+              "title": "Net CAGR: Flat Haircut vs Turnover-Aware Cost Model",
+              "xAxisLabel": "Candidate",
+              "yAxisLabel": "Net CAGR (%)",
+              "data": [
+                { "label": "A: Threshold 0.5", "value": 29 },
+                { "label": "B: Threshold 1.0", "value": 21 },
+                { "label": "C: Threshold 1.5", "value": 14 }
+              ],
+              "series": [
+                { "label": "Net CAGR, Flat 3-pt Haircut", "values": [29, 21, 14] },
+                { "label": "Net CAGR, Turnover-Aware Cost", "values": [-20.8, 4.2, 10.4] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "d11",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "d11s1", "text": "Under the flat haircut, Candidate A still wins, exactly as it did on gross returns, because a parallel shift cannot reorder anything. An optimizer using Workflow A picks A and moves on. Under the turnover-aware cost model, Candidate A is not just beaten, it is deeply unprofitable once its 240 round trips a year are actually paid for, while Candidate C, the one that looked weakest on paper, comes out on top. Workflow A does not just underestimate the damage. It selects the strategy that turns out to lose money live and never flags a problem.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "d12",
+              "type": "warning",
+              "text": "A tight, high-turnover threshold generates a higher gross Sharpe partly because it is reacting to noise, small, statistically meaningless wobbles that revert by chance. Cost-blind optimization systematically rewards this: the noisier and more frequent the trades, the better gross returns look, and the worse net returns actually are. Optimizing on gross returns does not just ignore costs, it actively selects for strategies that costs will punish hardest."
+            },
+            {
+              "_type": "block",
+              "_key": "d13",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "d13s1", "text": "The Fix: Net Returns as the Objective Function", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "d14",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "d14s1", "text": "The practical fix is simple to state, even if it takes more compute to run: whatever cost model you eventually plan to use, apply it inside every backtest run, not just to the final candidate. Rank and select using net CAGR or net Sharpe, never gross. Report turnover alongside every result, the same way you would report drawdown or Sharpe, so a high number never gets celebrated without knowing what it costs to achieve. Chapter 2 gives you the cost model itself; this lesson is about making sure you plug it in at the right stage of the process.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "keyFact",
+              "_key": "d15",
+              "label": "Correct Objective Function for Strategy Selection",
+              "value": "Net CAGR or net Sharpe, computed with a turnover-aware cost model inside every run",
+              "context": "Not gross returns with a flat cost estimate applied to the winner after the fact."
+            },
+            {
+              "_type": "block",
+              "_key": "d16",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "d16s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "d17",
+              "variant": "scenario",
+              "title": "Spot the Trap",
+              "scenario": "You have backtested three parameter sets for a mean-reversion strategy on Nifty Midcap 150 stocks. All three show attractive gross Sharpe ratios. Your plan is to pick the best gross performer, then apply a standard 3-percentage-point cost haircut to whichever one wins, as a quick reality check before moving on.",
+              "prompt": "What is wrong with this plan, and what would you do differently?",
+              "modelAnswer": "A flat haircut applied after the winner is already chosen cannot change the ranking, since it subtracts the same amount from every candidate. If the highest-turnover strategy wins on a cost-blind gross basis, it will still be declared the winner after a flat haircut, regardless of how much more it actually costs to trade than the alternatives. The fix is to compute net CAGR or net Sharpe for all three candidates using a turnover-aware cost model before ranking them, not after picking a favorite. The true winner may well be a different, lower-turnover candidate than the one gross returns pointed to."
+            },
+            {
+              "_type": "block",
+              "_key": "d18",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "d18s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "d19",
+              "text": "A flat cost haircut applied after the fact can only shift every candidate's return by the same amount, it can never change who wins. If costs are going to change your decision, they have to be inside the decision, not bolted on after it has already been made."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "d20",
+              "points": [
+                "Subtracting a flat cost estimate from an already-chosen winner cannot alter a ranking, since it shifts every candidate by the same amount.",
+                "Cost-blind optimization systematically favors high-turnover, noise-reactive strategies, because trading more often inflates gross returns while actual costs scale with that same turnover.",
+                "A turnover-aware cost model applied inside the backtest, not after it, can completely invert which candidate looks best, as shown by the threshold example in this lesson.",
+                "The correct objective function for ranking and selecting strategies is net CAGR or net Sharpe computed with realistic, turnover-sensitive costs, never gross returns with costs added as an afterthought."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

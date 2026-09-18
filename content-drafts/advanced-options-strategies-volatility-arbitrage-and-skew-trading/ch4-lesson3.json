@@ -1,0 +1,186 @@
+{
+  "courseSlug": "advanced-options-strategies-volatility-arbitrage-and-skew-trading",
+  "chapters": [
+    {
+      "title": "Chapter 4: Second-Order Greeks for Volatility Trading",
+      "lessons": [
+        {
+          "title": "Building a Vanna-Volga Pricing Adjustment",
+          "slug": "building-a-vanna-volga-pricing-adjustment",
+          "body": [
+            {
+              "_key": "c4l3-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l3-001s1", "_type": "span", "text": "Every tool from this course converges here. Chapter 1 gave you Black-Scholes and a way to solve IV strike by strike. Chapter 2 gave the risk reversal and butterfly a price and a delta convention. Chapter 4 gave Vanna and Volga a formula and showed they are exactly the Greeks those two structures trade. This lesson combines all three into a single, practical technique, born in FX options markets and used wherever a desk needs to price a strike the market does not quote directly: Vanna-Volga pricing.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l3-002",
+              "_type": "bigIdea",
+              "text": "Start from the flat-vol Black-Scholes price at ATM volatility, for any strike. Then add a correction built from the market prices of the risk reversal and the butterfly, weighted by how much Vanna and Volga exposure the target strike shares with them. The result is a smile-consistent price using only three market-observed instruments, ATM, 25-delta RR, 25-delta BF, without needing that strike's own IV to be directly quoted."
+            },
+            {
+              "_key": "c4l3-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l3-003s1", "_type": "span", "text": "Why Not Just Read the Strike's Own IV?", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l3-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l3-004s1", "_type": "span", "text": "On a deep, liquid NSE chain, you usually can just solve the strike's own IV directly, exactly as Chapter 1 taught. Vanna-Volga earns its place where that is not true: an OTC-style strike, a custom delta a client wants priced, or any market where only a handful of points, ATM and the two 25-delta wings, trade with real liquidity, which is the everyday reality of FX options desks where this method originated. It solves a narrower version of the same problem Chapter 1's SVI curve solves, interpolating and extrapolating a smile from limited data, using a Greeks-based hedging argument instead of a curve fit.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l3-005",
+              "_type": "table",
+              "caption": "The three building blocks and what each one supplies",
+              "headers": ["Market instrument", "Supplies", "Chapter 4 Greek"],
+              "rows": [
+                { "_key": "c4l3-005r1", "_type": "tableRow", "cells": ["ATM straddle", "The flat, base-case volatility level", "Vega, the first-order sensitivity"] },
+                { "_key": "c4l3-005r2", "_type": "tableRow", "cells": ["25-delta risk reversal", "How much the smile tilts, calls vs puts", "Vanna, from Lesson 1"] },
+                { "_key": "c4l3-005r3", "_type": "tableRow", "cells": ["25-delta butterfly", "How much the wings curve above ATM", "Volga, from Lesson 1"] }
+              ]
+            },
+            {
+              "_key": "c4l3-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l3-006s1", "_type": "span", "text": "The Core Idea", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l3-007",
+              "_type": "mathBlock",
+              "latex": "\\text{Price}_{VV}(K) = \\text{Price}_{BS}(K, \\sigma_{ATM}) + w_{Vanna}(K) \\times \\text{RR contribution} + w_{Volga}(K) \\times \\text{BF contribution}",
+              "caption": "The Vanna-Volga price for strike K: a flat-vol base price, plus corrections sized by how much of the target's own Vanna and Volga the RR and BF instruments explain"
+            },
+            {
+              "_key": "c4l3-008",
+              "_type": "callout",
+              "type": "warning",
+              "text": "The full, rigorously derived version of this method, solving for exact weights that simultaneously match Vega, Vanna and Volga across the ATM, 25-delta put and 25-delta call, comes from Castagna and Mercurio's 2007 paper 'The Vanna-Volga method for implied volatilities' and uses log-strike-ratio weights beyond what this lesson derives by hand. What follows is a simplified, teaching version that captures the same core mechanism, weighting the correction by the ratio of the target's Vanna and Volga to the wing instrument's Vanna and Volga, and is accurate enough to build genuine intuition, not a substitute for the published closed-form in a production system."
+            },
+            {
+              "_key": "c4l3-009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l3-009s1", "_type": "span", "text": "Worked Example: Why Flat-Vol Pricing Fails an OTM Put", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l3-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c4l3-010s1", "_type": "span", "text": "Price the familiar 25,700 strike put two ways: once naively, using the flat ATM volatility of 13.2% as if the whole smile did not exist, and once correctly, using its own true smile IV of 16.8% established back in Chapter 1.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c4l3-011",
+              "_type": "table",
+              "caption": "The cost of ignoring the smile at K = 25,700, S = 26,500, T = 30/365, r = 6.5%",
+              "headers": ["Pricing basis", "IV used", "Put price"],
+              "rows": [
+                { "_key": "c4l3-011r1", "_type": "tableRow", "cells": ["Flat-vol (naive)", "13.2% (ATM)", "≈ ₹89.9"] },
+                { "_key": "c4l3-011r2", "_type": "tableRow", "cells": ["True smile", "16.8% (this strike's own IV)", "≈ ₹166.9"] },
+                { "_key": "c4l3-011r3", "_type": "tableRow", "cells": ["Gap the correction must close", "", "≈ ₹77.0"] }
+              ]
+            },
+            {
+              "_key": "c4l3-012",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Flat-vol pricing undervalues this put by almost half its true worth. A Vanna-Volga adjustment is built to close that gap using only three inputs, ATM, 25-delta RR, 25-delta BF, without ever being told this strike's own 16.8% figure directly. Lesson 1 already computed this strike's Vanna, large relative to the ATM point's near-zero Vanna, which is exactly why this strike inherits a large share of the risk reversal's skew information: its Vanna exposure marks it as sitting deep in the territory the RR instrument is designed to price."
+            },
+            {
+              "_key": "c4l3-013",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Sizing the smile gap",
+              "prompt": "Using the table above, the flat-vol put price is ₹89.9 and the true smile put price is ₹166.9. What is the gap, in rupees, that a smile-consistent correction needs to close?",
+              "correctValue": 77.0,
+              "tolerance": 1.0,
+              "unit": "₹",
+              "explanation": "166.9 − 89.9 = ₹77.0. This is not a small rounding correction, it is the difference between a badly mispriced option and a correctly priced one, and it exists purely because a flat-vol model has no mechanism to price skew at all."
+            },
+            {
+              "_key": "c4l3-014",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "from scipy.stats import norm\nimport numpy as np\n\ndef d1_d2(S, K, T, r, sigma):\n    d1 = (np.log(S / K) + (r + 0.5 * sigma ** 2) * T) / (sigma * np.sqrt(T))\n    return d1, d1 - sigma * np.sqrt(T)\n\ndef bs_put(S, K, T, r, sigma):\n    d1, d2 = d1_d2(S, K, T, r, sigma)\n    call = S * norm.cdf(d1) - K * np.exp(-r * T) * norm.cdf(d2)\n    return call - S + K * np.exp(-r * T)  # put-call parity\n\ndef vanna(S, K, T, r, sigma):\n    d1, d2 = d1_d2(S, K, T, r, sigma)\n    return -norm.pdf(d1) * d2 / sigma\n\ndef volga(S, K, T, r, sigma):\n    d1, d2 = d1_d2(S, K, T, r, sigma)\n    vega = S * norm.pdf(d1) * np.sqrt(T)\n    return vega * d1 * d2 / sigma\n\nS, T, r = 26500, 30 / 365, 0.065\nsigma_atm = 0.132\nK_target = 25700\n\nflat_price = bs_put(S, K_target, T, r, sigma_atm)\ntrue_price = bs_put(S, K_target, T, r, 0.168)  # this strike's own known smile IV\ngap = true_price - flat_price\n\n# Vanna ratio: how much of the target's exposure sits away from the near-zero ATM Vanna\nvanna_target = vanna(S, K_target, T, r, sigma_atm)\nvanna_atm = vanna(S, S, T, r, sigma_atm)\n\nprint(f\"Flat-vol put price: {flat_price:.1f}\")\nprint(f\"True smile put price: {true_price:.1f}\")\nprint(f\"Gap to close: {gap:.1f}\")\nprint(f\"Vanna at target strike: {vanna_target:.3f}, Vanna at ATM: {vanna_atm:.4f}\")\nprint(f\"Vanna ratio (target vs ATM): {vanna_target / vanna_atm:.1f}x\")",
+              "caption": "Reproducing the flat-vol vs true-smile gap, and the Vanna ratio that motivates why this strike absorbs a large share of the risk reversal's correction. Extend this with the 25-delta and Volga terms to build the full simplified adjustment."
+            },
+            {
+              "_key": "c4l3-015",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "What Vanna-Volga pricing actually needs",
+              "question": "To price a strike using the Vanna-Volga method, which inputs are required?",
+              "options": [
+                "That strike's own directly quoted market IV, plus nothing else",
+                "Only the risk-free rate and time to expiry",
+                "The ATM volatility, the 25-delta risk reversal, and the 25-delta butterfly, none of which is the target strike's own quote",
+                "A full SVI fit across every listed strike on the chain"
+              ],
+              "correctIndex": 2,
+              "explanation": "The entire point of the method is to price a strike without needing its own directly observed IV, using just three market-observed reference instruments and the target strike's Vanna and Volga relative to them. It does not require a full multi-strike SVI fit, that is the alternative approach from Chapter 1 for when many chain points are available."
+            },
+            {
+              "_key": "c4l3-016",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Pricing a client's custom structure",
+              "scenario": "A client asks your desk to quote an OTC-style Nifty put struck at a level that does not correspond to any strike NSE lists on the relevant expiry. You have live, liquid market quotes for the ATM straddle, the 25-delta risk reversal, and the 25-delta butterfly on that expiry, but obviously no direct market quote for the client's custom strike.",
+              "prompt": "Walk through how you would approach quoting this, and what you would flag as a limitation of your answer.",
+              "modelAnswer": "1. Start from the flat-vol Black-Scholes price for the custom strike using the ATM volatility. This is the baseline that ignores skew and curvature entirely and will underprice or overprice the option depending on which side of the smile the strike sits on, exactly as the 25,700 strike example showed.\n2. Compute the custom strike's Vanna and Volga at the ATM volatility, and compare them to the Vanna and Volga of the 25-delta wing instruments, to gauge how much of the RR-driven and BF-driven correction this specific strike should inherit.\n3. Build the smile-consistent correction using the simplified weighting from this lesson, or ideally the full Castagna-Mercurio closed-form if the desk's systems already implement it, and add it to the flat-vol base price.\n4. Flag clearly that this is a model-based extrapolation, not a directly observed market price. It is well-suited for a strike reasonably close to the three reference instruments, ATM and both 25-delta wings, and becomes progressively less reliable the further the custom strike sits outside that range, exactly the extrapolation risk Chapter 1's SVI discussion raised for unlisted deltas.\n5. If the client's strike sits well beyond the 25-delta wings, well past the 10-delta points, cross-check the Vanna-Volga estimate against a full SVI fit if enough chain data exists, or explicitly price in extra margin for model uncertainty before quoting, rather than presenting either method's output as a precise market truth."
+            },
+            {
+              "_key": "c4l3-017",
+              "_type": "flashcardSet",
+              "title": "Vanna-Volga Pricing",
+              "cards": [
+                { "_key": "c4l3-017f1", "term": "Vanna-Volga pricing", "definition": "A method for pricing a strike not directly quoted in the market, starting from a flat-vol Black-Scholes price and adding a correction built from the ATM, 25-delta RR and 25-delta BF instruments, weighted by the target's Vanna and Volga." },
+                { "_key": "c4l3-017f2", "term": "Flat-vol base price", "definition": "The Black-Scholes price computed using a single ATM volatility input, ignoring skew and curvature entirely; the starting point every Vanna-Volga adjustment corrects." },
+                { "_key": "c4l3-017f3", "term": "Castagna-Mercurio (2007)", "definition": "The published paper deriving the rigorous, closed-form Vanna-Volga weighting using log-strike ratios; this lesson's version is a simplified teaching approximation of that method." },
+                { "_key": "c4l3-017f4", "term": "Smile-consistent correction", "definition": "The price adjustment that converts a flat-vol price into one consistent with the market's observed skew and curvature, without requiring the target strike's own directly quoted IV." }
+              ]
+            },
+            {
+              "_key": "c4l3-018",
+              "_type": "keyTakeaways",
+              "points": [
+                "Vanna-Volga pricing starts from a flat, ATM-vol Black-Scholes price and corrects it using the market-observed risk reversal and butterfly, weighted by the target strike's own Vanna and Volga.",
+                "It solves the same practical problem as Chapter 1's SVI fit, pricing a strike the market does not directly quote, using a Greeks-based hedging argument instead of a curve fit, which suits markets like FX where only a few points trade liquidly.",
+                "In this lesson's worked example, flat-vol pricing undervalued the 25,700 strike put by about ₹77.0, roughly 46% of its true smile-consistent value, a direct, quantified illustration of why ignoring skew is expensive.",
+                "The full, published Castagna-Mercurio method solves precise log-strike-ratio weights; this lesson's simplified version captures the same core mechanism without that full derivation, and should not be mistaken for a production-grade implementation.",
+                "Reliability degrades the further a target strike sits from the three reference instruments, the same extrapolation caution Chapter 1 raised for unlisted deltas on a fitted surface.",
+                "This closes the course's full arc: Chapter 1 built the surface and the machinery to read it, Chapter 2 gave its shape a name and a trade, Chapter 3 added the time dimension and a defined-risk way to trade it, and Chapter 4 gave the whole thing a second-order Greek foundation, ending in a single practical pricing technique that uses all of it at once."
+              ]
+            },
+            {
+              "_key": "c4l3-019",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment or trading advice. All prices and figures are hand-computed illustrative examples building on earlier chapters' worked data, not live NSE quotes. The simplified Vanna-Volga weighting presented here is a teaching approximation and should not be used as-is for production pricing or hedging decisions without validation against the full published methodology. Consult a SEBI-registered adviser before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,193 @@
+{
+  "courseSlug": "understanding-multi-asset-systematic-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 7: Combining Strategies into a Multi-Strategy Book",
+      "lessons": [
+        {
+          "title": "Why Strategy Correlation Matters More Than Individual Strategy Sharpe",
+          "slug": "why-strategy-correlation-matters-more-than-individual-strategy-sharpe",
+          "body": [
+            {
+              "_key": "mac7l1b01",
+              "_type": "bigIdea",
+              "text": "A strategy's own Sharpe ratio tells you how good it is alone. It tells you almost nothing about whether adding it to a book that already runs several other strategies will make that book better or worse, because that answer depends on one more number entirely: how correlated the new strategy's returns are with everything already in the book."
+            },
+            {
+              "_key": "mac7l1b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac7l1b02s1",
+                  "_type": "span",
+                  "text": "Chapter 3 opened with correlation mattering more than volatility for a single asset. Chapter 5 closed by combining two strategy sleeves mathematically. This chapter takes the next step: deciding which strategies genuinely belong in a combined book, using an exact, derivable rule rather than intuition about which strategies \"seem complementary.\"",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac7l1b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac7l1b03s1", "_type": "span", "text": "The Marginal Sharpe Ratio Test: Should You Add This Strategy At All?", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac7l1b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac7l1b04s1",
+                  "_type": "span",
+                  "text": "Portfolio theory gives a precise condition for whether adding a new strategy improves a portfolio's Sharpe ratio: it helps if and only if the new strategy's own Sharpe ratio exceeds its correlation to the existing book, multiplied by the existing book's own Sharpe ratio. Rearranged, this defines a correlation threshold: a candidate strategy is worth adding only if its correlation to the existing book is below its own Sharpe ratio divided by the existing book's Sharpe ratio.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac7l1b05",
+              "_type": "mathBlock",
+              "latex": "\\text{Add if: } SR_{new} > \\rho \\times SR_{existing} \\quad \\Longleftrightarrow \\quad \\rho < \\frac{SR_{new}}{SR_{existing}}",
+              "caption": "The marginal Sharpe test. SR_existing is the current book's Sharpe ratio, SR_new and rho are the candidate strategy's own Sharpe ratio and its correlation to the existing book. Low correlation makes even a modest-Sharpe candidate worth adding; high correlation demands the candidate be nearly as good as, or better than, the book it is joining."
+            },
+            {
+              "_key": "mac7l1b06",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac7l1b06s1",
+                  "_type": "span",
+                  "text": "Take an existing multi-strategy book with a Sharpe ratio of 0.75, roughly this course's illustrative trend-plus-carry combination from Chapter 5's closing lesson. A candidate value strategy, Sharpe 0.30, correlated only 0.10 with the existing book, clears the test easily: 0.30 is well above 0.10 × 0.75 = 0.075. A second candidate, with a much more impressive standalone Sharpe of 0.60 but a correlation of 0.85 to the existing book, fails: 0.60 is below 0.85 × 0.75 = 0.6375. The weaker-looking strategy passes. The stronger-looking one does not.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac7l1b07",
+              "_type": "table",
+              "caption": "Applying the Marginal Test to Three Candidate Strategies (Existing Book Sharpe = 0.75)",
+              "headers": ["Candidate Strategy", "Standalone Sharpe", "Correlation to Book", "Threshold (SR/0.75)", "Result"],
+              "rows": [
+                { "_key": "mac7l1b07r1", "_type": "tableRow", "cells": ["Cross-Asset Value (Chapter 5)", "0.30", "0.10", "0.40", "PASS"] },
+                { "_key": "mac7l1b07r2", "_type": "tableRow", "cells": ["Currency Carry (Chapter 5)", "0.40", "0.25", "0.53", "PASS"] },
+                { "_key": "mac7l1b07r3", "_type": "tableRow", "cells": ["Hypothetical High-Correlation Strategy", "0.60", "0.85", "0.80", "FAIL"] }
+              ]
+            },
+            {
+              "_key": "mac7l1b08",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "These Sharpe ratios and correlations are illustrative, reused from earlier chapters' worked examples to demonstrate the marginal test mechanics, not the output of an actual combined backtest."
+            },
+            {
+              "_key": "mac7l1b09",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac7l1b09s1", "_type": "span", "text": "Why This Explains Something Counterintuitive About Real Multi-Strategy Books", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac7l1b10",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac7l1b10s1",
+                  "_type": "span",
+                  "text": "This test explains a pattern that confuses anyone screening strategies purely by their own track record: a sophisticated multi-strategy book will sometimes deliberately hold a strategy with a mediocre standalone Sharpe ratio, because its correlation to everything else is low enough to earn its place regardless, and will correctly reject a strategy with an excellent standalone track record, because it is too similar to something the book already runs. Evaluating a strategy purely on its own backtested performance, without ever checking correlation to the rest of the book, is exactly the mistake this lesson's math is built to prevent.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac7l1b11",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac7l1b11s1", "_type": "span", "text": "The Same Recursive Idea, One More Time", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac7l1b12",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac7l1b12s1",
+                  "_type": "span",
+                  "text": "This is the same underlying idea this course has built up at every level: Chapter 3 showed correlation matters more than volatility for individual assets. Chapter 3's closing lesson showed redundant versus complementary additions to an asset book. Chapter 4 showed the same logic for combining look-back windows within one signal. Chapter 5 showed it for combining trend and carry sleeves. This lesson gives that recurring idea its most precise form yet, an exact correlation threshold, applied to the decision of which whole strategies belong in a combined book.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac7l1b13",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Every chapter of this course has been teaching one idea from a different angle: correlation, not the standalone number you are staring at, determines whether adding something makes your portfolio better or worse. Assets, signal windows, currency versus commodity carry breadth, strategy sleeves, and now whole strategies competing for a spot in the book, it is the same question asked at increasing levels of precision each time."
+            },
+            {
+              "_key": "mac7l1b14",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "The Impressive Backtest That Still Got Rejected",
+              "scenario": "A quant researcher presents a new momentum-based strategy to their desk, with a standalone backtested Sharpe ratio of 0.55, higher than four of the five strategies already running in the desk's combined book, which together have a Sharpe ratio of 0.70. When measured against the existing book, the new strategy's return correlation comes out at 0.80. The researcher argues the strategy should be added, since its standalone Sharpe outperforms most of what is already there.",
+              "prompt": "Using the marginal Sharpe test from this lesson, should the desk add this strategy? Explain your reasoning to the researcher.",
+              "modelAnswer": "The correct test is not whether the new strategy's standalone Sharpe outperforms individual strategies already in the book, but whether it clears the correlation threshold: SR_new / SR_existing = 0.55 / 0.70 ≈ 0.786. The strategy's actual correlation to the book, 0.80, is above this threshold, so it fails the marginal test, meaning it would very likely make the combined book's Sharpe ratio worse, not better, despite outperforming individual components. The researcher's comparison to individual strategies already in the book is the wrong benchmark; what matters is the strategy's relationship to the book as a whole, and here that relationship is too close to what the book already has to earn a place, regardless of how good the strategy looks standing alone."
+            },
+            {
+              "_key": "mac7l1b15",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Finding the Break-Even Correlation Threshold",
+              "prompt": "An existing multi-strategy book has a Sharpe ratio of 0.75. A candidate new strategy has a standalone Sharpe ratio of 0.50. Using ρ_threshold = SR_new / SR_existing, what is the maximum correlation to the existing book at which this candidate would still be worth adding? Round to two decimal places.",
+              "correctValue": 0.67,
+              "tolerance": 0.02,
+              "explanation": "0.50 / 0.75 ≈ 0.67. As long as the candidate's actual correlation to the existing book stays below 0.67, adding it would improve the combined Sharpe ratio; above that threshold, it would make the combined book worse despite the candidate having a perfectly respectable standalone Sharpe ratio."
+            },
+            {
+              "_key": "mac7l1b16",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why Low Correlation Lowers the Bar",
+              "question": "Based on the marginal Sharpe test, why does a strategy with very low correlation to an existing book need a much lower standalone Sharpe ratio to be worth adding than a highly correlated strategy does?",
+              "options": [
+                "Because low-correlation strategies are always more profitable",
+                "Because the threshold for inclusion, SR_new/SR_existing, must exceed the candidate's actual correlation; a low correlation is easy to stay under even with a modest Sharpe, while a high correlation demands a Sharpe nearly as large as, or larger than, the existing book's own",
+                "Because correlation has no effect on whether a strategy should be added",
+                "Because regulators require low-correlation strategies to have lower minimum Sharpe ratios"
+              ],
+              "correctIndex": 1,
+              "explanation": "The inclusion rule is a race between two numbers: the candidate's correlation to the book, and its Sharpe ratio scaled by the book's own Sharpe ratio. A very low correlation is easy to stay under, so even a modest standalone Sharpe clears the bar. A high correlation sets a demanding bar, requiring the candidate to be nearly as good as, or better than, the book it is joining, exactly why a correlated but strong-looking strategy can still fail the test."
+            },
+            {
+              "_key": "mac7l1b17",
+              "_type": "keyTakeaways",
+              "points": [
+                "A candidate strategy improves a combined book's Sharpe ratio if and only if SR_new > correlation × SR_existing, equivalently, correlation below SR_new / SR_existing",
+                "Low correlation to the existing book lowers the bar dramatically, letting even a modest-Sharpe strategy earn a place",
+                "High correlation raises the bar sharply, requiring a candidate to be nearly as good as, or better than, the book it would join",
+                "This explains why sophisticated multi-strategy books sometimes hold mediocre-looking strategies for their diversification value, and correctly reject impressive-looking ones that are too similar to what is already there",
+                "Evaluating a candidate strategy purely on its own standalone backtest, without checking its correlation to the existing book, is the specific mistake this lesson's marginal test is designed to prevent",
+                "This is the same correlation-over-standalone-metric idea this course has built at every level, assets, signal windows, carry breadth, strategy sleeves, now given its most precise form yet for deciding which whole strategies belong in a book"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,238 @@
+{
+  "courseSlug": "understanding-business-cycles-and-their-impact-on-asset-classes",
+  "chapters": [
+    {
+      "title": "Chapter 3: Fixed Income and Rates Through the Cycle",
+      "lessons": [
+        {
+          "title": "Duration Risk: Why Long Bonds Swing More Than Short Ones",
+          "slug": "duration-risk-why-long-bonds-swing-more-than-short-ones",
+          "body": [
+            {
+              "_key": "c3l2k001",
+              "_type": "bigIdea",
+              "text": "Duration is a single number that tells you, in advance, roughly how much a bond or bond fund's price will move for a given change in yield. Learn to read it, and a debt fund's rate sensitivity stops being a mystery."
+            },
+            {
+              "_key": "c3l2k002",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2k002s1", "_type": "span", "text": "The last lesson showed that longer-maturity bonds swing more than shorter ones for the same yield change. This lesson gives you the actual number that predicts by how much, and shows you how to use it to pick the right debt mutual fund for wherever the cycle stands.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c3l2k003",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2k003s1", "_type": "span", "text": "Macaulay Duration: The Weighted Average Wait for Your Money", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c3l2k004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "c3l2k004md1", "_type": "glossaryTerm", "definition": "The weighted average time it takes to receive a bond's cash flows, where each cash flow is weighted by its present value. Named after economist Frederick Macaulay, who introduced the concept in 1938." }
+              ],
+              "children": [
+                { "_key": "c3l2k004s1", "_type": "span", "text": "Maturity tells you when a bond's last cash flow arrives. ", "marks": [] },
+                { "_key": "c3l2k004s2", "_type": "span", "text": "Macaulay duration", "marks": ["c3l2k004md1"] },
+                { "_key": "c3l2k004s3", "_type": "span", "text": " asks a subtler question: on average, weighted by how much of the bond's value each cash flow represents, how long do you actually have to wait to get your money back? A bond that pays large coupons early gets some of your money back sooner, so its duration is shorter than its maturity. A bond that pays nothing until the very end has a duration equal to its maturity, since all the value sits in that one final payment.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c3l2k005",
+              "_type": "mathBlock",
+              "latex": "\\text{Macaulay Duration} = \\frac{\\sum_{t} t \\times PV(CF_t)}{\\text{Price}}",
+              "caption": "The weighted average time to each cash flow, weighted by that cash flow's present value"
+            },
+            {
+              "_key": "c3l2k006",
+              "_type": "table",
+              "caption": "A 3-year bond, ₹1,000 face value, 8% annual coupon, yielding 8% (priced at par)",
+              "headers": ["Year", "Cash flow", "Present value", "Weight (PV ÷ price)", "Year × weight"],
+              "rows": [
+                { "_key": "c3l2k006r1", "_type": "tableRow", "cells": ["1", "₹80", "₹74.07", "7.4%", "0.074"] },
+                { "_key": "c3l2k006r2", "_type": "tableRow", "cells": ["2", "₹80", "₹68.59", "6.9%", "0.137"] },
+                { "_key": "c3l2k006r3", "_type": "tableRow", "cells": ["3", "₹1,080", "₹857.34", "85.7%", "2.572"] }
+              ]
+            },
+            {
+              "_key": "c3l2k007",
+              "_type": "keyFact",
+              "label": "Macaulay duration of this bond",
+              "value": "2.78 years",
+              "context": "Sum of the last column: 0.074 + 0.137 + 2.572 ≈ 2.78 years, shorter than its 3-year maturity because the coupons return some cash before the end."
+            },
+            {
+              "_key": "c3l2k008",
+              "_type": "callout",
+              "type": "insight",
+              "text": "A zero-coupon bond with the same 3-year maturity would have a Macaulay duration of exactly 3.0 years, since its entire value sits in one payment at the end. The bigger and earlier a bond's coupons are, the more its duration shrinks below its maturity. This is why two bonds maturing on the same date can still have meaningfully different rate sensitivity."
+            },
+            {
+              "_key": "c3l2k009",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2k009s1", "_type": "span", "text": "From Duration to a Price Move: Modified Duration", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c3l2k010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2k010s1", "_type": "span", "text": "Divide Macaulay duration by (1 + yield) and you get modified duration, which converts directly into an estimated price move: the percentage change in a bond's price is approximately its modified duration multiplied by the change in yield, with a negative sign, since price and yield move in opposite directions.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c3l2k011",
+              "_type": "mathBlock",
+              "latex": "\\%\\,\\Delta \\text{Price} \\approx -\\,\\text{Modified Duration} \\times \\Delta y",
+              "caption": "A quick estimate, not an exact price. See why below."
+            },
+            {
+              "_key": "c3l2k012",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "From Duration to a Predicted Price Move",
+              "prompt": "The 3-year bond above has a Macaulay duration of 2.78 years and a yield of 8%. Its modified duration is 2.78 ÷ 1.08 ≈ 2.58. If yield rises by 1 percentage point (0.01), what percentage price fall does modified duration predict? Enter a positive number.",
+              "correctValue": 2.58,
+              "tolerance": 0.1,
+              "unit": "%",
+              "explanation": "%ΔPrice ≈ −2.58 × 0.01 = −2.58%, so modified duration predicts roughly a 2.58% fall. Worth checking against the bond's actual price: recalculating every cash flow at a 9% yield gives a price of about ₹974.69, an actual fall of about 2.53%, very close to the duration estimate but not identical."
+            },
+            {
+              "_key": "c3l2k013",
+              "_type": "callout",
+              "type": "insight",
+              "text": "That small gap, a 2.58% predicted fall versus a 2.53% actual fall, is not a rounding error. Duration is a straight-line approximation of a curve that is actually slightly bowed, a property called convexity. In practice this bowing works slightly in your favour: it makes actual price falls a touch smaller than duration predicts when yields rise, and actual price gains a touch bigger than duration predicts when yields fall. For most practical decisions, though, duration alone gets you close enough."
+            },
+            {
+              "_key": "c3l2k014",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2k014s1", "_type": "span", "text": "Duration in Practice: Choosing a Debt Mutual Fund", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c3l2k015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2k015s1", "_type": "span", "text": "You rarely buy an individual bond directly. Most Indian investors get fixed-income exposure through mutual fund categories that SEBI defines partly by their permitted duration range. The category name is effectively a duration label.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c3l2k016",
+              "_type": "table",
+              "caption": "SEBI debt fund categories, ordered by typical duration",
+              "headers": ["Fund category", "Typical Macaulay duration", "Rate sensitivity"],
+              "rows": [
+                { "_key": "c3l2k016r1", "_type": "tableRow", "cells": ["Overnight / Liquid Fund", "1 day to ~3 months", "Minimal"] },
+                { "_key": "c3l2k016r2", "_type": "tableRow", "cells": ["Ultra Short / Low Duration Fund", "3 to 12 months", "Low"] },
+                { "_key": "c3l2k016r3", "_type": "tableRow", "cells": ["Short Duration Fund", "1 to 3 years", "Moderate"] },
+                { "_key": "c3l2k016r4", "_type": "tableRow", "cells": ["Medium to Long / Long Duration Fund", "4 years and above", "High"] },
+                { "_key": "c3l2k016r5", "_type": "tableRow", "cells": ["Gilt Fund (incl. 10-year constant duration)", "Often 7 years or more", "Very high"] }
+              ]
+            },
+            {
+              "_key": "c3l2k017",
+              "_type": "comparison",
+              "title": "Which way to lean, by what you expect rates to do",
+              "columns": [
+                {
+                  "_key": "c3l2k017c1",
+                  "_type": "comparisonColumn",
+                  "label": "You expect rates to rise (peak / overheat)",
+                  "points": [
+                    "Shift toward liquid or short-duration funds",
+                    "Rising yields hurt long-duration NAVs the most",
+                    "Shorter duration limits the mark-to-market pain",
+                    "You give up some yield pickup in exchange for stability"
+                  ]
+                },
+                {
+                  "_key": "c3l2k017c2",
+                  "_type": "comparisonColumn",
+                  "label": "You expect rates to fall (contraction / trough)",
+                  "points": [
+                    "Shift toward long-duration or gilt funds",
+                    "Falling yields lift long-duration NAVs the most",
+                    "Longer duration captures the biggest capital gain",
+                    "You take on more NAV volatility in exchange for the upside"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c3l2k018",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "The 2022 Long-Duration Fund",
+              "scenario": "In early 2022, an investor put a large lump sum into a long-duration gilt fund, expecting rates to stay low. Instead, the RBI hiked the repo rate from 4.00% to 6.50% over the following months, and the 10-year G-Sec yield rose from around 6.45% to above 7.4%, as covered in the last lesson.",
+              "prompt": "Using what you've learned about duration, what is the likely direction and rough scale of the NAV impact on this fund, and what would a liquid fund investor have experienced over the same period?",
+              "modelAnswer": "A long-duration gilt fund, with a duration likely in the 7-to-10-year range, would have taken a meaningful NAV hit. Using the modified duration approximation, a duration of roughly 7 years against a yield rise of close to 1 percentage point implies a price fall in the rough neighbourhood of 6 to 7%, before accounting for the coupon income earned along the way, which partially offsets the NAV drop. A liquid fund investor, by contrast, holds instruments maturing in days to a few months, so their NAV would have been almost unaffected by the same rate rise, and would have kept earning the (rising) short-term rate as it reset higher. The lesson is not that long-duration funds are bad, they would have been the right call heading into a rate-cutting phase, but that duration needs to match your view of where the cycle is headed, not just your appetite for extra yield."
+            },
+            {
+              "_key": "c3l2k019",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Test Yourself",
+              "question": "GDP growth is decelerating sharply, inflation is easing, and the RBI has just started cutting rates, an early-contraction-into-trough setup. Which fund category does the framework in this lesson favour?",
+              "options": ["Overnight Fund", "Liquid Fund", "Long Duration or Gilt Fund", "It doesn't matter, all debt funds behave the same"],
+              "correctIndex": 2,
+              "explanation": "Falling rates lift long-duration bond prices the most. A cutting cycle is exactly when investors typically extend duration, into long-duration or gilt funds, to capture the biggest capital gain from falling yields, the mirror image of shortening duration into a hiking cycle."
+            },
+            {
+              "_key": "c3l2k020",
+              "_type": "callout",
+              "type": "warning",
+              "text": "A fund's duration is not fixed. Dynamic bond funds, in particular, actively shift their duration up and down as the manager's rate view changes, and even funds within a fixed SEBI category can sit anywhere within their permitted duration band. Check a fund's factsheet for its current Macaulay duration before assuming it will behave the way its category name suggests."
+            },
+            {
+              "_key": "c3l2k021",
+              "_type": "flashcardSet",
+              "title": "Duration Vocabulary",
+              "cards": [
+                { "_key": "c3l2k021c1", "_type": "flashcard", "term": "Macaulay duration", "definition": "The weighted average time to receive a bond's cash flows, weighted by each cash flow's present value." },
+                { "_key": "c3l2k021c2", "_type": "flashcard", "term": "Modified duration", "definition": "Macaulay duration divided by (1 + yield); used to estimate the percentage price change for a given change in yield." },
+                { "_key": "c3l2k021c3", "_type": "flashcard", "term": "Convexity", "definition": "The slight curvature in the actual bond price-yield relationship, which duration alone, a straight-line measure, doesn't fully capture." },
+                { "_key": "c3l2k021c4", "_type": "flashcard", "term": "Gilt fund", "definition": "A debt mutual fund investing predominantly in government securities, typically carrying long duration and high rate sensitivity." },
+                { "_key": "c3l2k021c5", "_type": "flashcard", "term": "Dynamic bond fund", "definition": "A debt fund category that can actively shift its duration across the full range based on the fund manager's interest rate view." }
+              ]
+            },
+            {
+              "_key": "c3l2k022",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "Bond and duration calculations in this lesson use simplified annual-coupon assumptions for teaching purposes; real-world bonds and fund NAVs involve additional factors such as accrued interest, semi-annual compounding, and portfolio-level effects across many holdings. Fund category duration ranges are illustrative and can change with SEBI guidelines. Nothing here is investment advice; consult a SEBI registered investment adviser for advice on your own portfolio."
+            },
+            {
+              "_key": "c3l2k023",
+              "_type": "keyTakeaways",
+              "points": [
+                "Macaulay duration is the weighted average time to receive a bond's cash flows; it is shorter than maturity for coupon-paying bonds and equal to maturity for zero-coupon bonds",
+                "Modified duration (Macaulay duration ÷ (1 + yield)) converts directly into an estimated percentage price change for a given change in yield",
+                "In this lesson's example, a 2.78-year Macaulay duration bond predicted a 2.58% price fall for a 1-percentage-point yield rise, versus an actual fall of about 2.53%, the small gap being convexity",
+                "Indian debt mutual fund categories are effectively duration labels, running from overnight and liquid funds (minimal duration) up to long duration and gilt funds (high duration)",
+                "Shorten duration heading into a rate-hiking phase (peak/overheat) to limit NAV pain; lengthen duration heading into a rate-cutting phase (contraction/trough) to capture the biggest capital gain",
+                "A fund's actual duration can drift within its category's permitted range, or shift actively in a dynamic bond fund, so check the factsheet rather than assuming from the category name alone"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

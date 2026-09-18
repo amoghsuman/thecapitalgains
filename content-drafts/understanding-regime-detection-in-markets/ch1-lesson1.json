@@ -1,0 +1,363 @@
+{
+  "courseSlug": "understanding-regime-detection-in-markets",
+  "chapters": [
+    {
+      "title": "Chapter 1: What Regimes Are and Why They Matter",
+      "lessons": [
+        {
+          "title": "Market Regimes: Why \"The Market\" Isn't Always the Same Market",
+          "slug": "market-regimes-why-the-market-isnt-always-the-same-market",
+          "body": [
+            {
+              "_key": "c1l1k001",
+              "_type": "bigIdea",
+              "text": "A strategy is not right or wrong in the abstract. It is right or wrong for a regime, and markets do not stay in one regime forever."
+            },
+            {
+              "_key": "c1l1k002",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l1k002s1",
+                  "_type": "span",
+                  "text": "Take a plain 50-day/200-day moving average crossover, the kind you can build in an afternoon on Zerodha's Streak or code yourself against a broker's API. Run it on Nifty futures through 2020 and 2021 and it looks like genius. Price trended hard in one direction for months at a stretch, crossovers fired rarely, and almost every one that did fire caught a large, clean move.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1k003",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l1k003s1",
+                  "_type": "span",
+                  "text": "Run the exact same system, unchanged, through 2022. It bleeds money. Nifty spent most of that year chopping sideways in a wide range as FIIs sold heavily and the RBI hiked the repo rate from 4.00% to 6.50%, and nearly every crossover signal arrived just in time to catch the next reversal instead of the next trend.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1k004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l1k004s1",
+                  "_type": "span",
+                  "text": "Nothing was wrong with the code. What changed was the market itself, its regime. This course is about learning to notice that change, ideally before your drawdown tells you about it.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1k005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l1k005s1",
+                  "_type": "span",
+                  "text": "What Is a Market Regime?",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1k006",
+              "_type": "keyFact",
+              "label": "Market Regime",
+              "value": "A stretch of time with stable return behavior",
+              "context": "Defined by how much prices trend, how volatile they are, and how correlated different assets are, not by fixed calendar dates"
+            },
+            {
+              "_key": "c1l1k007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l1k007s1",
+                  "_type": "span",
+                  "text": "A regime is a period during which the statistical character of returns stays roughly consistent, and is meaningfully different from the period before or after it. Two regimes can sit on the exact same index at the exact same price level and still be completely different markets to trade.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1k008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l1k008s1",
+                  "_type": "span",
+                  "text": "Notice what a regime is not. It is not a bull market or a bear market in the loose headline sense, and it is not defined by whether the index went up or down over a year. 2022 is the clearest proof of that: Nifty ended the calendar year up roughly 4%, a mild positive return that hides a genuinely difficult, choppy, high-whipsaw year for anyone running a directional or trend-following system.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1k009",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Nifty 50, 2020 to 2023: Same Index, Different Regimes (illustrative, not exact levels)",
+              "xAxisLabel": "Period",
+              "yAxisLabel": "Nifty 50 (illustrative)",
+              "data": [
+                { "_key": "c1l1charti1", "label": "Mar 2020", "value": 7610 },
+                { "_key": "c1l1charti2", "label": "Dec 2020", "value": 13982 },
+                { "_key": "c1l1charti3", "label": "Oct 2021", "value": 18477 },
+                { "_key": "c1l1charti4", "label": "Jun 2022", "value": 15680 },
+                { "_key": "c1l1charti5", "label": "Dec 2022", "value": 18105 },
+                { "_key": "c1l1charti6", "label": "Dec 2023", "value": 21731 }
+              ]
+            },
+            {
+              "_key": "c1l1k010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l1k010s1",
+                  "_type": "span",
+                  "text": "From the March 2020 low to the October 2021 high, Nifty moved in one broad direction with relatively few, relatively small pullbacks: a trending, low-chop regime. From late 2021 through most of 2022, the index churned in a wide band, repeatedly approaching and failing at the same levels: a mean-reverting, high-chop regime. Same instrument. Same chart. Two different regimes, and two different games.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1k011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l1k011s1",
+                  "_type": "span",
+                  "text": "Three Dimensions Regimes Differ Along",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1k012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c1l1k012md1",
+                  "_type": "glossaryTerm",
+                  "definition": "A measure of how related today's return is to returns on previous days. Positive autocorrelation means an up move tends to be followed by more up moves, a trending market. Negative autocorrelation means an up move tends to be followed by a down move, a mean-reverting market. Zero autocorrelation means tomorrow's return is essentially unrelated to today's."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c1l1k012s1",
+                  "_type": "span",
+                  "text": "When quants talk about a regime, they usually mean it is stable along one or more of three dimensions. The first is trendiness, formally the ",
+                  "marks": []
+                },
+                {
+                  "_key": "c1l1k012s2",
+                  "_type": "span",
+                  "text": "autocorrelation of returns",
+                  "marks": ["c1l1k012md1"]
+                },
+                {
+                  "_key": "c1l1k012s3",
+                  "_type": "span",
+                  "text": ". Positive autocorrelation means the index tends to keep moving the way it has been, which is what trend-following and momentum systems are built to exploit. Negative autocorrelation means moves tend to reverse, which is what range-trading and mean-reversion systems are built to exploit.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1k013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l1k013s1",
+                  "_type": "span",
+                  "text": "The second dimension is volatility: whether the market is calm or stressed. The third is correlation: whether asset classes and sectors are behaving somewhat independently of each other, the normal state, or moving together as a single block, which usually shows up during sharp sell-offs when everything, good stocks and bad stocks alike, gets sold at once.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1k014",
+              "_type": "table",
+              "caption": "Three dimensions of a regime, with an Indian market example each",
+              "headers": ["Dimension", "One extreme", "Other extreme", "Indian market example"],
+              "rows": [
+                {
+                  "_key": "c1l1k014r1",
+                  "_type": "tableRow",
+                  "cells": ["Trendiness", "Trending (positive autocorrelation)", "Mean-reverting (negative autocorrelation)", "Nifty's steady 2020-21 climb vs its 2022 range-bound chop"]
+                },
+                {
+                  "_key": "c1l1k014r2",
+                  "_type": "tableRow",
+                  "cells": ["Volatility", "Calm, low realized volatility", "Stressed, high realized volatility", "India VIX in the low teens through late 2021 vs sharp spikes around major global and domestic shocks"]
+                },
+                {
+                  "_key": "c1l1k014r3",
+                  "_type": "tableRow",
+                  "cells": ["Correlation", "Normal dispersion across stocks and sectors", "Everything moves together", "Broad-based, near-uniform selling across Nifty sectors during the March 2020 crash"]
+                }
+              ]
+            },
+            {
+              "_key": "c1l1k015",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "c1l1statsi1", "label": "Nifty 50, CY2021", "value": "~+24%", "context": "Mostly one-directional, low chop" },
+                { "_key": "c1l1statsi2", "label": "Nifty 50, CY2022", "value": "~+4%", "context": "A flat headline number hiding a genuinely choppy year" },
+                { "_key": "c1l1statsi3", "label": "RBI repo rate, 2022 to Feb 2023", "value": "4.00% → 6.50%", "context": "A rapid hiking cycle that reshaped the regime" },
+                { "_key": "c1l1statsi4", "label": "FII net equity selling, CY2022", "value": "Over ₹1.2 lakh crore", "context": "Among the heaviest annual outflows on record at the time" }
+              ]
+            },
+            {
+              "_key": "c1l1k016",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This is exactly why prop desks and quant funds run regime filters before, and while, a strategy is live. A system is built and validated for a regime, not for all time. Position size, or turn a strategy off entirely, when the live market stops looking like the regime it was designed for."
+            },
+            {
+              "_key": "c1l1k017",
+              "_type": "comparison",
+              "title": "Trending Regime vs Mean-Reverting Regime",
+              "columns": [
+                {
+                  "_key": "c1l1cmpi1",
+                  "label": "Trending Regime (e.g. Nifty, Apr 2020 to Oct 2021)",
+                  "points": [
+                    "Positive autocorrelation: moves tend to continue",
+                    "Moving average crossovers and momentum systems tend to work",
+                    "Fewer, larger, cleaner signals",
+                    "Range-trading and mean-reversion systems tend to get run over"
+                  ]
+                },
+                {
+                  "_key": "c1l1cmpi2",
+                  "label": "Mean-Reverting Regime (e.g. Nifty, most of 2022)",
+                  "points": [
+                    "Negative or near-zero autocorrelation: moves tend to reverse",
+                    "Range-trading and mean-reversion systems tend to work",
+                    "Trend-following systems generate frequent false signals",
+                    "Moving average crossovers whipsaw repeatedly"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c1l1k018",
+              "_type": "callout",
+              "type": "warning",
+              "text": "It is tempting to look at a chart after the fact and confidently label every swing its own regime. In real time, regimes are messy and overlapping, and you rarely know you are inside one until well after it has started. Hold that humility through this course. Chapter 3 comes back to exactly this problem, called detection lag."
+            },
+            {
+              "_key": "c1l1k019",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l1k019s1",
+                  "_type": "span",
+                  "text": "Quick Check",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1k020",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why Did the Crossover System Fail in 2022?",
+              "question": "The 50/200-day moving average crossover system caught smooth, sustained trends on Nifty futures through 2020 and 2021, then lost money to repeated whipsaws through most of 2022, with no change to its code. What best explains this?",
+              "options": [
+                "Nifty's absolute price level had risen too high for the strategy to work",
+                "Brokerage and trading costs rose sharply in 2022",
+                "The trending, low-chop regime of 2020-21 gave way to a choppier, more mean-reverting regime in 2022",
+                "Moving average crossover systems only work on individual stocks, never on an index"
+              ],
+              "correctIndex": 2,
+              "explanation": "The strategy's logic never changed; the market's regime did. Positive autocorrelation in 2020-21 meant trends persisted long enough for a slow crossover to catch them. Weaker or negative autocorrelation through 2022 meant price kept reversing before the crossover could confirm a trend, generating losing whipsaws instead. Absolute price level and instrument type are unrelated to this failure mode."
+            },
+            {
+              "_key": "c1l1k021",
+              "_type": "collapsible",
+              "title": "Go deeper: how do statisticians actually define a regime shift?",
+              "content": [
+                {
+                  "_key": "c1l1k022",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c1l1k022s1",
+                      "_type": "span",
+                      "text": "There are two related but distinct ideas here, and this course will use both. A structural break is a one-time, permanent change in the parameters that generate returns, for example if a policy change permanently altered how volatile a market is going forward. A regime switch, the framing this course leans on, treats the market as repeatedly moving between a small number of hidden states, such as calm and stressed, and switching back and forth between them over time rather than breaking once and staying broken.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c1l1k023",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c1l1k023s1",
+                      "_type": "span",
+                      "text": "That switching idea is what lets you say something sharper than \"the market feels different now.\" It lets you assign each day a probability of being in each state, based only on the pattern of returns, without ever being told directly which state it is in. Chapter 3 builds up to exactly this, ending with an intuitive, code-free look at Hidden Markov Models, the tool most commonly used for it.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c1l1k024",
+              "_type": "toolLink",
+              "label": "NSE: India VIX",
+              "url": "https://www.nseindia.com/market-data/india-vix",
+              "description": "NSE's own India VIX page, with the current level and historical values. You will use this indicator directly in Chapter 2."
+            },
+            {
+              "_key": "c1l1k025",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is educational and explains general concepts in quantitative finance. It is not investment or trading advice, and nothing here is a recommendation to buy, sell, or trade any security, index, or derivative. Historical regimes do not guarantee how future regimes will behave."
+            },
+            {
+              "_key": "c1l1k026",
+              "_type": "keyTakeaways",
+              "points": [
+                "A market regime is a stretch of time where the statistical character of returns, trendiness, volatility, and correlation, stays roughly stable and differs meaningfully from other stretches",
+                "A regime is not the same thing as a bull or bear year: Nifty's mildly positive 2022 hid a genuinely choppy, high-whipsaw regime",
+                "Regimes differ along three main dimensions: trendiness (autocorrelation of returns), volatility, and cross-asset correlation",
+                "A strategy that works brilliantly in one regime, like a moving average crossover in a trending market, can lose steadily in another without any change to its logic",
+                "Professional desks size or switch off strategies based on the live regime rather than assuming any one system works in all conditions",
+                "Regimes are only ever identified with a lag and with uncertainty in real time, a theme this course returns to repeatedly"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

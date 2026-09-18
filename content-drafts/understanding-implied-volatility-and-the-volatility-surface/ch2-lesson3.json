@@ -1,0 +1,234 @@
+{
+  "courseSlug": "understanding-implied-volatility-and-the-volatility-surface",
+  "chapters": [
+    {
+      "title": "Chapter 2: The Volatility Smile and Skew",
+      "lessons": [
+        {
+          "title": "The Indian Index Put Skew and What It Reveals About Positioning",
+          "slug": "the-indian-index-put-skew-and-what-it-reveals-about-positioning",
+          "body": [
+            {
+              "_key": "k1",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                { "_key": "k1s", "_type": "span", "text": "Skew Exists Everywhere in Equities. Its Steepness Is the Interesting Part", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k2",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                { "_key": "k2s1", "_type": "span", "text": "Every liquid equity index carries some version of a put skew, ever since 1987. That much is background radiation, always there. What actually moves, day to day, and what a desk actually watches, is how steep that skew is right now. A Nifty put skew that is a little steeper than usual is telling you something real about who is buying protection and how urgently. This lesson is about reading that steepness on the specific, India-shaped market you are actually trading.", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k3",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                { "_key": "k3s", "_type": "span", "text": "Who Is Actually Buying All Those Puts? Institutional Portfolio Insurance", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k4",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                { "_key": "k4s1", "_type": "span", "text": "Domestic mutual funds, insurance companies such as LIC, and other large institutional holders sit on enormous equity portfolios that they have no intention of selling on a bad week. Selling that much stock to raise cash is slow, moves the market against them, and undoes years of positioning. Buying Nifty or Bank Nifty index puts is faster, cheaper in market-impact terms, and reversible the moment the risk passes. This creates a steady, structural bid for downside protection that has nothing to do with any single day's news. It is simply how large Indian portfolios manage risk, and it is a big part of why Nifty's put skew tends to stay persistently steep rather than only spiking around obvious events.", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "callout",
+              "type": "insight",
+              "text": "A steep put skew is not only a fear gauge for the next crash. On the Indian index options market, a meaningful part of it is simply the ongoing cost of institutional portfolio insurance, a recurring hedging flow that keeps OTM put IV bid up even in perfectly calm weeks.",
+              "_key": "k5"
+            },
+            {
+              "_key": "k6",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                { "_key": "k6s", "_type": "span", "text": "India's Retail Options Boom and Its Effect on Skew", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k7",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                { "_key": "k7s1", "_type": "span", "text": "India also brings a genuinely local wrinkle to this story: retail participation in weekly Nifty and Bank Nifty options is exceptionally large by global standards. Strategies like selling weekly OTM strangles or iron condors for steady premium income, often called theta harvesting, are hugely popular among individual traders. A SEBI study published in January 2023 found that roughly 9 out of 10 individual traders in the equity Futures & Options segment lost money over the period it examined, and a large share of that retail activity runs through exactly these short-dated weekly options.", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k8",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                { "_key": "k8s1", "_type": "span", "text": "That matters for skew because heavy retail selling pressure on both the OTM call and OTM put legs of weekly expiries pushes back against the institutional bid for puts specifically, at least at the very front of the expiry curve. The result is that skew on India's shortest-dated weekly options can sometimes look a touch flatter than what institutional hedging demand alone would produce, while skew further out (monthly expiries, where retail theta-selling is thinner and institutional hedging dominates more cleanly) tends to run steeper. This interaction between skew and time to expiry is exactly what the next chapter, on term structure, digs into properly.", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "keyFact",
+              "label": "SEBI's finding on retail F&O outcomes (January 2023 study)",
+              "value": "~9 in 10 individual traders lost money",
+              "context": "The study examined individual trader outcomes in the equity Futures & Options segment over several preceding years. It is one reason this course treats retail options flow as a real, distinct force shaping the Indian skew, not just background noise.",
+              "_key": "k9"
+            },
+            {
+              "_key": "k10",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                { "_key": "k10s", "_type": "span", "text": "Measuring Steepness: The Risk Reversal", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k11",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                { "_key": "k11s1", "_type": "span", "text": "\"The skew looks steeper today\" is a feeling until you attach a number to it. Desks use a metric called the risk reversal: the IV of an OTM put minus the IV of an equally-far OTM call, usually measured at a standard distance like 25-delta on both sides (roughly, strikes with about a 25% chance of finishing in the money).", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "mathBlock",
+              "latex": "\\text{25-Delta Risk Reversal} = IV_{25\\Delta\\,put} - IV_{25\\Delta\\,call}",
+              "caption": "A more negative number means the put side is trading at a bigger premium over the call side: a steeper, more fear-driven skew. A number closer to zero means the skew has flattened, the two sides are pricing closer together, and urgent hedging demand has eased.",
+              "_key": "k12"
+            },
+            {
+              "_key": "k13",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                { "_key": "k13s1", "_type": "span", "text": "Tracked over time, the risk reversal gives you a single running number for how nervous the options market currently is, independent of where Nifty itself is trading. It tends to compress during long, grinding bull runs, when hedging demand relaxes, and steepen sharply ahead of known binary events, Budget day, election results, or a sudden global risk-off shock, as institutions actively add fresh protection.", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "table",
+              "caption": "Illustrative 25-delta risk reversal across market regimes",
+              "headers": ["Market Regime", "25-Delta Put IV", "25-Delta Call IV", "Risk Reversal (Put minus Call)"],
+              "rows": [
+                { "_key": "r1", "_type": "tableRow", "cells": ["Calm, grinding bull market", "11.5%", "9.8%", "-1.7 pts"] },
+                { "_key": "r2", "_type": "tableRow", "cells": ["Typical, unremarkable week", "13.0%", "9.5%", "-3.5 pts"] },
+                { "_key": "r3", "_type": "tableRow", "cells": ["Pre-Budget / pre-election week", "17.0%", "9.8%", "-7.2 pts"] },
+                { "_key": "r4", "_type": "tableRow", "cells": ["Global risk-off shock", "28.0%", "13.0%", "-15.0 pts"] }
+              ],
+              "_key": "k14"
+            },
+            {
+              "_key": "k15",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                { "_key": "k15s", "_type": "span", "text": "A Common Confusion: Skew Steepness Is Not the Put-Call Ratio", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k16",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                { "_key": "k16s1", "_type": "span", "text": "Retail commentary often mixes up two genuinely different numbers: the Put-Call Ratio (PCR), which compares the volume or open interest of puts to calls, and skew steepness, which compares their price. A high PCR means a lot of put contracts are changing hands or sitting open. It says nothing on its own about whether those puts are expensive. You can easily have a day with heavy put volume at completely ordinary IV levels, a high PCR sitting next to an unremarkable risk reversal, because a lot of cheap, far-OTM puts got written without anyone paying up for real protection.", "marks": [] }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "callout",
+              "type": "warning",
+              "text": "\"Lots of puts trading\" (PCR) and \"puts are expensive right now\" (skew) are two different claims. Conflating them is one of the most common mistakes newer traders make when reading Indian index options data, and it can lead to reading fear into a chain that is actually calm, or missing real stress in a chain with unremarkable volume.",
+              "_key": "k17"
+            },
+            {
+              "_type": "comparison",
+              "title": "Put-Call Ratio vs Skew Steepness (Risk Reversal)",
+              "columns": [
+                {
+                  "_key": "c1",
+                  "label": "Put-Call Ratio (PCR)",
+                  "points": [
+                    "Compares the volume or open interest of puts to calls",
+                    "A count of contracts, not a price",
+                    "Often read, loosely, as a contrarian sentiment or support-level gauge",
+                    "Can be high even when puts are not trading at any unusual premium"
+                  ]
+                },
+                {
+                  "_key": "c2",
+                  "label": "Skew Steepness (Risk Reversal)",
+                  "points": [
+                    "Compares the IV, the price, of puts to calls at an equivalent distance from spot",
+                    "A measure of relative cost, not contract count",
+                    "Reflects genuine hedging demand and crash-risk pricing",
+                    "Can be steep even on a day with unremarkable put volume, if the puts that do trade are trading rich"
+                  ]
+                }
+              ],
+              "_key": "k18"
+            },
+            {
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "PCR vs skew, in one scenario",
+              "question": "On a given day, Nifty's Put-Call Ratio is unusually high, meaning a large volume of put contracts traded relative to calls, but the 25-delta risk reversal sits close to its normal, unremarkable level. What does this combination most likely tell you?",
+              "options": [
+                "The put skew is unusually steep and puts are expensive right now",
+                "A large volume of puts is changing hands, but they are not being priced at any unusual premium; heavy put activity does not automatically mean puts are expensive, since PCR measures quantity and skew measures price",
+                "PCR and skew steepness always move together, so this combination could not actually happen",
+                "This combination means Nifty is guaranteed to fall soon"
+              ],
+              "correctIndex": 1,
+              "explanation": "PCR and skew steepness measure different things. A high PCR with a normal risk reversal simply means a lot of put contracts changed hands without the market paying up for them, most likely routine hedging or retail theta-selling flow rather than urgent, fear-driven demand for protection.",
+              "_key": "k19"
+            },
+            {
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "A quant desk watches the risk reversal steepen",
+              "scenario": "A quant analyst tracking Nifty's 25-delta risk reversal notices it move from -3.2 to -8.5 over the ten trading days leading into a closely contested state election result. Nifty's own price has barely moved during this period.",
+              "prompt": "What is this steepening most likely telling the analyst about institutional positioning, and why might the analyst not expect to see this reflected in Nifty's price yet?",
+              "modelAnswer": "The steepening risk reversal, puts getting meaningfully more expensive relative to calls at the same distance, most likely reflects institutions actively adding fresh downside protection ahead of a genuinely uncertain, binary event, exactly the portfolio-insurance behavior described earlier in this lesson. Because buying a put does not require selling the underlying, institutions can, and often do, hedge through options well before, or even instead of, trimming their actual equity holdings. That is precisely why the options market can show a clear shift in positioning and sentiment days ahead of anything visible in the index's own price. It is one of the reasons quant desks track the risk reversal as a standalone, leading positioning signal rather than only watching price.",
+              "_key": "k20"
+            },
+            {
+              "_type": "bigIdea",
+              "text": "Nifty's put skew is never just a textbook echo of 1987. It is a live readout of who is hedging right now, how urgently, and through which instrument, institutions quietly buying protection through options, and India's uniquely large retail base selling premium against them at the shortest expiries. Reading the risk reversal, not just the existence of skew, is how you actually listen to that conversation.",
+              "_key": "k21"
+            },
+            {
+              "_type": "keyTakeaways",
+              "points": [
+                "Skew exists on every equity index by default; its steepness on any given day is the part that actually carries fresh information.",
+                "Domestic mutual funds and insurers create a persistent structural bid for OTM Nifty and Bank Nifty puts by hedging large portfolios through options instead of selling stock outright.",
+                "India's exceptionally large retail weekly-options activity, much of it net premium-selling, can flatten skew at the shortest expiries relative to what institutional hedging demand alone would produce.",
+                "The risk reversal (OTM put IV minus equally-far OTM call IV, commonly at 25-delta) is the standard way desks turn skew steepness into a single trackable number.",
+                "Put-Call Ratio measures volume or open interest; skew steepness measures price. A high PCR does not imply a steep skew, and the two are commonly, and wrongly, treated as the same signal."
+              ],
+              "_key": "k22"
+            },
+            {
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice. The risk reversal table and the quant desk scenario are hypothetical and illustrative, not live market data. The SEBI study finding is cited as reported public information and should be independently verified against SEBI's own publications before being relied on. Always check live prices and IV on NSE or your broker's terminal before trading, and consult a SEBI-registered advisor for personalised advice.",
+              "_key": "k23"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

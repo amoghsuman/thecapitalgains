@@ -1,0 +1,249 @@
+{
+  "courseSlug": "advanced-regime-switching-models-for-strategy-allocation",
+  "chapters": [
+    {
+      "title": "Chapter 7: Backtesting Regime-Switching Systems Rigorously",
+      "lessons": [
+        {
+          "title": "Regime Detection Lag: Why Your Model Is Always a Little Late",
+          "slug": "regime-detection-lag-why-your-model-is-always-a-little-late",
+          "body": [
+            {
+              "_key": "rswc7l3b01",
+              "_type": "bigIdea",
+              "text": "Even a perfectly walk-forward-validated model, with zero look-ahead bias, still lags real regime shifts by construction. Evidence takes time to accumulate, and a model that flipped its belief on a single ambiguous day would just be trading one flaw for another."
+            },
+            {
+              "_key": "rswc7l3b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc7l3b02s1",
+                  "_type": "span",
+                  "text": "The previous lesson built a genuinely point-in-time pipeline. That pipeline still lags real regime shifts, and that lag is not a mistake to be engineered away, it is a direct, unavoidable consequence of what filtering actually does. This lesson explains why, shows how to measure it, and connects it back to a tradeoff this course has been circling since Chapter 1.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l3b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc7l3b03s1",
+                  "_type": "span",
+                  "text": "Why Lag Is Structural, Not a Bug",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l3b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc7l3b04s1",
+                  "_type": "span",
+                  "text": "A genuine regime shift begins on some real day, but the model only knows what has actually happened by then, one data point, maybe two. Chapter 2's toy Bayesian update showed exactly how much a single observation moves a belief: meaningfully, but rarely all the way to certainty. It takes several confirming days before a filtered probability swings decisively toward a new regime, and that is the model behaving correctly, not slowly. A model that flipped its belief on the first ambiguous day would simply be reintroducing the exact whipsaw problem Chapter 2 spent a full lesson quantifying, just at the belief level instead of the flag level.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l3b05",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc7l3b05s1",
+                  "_type": "span",
+                  "text": "This is directly tied to Chapter 1's persistence formula. A model with a high self-transition probability holds a strong prior that today's regime will still be true tomorrow, which makes it appropriately skeptical of a single day's evidence and, as a direct consequence, appropriately slow to change its mind.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l3b06",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc7l3b06s1",
+                  "_type": "span",
+                  "text": "Measuring Lag Empirically",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l3b07",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc7l3b07s1",
+                  "_type": "span",
+                  "text": "Run the previous lesson's walk-forward pipeline against a known historical regime shift and count the trading days between the actual start of the shift and the day the filtered probability first crosses a chosen decision threshold, such as 50%.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l3b08",
+              "_type": "table",
+              "caption": "Illustrative lag measurement on two known regime shifts from Chapter 1",
+              "headers": ["Known Shift", "Approximate Actual Start", "Walk-Forward Crosses 50% Stressed", "Illustrative Lag"],
+              "rows": [
+                {
+                  "_key": "rswc7l3b08r1",
+                  "_type": "tableRow",
+                  "cells": ["2020 COVID Crash", "Late February 2020", "Early March 2020", "~7 trading days"]
+                },
+                {
+                  "_key": "rswc7l3b08r2",
+                  "_type": "tableRow",
+                  "cells": ["2022 Correction", "Mid-January 2022", "Late January 2022", "~8 trading days"]
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l3b09",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "These lag figures are illustrative, consistent with the ~5 to 7 trading day range estimated in Lesson 1, not measured from an actual walk-forward run. Run this exact measurement on your own fitted model and real data to get a real number for your specific setup."
+            },
+            {
+              "_key": "rswc7l3b10",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc7l3b10s1",
+                  "_type": "span",
+                  "text": "The Tradeoff: Lag vs False Positives, Formalized",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l3b11",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc7l3b11s1",
+                  "_type": "span",
+                  "text": "The self-transition probability is a single dial that controls both sides of this tradeoff at once. Push it higher and the model becomes more skeptical of short-lived noise, cutting false alarms, at the direct cost of taking longer to recognize a genuine shift. Push it lower and detection gets faster, at the direct cost of more false alarms from ordinary noise. Both effects are driven by the same underlying parameter and move in the same direction as it changes.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l3b12",
+              "_type": "table",
+              "caption": "Illustrative relationship between self-transition probability, lag, and false alarms",
+              "headers": ["Self-Transition p", "Illustrative Lag", "Illustrative False Alarms per Year"],
+              "rows": [
+                {
+                  "_key": "rswc7l3b12r1",
+                  "_type": "tableRow",
+                  "cells": ["0.85", "~3 to 4 trading days", "High, roughly 15 to 20"]
+                },
+                {
+                  "_key": "rswc7l3b12r2",
+                  "_type": "tableRow",
+                  "cells": ["0.95", "~7 to 8 trading days", "Moderate, roughly 5 to 8"]
+                },
+                {
+                  "_key": "rswc7l3b12r3",
+                  "_type": "tableRow",
+                  "cells": ["0.99", "~15 to 20 trading days", "Low, roughly 1 to 2"]
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l3b13",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Lag is not something you eliminate. It is something you calibrate. A model tuned to react faster is not a better model in any absolute sense, it is a model deliberately calibrated to accept more false alarms in exchange for shorter lag, exactly the same tradeoff Chapter 2's Lesson 3 introduced with hysteresis confirmation windows, now expressed through a fitted parameter instead of a hand-picked rule."
+            },
+            {
+              "_key": "rswc7l3b14",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc7l3b14s1",
+                  "_type": "span",
+                  "text": "What This Means for Strategy Design",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l3b15",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc7l3b15s1",
+                  "_type": "span",
+                  "text": "Every backtest result in this course, from Chapter 5's case studies onward, should be evaluated assuming a realistic, measured lag, not the zero-lag fantasy a look-ahead-biased setup would hand you. For fast-moving shocks like the 2020 crash, where a large fraction of the total move happened within days, even a well-calibrated model's lag can mean missing a meaningful share of the initial decline. Strategies exposed to that risk need either a lower self-transition probability, accepting more false alarms in calmer periods, or a separate, faster overlay that does not wait for the regime model at all. Chapter 8 builds exactly that kind of overlay, circuit breakers and kill switches that act independently of the regime model's own, structurally unavoidable, lag.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc7l3b16",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Choosing a Self-Transition Probability for a New Strategy",
+              "scenario": "You are deploying a regime-switching options strategy that trades several times per week and is moderately sensitive to false alarms, since each unnecessary regime flip forces an unwind and re-entry with real transaction costs, but the strategy is also badly hurt if it is slow to recognize a genuine shift into a stressed regime, since options positions can lose value quickly once realized volatility jumps.",
+              "prompt": "Using this lesson's table as a rough guide, would you lean toward a higher or lower self-transition probability than 0.95, and what would you be explicitly trading away by making that choice?",
+              "modelAnswer": "This strategy sits in a genuinely difficult middle ground: meaningful cost from false alarms, but also meaningful cost from slow detection, so there is no value of p that avoids both. A reasonable starting point is close to 0.95 rather than pushing toward 0.99, since the strategy's exposure to a slow-detected volatility jump is a real, potentially large cost, and it is worth accepting somewhat more frequent false alarms, and their transaction costs, to keep lag closer to the shorter end of this lesson's illustrative range. What is explicitly being traded away is a smoother false-alarm profile: choosing p closer to 0.90 to 0.95 rather than 0.99 means accepting more regime flips driven by ordinary noise, each with a real transaction cost, in exchange for materially shorter lag on the shifts that actually matter to this strategy's risk."
+            },
+            {
+              "_key": "rswc7l3b17",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "The Core Idea to Retain",
+              "question": "What is the most accurate way to think about detection lag in a properly walk-forward-validated regime-switching model?",
+              "options": [
+                "Lag is a bug that better code or more data will eventually eliminate entirely",
+                "Lag is a structural consequence of requiring evidence to accumulate before a belief updates, and it trades off directly against false-alarm frequency through the self-transition probability",
+                "Lag only exists because of look-ahead bias, and a correctly built model has none",
+                "Lag is irrelevant once a model has been fit with enough random seeds"
+              ],
+              "correctIndex": 1,
+              "explanation": "Lag in a genuinely point-in-time model is not a symptom of a mistake; it is a direct, calibratable consequence of requiring evidence before updating a belief, governed by the same self-transition probability that determines how resistant the model is to noise. Look-ahead bias, covered in Lesson 1, is a completely different and illegitimate way of appearing to have less lag."
+            },
+            {
+              "_key": "rswc7l3b18",
+              "_type": "keyTakeaways",
+              "points": [
+                "Detection lag exists in any genuinely point-in-time model because filtering correctly requires several confirming observations before a belief swings decisively",
+                "Lag is directly tied to the self-transition probability: a stronger prior toward persistence makes the model appropriately skeptical of any single day's evidence, and therefore slower to update",
+                "Measuring lag empirically means counting the trading days between a known regime shift's actual start and the point a walk-forward model's filtered probability crosses a chosen threshold",
+                "Lag and false-alarm frequency move in opposite directions as the self-transition probability changes; there is no setting that minimizes both simultaneously",
+                "Strategies particularly exposed to fast-moving shocks should either accept more false alarms with a lower self-transition probability or add a faster overlay that does not depend on the regime model at all, which Chapter 8 builds directly"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

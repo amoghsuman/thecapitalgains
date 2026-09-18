@@ -1,0 +1,211 @@
+{
+  "courseSlug": "understanding-reinforcement-learning-applications-in-trading",
+  "chapters": [
+    {
+      "title": "Chapter 6: From Backtest to Live",
+      "lessons": [
+        {
+          "title": "Regulatory and Operational Reality: SEBI's Algo Trading Framework for a Live RL Strategy",
+          "slug": "regulatory-and-operational-reality-sebis-algo-trading-framework-for-a-live-rl-strategy",
+          "body": [
+            {
+              "_key": "rl6l4b01",
+              "_type": "bigIdea",
+              "text": "Five chapters of modeling, training, and validation do not exempt a strategy from being, in a regulator's eyes, just another algorithm placing orders. This closing lesson makes sure that reality was never optional, only deferred."
+            },
+            {
+              "_key": "rl6l4b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl6l4b02s1", "_type": "span", "text": "Why This Isn't Optional Once Real Capital Is Involved", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl6l4b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl6l4b03s1",
+                  "_type": "span",
+                  "text": "Chapter 1 mentioned SEBI's algo trading framework in passing, more than once, each time as a placeholder: automated strategies need exchange approval, and this course's scope was the modeling and strategy design underneath that requirement. This lesson is where that placeholder finally gets substance, with an important caveat stated upfront: the goal here is understanding the structure and intent of this regulatory requirement well enough to plan for it, not a procedural manual for registering a specific strategy. The exact requirements are set and periodically updated by SEBI and the exchanges directly, and need to be verified against their current circulars and your broker's own compliance process before any real capital is involved.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl6l4b04",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl6l4b04s1", "_type": "span", "text": "The Core Structural Requirement: Every Algorithmic Order Must Be Traceable", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl6l4b05",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl6l4b05s1",
+                  "_type": "span",
+                  "text": "The structural principle anchoring SEBI's algo trading framework since it began, stable even as the specific rules around it have evolved, is straightforward: every order an algorithm places at an exchange needs to be traceable back to that specific algorithm, tagged with a unique algo ID, so market surveillance can identify which automated system generated which order. This requirement does not distinguish between a simple moving average crossover, a statistical arbitrage model, or a trained RL policy like the one this course has built. From a regulatory standpoint, they are all algorithms placing algorithmic orders, and all of them need to be traceable the same way.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl6l4b06",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl6l4b06s1", "_type": "span", "text": "Approval Sits at Multiple Levels", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl6l4b07",
+              "_type": "table",
+              "caption": "Two Levels Approval Historically Covers",
+              "headers": ["Level", "What It Covers"],
+              "rows": [
+                { "_key": "rl6l4b07r1", "_type": "tableRow", "cells": ["Broker / trading member level", "The broker or trading member offering algorithmic order placement to clients needs its own approval and risk management infrastructure in place with the exchange, independent of any specific strategy running on top of it"] },
+                { "_key": "rl6l4b07r2", "_type": "tableRow", "cells": ["Strategy / algo level", "Each specific algorithm needs to be registered and tagged with the exchange, so its orders carry an identifiable algo ID, a requirement that applies regardless of how the algorithm's internal logic was built, rule-based or RL-trained makes no difference to this requirement"] }
+              ]
+            },
+            {
+              "_key": "rl6l4b08",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl6l4b08s1",
+                  "_type": "span",
+                  "text": "A trained RL policy from this course's perspective is, from a regulatory standpoint, simply one more entry in the second category: an algorithm whose live orders need to be tagged and traceable, no different in kind from a much simpler rule-based system in what this specific requirement asks for.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl6l4b09",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl6l4b09s1", "_type": "span", "text": "What's Been Tightening for Retail-Accessible Algo Trading", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl6l4b10",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl6l4b10s1",
+                  "_type": "span",
+                  "text": "For years, a meaningful gray area existed for retail traders running their own automated logic through a broker's API, treated by some as ordinary manual order placement simply because a human had written the code rather than a broker-provided algo product. SEBI's direction of travel in recent years has been to close that gap, moving toward requiring retail-accessible automated strategies, including ones built and run independently through APIs like Zerodha's Kite Connect, to also be registered, tagged, and run through processes exchanges and brokers have been building out for exactly this purpose. This affects precisely the kind of strategy this course has built throughout: an agent trained and validated across five chapters is not exempt from this framework merely because it began as an independent research project rather than a broker-issued product.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl6l4b11",
+              "_type": "callout",
+              "type": "warning",
+              "text": "The specific procedural requirements here, what registration actually involves, which categories of trader or strategy they apply to, and what the current compliance workflow looks like, are set by SEBI and the exchanges directly and have been actively evolving. Treat everything in this lesson as understanding the shape and intent of the requirement, not as current, actionable compliance instructions. Before any of this course's technical work touches real orders, verify the current requirements directly with your broker's compliance desk or a SEBI-registered intermediary, not from a course transcript that cannot track regulatory changes made after it was written."
+            },
+            {
+              "_key": "rl6l4b12",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl6l4b12s1", "_type": "span", "text": "Building the Technical Work in This Course to Fit This Requirement", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl6l4b13",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl6l4b13s1",
+                  "_type": "span",
+                  "text": "The hard guardrails the previous lesson built, independent position limits, a kill switch, a daily circuit breaker, are not only good engineering practice. Risk controls of exactly this kind are the sort of thing a broker's or exchange's approval process reviews when evaluating whether an algorithm is fit to trade client or proprietary capital, since a regulator's underlying concern, an automated system behaving unpredictably at scale, is the same concern this course's guardrails exist to address. ExecutionGuard's position immediately before any real order is placed is also the natural point to attach whatever tagging metadata an exchange's algo ID requirement calls for, since every order that will ever reach a real broker API already passes through exactly that layer.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl6l4b14",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "rl6l4b14s1", "_type": "span", "text": "What This Course Does and Doesn't Cover", "marks": [] }
+              ]
+            },
+            {
+              "_key": "rl6l4b15",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rl6l4b15s1",
+                  "_type": "span",
+                  "text": "This course teaches the modeling, environment design, training, and validation of a reinforcement learning trading strategy, and closes, in this lesson, by making sure that work is understood as sitting inside a regulatory context rather than as if that context did not exist. It does not teach securities law, and it does not walk through current registration paperwork, since that paperwork changes over time in ways a fixed course cannot track, and getting it wrong carries real consequences a broker's compliance team or a SEBI-registered intermediary is equipped to handle correctly and a course transcript is not.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rl6l4b16",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Deciding Whether Compliance Applies",
+              "scenario": "A researcher has trained, validated, and paper-traded an RL agent using every technique across this course, and is now considering connecting it to a live broker API to place real orders with personal capital, reasoning that since it's their own strategy and their own money, none of the algo trading framework applies to them the way it would to an institutional desk.",
+              "prompt": "Is this reasoning correct, based on this lesson? What would you tell them before they connect the agent to a live order-placement endpoint?",
+              "modelAnswer": "The reasoning is not correct, and reflects exactly the historical gray area this lesson described as closing. The core traceability requirement, and the broader direction SEBI has taken on retail-accessible automated strategies, does not turn on whose capital is being traded or how sophisticated the underlying strategy is; it turns on whether an algorithm is placing orders at an exchange. Before connecting this agent to any live order-placement endpoint, the researcher needs to check current requirements directly with their broker's compliance desk, since brokers offering API access have their own current processes for exactly this situation, rather than assuming that personal capital and independent development exempt them from a framework this course has flagged as applying to any automated order-placing system, RL-trained or not."
+            },
+            {
+              "_key": "rl6l4b17",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "What This Lesson's Regulatory Content Is and Isn't",
+              "question": "According to this lesson, what is the appropriate way to treat the regulatory content covered here?",
+              "options": [
+                "As a complete, current, step-by-step registration guide ready to follow directly before deploying a live strategy",
+                "As background understanding of the structure and intent of SEBI's algo trading framework, useful for planning, with current procedural specifics needing verification directly with a broker or SEBI-registered intermediary before real capital is involved",
+                "As entirely irrelevant to a strategy built for personal, non-institutional use",
+                "As a topic that only applies to strategies using a discrete action space, not continuous ones"
+              ],
+              "correctIndex": 1,
+              "explanation": "This lesson deliberately draws a line between the stable structural principle it can teach reliably, algorithmic orders need to be traceable and approved, and the specific, evolving procedural detail it explicitly declines to present as current or actionable, since that detail is set by SEBI and the exchanges and changes over time. Treating this lesson as background understanding for planning, not as a substitute for checking current requirements with a qualified source, is exactly the intended takeaway."
+            },
+            {
+              "_key": "rl6l4b18",
+              "_type": "keyTakeaways",
+              "points": [
+                "SEBI's algo trading framework rests on a stable core principle: every algorithmic order needs to be traceable to a specific algorithm through a unique algo ID, a requirement that treats a trained RL policy no differently from any simpler rule-based system",
+                "Approval historically sits at two levels, the broker or trading member offering algo access, and the specific strategy or algo running on top of it, both relevant regardless of how sophisticated the underlying model is",
+                "Retail-accessible automated strategies run through broker APIs have increasingly been brought into this same framework rather than treated as exempt manual trading, directly relevant to any strategy built across this course and eventually connected to real order placement",
+                "The specific procedural requirements evolve and must be verified directly with a broker's compliance desk or a SEBI-registered intermediary before real capital is involved; this lesson teaches the shape of the obligation, not a substitute for that verification",
+                "Chapter 6's hard guardrails, position limits, kill switches, circuit breakers, serve both this course's engineering goals and the kind of risk control a regulatory approval process is built to expect, with ExecutionGuard's position before any real order a natural integration point for exchange-required tagging",
+                "This closes the course's full arc: framing RL as a tool for narrow, well-defined trading decisions, the mathematical foundation of MDPs and model-free learning, building a real environment with honest state, reward, and action design, training an agent without quietly cheating on held-out data, validating it against realistic costs and known historical stress, and finally the operational and regulatory reality of actually running it"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

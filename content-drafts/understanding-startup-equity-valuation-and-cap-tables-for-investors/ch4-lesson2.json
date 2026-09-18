@@ -1,0 +1,1160 @@
+{
+  "courseSlug": "understanding-startup-equity-valuation-and-cap-tables-for-investors",
+  "chapters": [
+    {
+      "title": "Chapter 4: Dilution, Down Rounds and Protecting Your Stake",
+      "lessons": [
+        {
+          "title": "Down Rounds and Anti-Dilution: Full Ratchet vs Weighted Average",
+          "slug": "down-rounds-and-anti-dilution-full-ratchet-vs-weighted-average",
+          "body": [
+            {
+              "_key": "k1",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k2",
+                  "_type": "span",
+                  "text": "Every dilution example so far has had a happy ending: smaller slice, bigger cake. Now the cake shrinks. A startup that raised at ₹500 per share runs short of cash during a funding winter and the only investor willing to write a cheque offers ₹250. Everyone gets diluted, and the value of every existing share is marked down by half. But not everyone is hurt equally. Investors with anti-dilution protection get extra shares, and those shares come out of everyone else. This lesson shows exactly how, using the two formulas you will see in Indian term sheets.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "bigIdea",
+              "text": "Anti-dilution protection does not stop a down round from happening. It decides who pays for it. Every extra share handed to a protected investor comes out of the founders, the ESOP pool and unprotected holders, often including small angels.",
+              "_key": "k3"
+            },
+            {
+              "_key": "k4",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k5",
+                  "_type": "span",
+                  "text": "What a Down Round Is",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k6",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k7",
+                  "_type": "span",
+                  "text": "A ",
+                  "marks": []
+                },
+                {
+                  "_key": "k9",
+                  "_type": "span",
+                  "text": "down round",
+                  "marks": [
+                    "k8"
+                  ]
+                },
+                {
+                  "_key": "k10",
+                  "_type": "span",
+                  "text": " is a round priced lower per share than the one before. In India, down rounds became far more common during the 2022 to 2023 funding winter, when companies that had raised at 2021 valuations needed cash and found investors unwilling to pay those prices.",
+                  "marks": []
+                }
+              ],
+              "markDefs": [
+                {
+                  "_key": "k8",
+                  "_type": "glossaryTerm",
+                  "definition": "A funding round priced lower per share than the previous round."
+                }
+              ]
+            },
+            {
+              "_type": "keyFact",
+              "label": "A high-profile Indian example",
+              "value": "Roughly 90% below the peak",
+              "context": "In 2023, PharmEasy's parent raised about ₹3,500 crore through a rights issue at a valuation reported to be roughly 90% below its 2021 peak. Existing shareholders who did not put in more money saw their stakes diluted sharply.",
+              "_key": "k11"
+            },
+            {
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "k13",
+                  "label": "Headline valuation",
+                  "value": "Falls",
+                  "context": "Pre-money below the last post-money"
+                },
+                {
+                  "_key": "k15",
+                  "label": "Price per share",
+                  "value": "Falls",
+                  "context": "The defining feature of a down round"
+                },
+                {
+                  "_key": "k17",
+                  "label": "Dilution",
+                  "value": "Larger",
+                  "context": "Same cash buys more shares at a lower price"
+                },
+                {
+                  "_key": "k19",
+                  "label": "Protected investors",
+                  "value": "Get extra shares",
+                  "context": "Through an adjusted conversion ratio"
+                }
+              ],
+              "_key": "k20"
+            },
+            {
+              "_key": "k21",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k22",
+                  "_type": "span",
+                  "text": "How Anti-Dilution Works in India",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k23",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k24",
+                  "_type": "span",
+                  "text": "In Indian venture deals, anti-dilution protection sits in the terms of an investor's CCPS. The investor paid an original issue price per CCPS, and each CCPS converts at a ",
+                  "marks": []
+                },
+                {
+                  "_key": "k26",
+                  "_type": "span",
+                  "text": "conversion price",
+                  "marks": [
+                    "k25"
+                  ]
+                },
+                {
+                  "_key": "k27",
+                  "_type": "span",
+                  "text": ". At issue, the conversion price equals the issue price, so each CCPS converts 1:1. If a down round triggers anti-dilution, the conversion price is cut, and each CCPS converts into more equity shares.",
+                  "marks": []
+                }
+              ],
+              "markDefs": [
+                {
+                  "_key": "k25",
+                  "_type": "glossaryTerm",
+                  "definition": "The price at which a CCPS converts into equity shares. The number of equity shares per CCPS equals the original issue price divided by the conversion price."
+                }
+              ]
+            },
+            {
+              "_type": "mathBlock",
+              "latex": "\\text{Equity shares per CCPS} = \\frac{\\text{Original issue price}}{\\text{Adjusted conversion price}}",
+              "caption": "Cut the conversion price and the conversion ratio rises",
+              "_key": "k28"
+            },
+            {
+              "_key": "k29",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k30",
+                  "_type": "span",
+                  "text": "There are two main formulas for cutting that conversion price: full ratchet and weighted average.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k31",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k32",
+                  "_type": "span",
+                  "text": "Worked Example: PedalPower Hits a Funding Winter",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k33",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k34",
+                  "_type": "span",
+                  "text": "PedalPower Mobility Private Limited is a fictional Bengaluru startup renting e-bikes to delivery riders. After its Series A, its fully diluted cap table looks like this.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "table",
+              "caption": "PedalPower after Series A (illustrative)",
+              "headers": [
+                "Holder",
+                "Security",
+                "Shares",
+                "Price paid"
+              ],
+              "rows": [
+                {
+                  "_key": "k36",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Founders",
+                    "Equity",
+                    "9,00,000",
+                    "Face value"
+                  ]
+                },
+                {
+                  "_key": "k38",
+                  "_type": "tableRow",
+                  "cells": [
+                    "ESOP pool",
+                    "Options",
+                    "1,50,000",
+                    "n/a"
+                  ]
+                },
+                {
+                  "_key": "k40",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Seed investors",
+                    "Seed CCPS",
+                    "1,50,000",
+                    "₹200"
+                  ]
+                },
+                {
+                  "_key": "k42",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Series A fund",
+                    "Series A CCPS with anti-dilution",
+                    "3,00,000",
+                    "₹500 (₹15 crore)"
+                  ]
+                },
+                {
+                  "_key": "k44",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Total",
+                    "",
+                    "15,00,000",
+                    ""
+                  ]
+                }
+              ],
+              "_key": "k45"
+            },
+            {
+              "_key": "k46",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k47",
+                  "_type": "span",
+                  "text": "The Series A post-money valuation was 15,00,000 × ₹500 = ₹75 crore. Two years later, PedalPower raises ₹10 crore in a Series B at ₹250 per share, a pre-money valuation of ₹37.5 crore. The Series B investor receives 4,00,000 CCPS.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "callout",
+              "type": "insight",
+              "text": "The seed investors paid ₹200, below the new ₹250 price. A down round only triggers anti-dilution for investors whose price is above the new round price, so in this example only the Series A fund is affected.",
+              "_key": "k48"
+            },
+            {
+              "_key": "k49",
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_key": "k50",
+                  "_type": "span",
+                  "text": "Option 1: Full ratchet",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k51",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k52",
+                  "_type": "span",
+                  "text": "Under ",
+                  "marks": []
+                },
+                {
+                  "_key": "k54",
+                  "_type": "span",
+                  "text": "full ratchet",
+                  "marks": [
+                    "k53"
+                  ]
+                },
+                {
+                  "_key": "k55",
+                  "_type": "span",
+                  "text": ", the Series A conversion price drops straight to ₹250, the new round price. It does not matter whether the down round raises ₹10 crore or ₹10 lakh.",
+                  "marks": []
+                }
+              ],
+              "markDefs": [
+                {
+                  "_key": "k53",
+                  "_type": "glossaryTerm",
+                  "definition": "An anti-dilution formula that cuts the protected investor's conversion price all the way down to the new, lower round price, regardless of how much money is raised."
+                }
+              ]
+            },
+            {
+              "_key": "k56",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k57",
+                  "_type": "span",
+                  "text": "Adjusted conversion price: ₹250",
+                  "marks": []
+                }
+              ],
+              "markDefs": [],
+              "listItem": "bullet",
+              "level": 1
+            },
+            {
+              "_key": "k58",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k59",
+                  "_type": "span",
+                  "text": "Equity shares on conversion: ₹15 crore ÷ ₹250 = 6,00,000",
+                  "marks": []
+                }
+              ],
+              "markDefs": [],
+              "listItem": "bullet",
+              "level": 1
+            },
+            {
+              "_key": "k60",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k61",
+                  "_type": "span",
+                  "text": "Extra shares for the Series A fund: 3,00,000",
+                  "marks": []
+                }
+              ],
+              "markDefs": [],
+              "listItem": "bullet",
+              "level": 1
+            },
+            {
+              "_key": "k62",
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_key": "k63",
+                  "_type": "span",
+                  "text": "Option 2: Broad-based weighted average",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k64",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k65",
+                  "_type": "span",
+                  "text": "The ",
+                  "marks": []
+                },
+                {
+                  "_key": "k67",
+                  "_type": "span",
+                  "text": "broad-based weighted average",
+                  "marks": [
+                    "k66"
+                  ]
+                },
+                {
+                  "_key": "k68",
+                  "_type": "span",
+                  "text": " formula cuts the conversion price by an amount that depends on how big the down round is relative to the whole company.",
+                  "marks": []
+                }
+              ],
+              "markDefs": [
+                {
+                  "_key": "k66",
+                  "_type": "glossaryTerm",
+                  "definition": "An anti-dilution formula that reduces the conversion price in proportion to how much money is raised at the lower price and how many shares already exist, counted on a fully diluted basis."
+                }
+              ]
+            },
+            {
+              "_type": "mathBlock",
+              "latex": "CP_2 = CP_1 \\times \\frac{A + B}{A + C}",
+              "caption": "The weighted average formula",
+              "_key": "k69"
+            },
+            {
+              "_type": "table",
+              "caption": "What each letter means, with PedalPower numbers",
+              "headers": [
+                "Symbol",
+                "Meaning",
+                "PedalPower value"
+              ],
+              "rows": [
+                {
+                  "_key": "k71",
+                  "_type": "tableRow",
+                  "cells": [
+                    "CP₁",
+                    "Conversion price before the down round",
+                    "₹500"
+                  ]
+                },
+                {
+                  "_key": "k73",
+                  "_type": "tableRow",
+                  "cells": [
+                    "A",
+                    "Shares outstanding before the round (broad-based: fully diluted)",
+                    "15,00,000"
+                  ]
+                },
+                {
+                  "_key": "k75",
+                  "_type": "tableRow",
+                  "cells": [
+                    "B",
+                    "Shares the new money would have bought at CP₁",
+                    "₹10 crore ÷ ₹500 = 2,00,000"
+                  ]
+                },
+                {
+                  "_key": "k77",
+                  "_type": "tableRow",
+                  "cells": [
+                    "C",
+                    "Shares actually issued in the down round",
+                    "4,00,000"
+                  ]
+                },
+                {
+                  "_key": "k79",
+                  "_type": "tableRow",
+                  "cells": [
+                    "CP₂",
+                    "Adjusted conversion price",
+                    "₹500 × 17,00,000 ÷ 19,00,000 = ₹447.37"
+                  ]
+                }
+              ],
+              "_key": "k80"
+            },
+            {
+              "_key": "k81",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k82",
+                  "_type": "span",
+                  "text": "Adjusted conversion price: ₹447.37",
+                  "marks": []
+                }
+              ],
+              "markDefs": [],
+              "listItem": "bullet",
+              "level": 1
+            },
+            {
+              "_key": "k83",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k84",
+                  "_type": "span",
+                  "text": "Equity shares on conversion: ₹15 crore ÷ ₹447.37 = 3,35,294",
+                  "marks": []
+                }
+              ],
+              "markDefs": [],
+              "listItem": "bullet",
+              "level": 1
+            },
+            {
+              "_key": "k85",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k86",
+                  "_type": "span",
+                  "text": "Extra shares for the Series A fund: 35,294",
+                  "marks": []
+                }
+              ],
+              "markDefs": [],
+              "listItem": "bullet",
+              "level": 1
+            },
+            {
+              "_key": "k87",
+              "_type": "collapsible",
+              "title": "Narrow-based weighted average: the middle ground",
+              "content": [
+                {
+                  "_key": "k88",
+                  "_type": "block",
+                  "style": "normal",
+                  "children": [
+                    {
+                      "_key": "k89",
+                      "_type": "span",
+                      "text": "A narrow-based version uses the same formula but counts only a narrower group of shares in A, often just the outstanding preference shares. A smaller A makes the adjustment bigger.",
+                      "marks": []
+                    }
+                  ],
+                  "markDefs": []
+                },
+                {
+                  "_key": "k90",
+                  "_type": "block",
+                  "style": "normal",
+                  "children": [
+                    {
+                      "_key": "k91",
+                      "_type": "span",
+                      "text": "A = Seed CCPS + Series A CCPS = 4,50,000",
+                      "marks": []
+                    }
+                  ],
+                  "markDefs": [],
+                  "listItem": "bullet",
+                  "level": 1
+                },
+                {
+                  "_key": "k92",
+                  "_type": "block",
+                  "style": "normal",
+                  "children": [
+                    {
+                      "_key": "k93",
+                      "_type": "span",
+                      "text": "CP₂ = ₹500 × (4,50,000 + 2,00,000) ÷ (4,50,000 + 4,00,000) = ₹382.35",
+                      "marks": []
+                    }
+                  ],
+                  "markDefs": [],
+                  "listItem": "bullet",
+                  "level": 1
+                },
+                {
+                  "_key": "k94",
+                  "_type": "block",
+                  "style": "normal",
+                  "children": [
+                    {
+                      "_key": "k95",
+                      "_type": "span",
+                      "text": "Equity shares on conversion: ₹15 crore ÷ ₹382.35 = 3,92,307",
+                      "marks": []
+                    }
+                  ],
+                  "markDefs": [],
+                  "listItem": "bullet",
+                  "level": 1
+                },
+                {
+                  "_key": "k96",
+                  "_type": "block",
+                  "style": "normal",
+                  "children": [
+                    {
+                      "_key": "k97",
+                      "_type": "span",
+                      "text": "Extra shares for the Series A fund: 92,307",
+                      "marks": []
+                    }
+                  ],
+                  "markDefs": [],
+                  "listItem": "bullet",
+                  "level": 1
+                },
+                {
+                  "_key": "k98",
+                  "_type": "block",
+                  "style": "normal",
+                  "children": [
+                    {
+                      "_key": "k99",
+                      "_type": "span",
+                      "text": "Narrow-based protection sits between broad-based and full ratchet, and is less common in balanced term sheets.",
+                      "marks": []
+                    }
+                  ],
+                  "markDefs": []
+                }
+              ]
+            },
+            {
+              "_key": "k100",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k101",
+                  "_type": "span",
+                  "text": "Who Pays: The Four Outcomes Side by Side",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "table",
+              "caption": "PedalPower after the Series B down round (fully diluted, shares rounded down)",
+              "headers": [
+                "Holder",
+                "No protection",
+                "Broad-based WA",
+                "Narrow-based WA",
+                "Full ratchet"
+              ],
+              "rows": [
+                {
+                  "_key": "k103",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Series A conversion price",
+                    "₹500",
+                    "₹447.37",
+                    "₹382.35",
+                    "₹250"
+                  ]
+                },
+                {
+                  "_key": "k105",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Series A shares",
+                    "3,00,000",
+                    "3,35,294",
+                    "3,92,307",
+                    "6,00,000"
+                  ]
+                },
+                {
+                  "_key": "k107",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Total shares",
+                    "19,00,000",
+                    "19,35,294",
+                    "19,92,307",
+                    "22,00,000"
+                  ]
+                },
+                {
+                  "_key": "k109",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Founders",
+                    "47.37%",
+                    "46.50%",
+                    "45.17%",
+                    "40.91%"
+                  ]
+                },
+                {
+                  "_key": "k111",
+                  "_type": "tableRow",
+                  "cells": [
+                    "ESOP pool",
+                    "7.89%",
+                    "7.75%",
+                    "7.53%",
+                    "6.82%"
+                  ]
+                },
+                {
+                  "_key": "k113",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Seed investors",
+                    "7.89%",
+                    "7.75%",
+                    "7.53%",
+                    "6.82%"
+                  ]
+                },
+                {
+                  "_key": "k115",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Series A fund",
+                    "15.79%",
+                    "17.33%",
+                    "19.69%",
+                    "27.27%"
+                  ]
+                },
+                {
+                  "_key": "k117",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Series B investor",
+                    "21.05%",
+                    "20.67%",
+                    "20.08%",
+                    "18.18%"
+                  ]
+                },
+                {
+                  "_key": "k119",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Series A stake value at ₹250",
+                    "₹7.50 crore",
+                    "₹8.38 crore",
+                    "₹9.81 crore",
+                    "₹15.00 crore"
+                  ]
+                }
+              ],
+              "_key": "k120"
+            },
+            {
+              "_type": "chart",
+              "chartType": "bar",
+              "title": "Founders vs Series A fund under each protection type (%)",
+              "xAxisLabel": "Anti-dilution type",
+              "yAxisLabel": "Fully diluted ownership (%)",
+              "data": [
+                {
+                  "_key": "k122",
+                  "label": "None"
+                },
+                {
+                  "_key": "k124",
+                  "label": "Broad-based WA"
+                },
+                {
+                  "_key": "k126",
+                  "label": "Narrow-based WA"
+                },
+                {
+                  "_key": "k128",
+                  "label": "Full ratchet"
+                }
+              ],
+              "series": [
+                {
+                  "_key": "k130",
+                  "label": "Founders",
+                  "values": [
+                    47.37,
+                    46.5,
+                    45.17,
+                    40.91
+                  ]
+                },
+                {
+                  "_key": "k132",
+                  "label": "Series A fund",
+                  "values": [
+                    15.79,
+                    17.33,
+                    19.69,
+                    27.27
+                  ]
+                }
+              ],
+              "_key": "k133"
+            },
+            {
+              "_key": "k134",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k135",
+                  "_type": "span",
+                  "text": "Under full ratchet, the Series A fund is fully protected: its ₹15 crore is still worth ₹15 crore at the new price. Every one of its 3,00,000 extra shares comes out of the founders, the ESOP pool, the seed investors and even the new Series B investor. Under broad-based weighted average, the fund recovers only a small part of its markdown, and the pain is shared far more evenly.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "callout",
+              "type": "warning",
+              "text": "In this simplified example, the extra anti-dilution shares also dilute the Series B investor. In practice, a new investor usually insists that those shares are counted in its pre-money share count, which pushes all of the cost back onto founders and earlier unprotected holders.",
+              "_key": "k136"
+            },
+            {
+              "_type": "comparison",
+              "title": "Full ratchet vs broad-based weighted average",
+              "columns": [
+                {
+                  "_key": "k138",
+                  "label": "Full ratchet",
+                  "points": [
+                    "Conversion price falls to the new round price",
+                    "Ignores how much money the down round raises",
+                    "Protected investor fully restored at the new price",
+                    "Can devastate founders and unprotected holders",
+                    "Rare in balanced Indian term sheets; a sign of weak negotiating power"
+                  ]
+                },
+                {
+                  "_key": "k140",
+                  "label": "Broad-based weighted average",
+                  "points": [
+                    "Conversion price falls in proportion to the size of the down round",
+                    "A small down round causes a small adjustment",
+                    "Protected investor recovers only part of the markdown",
+                    "Dilution shared more fairly",
+                    "The most common market standard"
+                  ]
+                }
+              ],
+              "_key": "k141"
+            },
+            {
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Calculate the adjusted conversion price",
+              "prompt": "An investor holds CCPS with a conversion price of ₹300 and broad-based weighted average protection. The company has 10,00,000 fully diluted shares and raises ₹5 crore in a down round at ₹200 per share. What is the adjusted conversion price, in ₹?",
+              "correctValue": 280,
+              "tolerance": 0.5,
+              "unit": "₹",
+              "explanation": "A = 10,00,000. B = ₹5 crore ÷ ₹300 = 1,66,667. C = ₹5 crore ÷ ₹200 = 2,50,000. CP₂ = ₹300 × (10,00,000 + 1,66,667) ÷ (10,00,000 + 2,50,000) = ₹300 × 0.9333 = ₹280. Under full ratchet it would have been ₹200.",
+              "_key": "k142"
+            },
+            {
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Most founder-friendly",
+              "question": "Which form of anti-dilution protection is usually the most favourable to founders and unprotected shareholders?",
+              "options": [
+                "Full ratchet",
+                "Narrow-based weighted average",
+                "Broad-based weighted average",
+                "All three have the same effect"
+              ],
+              "correctIndex": 2,
+              "explanation": "Broad-based weighted average counts the most shares in A, which makes the adjustment smallest. Narrow-based gives a bigger adjustment, and full ratchet the biggest, because it ignores the size of the down round entirely.",
+              "_key": "k143"
+            },
+            {
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "The harshest formula",
+              "textWithBlank": "The anti-dilution formula that cuts the conversion price all the way to the new round price, regardless of how much is raised, is called full ___.",
+              "correctAnswers": [
+                "ratchet"
+              ],
+              "explanation": "Full ratchet gives the protected investor complete protection at the new price, entirely at the expense of other shareholders.",
+              "_key": "k144"
+            },
+            {
+              "_key": "k145",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k146",
+                  "_type": "span",
+                  "text": "Indian Twists and Common Carve-Outs",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k147",
+              "_type": "collapsible",
+              "title": "FEMA limits anti-dilution for foreign investors",
+              "content": [
+                {
+                  "_key": "k148",
+                  "_type": "block",
+                  "style": "normal",
+                  "children": [
+                    {
+                      "_key": "k149",
+                      "_type": "span",
+                      "text": "Under FEMA pricing rules, CCPS issued to a non-resident cannot convert at a price below the fair value determined when they were issued. If a Singapore fund paid ₹500 per CCPS and the certified fair value at that time was ₹480, the conversion price generally cannot be cut below ₹480, however deep the down round.",
+                      "marks": []
+                    }
+                  ],
+                  "markDefs": []
+                },
+                {
+                  "_key": "k150",
+                  "_type": "block",
+                  "style": "normal",
+                  "children": [
+                    {
+                      "_key": "k151",
+                      "_type": "span",
+                      "text": "Lawyers use various structures to address this, such as founders transferring some of their own shares to the investor, but each has its own pricing, tax and regulatory constraints. The practical takeaway: anti-dilution protection for a foreign investor in an Indian company is often weaker than the term sheet suggests.",
+                      "marks": []
+                    }
+                  ],
+                  "markDefs": []
+                }
+              ]
+            },
+            {
+              "_key": "k152",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k153",
+                  "_type": "span",
+                  "text": "Almost every anti-dilution clause excludes certain share issues, called carve-outs, so that routine events do not trigger an adjustment.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k154",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k155",
+                  "_type": "span",
+                  "text": "ESOP grants and exercises",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_key": "k156",
+                  "_type": "span",
+                  "text": " within the approved pool.",
+                  "marks": []
+                }
+              ],
+              "markDefs": [],
+              "listItem": "bullet",
+              "level": 1
+            },
+            {
+              "_key": "k157",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k158",
+                  "_type": "span",
+                  "text": "Conversion of existing CCPS, notes or iSAFEs.",
+                  "marks": [
+                    "strong"
+                  ]
+                }
+              ],
+              "markDefs": [],
+              "listItem": "bullet",
+              "level": 1
+            },
+            {
+              "_key": "k159",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k160",
+                  "_type": "span",
+                  "text": "Bonus issues and share splits",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_key": "k161",
+                  "_type": "span",
+                  "text": ", which are handled by a separate proportional adjustment.",
+                  "marks": []
+                }
+              ],
+              "markDefs": [],
+              "listItem": "bullet",
+              "level": 1
+            },
+            {
+              "_key": "k162",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k163",
+                  "_type": "span",
+                  "text": "Shares issued in an approved acquisition or strategic partnership.",
+                  "marks": [
+                    "strong"
+                  ]
+                }
+              ],
+              "markDefs": [],
+              "listItem": "bullet",
+              "level": 1
+            },
+            {
+              "_key": "k164",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k165",
+                  "_type": "span",
+                  "text": "Shares issued with the consent of the protected investors",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_key": "k166",
+                  "_type": "span",
+                  "text": ", often a majority of that series.",
+                  "marks": []
+                }
+              ],
+              "markDefs": [],
+              "listItem": "bullet",
+              "level": 1
+            },
+            {
+              "_type": "callout",
+              "type": "insight",
+              "text": "Some term sheets add a pay-to-play clause: an investor keeps its anti-dilution protection only if it invests its pro-rata share in the down round. It stops protected investors from sitting back and collecting extra shares while others provide the rescue money.",
+              "_key": "k167"
+            },
+            {
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "The angel holding plain equity",
+              "scenario": "You invested ₹10 lakh in PedalPower's seed round, but unlike the seed fund, you took equity shares, not CCPS. You now learn that the Series B down round is proceeding at ₹250 per share, and that the Series A fund has full ratchet protection. The founders ask all existing shareholders to approve the round at a general meeting.",
+              "prompt": "How does this affect you, and what can you realistically do?",
+              "modelAnswer": "How it affects you:\n1. You are diluted twice: once by the 4,00,000 new Series B shares and again by the 3,00,000 extra shares the Series A fund receives under full ratchet.\n2. As an equity holder, you also sit behind every CCPS series in any sale, and the Series A fund's preference is unaffected by the down round.\n3. Your ₹200 entry price is below ₹250, so your shares are still above cost on paper, but your percentage falls much more than it would under weighted average protection.\n\nWhat you can realistically do:\n1. Ask the founders and Series A fund whether they will negotiate the ratchet down to broad-based weighted average, or waive it, to make the rescue round fair. Series A investors sometimes agree when the alternative is the company running out of cash.\n2. Ask whether the extra anti-dilution shares will be counted in the Series B pre-money, and who bears them.\n3. Ask whether there is a pay-to-play requirement for the Series A fund.\n4. Consider whether to invest your pro-rata share in the Series B if you believe in the company, since new money at ₹250 buys more shares.\n5. For future deals, ask for the same instrument and protection as the lead investor, and push back on full ratchet clauses before you invest.",
+              "_key": "k168"
+            },
+            {
+              "_type": "flashcardSet",
+              "title": "Down Rounds and Anti-Dilution",
+              "cards": [
+                {
+                  "_key": "k170",
+                  "term": "Down round",
+                  "definition": "A round priced lower per share than the previous round."
+                },
+                {
+                  "_key": "k172",
+                  "term": "Conversion price",
+                  "definition": "The price at which a CCPS converts into equity. Lowering it gives the holder more equity shares."
+                },
+                {
+                  "_key": "k174",
+                  "term": "Full ratchet",
+                  "definition": "Cuts the conversion price to the new round price, regardless of the round size."
+                },
+                {
+                  "_key": "k176",
+                  "term": "Broad-based weighted average",
+                  "definition": "CP₂ = CP₁ × (A + B) ÷ (A + C), with A counted on a fully diluted basis. The market-standard, more balanced formula."
+                },
+                {
+                  "_key": "k178",
+                  "term": "Narrow-based weighted average",
+                  "definition": "The same formula with a smaller A, such as only preference shares, giving a larger adjustment."
+                },
+                {
+                  "_key": "k180",
+                  "term": "Carve-outs",
+                  "definition": "Share issues, such as ESOP grants and conversions, that do not trigger anti-dilution."
+                },
+                {
+                  "_key": "k182",
+                  "term": "Pay-to-play",
+                  "definition": "A clause requiring investors to fund their pro-rata share of a down round to keep their protections."
+                }
+              ],
+              "_key": "k183"
+            },
+            {
+              "_type": "keyTakeaways",
+              "points": [
+                "A down round is priced below the previous round per share. It dilutes everyone and marks down every existing share.",
+                "Anti-dilution protection works by cutting a CCPS conversion price, so the protected investor receives more equity shares.",
+                "Full ratchet cuts the price all the way to the new round price. Broad-based weighted average adjusts in proportion to the round size.",
+                "The extra shares come out of founders, the ESOP pool and unprotected holders, often including small angels on plain equity.",
+                "FEMA pricing rules can limit anti-dilution for foreign investors in Indian companies.",
+                "Before investing, check which formula applies to every series ahead of you, and ask for the same protection as the lead."
+              ],
+              "_key": "k184"
+            },
+            {
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment or legal advice. PedalPower and the investors described are fictional. PharmEasy figures are approximate and based on public reports. Anti-dilution clauses vary widely in their drafting and carve-outs, and their enforceability can depend on FEMA and company law. Consult a SEBI-registered investment adviser and a lawyer before investing.",
+              "_key": "k185"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

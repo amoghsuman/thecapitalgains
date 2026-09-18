@@ -1,0 +1,157 @@
+{
+  "courseSlug": "understanding-transaction-costs-and-slippage-in-backtests",
+  "chapters": [
+    {
+      "title": "Chapter 5: Building Realistic Backtests",
+      "lessons": [
+        {
+          "title": "Key Takeaways and Where to Go Next",
+          "slug": "key-takeaways-and-where-to-go-next",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "v1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "v1s1", "text": "Five chapters, four case studies, and one recurring pattern: a strategy that looks profitable on paper and a real market that charges for every assumption a backtest quietly gets wrong. Before moving into the capstone, this lesson pulls the course's arc, formulas, and throughline into one place.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "v2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "v2s1", "text": "The Arc of This Course, in One Table", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "v3",
+              "caption": "Five chapters, five questions, five results",
+              "headers": ["Chapter", "Core Question", "Key Result"],
+              "rows": [
+                { "cells": ["1: Why Backtested Returns Lie", "Why does a backtest's return differ from what you actually earn?", "A 22.4% backtest returned 4.1% live; transaction costs, spread, and market impact accounted for 37.2%, 22.4%, and 40.4% of the gap"] },
+                { "cells": ["2: The Explicit Cost Stack", "What exactly does the government, the exchange, and the broker charge?", "Six charges, priced and coded; a Bank Nifty scalp lost 91.3% of gross profit to explicit costs alone"] },
+                { "cells": ["3: Slippage and Market Impact", "What does the market itself charge, beyond published rates?", "Spread and the square-root impact law, plus a momentum-specific drift cost that was the largest single component in its case study"] },
+                { "cells": ["4: Strategy Sensitivity and Break-Even", "How does trading frequency change everything above?", "Cost drag = turnover x round-trip cost; a higher gross CAGR strategy lost to a lower one once turnover was accounted for"] },
+                { "cells": ["5: Building Realistic Backtests", "How do I build (and check) a backtest I can trust?", "A four-category checklist; methodology bugs alone inflated one backtest's CAGR by over 6 points"] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "v4",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "v4s1", "text": "The Formulas Worth Memorizing", "marks": [] }
+              ]
+            },
+            {
+              "_type": "flashcardSet",
+              "_key": "v5",
+              "title": "Four Formulas From This Course",
+              "cards": [
+                { "_type": "flashcard", "_key": "v5c1", "term": "Cost Drag", "definition": "Cost Drag (% per year) = Turnover Ratio x Round-Trip Cost (%). The annual erosion a strategy's turnover applies to its gross return, from Chapter 4." },
+                { "_type": "flashcard", "_key": "v5c2", "term": "Turnover / Holding Period", "definition": "T = 250 / H. Annual turnover ratio equals roughly 250 (NSE trading days per year) divided by average holding period in trading days, from Chapter 4." },
+                { "_type": "flashcard", "_key": "v5c3", "term": "Break-Even Gross CAGR", "definition": "Break-Even Gross CAGR = Turnover Ratio x Round-Trip Cost (%), the same figure as cost drag, read as a minimum threshold a strategy must clear, ideally with a 2x to 3x safety margin, from Chapter 4." },
+                { "_type": "flashcard", "_key": "v5c4", "term": "Square-Root Market Impact", "definition": "I = k x sigma x sqrt(Q / ADV). Market impact scales with the square root of participation rate (order value over average daily traded value), not linearly with order size, from Chapter 3." }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "v6",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "v6s1", "text": "The Throughline", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "v7",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "v7s1", "text": "Underneath five chapters of formulas and case studies, three habits do almost all of the work. First, never trust a cost function until it reproduces a number you already worked out by hand, the discipline used from Chapter 2 onward. Second, treat turnover as the master variable, since it multiplies every other cost this course has priced, explicit and implicit alike, at once. Third, separate cost problems from methodology problems, a perfect cost model bolted onto a look-ahead-biased gross return is still a broken backtest, as Chapter 5 showed directly.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "v8",
+              "type": "insight",
+              "text": "None of this requires exotic tools. Every calculation in this course was ordinary arithmetic and a handful of Python functions, applied consistently and checked against known numbers. The edge this course builds is discipline, not complexity."
+            },
+            {
+              "_type": "block",
+              "_key": "v9",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "v9s1", "text": "Where to Go Next: The Capstone", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "v10",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "v10s1", "text": "Chapter 6 closes the course by moving from backtest to reality: why live trading still costs more than even a fully realistic backtest predicts, a single audit framework that ties every tool from this course together into one repeatable process, how cost and slippage questions actually show up in quant and prop trading interviews, and a final, comprehensive case study that runs a strategy through the complete framework end to end.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "v11",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "v11s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "v12",
+              "variant": "quiz",
+              "title": "Quick Check",
+              "question": "A strategy has a turnover ratio of 8.0x and a round-trip cost of 0.25%. Using the formulas from this course, what is its break-even gross CAGR?",
+              "options": [
+                "0.25%",
+                "2.00%",
+                "8.00%",
+                "31.25%"
+              ],
+              "correctIndex": 1,
+              "explanation": "Break-Even Gross CAGR = Turnover Ratio x Round-Trip Cost = 8.0 x 0.25% = 2.00%. This strategy needs at least a 2.00% gross CAGR just to avoid losing money to costs, and following Chapter 4, ideally 4.00% to 6.00% (a 2x to 3x margin) before being considered live-ready."
+            },
+            {
+              "_type": "block",
+              "_key": "v13",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "v13s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "v14",
+              "text": "A backtest is not a prediction, it is a claim, and every chapter in this course has been about the discipline of checking that claim before trusting it with real capital: price the costs precisely, model the slippage honestly, respect what turnover does to both, and make sure the methodology generating the gross return was sound in the first place."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "v15",
+              "points": [
+                "This course built four independent disciplines: explicit costs (Chapter 2), slippage and market impact (Chapter 3), turnover and break-even analysis (Chapter 4), and backtest methodology integrity (Chapter 5), each shown capable of independently invalidating a backtest.",
+                "The core formulas, Cost Drag = Turnover x Round-Trip Cost, T = 250/H, and the square-root market impact law, apply across every strategy type and every chapter's case studies.",
+                "The habit that mattered more than any single formula was validating every model against a number already worked out by hand, and never trusting a cost estimate that skipped that step.",
+                "Chapter 6 closes the course with the paper-to-live transition, a unified audit framework, how these questions surface in quant and prop trading interviews, and one final end-to-end case study."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

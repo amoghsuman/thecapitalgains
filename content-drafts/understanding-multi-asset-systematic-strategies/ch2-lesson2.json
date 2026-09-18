@@ -1,0 +1,303 @@
+{
+  "courseSlug": "understanding-multi-asset-systematic-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 2: Understanding the Asset Classes You're Trading",
+      "lessons": [
+        {
+          "title": "Fixed Income Systematically: G-Secs, SDLs, and the Yield Curve as a Tradable Asset",
+          "slug": "fixed-income-systematically-g-secs-sdls-and-the-yield-curve-as-a-tradable-asset",
+          "body": [
+            {
+              "_key": "mac2l2b01",
+              "_type": "bigIdea",
+              "text": "A bond is not one asset, it is a whole curve of them, one yield per maturity, and a systematic desk that only ever asks \"will rates go up or down\" is throwing away most of what fixed income has to offer. The curve's shape is a tradable signal in its own right, independent of where rates end up."
+            },
+            {
+              "_key": "mac2l2b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac2l2b02s1",
+                  "_type": "span",
+                  "text": "Fixed income entered this course in Lesson 2 of Chapter 1 as the asset class driven by interest rate expectations rather than earnings. This lesson gets concrete: what G-Secs and SDLs actually are, how the yield curve works as a tradable object, why duration determines how hard a rate move hits a given bond, and how a systematic desk in India actually gets exposure without buying and holding physical bonds one at a time.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac2l2b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac2l2b03s1", "_type": "span", "text": "G-Secs and SDLs: What You're Actually Owning", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac2l2b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac2l2b04s1",
+                  "_type": "span",
+                  "text": "Government Securities, G-Secs, are sovereign debt issued by the Government of India through RBI auctions, ranging from 91-day and 364-day treasury bills to bonds with maturities of 30 to 40 years. State Development Loans, SDLs, are the equivalent instrument issued by individual state governments, also auctioned through RBI, and while not formally sovereign-guaranteed in the same way as central government debt, they carry a strong implicit backing that keeps their credit risk low relative to corporate debt. What actually differentiates them for a systematic desk is liquidity and pricing, not really credit quality.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac2l2b05",
+              "_type": "table",
+              "caption": "G-Secs vs SDLs",
+              "headers": ["Feature", "G-Secs", "SDLs"],
+              "rows": [
+                { "_key": "mac2l2b05r1", "_type": "tableRow", "cells": ["Issuer", "Government of India, via RBI auctions", "Individual state governments, via RBI auctions"] },
+                { "_key": "mac2l2b05r2", "_type": "tableRow", "cells": ["Yield vs G-Sec Curve", "The benchmark itself", "Trades at a spread over the comparable-tenor G-Sec, varying by state"] },
+                { "_key": "mac2l2b05r3", "_type": "tableRow", "cells": ["Liquidity", "Deepest, most liquid segment of Indian fixed income", "Meaningfully thinner, varies by state and issue size"] },
+                { "_key": "mac2l2b05r4", "_type": "tableRow", "cells": ["Primary Buyers", "Banks, insurers, mutual funds, RBI open market operations", "Similar investor base, typically smaller individual allocations"] }
+              ]
+            },
+            {
+              "_key": "mac2l2b06",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac2l2b06s1", "_type": "span", "text": "The Yield Curve: One Curve, Many Systematic Signals", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac2l2b07",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac2l2b07s1",
+                  "_type": "span",
+                  "text": "Plot G-Sec yield against maturity and you get the yield curve. The short end is anchored mainly by the RBI's policy repo rate and near-term rate expectations. The long end reflects inflation expectations, growth outlook, and how much new supply the government needs the market to absorb through its borrowing program. A normal curve slopes upward, longer maturities yielding more to compensate for locking up capital longer. What a systematic desk actually trades is not just the level of yields, but the shape: how the curve steepens, flattens, or occasionally inverts as the RBI's cycle and the market's expectations shift, all without needing a view on whether rates in aggregate are going up or down.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac2l2b08",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Illustrative G-Sec Yield Curve: Calm Regime vs Rate-Hike Cycle",
+              "xAxisLabel": "Tenor",
+              "yAxisLabel": "Yield (%)",
+              "data": [
+                { "_key": "mac2l2b08d1", "label": "3M" },
+                { "_key": "mac2l2b08d2", "label": "1Y" },
+                { "_key": "mac2l2b08d3", "label": "2Y" },
+                { "_key": "mac2l2b08d4", "label": "5Y" },
+                { "_key": "mac2l2b08d5", "label": "10Y" },
+                { "_key": "mac2l2b08d6", "label": "15Y" },
+                { "_key": "mac2l2b08d7", "label": "30Y" }
+              ],
+              "series": [
+                { "_key": "mac2l2b08s1", "label": "Calm Regime Curve", "values": [6.0, 6.3, 6.6, 7.0, 7.2, 7.3, 7.4] },
+                { "_key": "mac2l2b08s2", "label": "Rate-Hike Cycle Curve (2022-style)", "values": [6.8, 7.0, 7.3, 7.35, 7.4, 7.35, 7.3] }
+              ]
+            },
+            {
+              "_key": "mac2l2b09",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This yield curve is a stylized illustration built to show the shape change a hiking cycle typically produces, short-end yields rising faster than long-end yields, flattening the curve, not an actual historical G-Sec data series for any specific date. Treat it as directionally instructive."
+            },
+            {
+              "_key": "mac2l2b10",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac2l2b10s1", "_type": "span", "text": "Duration: Why a 1% Rate Move Doesn't Hit Every Bond the Same Way", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac2l2b11",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "mac2l2m01",
+                  "_type": "glossaryTerm",
+                  "definition": "A measure of a bond's price sensitivity to a change in yield, expressed roughly as the percentage price change for a 1 percentage point move in yield. Longer-maturity bonds generally have higher duration and are more sensitive to rate moves."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "mac2l2b11s1",
+                  "_type": "span",
+                  "text": "A 50 basis point rise in yields does not move a 91-day treasury bill and a 30-year G-Sec by the same amount. The instrument that captures this is ",
+                  "marks": []
+                },
+                { "_key": "mac2l2b11s2", "_type": "span", "text": "modified duration", "marks": ["mac2l2m01"] },
+                {
+                  "_key": "mac2l2b11s3",
+                  "_type": "span",
+                  "text": ", and the approximation below is the single most useful formula for reasoning about fixed income risk quickly.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac2l2b12",
+              "_type": "mathBlock",
+              "latex": "\\%\\Delta P \\approx -D_{mod} \\times \\Delta y",
+              "caption": "Approximate percentage price change for a bond, given its modified duration and a change in yield. The negative sign captures the inverse relationship: yields up, prices down."
+            },
+            {
+              "_key": "mac2l2b13",
+              "_type": "keyFact",
+              "label": "Illustrative Modified Duration, 10Y vs 2Y G-Sec",
+              "value": "~7 vs ~1.8",
+              "context": "A 0.5 percentage point yield rise costs the 10Y bond roughly 3.5% in price, versus roughly 0.9% for the 2Y bond, using the approximation above"
+            },
+            {
+              "_key": "mac2l2b14",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac2l2b14s1", "_type": "span", "text": "How a Systematic Desk Actually Gets Exposure", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac2l2b15",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac2l2b15s1",
+                  "_type": "span",
+                  "text": "RBI's Retail Direct scheme, launched in November 2021, lets individuals buy G-Secs directly at auction or in the secondary market, which is genuinely useful for buy-and-hold exposure but impractical for a strategy that needs to go long, go short, or roll positions frequently. For actual systematic trading, exchange-traded interest rate futures on NSE, based on a notional coupon-bearing G-Sec, are the more practical instrument: standardized, liquid relative to the alternatives, and tradable long or short without holding physical bonds. Gilt mutual funds and G-Sec index funds offer a simpler, lower-frequency proxy for desks that want curve exposure without derivatives infrastructure. SDLs, by contrast, are mostly accessed through NDS-OM by institutional participants, with limited practical retail or systematic access.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac2l2b16",
+              "_type": "table",
+              "caption": "Getting Fixed Income Exposure: Instrument to Venue",
+              "headers": ["Instrument", "Venue", "Best Suited For"],
+              "rows": [
+                { "_key": "mac2l2b16r1", "_type": "tableRow", "cells": ["G-Secs (direct)", "RBI Retail Direct / NDS-OM", "Buy-and-hold exposure, not frequent systematic rebalancing"] },
+                { "_key": "mac2l2b16r2", "_type": "tableRow", "cells": ["Interest Rate Futures (notional G-Sec)", "NSE", "Systematic long/short exposure, frequent rebalancing, duration bets"] },
+                { "_key": "mac2l2b16r3", "_type": "tableRow", "cells": ["Gilt / G-Sec Index Funds", "Open-ended mutual funds", "Simple, lower-frequency proxy exposure to the G-Sec curve"] },
+                { "_key": "mac2l2b16r4", "_type": "tableRow", "cells": ["SDLs", "NDS-OM, mostly institutional", "Research and spread signal more than an actively traded systematic position"] }
+              ]
+            },
+            {
+              "_key": "mac2l2b17",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac2l2b17s1", "_type": "span", "text": "Curve Trades: Going Beyond a Simple Duration Bet", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac2l2b18",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac2l2b18s1",
+                  "_type": "span",
+                  "text": "A steepener trade goes long short-tenor duration and short long-tenor duration, profiting if the curve steepens regardless of which direction overall rates move. A flattener does the reverse. These curve trades isolate a view on shape rather than level, which is a genuinely different bet from simply being long or short duration outright, and they show up again in Chapter 5 as a form of carry and rolldown strategy, since a normal upward-sloping curve pays you to hold longer-duration exposure and let it \"roll down\" the curve as time passes, independent of any active rate call.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac2l2b19",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Level, slope, and curvature are the three classic ways to describe how a yield curve moves. A systematic desk that only trades level is leaving two-thirds of the curve's information, and two-thirds of the potential trades, on the table."
+            },
+            {
+              "_key": "mac2l2b20",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac2l2b20s1", "_type": "span", "text": "The G-Sec to SDL Spread: A Quieter Systematic Signal", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac2l2b21",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac2l2b21s1",
+                  "_type": "span",
+                  "text": "The spread between a state's SDL yield and the comparable-tenor G-Sec tends to widen when the market grows more concerned about that state's fiscal position or borrowing volume, and narrows when fiscal conditions look comfortable. It is a genuinely informative signal about perceived state-level credit and supply pressure. It is also a difficult one to trade systematically at any real size, given SDL liquidity is thin even by fixed income standards, so most systematic desks treat this spread as a research input rather than a directly tradable position, a good example of a signal being real without being immediately actionable at scale.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac2l2b22",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "The Duration Mismatch That Cost More Than Expected",
+              "scenario": "A conservative fund holds a portfolio it considers low risk: 70% in a mix of 10Y and 15Y G-Secs, and 30% in equities. Through 2022, as the RBI raised rates through a hiking cycle, the fund's bond allocation lost more in percentage terms than many investors expected from a \"safe\" government-backed holding.",
+              "prompt": "Using what this lesson covered about duration, explain why a portfolio dominated by long-tenor G-Secs was more exposed to the 2022 rate-hike cycle than its \"government-backed, therefore safe\" label suggested.",
+              "modelAnswer": "Government backing addresses credit risk, the near-certainty that the bond will be repaid. It does nothing to address duration risk, the sensitivity of the bond's price to a change in yield. 10Y and 15Y G-Secs carry high modified duration, roughly 7 or more, so a rate-hike cycle that pushed yields up by a percentage point or more produced a price decline in the high single digits or more on that portion of the portfolio, using the duration approximation from this lesson. \"Government-backed\" is a statement about the issuer's default risk, not about how much the bond's market price will move when rates change. A fund that wanted lower rate sensitivity needed shorter-duration instruments, not just a sovereign issuer."
+            },
+            {
+              "_key": "mac2l2b23",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Applying the Duration Approximation",
+              "prompt": "A bond has a modified duration of 7. Yields rise by 0.5 percentage points. Using the approximation %ΔP ≈ -D_mod × Δy, what is the approximate percentage price change? Give your answer as a negative number, to one decimal place.",
+              "correctValue": -3.5,
+              "tolerance": 0.2,
+              "unit": "%",
+              "explanation": "%ΔP ≈ -7 × 0.5 = -3.5%. This is why long-duration bonds are far more sensitive to a given rate move than short-duration ones, even when both are issued by the same, equally creditworthy, government."
+            },
+            {
+              "_key": "mac2l2b24",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Reading a Flattening Curve",
+              "question": "If short-tenor G-Sec yields rise faster than long-tenor yields, causing the gap between them to shrink, what is this movement called, and what does it typically signal?",
+              "options": [
+                "Steepening; the market expects the RBI to cut rates sharply",
+                "Flattening; often associated with a hiking cycle where near-term policy tightening outpaces long-run inflation and growth expectations",
+                "Inversion of credit risk; SDLs are becoming safer than G-Secs",
+                "Duration compression; all bonds are being issued with shorter maturities"
+              ],
+              "correctIndex": 1,
+              "explanation": "A flattening curve, where the spread between short and long tenors narrows, commonly occurs during hiking cycles as the RBI raises near-term rates faster than long-run inflation and growth expectations move, exactly the pattern illustrated in this lesson's chart."
+            },
+            {
+              "_key": "mac2l2b25",
+              "_type": "keyTakeaways",
+              "points": [
+                "G-Secs are central government debt, SDLs are state government debt, and the practical difference for a systematic desk is liquidity and pricing spread, not really credit quality",
+                "The yield curve's shape, level, slope, and curvature, offers systematic signals beyond a simple directional rate call",
+                "Modified duration determines how much a bond's price moves for a given yield change; longer tenors mean higher duration and higher sensitivity",
+                "\"Government-backed\" addresses credit risk, not duration risk, a 2022-style hiking cycle can still hurt long-duration G-Secs significantly",
+                "Interest rate futures on NSE are the practical instrument for systematic, frequently rebalanced fixed income exposure, versus Retail Direct or gilt funds for lower-frequency access",
+                "The G-Sec to SDL spread is a genuine signal of state-level fiscal perception, but thin SDL liquidity limits it to mostly a research input rather than a directly tradable systematic position"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,261 @@
+{
+  "courseSlug": "understanding-alternative-data-in-quantitative-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 6: Backtesting Alternative Data Strategies Rigorously",
+      "lessons": [
+        {
+          "title": "Look-Ahead Bias and Point-in-Time Data: The Silent Backtest Killer",
+          "slug": "look-ahead-bias-and-point-in-time-data-the-silent-backtest-killer",
+          "body": [
+            {
+              "_key": "c6l1k001",
+              "_type": "bigIdea",
+              "text": "Chapter 4 showed you how to build a dataset that never leaks the future into the past. This lesson shows you exactly what happens to a backtest when that discipline slips, measured in real numbers, not just described as a risk."
+            },
+            {
+              "_key": "c6l1k002",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l1k002s1",
+                  "_type": "span",
+                  "text": "Chapter 4, Lesson 2 built the engineering fix: knowledge dates, data vintages, an append-only database. This lesson is about the cost of skipping that fix, specifically inside a backtest, where look-ahead bias hides in more places than a simple knowledge date column alone can catch. You will see how much it can inflate a result, four specific traps that go beyond basic PIT hygiene, and a practical method for catching bias by hand before it costs real money.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l1k003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l1k003s1",
+                  "_type": "span",
+                  "text": "Quantifying the Damage: A Before-and-After Comparison",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l1k004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l1k004s1",
+                  "_type": "span",
+                  "text": "Take the same feature, tested two ways. A naive backtest uses each data point as of its period date, as if it had been known the moment it happened. A correct backtest uses the same data, but lagged to each point's actual knowledge date, exactly as covered in Chapter 4. Run both through the Information Coefficient methodology from Chapter 5.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l1k005",
+              "_type": "table",
+              "caption": "The same underlying data, tested two different ways, on the exact same historical period",
+              "headers": ["Backtest Version", "Assumption", "Mean IC"],
+              "rows": [
+                {
+                  "_key": "c6l1k005r1",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Naive backtest",
+                    "Data is usable the moment it is dated, ignoring reporting and processing lag",
+                    "0.08"
+                  ]
+                },
+                {
+                  "_key": "c6l1k005r2",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Correct, PIT-lagged backtest",
+                    "Data is only usable from its actual knowledge date onward, as covered in Chapter 4",
+                    "0.04"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c6l1k006",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Calculate the Inflation From Look-Ahead Bias",
+              "prompt": "Using the table above, by what percentage did the naive backtest overstate the mean IC compared to the correct, PIT-lagged version?",
+              "correctValue": 100,
+              "tolerance": 2,
+              "unit": "%",
+              "explanation": "Inflation = (0.08 - 0.04) / 0.04 x 100 = 100%. The naive version did not just look a little optimistic, it reported double the true predictive power. A signal a desk might have sized aggressively based on the naive 0.08 reading would, in live trading, actually be delivering the much more modest 0.04 the market was really offering."
+            },
+            {
+              "_key": "c6l1k007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l1k007s1",
+                  "_type": "span",
+                  "text": "Four Look-Ahead Traps Specific to Backtesting",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l1k008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l1k008s1",
+                  "_type": "span",
+                  "text": "A knowledge date column on your alternative data alone does not fully protect a backtest. Look-ahead bias creeps in through several other doors that have nothing to do with the alt data feature itself.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l1k009",
+              "_type": "table",
+              "caption": "Four distinct ways a backtest can quietly use information from the future",
+              "headers": ["Trap", "How It Sneaks In"],
+              "rows": [
+                {
+                  "_key": "c6l1k009r1",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Universe selection look-ahead",
+                    "Building the backtest universe from today's index constituents and applying that same list to every historical date, even though some companies joined the index later and others were removed, delisted, or merged along the way"
+                  ]
+                },
+                {
+                  "_key": "c6l1k009r2",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Restated fundamentals look-ahead",
+                    "Using a company's latest, restated financial figures for a historical ratio, instead of the figure actually reported at that point in time, the same data vintage problem from Chapter 4 now applied to standard financial factors, not just alt data"
+                  ]
+                },
+                {
+                  "_key": "c6l1k009r3",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Corporate action look-ahead",
+                    "Adjusting historical prices for a stock split, bonus issue, or merger before the actual corporate action date, distorting the return series around that event"
+                  ]
+                },
+                {
+                  "_key": "c6l1k009r4",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Alt-data delivery-lag look-ahead",
+                    "The specific case already covered in Chapter 4: satellite processing lag, scraper retrieval delay, or vendor publication lag not properly reflected in the knowledge date"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c6l1k010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c6l1m001",
+                  "_type": "glossaryTerm",
+                  "definition": "A historically accurate record of exactly which companies belonged to an index, such as the Nifty 500, on every past date, reflecting additions and removals as they actually happened, rather than applying today's constituent list retroactively across the whole backtest period."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c6l1k010s1",
+                  "_type": "span",
+                  "text": "The universe selection trap deserves special attention because it is easy to miss entirely. Index providers publish periodic reconstitution announcements as companies are added or dropped, and a properly built backtest needs a ",
+                  "marks": []
+                },
+                {
+                  "_key": "c6l1k010s2",
+                  "_type": "span",
+                  "text": "point-in-time index membership history",
+                  "marks": ["c6l1m001"]
+                },
+                {
+                  "_key": "c6l1k010s3",
+                  "_type": "span",
+                  "text": " built from those announcements, not just today's constituent list applied backward. Using today's list means your five-year backtest silently excludes every company that was large and relevant in year one but has since fallen out of the index, and silently includes companies that were too small or too new to have even been part of your investable universe back then.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l1k011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l1k011s1",
+                  "_type": "span",
+                  "text": "The Spot-Check Method: Catching Look-Ahead Bias by Hand",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l1k012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l1k012s1",
+                  "_type": "span",
+                  "text": "No automated test catches every possible leak, so experienced researchers build in a manual habit: pick a handful of random historical dates deep inside the backtest period, and for each one, ask a single blunt question. Standing on this exact date, with only the information that genuinely existed then, would I actually have had this exact data point in front of me? Answering that honestly, for even five or six spot-checked dates, catches a surprising share of subtle bias that a purely automated pipeline can miss.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l1k013",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "A Suspiciously Good Result From Three Years Ago",
+              "scenario": "A colleague's backtest shows an unusually strong result concentrated in a stretch from three years ago, coinciding with a period when a mid-cap company in the universe underwent a stock split. Outside that stretch, the signal's performance looks far more ordinary.",
+              "prompt": "What is the first thing you would check using the spot-check method, and why does a concentrated pocket of outperformance around a specific corporate action date deserve extra scrutiny?",
+              "modelAnswer": "The first check is to pick a date shortly before and shortly after the stock split and manually verify whether the backtest's price and feature data were correctly unadjusted before the split date and correctly adjusted only from the split date onward, rather than applying the post-split adjustment retroactively across the entire history. A concentrated pocket of outperformance clustered exactly around a known corporate action is a classic signature of the corporate action look-ahead trap: if the adjustment was applied too early, the backtest may show an artificial, mechanical price jump or drop that has nothing to do with the signal's genuine predictive power, and the strategy would appear to have 'called' a move that was actually just a data processing artifact."
+            },
+            {
+              "_key": "c6l1k014",
+              "_type": "callout",
+              "type": "insight",
+              "text": "A backtest that looks too good rarely means you found something everyone else missed. Far more often, it means a piece of the future leaked into your past. Get suspicious of your best results first, not your worst ones."
+            },
+            {
+              "_key": "c6l1k015",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "The IC figures and scenario in this lesson are illustrative teaching examples, not results from any real backtest. Nothing here is a recommendation to trade any security."
+            },
+            {
+              "_key": "c6l1k016",
+              "_type": "keyTakeaways",
+              "points": [
+                "Look-ahead bias is not a minor rounding error, an illustrative naive-versus-correct comparison in this lesson showed it can double a signal's measured IC, from 0.04 to a falsely inflated 0.08",
+                "Beyond alt data delivery lag, three more traps commonly leak future information into a backtest: universe selection look-ahead, restated fundamentals look-ahead, and corporate action look-ahead",
+                "A backtest universe should be built from a point-in-time index membership history reflecting actual additions and removals, never today's constituent list applied retroactively across the whole period",
+                "Restated financial figures and stock split or bonus adjustments must both respect their true knowledge date and effective date, the same vintage discipline from Chapter 4, now applied beyond alt data",
+                "The spot-check method, manually verifying a handful of random historical dates against what would genuinely have been known then, catches subtle bias that automated pipelines can miss",
+                "A suspiciously strong backtest result, especially one concentrated around a specific corporate action or data event, deserves more scrutiny than a mediocre one, not less"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

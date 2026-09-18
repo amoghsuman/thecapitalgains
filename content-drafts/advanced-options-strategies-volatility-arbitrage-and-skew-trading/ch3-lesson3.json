@@ -1,0 +1,243 @@
+{
+  "courseSlug": "advanced-options-strategies-volatility-arbitrage-and-skew-trading",
+  "chapters": [
+    {
+      "title": "Chapter 3: Volatility Term Structure and Calendar Dynamics",
+      "lessons": [
+        {
+          "title": "Calendar Spreads and Term Structure Arbitrage",
+          "slug": "calendar-spreads-and-term-structure-arbitrage",
+          "body": [
+            {
+              "_key": "c3l3-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l3-001s1", "_type": "span", "text": "The last lesson's short straddle harvested the RBI-day crush, but with undefined risk: if the announcement itself was the surprise, the loss had no ceiling. There is a structure that expresses almost the same view, front-tenor IV is rich and will normalize, while capping exactly that tail risk. It is called a calendar spread, and it is the structural trade this whole chapter has been building toward.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c3l3-002",
+              "_type": "bigIdea",
+              "text": "A calendar spread sells the rich near-tenor option and buys the calmer far-tenor option at the same strike. It profits when the front's elevated IV crushes back toward normal while the back barely moves, the exact term structure normalization this chapter has been tracking, but with loss capped at the premium paid instead of the open-ended risk of a naked short straddle."
+            },
+            {
+              "_key": "c3l3-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l3-003s1", "_type": "span", "text": "Anatomy of a Calendar Spread", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c3l3-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "c3l3-004m1", "_type": "glossaryTerm", "definition": "An options position built from the same strike and the same option type across two different expiries: short the near-dated option, long the far-dated option. Also called a horizontal spread or a time spread." }
+              ],
+              "children": [
+                { "_key": "c3l3-004s1", "_type": "span", "text": "A basic ", "marks": [] },
+                { "_key": "c3l3-004s2", "_type": "span", "text": "calendar spread", "marks": ["c3l3-004m1"] },
+                { "_key": "c3l3-004s3", "_type": "span", "text": " sells one near-tenor ATM option and buys one far-tenor ATM option, same strike, same option type. You pay a net debit, since the far-dated option is normally worth more than the near-dated one at the same strike, unless the front's event-driven IV is elevated enough to shrink or even eliminate that gap, which is precisely the setup that makes an event calendar spread attractive rather than merely a default time-decay play.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c3l3-005",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l3-005s1", "_type": "span", "text": "Apply it to the RBI-day setup, ATM strike 26,500, using the Brenner-Subrahmanyam approximation from the last lesson for each leg.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c3l3-006",
+              "_type": "table",
+              "caption": "Building the calendar spread just before the RBI announcement",
+              "headers": ["Leg", "Tenor", "IV", "Approx. ATM call price"],
+              "rows": [
+                { "_key": "c3l3-006r1", "_type": "tableRow", "cells": ["Short (sold)", "7 days", "19.8%", "₹290"] },
+                { "_key": "c3l3-006r2", "_type": "tableRow", "cells": ["Long (bought)", "30 days", "14.5%", "₹439"] },
+                { "_key": "c3l3-006r3", "_type": "tableRow", "cells": ["Net debit paid", "", "", "₹439 − ₹290 = ₹149"] }
+              ]
+            },
+            {
+              "_key": "c3l3-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l3-007s1", "_type": "span", "text": "What Happens When the Front Crushes", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c3l3-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l3-008s1", "_type": "span", "text": "Carry forward the last lesson's post-event assumption: front IV crushes from 19.8% to 13.5%, back IV barely moves, staying at 14.5%, and spot is unchanged at 26,500. Time passage over the single day is ignored here, as in the last lesson, to isolate the vol-only effect.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c3l3-009",
+              "_type": "table",
+              "caption": "The same calendar spread, just after the announcement",
+              "headers": ["Leg", "IV", "Approx. value"],
+              "rows": [
+                { "_key": "c3l3-009r1", "_type": "tableRow", "cells": ["Short (sold) leg, 7-day", "13.5%", "₹198"] },
+                { "_key": "c3l3-009r2", "_type": "tableRow", "cells": ["Long (bought) leg, 30-day", "14.5% (unchanged)", "₹439 (unchanged)"] },
+                { "_key": "c3l3-009r3", "_type": "tableRow", "cells": ["Spread value now", "", "₹439 − ₹198 = ₹241"] }
+              ]
+            },
+            {
+              "_key": "c3l3-010",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Bought at a net debit of ₹149 and now worth ₹241, the position has gained ₹92, about 62% on the debit paid, purely from the front leg's IV crushing while the back leg held its value. Compare this to the last lesson's naked short straddle: the calendar spread captures essentially the same term structure normalization, but the short leg is fully hedged by the long leg's presence, not left naked against an unlimited move."
+            },
+            {
+              "_key": "c3l3-011",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Confirming the spread's gain",
+              "prompt": "The calendar spread above was opened at a net debit of ₹149 and is now worth ₹241. What is the percentage gain on the capital deployed, to the nearest whole percent?",
+              "correctValue": 62,
+              "tolerance": 2,
+              "unit": "%",
+              "explanation": "(241 − 149) / 149 ≈ 0.617, about 62%. This is a large percentage move on a small, defined debit, which is normal for calendar spreads targeting event richness: the position is small and cheap precisely because the two legs mostly offset, so a relatively modest rupee gain translates into a large percentage return."
+            },
+            {
+              "_key": "c3l3-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l3-012s1", "_type": "span", "text": "The Tail Case: What If Spot Moves a Lot", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c3l3-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l3-013s1", "_type": "span", "text": "If the RBI announcement genuinely surprises and Nifty gaps hard away from 26,500 in either direction, both legs move deep in or out of the money together. The extra time value that made the spread work largely evaporates on both sides, and the position's value drifts down toward, and in most ordinary cases no lower than, roughly the net debit paid. The maximum loss on a long calendar spread is generally limited to that net premium, ₹149 in this example, a hard ceiling a naked short straddle simply does not have. Extreme skew or term-structure moves can erode this slightly beyond the simple textbook picture, but the structural point holds: owning the back leg means you are never left with an unhedged short option.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c3l3-014",
+              "_type": "table",
+              "caption": "Naked short straddle vs calendar spread, same event view",
+              "headers": ["", "Naked short straddle", "Calendar spread"],
+              "rows": [
+                { "_key": "c3l3-014r1", "_type": "tableRow", "cells": ["Captures front-tenor crush", "Yes", "Yes"] },
+                { "_key": "c3l3-014r2", "_type": "tableRow", "cells": ["Maximum loss", "Undefined, in theory unlimited", "Capped, roughly the net debit paid"] },
+                { "_key": "c3l3-014r3", "_type": "tableRow", "cells": ["Capital required upfront", "None, but heavy margin", "Small net debit"] },
+                { "_key": "c3l3-014r4", "_type": "tableRow", "cells": ["Profit if front IV crushes as expected", "Larger in rupee terms", "Smaller in rupee terms, larger in percentage terms"] },
+                { "_key": "c3l3-014r5", "_type": "tableRow", "cells": ["Exposure if spot barely moves and IV does not crush", "Loses only slowly, mainly to theta", "Can lose the full debit if the front's richness does not normalize"] }
+              ]
+            },
+            {
+              "_key": "c3l3-015",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l3-015s1", "_type": "span", "text": "A Note on \"Arbitrage\"", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c3l3-016",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Desks call this kind of trade 'term structure arbitrage' informally, but it is not arbitrage in the strict, textbook sense of a riskless, guaranteed profit. It is a relative-value bet that a specific historical pattern, front-tenor richness normalizing after a known event, repeats. Genuine, model-level arbitrage in the term structure means a true violation of a no-arbitrage bound, the calendar arbitrage condition from Chapter 1, where total implied variance is not allowed to decrease as expiry lengthens for the same strike. If you ever see that condition actually violated on a live, liquid chain, that is a construction or data error to fix, not a trading opportunity to chase; genuinely riskless arbitrage of that kind does not survive contact with a liquid, well-quoted market for long."
+            },
+            {
+              "_key": "c3l3-017",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l3-017s1", "_type": "span", "text": "The Double Calendar", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c3l3-018",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l3-018s1", "_type": "span", "text": "The single-leg call calendar above carries some residual delta as spot drifts away from the strike, since only one side, calls, is positioned. In practice, desks running this as a pure term-structure trade more often use a double calendar: sell the near-tenor ATM straddle, buy the far-tenor ATM straddle, same strike, combining a call calendar and a put calendar into one position. It roughly doubles the debit and the rupee payoff of the single-leg version, but stays closer to delta-neutral through more of the underlying's likely range, keeping the position's P&L driven by the term structure view rather than by an accidental directional bet.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c3l3-019",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "import math\n\ndef atm_call_approx(S, sigma, T):\n    return 0.3989 * S * sigma * math.sqrt(T)\n\ndef calendar_spread_value(S, front_iv, back_iv, T_front, T_back):\n    front = atm_call_approx(S, front_iv, T_front)\n    back = atm_call_approx(S, back_iv, T_back)\n    return back - front  # long back, short front\n\nS = 26500\nT_front, T_back = 7 / 365, 30 / 365\n\ndebit = calendar_spread_value(S, front_iv=0.198, back_iv=0.145, T_front=T_front, T_back=T_back)\npost_event_value = calendar_spread_value(S, front_iv=0.135, back_iv=0.145, T_front=T_front, T_back=T_back)\n\nprint(f\"Net debit paid: {debit:.0f}\")\nprint(f\"Value after front IV crush: {post_event_value:.0f}\")\nprint(f\"P&L: {post_event_value - debit:.0f} ({(post_event_value - debit) / debit:.1%})\")",
+              "caption": "Reusable calendar spread P&L calculator, confirming the ₹149 debit and ₹92 gain worked through by hand above"
+            },
+            {
+              "_key": "c3l3-020",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "The main structural advantage",
+              "question": "Compared to a naked short straddle expressing the same 'front-tenor IV will normalize' view, what is the calendar spread's main structural advantage?",
+              "options": [
+                "It always produces a larger rupee profit if the view plays out",
+                "It requires no margin at all",
+                "Its maximum loss is capped at the net debit paid, instead of being open-ended",
+                "It has zero exposure to time decay"
+              ],
+              "correctIndex": 2,
+              "explanation": "The calendar spread's long back-tenor leg hedges the short front-tenor leg against a large adverse move, capping the maximum loss at roughly the net debit paid. It typically produces a smaller rupee profit than a naked short straddle when the view plays out exactly as expected, still requires margin, and both legs carry time decay, just at different rates."
+            },
+            {
+              "_key": "c3l3-021",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Applying it to the Budget",
+              "scenario": "Two trading days before the Union Budget, you observe the same pattern Chapter 3 has described throughout: the 7-day ATM straddle is pricing a far larger implied move than the typical historical Budget-day realized move, while the 30-day ATM IV sits close to its normal level. You are considering either a naked short strangle or a calendar spread to express the view that the front's richness will normalize once the Budget is announced.",
+              "prompt": "Which structure would you lean toward, and what specific risk are you most concerned about managing either way?",
+              "modelAnswer": "1. Given the same setup that produced a profitable, defined-risk outcome in the RBI-day worked example, a calendar spread is the more prudent default for a scheduled, binary-ish event like the Budget, where genuinely large surprises, while infrequent, are not impossible.\n2. The specific risk in both structures is the same: the event itself producing an outsized, unexpected market reaction rather than the typical muted, already-priced-in outcome. A naked short strangle has no ceiling on that loss; the calendar spread's downside in that same scenario is capped near the net debit paid.\n3. The trade-off is real, not free: if the front's richness normalizes exactly as expected, the calendar spread's rupee profit is meaningfully smaller than the naked short strangle's would have been, in exchange for that capped downside.\n4. Using a double calendar, both a call and a put calendar at the ATM strike, rather than a single-leg version, keeps the position closer to delta-neutral through the likely range of Budget-day outcomes, rather than accidentally taking on directional risk from picking calls or puts alone.\n5. Whichever structure is chosen, size it against the worst Budget-day move on record, not the typical one, and treat the 'front-tenor richness normalizes' pattern as a historical tendency to lean on, not a guarantee to bet the account on."
+            },
+            {
+              "_key": "c3l3-022",
+              "_type": "flashcardSet",
+              "title": "Calendar Spreads",
+              "cards": [
+                { "_key": "c3l3-022f1", "term": "Calendar spread", "definition": "Short the near-tenor option, long the far-tenor option, same strike and option type. Also called a horizontal or time spread." },
+                { "_key": "c3l3-022f2", "term": "Net debit", "definition": "The upfront cost of a calendar spread, normally the far-tenor premium minus the near-tenor premium." },
+                { "_key": "c3l3-022f3", "term": "Double calendar", "definition": "A call calendar and a put calendar combined at the same ATM strike, roughly doubling the debit while staying closer to delta-neutral than a single-leg calendar." },
+                { "_key": "c3l3-022f4", "term": "Term structure 'arbitrage'", "definition": "Desk shorthand for a relative-value trade betting that front-tenor IV richness normalizes, not genuine riskless arbitrage, which would require an actual no-arbitrage bound violation." },
+                { "_key": "c3l3-022f5", "term": "Calendar arbitrage condition", "definition": "The genuine no-arbitrage requirement from Chapter 1 that total implied variance must not decrease as expiry lengthens for the same strike; a violation signals a data or construction error, not a trading opportunity." }
+              ]
+            },
+            {
+              "_key": "c3l3-023",
+              "_type": "keyTakeaways",
+              "points": [
+                "A calendar spread sells the near-tenor ATM option and buys the far-tenor ATM option at the same strike, paid for with a net debit.",
+                "It captures the same front-tenor IV normalization a naked short straddle targets, but caps the maximum loss at roughly the net debit paid, since the long back leg hedges the short front leg.",
+                "In this chapter's worked RBI-day example, a ₹149 debit calendar spread gained about ₹92, roughly 62%, purely from the front leg's IV crush while the back leg held steady.",
+                "A double calendar, combining a call calendar and a put calendar at the same strike, stays closer to delta-neutral than a single-leg version and is the more common practical structure.",
+                "'Term structure arbitrage' as desks use the phrase is relative-value trading on a historical convergence pattern, not textbook riskless arbitrage, which would require an actual violation of the calendar no-arbitrage bound from Chapter 1.",
+                "This closes the term structure toolkit: Chapter 3 has moved from reading the shape of the curve, to trading a single event's implied move, to structuring that view with defined risk. Chapter 4 turns to the second-order Greeks, Vanna and Volga, that price exactly how spot and volatility moves interact across this surface."
+              ]
+            },
+            {
+              "_key": "c3l3-024",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment or trading advice. All prices, debits and P&L figures are illustrative approximations built on this chapter's earlier worked examples, not live NSE quotes or a verified historical backtest. Options strategies involving multiple legs carry their own execution, liquidity and margin considerations. Consult a SEBI-registered adviser before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

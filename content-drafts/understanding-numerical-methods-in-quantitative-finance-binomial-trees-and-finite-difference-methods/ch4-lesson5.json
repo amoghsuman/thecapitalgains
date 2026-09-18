@@ -1,0 +1,186 @@
+{
+  "courseSlug": "understanding-numerical-methods-in-quantitative-finance-binomial-trees-and-finite-difference-methods",
+  "chapters": [
+    {
+      "title": "Chapter 4: Finite Difference Methods for Option Pricing",
+      "lessons": [
+        {
+          "title": "Case Study: Pricing a Nifty Index Option With Crank-Nicolson in Python",
+          "slug": "case-study-pricing-a-nifty-index-option-with-crank-nicolson-in-python",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "t1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "t1s1", "text": "Chapter 3, Lesson 1 priced an American Nifty put on a deliberately small, six-step tree, coarse enough to compute by hand. Chapter 4 then built the PDE that tree was secretly approximating, the grid it lives on, and Crank-Nicolson, the method that solves it with both stability and real accuracy. This final lesson closes the loop: the exact same option, solved by a completely different route, in full working code, to see whether two independent numerical philosophies actually agree.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "t2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "t2s1", "text": "The Same Option, One More Time", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "t3",
+              "caption": "Chapter 3, Lesson 1's exact American Nifty put",
+              "headers": ["Input", "Value"],
+              "rows": [
+                { "cells": ["Nifty 50 spot, S0", "24,000"] },
+                { "cells": ["Strike, K", "24,000 (at the money put)"] },
+                { "cells": ["Time to expiry, T", "3 months (0.25 years)"] },
+                { "cells": ["Annualized volatility, sigma", "14%"] },
+                { "cells": ["Risk-free rate, r", "6.5% (continuous)"] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "t4",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "t4s1", "text": "Setting Up the Grid, With American Exercise", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "t5",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "t5s1", "text": "Reuse Chapter 4's exact grid conventions, Smax = 4 times the strike, 200 price steps, and Crank-Nicolson's tridiagonal update from Lesson 4. One addition makes it price an American option instead of a European one, applied after solving each layer.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "mathBlock",
+              "_key": "t6",
+              "latex": "f_{i,j} = \\max\\big(f_{i,j}^{\\text{CN-solved}},\\ \\text{payoff}(S_i)\\big)",
+              "caption": "The exact same rule from Chapter 3, Lesson 1, applied at every grid point instead of every tree node. Early exercise on a grid is not a different idea, it is the identical comparison, just checked far more densely."
+            },
+            {
+              "_type": "block",
+              "_key": "t7",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "t7s1", "text": "The Full Pricer, in Python", "marks": [] }
+              ]
+            },
+            {
+              "_type": "codeBlock",
+              "_key": "t8",
+              "language": "python",
+              "code": "import numpy as np\n\ndef thomas_solve(lower, diag, upper, d):\n    n = len(diag)\n    cp, dp = np.zeros(n), np.zeros(n)\n    cp[0] = upper[0] / diag[0]\n    dp[0] = d[0] / diag[0]\n    for i in range(1, n):\n        m = diag[i] - lower[i] * cp[i - 1]\n        cp[i] = upper[i] / m\n        dp[i] = (d[i] - lower[i] * dp[i - 1]) / m\n    x = np.zeros(n)\n    x[-1] = dp[-1]\n    for i in range(n - 2, -1, -1):\n        x[i] = dp[i] - cp[i] * x[i + 1]\n    return x\n\ndef crank_nicolson_put(S0, K, sigma, T, r, Smax, N, M, american=True):\n    dS, dt = Smax / N, T / M\n    i = np.arange(1, N)\n    a = 0.5 * dt * (sigma**2 * i**2 - r * i)\n    b = 1 - dt * (sigma**2 * i**2 + r)\n    c = 0.5 * dt * (sigma**2 * i**2 + r * i)\n\n    S = np.arange(N + 1) * dS\n    f = np.maximum(K - S, 0)  # terminal payoff\n\n    for j in range(M, 0, -1):\n        t_remaining = T - (j - 1) * dt\n        bc0 = K * np.exp(-r * t_remaining)   # S = 0 boundary\n        bcN = 0.0                             # S = Smax boundary\n\n        lower, diag, upper = -0.5 * a, 1.5 - 0.5 * b, -0.5 * c\n        rhs = 0.5 * a * f[:-2] + (0.5 * b + 0.5) * f[1:-1] + 0.5 * c * f[2:]\n        rhs[0] += 0.5 * a[0] * bc0\n        rhs[-1] += 0.5 * c[-1] * bcN\n\n        interior = thomas_solve(lower, diag, upper, rhs)\n        if american:\n            interior = np.maximum(interior, np.maximum(K - S[1:-1], 0))\n\n        f = np.concatenate(([bc0], interior, [bcN]))\n\n    return f\n\nS0, K, sigma, T, r, Smax, N, M = 24000, 24000, 0.14, 0.25, 0.065, 96000, 200, 200\nf = crank_nicolson_put(S0, K, sigma, T, r, Smax, N, M, american=True)\ni0 = int(S0 / (Smax / N))\nprint(f\"American put price: Rs {f[i0]:.2f}\")",
+              "caption": "A complete, runnable Crank-Nicolson pricer, tridiagonal solve and American exercise check included. Running this reproduces Rs 517.84."
+            },
+            {
+              "_type": "block",
+              "_key": "t9",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "t9s1", "text": "The Result, and Whether It Agrees With Chapter 3", "marks": [] }
+              ]
+            },
+            {
+              "_type": "statGrid",
+              "_key": "t10",
+              "stats": [
+                { "label": "Crank-Nicolson, American put", "value": "₹517.84", "context": "N = 200 price steps, M = 200 time steps" },
+                { "label": "Crank-Nicolson, European put", "value": "₹482.02", "context": "Identical grid, no exercise check applied" },
+                { "label": "Early-exercise premium", "value": "₹35.82", "context": "The same phenomenon Chapter 3 first showed, now on a grid" }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "t11",
+              "caption": "Refining the grid further, both prices still moving",
+              "headers": ["N = M", "American Put", "European Put"],
+              "rows": [
+                { "cells": ["200", "₹517.84", "₹482.02"] },
+                { "cells": ["400", "₹523.94", "₹487.34"] },
+                { "cells": ["800", "₹525.45", "₹488.65"] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "t12",
+              "type": "insight",
+              "text": "Now rebuild Chapter 3's tree, not at 6 steps, but at 1,000. It converges to an American price of ₹525.94 and a European price of ₹488.91, a lattice built entirely independently of this chapter's PDE, grid, and tridiagonal solver. The refined Crank-Nicolson grid above, ₹525.45 and ₹488.65 at N = M = 800, lands within half a rupee of both. Two structurally unrelated methods, one branching through discrete price paths, one solving a differential equation on a fixed grid, converge to the same answer."
+            },
+            {
+              "_type": "callout",
+              "_key": "t13",
+              "type": "warning",
+              "text": "Chapter 3, Lesson 1's six-step tree price, Rs 513.26, was never wrong, it was deliberately coarse, chosen so its arithmetic could be checked by hand. This lesson's Rs 517.84, at N = M = 200, is closer to the truth simply because the grid is finer, exactly Chapter 3, Lesson 3's convergence lesson applied one more time, now to a second method entirely."
+            },
+            {
+              "_type": "block",
+              "_key": "t14",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "t14s1", "text": "What This Actually Confirms", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "t15",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "t15s1", "text": "An American option has no closed-form price, nothing plays the role Black-Scholes played for the European checks back in Chapter 3, Lesson 3. There is no single ground truth to compare either method against directly. What two independently built, independently derived, independently coded methods landing within half a rupee of each other actually demonstrates is the only kind of confidence available for a problem with no closed form at all, agreement between methods that have no reason to share a bug.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "t16",
+              "variant": "quiz",
+              "title": "Quick Check",
+              "question": "The American exercise projection on the Crank-Nicolson grid, f(i,j) = max(CN-solved value, payoff(S_i)), is applied at every grid point after each time layer is solved. How does this compare to Chapter 3's tree method?",
+              "options": [
+                "It is a completely different technique unique to finite difference methods",
+                "It is the exact same max(hold, intrinsic) comparison from Chapter 3, Lesson 1, just applied at grid points instead of tree nodes",
+                "It only applies to calls, not puts",
+                "It replaces the need for boundary conditions entirely"
+              ],
+              "correctIndex": 1,
+              "explanation": "Chapter 3, Lesson 1 introduced exactly one change to price American options on a tree, taking the maximum of the hold value and the intrinsic value at every node. This lesson's grid projection is that identical idea, unchanged in substance, simply checked at every point of a much denser grid rather than at tree nodes."
+            },
+            {
+              "_type": "exercise",
+              "_key": "t17",
+              "variant": "scenario",
+              "title": "What Disagreement Would Have Meant",
+              "scenario": "Suppose the refined tree from Chapter 3 had converged to an American price near ₹525.94, while this chapter's refined Crank-Nicolson grid had instead converged to something far off, say ₹610, instead of the ₹525.45 actually found.",
+              "prompt": "What would that gap have suggested, and what would be the right next step?",
+              "modelAnswer": "A meaningful gap between two properly refined, independently implemented methods solving the identical option would point to an error in one of them, most likely a bug in the newer implementation, since the tree's approach has been checked step by step across four earlier lessons in this course. It would not be evidence that one method is simply 'less suited' to this option, both a recombining tree and a Crank-Nicolson grid are well-established, generally applicable techniques for exactly this kind of American option. The right next step would be to re-derive and re-check the newer method's coefficients and boundary conditions against a simpler, hand-checkable case first, the same debugging instinct that caught a genuine sign error in Chapter 4, Lesson 3's own derivation, before trusting either number on a live book."
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "t18",
+              "text": "This course opened with a closed-form formula that could not price an American option, and closes with two entirely different numerical methods, a branching lattice and a differential-equation grid, independently built from first principles, agreeing with each other to within half a rupee on exactly the option Black-Scholes could never touch."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "t19",
+              "points": [
+                "The American exercise check on a Crank-Nicolson grid is the identical comparison Chapter 3, Lesson 1 introduced for trees, maximum of hold value and intrinsic value, now applied point by point across a dense grid.",
+                "On Chapter 3, Lesson 1's exact Nifty put, a refined Crank-Nicolson grid, N = M = 800, prices the American put at ₹525.45 and the European put at ₹488.65.",
+                "A refined 1,000-step version of Chapter 3's original tree converges to ₹525.94 and ₹488.91 on the same option, independently built, agreeing with the finite difference result to within half a rupee.",
+                "An American option has no closed-form benchmark to check against, so agreement between two structurally unrelated, independently implemented methods is the actual evidence of correctness, not a single formula's output.",
+                "Every technique in this course, replicating portfolios, recombining lattices, CRR calibration, PDEs, grids, and three finite difference schemes, exists because Black-Scholes stopped at exactly the option this final lesson just priced two different ways."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

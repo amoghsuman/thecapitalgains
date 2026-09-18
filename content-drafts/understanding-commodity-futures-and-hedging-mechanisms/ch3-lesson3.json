@@ -1,0 +1,317 @@
+{
+  "courseSlug": "understanding-commodity-futures-and-hedging-mechanisms",
+  "chapters": [
+    {
+      "title": "Hedging with Commodity Futures",
+      "lessons": [
+        {
+          "title": "Basis Risk and Why Hedges Aren't Perfect",
+          "slug": "basis-risk-and-why-hedges-arent-perfect",
+          "body": [
+            {
+              "_key": "cfh-c3l3-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "cfh-c3l3-001s1",
+                  "_type": "span",
+                  "text": "Nagaur, in Rajasthan, is the single highest-producing cumin district in a state that grows roughly half of India's entire jeera crop. Yet NCDEX's jeera futures contract does not settle against a Nagaur price. Its contract specification fixes the reference at 'ex-warehouse Unjha,' the Gujarat trading hub around 400 kilometres away, exclusive of GST. A Nagaur farmer hedging with this contract is not locking in the price they will actually get in Nagaur. They are locking in a price benchmarked to a warehouse in a different state, and the gap between the two is not a flaw in the system. It is basis risk, and it is why even a well-executed hedge rarely lands on the exact number you expected.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c3l3-002",
+              "_type": "bigIdea",
+              "text": "Basis is the difference between your actual local or physical price and the futures price you hedged with. Basis risk is not caused by that difference existing, it is caused by that difference changing unpredictably between when you place the hedge and when you close it out. A hedge removes most price risk and leaves you with a smaller, second-order risk: basis risk."
+            },
+            {
+              "_key": "cfh-c3l3-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "cfh-c3l3-003s1",
+                  "_type": "span",
+                  "text": "What Is Basis, Exactly?",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c3l3-004",
+              "_type": "mathBlock",
+              "latex": "\\text{Basis} = \\text{Local (Spot) Price} - \\text{Futures Price}",
+              "caption": "A negative basis means your local price sits below the exchange futures price; a positive basis means it sits above."
+            },
+            {
+              "_key": "cfh-c3l3-005",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "cfh-c3l3-005s1",
+                  "_type": "span",
+                  "text": "A stable, predictable basis does not actually hurt a hedge. If the Nagaur farmer knows their local price reliably trades ₹500 below the Unjha-linked futures price, they can simply account for that ₹500 in advance and still plan around a known number. The problem arrives only when the basis itself moves in a direction nobody expected.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c3l3-006",
+              "_type": "keyFact",
+              "label": "The word 'basis' is not just a finance term here",
+              "value": "NCDEX's own jeera contract specification uses it literally",
+              "context": "The contract's price basis is defined as 'ex-warehouse Unjha,' meaning every futures price quoted is implicitly a Unjha price. Anyone trading it anywhere else in India is, by definition, exposed to the gap between their location and that reference point."
+            },
+            {
+              "_key": "cfh-c3l3-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "cfh-c3l3-007s1",
+                  "_type": "span",
+                  "text": "Four Sources of Basis Risk",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c3l3-008",
+              "_type": "table",
+              "caption": "Where basis risk actually comes from",
+              "headers": ["Type", "What causes it", "Indian example"],
+              "rows": [
+                {
+                  "_key": "cfh-c3l3-008r1",
+                  "_type": "tableRow",
+                  "cells": ["Location basis", "Your physical market is geographically distant from the exchange's delivery centre", "A Nagaur jeera farmer hedging against NCDEX's Unjha-basis contract"]
+                },
+                {
+                  "_key": "cfh-c3l3-008r2",
+                  "_type": "tableRow",
+                  "cells": ["Quality/grade basis", "Your actual produce differs from the exact grade the contract specifies", "Jeera that does not meet the required moisture (under 8%) or foreign matter (under 1%) limits sells at a discount uncorrelated with the futures price"]
+                },
+                {
+                  "_key": "cfh-c3l3-008r3",
+                  "_type": "tableRow",
+                  "cells": ["Timing basis", "Your actual sale or purchase date falls between two contract expiries, forcing a rollover", "A processor needing coverage five months out, when only three-month contracts are liquid, must roll the hedge at least once, each roll carrying its own fresh basis"]
+                },
+                {
+                  "_key": "cfh-c3l3-008r4",
+                  "_type": "tableRow",
+                  "cells": ["Product (cross-hedge) basis", "No futures contract exists for your exact input, so you hedge with a related but different commodity", "An edible oil blender with no direct futures market for their specific blend hedging using crude palm oil futures as an imperfect proxy"]
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c3l3-009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "cfh-c3l3-009s1",
+                  "_type": "span",
+                  "text": "Basis Risk in Practice: The Nagaur Farmer's Numbers",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c3l3-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "cfh-c3l3-010s1",
+                  "_type": "span",
+                  "text": "Say the Nagaur farmer sells NCDEX jeera futures today at ₹21,500 per quintal, while their local Nagaur cash price today is ₹21,000, a basis of −₹500. If that basis holds steady until harvest, the hedge works exactly like the flat, fully-locked outcome from the previous lesson. But suppose local Nagaur conditions (say, a stronger local harvest than the rest of the country, or a temporary transport bottleneck) push the local basis to −₹1,300 by the time of sale, even as the futures price itself falls to ₹19,000.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c3l3-011",
+              "_type": "table",
+              "caption": "What actually happens when the basis widens",
+              "headers": ["", "If basis had stayed at −₹500", "What actually happened (basis widened to −₹1,300)"],
+              "rows": [
+                {
+                  "_key": "cfh-c3l3-011r1",
+                  "_type": "tableRow",
+                  "cells": ["Futures price at harvest", "₹19,000", "₹19,000"]
+                },
+                {
+                  "_key": "cfh-c3l3-011r2",
+                  "_type": "tableRow",
+                  "cells": ["Gain on short futures position (₹21,500 − ₹19,000)", "₹2,500/quintal", "₹2,500/quintal"]
+                },
+                {
+                  "_key": "cfh-c3l3-011r3",
+                  "_type": "tableRow",
+                  "cells": ["Local Nagaur cash price realised", "₹18,500 (19,000 − 500)", "₹17,700 (19,000 − 1,300)"]
+                },
+                {
+                  "_key": "cfh-c3l3-011r4",
+                  "_type": "tableRow",
+                  "cells": ["Total effective revenue", "₹21,000 (18,500 + 2,500)", "₹20,200 (17,700 + 2,500)"]
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c3l3-012",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Quantify the basis risk",
+              "prompt": "Using the numbers above, by how much did the farmer's actual effective revenue per quintal fall short of the ₹21,000 they would have realised had the basis stayed at −₹500?",
+              "correctValue": 800,
+              "tolerance": 0,
+              "unit": "₹",
+              "explanation": "₹21,000 expected minus ₹20,200 actual = ₹800 shortfall. This exactly matches how much the basis widened: from −₹500 to −₹1,300 is a change of ₹800. The futures leg of the hedge performed exactly as expected; the entire shortfall came from the local basis moving against the farmer, which is what basis risk means in practice."
+            },
+            {
+              "_key": "cfh-c3l3-013",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Compare this to going completely unhedged: the farmer's revenue would have simply been the local price at harvest, ₹17,700, a ₹3,300 shortfall from their original ₹21,000 plan. The hedge did not eliminate risk, but it cut the shortfall from ₹3,300 to ₹800. That is what a real-world hedge actually buys you: a large reduction in risk, not a perfect guarantee."
+            },
+            {
+              "_key": "cfh-c3l3-014",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "cfh-c3l3-014s1",
+                  "_type": "span",
+                  "text": "Why Basis Risk Is Smaller for Some Contracts Than Others",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c3l3-015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "cfh-c3l3-015s1",
+                  "_type": "span",
+                  "text": "Recall from Chapter 2 that MCX crude oil is cash-settled against a rupee-converted NYMEX WTI price, with no domestic delivery centre at all. That removes location basis for crude oil entirely; there is no Indian warehouse whose price could drift from the benchmark, because there is no Indian warehouse in the contract at all. But basis risk does not disappear for every crude-linked hedge. A diesel consumer hedging with crude oil futures, because no direct diesel futures contract suits their need, is taking on product basis risk: refining margins, domestic taxes and transport costs can all move independently of crude prices, so a crude hedge only imperfectly tracks a diesel exposure.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c3l3-016",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Which basis risk is this?",
+              "question": "A snacks manufacturer in Indore, Madhya Pradesh, hedges its edible oil purchases using MCX Crude Palm Oil futures, since no futures contract exists for the specific refined oil blend it actually buys. What type of basis risk does this introduce?",
+              "options": [
+                "Location basis, since Indore is far from any delivery centre",
+                "Quality/grade basis, since crude palm oil is graded differently from refined oil",
+                "Product (cross-hedge) basis, since the manufacturer is hedging one commodity with a different, related one",
+                "No basis risk, since both are edible oils"
+              ],
+              "correctIndex": 2,
+              "explanation": "This is a cross-hedge: the manufacturer's actual exposure is to a specific refined oil blend, not crude palm oil itself. Even though the two prices are correlated, they can move independently, especially once refining costs and blend-specific demand are factored in, which is the defining feature of product basis risk."
+            },
+            {
+              "_key": "cfh-c3l3-017",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "cfh-c3l3-017s1",
+                  "_type": "span",
+                  "text": "Managing Basis Risk: You Can Reduce It, Not Erase It",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c3l3-018",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "cfh-c3l3-018s1",
+                  "_type": "span",
+                  "text": "A few practical habits shrink basis risk without ever eliminating it entirely: track your own local price against the exchange reference price over past seasons to understand your typical basis and how much it has historically moved; prefer the delivery centre and grade closest to your actual physical situation when a choice exists; and treat any cross-hedge as a genuinely weaker hedge than a direct one, sized and monitored more conservatively.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c3l3-019",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Basis risk is a reason to hedge carefully, not a reason to skip hedging. As the Nagaur example showed, the hedge still cut the farmer's shortfall by roughly three-quarters even when the basis moved against them. Do not let 'the hedge won't be perfect' become an excuse for 'so why bother.'"
+            },
+            {
+              "_key": "cfh-c3l3-020",
+              "_type": "flashcardSet",
+              "title": "Basis Risk: Core Terms",
+              "cards": [
+                {
+                  "_key": "cfh-c3l3-020f1",
+                  "term": "Basis",
+                  "definition": "The difference between your local or physical price and the futures price you are hedging with (local price minus futures price)."
+                },
+                {
+                  "_key": "cfh-c3l3-020f2",
+                  "term": "Basis risk",
+                  "definition": "The risk that the basis changes unpredictably between placing and closing a hedge, leaving a residual gain or loss even on an otherwise well-executed hedge."
+                },
+                {
+                  "_key": "cfh-c3l3-020f3",
+                  "term": "Location basis",
+                  "definition": "Basis risk arising because your physical market is geographically distant from the exchange's delivery centre."
+                },
+                {
+                  "_key": "cfh-c3l3-020f4",
+                  "term": "Quality/grade basis",
+                  "definition": "Basis risk arising because your actual commodity differs in quality or grade from the exchange's contract specification."
+                },
+                {
+                  "_key": "cfh-c3l3-020f5",
+                  "term": "Cross-hedge (product basis)",
+                  "definition": "Hedging one commodity's exposure using a related but different commodity's futures contract, introducing basis risk from the two prices moving independently."
+                }
+              ]
+            },
+            {
+              "_key": "cfh-c3l3-021",
+              "_type": "keyTakeaways",
+              "points": [
+                "Basis equals your local price minus the futures price. A stable basis does not hurt a hedge; an unpredictably changing basis is what basis risk actually means.",
+                "The four common sources are location basis, quality/grade basis, timing basis from expiry mismatches, and product basis from cross-hedging with a related but different commodity.",
+                "NCDEX's jeera contract, priced ex-warehouse Unjha, is a real, literal example of location basis affecting any farmer trading from elsewhere in India.",
+                "Cash-settled, globally-benchmarked contracts like MCX crude oil remove location basis but do not remove product basis when used to hedge a related, non-identical exposure like diesel or edible oil blends.",
+                "A hedge with basis risk still sharply reduces total risk compared to going unhedged; basis risk is a reason to hedge thoughtfully, not a reason to avoid hedging altogether."
+              ]
+            },
+            {
+              "_key": "cfh-c3l3-022",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice. Numeric examples use illustrative prices and simplified basis assumptions for teaching purposes."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

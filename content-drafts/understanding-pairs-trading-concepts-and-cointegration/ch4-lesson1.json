@@ -1,0 +1,243 @@
+{
+  "courseSlug": "understanding-pairs-trading-concepts-and-cointegration",
+  "chapters": [
+    {
+      "title": "Chapter 4: Screening, Trading, and Managing a Pair",
+      "lessons": [
+        {
+          "title": "Screening the Market for Cointegrated Pair Candidates",
+          "slug": "screening-the-market-for-cointegrated-pair-candidates",
+          "body": [
+            {
+              "_key": "p14-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p14-001s1", "_type": "span", "marks": [], "text": "Every pair in this course so far was chosen by hand: HDFC Bank and ICICI Bank came from an obvious shared-exposure story, Axis Bank and Kotak Mahindra Bank from the same reasoning applied to a second example. A systematizing trader does not want to rely on noticing pairs one at a time. This lesson builds a repeatable screen: a way to run correlation and cointegration testing across a whole universe of stocks at once, and come out the other end with a ranked shortlist instead of a single hand-picked guess." }
+              ]
+            },
+            {
+              "_key": "p14-002",
+              "_type": "bigIdea",
+              "text": "A screen is the same three-step process from this course, correlation, regression, and cointegration testing, applied systematically across many candidate pairs from a sensibly chosen universe, rather than to one pair you already suspected. The output is a ranked shortlist, not a single verdict, and most candidates that enter the screen will not survive it."
+            },
+            {
+              "_key": "p14-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p14-003s1", "_type": "span", "marks": [], "text": "Step 1: Choosing a Sensible Universe" }
+              ]
+            },
+            {
+              "_key": "p14-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p14-004s1", "_type": "span", "marks": [], "text": "Testing every possible pair among the roughly 2,000 stocks listed on the NSE is neither practical nor sensible. Chapter 1 established that a pair needs an explainable shared exposure before it is worth testing at all, so the right starting universe is a sector or peer group where that exposure genuinely exists: the constituents of an index like Nifty Bank, Nifty IT, or Nifty FMCG, or a hand-built peer group such as NBFCs or paint manufacturers. A group of 12 stocks, roughly the size of Nifty Bank, gives 66 possible pairs, a manageable set where every single pair already has a plausible economic reason to be tested, unlike a blind scan across unrelated sectors." }
+              ]
+            },
+            {
+              "_key": "p14-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p14-005s1", "_type": "span", "marks": [], "text": "Step 2: The Multiple Testing Problem" }
+              ]
+            },
+            {
+              "_key": "p14-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "p14-006m1", "_type": "glossaryTerm", "definition": "The statistical risk that, when running many hypothesis tests at once, some will appear significant purely by chance, even if none of the underlying relationships are real." }
+              ],
+              "children": [
+                { "_key": "p14-006s1", "_type": "span", "marks": [], "text": "A 5 percent significance level, by definition, means a truly non-cointegrated pair still has roughly a 1 in 20 chance of appearing to pass the test purely by chance. Test 66 pairs at once and you would expect a handful of false positives from chance alone, even if none of those 66 pairs were genuinely cointegrated. This is the " },
+                { "_key": "p14-006s2", "_type": "span", "marks": ["p14-006m1"], "text": "multiple testing problem" },
+                { "_key": "p14-006s3", "_type": "span", "marks": [], "text": ", and it is the large-scale version of the spurious correlation warning from Chapter 1. Three practical habits keep it in check: restrict testing to an economically sensible universe in the first place, so each test already has a real prior reason to succeed; use a stricter bar, such as requiring the 1 percent significance level rather than 5 percent, when scanning many pairs at once; and never trust a single test, always validate a passing result on a separate, later window of data before trading it, covered in Step 4." }
+              ]
+            },
+            {
+              "_key": "p14-007",
+              "_type": "callout",
+              "type": "warning",
+              "text": "The more pairs you test, the more chance-driven false positives your screen will surface. A screen of 66 economically sensible pairs is a reasonable, disciplined exercise. A screen of all 2,000 NSE stocks against each other, roughly 2 million possible pairs, would surface a large number of statistically convincing-looking but economically meaningless results, exactly the spurious regression trap from Chapter 3, now at scale."
+            },
+            {
+              "_key": "p14-008",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p14-008s1", "_type": "span", "marks": [], "text": "Step 3: Building the Screen" }
+              ]
+            },
+            {
+              "_key": "p14-009",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "import itertools\nimport pandas as pd\nfrom statsmodels.tsa.stattools import coint\n\n# prices: DataFrame of daily closing prices, one column per stock in the universe\nresults = []\nfor stock_a, stock_b in itertools.combinations(prices.columns, 2):\n    correlation = prices[stock_a].pct_change().corr(prices[stock_b].pct_change())\n    if correlation < 0.5:\n        continue  # skip pairs that don't clear the correlation screen\n\n    t_stat, p_value, _ = coint(prices[stock_a], prices[stock_b])\n    results.append({\n        \"pair\": f\"{stock_a} / {stock_b}\",\n        \"correlation\": round(correlation, 2),\n        \"eg_t_stat\": round(t_stat, 2),\n        \"p_value\": round(p_value, 3),\n    })\n\nshortlist = pd.DataFrame(results).sort_values(\"p_value\")",
+              "caption": "Screening a universe of stocks: correlation filter first, then Engle-Granger cointegration testing, ranked by p-value"
+            },
+            {
+              "_key": "p14-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p14-010s1", "_type": "span", "marks": [], "text": "Running this kind of screen across an illustrative Nifty Bank universe, correlation filter first, then Engle-Granger testing only on the pairs that clear it, might produce a shortlist like the one below. Notice that clearing the correlation filter does not guarantee clearing the cointegration test, the entire point of Chapter 3." }
+              ]
+            },
+            {
+              "_key": "p14-011",
+              "_type": "table",
+              "caption": "Illustrative Nifty Bank screen results, ranked by p-value",
+              "headers": ["Pair", "Correlation", "Engle-Granger t-stat", "p-value", "Verdict"],
+              "rows": [
+                { "_key": "p14-011r1", "cells": ["HDFC Bank / ICICI Bank", "0.70", "-3.85", "0.021", "Cointegrated (5%)"] },
+                { "_key": "p14-011r2", "cells": ["Axis Bank / Kotak Mahindra Bank", "0.66", "-3.50", "0.038", "Cointegrated (5%)"] },
+                { "_key": "p14-011r3", "cells": ["State Bank of India / Bank of Baroda", "0.61", "-3.20", "0.048", "Cointegrated (5%, borderline)"] },
+                { "_key": "p14-011r4", "cells": ["IndusInd Bank / Federal Bank", "0.55", "-2.85", "0.110", "Not cointegrated"] },
+                { "_key": "p14-011r5", "cells": ["AU Small Finance Bank / Bandhan Bank", "0.58", "-2.40", "0.220", "Not cointegrated"] }
+              ]
+            },
+            {
+              "_key": "p14-012",
+              "_type": "chart",
+              "chartType": "bar",
+              "title": "P-values across the shortlisted pairs (illustrative, lower is stronger evidence)",
+              "xAxisLabel": "Pair",
+              "yAxisLabel": "Engle-Granger p-value",
+              "data": [
+                { "_key": "p14-012d1", "label": "HDFC/ICICI", "value": 0.021 },
+                { "_key": "p14-012d2", "label": "Axis/Kotak", "value": 0.038 },
+                { "_key": "p14-012d3", "label": "SBI/BoB", "value": 0.048 },
+                { "_key": "p14-012d4", "label": "IndusInd/Federal", "value": 0.110 },
+                { "_key": "p14-012d5", "label": "AU SFB/Bandhan", "value": 0.220 }
+              ]
+            },
+            {
+              "_key": "p14-013",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Five pairs cleared the correlation filter, but only three cleared the cointegration test at the 5% level, and one of those three, State Bank of India and Bank of Baroda, is a close call. IndusInd Bank / Federal Bank and AU Small Finance Bank / Bandhan Bank both looked reasonable on correlation alone, 0.55 and 0.58, but neither showed statistically meaningful mean reversion in their spread. A correlation-only screen would have kept all five. The cointegration step is what actually separates the shortlist from the real candidates."
+            },
+            {
+              "_key": "p14-014",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p14-014s1", "_type": "span", "marks": [], "text": "Step 4: Validating Before You Trust It" }
+              ]
+            },
+            {
+              "_key": "p14-015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p14-015s1", "_type": "span", "marks": [], "text": "A single passing test result, especially one as borderline as State Bank of India and Bank of Baroda's, is not enough on its own, particularly after running dozens of tests at once. Split your available price history into two windows: a formation window, where you run the correlation and cointegration screen exactly as above, and a separate, later validation window, where you retest the pairs that passed, using fresh data the screen never saw. A pair that was cointegrated only in the formation window, and fails on the validation window, was very likely one of the false positives the multiple testing problem warns about. Only a pair that holds up across both windows is a genuinely strong candidate to size and trade, the subject of the rest of this chapter." }
+              ]
+            },
+            {
+              "_key": "p14-016",
+              "_type": "comparison",
+              "title": "Hand-picking a pair vs running a systematic screen",
+              "columns": [
+                {
+                  "_key": "p14-016c1",
+                  "label": "Hand-picking one pair (Chapters 1–3)",
+                  "points": [
+                    "Fast, and good for learning the underlying mechanics deeply",
+                    "Relies entirely on the trader's own intuition to even consider a pair",
+                    "Easy to unconsciously cherry-pick a pair that already looks good",
+                    "No sense of how the chosen pair compares to alternatives"
+                  ]
+                },
+                {
+                  "_key": "p14-016c2",
+                  "label": "Systematic screen across a universe (this lesson)",
+                  "points": [
+                    "Surfaces candidates a trader might never have thought to check by hand",
+                    "Exposed to the multiple testing problem, needs discipline about thresholds",
+                    "Produces a ranked shortlist, not just a single yes or no",
+                    "Needs a validation step on fresh data before any candidate is trusted"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "p14-017",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "p14-017s1", "label": "Pairs from a 12-stock universe", "value": "66", "context": "A manageable, economically sensible number, far smaller than scanning the whole NSE" },
+                { "_key": "p14-017s2", "label": "Expected false positives at 5%", "value": "~1 in 20 tests", "context": "The multiple testing problem, why a large screen needs stricter thresholds or validation" },
+                { "_key": "p14-017s3", "label": "Screen pipeline order", "value": "Correlation filter → cointegration test", "context": "Cheap to compute first, applied to the whole universe before the more expensive test" },
+                { "_key": "p14-017s4", "label": "Before trusting any result", "value": "Retest on a separate validation window", "context": "A passing result on the formation window alone is not sufficient" }
+              ]
+            },
+            {
+              "_key": "p14-018",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Interpreting a large screen",
+              "question": "You run a cointegration screen across 200 economically sensible candidate pairs at the 5% significance level and find 12 that pass. What is the most appropriate next step?",
+              "options": [
+                "Immediately begin trading all 12 pairs, since each individually passed a 5% significance test",
+                "Discard the entire screen, since 12 passing pairs out of 200 is too few to be meaningful",
+                "Recognize that some of the 12 are likely false positives given the multiple testing problem, and retest them on a separate validation window before trusting any of them",
+                "Lower the significance level to 10% to increase the number of pairs that pass"
+              ],
+              "correctIndex": 2,
+              "explanation": "With 200 tests at a 5% significance level, roughly 10 false positives would be expected from chance alone, even if none of the pairs were genuinely cointegrated. Twelve passing results should be treated as a shortlist to validate further, not a final answer, which is exactly why Step 4 introduces retesting on a separate window before trusting any result."
+            },
+            {
+              "_key": "p14-019",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Choosing a validation approach",
+              "scenario": "Your screen of Nifty IT constituents finds one pair, Stock X and Stock Y, cointegrated with a p-value of 0.043, just inside the 5% bar, based on 180 days of data.",
+              "prompt": "Given how borderline this result is, what would you do before sizing a real trade on this pair?",
+              "modelAnswer": "Given the borderline p-value and the fact that it came from testing multiple pairs within the Nifty IT universe, this result alone is not strong enough to trade on immediately. The right next step is to retest this specific pair on a separate, later window of data it was not screened on, a genuine out-of-sample validation. If the pair remains cointegrated, ideally with a stronger p-value, on the new window, that is much better evidence than a single borderline pass. If it fails to hold up, it was likely one of the false positives the multiple testing problem predicts, and the pair should be dropped rather than traded."
+            },
+            {
+              "_key": "p14-020",
+              "_type": "flashcardSet",
+              "title": "Screening for Pairs: Core Terms",
+              "cards": [
+                { "_key": "p14-020f1", "term": "Screening universe", "definition": "A deliberately chosen group of stocks, typically a sector or peer group with a plausible shared exposure, used as the pool of candidates for a systematic pairs screen." },
+                { "_key": "p14-020f2", "term": "Multiple testing problem", "definition": "The statistical risk that running many hypothesis tests at once produces some falsely significant results purely by chance, even if no real relationships exist among them." },
+                { "_key": "p14-020f3", "term": "Formation window", "definition": "The historical period of data used to run an initial correlation and cointegration screen and identify candidate pairs." },
+                { "_key": "p14-020f4", "term": "Validation window", "definition": "A separate, later period of data, not used in the original screen, used to retest a candidate pair before trusting it enough to trade." }
+              ]
+            },
+            {
+              "_key": "p14-021",
+              "_type": "keyTakeaways",
+              "points": [
+                "A systematic screen applies the same correlation and cointegration pipeline from earlier chapters across many candidate pairs from a sensibly chosen universe, instead of one hand-picked guess.",
+                "Restricting the universe to economically sensible groups, like a single sector's index constituents, keeps the number of tests manageable and each test economically justified.",
+                "The multiple testing problem means some pairs will appear to pass a cointegration test purely by chance when testing many pairs at once, especially near the significance boundary.",
+                "A correlation filter followed by a cointegration test on the survivors is an efficient screening order, and typically only a fraction of correlation-screened pairs will actually pass cointegration.",
+                "A passing result from the initial screen should always be retested on a separate validation window of fresh data before it is trusted enough to size a real trade.",
+                "The rest of this chapter assumes a pair has cleared both the screen and validation, and moves on to sizing, managing, and eventually exiting a live position."
+              ]
+            },
+            {
+              "_key": "p14-022",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice or a recommendation to buy, sell, or short any security named here. All correlations, test statistics, p-values, and screen results shown are illustrative and do not represent an actual statistical screen of real market data. Index constituents change over time; verify current composition independently. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

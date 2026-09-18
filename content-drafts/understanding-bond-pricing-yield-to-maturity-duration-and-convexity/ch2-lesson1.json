@@ -1,0 +1,557 @@
+{
+  "courseSlug": "understanding-bond-pricing-yield-to-maturity-duration-and-convexity",
+  "chapters": [
+    {
+      "title": "Chapter 2: Yield Measures and What They Really Mean",
+      "lessons": [
+        {
+          "title": "Current Yield vs Yield to Maturity: Why the Coupon Rate Is Not Your Return",
+          "slug": "current-yield-vs-yield-to-maturity-why-the-coupon-rate-is-not-your-return",
+          "body": [
+            {
+              "_key": "c2l1-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l1-001s1",
+                  "_type": "span",
+                  "text": "\"Earn up to 10.25% p.a.\" is the headline on almost every NBFC NCD advertisement. Open the NSE bond listing for the same NCD a year later and you may see it quoted with a \"yield\" of 9.95%. Check a debt mutual fund factsheet and you will find yet another number, labelled YTM. These are three different measures, and only one of them tells you what you will actually earn if you hold the bond to maturity. Chapter 1 taught you to price a bond. This chapter turns that around and asks: given the price, what return am I really getting?",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l1-002",
+              "_type": "bigIdea",
+              "text": "The coupon rate tells you what the issuer pays. The current yield tells you your income this year. Only the yield to maturity tells you your total return if you hold to the end, because only it accounts for the price you paid versus the ₹100 you will get back."
+            },
+            {
+              "_key": "c2l1-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l1-003s1",
+                  "_type": "span",
+                  "text": "Measure One: The Coupon Rate",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l1-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l1-004s1",
+                  "_type": "span",
+                  "text": "The coupon rate is fixed on the day of issue and calculated on face value. It is a return only for the very first investor who bought at exactly ₹100 and holds to maturity. For anyone who buys later on NSE, BSE or RBI Retail Direct at ₹106 or ₹94, it is just a number that sets the size of the cash flows. As you saw in Lesson 4 of Chapter 1, two bonds with 9.00% and 6.50% coupons can deliver exactly the same return.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l1-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l1-005s1",
+                  "_type": "span",
+                  "text": "Measure Two: Current Yield",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l1-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c2l1-006m1",
+                  "_type": "glossaryTerm",
+                  "definition": "Annual coupon income divided by the bond's current market price. It measures income relative to what you pay, but ignores any gain or loss as the price moves to face value."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c2l1-006s1",
+                  "_type": "span",
+                  "text": "The ",
+                  "marks": []
+                },
+                {
+                  "_key": "c2l1-006s2",
+                  "_type": "span",
+                  "text": "current yield",
+                  "marks": ["c2l1-006m1"]
+                },
+                {
+                  "_key": "c2l1-006s3",
+                  "_type": "span",
+                  "text": " fixes the first flaw of the coupon rate by dividing the coupon by what you actually pay instead of by face value. It answers a narrow but useful question: for every rupee I invest today, how much coupon income do I receive each year?",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l1-007",
+              "_type": "mathBlock",
+              "latex": "\\text{Current Yield} = \\frac{\\text{Annual Coupon}}{\\text{Market Price}}",
+              "caption": "Bond A from Chapter 1: 9.00% coupon at ₹106.16 gives ₹9.00 ÷ ₹106.16 = 8.48%."
+            },
+            {
+              "_key": "c2l1-008",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Calculate a current yield",
+              "prompt": "An illustrative 7.26% G-Sec is quoted at ₹102.40 on RBI Retail Direct. What is its current yield? Round to two decimal places.",
+              "correctValue": 7.09,
+              "tolerance": 0.01,
+              "unit": "%",
+              "explanation": "Annual coupon = ₹7.26 per ₹100 face value. Current yield = ₹7.26 ÷ ₹102.40 = 7.09%. It is below the coupon rate because you pay more than ₹100 for the same ₹7.26 of income."
+            },
+            {
+              "_key": "c2l1-009",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Current yield has a blind spot: it pretends the price will never change. But every bond pays back exactly ₹100 at maturity. If you pay ₹106.16, you will lose ₹6.16 by maturity; if you pay ₹95.89, you will gain ₹4.11. Current yield ignores both, so it overstates the return on premium bonds and understates it on discount bonds."
+            },
+            {
+              "_key": "c2l1-010",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l1-010s1",
+                  "_type": "span",
+                  "text": "Measure Three: Yield to Maturity",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l1-011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c2l1-011m1",
+                  "_type": "glossaryTerm",
+                  "definition": "The single discount rate that makes the present value of all a bond's remaining cash flows equal to its current (dirty) price. It is the annualised return from buying at today's price and holding to maturity, assuming every cash flow is paid and coupons are reinvested at the same rate."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c2l1-011s1",
+                  "_type": "span",
+                  "text": "In Chapter 1, you took a market yield and calculated a price. ",
+                  "marks": []
+                },
+                {
+                  "_key": "c2l1-011s2",
+                  "_type": "span",
+                  "text": "Yield to maturity",
+                  "marks": ["c2l1-011m1"]
+                },
+                {
+                  "_key": "c2l1-011s3",
+                  "_type": "span",
+                  "text": " runs the same equation backwards: take the price you are being asked to pay and find the one discount rate that makes all the future cash flows add up to exactly that price. Because it uses every coupon, the face value at maturity, and the timing of each, it captures both your income and the gain or loss from pull to par in a single annual rate.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l1-012",
+              "_type": "mathBlock",
+              "latex": "\\text{Price} = \\sum_{t=1}^{n} \\frac{C/m}{(1 + \\text{YTM}/m)^{t}} + \\frac{FV}{(1 + \\text{YTM}/m)^{n}}",
+              "caption": "The same pricing equation from Chapter 1, but now the price is known and YTM is the unknown. For Bond A: ₹106.16 = PV of ten ₹4.50 coupons and ₹100 at YTM, which solves to 7.50%."
+            },
+            {
+              "_key": "c2l1-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l1-013s1",
+                  "_type": "span",
+                  "text": "There is no neat algebraic formula that isolates YTM for a bond with more than a couple of cash flows, so it has to be found by trial and error or by a spreadsheet. That is the whole of the next lesson. For now, focus on what YTM means and why it is the number that matters.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l1-014",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l1-014s1",
+                  "_type": "span",
+                  "text": "All Three Measures Side by Side",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l1-015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l1-015s1",
+                  "_type": "span",
+                  "text": "Here are Rohit's two bonds from the last chapter, plus a par bond from the same issuer, all with five years left and all priced by the market at a 7.50% yield to maturity.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l1-016",
+              "_type": "table",
+              "caption": "Three bonds, same issuer, same 5-year maturity, same 7.50% YTM (per ₹100 face value)",
+              "headers": ["Bond", "Price (₹)", "Coupon rate", "Current yield", "Yield to maturity"],
+              "rows": [
+                { "_key": "c2l1-016r1", "_type": "tableRow", "cells": ["Bond A (premium)", "106.16", "9.00%", "8.48%", "7.50%"] },
+                { "_key": "c2l1-016r2", "_type": "tableRow", "cells": ["Par bond", "100.00", "7.50%", "7.50%", "7.50%"] },
+                { "_key": "c2l1-016r3", "_type": "tableRow", "cells": ["Bond B (discount)", "95.89", "6.50%", "6.78%", "7.50%"] }
+              ]
+            },
+            {
+              "_key": "c2l1-017",
+              "_type": "chart",
+              "chartType": "bar",
+              "title": "Coupon Rate vs Current Yield vs YTM (%)",
+              "xAxisLabel": "Bond",
+              "yAxisLabel": "% per year",
+              "data": [
+                { "_key": "c2l1-017d1", "label": "Bond A at ₹106.16" },
+                { "_key": "c2l1-017d2", "label": "Par bond at ₹100" },
+                { "_key": "c2l1-017d3", "label": "Bond B at ₹95.89" }
+              ],
+              "series": [
+                { "_key": "c2l1-017s1", "label": "Coupon rate", "values": [9.00, 7.50, 6.50] },
+                { "_key": "c2l1-017s2", "label": "Current yield", "values": [8.48, 7.50, 6.78] },
+                { "_key": "c2l1-017s3", "label": "Yield to maturity", "values": [7.50, 7.50, 7.50] }
+              ]
+            },
+            {
+              "_key": "c2l1-018",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l1-018s1",
+                  "_type": "span",
+                  "text": "A fixed ordering falls out of this, and it is worth memorising because it lets you sanity-check any bond quote in seconds. Current yield always sits between the coupon rate and the YTM, since it captures the price you pay but not the pull to par.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l1-019",
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "c2l1-019s1",
+                  "label": "Premium bond",
+                  "value": "Coupon > CY > YTM",
+                  "context": "Bond A: 9.00% > 8.48% > 7.50%"
+                },
+                {
+                  "_key": "c2l1-019s2",
+                  "label": "Par bond",
+                  "value": "Coupon = CY = YTM",
+                  "context": "All three at 7.50%"
+                },
+                {
+                  "_key": "c2l1-019s3",
+                  "label": "Discount bond",
+                  "value": "Coupon < CY < YTM",
+                  "context": "Bond B: 6.50% < 6.78% < 7.50%"
+                }
+              ]
+            },
+            {
+              "_key": "c2l1-020",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Sanity-check a quote",
+              "question": "A broker's note describes a listed NCD as: price ₹1,042 per ₹1,000 face value, coupon 9.40%, current yield 9.02%, YTM 9.65%. What is wrong?",
+              "options": [
+                "Nothing, the numbers are consistent",
+                "The current yield is too low for a 9.40% coupon",
+                "The YTM cannot be above the current yield for a bond trading above face value",
+                "The price should be below ₹1,000 for a 9.40% coupon"
+              ],
+              "correctIndex": 2,
+              "explanation": "At ₹1,042 the NCD is a premium bond, so the ordering must be coupon > current yield > YTM. The current yield (₹94 ÷ ₹1,042 = 9.02%) is correct, but the YTM must be below 9.02% because the holder will lose ₹42 as the price is pulled to ₹1,000. A YTM of 9.65% is impossible at this price."
+            },
+            {
+              "_key": "c2l1-021",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l1-021s1",
+                  "_type": "span",
+                  "text": "Where Current Yield Misleads the Most",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l1-022",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l1-022s1",
+                  "_type": "span",
+                  "text": "The gap between current yield and YTM is widest when a bond trades at a big premium close to maturity, because the whole loss to par gets squeezed into a short period. This is exactly the situation of many high-coupon NBFC NCDs issued a few years ago that now trade on the NSE and BSE with a year or so left.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l1-023",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l1-023s1",
+                  "_type": "span",
+                  "text": "Take an illustrative 9.50% annual-coupon NCD with ₹1,000 face value and exactly one year left, trading at ₹1,025 just after a coupon payment. In one year you receive ₹95 of coupon plus ₹1,000 of face value, ₹1,095 in total, for an outlay of ₹1,025.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l1-024",
+              "_type": "keyFact",
+              "label": "Current yield vs actual return on the 1-year NCD",
+              "value": "9.27% vs 6.83%",
+              "context": "Current yield = ₹95 ÷ ₹1,025 = 9.27%. YTM = ₹1,095 ÷ ₹1,025 − 1 = 6.83%. The ₹25 premium wipes out more than a quarter of the coupon."
+            },
+            {
+              "_key": "c2l1-025",
+              "_type": "comparison",
+              "title": "Current Yield vs Yield to Maturity",
+              "columns": [
+                {
+                  "_key": "c2l1-025c1",
+                  "label": "Current yield",
+                  "points": [
+                    "Annual coupon ÷ price",
+                    "Captures the price you pay, ignores the ₹100 you get back",
+                    "Useful for comparing this year's income across bonds",
+                    "Easy to calculate on a phone calculator",
+                    "Misleads badly for large premiums or discounts near maturity"
+                  ]
+                },
+                {
+                  "_key": "c2l1-025c2",
+                  "label": "Yield to maturity",
+                  "points": [
+                    "The discount rate that equates all cash flows to the price",
+                    "Captures coupons, pull to par and the timing of every cash flow",
+                    "The right basis for comparing bonds with different coupons and prices",
+                    "Needs trial and error or a spreadsheet",
+                    "Assumes you hold to maturity, get paid in full and reinvest at the same rate"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c2l1-026",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "Name the measure",
+              "textWithBlank": "The yield measure that accounts for coupons, the purchase price and the repayment of face value at maturity is the yield to ___.",
+              "correctAnswers": ["maturity"],
+              "explanation": "Yield to maturity captures every cash flow and the price paid, so it reflects both income and the gain or loss from pull to par. Current yield captures only income relative to price."
+            },
+            {
+              "_key": "c2l1-027",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l1-027s1",
+                  "_type": "span",
+                  "text": "What YTM Does Not Promise",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l1-028",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l1-028s1",
+                  "_type": "span",
+                  "text": "YTM is the best single measure of a bond's return, but it is a promise wrapped in conditions. You will realise exactly the YTM only if all of the following hold:",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l1-029",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l1-029s1",
+                  "_type": "span",
+                  "text": "You hold to maturity. ",
+                  "marks": ["strong"]
+                },
+                {
+                  "_key": "c2l1-029s2",
+                  "_type": "span",
+                  "text": "Sell early and your return depends on the price at that time, which depends on yields then.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l1-030",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l1-030s1",
+                  "_type": "span",
+                  "text": "The issuer pays every rupee on time. ",
+                  "marks": ["strong"]
+                },
+                {
+                  "_key": "c2l1-030s2",
+                  "_type": "span",
+                  "text": "Close to certain for G-Secs. For NCDs of companies like DHFL, which defaulted in 2019, the quoted YTM turned out to be meaningless.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l1-031",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l1-031s1",
+                  "_type": "span",
+                  "text": "Every coupon is reinvested at the YTM itself. ",
+                  "marks": ["strong"]
+                },
+                {
+                  "_key": "c2l1-031s2",
+                  "_type": "span",
+                  "text": "If rates fall and you can only reinvest coupons at a lower rate, your realised return will be lower. Lesson 3 of this chapter covers this in detail.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l1-032",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l1-032s1",
+                  "_type": "span",
+                  "text": "The issuer does not redeem early. ",
+                  "marks": ["strong"]
+                },
+                {
+                  "_key": "c2l1-032s2",
+                  "_type": "span",
+                  "text": "Callable bonds can be repaid before maturity, which is why Lesson 4 introduces yield to call and yield to worst.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l1-033",
+              "_type": "callout",
+              "type": "insight",
+              "text": "The YTM printed on a debt mutual fund factsheet is the weighted yield of the bonds the fund holds today. It is not a forecast of the fund's return: the fund charges an expense ratio, keeps buying and selling bonds, and rarely holds everything to maturity. For target maturity funds and roll-down funds, which do hold to a fixed date, portfolio YTM minus the expense ratio is a reasonable first estimate of the return, as long as you stay invested until that date."
+            },
+            {
+              "_key": "c2l1-034",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Shobha picks an NCD",
+              "scenario": "Shobha Pillai, a retired school principal in Kochi, wants to invest ₹5 lakh in listed NCDs on the NSE through her Zerodha account. She shortlists two illustrative NCDs with the same AA rating, both paying annual coupons and both trading just after a coupon date, so there is no accrued interest. NCD X: 10.25% coupon, 1 year left, price ₹1,030 per ₹1,000 face value. NCD Y: 8.90% coupon, 3 years left, price ₹985. Shobha leans towards X: \"10.25% is the highest rate I have seen.\"",
+              "prompt": "Calculate the current yield and YTM for both NCDs, show what ₹5 lakh in NCD X actually earns, and advise Shobha on what else she should weigh before deciding.",
+              "modelAnswer": "1. NCD X: current yield = ₹102.50 ÷ ₹1,030 = 9.95%. With one year left, YTM = (₹102.50 + ₹1,000) ÷ ₹1,030 − 1 = 7.04%.\n2. NCD Y: current yield = ₹89 ÷ ₹985 = 9.04%. Solving ₹985 = ₹89 ÷ 1.095 + ₹89 ÷ 1.095² + ₹1,089 ÷ 1.095³ gives a YTM of about 9.50%.\n3. ₹5 lakh in NCD X buys 485 NCDs for ₹4,99,550. In a year she receives 485 × ₹1,102.50 = ₹5,34,712.50, a gain of ₹35,162.50, which is 7.04%, not 10.25%.\n4. On yield to maturity, NCD Y is clearly higher: 9.50% vs 7.04%. The 10.25% coupon on X is mostly returned to the seller through the ₹30 premium.\n5. What else to weigh: (a) Tenor fit: X returns her money in one year, Y locks it for three; she should match this to when she needs the cash. (b) Reinvestment: after one year, she will have to reinvest X's proceeds at whatever rates prevail then. (c) Credit risk over time: three years of exposure to an AA issuer is more risk than one year, so she should read the latest rating rationale for Y. (d) Liquidity: check recent traded volumes for both on the NSE, since thinly traded NCDs can be hard to sell early. (e) Tax: coupon income is taxed at her slab rate, and X's premium loss and Y's discount gain are treated as capital losses or gains, which can change the post-tax comparison."
+            },
+            {
+              "_key": "c2l1-035",
+              "_type": "flashcardSet",
+              "title": "Yield Measures",
+              "cards": [
+                { "_key": "c2l1-035f1", "term": "Coupon rate", "definition": "Annual coupon as a percentage of face value. Fixed at issue. Not your return unless you bought at par." },
+                { "_key": "c2l1-035f2", "term": "Current yield", "definition": "Annual coupon ÷ market price. Measures income relative to price, ignores pull to par." },
+                { "_key": "c2l1-035f3", "term": "Yield to maturity (YTM)", "definition": "The discount rate at which the present value of all remaining cash flows equals the price. Total annualised return if held to maturity." },
+                { "_key": "c2l1-035f4", "term": "Premium bond ordering", "definition": "Coupon rate > current yield > YTM." },
+                { "_key": "c2l1-035f5", "term": "Discount bond ordering", "definition": "Coupon rate < current yield < YTM." },
+                { "_key": "c2l1-035f6", "term": "Portfolio YTM", "definition": "Weighted YTM of a debt fund's holdings on the factsheet date. Not a forecast of the fund's return." }
+              ]
+            },
+            {
+              "_key": "c2l1-036",
+              "_type": "keyTakeaways",
+              "points": [
+                "The coupon rate is a return only for someone who buys at face value and holds to maturity.",
+                "Current yield = annual coupon ÷ price. It captures what you pay but ignores the gain or loss as the price moves to face value.",
+                "YTM is the discount rate that makes all remaining cash flows equal the price. It is the right basis for comparing bonds.",
+                "Premium: coupon > current yield > YTM. Discount: coupon < current yield < YTM. Par: all three are equal.",
+                "The gap is widest for big premiums close to maturity: a 1-year NCD at ₹1,025 shows a 9.27% current yield but a 6.83% YTM.",
+                "YTM assumes you hold to maturity, get paid in full, face no early call and reinvest coupons at the same rate."
+              ]
+            },
+            {
+              "_key": "c2l1-037",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment or tax advice. NCDs, prices, ratings and investors are illustrative unless named, and returns shown are before tax and transaction costs. Listed NCDs can carry credit and liquidity risk, and a rating is not a guarantee. Read the issue documents and latest rating rationale, and consult a SEBI-registered investment adviser before investing."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,252 @@
+{
+  "courseSlug": "advanced-machine-learning-techniques-for-trading-ensembles-and-deep-learning",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Machine Learning for Trading Is Different",
+      "lessons": [
+        {
+          "title": "Labeling Market Data Correctly: The Triple-Barrier Method and Meta-Labeling",
+          "slug": "labeling-market-data-correctly-the-triple-barrier-method-and-meta-labeling",
+          "body": [
+            {
+              "_key": "amlc1l3b01",
+              "_type": "bigIdea",
+              "text": "Get the label wrong and it does not matter how good the model is downstream. A random forest, a gradient booster, and an LSTM trained on a bad label are all learning to predict the wrong thing, with high confidence. Labeling is the least glamorous part of this chapter and the one most likely to determine whether anything you build in Chapters 2 to 4 survives contact with live markets."
+            },
+            {
+              "_key": "amlc1l3b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc1l3b02s1", "_type": "span", "text": "The Naive Label Nobody Should Use: Fixed-Horizon Sign", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc1l3b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc1l3b03s1",
+                  "_type": "span",
+                  "text": "The most common first attempt at a label is: look N days ahead, take the sign of the return, and call that the target. It is easy to code and it is wrong for trading in three specific ways. It ignores volatility, a 2% move means something completely different for a sleepy PSU utility than for a small-cap that regularly swings 5% in a session, yet a fixed-horizon label treats both identically. It ignores path, a position that would have hit your actual stop-loss on day 3 still gets labeled by whatever the price happens to be doing on day N, even though you would never have held it that long. And it ignores that almost no real systematic strategy holds every position for a fixed number of days regardless of what happens in between; real positions exit on a stop, a target, or a time limit, whichever comes first.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc1l3b04",
+              "_type": "callout",
+              "type": "insight",
+              "text": "A fixed-horizon label answers the question 'what was the return N days later.' A trader almost never actually asks that question. They ask 'if I took this trade with a real stop and a real target, would I have made money before one of those was hit.' The triple-barrier method labels the second question, which is the one that matters."
+            },
+            {
+              "_key": "amlc1l3b05",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc1l3b05s1", "_type": "span", "text": "The Triple-Barrier Method", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc1l3b06",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "amlc1l3m01",
+                  "_type": "glossaryTerm",
+                  "definition": "A labeling technique, formalized by Marcos López de Prado, that places three exit conditions around a position, an upper profit-take barrier, a lower stop-loss barrier, and a vertical time-based barrier, and labels the outcome by whichever is touched first."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "amlc1l3b06s1",
+                  "_type": "span",
+                  "text": "The ",
+                  "marks": []
+                },
+                { "_key": "amlc1l3b06s2", "_type": "span", "text": "triple-barrier method", "marks": ["amlc1l3m01"] },
+                {
+                  "_key": "amlc1l3b06s3",
+                  "_type": "span",
+                  "text": " fixes all three problems at once. For every entry point, draw three barriers around it: an upper barrier (take profit), a lower barrier (stop loss), and a vertical barrier (maximum holding period). Scan forward from the entry and label the outcome by whichever barrier is touched first. Touch the upper barrier first: label +1. Touch the lower barrier first: label -1. Reach the vertical barrier with neither touched: label by the sign of whatever return you are sitting on at that point, sometimes treated as a separate 0 class if the move is negligible. Crucially, the upper and lower barriers are set as a multiple of the instrument's own recent volatility, not a fixed percentage, which is exactly what makes this label stationary in a way a fixed-percentage label is not: it automatically widens for a volatile small-cap and tightens for a sleepy large-cap.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc1l3b07",
+              "_type": "mathBlock",
+              "latex": "P_{upper} = P_0 (1 + pt \\cdot \\sigma_t), \\quad P_{lower} = P_0 (1 - sl \\cdot \\sigma_t), \\quad t_{vertical} = t_0 + h",
+              "caption": "P₀ is the entry price, σₜ is a rolling volatility estimate at entry (commonly an EWMA of daily returns), pt and sl are the profit-take and stop-loss multipliers, and h is the maximum holding period in bars. Scaling both barriers by σₜ, rather than fixing them as a flat percentage, is what makes this label adapt to the non-stationarity covered in this chapter's first lesson."
+            },
+            {
+              "_key": "amlc1l3b08",
+              "_type": "candlestickChart",
+              "title": "Illustrative: A Triple-Barrier Path, ₹500 Entry, +4% Upper / -4% Lower, 10-Day Vertical Barrier",
+              "data": [
+                { "_key": "amlc1l3b08c1", "date": "Day 1", "open": 497, "high": 503, "low": 494, "close": 500 },
+                { "_key": "amlc1l3b08c2", "date": "Day 2", "open": 500, "high": 506, "low": 497, "close": 503 },
+                { "_key": "amlc1l3b08c3", "date": "Day 3", "open": 503, "high": 509, "low": 500, "close": 501 },
+                { "_key": "amlc1l3b08c4", "date": "Day 4", "open": 501, "high": 511, "low": 499, "close": 507 },
+                { "_key": "amlc1l3b08c5", "date": "Day 5", "open": 507, "high": 514, "low": 504, "close": 511 },
+                { "_key": "amlc1l3b08c6", "date": "Day 6", "open": 511, "high": 521, "low": 508, "close": 518 }
+              ]
+            },
+            {
+              "_key": "amlc1l3b09",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This candlestick path is a stylized illustration, not real market data. With entry at ₹500, an upper barrier at ₹520 (+4%) and a lower barrier at ₹480 (-4%), Day 6's high of ₹521 is the first barrier touch: the upper barrier, so this position is labeled +1 on Day 6, six days into a ten-day maximum holding window. Everything that might happen after Day 6 is irrelevant to this trade's label, since the position has already exited."
+            },
+            {
+              "_key": "amlc1l3b10",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "def triple_barrier_label(prices, entry_idx, pt_mult, sl_mult, vol, max_holding):\n    entry_price = prices[entry_idx]\n    upper = entry_price * (1 + pt_mult * vol)\n    lower = entry_price * (1 - sl_mult * vol)\n    last_idx = min(entry_idx + max_holding, len(prices) - 1)\n\n    for i in range(entry_idx + 1, last_idx + 1):\n        if prices[i] >= upper:\n            return 1, i          # upper barrier touched first\n        if prices[i] <= lower:\n            return -1, i         # lower barrier touched first\n\n    ret = prices[last_idx] / entry_price - 1\n    label = 1 if ret > 0 else -1 if ret < 0 else 0\n    return label, last_idx       # vertical barrier reached",
+              "caption": "This simplified version checks barrier touches against daily closes only. A more faithful implementation checks each day's high and low against the barriers, since a stop-loss can be touched intraday and the price can still close well inside it, something a close-only scan would miss entirely."
+            },
+            {
+              "_key": "amlc1l3b11",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Computing a Triple-Barrier Stop Level",
+              "prompt": "A stock enters a long position at ₹840. Its recent daily return volatility is 2.5%. Using a stop-loss multiplier of 1.5x this daily volatility, what is the lower (stop-loss) barrier price, in rupees?",
+              "correctValue": 808.5,
+              "tolerance": 0.5,
+              "unit": "₹",
+              "explanation": "Lower barrier = Entry × (1 − stop multiplier × volatility) = ₹840 × (1 − 1.5 × 0.025) = ₹840 × 0.9625 = ₹808.50. Scaling by the stock's own recent volatility, rather than a fixed percentage, is what lets the triple-barrier method treat a volatile stock and a sleepy one fairly."
+            },
+            {
+              "_key": "amlc1l3b12",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc1l3b12s1", "_type": "span", "text": "Meta-Labeling: Betting Size, Not Direction", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc1l3b13",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc1l3b13s1",
+                  "_type": "span",
+                  "text": "The previous lesson previewed meta-labeling as a third role for ML in a systematic pipeline. Now that triple-barrier labels exist, meta-labeling can be stated precisely. Keep a primary model or rule that already decides direction, a moving average crossover, a factor composite, a Chapter 2 ensemble, anything you already trust enough to generate signals from. Then train a second, separate model whose only job is to predict whether that specific primary signal will hit its upper barrier before its lower barrier. The meta-model never decides long or short. It decides take this bet or skip it, and optionally, how large.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc1l3b14",
+              "_type": "comparison",
+              "title": "Primary Model vs Meta-Model: Different Jobs, Different Features",
+              "columns": [
+                {
+                  "_key": "amlc1l3b14c1",
+                  "label": "Primary Model",
+                  "points": [
+                    "Answers: long, short, or flat",
+                    "Typically uses price, volume, and factor-style features",
+                    "Can be a simple rule, a factor composite, or a Chapter 2 to 4 model",
+                    "Its own accuracy can be mediocre and still be useful"
+                  ]
+                },
+                {
+                  "_key": "amlc1l3b14c2",
+                  "label": "Meta-Model",
+                  "points": [
+                    "Answers: take this specific bet, or skip it",
+                    "Often uses different features: recent volatility regime, primary model confidence, market breadth",
+                    "Trained only on instances the primary model actually flagged",
+                    "Its job is to raise precision, even if that means taking fewer bets"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "amlc1l3b15",
+              "_type": "table",
+              "caption": "Illustrative effect of a meta-labeling filter on a primary signal, not results from any specific model in this course",
+              "headers": ["Stage", "Bets Taken", "Win Rate (Precision)", "% of Original Opportunities Kept (Recall)"],
+              "rows": [
+                { "_key": "amlc1l3b15r1", "_type": "tableRow", "cells": ["Primary signal, unfiltered", "1,000", "52%", "100%"] },
+                { "_key": "amlc1l3b15r2", "_type": "tableRow", "cells": ["After meta-labeling filter", "480", "61%", "48%"] }
+              ]
+            },
+            {
+              "_key": "amlc1l3b16",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Meta-labeling almost always trades recall for precision: it takes fewer bets, but the bets it takes are more likely to win. For a systematic desk sizing real capital, that trade is usually worth making, since capital left in cash on a skipped bet is not a loss, but a losing bet that a meta-model could have filtered out is."
+            },
+            {
+              "_key": "amlc1l3b17",
+              "_type": "callout",
+              "type": "warning",
+              "text": "The meta-model must only be trained on instances where the primary signal itself would have fired, generated strictly out-of-sample from however the primary model was built. Training the meta-model on the same in-sample data used to fit the primary model, or letting the primary model peek at data the meta-model later trains on, reintroduces exactly the look-ahead bias this chapter's first lesson warned about, just one layer deeper."
+            },
+            {
+              "_key": "amlc1l3b18",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "The Core Rule of Triple-Barrier Labeling",
+              "textWithBlank": "In the triple-barrier method, a position's label is determined by whichever of the upper barrier, lower barrier, or vertical barrier is touched ___.",
+              "correctAnswers": ["first"],
+              "explanation": "Whichever barrier the price path reaches first, profit-take, stop-loss, or the maximum holding period, determines both the exit and the label. This path-dependence is exactly what a fixed-horizon sign label ignores, since it only looks at the return N days later regardless of what happened along the way."
+            },
+            {
+              "_key": "amlc1l3b19",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc1l3b19s1", "_type": "span", "text": "What This Means for the Rest of This Chapter", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc1l3b20",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc1l3b20s1",
+                  "_type": "span",
+                  "text": "Every case study from Chapter 2 onward uses triple-barrier labels, sized by rolling volatility, rather than a fixed-horizon sign. Where a chapter builds a primary signal, Chapters 2 and 4 mostly do, the labels come straight from this lesson's method. Where a chapter's case study filters an existing signal instead of generating a new direction, meta-labeling from this lesson is the mechanism. The next lesson closes out this chapter's foundation by setting up the actual Python data pipeline, pulling NSE and BSE price history and building the rolling volatility estimates this lesson's barriers depend on.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc1l3b21",
+              "_type": "keyFact",
+              "label": "The One-Line Version of This Lesson",
+              "value": "Label the trade you would actually take, not the return N days later",
+              "context": "A stop-loss, a target, and a maximum holding period define almost every real position. The triple-barrier method labels exactly that, scaled to the instrument's own volatility."
+            },
+            {
+              "_key": "amlc1l3b22",
+              "_type": "keyTakeaways",
+              "points": [
+                "A fixed-horizon sign label ignores volatility, ignores the path price took to get there, and assumes a fixed holding period real strategies rarely use",
+                "The triple-barrier method labels a position by whichever of an upper (profit-take), lower (stop-loss), or vertical (time) barrier is touched first",
+                "Scaling the upper and lower barriers by the instrument's own recent volatility, rather than a fixed percentage, keeps the label stationary across calm and volatile regimes",
+                "A faithful triple-barrier implementation checks each bar's high and low against the barriers, not just the close, or it will miss intraday touches",
+                "Meta-labeling trains a second model to filter or size an existing primary signal's bets, trading recall for precision, and must be trained on strictly out-of-sample primary-signal outputs to avoid a second layer of look-ahead bias",
+                "Every ensemble and deep learning case study in this course builds on triple-barrier labels, not fixed-horizon returns"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

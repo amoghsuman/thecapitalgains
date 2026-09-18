@@ -1,0 +1,198 @@
+{
+  "courseSlug": "introduction-to-options-pricing-models-black-scholes-explained",
+  "chapters": [
+    {
+      "title": "Chapter 4: The Greeks: Reading an Option's Sensitivities",
+      "lessons": [
+        {
+          "title": "Rho and the Minor Greeks: Completing the Picture",
+          "slug": "rho-and-the-minor-greeks-completing-the-picture",
+          "body": [
+            {
+              "_key": "k1",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k1s",
+                  "_type": "span",
+                  "text": "Rho: Sensitivity to the Risk-Free Rate",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k2",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k2s1",
+                  "_type": "span",
+                  "text": "Rho measures how much an option's price changes for a 1 percentage point change in the risk-free rate, with everything else held fixed. It is the quietest of the five main Greeks, and the reason why becomes obvious the moment you compute it.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "mathBlock",
+              "latex": "\\rho_{\\text{call}} = K T e^{-rT} N(d_2), \\qquad \\rho_{\\text{put}} = -K T e^{-rT} N(-d_2)",
+              "caption": "Both formulas scale directly with T, time to expiry. Everything else in this lesson's Greeks depends on T through σ√T; rho depends on T all by itself.",
+              "_key": "k3"
+            },
+            {
+              "_key": "k4",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k4s1",
+                  "_type": "span",
+                  "text": "For Lesson 3.3's exact ATM call: K T e^(−rT) ≈ 24,800 × (1/12) × 0.9946 ≈ 2,055.50. Multiply by N(d2) = 0.55 for the call: ρ_call ≈ 2,055.50 × 0.55 ≈ 1,130.53 per full 100 percentage points, or about ₹11.31 per 1 percentage point. For the matching put, multiply the same 2,055.50 by N(−d2) = 0.45 and flip the sign: ρ_put ≈ −₹9.25 per 1 percentage point. A rise in the risk-free rate slightly raises the call and slightly lowers the put, exactly the direction Lesson 1.1's very first factors table stated in words, now backed by an exact number.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "callout",
+              "type": "insight",
+              "text": "Notice how small ₹11.31 is next to this call's ₹440.72 price, for a full 1 percentage point rate move, larger than most single RBI policy decisions. That smallness is not a quirk of this example; rho scales directly with T. A one-month option barely notices interest rates. A one-year option, or a deep-in-the-money LEAPS-style position held for years, can have rho as a genuinely important line item. Match how much attention you pay to rho with how long you are actually holding the position.",
+              "_key": "k5"
+            },
+            {
+              "_key": "k6",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k6s",
+                  "_type": "span",
+                  "text": "The Minor Greeks: What Professional Desks Track Beyond This Course",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k7",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k7s1",
+                  "_type": "span",
+                  "text": "Delta, gamma, theta, vega, and rho are first and second derivatives of the option price with respect to one input at a time. Market makers and prop desks running large, multi-leg books also track a further layer of second-order Greeks, cross-effects between two inputs at once.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "table",
+              "caption": "A brief survey of second-order Greeks",
+              "headers": ["Greek", "What it measures"],
+              "rows": [
+                { "_key": "k8", "_type": "tableRow", "cells": ["Vanna", "How much delta changes when implied volatility changes (equivalently, how much vega changes when spot moves)"] },
+                { "_key": "k9", "_type": "tableRow", "cells": ["Charm", "How much delta itself decays as one day passes, with spot and volatility unchanged"] },
+                { "_key": "k10", "_type": "tableRow", "cells": ["Vomma", "How much vega itself changes as implied volatility changes"] },
+                { "_key": "k11", "_type": "tableRow", "cells": ["Speed", "How much gamma changes as spot moves, the price's third derivative with respect to spot"] }
+              ],
+              "_key": "k12"
+            },
+            {
+              "_key": "k13",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k13s1",
+                  "_type": "span",
+                  "text": "A retail trader holding a handful of positions rarely needs any of these; delta, gamma, theta, and vega already answer almost every practical question. A market maker running thousands of strikes simultaneously, where small cross-effects compound across an entire book, cannot afford to ignore them. Knowing these names exist, and roughly what each one answers, is enough for this course; building intuition for them in practice is what a prop desk risk seat is for.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k14",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k14s",
+                  "_type": "span",
+                  "text": "Putting All Five Greeks Together",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "table",
+              "caption": "This course's ATM Nifty call (Lesson 3.3), all five Greeks in one place",
+              "headers": ["Greek", "Measures sensitivity to", "Value for this call"],
+              "rows": [
+                { "_key": "k15", "_type": "tableRow", "cells": ["Delta", "Spot price", "0.5648"] },
+                { "_key": "k16", "_type": "tableRow", "cells": ["Gamma", "Spot price (rate of change of delta)", "≈ 0.000423 per rupee"] },
+                { "_key": "k17", "_type": "tableRow", "cells": ["Theta", "Time (per calendar day)", "≈ −₹8.44 per day"] },
+                { "_key": "k18", "_type": "tableRow", "cells": ["Vega", "Implied volatility (per 1 point)", "≈ ₹28.18"] },
+                { "_key": "k19", "_type": "tableRow", "cells": ["Rho", "Risk-free rate (per 1 point)", "≈ ₹11.31"] }
+              ],
+              "_key": "k20"
+            },
+            {
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "The least urgent Greek",
+              "question": "You are managing a book of 1-week Nifty weekly options. Given how each Greek scales, which one would you realistically worry about least, day to day?",
+              "options": [
+                "Delta, since it barely matters for short-dated options",
+                "Theta, since short-dated options barely decay",
+                "Rho, since it scales directly with time to expiry, which is tiny here",
+                "Gamma, since it is irrelevant for weekly options"
+              ],
+              "correctIndex": 2,
+              "explanation": "Rho scales directly with T. With only days left, T is a small fraction of a year, making rho tiny regardless of the other inputs. Delta and gamma remain fully relevant at any expiry, and theta is usually at its most aggressive, not least relevant, in an option's final week.",
+              "_key": "k21"
+            },
+            {
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "See rho scale with time",
+              "prompt": "This lesson's ATM call has a rho of about ₹11.31 per 1 percentage point, with 1 month to expiry. Since rho scales roughly linearly with T, approximately what would you expect rho to be for a similar ATM option with 3 months to expiry instead?",
+              "correctValue": 33.93,
+              "tolerance": 3,
+              "explanation": "Rho scales directly with T in the formula. Roughly tripling T (from 1 month to 3 months) roughly triples rho: ₹11.31 × 3 ≈ ₹33.93. In practice N(d2) would also shift slightly with a longer T, so this is an approximation, not an exact recomputation.",
+              "_key": "k22"
+            },
+            {
+              "_type": "bigIdea",
+              "text": "Five Greeks, one option price: delta and gamma for how it reacts to the underlying, theta for how it reacts to time, vega for how it reacts to the market's own uncertainty estimate, and rho for how it reacts to interest rates, usually the quietest voice in the room.",
+              "_key": "k23"
+            },
+            {
+              "_type": "keyTakeaways",
+              "points": [
+                "Rho measures price sensitivity to a 1 percentage point change in the risk-free rate; for this course's ATM example, roughly ₹11.31 for the call and −₹9.25 for the put.",
+                "Rho scales directly with time to expiry, which is why it barely matters for short-dated Indian weekly and monthly options but becomes genuinely significant for long-dated positions.",
+                "Second-order Greeks like vanna, charm, vomma, and speed capture cross-effects between two inputs at once; professional market makers track them, but delta, gamma, theta, and vega cover nearly everything a retail trader needs.",
+                "The five main Greeks together, delta, gamma, theta, vega, and rho, fully describe how an option's price reacts to every one of Black-Scholes' five observable-or-estimable inputs.",
+                "This closes Chapter 4: every number in this lesson's recap table traces directly back to the same single formula built across Chapter 3."
+              ],
+              "_key": "k24"
+            },
+            {
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice. All Greek values are illustrative, computed from the same hypothetical inputs as Lesson 3.3, not live market data.",
+              "_key": "k25"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

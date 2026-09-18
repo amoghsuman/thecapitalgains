@@ -1,0 +1,241 @@
+{
+  "courseSlug": "advanced-machine-learning-techniques-for-trading-ensembles-and-deep-learning",
+  "chapters": [
+    {
+      "title": "Chapter 4: Deep Learning Foundations for Market Sequences",
+      "lessons": [
+        {
+          "title": "Why Neural Networks for Trading: Where Deep Learning Beats (and Loses to) Trees",
+          "slug": "why-neural-networks-for-trading-where-deep-learning-beats-and-loses-to-trees",
+          "body": [
+            {
+              "_key": "amlc4l1b01",
+              "_type": "bigIdea",
+              "text": "Deep learning is not an upgrade to gradient boosting. It is a different tool built for a different kind of structure, sequences, not rows of hand-engineered features, and reaching for it on the cross-sectional factor data Chapters 2 and 3 used would likely make results worse, not better, given everything this course has established about overfitting on thin signal."
+            },
+            {
+              "_key": "amlc4l1b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc4l1b02s1", "_type": "span", "text": "The Empirical Baseline: Trees Usually Win on Tabular Data", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc4l1b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc4l1b03s1",
+                  "_type": "span",
+                  "text": "This is not a matter of opinion. Large benchmark studies, including Grinsztajn, Oyallon, and Varoquaux's 2022 comparison of tree ensembles against deep learning on tabular datasets, and Shwartz-Ziv and Armon's 2021 survey making the same case, consistently find gradient-boosted trees matching or beating neural networks on structured, tabular data, especially at the small-to-medium sample sizes and irregular feature relationships that describe most cross-sectional equity feature sets, including every one this course has built so far.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc4l1b04",
+              "_type": "table",
+              "caption": "Why tabular data tends to favor trees",
+              "headers": ["Property of Tabular / Cross-Sectional Data", "Why Trees Handle It Well", "Why Plain Neural Nets Struggle More"],
+              "rows": [
+                { "_key": "amlc4l1b04r1", "_type": "tableRow", "cells": ["Irregular feature scales and non-smooth relationships", "Trees split on thresholds; scale and smoothness barely matter", "Networks are sensitive to feature scaling and naturally bias toward smooth functions"] },
+                { "_key": "amlc4l1b04r2", "_type": "tableRow", "cells": ["Small-to-medium sample sizes", "Trees are relatively sample-efficient; useful splits emerge from a few hundred to a few thousand rows", "Networks typically need far more data to reliably learn useful representations"] },
+                { "_key": "amlc4l1b04r3", "_type": "tableRow", "cells": ["Many uninformative or weakly informative features", "Split selection largely ignores features that do not reduce impurity", "A network needs explicit regularization to avoid fitting noise in uninformative inputs"] }
+              ]
+            },
+            {
+              "_key": "amlc4l1b05",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc4l1b05s1", "_type": "span", "text": "Where Deep Learning Actually Has an Edge: Sequences and Shared Structure", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc4l1b06",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc4l1b06s1",
+                  "_type": "span",
+                  "text": "Deep learning's genuine edge shows up under specific conditions: when the input has real sequential structure that summary statistics discard, the actual shape of a 60-day price path, not just its trailing return and volatility; when there is enough data across enough related sequences, many stocks' histories sharing some underlying dynamics, for a network to learn a reusable representation rather than memorize individual paths; and when hand-engineering every useful feature in advance is genuinely impractical.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc4l1b07",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Be honest about where that last condition holds. In computer vision and language, hand-engineering useful features was never realistic, which is exactly why deep learning transformed those fields. In finance, most of what matters, momentum, valuation, quality, volatility, is already reasonably well captured by decades of factor research and the engineered features Chapters 2 and 3 used. Deep learning's edge in trading is real but considerably narrower and more contested than its reputation from vision or language would suggest."
+            },
+            {
+              "_key": "amlc4l1b08",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc4l1b08s1", "_type": "span", "text": "The Specific Case for Chapter 4: Sequence Models on Price Paths", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc4l1b09",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc4l1b09s1",
+                  "_type": "span",
+                  "text": "This chapter's LSTMs and 1D CNNs take the raw OHLCV sequence itself as input, occupying Role 2, primary signal generation, from Chapter 1's second lesson, rather than replacing the engineered-feature-plus-tree-ensemble pipeline from Chapters 2 and 3, which remains the more defensible default for most factor-combination problems. Treat what follows as a genuinely different, complementary tool being explored on its own terms, not a strict upgrade to anything already built.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc4l1b10",
+              "_type": "comparison",
+              "title": "Two Different Jobs for Two Different Model Families",
+              "columns": [
+                {
+                  "_key": "amlc4l1b10c1",
+                  "label": "Tabular Cross-Sectional Factors (Chapters 2-3)",
+                  "points": [
+                    "Input: a row per stock per date, with hand-engineered features like momentum and RSI",
+                    "Trees and their ensembles are the empirically stronger default here",
+                    "Remains the right first choice for most factor-combination problems in this course"
+                  ]
+                },
+                {
+                  "_key": "amlc4l1b10c2",
+                  "label": "Sequential Price Paths (Chapter 4)",
+                  "points": [
+                    "Input: the actual ordered sequence of prices and volumes, not a handful of summary statistics",
+                    "Recurrent and convolutional networks can use structure engineered features discard",
+                    "Worth exploring specifically when this lesson's diagnostic questions say yes"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "amlc4l1b11",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc4l1b11s1", "_type": "span", "text": "Why Non-Stationarity and Thin Signal Hit Deep Learning Even Harder", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc4l1b12",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc4l1b12s1",
+                  "_type": "span",
+                  "text": "A modest LSTM easily has more parameters than an entire gradient-boosted ensemble from Chapter 2. More parameters means more capacity to fit whatever is in the training data, signal and noise alike, exactly the overfitting mechanism Chapter 1's first lesson warned about, now with a larger, more flexible model doing the fitting. Non-stationarity does not get gentler because the model got fancier; if anything, a large network can memorize a stale, regime-specific pattern more thoroughly than a shallow tree ever could.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc4l1b13",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Every regularization habit this course has built, shallow architectures, aggressive early stopping, chronological validation splits, walk-forward testing, applies to deep learning with the volume turned up, not down. A neural network trained the way a Kaggle tutorial suggests, on shuffled data, for as many epochs as it takes to minimize training loss, will overfit market data faster and more completely than the single unconstrained decision tree from Chapter 2's first lesson."
+            },
+            {
+              "_key": "amlc4l1b14",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc4l1b14s1", "_type": "span", "text": "A Simple Diagnostic: When Should You Even Try Deep Learning?", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc4l1b15",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc4l1b15s1",
+                  "_type": "span",
+                  "text": "Before opening the next lesson's first LSTM, answer three questions honestly. Does the raw sequence's shape plausibly carry information your engineered features would discard? Do you have enough data across enough related sequences for a network to learn shared structure rather than memorize individual paths? And do you already have a walk-forward tested Chapter 2 to 3 ensemble baseline, so you know exactly what number a neural network needs to beat before its added complexity is worth carrying? If the honest answer to any of these is no, the right decision is to stay with trees, and that is a legitimate, well-supported decision, not a failure of ambition.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc4l1b16",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc4l1b16s1", "_type": "span", "text": "What's Next", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc4l1b17",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc4l1b17s1",
+                  "_type": "span",
+                  "text": "With expectations set honestly, the next lesson builds the first sequence model this course uses: an LSTM trained on raw price sequences from Indian indices, with the same discipline, chronological splits, aggressive regularization, walk-forward validation, this course has applied to every model before it.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc4l1b18",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Should You Even Reach for Deep Learning Here?",
+              "steps": [
+                "The raw sequence's shape or path plausibly carries information your engineered features (momentum, RSI, volatility) would discard",
+                "You have enough data across enough related sequences, many stocks over a long history, for a network to learn shared structure rather than memorize individual paths",
+                "You have already built and walk-forward tested a Chapters 2 to 3 ensemble baseline on the same problem, and know exactly what number a neural network needs to beat",
+                "You are prepared to apply stronger regularization (dropout, weight decay, early stopping) than a comparable tree ensemble would need, given deep learning's larger parameter count",
+                "You can still explain, even loosely, what the network appears to be responding to, rather than trusting a black box with no SHAP-equivalent scrutiny"
+              ]
+            },
+            {
+              "_key": "amlc4l1b19",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "A Colleague Wants to Skip Straight to LSTMs",
+              "scenario": "A colleague on your desk wants to abandon the Chapter 2 to 3 tree ensemble work entirely and build an LSTM from scratch for a new signal, arguing that deep learning is more advanced and should work better. The team has about three years of daily data for roughly 150 stocks and has not yet tried a gradient-boosted baseline on this specific problem.",
+              "prompt": "How would you respond, using this lesson's framework?",
+              "modelAnswer": "Push back, specifically rather than generally. More advanced is not the same as more appropriate for this data: the empirical evidence on tabular and moderate-sized financial datasets generally favors tree ensembles, and nothing in the setup described here, no mention of the raw sequence shape carrying information engineered features would miss, a relatively modest sample size across 150 stocks and three years, no existing baseline to beat, meets this lesson's diagnostic for reaching for deep learning. The more defensible path is building the Chapter 2 to 3 ensemble baseline first, both because it will likely perform competitively on its own and because, if an LSTM is attempted later, that baseline is exactly the number it needs to beat to justify the added complexity and overfitting risk."
+            },
+            {
+              "_key": "amlc4l1b20",
+              "_type": "keyTakeaways",
+              "points": [
+                "Large benchmark studies consistently find gradient-boosted trees matching or beating neural networks on tabular data, especially at the sample sizes and feature irregularity typical of cross-sectional equity data",
+                "Deep learning's genuine edge appears specifically with real sequential structure, enough shared data across related sequences, and inputs that are impractical to hand-engineer, conditions far more common in vision and language than in most of finance",
+                "This chapter's LSTMs and CNNs take raw price sequences as input, a Role 2 primary-signal-generation use case, and are a complementary tool, not a replacement for Chapters 2 and 3's ensemble work",
+                "Larger parameter counts give deep learning models more capacity to memorize noise, not less, so every regularization and validation habit from this course applies here with the volume turned up, not down",
+                "Before building a neural network, confirm the raw sequence plausibly carries information engineered features miss, that there is enough shared data to learn from, and that a walk-forward tested tree ensemble baseline already exists to beat",
+                "Staying with trees when the diagnostic says no is a legitimate, well-supported decision, not a failure of ambition"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

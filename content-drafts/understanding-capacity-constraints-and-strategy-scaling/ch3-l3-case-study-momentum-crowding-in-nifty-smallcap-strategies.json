@@ -1,0 +1,201 @@
+{
+  "courseSlug": "understanding-capacity-constraints-and-strategy-scaling",
+  "chapters": [
+    {
+      "title": "Chapter 3: Signal Decay and Crowding: When an Edge Gets Discovered",
+      "lessons": [
+        {
+          "title": "Case Study: Momentum Crowding in Nifty Smallcap Strategies",
+          "slug": "case-study-momentum-crowding-in-nifty-smallcap-strategies",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "c1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c1s1", "text": "This case study is composite and illustrative, built from a pattern common to small-cap momentum strategies rather than one specific named fund, and it brings the last two lessons together in a single strategy's life. Alpha decay and crowding are not separate stories here. They happen to the same portfolio, one after the other.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c2s1", "text": "The Strategy: Cross-Sectional Momentum on Nifty Smallcap 250", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c3",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c3s1", "text": "The strategy ranks Nifty Smallcap 250 constituents by trailing 6-month return, skipping the most recent month to avoid short-term reversal, a well-known refinement in momentum research. It goes long the top decile, equal-weighted, rebalancing monthly. It is about as replicable as a systematic strategy gets, needing nothing more than public price history that anyone can pull from NSE data or a tool like screener.in.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c4",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c4s1", "text": "Year 0 to 1: A Clean, Strong Signal", "marks": [] }
+              ]
+            },
+            {
+              "_type": "statGrid",
+              "_key": "c5",
+              "stats": [
+                { "label": "Sharpe ratio", "value": "1.9", "context": "Over the first year live" },
+                { "label": "Annualised alpha vs Nifty Smallcap 250", "value": "22%", "context": "Well above the benchmark" },
+                { "label": "Correlation to known factor strategies", "value": "Low, under 0.2", "context": "Looked like a proprietary edge at this stage" }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c6",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c6s1", "text": "Year 2: Alpha Decay Sets In", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c7",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c7s1", "text": "As more AIFs and prop desks build similar momentum screens off the same public data, the rolling Information Coefficient starts trending down. By the end of Year 2, annualized alpha has fallen from 22% to 11%, exactly consistent with a 2-year half-life, right in line with the decay framework from the previous lesson. Nothing about the signal's logic has broken. It is simply less alone than it used to be.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "chart",
+              "_key": "c8",
+              "chartType": "line",
+              "title": "Alpha Decay Over the First Two Years",
+              "xAxisLabel": "Time",
+              "yAxisLabel": "Annualised Alpha (%)",
+              "data": [
+                { "label": "Year 0", "value": 22 },
+                { "label": "Year 1", "value": 15.6 },
+                { "label": "Year 2", "value": 11 }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c9",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c9s1", "text": "Early Year 3: The Crowded Unwind", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c10",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c10s1", "text": "Gradual decay was not the end of the story. Early in Year 3, over just six trading days, the strategy's momentum basket fell 18 percent while the Nifty Smallcap 250 index itself fell only 3 percent over the same days, a gap far too large to explain by ordinary market moves alone.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "chart",
+              "_key": "c11",
+              "chartType": "bar",
+              "title": "Six-Day Return: Momentum Basket vs Benchmark",
+              "yAxisLabel": "Cumulative Return (%)",
+              "data": [
+                { "label": "Momentum Basket", "value": -18 },
+                { "label": "Nifty Smallcap 250 Index", "value": -3 }
+              ]
+            },
+            {
+              "_type": "timeline",
+              "_key": "c12",
+              "title": "How the Unwind Played Out",
+              "events": [
+                { "date": "Day 1", "title": "A Large Multi-Strategy Fund Cuts Risk", "description": "A sizeable multi-strategy AIF, holding a momentum sleeve as one of several factor books, needs to rapidly deleverage after losses in an unrelated derivatives position, and starts liquidating its smallcap momentum longs first, since they are among its most liquid holdings relative to the rest of its book." },
+                { "date": "Day 2 to 3", "title": "The Shared Basket Gets Hit", "description": "Because so many quant AIFs and prop desks build momentum portfolios off the same public price data with a similar top-decile methodology, the forced selling concentrates in a basket of stocks a large share of the momentum community also holds." },
+                { "date": "Day 4 to 5", "title": "Other Funds Are Forced to Follow", "description": "Other momentum books, now sitting on unexpected losses in names that had shown nothing but strong trailing returns, cut risk too, extending the slide well beyond what the initial seller's position size alone would explain." },
+                { "date": "Day 6 Onward", "title": "Partial Recovery", "description": "Once the initiating fund finishes deleveraging, selling pressure eases and the basket recovers part of the loss over the following weeks, though funds forced to exit near the bottom do not get that recovery back." }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c13",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c13s1", "text": "What This Teaches About Small-Cap Momentum Specifically", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "c14",
+              "headers": ["Vulnerability", "Why Small-Cap Momentum Is Exposed"],
+              "rows": [
+                { "cells": ["Capacity", "Small-cap constituents have thin ADV and often low free float, so even moderate AUM can represent a large share of daily volume"] },
+                { "cells": ["Replicability", "The strategy needs only public price history, so independent convergence across many desks is fast and easy"] },
+                { "cells": ["Crowding", "Overlapping methodology means many books hold the same top-decile basket, so one large forced seller can hit everyone else at once"] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "c15",
+              "type": "insight",
+              "text": "Small-cap momentum sits at the intersection of every vulnerability this course has covered so far: thin liquidity, a highly replicable signal, and heavy realistic overlap across independently run books. None of these three problems alone would necessarily be fatal. Together, they compound."
+            },
+            {
+              "_type": "block",
+              "_key": "c16",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c16s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "c17",
+              "variant": "numericInput",
+              "title": "Recover the Half-Life From the Decay Data",
+              "prompt": "The strategy's annualized alpha fell from 22% at launch to 11% two years later, following pure exponential decay. What is the implied half-life, in years?",
+              "correctValue": 2,
+              "tolerance": 0.1,
+              "unit": "years",
+              "explanation": "11 is exactly half of 22, so 2 years is exactly one half-life. Using the formula from the previous lesson, alpha(t) = alpha_0 x (1/2)^(t/H), setting t = 2 and alpha(2)/alpha_0 = 0.5 gives 2/H = 1, so H = 2 years."
+            },
+            {
+              "_type": "block",
+              "_key": "c18",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c18s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "c19",
+              "text": "A momentum strategy that is easy to build is, by the same logic, easy for everyone else to build too. Small-cap momentum's real weakness was never the ranking logic. It was how many other desks could run the exact same logic against the exact same thin liquidity."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "c20",
+              "points": [
+                "Gradual alpha decay and a sudden crowded unwind are not competing explanations, a strategy can experience both in sequence, as this one did.",
+                "A sharp, strategy-specific drawdown that is far larger than the benchmark's own move over the same window is a strong signature of crowding rather than ordinary market risk.",
+                "Small-cap momentum is unusually exposed because it combines thin underlying liquidity, high replicability from public data, and heavy realistic overlap across independently run books.",
+                "Recovering an implied half-life from just two data points, starting alpha and alpha after a known period, is a quick, practical way to sanity-check whether a strategy's decay looks ordinary or unusually fast."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

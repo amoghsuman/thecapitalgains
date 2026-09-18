@@ -1,0 +1,222 @@
+{
+  "courseSlug": "understanding-capacity-constraints-and-strategy-scaling",
+  "chapters": [
+    {
+      "title": "Chapter 2: Market Impact and Liquidity: Why Big Money Moves Prices",
+      "lessons": [
+        {
+          "title": "Measuring Liquidity: ADV, Turnover Ratio, and Free Float on NSE Stocks",
+          "slug": "measuring-liquidity-adv-turnover-ratio-and-free-float-on-nse-stocks",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "c1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c1s1", "text": "The square-root law needs one input above all others: ADV, average daily volume. That sounds simple until you try to pull a real number for a real NSE stock and realize ADV alone can be misleading. This lesson covers ADV properly, along with two numbers that give it context, turnover ratio and free float, and where to actually find all three for Indian stocks.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c2s1", "text": "Average Daily Volume: The Core Liquidity Input", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c3",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c3s1", "text": "ADV is usually quoted two ways: number of shares traded per day, or rupee value traded per day. For capacity work, always use rupee value. A stock trading 10 lakh shares a day at Rs 50 has the same rupee liquidity as a stock trading 50,000 shares a day at Rs 1,000, but comparing the two by share count alone makes them look wildly different. Most desks compute ADV as a rolling average, commonly 20 trading days or 90 trading days. A short window reacts fast to a recent liquidity spike, say from a stock entering the Nifty 50 or a large index rebalancing, but can also overstate ongoing liquidity if that spike was temporary. A longer window smooths out one-off events but can understate a genuine, lasting shift in how much a stock trades.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c4",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c4s1", "text": "Turnover Ratio: Liquidity Relative to Company Size", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c5",
+              "style": "normal",
+              "markDefs": [
+                { "_type": "glossaryTerm", "_key": "gt1", "definition": "ADV expressed as a percentage of market capitalization, showing how intensely a stock trades relative to its own size, rather than in absolute rupee terms." }
+              ],
+              "children": [
+                { "_type": "span", "_key": "c5s1", "text": "Rs 5 crore of ADV means very different things for very different companies. Dividing ADV by market capitalization gives the ", "marks": [] },
+                { "_type": "span", "_key": "c5s2", "text": "turnover ratio", "marks": ["gt1"] },
+                { "_type": "span", "_key": "c5s3", "text": ", which tells you roughly how many days it would take to trade the entire company at current volumes, a useful cross-check on raw ADV.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "c6",
+              "caption": "Illustrative comparison of three NSE stocks",
+              "headers": ["Stock", "Market Cap", "ADV (value)", "Turnover Ratio"],
+              "rows": [
+                { "cells": ["A: Large-cap index heavyweight", "Rs 5,00,000 Cr", "Rs 300 Cr", "0.06% daily"] },
+                { "cells": ["B: Liquid mid-cap", "Rs 15,000 Cr", "Rs 40 Cr", "0.27% daily"] },
+                { "cells": ["C: Closely held small-cap", "Rs 3,000 Cr", "Rs 2 Cr", "0.07% daily"] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c7",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c7s1", "text": "Notice Stock C: a turnover ratio close to the giant large-cap, despite being 150 times smaller. Market cap alone did not warn you this stock trades thinly. The next metric explains why.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c8",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c8s1", "text": "Free Float: The Shares That Can Actually Trade", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c9",
+              "style": "normal",
+              "markDefs": [
+                { "_type": "glossaryTerm", "_key": "gt2", "definition": "The percentage of a company's shares not held by promoters, the government, or other strategic and locked-in holders, and therefore actually available for public trading." }
+              ],
+              "children": [
+                { "_type": "span", "_key": "c9s1", "text": "Free float", "marks": ["gt2"] },
+                { "_type": "span", "_key": "c9s2", "text": " is the share of a company that promoters and other strategic holders are not sitting on, the portion actually available to trade in the market. NSE indices, including the Nifty 50, are themselves weighted by free-float market capitalization rather than total market capitalization, precisely because total market cap overstates how much of a company the market can realistically absorb. Under SEBI's listing disclosure norms, every listed company reports its exact shareholding pattern, including promoter holding, every quarter.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c10",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c10s1", "text": "Back to Stock C. It has a 70 percent promoter and locked-in holding, leaving a free float of only 30 percent. Recomputing its turnover ratio against free-float market cap instead of total market cap tells a very different story.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "statGrid",
+              "_key": "c11",
+              "stats": [
+                { "label": "Total market cap", "value": "Rs 3,000 Cr", "context": "The headline number" },
+                { "label": "Free float", "value": "30%", "context": "70% held by promoters and locked-in holders" },
+                { "label": "Turnover ratio vs free-float market cap", "value": "0.22%", "context": "Rs 2 Cr ADV against Rs 900 Cr free-float market cap, much closer to Stock B's 0.27% than the misleading 0.07% computed against total market cap" }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "c12",
+              "type": "insight",
+              "text": "Once adjusted for free float, Stock C's tradable liquidity looks far closer to a mid-cap than a headline-driven glance at its market cap and raw turnover ratio would suggest. Capacity work should always use free-float-adjusted numbers where promoter or strategic holding is high, since headline market cap can be quietly misleading about how much of a company you can actually trade."
+            },
+            {
+              "_type": "block",
+              "_key": "c13",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c13s1", "text": "Where to Actually Find These Numbers", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c14",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c14s1", "text": "NSE and BSE publish daily traded volume and value for every listed stock, going back years, on their own websites. Shareholding pattern, including promoter and free-float percentages, is disclosed quarterly by every company and published on the same exchange websites under corporate filings. screener.in pulls much of this together into ready-made ratios, which is faster for a quick check, though pulling the raw shareholding pattern yourself is safer once real capital is involved. Zerodha's Kite and Console show recent traded volume for a stock but not turnover ratio or free float directly, so a proper capacity check usually means combining more than one source.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "toolLink",
+              "_key": "c15",
+              "label": "NSE India",
+              "url": "https://www.nseindia.com",
+              "description": "Daily traded volume, value, and quarterly shareholding pattern disclosures for every NSE-listed stock."
+            },
+            {
+              "_type": "toolLink",
+              "_key": "c16",
+              "label": "screener.in",
+              "url": "https://www.screener.in",
+              "description": "Aggregated ratios, including promoter holding trends, for a quick first pass before pulling raw exchange data."
+            },
+            {
+              "_type": "block",
+              "_key": "c17",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c17s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "c18",
+              "variant": "fillInTheBlank",
+              "title": "Quick Recall",
+              "textWithBlank": "The percentage of a company's shares not held by promoters or other locked-in strategic holders, and therefore actually available for public trading, is called ___.",
+              "correctAnswers": ["free float", "free-float"],
+              "explanation": "Free float is exactly this: the portion of a company genuinely available to the market, which is why Nifty indices weight constituents by free-float market cap rather than total market cap."
+            },
+            {
+              "_type": "block",
+              "_key": "c19",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c19s1", "text": "Putting the Three Metrics Together", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c20",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c20s1", "text": "None of these three metrics tells the full story alone. ADV tells you today's trading intensity in rupee terms. Turnover ratio normalizes that against the company's overall size. Free float tells you how much of the company could ever realistically trade in the first place. A proper capacity estimate, the subject of Chapter 4, uses free-float-adjusted ADV as its liquidity denominator, not headline market cap or raw ADV taken at face value.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c21",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c21s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "c22",
+              "text": "ADV tells you how much a stock trades today. Turnover ratio tells you if that is a lot or a little for a company of its size. Free float tells you how much of the company could ever trade at all. Skip any one of the three and your liquidity picture is incomplete."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "c23",
+              "points": [
+                "ADV should be measured in rupee value, not share count, and the choice of lookback window trades off responsiveness to recent shifts against stability.",
+                "Turnover ratio, ADV divided by market cap, normalizes liquidity against company size and can reveal that a company is far more thinly traded than its market cap alone suggests.",
+                "Free float, the portion of shares not held by promoters or other locked-in holders, is why Nifty indices are free-float weighted, and why headline market cap can overstate real tradability.",
+                "A proper capacity estimate uses free-float-adjusted ADV as its liquidity input, combining data typically pulled from NSE and BSE disclosures rather than any single source alone."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

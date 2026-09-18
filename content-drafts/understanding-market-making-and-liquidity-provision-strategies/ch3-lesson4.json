@@ -1,0 +1,240 @@
+{
+  "courseSlug": "understanding-market-making-and-liquidity-provision-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 3: Inventory Risk and Quote Skewing",
+      "lessons": [
+        {
+          "title": "Case Study: A Market Maker's Inventory Through a Volatile Bank Nifty Expiry Day",
+          "slug": "case-study-a-market-makers-inventory-through-a-volatile-bank-nifty-expiry-day",
+          "body": [
+            {
+              "_key": "mmc3l4b01",
+              "_type": "bigIdea",
+              "text": "On a quiet day, a market maker's P&L is almost entirely spread capture from balanced two-way flow. On a day like this one, the entire chapter's toolkit, level risk, duration risk, skewing, and the decision to eventually pay up and unwind, gets used in a single session."
+            },
+            {
+              "_key": "mmc3l4b02",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This case study is a constructed, illustrative narrative built to walk through the concepts in this chapter, not a record of an actual trading day. Exact weekly expiry day assignments for Bank Nifty and Nifty contracts have been revised multiple times through SEBI and NSE circulars in recent years, so no specific day of the week or expiry cadence is claimed here; treat this simply as \"an expiry session,\" and check current NSE contract specifications for what actually applies today. Every price, inventory figure, and rupee amount below is illustrative."
+            },
+            {
+              "_key": "mmc3l4b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc3l4b03s1",
+                  "_type": "span",
+                  "text": "09:15 to 11:00: An Ordinary Morning",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc3l4b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc3l4b04s1",
+                  "_type": "span",
+                  "text": "The market maker opens flat, quoting a near-the-money Bank Nifty put on both sides at a tight, cost-constrained spread. For the first hour and forty-five minutes, order flow is genuinely two-way: some traders buy the put, others sell it back, and the market maker's inventory oscillates in a narrow band around zero. This is the business working exactly as intended, collecting small spread on a stream of balanced trades without ever building any meaningful directional exposure.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc3l4b05",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc3l4b05s1",
+                  "_type": "span",
+                  "text": "11:30: A Risk-Off Headline Breaks the Balance",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc3l4b06",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc3l4b06s1",
+                  "_type": "span",
+                  "text": "An unexpected risk-off macro headline hits the tape. Bank Nifty starts falling, and hedgers rush to buy protective puts, hitting the market maker's ask again and again with almost no offsetting sellers. This is textbook one-sided order flow from Chapter 3's first lesson: each individual fill looks routine, but in aggregate the market maker is rapidly becoming short a growing number of puts, exactly the kind of unintended directional exposure this chapter has spent three lessons building tools to manage.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc3l4b07",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Illustrative: Bank Nifty Level vs Market Maker's Net Put Inventory Through the Session",
+              "xAxisLabel": "Time",
+              "yAxisLabel": "Indexed level / Inventory (units, negative = short)",
+              "data": [
+                { "_key": "mmc3l4b07d1", "label": "09:15" },
+                { "_key": "mmc3l4b07d2", "label": "10:00" },
+                { "_key": "mmc3l4b07d3", "label": "11:00" },
+                { "_key": "mmc3l4b07d4", "label": "11:30" },
+                { "_key": "mmc3l4b07d5", "label": "12:00" },
+                { "_key": "mmc3l4b07d6", "label": "12:30" },
+                { "_key": "mmc3l4b07d7", "label": "13:00" },
+                { "_key": "mmc3l4b07d8", "label": "13:30" },
+                { "_key": "mmc3l4b07d9", "label": "14:00" },
+                { "_key": "mmc3l4b07d10", "label": "14:30" },
+                { "_key": "mmc3l4b07d11", "label": "14:45" },
+                { "_key": "mmc3l4b07d12", "label": "15:00" },
+                { "_key": "mmc3l4b07d13", "label": "15:30" }
+              ],
+              "series": [
+                {
+                  "_key": "mmc3l4b07s1",
+                  "label": "Bank Nifty (indexed to 100)",
+                  "values": [100, 100.2, 100.1, 98.5, 97.2, 96.8, 97.5, 98.0, 97.6, 96.9, 97.1, 97.4, 97.6]
+                },
+                {
+                  "_key": "mmc3l4b07s2",
+                  "label": "MM Net Put Inventory (units)",
+                  "values": [0, -5, -2, -40, -90, -120, -100, -70, -85, -95, -40, -20, -15]
+                }
+              ]
+            },
+            {
+              "_key": "mmc3l4b08",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc3l4b08s1",
+                  "_type": "span",
+                  "text": "11:30 to 12:30: Level Risk Builds Faster Than Skewing Can Slow It",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc3l4b09",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc3l4b09s1",
+                  "_type": "span",
+                  "text": "The desk starts skewing the moment the imbalance becomes visible. Being short pushes the reservation price above the mid, exactly as the previous lesson's formula describes, so both the bid and the ask move up: the higher ask makes it costlier for hedgers to buy still more puts from the market maker, while the higher bid makes it more attractive for anyone holding puts to sell them back. The skew slows the bleeding, but it does not stop it outright, because the underlying demand for protection is still strong enough that the ask keeps getting hit even at the adjusted price. Inventory keeps growing, from -40 at 11:30 to a peak of -120 at 12:30, even with skewing actively working the whole time.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc3l4b10",
+              "_type": "table",
+              "caption": "Key moments and the decision made at each one",
+              "headers": ["Time", "What Happened", "Inventory After", "Response"],
+              "rows": [
+                { "_key": "mmc3l4b10r1", "_type": "tableRow", "cells": ["11:30", "Risk-off headline triggers one-sided put buying", "-40", "Begin skewing bid and ask upward"] },
+                { "_key": "mmc3l4b10r2", "_type": "tableRow", "cells": ["12:30", "Demand for puts still outpacing skew's effect", "-120", "Skew pushed further; size reduced on the ask"] },
+                { "_key": "mmc3l4b10r3", "_type": "tableRow", "cells": ["13:00 to 13:30", "Bank Nifty stabilises; some long-put holders take profit and sell back", "-70", "Continue skewing; allow natural flow to reduce the short"] },
+                { "_key": "mmc3l4b10r4", "_type": "tableRow", "cells": ["14:00 to 14:30", "A second smaller wave of put buying resumes", "-95", "Skew maintained; monitor time remaining to expiry"] },
+                { "_key": "mmc3l4b10r5", "_type": "tableRow", "cells": ["14:45", "45 minutes to expiry; duration risk judged too high to leave to chance", "-40", "Partial aggressive unwind: buy back 55 units, paying the spread"] },
+                { "_key": "mmc3l4b10r6", "_type": "tableRow", "cells": ["15:00 to 15:30", "Remaining position allowed to run down passively into close", "-15", "Hold small residual short through expiry"] }
+              ]
+            },
+            {
+              "_key": "mmc3l4b11",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc3l4b11s1",
+                  "_type": "span",
+                  "text": "14:45: When Duration Risk Overtakes the Cost of Skewing",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc3l4b12",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc3l4b12s1",
+                  "_type": "span",
+                  "text": "By 14:45, still short 95 units with only 45 minutes left before expiry, the desk faces the exact trade-off from the previous lesson. Continuing to skew passively costs nothing extra directly, but the shrinking time to expiry raises duration risk sharply: gamma is high this close to expiry, and being caught with a large short position into the final settlement window is judged too dangerous to leave entirely to natural order flow. The desk chooses a partial aggressive unwind, buying back 55 units by crossing the spread, paying for certainty exactly as Chapter 3's third lesson described, and leaving a smaller residual short of 40 units to be worked passively into the close.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc3l4b13",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Notice that the decision to unwind aggressively was not made because skewing had failed. It worked well enough to cut the position from -120 to -95 over two hours. It was made because the remaining time to expiry made the cost of waiting for skewing to finish the job larger than the cost of paying the spread to finish it immediately, precisely the calculation the previous lesson set up."
+            },
+            {
+              "_key": "mmc3l4b14",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "mmc3l4b14st1", "label": "Peak Short Inventory", "value": "-120 units", "context": "Reached at 12:30, near the height of the risk-off move" },
+                { "_key": "mmc3l4b14st2", "label": "Realised Spread Captured", "value": "+₹18,500", "context": "From ordinary two-way flow across the full session" },
+                { "_key": "mmc3l4b14st3", "label": "Aggressive Unwind Cost", "value": "-₹9,200", "context": "Cost of buying back 55 units by crossing the spread at 14:45" },
+                { "_key": "mmc3l4b14st4", "label": "Net Day P&L", "value": "+₹9,300", "context": "Spread income minus the cost of managing the day's inventory risk" }
+              ]
+            },
+            {
+              "_key": "mmc3l4b15",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Reviewing the Desk's 14:45 Decision",
+              "scenario": "A junior risk analyst reviewing the day's trading log argues that the desk should have kept skewing passively all the way to expiry instead of paying to unwind 55 units at 14:45, since skewing had already reduced the position from -120 to -95 without any cost.",
+              "prompt": "Using this chapter's framework, explain what the analyst's argument is missing.",
+              "modelAnswer": "The analyst is looking only at level risk, the size of the position, and correctly notes it had been falling. What the argument misses is duration risk: with only 45 minutes left before expiry and gamma elevated, the danger was not just how large the position was, but how little time remained to fix it if flow turned unfavourable again or simply stopped arriving on the desired side. Passive skewing had been working, but working is not the same as working fast enough, and the desk judged that the cost of a further adverse move in the final 45 minutes, if skewing alone did not finish the job in time, was larger than the certain, known cost of the aggressive unwind."
+            },
+            {
+              "_key": "mmc3l4b16",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Reading the Day's P&L",
+              "question": "The desk's net P&L for the day was +₹9,300, made up of +₹18,500 in realised spread and -₹9,200 in aggressive unwind cost. What does this breakdown say about where the day's profit actually came from?",
+              "options": [
+                "The unwind was the main source of profit",
+                "Almost the entire net profit came from ordinary spread capture during two-way flow; the unwind was a cost of managing risk, not a profit centre",
+                "The desk lost money overall once all costs are accounted for",
+                "Spread capture and unwind cost contributed roughly equally to the final profit"
+              ],
+              "correctIndex": 1,
+              "explanation": "The realised spread of +₹18,500 is where essentially all of the day's profit originated, consistent with Chapter 1's description of a market maker's core business. The -₹9,200 unwind cost is not a separate profit source at all; it is the price paid to manage the inventory risk that built up during the one-sided flow, and it reduced, rather than contributed to, the day's final P&L."
+            },
+            {
+              "_key": "mmc3l4b17",
+              "_type": "keyTakeaways",
+              "points": [
+                "In balanced, two-way order flow, a market maker's P&L is close to pure spread capture, as covered in Chapter 1",
+                "A single news-driven wave of one-sided flow can build significant short or long inventory in under an hour, exactly the level risk problem from this chapter's first lesson",
+                "Skewing the reservation price slows an inventory buildup and can reverse it, but it works on probability, not on a deadline",
+                "As expiry approaches, duration risk rises even if level risk is stable or falling, which can flip the right decision from patient skewing to a paid, aggressive unwind",
+                "A day's net P&L is best read as spread income earned in calm periods, minus the cost of actively managing the risk that shows up in volatile ones, not as separate, unrelated line items",
+                "This is the last lesson built purely around a single market maker's own book; the next chapter turns to a related but distinct risk, adverse selection from informed order flow"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

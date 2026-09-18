@@ -1,0 +1,233 @@
+{
+  "courseSlug": "understanding-pairs-trading-concepts-and-cointegration",
+  "chapters": [
+    {
+      "title": "Chapter 4: Screening, Trading, and Managing a Pair",
+      "lessons": [
+        {
+          "title": "Position Sizing and Hedge Ratios in Practice",
+          "slug": "position-sizing-and-hedge-ratios-in-practice",
+          "body": [
+            {
+              "_key": "p15-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p15-001s1", "_type": "span", "marks": [], "text": "Chapter 1 sized HDFC Bank and ICICI Bank using the naive price-ratio hedge ratio, 1.375, because the regression-based one had not been built yet. Chapter 3 confirmed the pair is cointegrated using a regression beta of 1.28. This lesson resizes the trade properly, using the validated hedge ratio, and works through the practical realities, capital allocation across more than one pair, lot sizes, and margin, that turn a calculated ratio into an actual order you place with your broker." }
+              ]
+            },
+            {
+              "_key": "p15-002",
+              "_type": "bigIdea",
+              "text": "Real position sizing has three layers: the correct hedge ratio for the individual pair, sensible capital allocation across your whole shortlist of validated pairs, and the lot-size and margin constraints that force your calculated position into what is actually tradeable. Skipping any layer leaves you with a position that looks right on paper and behaves differently in your account."
+            },
+            {
+              "_key": "p15-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p15-003s1", "_type": "span", "marks": [], "text": "Step 1: Beta-Neutral, Not Quite Rupee-Neutral" }
+              ]
+            },
+            {
+              "_key": "p15-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "p15-004m1", "_type": "glossaryTerm", "definition": "A position sized so the short leg's quantity equals the regression hedge ratio (beta) times the long leg's quantity, replicating the actual spread rather than simply matching rupee value on each side." }
+              ],
+              "children": [
+                { "_key": "p15-004s1", "_type": "span", "marks": [], "text": "With ₹5 lakh deployed long HDFC Bank at ₹1,650, that is 303 shares, the same starting point as Chapter 1. The difference now is the short leg: using the validated regression beta of 1.28, not the naive price ratio, gives 1.28 times 303, or about 388 shares of ICICI Bank to short. This is a " },
+                { "_key": "p15-004s2", "_type": "span", "marks": ["p15-004m1"], "text": "beta-neutral" },
+                { "_key": "p15-004s3", "_type": "span", "marks": [], "text": " position, sized to actually replicate the spread Chapter 3 tested, not merely to match rupee value on both sides. Checking the rupee values: 388 shares of ICICI Bank at ₹1,200 comes to ₹4,65,600, noticeably less than the ₹5,00,000 long leg. The two legs are no longer perfectly rupee-matched, and that is expected, not a mistake." }
+              ]
+            },
+            {
+              "_key": "p15-005",
+              "_type": "table",
+              "caption": "Beta-neutral sizing using the validated hedge ratio (illustrative)",
+              "headers": ["Leg", "Shares", "Rupee value"],
+              "rows": [
+                { "_key": "p15-005r1", "cells": ["Long: HDFC Bank", "303", "≈ ₹5,00,000"] },
+                { "_key": "p15-005r2", "cells": ["Short: ICICI Bank (β = 1.28)", "388", "≈ ₹4,65,600"] }
+              ]
+            },
+            {
+              "_key": "p15-006",
+              "_type": "callout",
+              "type": "insight",
+              "text": "The ₹34,400 gap between the two legs is not an error, it is a direct consequence of today's spread value itself, about ₹114 times the 303 shares held long. A beta-neutral position is sized to track the spread accurately, which is what the z-score and the cointegration test are actually built on, even though it leaves a small, deliberate rupee imbalance rather than the exact rupee match Chapter 1's naive approach produced."
+            },
+            {
+              "_key": "p15-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p15-007s1", "_type": "span", "marks": [], "text": "Step 2: Capital Allocation Across a Shortlist" }
+              ]
+            },
+            {
+              "_key": "p15-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p15-008s1", "_type": "span", "marks": [], "text": "Lesson 1's screen validated more than one candidate: HDFC Bank / ICICI Bank, Axis Bank / Kotak Mahindra Bank, and the more borderline State Bank of India / Bank of Baroda. Putting all available capital into a single pair concentrates risk on one relationship holding up. A common practical rule is to cap any single pair at a fixed share of total pairs-trading capital, commonly somewhere around 20 to 25 percent, and to weight stronger cointegration results, like HDFC Bank / ICICI Bank's comfortable margin, more heavily than borderline ones, like State Bank of India / Bank of Baroda's narrow pass." }
+              ]
+            },
+            {
+              "_key": "p15-009",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "p15-009s1", "label": "HDFC Bank / ICICI Bank", "value": "40% of capital", "context": "Strongest cointegration result from the Lesson 1 screen, p = 0.021" },
+                { "_key": "p15-009s2", "label": "Axis Bank / Kotak Mahindra Bank", "value": "35% of capital", "context": "Solid result, p = 0.038" },
+                { "_key": "p15-009s3", "label": "SBI / Bank of Baroda", "value": "25% of capital", "context": "Borderline result, p = 0.048, smaller allocation reflects weaker evidence" },
+                { "_key": "p15-009s4", "label": "Any single pair, common rule of thumb", "value": "≤ 20–25% typical cap", "context": "This illustrative split leans on the strongest result more than a strict cap would allow" }
+              ]
+            },
+            {
+              "_key": "p15-010",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p15-010s1", "_type": "span", "marks": [], "text": "A Brief Note on Volatility-Weighted Sizing" }
+              ]
+            },
+            {
+              "_key": "p15-011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p15-011s1", "_type": "span", "marks": [], "text": "Beta-neutral sizing matches the historical price co-movement between two stocks, but it does not necessarily equalize how much day-to-day risk each leg contributes if one stock has become meaningfully more volatile than the other recently. Some desks refine this further with volatility-weighted or risk-parity sizing, adjusting quantities so each leg contributes roughly equal risk, not just the beta-implied quantity. This refinement is a genuine improvement in more advanced setups, but it adds real complexity and sits beyond what this course covers. Beta-neutral sizing, done correctly as above, is a solid, standard starting point." }
+              ]
+            },
+            {
+              "_key": "p15-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p15-012s1", "_type": "span", "marks": [], "text": "Step 3: Fitting the Ratio Into Lot Sizes" }
+              ]
+            },
+            {
+              "_key": "p15-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p15-013s1", "_type": "span", "marks": [], "text": "Recall from Chapter 1 that ICICI Bank's futures lot size is 700 shares (illustrative). The beta-neutral target of 388 shares is smaller than a single lot, so one full lot, 700 shares, substantially overshoots the calculated ratio on its own. To keep the position genuinely beta-neutral around a full lot, scale the long leg up to match: 700 divided by 1.28 is about 547 shares of HDFC Bank, which at ₹1,650 comes to roughly ₹9,02,550. The trade only becomes cleanly executable, at this particular hedge ratio, once enough capital is committed to make one full ICICI Bank lot the correct beta-neutral counterpart." }
+              ]
+            },
+            {
+              "_key": "p15-014",
+              "_type": "table",
+              "caption": "Scaling up to fit one full ICICI Bank futures lot (illustrative)",
+              "headers": ["Leg", "Quantity", "Rupee value"],
+              "rows": [
+                { "_key": "p15-014r1", "cells": ["Long: HDFC Bank (cash)", "547 shares", "≈ ₹9,02,550"] },
+                { "_key": "p15-014r2", "cells": ["Short: ICICI Bank (futures)", "1 lot (700 shares)", "≈ ₹8,40,000"] }
+              ]
+            },
+            {
+              "_key": "p15-015",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "p15-015s1", "label": "Illustrative SPAN + exposure margin", "value": "≈ 20% of notional", "context": "On the ₹8,40,000 short futures leg, roughly ₹1,68,000, charged by the exchange and adjusted daily" },
+                { "_key": "p15-015s2", "label": "Total capital committed", "value": "≈ ₹9.03 lakh long + margin", "context": "Cash purchase for the long leg, plus futures margin for the short leg" },
+                { "_key": "p15-015s3", "label": "Why capital scaled up from ₹5 lakh", "value": "Lot size rounding", "context": "700-share lots forced the position larger than the original target to stay beta-neutral" }
+              ]
+            },
+            {
+              "_key": "p15-016",
+              "_type": "callout",
+              "type": "warning",
+              "text": "The hedge ratio used here, 1.28, was estimated over a specific historical window. As new price data comes in, a recalculated beta will drift, sometimes only slightly, sometimes meaningfully if the underlying relationship is starting to shift. A position sized once and never revisited slowly stops being beta-neutral. Lesson 3 covers how to recognize when that drift has become a genuine structural break rather than routine noise."
+            },
+            {
+              "_key": "p15-017",
+              "_type": "comparison",
+              "title": "Rupee-neutral vs beta-neutral sizing",
+              "columns": [
+                {
+                  "_key": "p15-017c1",
+                  "label": "Rupee-neutral (naive price ratio)",
+                  "points": [
+                    "Both legs carry equal rupee value on entry day",
+                    "Simple to calculate from today's prices alone",
+                    "Does not reflect the actual historical relationship between the stocks",
+                    "Chapter 1's starting point, before a real hedge ratio existed"
+                  ]
+                },
+                {
+                  "_key": "p15-017c2",
+                  "label": "Beta-neutral (regression hedge ratio)",
+                  "points": [
+                    "Sized to replicate the actual spread being traded",
+                    "Rupee values on each leg are close but rarely exactly equal",
+                    "Directly consistent with the z-score and cointegration test",
+                    "The standard for a pair that has cleared Chapter 3's testing"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "p15-018",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Calculate a beta-neutral position",
+              "prompt": "You hold 400 shares of a Stock A long. The validated regression beta (Stock A regressed on Stock B) is 0.85. How many shares of Stock B should you short to be beta-neutral?",
+              "correctValue": 340,
+              "tolerance": 5,
+              "unit": "shares",
+              "explanation": "Beta-neutral shares to short = β × shares held long = 0.85 × 400 = 340 shares of Stock B."
+            },
+            {
+              "_key": "p15-019",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Allocating across a shortlist",
+              "scenario": "You have ₹20 lakh of pairs-trading capital and three validated pairs from a screen: Pair 1 with p = 0.008, Pair 2 with p = 0.041, and Pair 3 with p = 0.049.",
+              "prompt": "How would you think about splitting capital across these three, and why shouldn't they simply get an equal one-third each?",
+              "modelAnswer": "An equal split ignores the fact that the three pairs have meaningfully different statistical strength. Pair 1's p-value of 0.008 is comfortably inside even the 1% significance level, much stronger evidence of genuine cointegration than Pair 3's 0.049, which barely clears the conventional 5% bar. A more sensible approach weights allocation toward the stronger evidence, for example a larger share to Pair 1, a moderate share to Pair 2, and the smallest share to Pair 3, while still keeping any single pair below a sensible concentration cap so that one relationship breaking down does not dominate the whole book."
+            },
+            {
+              "_key": "p15-020",
+              "_type": "flashcardSet",
+              "title": "Position Sizing in Practice: Core Terms",
+              "cards": [
+                { "_key": "p15-020f1", "term": "Beta-neutral position", "definition": "A position sized using the regression hedge ratio (beta) so the short leg's quantity equals beta times the long leg's quantity, replicating the actual spread." },
+                { "_key": "p15-020f2", "term": "Concentration cap", "definition": "A rule limiting how much of total trading capital any single pair can receive, to avoid one relationship's breakdown dominating overall risk." },
+                { "_key": "p15-020f3", "term": "Volatility-weighted sizing", "definition": "A refinement to beta-neutral sizing that adjusts position quantities so each leg contributes roughly equal day-to-day risk, not just equal beta exposure." },
+                { "_key": "p15-020f4", "term": "Hedge ratio drift", "definition": "The gradual change in an estimated regression beta as new price data arrives, which can leave a previously beta-neutral position no longer accurately hedged over time." }
+              ]
+            },
+            {
+              "_key": "p15-021",
+              "_type": "keyTakeaways",
+              "points": [
+                "Once a pair is validated, size it using the regression-based hedge ratio, not the naive price ratio, which produces a beta-neutral rather than an exactly rupee-neutral position.",
+                "A small rupee imbalance between the two legs is expected under beta-neutral sizing and reflects today's actual spread value, not a sizing mistake.",
+                "Capital should be allocated across a shortlist of validated pairs, not concentrated in one, and can reasonably be weighted toward pairs with stronger cointegration evidence.",
+                "Volatility-weighted or risk-parity sizing is a genuine refinement beyond beta-neutral sizing, but it is an advanced technique beyond this course's scope.",
+                "Lot size constraints on futures contracts often force the whole position to scale up in order to keep a full lot beta-neutral, increasing both capital and margin requirements.",
+                "A hedge ratio drifts as new data arrives. A position sized once and never revisited will gradually stop being beta-neutral, a concern Lesson 3 addresses directly."
+              ]
+            },
+            {
+              "_key": "p15-022",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice or a recommendation to buy, sell, or short any security named here. All prices, hedge ratios, lot sizes, margin figures, and capital allocations are illustrative and do not represent actual current market data. Trading futures and short positions carries real risk of loss beyond the initial margin deployed. Consult a SEBI-registered investment adviser or research analyst, and verify current exchange specifications, before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

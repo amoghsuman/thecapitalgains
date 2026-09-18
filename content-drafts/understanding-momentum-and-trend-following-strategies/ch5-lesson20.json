@@ -1,0 +1,280 @@
+{
+  "courseSlug": "understanding-momentum-and-trend-following-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 5: Risk Management for Trend and Momentum Strategies",
+      "lessons": [
+        {
+          "title": "Case Study: Managing Risk Through a Momentum Crash",
+          "slug": "case-study-managing-risk-through-a-momentum-crash",
+          "body": [
+            {
+              "_key": "m20-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m20-001s1", "_type": "span", "marks": [], "text": "Chapter 1 introduced the March 2020 momentum crash mechanism: a long-short portfolio, long the pre-crash winners and short the pre-crash losers, getting hurt badly when the market's most beaten-down names rebounded faster than its steadier leaders during the sharp Apr-Jun 2020 recovery. This case study takes that exact scenario and runs it through the full risk toolkit this chapter just built: inverse-volatility sizing from Lesson 2 and ATR-based trailing stops from Lesson 3, to see how much of the damage they would have actually prevented." }
+              ]
+            },
+            {
+              "_key": "m20-002",
+              "_type": "bigIdea",
+              "text": "Risk management does not prevent a momentum crash from happening. It changes how much of it you actually absorb. The same portfolio, sized and exited two different ways, can produce dramatically different outcomes from the exact same underlying price moves."
+            },
+            {
+              "_key": "m20-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m20-003s1", "_type": "span", "marks": [], "text": "The Setup: A Long-Short Book Going Into February 2020" }
+              ]
+            },
+            {
+              "_key": "m20-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m20-004s1", "_type": "span", "marks": [], "text": "A simple illustrative 4-position cross-sectional momentum book: long two pre-crash winners, defensive, lower-volatility names, and short two pre-crash losers, high-beta cyclical names, entered just before the February 2020 peak." }
+              ]
+            },
+            {
+              "_key": "m20-005",
+              "_type": "table",
+              "caption": "The illustrative book and each position's volatility",
+              "headers": ["Position", "Side", "Volatility", "Apr-Jun 2020 price return"],
+              "rows": [
+                { "_key": "m20-005r1", "_type": "tableRow", "cells": ["IT Co.", "Long", "20%", "+12%"] },
+                { "_key": "m20-005r2", "_type": "tableRow", "cells": ["Pharma Co.", "Long", "18%", "+18%"] },
+                { "_key": "m20-005r3", "_type": "tableRow", "cells": ["PSU Bank Co.", "Short", "42%", "+50% (price rose sharply)"] },
+                { "_key": "m20-005r4", "_type": "tableRow", "cells": ["Auto Co.", "Short", "38%", "+40% (price rose sharply)"] }
+              ]
+            },
+            {
+              "_key": "m20-006",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Notice the two short positions, PSU Bank Co. and Auto Co., are both the highest-volatility names in the book and the ones that moved most sharply against the short during the recovery. This is not a coincidence. The high-beta cyclicals that fell hardest in the crash are typically the same names that rebound fastest and most violently, exactly the Daniel-Moskowitz mechanism from Chapter 1."
+            },
+            {
+              "_key": "m20-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m20-007s1", "_type": "span", "marks": [], "text": "Scenario A: No Risk Management" }
+              ]
+            },
+            {
+              "_key": "m20-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m20-008s1", "_type": "span", "marks": [], "text": "Equal weight, 25% of capital in each of the 4 positions, no stops of any kind." }
+              ]
+            },
+            {
+              "_key": "m20-009",
+              "_type": "table",
+              "caption": "Scenario A: equal-weighted, unmanaged P&L contribution",
+              "headers": ["Position", "Weight", "Return", "P&L contribution"],
+              "rows": [
+                { "_key": "m20-009r1", "_type": "tableRow", "cells": ["IT Co. (long)", "25%", "+12%", "+3.00%"] },
+                { "_key": "m20-009r2", "_type": "tableRow", "cells": ["Pharma Co. (long)", "25%", "+18%", "+4.50%"] },
+                { "_key": "m20-009r3", "_type": "tableRow", "cells": ["PSU Bank Co. (short)", "25%", "-50%", "-12.50%"] },
+                { "_key": "m20-009r4", "_type": "tableRow", "cells": ["Auto Co. (short)", "25%", "-40%", "-10.00%"] }
+              ]
+            },
+            {
+              "_key": "m20-010",
+              "_type": "keyFact",
+              "label": "Scenario A total return",
+              "value": "-15.0%",
+              "context": "3.00 + 4.50 - 12.50 - 10.00. Both long positions gained, and the book still lost 15% overall, because the equal-weighted short legs, sized without any regard for their much higher volatility, dominated the result"
+            },
+            {
+              "_key": "m20-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m20-011s1", "_type": "span", "marks": [], "text": "Scenario B: Inverse-Volatility Sizing" }
+              ]
+            },
+            {
+              "_key": "m20-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m20-012s1", "_type": "span", "marks": [], "text": "Apply Lesson 2's inverse-volatility weighting to the same 4 positions, before adding any stop." }
+              ]
+            },
+            {
+              "_key": "m20-013",
+              "_type": "table",
+              "caption": "Scenario B: inverse-volatility weighted P&L contribution",
+              "headers": ["Position", "Inverse-vol weight", "Return", "P&L contribution"],
+              "rows": [
+                { "_key": "m20-013r1", "_type": "tableRow", "cells": ["IT Co. (long)", "32.1%", "+12%", "+3.85%"] },
+                { "_key": "m20-013r2", "_type": "tableRow", "cells": ["Pharma Co. (long)", "35.7%", "+18%", "+6.43%"] },
+                { "_key": "m20-013r3", "_type": "tableRow", "cells": ["PSU Bank Co. (short)", "15.3%", "-50%", "-7.65%"] },
+                { "_key": "m20-013r4", "_type": "tableRow", "cells": ["Auto Co. (short)", "16.9%", "-40%", "-6.76%"] }
+              ]
+            },
+            {
+              "_key": "m20-014",
+              "_type": "keyFact",
+              "label": "Scenario B total return, sizing only",
+              "value": "-4.1%",
+              "context": "3.85 + 6.43 - 7.65 - 6.76. Sizing alone, with no stop yet added, cuts the loss from -15.0% to roughly a quarter of that, purely by giving the two highest-volatility, worst-performing short positions smaller allocations from the start"
+            },
+            {
+              "_key": "m20-015",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m20-015s1", "_type": "span", "marks": [], "text": "Scenario C: Sizing Plus ATR Trailing Stops" }
+              ]
+            },
+            {
+              "_key": "m20-016",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m20-016s1", "_type": "span", "marks": [], "text": "Now add Lesson 3's ATR-based trailing stop to the two short positions. Because both PSU Bank Co. and Auto Co. move sharply and immediately against the short, the stop does not catch the entire move, real stops react with some lag, but it does cut off a real portion of it before the recovery is complete." }
+              ]
+            },
+            {
+              "_key": "m20-017",
+              "_type": "table",
+              "caption": "Scenario C: inverse-volatility weighted, with ATR stops capping the short losses",
+              "headers": ["Position", "Weight", "Return (capped by stop where applicable)", "P&L contribution"],
+              "rows": [
+                { "_key": "m20-017r1", "_type": "tableRow", "cells": ["IT Co. (long)", "32.1%", "+12%", "+3.85%"] },
+                { "_key": "m20-017r2", "_type": "tableRow", "cells": ["Pharma Co. (long)", "35.7%", "+18%", "+6.43%"] },
+                { "_key": "m20-017r3", "_type": "tableRow", "cells": ["PSU Bank Co. (short)", "15.3%", "-38% (stopped out before the full -50% move)", "-5.81%"] },
+                { "_key": "m20-017r4", "_type": "tableRow", "cells": ["Auto Co. (short)", "16.9%", "-30% (stopped out before the full -40% move)", "-5.07%"] }
+              ]
+            },
+            {
+              "_key": "m20-018",
+              "_type": "keyFact",
+              "label": "Scenario C total return, sizing plus stops",
+              "value": "-0.6%",
+              "context": "3.85 + 6.43 - 5.81 - 5.07. Roughly flat, a dramatic improvement from -15.0%, though still a small loss, not a gain, an honest reminder that risk management reduces damage, it does not turn a genuine adverse move into a win"
+            },
+            {
+              "_key": "m20-019",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "m20-019s1", "label": "Scenario A: no risk management", "value": "-15.0%", "context": "Equal weight, no stops" },
+                { "_key": "m20-019s2", "label": "Scenario B: sizing only", "value": "-4.1%", "context": "Inverse-volatility weighting, no stops" },
+                { "_key": "m20-019s3", "label": "Scenario C: sizing plus stops", "value": "-0.6%", "context": "Inverse-volatility weighting, ATR trailing stops on the short legs" },
+                { "_key": "m20-019s4", "label": "Improvement, A to C", "value": "14.4 percentage points", "context": "The bulk of the improvement, roughly 11 points, comes from sizing alone, with stops adding a further, smaller reduction" }
+              ]
+            },
+            {
+              "_key": "m20-020",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Do not read Scenario C as proof that good risk management always turns a crash into a non-event. This is one illustrative episode with hypothetical numbers chosen to demonstrate the mechanics clearly. Real markets, real correlations breaking down under stress, and real execution slippage during a fast-moving crash make outcomes far less tidy than this worked example."
+            },
+            {
+              "_key": "m20-021",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "m20-021s1", "_type": "span", "marks": [], "text": "What Risk Management Did and Didn't Do" }
+              ]
+            },
+            {
+              "_key": "m20-022",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "m20-022s1", "_type": "span", "marks": [], "text": "Sizing did most of the work here, and it did it before a single stop was even needed, simply by recognizing that the two positions most exposed to a violent reversal were also the two highest-volatility names in the book, and allocating less capital to them from day one. The ATR stops added a further, smaller improvement on top, cutting off part of the move but not all of it, since a fast-moving reversal always outruns a trailing stop by some amount. Together, they turned a book-wide 15% loss into something close to flat. They did not turn it into a profit, and they would not have prevented a loss entirely in a faster or more extreme version of the same event. That is the honest, realistic promise of risk management: less damage, not none."
+              }
+            ]
+            },
+            {
+              "_key": "m20-023",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Where did most of the improvement come from?",
+              "question": "Between Scenario A and Scenario C in this case study, which single change contributed the larger share of the total improvement?",
+              "options": [
+                "The ATR trailing stops, contributing more than the sizing change",
+                "Inverse-volatility sizing, contributing roughly 11 of the 14.4 percentage point improvement, more than the stops",
+                "Both contributed exactly equal amounts",
+                "Neither change had any measurable effect"
+              ],
+              "correctIndex": 1,
+              "explanation": "Sizing alone moved the result from -15.0% to -4.1%, an improvement of roughly 11 percentage points. Adding stops moved it from -4.1% to -0.6%, a further improvement of about 3.5 points, smaller than sizing's contribution."
+            },
+            {
+              "_key": "m20-024",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Recompute Scenario B's total",
+              "prompt": "Using Scenario B's inverse-volatility weights, if Auto Co.'s return had been -30% instead of -40% (with every other position's return and weight unchanged), what would Scenario B's new total return be, in percent? Use weights of 32.1%, 35.7%, 15.3%, and 16.9% as in the table.",
+              "correctValue": -2.44,
+              "tolerance": 0.2,
+              "unit": "%",
+              "explanation": "Auto Co.'s new contribution is 16.9% x -30% = -5.07%, versus -6.76% before, a difference of +1.69 points. Adding that to the original -4.13% total gives roughly -2.44%."
+            },
+            {
+              "_key": "m20-025",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Would you have kept the short position at all?",
+              "scenario": "A colleague argues that, given how badly the short positions hurt this book, the entire short leg should simply have been removed from the strategy, running long-only instead.",
+              "prompt": "Based on this chapter, and on Chapter 4's discussion of net market exposure, what would you say in response?",
+              "modelAnswer": "Removing the short leg entirely would have avoided this specific episode's losses, but it would also give up the structurally market-neutral exposure that is the whole point of a cross-sectional long-short design, covered in Chapter 4. A long-only version of the same strategy would have full market exposure during a broad decline instead of being hedged, which carries its own, different risk. The better fix demonstrated in this case study is not removing the short leg, but sizing and managing it properly, inverse-volatility weighting and ATR stops turned a 15% loss into a near-flat result without abandoning the market-neutral structure altogether."
+            },
+            {
+              "_key": "m20-026",
+              "_type": "toolLink",
+              "label": "Explore Kite Connect's historical data to test a scenario like this one",
+              "url": "https://kite.trade",
+              "description": "Rebuilding this case study on real NSE price data, rather than illustrative figures, is a natural next step using Kite Connect's historical data API alongside the sizing and stop code from Lessons 2 and 3."
+            },
+            {
+              "_key": "m20-027",
+              "_type": "flashcardSet",
+              "title": "Chapter 5 Case Study: Core Terms",
+              "cards": [
+                { "_key": "m20-027f1", "term": "P&L contribution", "definition": "A single position's share of a portfolio's total return, calculated as its portfolio weight multiplied by its own return." },
+                { "_key": "m20-027f2", "term": "Damage reduction (risk management)", "definition": "The realistic goal of position sizing and exit rules during an adverse event: reducing the size of a loss, not eliminating the possibility of one." }
+              ]
+            },
+            {
+              "_key": "m20-028",
+              "_type": "keyTakeaways",
+              "points": [
+                "Applying inverse-volatility sizing to the illustrative crash-mechanism book from Chapter 1 cut an equal-weighted 15.0% loss to roughly a 4.1% loss, before any stop was involved.",
+                "Adding ATR trailing stops on the short legs reduced the loss further, to roughly 0.6%, by cutting off part, not all, of the adverse move.",
+                "Sizing contributed the larger share of the total improvement in this case study, a reminder that where capital is allocated often matters more than exactly when a position is exited.",
+                "None of this eliminated the loss entirely. Risk management's honest promise, as this chapter has emphasized throughout, is less damage, not immunity from it.",
+                "This closes Chapter 5's toolkit: understanding why these strategies have fat tails and negative skew (Lesson 1), sizing positions to reflect that risk (Lesson 2), and exiting with a rule that adapts to each asset's own volatility (Lesson 3), all three working together in this case study."
+              ]
+            },
+            {
+              "_key": "m20-029",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice. All positions, weights, returns, and the specific outcomes in this case study are hypothetical and illustrative, constructed for teaching purposes, and do not represent actual historical trading results. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

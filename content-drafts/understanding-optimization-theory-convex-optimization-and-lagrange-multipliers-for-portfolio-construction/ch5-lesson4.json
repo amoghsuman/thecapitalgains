@@ -1,0 +1,240 @@
+{
+  "courseSlug": "understanding-optimization-theory-convex-optimization-and-lagrange-multipliers-for-portfolio-construction",
+  "chapters": [
+    {
+      "title": "Chapter 5: Beyond Equality: KKT Conditions and Inequality Constraints",
+      "lessons": [
+        {
+          "title": "Case Study: Solving a Long-Only Minimum Variance Portfolio With KKT Conditions",
+          "slug": "case-study-solving-a-long-only-minimum-variance-portfolio-with-kkt-conditions",
+          "body": [
+            {
+              "_key": "oc5l4-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc5l4-001s1", "_type": "span", "marks": [], "text": "Chapter 1 introduced this exact five-stock portfolio and flagged it as needing tools this course had not yet built: one equality constraint, five inequality constraints, a genuine long-only, fully-invested minimum variance problem. Four chapters later, every tool needed to actually solve it is in hand. This case study closes that loop." }
+              ]
+            },
+            {
+              "_key": "oc5l4-002",
+              "_type": "bigIdea",
+              "text": "This case study fully resolves Chapter 1's cliffhanger, and it demonstrates something important: the active-set method's cheapest first step is sometimes all you need, but there was no way to know that in advance without checking properly."
+            },
+            {
+              "_key": "oc5l4-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc5l4-003s1", "_type": "span", "marks": [], "text": "Recalling the Setup From Chapter 1" }
+              ]
+            },
+            {
+              "_key": "oc5l4-004",
+              "_type": "table",
+              "caption": "Covariance matrix, HDFC Bank, ICICI Bank, TCS, Infosys, HUL (from Chapter 1)",
+              "headers": ["", "HDFC", "ICICI", "TCS", "Infosys", "HUL"],
+              "rows": [
+                { "_key": "oc5l4-004r1", "_type": "tableRow", "cells": ["HDFC", "0.0676", "0.0546", "0.0125", "0.0130", "0.0070"] },
+                { "_key": "oc5l4-004r2", "_type": "tableRow", "cells": ["ICICI", "0.0546", "0.0784", "0.0121", "0.0126", "0.0060"] },
+                { "_key": "oc5l4-004r3", "_type": "tableRow", "cells": ["TCS", "0.0125", "0.0121", "0.0576", "0.0420", "0.0043"] },
+                { "_key": "oc5l4-004r4", "_type": "tableRow", "cells": ["Infosys", "0.0130", "0.0126", "0.0420", "0.0625", "0.0045"] },
+                { "_key": "oc5l4-004r5", "_type": "tableRow", "cells": ["HUL", "0.0070", "0.0060", "0.0043", "0.0045", "0.0324"] }
+              ]
+            },
+            {
+              "_key": "oc5l4-005",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc5l4-005s1", "_type": "span", "marks": [], "text": "One equality constraint (full investment), five inequality constraints (no short-selling on each stock). Chapter 1 could frame this precisely but not solve it. This lesson does." }
+              ]
+            },
+            {
+              "_key": "oc5l4-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc5l4-006s1", "_type": "span", "marks": [], "text": "Step 1: Solve the Unconstrained (Equality-Only) Problem" }
+              ]
+            },
+            {
+              "_key": "oc5l4-007",
+              "_type": "collapsible",
+              "title": "Show me the full elimination",
+              "content": [
+                {
+                  "_key": "oc5l4-007a",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    { "_key": "oc5l4-007as1", "_type": "span", "marks": [], "text": "Solving Σx = 1 for all five stocks at once, by Gaussian elimination, one column at a time." }
+                  ]
+                },
+                {
+                  "_key": "oc5l4-007b",
+                  "_type": "mathBlock",
+                  "latex": "\\text{After eliminating column 1:} \\\\ 0.03430x_2 + 0.002004x_3 + 0.002100x_4 + 0.000346x_5 = 0.192308 \\\\ 0.002004x_2 + 0.055289x_3 + 0.039596x_4 + 0.003006x_5 = 0.815089 \\\\ 0.002100x_2 + 0.039596x_3 + 0.060000x_4 + 0.003154x_5 = 0.807692 \\\\ 0.000346x_2 + 0.003006x_3 + 0.003154x_4 + 0.031675x_5 = 0.896450",
+                  "caption": ""
+                },
+                {
+                  "_key": "oc5l4-007c",
+                  "_type": "mathBlock",
+                  "latex": "\\text{After eliminating column 2:} \\\\ 0.055172x_3 + 0.039473x_4 + 0.002986x_5 = 0.803853 \\\\ 0.039473x_3 + 0.059871x_4 + 0.003133x_5 = 0.795918 \\\\ 0.002986x_3 + 0.003133x_4 + 0.031672x_5 = 0.894510",
+                  "caption": ""
+                },
+                {
+                  "_key": "oc5l4-007d",
+                  "_type": "mathBlock",
+                  "latex": "\\text{After eliminating column 3:} \\\\ 0.031624x_4 + 0.000996x_5 = 0.220693 \\\\ 0.000996x_4 + 0.031510x_5 = 0.850997",
+                  "caption": ""
+                },
+                {
+                  "_key": "oc5l4-007e",
+                  "_type": "mathBlock",
+                  "latex": "\\text{After eliminating column 4:} \\quad 0.031479x_5 = 0.844046 \\;\\Rightarrow\\; x_5 \\approx 26.813",
+                  "caption": "Back-substitution through every stage above gives the remaining four entries."
+                }
+              ]
+            },
+            {
+              "_key": "oc5l4-008",
+              "_type": "mathBlock",
+              "latex": "\\Sigma^{-1}\\mathbf{1} \\approx (5.628, \\; 4.450, \\; 8.730, \\; 6.135, \\; 26.813), \\qquad \\text{sum} \\approx 51.757",
+              "caption": "The full solved vector."
+            },
+            {
+              "_key": "oc5l4-009",
+              "_type": "mathBlock",
+              "latex": "\\mathbf{w}^* \\approx (10.87\\%, \\; 8.60\\%, \\; 16.87\\%, \\; 11.85\\%, \\; 51.80\\%)",
+              "caption": "HDFC Bank, ICICI Bank, TCS, Infosys, HUL, in that order."
+            },
+            {
+              "_key": "oc5l4-010",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc5l4-010s1", "_type": "span", "marks": [], "text": "Verifying Feasibility" }
+              ]
+            },
+            {
+              "_key": "oc5l4-011",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "oc5l4-011s1", "label": "All five weights", "value": "Positive", "context": "None violate wi ≥ 0" },
+                { "_key": "oc5l4-011s2", "label": "Sum of weights", "value": "≈ 100%", "context": "Budget constraint satisfied" },
+                { "_key": "oc5l4-011s3", "label": "All five inequality multipliers", "value": "= 0", "context": "None of the no-short-selling constraints bind" }
+              ]
+            },
+            {
+              "_key": "oc5l4-012",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Step 1's cheapest check already succeeds. Every weight is positive, so every no-short-selling constraint is automatically non-binding, and the equality-only, Chapter 4 style answer is, unmodified, the correct answer to the full long-only problem. Even HDFC Bank and ICICI Bank, correlated at 0.75, do not push each other negative here, unlike the more extreme, more correlated pairs used earlier in this chapter, because three other, more weakly correlated stocks give the optimizer enough room to diversify without needing to short anything."
+            },
+            {
+              "_key": "oc5l4-013",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc5l4-013s1", "_type": "span", "marks": [], "text": "Why This Doesn't Mean Chapter 5 Was Unnecessary" }
+              ]
+            },
+            {
+              "_key": "oc5l4-014",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc5l4-014s1", "_type": "span", "marks": [], "text": "There was no way to know this outcome in advance. HDFC Bank and ICICI Bank's correlation, 0.75, is genuinely high, high enough that a naive guess could easily have gone the other way. Chapter 1's opening lesson made exactly this point: the goal is a provably optimal answer, not a plausible-looking one. Checking Step 1 properly, and confirming every KKT condition rather than assuming a high correlation must force a short position, is what turns a guess into a proof. The method's value is in the guarantee, not in guaranteeing extra work every time." }
+              ]
+            },
+            {
+              "_key": "oc5l4-015",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc5l4-015s1", "_type": "span", "marks": [], "text": "What If the Mandate Also Capped Concentration?" }
+              ]
+            },
+            {
+              "_key": "oc5l4-016",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "oc5l4-016s1", "_type": "span", "marks": [], "text": "HUL's 51.80% weight is unusually large for a single holding, a direct consequence of its low volatility (18%) and weak correlation with every other stock in the table, exactly the diversification logic from Chapter 1. Suppose the mandate added one more rule: no single stock over 40%. Unlike every no-short-selling constraint, this one, wi ≤ 0.40 for HUL, would now bind, since 51.80% exceeds it." }
+              ]
+            },
+            {
+              "_key": "oc5l4-017",
+              "_type": "callout",
+              "type": "insight",
+              "text": "The KKT machinery handles upper bounds exactly as symmetrically as lower bounds; wi ≤ 0.40 is just as valid a g(x) ≤ 0 constraint as -wi ≤ 0 was. The same active-set procedure applies: fix HUL at exactly 40%, re-solve the remaining four stocks as their own reduced minimum variance problem over the remaining 60% of capital, then verify every KKT condition, including that the new multiplier on HUL's cap comes out non-negative."
+            },
+            {
+              "_key": "oc5l4-018",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Walk through the concentration cap case",
+              "scenario": "The fund's mandate adds a 40% single-stock concentration cap on top of the original budget and no-short-selling rules. HUL's unconstrained weight, 51.80%, violates this new cap.",
+              "prompt": "Using this chapter's active-set method, describe the steps you would take to find the correct constrained portfolio, and what you would need to verify at the end.",
+              "modelAnswer": "First, hypothesize that only HUL's concentration cap binds: fix HUL's weight at exactly 40%, and check whether the other four stocks' no-short-selling constraints still hold once the remaining 60% of capital is optimally split among them (solved as a four-stock minimum variance sub-problem, using the same covariance sub-matrix with the budget reduced to 0.60). Second, verify every KKT condition on the resulting five-stock candidate: primal feasibility (all weights within their bounds, budget satisfied), dual feasibility (the multiplier on HUL's cap constraint must come out non-negative, and any newly implied multipliers on the other stocks' no-short-selling constraints must also be non-negative if any of them turned out to bind too), and complementary slackness for every constraint. If any check fails, the hypothesis needs revising, exactly as the small-cap, large-cap, gold example demonstrated for a violated lower bound."
+            },
+            {
+              "_key": "oc5l4-019",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Confirm the case study's conclusion",
+              "question": "For the five-stock HDFC Bank, ICICI Bank, TCS, Infosys, HUL minimum variance portfolio (budget and no-short-selling constraints only, no concentration cap), what did this case study conclude?",
+              "options": [
+                "The unconstrained (equality-only) solution already satisfies every no-short-selling constraint, so it is the correct final answer",
+                "HDFC Bank must be shorted, since it is highly correlated with ICICI Bank",
+                "The problem has no feasible solution",
+                "KKT conditions cannot be applied to more than three assets"
+              ],
+              "correctIndex": 0,
+              "explanation": "Solving Σx = 1 and normalizing gave all five weights positive, roughly 10.87%, 8.60%, 16.87%, 11.85%, and 51.80%. Since every weight already satisfies wi ≥ 0, none of the five no-short-selling constraints bind, and the equality-only solution is, unmodified, the correct answer to the full long-only problem."
+            },
+            {
+              "_key": "oc5l4-020",
+              "_type": "flashcardSet",
+              "title": "Chapter 5 Case Study: Core Terms",
+              "cards": [
+                { "_key": "oc5l4-020f1", "term": "Non-binding case, confirmed", "definition": "When Step 1's unconstrained solve already satisfies every inequality constraint, it is the true, verified optimum, no further hypothesis testing needed." },
+                { "_key": "oc5l4-020f2", "term": "Upper-bound inequality constraint", "definition": "A rule like wi ≤ 0.40, handled by exactly the same KKT machinery as a lower bound like wi ≥ 0, just with the inequality direction flipped." },
+                { "_key": "oc5l4-020f3", "term": "Provably optimal vs plausible", "definition": "The core distinction this entire course is built around: a checked, verified KKT solution is provably optimal; an unchecked guess, however reasonable it looks, is merely plausible." }
+              ]
+            },
+            {
+              "_key": "oc5l4-021",
+              "_type": "keyTakeaways",
+              "points": [
+                "The five-stock HDFC Bank, ICICI Bank, TCS, Infosys, HUL minimum variance portfolio, framed but left unsolved in Chapter 1, resolves cleanly: the unconstrained (equality-only) solution already satisfies every no-short-selling constraint.",
+                "Weights work out to roughly 10.87% HDFC Bank, 8.60% ICICI Bank, 16.87% TCS, 11.85% Infosys, and 51.80% HUL.",
+                "Even a fairly high correlation, 0.75 between the two banking stocks, was not enough to force a short position, because three additional, more weakly correlated stocks gave the optimizer room to diversify instead.",
+                "This outcome could not have been assumed in advance. Checking properly, rather than guessing from the correlation alone, is what makes the answer provably optimal rather than merely plausible.",
+                "The same KKT machinery extends symmetrically to upper-bound constraints, like a single-stock concentration cap, using the identical guess, solve, verify procedure from earlier in this chapter.",
+                "Chapter 5 is complete: why inequality constraints matter, the four KKT conditions, complementary slackness in practice, and this closing case study. Chapter 6 turns to duality and the practical solvers that automate this entire process."
+              ]
+            },
+            {
+              "_key": "oc5l4-022",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to buy or sell any security named here. Expected returns, volatilities, and covariances used are illustrative assumptions, not live or historical market data, and figures involve hand-calculation rounding. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

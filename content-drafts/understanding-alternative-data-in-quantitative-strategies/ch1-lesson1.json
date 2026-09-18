@@ -1,0 +1,422 @@
+{
+  "courseSlug": "understanding-alternative-data-in-quantitative-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Alternative Data Matters in Quant Research",
+      "lessons": [
+        {
+          "title": "What Counts as Alternative Data? A Working Definition for Quant Researchers",
+          "slug": "what-counts-as-alternative-data-a-working-definition-for-quant-researchers",
+          "body": [
+            {
+              "_key": "c1l1k001",
+              "_type": "bigIdea",
+              "text": "Alternative data is not defined by what it is. It is defined by how few people have already turned it into a systematic signal."
+            },
+            {
+              "_key": "c1l1k002",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l1k002s1",
+                  "_type": "span",
+                  "text": "Open any NSE or BSE listed company on screener.in and you see the same price history, the same quarterly results, and the same shareholding pattern that every other subscriber sees, at the same time. A Zerodha client in Mumbai and a hedge fund analyst in Singapore are reading identical numbers from identical filings. Any signal built purely on that shared data gets found, copied, and priced in fast, because thousands of people are looking at the same rows of the same spreadsheet.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1k003",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c1l1m001",
+                  "_type": "glossaryTerm",
+                  "definition": "The tendency for a signal's excess return to shrink over time as more participants discover it and trade against the same edge, competing away the profit."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c1l1k003s1",
+                  "_type": "span",
+                  "text": "This is ",
+                  "marks": []
+                },
+                {
+                  "_key": "c1l1k003s2",
+                  "_type": "span",
+                  "text": "alpha decay",
+                  "marks": ["c1l1m001"]
+                },
+                {
+                  "_key": "c1l1k003s3",
+                  "_type": "span",
+                  "text": " in its simplest form: a crowded input produces a crowded trade. Alternative data exists because quant researchers keep looking for inputs that are not yet crowded, data that was never built for financial markets in the first place, but that can be turned into a feature which moves ahead of, or independent from, the official numbers everyone else is waiting for.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1k004",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l1k004s1",
+                  "_type": "span",
+                  "text": "A Working Definition",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1k005",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l1k005s1",
+                  "_type": "span",
+                  "text": "For this course, alternative data is any dataset that was not created for the purpose of financial disclosure, but can be processed into a feature that proxies a tradeable variable such as revenue, demand, risk, or sentiment, ahead of or independent from the company's own reporting cycle. Three properties separate it from ordinary market data.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1k006",
+              "_type": "table",
+              "caption": "The three properties that make a dataset 'alternative' for a quant desk",
+              "headers": ["Property", "What It Means", "Why It Matters"],
+              "rows": [
+                {
+                  "_key": "c1l1k006r1",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Not natively financial",
+                    "The data was generated for a non-market purpose: app usage logs, satellite passes, tax filings, job listings",
+                    "Nobody built it to move share prices, so the market has not fully priced it in by default"
+                  ]
+                },
+                {
+                  "_key": "c1l1k006r2",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Requires real processing",
+                    "Raw web traffic, satellite pixels, or transaction logs are not a signal on their own",
+                    "The engineering effort needed to turn it into a feature is itself a barrier that slows down how fast the edge gets arbitraged away"
+                  ]
+                },
+                {
+                  "_key": "c1l1k006r3",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Time-limited edge",
+                    "Once a dataset becomes standard on every desk's terminal, it behaves like traditional data",
+                    "Today's alternative data is tomorrow's Bloomberg field, so the research process matters more than any single dataset"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c1l1k007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l1k007s1",
+                  "_type": "span",
+                  "text": "Traditional Data vs Alternative Data",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1k008",
+              "_type": "comparison",
+              "title": "What Sits on Each Side of the Line",
+              "columns": [
+                {
+                  "_key": "c1l1k008c1",
+                  "label": "Traditional Market Data",
+                  "points": [
+                    "Price and volume from NSE and BSE",
+                    "F&O open interest and derivatives data",
+                    "Quarterly results filed under SEBI's LODR disclosure norms",
+                    "Analyst estimates and management commentary on earnings calls",
+                    "Available to every subscriber at the same moment"
+                  ]
+                },
+                {
+                  "_key": "c1l1k008c2",
+                  "label": "Alternative Data",
+                  "points": [
+                    "App download ranks and website traffic analytics",
+                    "Satellite imagery of plants, ports, and parking lots",
+                    "UPI settlement volumes and credit card spend panels",
+                    "GST e-way bill counts and import-export shipment records",
+                    "Job postings, hiring velocity, and employee review sentiment"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c1l1k009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l1k009s1",
+                  "_type": "span",
+                  "text": "Five Categories You Will Work With in This Course",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1k010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l1k010s1",
+                  "_type": "span",
+                  "text": "Chapter 2 covers each of these in depth. For now, here is the map, with an Indian example for each so you can see where in the market this data actually shows up.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1k011",
+              "_type": "table",
+              "caption": "The five broad categories of alternative data, and what each proxies",
+              "headers": ["Category", "Example Source", "What It Proxies", "Indian Example"],
+              "rows": [
+                {
+                  "_key": "c1l1k011r1",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Web and app data",
+                    "App store rankings, website traffic analytics",
+                    "Consumer demand ahead of the quarterly result",
+                    "Tracking Zomato and Swiggy app download trends and delivery-partner hiring before food-delivery volume estimates are published"
+                  ]
+                },
+                {
+                  "_key": "c1l1k011r2",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Satellite and geospatial data",
+                    "Satellite imagery, foot traffic counts",
+                    "Physical activity: inventory, construction, footfall",
+                    "Reading kiln activity and clinker stockpiles at cement plants to estimate quarterly volumes for UltraTech or Ambuja before results"
+                  ]
+                },
+                {
+                  "_key": "c1l1k011r3",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Transaction and payment data",
+                    "UPI settlement data published by NPCI, card spend panels",
+                    "Discretionary consumption and cash flow trends",
+                    "Using monthly NPCI UPI volume data as an early read on urban consumption ahead of GDP and IIP releases"
+                  ]
+                },
+                {
+                  "_key": "c1l1k011r4",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Text and sentiment data",
+                    "News wires, exchange filings, social media, job reviews",
+                    "Sentiment shifts and early risk flags",
+                    "Scraping BSE and NSE corporate announcement feeds the second a filing goes live, before it is picked up by news aggregators"
+                  ]
+                },
+                {
+                  "_key": "c1l1k011r5",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Supply chain and regulatory data",
+                    "GST e-way bills, DGCI&S trade data, job postings",
+                    "Freight activity, trade volumes, hiring intensity",
+                    "Using state-wise e-way bill generation counts as a monthly proxy for logistics and freight demand"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c1l1k012",
+              "_type": "keyFact",
+              "label": "The first famous alt data trade",
+              "value": "Satellite images of retailer parking lots",
+              "context": "In the 2010s, US hedge funds began buying satellite imagery of retail chain parking lots to count cars and estimate quarterly footfall before the companies reported earnings. It is one of the earliest mainstream examples of alternative data producing a tradeable signal, and it is why satellite data remains a standard category today."
+            },
+            {
+              "_key": "c1l1k013",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l1k013s1",
+                  "_type": "span",
+                  "text": "Where the Line Blurs: Alternative Data vs Insider Information",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1k014",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c1l1m002",
+                  "_type": "glossaryTerm",
+                  "definition": "Unpublished Price Sensitive Information: information that, if made public, is likely to materially affect the price of a security, as defined under SEBI's Prohibition of Insider Trading Regulations, 2015. Trading on it, or passing it to someone who trades on it, is a criminal and civil offence in India."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c1l1k014s1",
+                  "_type": "span",
+                  "text": "This is where an advanced course has to be blunt: not everything that is not on Bloomberg counts as legitimate alternative data. If a dataset reaches you because someone inside a company chose to give you access to information that has not been disclosed to the exchanges, that is not an edge, it is ",
+                  "marks": []
+                },
+                {
+                  "_key": "c1l1k014s2",
+                  "_type": "span",
+                  "text": "UPSI",
+                  "marks": ["c1l1m002"]
+                },
+                {
+                  "_key": "c1l1k014s3",
+                  "_type": "span",
+                  "text": ", and trading on it is a violation of SEBI's insider trading regulations regardless of how the vendor invoice describes the product.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l1k015",
+              "_type": "collapsible",
+              "title": "The compliance test every alt data source has to pass",
+              "content": [
+                {
+                  "_key": "c1l1k015b1",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c1l1k015b1s1",
+                      "_type": "span",
+                      "text": "Before any quant desk pays for or builds a data source, it should be able to answer one question cleanly: is this observation independently reproducible by anyone willing to do the same work or pay the same price, or does it depend on a specific person inside the company choosing to share something they should not?",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c1l1k015b2",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c1l1k015b2s1",
+                      "_type": "span",
+                      "text": "A satellite operator selling imagery of a factory car park to any subscriber passes this test, because the satellite is observing something public from outside the company's walls. A logistics employee texting you tomorrow's exact dispatch numbers before they appear in any filing fails it, because the only reason you have that number is a specific person's breach of duty. The dataset can look identical in a spreadsheet. The legal status is completely different.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c1l1k016",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "A Vendor Pitch You Have to Evaluate",
+              "scenario": "A data vendor approaches your desk offering weekly dispatch volumes for a specific NSE-listed FMCG company, sourced, in their words, 'directly from a contact inside the company's regional distribution network.' The price is high, but the vendor claims it consistently leads the company's reported quarterly volumes by three to four weeks.",
+              "prompt": "Before your desk subscribes, what should you check, and what is the compliance risk if the answer to your check is unfavourable?",
+              "modelAnswer": "The key question is whether this observation is independently reproducible by any other paying subscriber through a repeatable, arm's length process, or whether it depends entirely on one named contact inside the company choosing to leak numbers ahead of disclosure. A phrase like 'a contact inside the company's regional distribution network' is a red flag: it suggests the edge exists only because a specific insider is breaching confidentiality, which makes the data UPSI under SEBI's Prohibition of Insider Trading Regulations, 2015, not alternative data. Trading on it, or even receiving and using it, exposes the desk and the individual analyst to civil and criminal liability. The correct response is to route this to compliance and legal before any commercial discussion continues, and in most cases to decline the vendor outright rather than accept the risk for a data edge that will not survive scrutiny."
+            },
+            {
+              "_key": "c1l1k017",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Spot the Legitimate Alternative Data Source",
+              "question": "Which of the following is most likely to be legitimate alternative data rather than insider information?",
+              "options": [
+                "A satellite imagery marketplace selling parking lot occupancy counts near retail stores to any paying subscriber",
+                "A factory floor employee privately messaging you next month's production numbers before they are reported",
+                "A company director sharing draft quarterly results with a friend before the board meeting",
+                "A distributor forwarding a confidential internal inventory report marked 'not for external circulation'"
+              ],
+              "correctIndex": 0,
+              "explanation": "The satellite marketplace observes something from outside the company, independently, and sells the same product to any subscriber on the same terms. The other three all depend on one specific insider breaching a duty of confidentiality, which is the definition of UPSI misuse under SEBI's insider trading framework, not a data business."
+            },
+            {
+              "_key": "c1l1k018",
+              "_type": "callout",
+              "type": "insight",
+              "text": "The single best test for whether a data source is legitimate: could a thousand other subscribers buy the exact same access on the exact same terms? If yes, it is a data business. If the answer depends on knowing someone inside the company, it is insider trading with a data vendor's invoice attached."
+            },
+            {
+              "_key": "c1l1k019",
+              "_type": "flashcardSet",
+              "title": "Vocabulary Check: Terms From This Lesson",
+              "cards": [
+                {
+                  "_key": "c1l1k019c1",
+                  "term": "Alternative data",
+                  "definition": "Data not originally created for financial disclosure that can be processed into a feature proxying a tradeable variable, ahead of or independent from official reporting."
+                },
+                {
+                  "_key": "c1l1k019c2",
+                  "term": "Alpha decay",
+                  "definition": "The shrinking of a signal's excess return as more participants discover it and trade against the same edge."
+                },
+                {
+                  "_key": "c1l1k019c3",
+                  "term": "UPSI",
+                  "definition": "Unpublished Price Sensitive Information under SEBI's Prohibition of Insider Trading Regulations, 2015. Trading on it or tipping others is a criminal and civil offence."
+                },
+                {
+                  "_key": "c1l1k019c4",
+                  "term": "Nowcasting",
+                  "definition": "Using high-frequency, non-official data such as UPI volumes or e-way bills to estimate a current-period economic or company outcome before the official figure is released."
+                }
+              ]
+            },
+            {
+              "_key": "c1l1k020",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "Companies, vendors, and data categories named in this lesson are used only to illustrate concepts. Nothing here is a recommendation to trade any security or subscribe to any data vendor. Always route new data sources through your organisation's compliance and legal review before use."
+            },
+            {
+              "_key": "c1l1k021",
+              "_type": "keyTakeaways",
+              "points": [
+                "Alternative data is defined less by its content and more by how few market participants have already turned it into a systematic signal",
+                "A dataset qualifies as alternative when it is not natively financial, needs real processing to become a feature, and offers only a time-limited edge",
+                "Traditional data (NSE and BSE price and volume, SEBI LODR filings, F&O open interest) is seen by everyone at once, which is exactly why it decays fast as a source of alpha",
+                "This course covers five categories: web and app data, satellite and geospatial data, transaction and payment data, text and sentiment data, and supply chain and regulatory data",
+                "Not everything unavailable on a terminal is legitimate: data that depends on one insider's breach of duty is UPSI, not alternative data, and using it violates SEBI's insider trading regulations",
+                "The reliable test for legitimacy: any other paying subscriber should be able to access the exact same data through the exact same process"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

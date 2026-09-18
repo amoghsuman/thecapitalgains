@@ -1,0 +1,227 @@
+{
+  "courseSlug": "understanding-numerical-methods-in-quantitative-finance-binomial-trees-and-finite-difference-methods",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Numerical Methods? Foundations of Option Pricing Beyond Closed-Form",
+      "lessons": [
+        {
+          "title": "Discretizing Time: From Continuous Markets to Step-by-Step Models",
+          "slug": "discretizing-time-from-continuous-markets-to-step-by-step-models",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "c1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c1s1", "text": "Lesson 2 solved the pricing problem for one step of time. A real option has months, sometimes years, of continuous time sitting between today and expiry, and the stock underlying it does not politely wait for a single up or down move, it can shift at every instant along the way. Before any tree or grid can be built, that continuous stretch of time has to be cut down into something a computer can actually work with. That cutting process is called discretization, and it is the second foundation this course is built on.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c2s1", "text": "The Problem With Continuous Time", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c3",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c3s1", "text": "The model underneath Black-Scholes describes the stock price as moving continuously, jittering up and down at every instant, following what is called Geometric Brownian Motion. There is no smallest unit of time in this description, between any two instants, however close, there is always another instant in between. That is mathematically clean and analytically convenient, it is exactly what lets Black-Scholes integrate its way to a closed-form answer, but it is also completely unusable for direct computation. A computer cannot loop over infinitely many instants. Something has to give.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "mathBlock",
+              "_key": "c4",
+              "latex": "dS_t = r S_t\\, dt + \\sigma S_t\\, dW_t",
+              "caption": "Geometric Brownian Motion under the risk-neutral drift from Lesson 2. This continuous equation is the exact process every numerical method in this course approximates with a finite number of discrete steps."
+            },
+            {
+              "_type": "block",
+              "_key": "c5",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c5s1", "text": "Chopping Time Into Steps", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c6",
+              "style": "normal",
+              "markDefs": [ { "_type": "glossaryTerm", "_key": "gt3", "definition": "The length of one discrete time interval in a numerical model, usually written as delta-t. Smaller step sizes mean more steps for the same total time and, generally, a more accurate approximation." } ],
+              "children": [
+                { "_type": "span", "_key": "c6s1", "text": "Discretization simply means splitting the total time to expiry, T, into N equal intervals, each of length ", "marks": [] },
+                { "_type": "span", "_key": "c6s2", "text": "delta-t", "marks": ["gt3"] },
+                { "_type": "span", "_key": "c6s3", "text": ". Instead of describing what the stock does at every instant, the model only has to describe what happens over one small step, then repeat that description N times. That one-small-step description is exactly the two-state, up-or-down building block from Lesson 2. Discretization is what turns a single application of that idea into a full pricing model spanning the whole life of the option.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "keyFact",
+              "_key": "c7",
+              "label": "Delta-t = T / N",
+              "value": "A 6-month option split into N = 126 steps gives delta-t = 0.5 / 126 ≈ 1 trading day",
+              "context": "126 steps because Indian desks, like desks everywhere, conventionally annualize using 252 trading days a year, even though NSE's actual trading calendar runs closer to 245-250 days after weekends and holidays"
+            },
+            {
+              "_type": "callout",
+              "_key": "c8",
+              "type": "insight",
+              "text": "Choosing one step per trading day is a natural, intuitive default, it matches how the stock actually trades on the NSE, closing and reopening once a day. It is not the only choice. A binomial tree with 126 steps and a tree with 1,260 steps are both valid discretizations of the same 6-month option, they will simply produce different levels of accuracy, which is exactly the trade-off the next section covers."
+            },
+            {
+              "_type": "block",
+              "_key": "c9",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c9s1", "text": "Two Ways to Discretize: Branches vs a Grid", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c10",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c10s1", "text": "Splitting time is only half the job. The stock price itself also has to be represented with a finite, computable set of possibilities at each step, not a continuum. The two methods this course builds make different choices here, and that difference is what actually separates a binomial tree from a finite difference grid.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "comparison",
+              "_key": "c11",
+              "title": "How Each Method Discretizes Price",
+              "columns": [
+                {
+                  "label": "Binomial Tree (Chapters 2-3)",
+                  "points": [
+                    "At each of the N time steps, the stock is allowed exactly 2 possible next prices, up or down",
+                    "Over N steps this branches into a lattice of possible prices, built and calibrated in the next chapter",
+                    "The two-state, risk-neutral pricing rule from Lesson 2 is applied at every single branch point",
+                    "Natural fit for checking early exercise at every node, which is why American options lean on this method"
+                  ]
+                },
+                {
+                  "label": "Finite Difference Grid (Chapter 4)",
+                  "points": [
+                    "At each of the N time steps, price is discretized into many levels at once, forming a full grid",
+                    "The Black-Scholes PDE's derivatives are approximated using differences between neighbouring grid values",
+                    "Solves for the option price at every grid point simultaneously, not just one path of branches",
+                    "More flexible for awkward boundary conditions and complex payoff shapes"
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c12",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c12s1", "text": "Does Chopping Things Up Actually Give the Right Answer?", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c13",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c13s1", "text": "A fair question at this point: if the true process is continuous, why should chopping it into a handful of discrete up-or-down steps give a trustworthy price at all? The reassuring answer comes from a basic statistical fact. Add up a large number of small, independent up-or-down steps and the total displacement starts looking like a smooth, bell-curve-shaped random walk, regardless of how simple each individual step was. That is the same intuition behind the Central Limit Theorem from basic statistics. Run that logic through a binomial price process and the resulting distribution of stock prices after many small steps converges toward the exact same lognormal distribution that Geometric Brownian Motion assumes. The discrete model is not a rough approximation of a different reality, it is aimed at the same continuous reality, and gets closer to it as the step count grows.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "chart",
+              "_key": "c14",
+              "chartType": "line",
+              "title": "Illustrative Pattern: Tree Price Converging Toward the Black-Scholes Price as Steps Increase",
+              "xAxisLabel": "Number of steps (N)",
+              "yAxisLabel": "Computed option price (Rs)",
+              "data": [
+                { "label": "5", "value": 91.20 },
+                { "label": "10", "value": 84.95 },
+                { "label": "20", "value": 88.60 },
+                { "label": "50", "value": 86.40 },
+                { "label": "100", "value": 87.80 },
+                { "label": "200", "value": 87.10 },
+                { "label": "500", "value": 87.40 }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "c15",
+              "type": "warning",
+              "text": "The chart above is illustrative only, meant to show the shape of convergence, the way a binomial price oscillates above and below the true value before settling down as N grows, not a computed result for a specific option. Chapter 3's lesson on convergence builds and runs a real example, with real numbers, on an actual tree."
+            },
+            {
+              "_type": "block",
+              "_key": "c16",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c16s1", "text": "The Shared Recipe Behind Every Method in This Course", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "c17",
+              "variant": "checklist",
+              "title": "The Four Steps Every Numerical Pricing Method Follows",
+              "steps": [
+                "Discretize time: split T into N steps of length delta-t = T / N",
+                "Discretize price: either into 2 branches per step (tree) or a full grid of price levels per step (finite difference)",
+                "Start from a known boundary: the option's payoff at expiry is always known exactly, it needs no model, just the payoff formula",
+                "Step backward from that known boundary to today, applying the risk-neutral pricing rule from Lesson 2 at every single point along the way"
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "c18",
+              "variant": "quiz",
+              "title": "Quick Check",
+              "question": "A quant increases the number of steps N in a binomial tree from 50 to 500 for the same 6-month option, keeping everything else fixed. What is the most likely effect?",
+              "options": [
+                "Faster computation but a less accurate price",
+                "A price closer to the true continuous-time value, at the cost of more computation",
+                "No effect, since binomial tree prices don't depend on the number of steps",
+                "The option's payoff at expiry changes"
+              ],
+              "correctIndex": 1,
+              "explanation": "More steps means a smaller delta-t and a finer discretization of the same continuous process, which by the convergence argument above pushes the tree's price closer to the true Black-Scholes value. The cost is computational, more steps means more nodes to evaluate, which is precisely the accuracy-versus-speed trade-off every numerical method in this course has to manage."
+            },
+            {
+              "_type": "exercise",
+              "_key": "c19",
+              "variant": "scenario",
+              "title": "Choosing N on a Live Desk",
+              "scenario": "A derivatives desk needs two different things from the same pricing model: live, streaming quotes for options throughout the NSE trading session, and a detailed overnight risk report covering the entire options book.",
+              "prompt": "Would you expect the same number of steps N to be used for both, or different numbers? Explain your reasoning.",
+              "modelAnswer": "Different numbers, and for a clear reason. Live intraday quoting needs a price in milliseconds, repeated thousands of times a second as the market moves, so the desk keeps N small enough, often just a few hundred steps, or a closed-form approximation where one is valid, to hit that speed requirement, accepting a small amount of pricing error in exchange. The overnight risk report has hours to run and no live client waiting on it, so it can afford a much larger N, thousands of steps, to get the most accurate possible valuation for risk and compliance purposes. Same underlying model, different N, because the two use cases are trading off accuracy against speed differently."
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "c20",
+              "text": "Every numerical method in this course does the same four things: chop time into steps, chop price into either branches or a grid, start from a known answer at expiry, and step backward applying risk-neutral pricing at every single point until landing back at today."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "c21",
+              "points": [
+                "Black-Scholes's continuous-time model lets the stock move at every instant along infinitely many paths, something no computer can simulate directly, which is why every numerical method first discretizes time.",
+                "Time is split into N steps of length delta-t = T / N. A 6-month option split at 1 trading day per step, using the conventional 252 trading days a year, needs roughly 126 steps.",
+                "Binomial trees discretize price into 2 branches per step. Finite difference methods discretize price into a full grid of levels at each step and approximate the pricing PDE's derivatives numerically.",
+                "A discrete random walk built from many small steps converges, by the same logic as the Central Limit Theorem, toward the same continuous lognormal process Black-Scholes assumes, which is why tree and grid prices converge to the closed-form price as the number of steps grows.",
+                "Every method in this course follows the same four-step recipe: discretize time, discretize price, start from the known expiry payoff, and step backward applying risk-neutral pricing at every point."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

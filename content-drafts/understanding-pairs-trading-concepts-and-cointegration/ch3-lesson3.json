@@ -1,0 +1,233 @@
+{
+  "courseSlug": "understanding-pairs-trading-concepts-and-cointegration",
+  "chapters": [
+    {
+      "title": "Chapter 3: Cointegration — Testing Whether a Pair Really Mean-Reverts",
+      "lessons": [
+        {
+          "title": "The Augmented Dickey-Fuller Test for Stationarity",
+          "slug": "the-augmented-dickey-fuller-test-for-stationarity",
+          "body": [
+            {
+              "_key": "p11-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p11-001s1", "_type": "span", "marks": [], "text": "Lesson 2 showed you two charts and asked you to eyeball the difference between a wandering random walk and a genuinely mean-reverting series. In practice, you cannot trade off a chart you eyeballed. You need a formal statistical test that takes a series, such as the spread from Chapter 2, and gives you a number-based answer to the question: is this stationary enough to trust? The Augmented Dickey-Fuller test, usually shortened to the ADF test, is the standard tool for exactly this." }
+              ]
+            },
+            {
+              "_key": "p11-002",
+              "_type": "bigIdea",
+              "text": "The ADF test starts by assuming a series is non-stationary, a random walk, and only concludes it is stationary if the data gives strong enough evidence against that assumption. A low p-value, conventionally below 0.05, means you can reject the non-stationary assumption and treat the series as mean-reverting. A high p-value means the data has not given you enough evidence to make that claim."
+            },
+            {
+              "_key": "p11-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p11-003s1", "_type": "span", "marks": [], "text": "The Null and Alternative Hypotheses" }
+              ]
+            },
+            {
+              "_key": "p11-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "p11-004m1", "_type": "glossaryTerm", "definition": "A property of a non-stationary series where a shock's effect never fades, causing the series to drift permanently rather than revert to a fixed mean. A random walk has a unit root." }
+              ],
+              "children": [
+                { "_key": "p11-004s1", "_type": "span", "marks": [], "text": "The ADF test's null hypothesis is that the series has a " },
+                { "_key": "p11-004s2", "_type": "span", "marks": ["p11-004m1"], "text": "unit root" },
+                { "_key": "p11-004s3", "_type": "span", "marks": [], "text": ", meaning it behaves like a random walk: non-stationary, with shocks that persist forever. The alternative hypothesis is that the series does not have a unit root, meaning it is stationary. This direction matters and is easy to get backwards: the test is built to assume non-stationarity by default, and it takes sufficiently strong evidence in the data to reject that default and conclude the series actually mean-reverts. This is a deliberately conservative starting point. A spread does not get to be treated as tradeable just because it looks reasonable, it has to actively clear this statistical bar." }
+              ]
+            },
+            {
+              "_key": "p11-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p11-005s1", "_type": "span", "marks": [], "text": "Why \"Augmented\"" }
+              ]
+            },
+            {
+              "_key": "p11-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p11-006s1", "_type": "span", "marks": [], "text": "The original Dickey-Fuller test regresses a series' change on its own previous level and checks whether that relationship is strong enough to imply reversion. Real financial series usually have more complex short-term dynamics than that simple regression can fully capture, today's change can be related to recent changes, not just yesterday's level. The Augmented Dickey-Fuller test adds extra lagged difference terms to the regression to absorb this extra structure, which keeps the test statistically valid on real-world series like a stock spread, rather than only on idealized, simple ones." }
+              ]
+            },
+            {
+              "_key": "p11-007",
+              "_type": "mathBlock",
+              "latex": "\\Delta Y_t = \\alpha + \\gamma Y_{t-1} + \\sum_{i=1}^{p} \\delta_i \\, \\Delta Y_{t-i} + \\varepsilon_t \\qquad H_0: \\gamma = 0 \\; \\text{(unit root)} \\quad H_1: \\gamma < 0 \\; \\text{(stationary)}",
+              "caption": "The ADF regression. If γ is significantly less than zero, the series pulls back toward its mean and the null hypothesis of a unit root is rejected."
+            },
+            {
+              "_key": "p11-008",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p11-008s1", "_type": "span", "marks": [], "text": "Reading the Output: Test Statistic, Critical Values, and P-Value" }
+              ]
+            },
+            {
+              "_key": "p11-009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p11-009s1", "_type": "span", "marks": [], "text": "The test produces a test statistic, which is compared against critical values at the 1 percent, 5 percent, and 10 percent significance levels, not the standard normal critical values used elsewhere in statistics, since the ADF test statistic follows its own, non-standard distribution. A more negative test statistic is stronger evidence against a unit root. If the test statistic is more negative than the critical value at your chosen significance level, you reject the null hypothesis at that level. In practice, most statistical software also reports a p-value directly: below 0.05 is the conventional bar to reject the null and treat the series as stationary." }
+              ]
+            },
+            {
+              "_key": "p11-010",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "from statsmodels.tsa.stattools import adfuller\n\n# spread: pandas Series, the Chapter 2 spread built from the regression hedge ratio\nresult = adfuller(spread)\n\nadf_statistic = result[0]\np_value = result[1]\ncritical_values = result[4]\n\nprint(f\"ADF statistic: {adf_statistic:.2f}\")\nprint(f\"p-value: {p_value:.3f}\")\nprint(f\"Critical values: {critical_values}\")",
+              "caption": "Running the ADF test on a spread series using statsmodels"
+            },
+            {
+              "_key": "p11-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p11-011s1", "_type": "span", "marks": [], "text": "Worked Example: Testing a Spread's Stationarity" }
+              ]
+            },
+            {
+              "_key": "p11-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p11-012s1", "_type": "span", "marks": [], "text": "Running the ADF test on a spread series (illustrative output, based on a full multi-year daily history, not the twelve-point toy series used earlier in this course for illustration) gives a test statistic of negative 3.42 and a p-value of 0.015. The 5 percent critical value is negative 3.00 and the 1 percent critical value is negative 3.75. Since negative 3.42 is more negative than negative 3.00, and the p-value of 0.015 is below 0.05, the null hypothesis of a unit root is rejected at the 5 percent level: there is statistical evidence this spread is stationary. It falls short of the stricter negative 3.75 needed to reject at the 1 percent level, so the evidence is solid but not overwhelming." }
+              ]
+            },
+            {
+              "_key": "p11-013",
+              "_type": "table",
+              "caption": "Illustrative ADF test result on a spread series",
+              "headers": ["Item", "Value", "Conclusion"],
+              "rows": [
+                { "_key": "p11-013r1", "cells": ["ADF test statistic", "-3.42", "More negative than the 5% critical value"] },
+                { "_key": "p11-013r2", "cells": ["5% critical value", "-3.00", "-3.42 < -3.00 → reject H₀ at 5%"] },
+                { "_key": "p11-013r3", "cells": ["1% critical value", "-3.75", "-3.42 > -3.75 → cannot reject H₀ at 1%"] },
+                { "_key": "p11-013r4", "cells": ["p-value", "0.015", "Below the conventional 0.05 bar"] }
+              ]
+            },
+            {
+              "_key": "p11-014",
+              "_type": "callout",
+              "type": "insight",
+              "text": "\"Reject the null at 5%\" is not the same as \"proven stationary.\" It means the data would be unlikely, only about a 1.5% chance here, to look this mean-reverting if the series truly had a unit root. That is meaningfully strong evidence, and enough for most pairs traders to proceed, but it is still a probabilistic conclusion, not a certainty."
+            },
+            {
+              "_key": "p11-015",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Two practical cautions. First, the ADF test needs a reasonably long history to have real statistical power, real applications typically use at least a year or two of daily data, not the twelve-week toy series used earlier in this course purely for illustration. Second, applying the plain ADF test directly to a spread built from an estimated regression hedge ratio slightly understates how strict the bar should be, since the hedge ratio itself was estimated from the same data. Lesson 4 covers the Engle-Granger method, which uses adjusted critical values to correct for exactly this."
+            },
+            {
+              "_key": "p11-016",
+              "_type": "comparison",
+              "title": "Reject H₀ vs fail to reject H₀",
+              "columns": [
+                {
+                  "_key": "p11-016c1",
+                  "label": "Reject the null (p < 0.05)",
+                  "points": [
+                    "Statistical evidence the series is stationary",
+                    "The spread has historically shown genuine mean reversion",
+                    "A z-score built on this spread has meaningful statistical grounding",
+                    "Still probabilistic, not a guarantee the pattern continues"
+                  ]
+                },
+                {
+                  "_key": "p11-016c2",
+                  "label": "Fail to reject the null (p ≥ 0.05)",
+                  "points": [
+                    "No statistical evidence against a unit root",
+                    "The spread could be a random walk with no real anchor",
+                    "A z-score on this spread has no reliable statistical basis",
+                    "The correct action is to drop the pair as a candidate, not trade it anyway"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "p11-017",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "p11-017s1", "label": "ADF null hypothesis", "value": "Unit root (non-stationary)", "context": "The test assumes non-stationarity until the data proves otherwise" },
+                { "_key": "p11-017s2", "label": "Conventional significance bar", "value": "p < 0.05", "context": "Below this, reject the null and treat the series as stationary" },
+                { "_key": "p11-017s3", "label": "Test statistic direction", "value": "More negative = stronger evidence", "context": "Compared against non-standard critical values, not a normal distribution" },
+                { "_key": "p11-017s4", "label": "Minimum practical data length", "value": "1–2+ years of daily data", "context": "The test needs real statistical power; short toy windows are for illustration only" }
+              ]
+            },
+            {
+              "_key": "p11-018",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Interpreting an ADF result",
+              "question": "An ADF test on a candidate spread gives a test statistic of -1.85 and a p-value of 0.35, with a 5% critical value of -3.00. What should you conclude?",
+              "options": [
+                "Reject the null hypothesis, the spread is confirmed stationary",
+                "Fail to reject the null hypothesis, there is no statistical evidence the spread is stationary, and it should not be treated as tradeable on this basis",
+                "The test is inconclusive and should be ignored in favor of the correlation coefficient",
+                "A p-value of 0.35 confirms the spread is a unit root process with certainty"
+              ],
+              "correctIndex": 1,
+              "explanation": "A test statistic of -1.85 is less negative than the -3.00 critical value, and a p-value of 0.35 is well above the conventional 0.05 bar. Both point to failing to reject the null hypothesis of a unit root, meaning there is no statistical evidence this spread is stationary. Trading it as if it were mean-reverting would not be supported by this test."
+            },
+            {
+              "_key": "p11-019",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "A pair that fails the test",
+              "scenario": "You ran correlation (0.71), built a regression hedge ratio, and constructed a spread for two NSE stocks that looked visually mean-reverting on a chart. The ADF test on that spread returns a p-value of 0.18.",
+              "prompt": "What should you do next, and why?",
+              "modelAnswer": "Despite the reasonable correlation and a chart that looked mean-reverting by eye, a p-value of 0.18 is well above the conventional 0.05 threshold, so there is no statistical evidence to reject the unit root null hypothesis. The correct response is to treat this pair as not confirmed cointegrated and not trade it on a z-score basis, regardless of how convincing the chart or the correlation number looked. A chart can look mean-reverting over a specific window purely by chance, which is exactly why Lesson 1 and Lesson 2 emphasized that eyeballing is not a substitute for the formal test."
+            },
+            {
+              "_key": "p11-020",
+              "_type": "flashcardSet",
+              "title": "The ADF Test: Core Terms",
+              "cards": [
+                { "_key": "p11-020f1", "term": "Unit root", "definition": "A property of a non-stationary series where shocks persist permanently rather than fading, causing the series to drift rather than mean-revert. A random walk has a unit root." },
+                { "_key": "p11-020f2", "term": "Augmented Dickey-Fuller (ADF) test", "definition": "A statistical test for whether a time series has a unit root, extended with lagged difference terms to remain valid on series with more complex short-term dynamics." },
+                { "_key": "p11-020f3", "term": "Null hypothesis (in the ADF test)", "definition": "The default assumption that the series has a unit root and is non-stationary, which the test only rejects if the data provides sufficiently strong evidence against it." },
+                { "_key": "p11-020f4", "term": "P-value", "definition": "The probability of observing data at least this extreme if the null hypothesis were true. Conventionally, a p-value below 0.05 is treated as sufficient evidence to reject the null." }
+              ]
+            },
+            {
+              "_key": "p11-021",
+              "_type": "keyTakeaways",
+              "points": [
+                "The ADF test's null hypothesis is that a series has a unit root and is non-stationary. Rejecting the null is evidence, not proof, that the series is stationary.",
+                "\"Augmented\" refers to added lagged difference terms that make the test valid for real-world series with more complex short-term dynamics than the basic Dickey-Fuller test assumes.",
+                "A more negative test statistic, compared against non-standard critical values, is stronger evidence against a unit root. A p-value below 0.05 is the conventional bar to reject the null.",
+                "The ADF test needs real statistical power to be meaningful, which means a reasonably long history, at least a year or two of daily data in practice, not a handful of weekly points.",
+                "Failing to reject the null means there is no statistical basis to treat a spread as mean-reverting, even if a chart or a correlation number looked encouraging.",
+                "Applying plain ADF critical values directly to a regression-based spread understates the true bar slightly, since the hedge ratio was estimated from the same data. Lesson 4's Engle-Granger method corrects for this with adjusted critical values."
+              ]
+            },
+            {
+              "_key": "p11-022",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice or a recommendation to buy, sell, or short any security named here. All test statistics, p-values, and critical values shown are illustrative and do not represent an actual statistical test on real market data. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

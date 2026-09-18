@@ -1,0 +1,231 @@
+{
+  "courseSlug": "advanced-regime-switching-models-for-strategy-allocation",
+  "chapters": [
+    {
+      "title": "Chapter 6: Portfolio and Capital Allocation Across Regimes",
+      "lessons": [
+        {
+          "title": "Case Study: Reallocating Capital Through a Regime Shift",
+          "slug": "case-study-reallocating-capital-through-a-regime-shift",
+          "body": [
+            {
+              "_key": "rswc6l4b01",
+              "_type": "bigIdea",
+              "text": "The real test of everything this chapter built is not any single regime's position size. It is how allocation actually moves as the regime probability drifts from one state toward another, since that drift is where real risk is won or lost."
+            },
+            {
+              "_key": "rswc6l4b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc6l4b02s1",
+                  "_type": "span",
+                  "text": "Lessons 1 through 3 built regime-aware Kelly, confidence-scaled leverage, and correlation-aware risk budgeting, each demonstrated at a single, static regime reading. This case study runs the full pipeline through an actual transition, a stylized 10-day drift from a confident Calm reading to a confident Stressed reading, and tracks position size day by day.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc6l4b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc6l4b03s1",
+                  "_type": "span",
+                  "text": "A 10-Day Drift From Calm to Stressed",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc6l4b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc6l4b04s1",
+                  "_type": "span",
+                  "text": "Using Lesson 2's blending formulas and Chapter 3's Calm and Stressed parameters throughout, apply the full pipeline, blended mean, blended variance via the law of total variance, Kelly fraction, confidence, and one-quarter Kelly scaling, at ten P(Calm) readings drifting steadily from 0.90 down to 0.10.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc6l4b05",
+              "_type": "table",
+              "caption": "The full sizing pipeline across a stylized 10-day regime transition",
+              "headers": ["Day", "P(Calm)", "mu_blend", "Kelly f*", "Confidence", "Position (1/4 Kelly x confidence)"],
+              "rows": [
+                {
+                  "_key": "rswc6l4b05r1",
+                  "_type": "tableRow",
+                  "cells": ["1", "0.90", "+0.039%", "3.92", "0.80", "+78.5%"]
+                },
+                {
+                  "_key": "rswc6l4b05r2",
+                  "_type": "tableRow",
+                  "cells": ["2", "0.85", "+0.029%", "2.36", "0.70", "+41.2%"]
+                },
+                {
+                  "_key": "rswc6l4b05r3",
+                  "_type": "tableRow",
+                  "cells": ["3", "0.75", "+0.0075%", "0.46", "0.50", "+5.7%"]
+                },
+                {
+                  "_key": "rswc6l4b05r4",
+                  "_type": "tableRow",
+                  "cells": ["4", "0.60", "-0.024%", "-1.05", "0.20", "-5.25%"]
+                },
+                {
+                  "_key": "rswc6l4b05r5",
+                  "_type": "tableRow",
+                  "cells": ["5", "0.50", "-0.045%", "-1.66", "0.00", "0.0%"]
+                },
+                {
+                  "_key": "rswc6l4b05r6",
+                  "_type": "tableRow",
+                  "cells": ["6", "0.40", "-0.066%", "-2.10", "0.20", "-10.5%"]
+                },
+                {
+                  "_key": "rswc6l4b05r7",
+                  "_type": "tableRow",
+                  "cells": ["7", "0.30", "-0.087%", "-2.44", "0.40", "-24.4%"]
+                },
+                {
+                  "_key": "rswc6l4b05r8",
+                  "_type": "tableRow",
+                  "cells": ["8", "0.20", "-0.108%", "-2.71", "0.60", "-40.6%"]
+                },
+                {
+                  "_key": "rswc6l4b05r9",
+                  "_type": "tableRow",
+                  "cells": ["9", "0.15", "-0.119%", "-2.82", "0.70", "-49.3%"]
+                },
+                {
+                  "_key": "rswc6l4b05r10",
+                  "_type": "tableRow",
+                  "cells": ["10", "0.10", "-0.129%", "-2.92", "0.80", "-58.4%"]
+                }
+              ]
+            },
+            {
+              "_key": "rswc6l4b06",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Position Size Through the 10-Day Regime Drift",
+              "xAxisLabel": "Day",
+              "yAxisLabel": "Position (% of capital)",
+              "data": [
+                { "_key": "rswc6l4b06d1", "label": "1", "value": 78.5 },
+                { "_key": "rswc6l4b06d2", "label": "2", "value": 41.2 },
+                { "_key": "rswc6l4b06d3", "label": "3", "value": 5.7 },
+                { "_key": "rswc6l4b06d4", "label": "4", "value": -5.25 },
+                { "_key": "rswc6l4b06d5", "label": "5", "value": 0.0 },
+                { "_key": "rswc6l4b06d6", "label": "6", "value": -10.5 },
+                { "_key": "rswc6l4b06d7", "label": "7", "value": -24.4 },
+                { "_key": "rswc6l4b06d8", "label": "8", "value": -40.6 },
+                { "_key": "rswc6l4b06d9", "label": "9", "value": -49.3 },
+                { "_key": "rswc6l4b06d10", "label": "10", "value": -58.4 }
+              ]
+            },
+            {
+              "_key": "rswc6l4b07",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "The P(Calm) sequence is a stylized, hand-picked drift, not a real model output, chosen to walk cleanly through the pipeline's mechanics. Chapter 3 and 4's fitted models produce genuine daily probability sequences that will not look this smooth."
+            },
+            {
+              "_key": "rswc6l4b08",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc6l4b08s1",
+                  "_type": "span",
+                  "text": "What the Transition Reveals",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc6l4b09",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc6l4b09s1",
+                  "_type": "span",
+                  "text": "Three things stand out that a single-snapshot example could never show. First, position size at Day 1 (+78.5%, P(Calm) = 0.90) is meaningfully larger in magnitude than at Day 10 (-58.4%, P(Calm) = 0.10), even though both sit at the same distance from maximum uncertainty. This is not an error. Calm's variance (0.75% daily) is far smaller than Stressed's (2.20%), and Kelly's formula divides by variance, so the same confidence level buys more leverage on the low-variance Calm side than on the high-variance Stressed side. Second, confidence hits exactly zero at Day 5, P(Calm) = 0.50, and forces the position to exactly zero regardless of what the raw Kelly fraction says, a direct, structural consequence of the confidence formula itself, not a coincidence of this particular example.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc6l4b10",
+              "_type": "callout",
+              "type": "insight",
+              "text": "The third and most subtle finding: the position flips from long to short between Day 3 (P(Calm) = 0.75, still +5.7%) and Day 4 (P(Calm) = 0.60, already -5.25%), not at P(Calm) = 0.50. Setting mu_blend = 0.0021p - 0.0015 to zero shows the blended mean itself only turns negative once P(Calm) falls below about 0.714, not 0.50. Because Stressed's negative mean return is larger in magnitude than Calm's positive one, the desk's breakeven point sits well above a genuine coin flip: you need meaningfully more than 50% confidence in Calm just to justify staying net long."
+            },
+            {
+              "_key": "rswc6l4b11",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc6l4b11s1",
+                  "_type": "span",
+                  "text": "None of these three findings were designed into the example by hand. They fall directly out of plugging Chapter 3's fitted regime parameters into the formulas built across this chapter, exactly the kind of behavior a well-specified pipeline should produce without needing a special case bolted on for each one.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc6l4b12",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Finding the Exact Breakeven Point",
+              "prompt": "Using mu_blend = 0.0021 x P(Calm) - 0.0015, at what value of P(Calm) does mu_blend first cross from negative to positive?",
+              "correctValue": 0.714,
+              "tolerance": 0.01,
+              "explanation": "Setting 0.0021p - 0.0015 = 0 gives p = 0.0015 / 0.0021 ≈ 0.714. Below this P(Calm) level, the blended expected return is negative even though Calm may still be the more probable single regime, exactly what produced the sign flip between Day 3 and Day 4 in this lesson's table."
+            },
+            {
+              "_key": "rswc6l4b13",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Explaining the Asymmetric Breakeven",
+              "question": "Why does this lesson's pipeline flip from a long position to a short position at roughly P(Calm) = 0.71, rather than at the intuitive-seeming P(Calm) = 0.50?",
+              "options": [
+                "This is a calculation error; the flip should occur exactly at P(Calm) = 0.50",
+                "Because the Stressed regime's negative mean return is larger in magnitude than the Calm regime's positive mean return, the blended mean stays negative until P(Calm) climbs well above 0.50",
+                "Because confidence is asymmetric between the two regimes",
+                "Because fractional Kelly only activates above P(Calm) = 0.71"
+              ],
+              "correctIndex": 1,
+              "explanation": "The blended mean is a probability-weighted average of two numbers that are not symmetric around zero: Calm's +0.06% and Stressed's -0.15%. Because the negative number has more than double the magnitude of the positive one, it takes considerably more than 50% probability on Calm to pull the blended mean back to zero, exactly the 0.714 breakeven point computed in this lesson."
+            },
+            {
+              "_key": "rswc6l4b14",
+              "_type": "keyTakeaways",
+              "points": [
+                "Running the full sizing pipeline through a stylized 10-day transition, rather than at a single snapshot, reveals structural behavior that a static example cannot show",
+                "Position size is not symmetric between equally confident Calm and Stressed readings, because Kelly divides by variance and Calm's variance is far smaller than Stressed's",
+                "Confidence hits exactly zero at P(Calm) = 0.50 by construction, forcing position size to zero at maximum uncertainty regardless of the raw Kelly signal",
+                "The long-to-short breakeven point sits at roughly P(Calm) = 0.714, not 0.50, because Stressed's negative mean return outweighs Calm's positive one in magnitude",
+                "This case study demonstrates the pipeline's internal mechanics on a hand-picked probability sequence; Chapter 7 covers what is required before running any of it, or the P(Calm) sequence itself, on real data with real capital"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

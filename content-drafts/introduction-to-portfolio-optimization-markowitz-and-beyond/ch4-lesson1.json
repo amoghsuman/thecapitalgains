@@ -1,0 +1,278 @@
+{
+  "courseSlug": "introduction-to-portfolio-optimization-markowitz-and-beyond",
+  "chapters": [
+    {
+      "title": "Chapter 4: Adding a Risk-Free Asset: The Capital Market Line",
+      "lessons": [
+        {
+          "title": "The Capital Allocation Line: Mixing a Risk-Free Asset With Risky Ones",
+          "slug": "the-capital-allocation-line-mixing-a-risk-free-asset-with-risky-ones",
+          "body": [
+            {
+              "_key": "poc4l1-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc4l1-001s1", "_type": "span", "marks": [], "text": "Every portfolio in this course so far has mixed risky assets with other risky assets. Add one truly risk-free asset to the mix, and something changes immediately: the curved frontier from Chapter 3 gives way to a perfectly straight line, and that line's slope turns out to be a number this course has used since Chapter 1's earliest mentions of risk-adjusted return." }
+              ]
+            },
+            {
+              "_key": "poc4l1-002",
+              "_type": "bigIdea",
+              "text": "Mixing a risk-free asset with any single risky portfolio produces a straight line in risk-return space, not a curve. That line's slope is exactly the Sharpe ratio of the risky portfolio you chose."
+            },
+            {
+              "_key": "poc4l1-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc4l1-003s1", "_type": "span", "marks": [], "text": "What Counts as Risk-Free in India" }
+              ]
+            },
+            {
+              "_key": "poc4l1-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "poc4l1-004m1", "_type": "glossaryTerm", "definition": "An asset with a certain, known return and zero variance. In practice, no asset is perfectly risk-free, but short-dated government securities come closest, since default risk is negligible and a short maturity limits interest-rate risk." }
+              ],
+              "children": [
+                { "_key": "poc4l1-004s1", "_type": "span", "marks": [], "text": "A true " },
+                { "_key": "poc4l1-004s2", "_type": "span", "marks": ["poc4l1-004m1"], "text": "risk-free asset" },
+                { "_key": "poc4l1-004s3", "_type": "span", "marks": [], "text": " has zero variance: its return is certain, known in advance, with no possible deviation. In India, the standard proxy is the 91-day or 182-day Treasury Bill, issued by the RBI on behalf of the Government of India. Sovereign default risk on rupee-denominated government debt is treated as negligible, and a maturity of a few months leaves almost no room for interest-rate risk to bite before redemption. Retail investors can access T-Bills directly through the RBI Retail Direct platform, though in practice many use a liquid mutual fund as a close, more convenient proxy." }
+              ]
+            },
+            {
+              "_key": "poc4l1-005",
+              "_type": "callout",
+              "type": "warning",
+              "text": "\"Risk-free\" only ever means free of DEFAULT and PRICE risk. It says nothing about inflation. A 91-day T-Bill yielding 6.5% still loses purchasing power in real terms if inflation runs higher than that. Every calculation in this lesson works in nominal terms, exactly as the rest of this course has throughout."
+            },
+            {
+              "_key": "poc4l1-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc4l1-006s1", "_type": "span", "marks": [], "text": "The Combined Portfolio: Return and Risk" }
+              ]
+            },
+            {
+              "_key": "poc4l1-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc4l1-007s1", "_type": "span", "marks": [], "text": "Pick any risky portfolio P, with expected return mu_P and risk sigma_P, perhaps one of Chapter 3's efficient frontier points. Put weight y into P, and the rest, 1 minus y, into the risk-free asset at rate Rf. Return follows Chapter 1's exact weighted-average formula, nothing new." }
+              ]
+            },
+            {
+              "_key": "poc4l1-008",
+              "_type": "mathBlock",
+              "latex": "R_c = y \\, \\mu_P + (1-y)\\, R_f = R_f + y(\\mu_P - R_f)",
+              "caption": "Combined portfolio return: the risk-free rate, plus y times the risky portfolio's excess return over that rate."
+            },
+            {
+              "_key": "poc4l1-009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc4l1-009s1", "_type": "span", "marks": [], "text": "Risk is where things simplify dramatically. Chapter 2's two-asset variance formula still technically applies, but the risk-free asset has zero variance AND zero covariance with everything, since a certain, constant return cannot move together with anything. Every term involving the risk-free asset vanishes." }
+              ]
+            },
+            {
+              "_key": "poc4l1-010",
+              "_type": "mathBlock",
+              "latex": "\\sigma_c^2 = y^2 \\sigma_P^2 + (1-y)^2 (0) + 2y(1-y)(0) = y^2 \\sigma_P^2 \\quad \\Rightarrow \\quad \\sigma_c = y \\, \\sigma_P",
+              "caption": "Combined portfolio risk: exactly y times the risky portfolio's own risk. No square root of a sum, no cross term. A straight multiple."
+            },
+            {
+              "_key": "poc4l1-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc4l1-011s1", "_type": "span", "marks": [], "text": "The Capital Allocation Line" }
+              ]
+            },
+            {
+              "_key": "poc4l1-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "poc4l1-012m1", "_type": "glossaryTerm", "definition": "The straight line, in risk-return space, of every combination of a specific risk-free asset and a specific risky portfolio, obtained by varying the weight y between them." }
+              ],
+              "children": [
+                { "_key": "poc4l1-012s1", "_type": "span", "marks": [], "text": "Both equations depend on y in the simplest possible way, linearly. Plot every combined portfolio as y varies, and the points fall on a perfectly straight line, the " },
+                { "_key": "poc4l1-012s2", "_type": "span", "marks": ["poc4l1-012m1"], "text": "Capital Allocation Line" },
+                { "_key": "poc4l1-012s3", "_type": "span", "marks": [], "text": ", or CAL. Chapter 3's frontier curved because two risky assets each carry their own uncertainty that can partially cancel. Here, only one leg carries any uncertainty at all, so there is nothing left to curve." }
+              ]
+            },
+            {
+              "_key": "poc4l1-013",
+              "_type": "mathBlock",
+              "latex": "R_c = R_f + \\left(\\frac{\\mu_P - R_f}{\\sigma_P}\\right) \\sigma_c",
+              "caption": "The CAL, written as a line: intercept Rf, and a slope built entirely from the risky portfolio's own numbers."
+            },
+            {
+              "_key": "poc4l1-014",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Look at that slope. (mu_P - Rf) divided by sigma_P is the Sharpe ratio of portfolio P, the exact same ratio this course has referenced since Chapter 1 as the standard measure of risk-adjusted return. The CAL's slope is not just related to the Sharpe ratio. It IS the Sharpe ratio, restated as a geometric line."
+            },
+            {
+              "_key": "poc4l1-015",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc4l1-015s1", "_type": "span", "marks": [], "text": "Worked Example: Building a CAL From Chapter 3's Frontier" }
+              ]
+            },
+            {
+              "_key": "poc4l1-016",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc4l1-016s1", "_type": "span", "marks": [], "text": "Take the five-stock frontier's 16% target-return portfolio from Chapter 3, Lesson 5: return 16%, risk 15.00%. Combine it with an illustrative risk-free rate of 6.5%, roughly in line with recent Indian T-Bill yields." }
+              ]
+            },
+            {
+              "_key": "poc4l1-017",
+              "_type": "table",
+              "caption": "Combined portfolios along this CAL (illustrative, Rf = 6.5%)",
+              "headers": ["Weight in P (y)", "Meaning", "Combined return", "Combined risk"],
+              "rows": [
+                { "_key": "poc4l1-017r1", "_type": "tableRow", "cells": ["0%", "All risk-free", "6.50%", "0.00%"] },
+                { "_key": "poc4l1-017r2", "_type": "tableRow", "cells": ["50%", "Half risk-free, half P", "11.25%", "7.50%"] },
+                { "_key": "poc4l1-017r3", "_type": "tableRow", "cells": ["100%", "All in P", "16.00%", "15.00%"] },
+                { "_key": "poc4l1-017r4", "_type": "tableRow", "cells": ["130%", "Borrow 30% at Rf, invest it in P", "18.85%", "19.50%"] }
+              ]
+            },
+            {
+              "_key": "poc4l1-018",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "The Capital Allocation Line",
+              "xAxisLabel": "Risk (%)",
+              "yAxisLabel": "Expected return (%)",
+              "data": [
+                { "_key": "poc4l1-018d1", "label": "0.00" },
+                { "_key": "poc4l1-018d2", "label": "7.50" },
+                { "_key": "poc4l1-018d3", "label": "15.00" },
+                { "_key": "poc4l1-018d4", "label": "19.50" }
+              ],
+              "series": [
+                { "_key": "poc4l1-018se1", "label": "Capital Allocation Line", "values": [6.5, 11.25, 16.0, 18.85] }
+              ]
+            },
+            {
+              "_key": "poc4l1-019",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc4l1-019s1", "_type": "span", "marks": [], "text": "y beyond 100% means borrowing at the risk-free rate to invest MORE than your own capital in P, leverage. The 130% row assumes that borrowing is possible at exactly 6.5%, the same rate you would earn lending. Real markets rarely offer this. A Zerodha margin trading facility, for instance, charges a meaningfully higher rate to borrow than a T-Bill pays to lend, so any real-world leveraged CAL is flatter above y = 100% than the formula above implies." }
+              ]
+            },
+            {
+              "_key": "poc4l1-020",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc4l1-020s1", "_type": "span", "marks": [], "text": "Choosing Which Risky Portfolio to Combine" }
+              ]
+            },
+            {
+              "_key": "poc4l1-021",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc4l1-021s1", "_type": "span", "marks": [], "text": "Nothing forces the choice of P to be the 16% frontier point. Any point on Chapter 3's frontier works, and each one draws its own CAL, with its own slope. A steeper CAL is strictly better: more return for the same risk, at every point along it. So the natural next question is which point on the entire frontier produces the steepest possible CAL." }
+              ]
+            },
+            {
+              "_key": "poc4l1-022",
+              "_type": "table",
+              "caption": "Sharpe ratios along Chapter 3's five-stock frontier (Rf = 6.5%)",
+              "headers": ["Frontier point (return / risk)", "Sharpe ratio"],
+              "rows": [
+                { "_key": "poc4l1-022r1", "_type": "tableRow", "cells": ["13.95% / 13.43% (minimum variance)", "0.555"] },
+                { "_key": "poc4l1-022r2", "_type": "tableRow", "cells": ["15.00% / 13.86%", "0.613"] },
+                { "_key": "poc4l1-022r3", "_type": "tableRow", "cells": ["16.00% / 15.00%", "0.633"] },
+                { "_key": "poc4l1-022r4", "_type": "tableRow", "cells": ["16.50% / 15.80%", "0.633"] },
+                { "_key": "poc4l1-022r5", "_type": "tableRow", "cells": ["17.50% / 17.73%", "0.620"] }
+              ]
+            },
+            {
+              "_key": "poc4l1-023",
+              "_type": "callout",
+              "type": "insight",
+              "text": "The Sharpe ratio rises, peaks somewhere between the 16.00% and 16.50% points, at essentially the same 0.633, and then falls again. The highest-RETURN portfolio on the frontier is not the one with the best Sharpe ratio, and neither is the lowest-risk one. There is exactly one point on the entire frontier that maximizes this slope, and finding it precisely, rather than by scanning a handful of rows, is Lesson 2's job."
+            },
+            {
+              "_key": "poc4l1-024",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Price a new allocation on this CAL",
+              "prompt": "Using this lesson's CAL (P: return 16%, risk 15.00%; Rf = 6.5%), what is the combined portfolio's expected return at y = 75% (75% in P, 25% risk-free)?",
+              "correctValue": 13.625,
+              "tolerance": 0.1,
+              "unit": "%",
+              "explanation": "Rc = Rf + y(muP - Rf) = 6.5 + 0.75 x (16 - 6.5) = 6.5 + 0.75 x 9.5 = 6.5 + 7.125 = 13.625%. Risk would be y x sigmaP = 0.75 x 15.00% = 11.25%."
+            },
+            {
+              "_key": "poc4l1-025",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Reading the slope",
+              "question": "Two Capital Allocation Lines share the same risk-free rate, but Line A has a steeper slope than Line B. What does this tell you?",
+              "options": [
+                "Line A's risky portfolio has a lower Sharpe ratio than Line B's",
+                "Line A's risky portfolio has a higher Sharpe ratio than Line B's, and offers more return for the same risk at every point along the line",
+                "Line A must have a higher risk-free rate than Line B",
+                "The two lines cannot be compared without knowing each investor's personal risk tolerance"
+              ],
+              "correctIndex": 1,
+              "explanation": "The CAL's slope is exactly the Sharpe ratio of its risky portfolio. A steeper CAL means a higher Sharpe ratio, and since both lines share the same intercept (the risk-free rate), the steeper line delivers strictly more return for any given level of risk, everywhere along it."
+            },
+            {
+              "_key": "poc4l1-026",
+              "_type": "flashcardSet",
+              "title": "Capital Allocation Line: Core Terms",
+              "cards": [
+                { "_key": "poc4l1-026f1", "term": "Risk-free asset", "definition": "An asset with zero variance and a certain return, approximated in India by short-dated Treasury Bills." },
+                { "_key": "poc4l1-026f2", "term": "Capital Allocation Line (CAL)", "definition": "The straight line of every combination of a specific risk-free asset and a specific risky portfolio, formed by varying the weight between them." },
+                { "_key": "poc4l1-026f3", "term": "CAL slope = Sharpe ratio", "definition": "The Capital Allocation Line's slope equals (mu_P - Rf) / sigma_P, exactly the Sharpe ratio of the risky portfolio it is built from." }
+              ]
+            },
+            {
+              "_key": "poc4l1-027",
+              "_type": "keyTakeaways",
+              "points": [
+                "Combining a risk-free asset with a risky portfolio produces a straight line, not a curve, since the risk-free leg carries zero variance and zero covariance with anything.",
+                "Combined return is Rf + y(muP - Rf), and combined risk is simply y times sigmaP, both linear in the weight y.",
+                "The CAL's slope is exactly the Sharpe ratio of the risky portfolio it is drawn from, connecting this lesson directly to risk-adjusted return measures used since Chapter 1.",
+                "Weights above 100% represent leverage, borrowing at the risk-free rate to invest more than your own capital, though real borrowing rates in India typically exceed the rate you can lend at.",
+                "Different risky portfolios from Chapter 3's frontier produce different CALs with different slopes, and a steeper CAL is unambiguously better at every point along it.",
+                "Scanning Chapter 3's frontier shows the Sharpe ratio rises, peaks, then falls, meaning neither the highest-return nor the lowest-risk frontier point is the best one to pair with the risk-free asset. Lesson 2 solves for the exact peak."
+              ]
+            },
+            {
+              "_key": "poc4l1-028",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to buy, sell, borrow against, or short any security or instrument named here. All returns, risk, risk-free rate, and Sharpe ratio figures used in this lesson are illustrative, not live or historical market data. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

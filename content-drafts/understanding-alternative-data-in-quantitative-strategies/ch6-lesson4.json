@@ -1,0 +1,272 @@
+{
+  "courseSlug": "understanding-alternative-data-in-quantitative-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 6: Backtesting Alternative Data Strategies Rigorously",
+      "lessons": [
+        {
+          "title": "Realistic Backtesting: Transaction Costs, Capacity, and Liquidity Constraints",
+          "slug": "realistic-backtesting-transaction-costs-capacity-and-liquidity-constraints",
+          "body": [
+            {
+              "_key": "c6l4k001",
+              "_type": "bigIdea",
+              "text": "A backtest with no cost model isn't a conservative estimate of a strategy. It's a description of a different, imaginary market where trading is free and infinite in size."
+            },
+            {
+              "_key": "c6l4k002",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l4k002s1",
+                  "_type": "span",
+                  "text": "The first three lessons of this chapter fixed statistical bias: look-ahead, survivorship, overfitting. Even a backtest that passes all three tests can still be worthless if it ignores what it actually costs to trade. This closing lesson brings the whole course back to the real market: what trading costs, how big a strategy can actually grow, and why the very inefficiency that makes alternative data valuable also makes it expensive to act on.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l4k003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l4k003s1",
+                  "_type": "span",
+                  "text": "The Real Cost Stack for Indian Equity Trades",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l4k004",
+              "_type": "table",
+              "caption": "A backtest that ignores this whole stack is quietly pricing execution at zero",
+              "headers": ["Cost Component", "What It Is"],
+              "rows": [
+                {
+                  "_key": "c6l4k004r1",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Brokerage",
+                    "Often near-zero for delivery trades on discount broking platforms, but a real, non-trivial cost on intraday and F&O trades depending on the broker's plan"
+                  ]
+                },
+                {
+                  "_key": "c6l4k004r2",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Securities Transaction Tax (STT)",
+                    "A government-levied tax on securities transactions, applied differently across delivery, intraday, and derivatives trades"
+                  ]
+                },
+                {
+                  "_key": "c6l4k004r3",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Stamp duty and exchange charges",
+                    "State stamp duty plus NSE and BSE transaction charges, small individually but a genuine drag once compounded across high turnover"
+                  ]
+                },
+                {
+                  "_key": "c6l4k004r4",
+                  "_type": "tableRow",
+                  "cells": [
+                    "SEBI turnover fees and GST",
+                    "A small regulatory fee plus GST applied on brokerage and certain other charges"
+                  ]
+                },
+                {
+                  "_key": "c6l4k004r5",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Bid-ask spread and market impact",
+                    "Not a line item on any contract note, but often the largest cost of all, covered next in this lesson"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c6l4k005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l4k005s1",
+                  "_type": "span",
+                  "text": "Market Impact: Why the Stocks Alt Data Loves Are Often the Hardest to Trade",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l4k006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c6l4m001",
+                  "_type": "glossaryTerm",
+                  "definition": "The cost of a trade moving the market price against you as you execute it, distinct from brokerage, taxes, and fees, and typically the largest single cost for any meaningfully sized position in a less liquid stock."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c6l4k006s1",
+                  "_type": "span",
+                  "text": "Here is a genuine tension worth sitting with. Alternative data tends to produce its strongest, least crowded signals on mid-cap and small-cap names, exactly the companies that are less thoroughly covered by analysts and less thoroughly priced by the market, which is precisely why Chapter 1 called this a source of edge in the first place. Those same companies also tend to have the thinnest trading volumes, which means ",
+                  "marks": []
+                },
+                {
+                  "_key": "c6l4k006s2",
+                  "_type": "span",
+                  "text": "market impact",
+                  "marks": ["c6l4m001"]
+                },
+                {
+                  "_key": "c6l4k006s3",
+                  "_type": "span",
+                  "text": " bites hardest exactly where the signal is strongest. A great IC on a stock you cannot trade in meaningful size without moving the price against yourself is a research result, not a strategy.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l4k007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l4k007s1",
+                  "_type": "span",
+                  "text": "Capacity: How Big Can This Strategy Actually Get?",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l4k008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l4k008s1",
+                  "_type": "span",
+                  "text": "A commonly used rule of thumb caps how much of a stock's average daily traded value, or ADV, a desk should trade in a single day without meaningfully worsening its own execution price, often cited around 10% of ADV. Working backward from that limit, and from a chosen number of days to build a position, gives you the strategy's actual capacity, the maximum AUM it can deploy before this liquidity constraint bites.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l4k009",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Calculate the Strategy's Capacity From One Position's Liquidity",
+              "prompt": "A mid-cap auto ancillary stock has an average daily traded value of ₹20 crore. Your desk's execution policy caps daily participation at 10% of ADV, and the position is built over 5 trading days. This stock is meant to be a 2% position size in the portfolio. What is the maximum portfolio AUM this single stock's liquidity would support, in ₹ crore?",
+              "correctValue": 500,
+              "tolerance": 10,
+              "unit": "₹ crore",
+              "explanation": "Max daily trade = 10% x ₹20 crore = ₹2 crore. Max position built over 5 days = ₹2 crore x 5 = ₹10 crore. If that ₹10 crore represents a 2% portfolio weight, Max AUM = ₹10 crore / 2% = ₹500 crore. If your desk's actual AUM exceeds this, either the position needs more days to build, a smaller portfolio weight, or the stock simply cannot support the strategy at that scale."
+            },
+            {
+              "_key": "c6l4k010",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l4k010s1",
+                  "_type": "span",
+                  "text": "Modeling Costs Realistically: Beyond a Flat Basis-Point Assumption",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l4k011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l4k011s1",
+                  "_type": "span",
+                  "text": "The simplest backtest cost model applies a flat basis-point charge to every trade regardless of size. This is a reasonable starting point but understates the true cost of larger trades in thinner names, since market impact does not scale in a straight line with trade size. A more realistic model, well established in market microstructure research, treats impact cost as scaling roughly with the square root of trade size relative to ADV, meaning a trade twice as large costs meaningfully more than twice as much to execute, but not four times as much. For an alt-data strategy that naturally gravitates toward less liquid names, upgrading from a flat cost assumption to a size-aware one is often the single change that most changes a backtest's conclusion about whether a strategy is actually viable.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l4k012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l4k012s1",
+                  "_type": "span",
+                  "text": "Turnover, Decay, and the Cost Squeeze",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l4k013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c6l4k013s1",
+                  "_type": "span",
+                  "text": "Chapter 1's alpha decay and Chapter 5's IC decay curves are not just academic. A fast-decaying signal only pays off if you rebalance often enough to actually capture it before it fades, but rebalancing often enough means paying the full cost stack from this lesson far more frequently. A signal with a higher gross IC but a very short useful horizon can end up worse, net of realistic costs, than a signal with a lower gross IC but a horizon long enough to rebalance monthly instead of weekly.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c6l4k014",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Choosing Between a Sharp Signal and a Durable One",
+              "scenario": "Signal A has a mean IC of 0.06, but its decay curve from Chapter 5 shows it peaks and largely fades within 5 trading days, requiring near-weekly rebalancing to capture. Signal B has a lower mean IC of 0.04, but its decay curve stays roughly flat out to 30 trading days, comfortably supporting a monthly rebalance. Both signals operate on a similar universe of mid-cap names with meaningful liquidity constraints.",
+              "prompt": "Which signal is more likely to be the better strategy once realistic transaction costs and capacity limits are accounted for, and why might the raw IC comparison alone be misleading?",
+              "modelAnswer": "Signal B is more likely to hold up better once realistic costs are included, even though its raw IC is lower. Signal A's near-weekly rebalance requirement means paying the full cost stack, brokerage, STT, stamp duty, and especially market impact on thinly traded mid-cap names, roughly four times as often as Signal B's monthly rebalance, and those costs compound directly against Signal A's gross edge every single time. On mid-cap names where market impact is already a real constraint, that turnover difference can easily erase more than the 0.02 IC advantage Signal A appears to have on paper. The raw IC comparison is misleading precisely because it describes predictive power in isolation, without asking what it costs to actually capture that power in a real market, which is exactly the gap this entire lesson, and this entire chapter, has been built to close."
+            },
+            {
+              "_key": "c6l4k015",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This chapter's four lessons form one discipline, not four separate checklists: get the dates right, get the universe right, get the statistics honest, and get the costs real. Skip any one of them and the other three still leave you with a backtest that cannot be trusted with actual capital."
+            },
+            {
+              "_key": "c6l4k016",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "The costs, figures, and scenario in this lesson are illustrative teaching examples, not a complete or current account of any specific broker's fees, government levies, or a recommendation to trade any security. Always confirm current brokerage, tax, and regulatory charges directly with your broker and consult a qualified professional before making trading decisions."
+            },
+            {
+              "_key": "c6l4k017",
+              "_type": "keyTakeaways",
+              "points": [
+                "A realistic Indian equity cost stack includes brokerage, STT, stamp duty, exchange charges, SEBI fees, GST, and, usually largest of all, bid-ask spread and market impact",
+                "Alternative data's strongest signals often sit on less liquid mid-cap and small-cap names, meaning the same inefficiency that creates the edge also creates the highest market impact cost to capture it",
+                "Capacity, the maximum AUM a strategy can support, can be estimated by working backward from a liquidity rule of thumb, such as 10% of ADV, through how many days a position takes to build and what weight it holds in the portfolio",
+                "A single stock's liquidity constraint can cap an entire strategy's scale, in this lesson's example, a ₹20 crore ADV name capped the strategy at roughly ₹500 crore in AUM",
+                "A flat basis-point cost assumption understates true cost for larger trades in thin names, a square-root market impact model is a more realistic, well-established alternative",
+                "A signal's decay speed directly determines its required turnover, and required turnover directly determines how much of its gross edge realistic transaction costs will erode, sometimes enough to flip which of two signals is actually the better strategy",
+                "This chapter's four lessons, look-ahead bias, survivorship bias, overfitting, and realistic costs, together form the full discipline a backtest needs before it deserves to be trusted with real capital"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

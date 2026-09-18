@@ -1,0 +1,160 @@
+{
+  "courseSlug": "understanding-capacity-constraints-and-strategy-scaling",
+  "chapters": [
+    {
+      "title": "Chapter 7: Capstone: Building and Defending a Capacity-Aware Scaling Plan",
+      "lessons": [
+        {
+          "title": "Stress-Testing Your Scaling Assumptions",
+          "slug": "stress-testing-your-scaling-assumptions",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "c1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c1s1", "text": "Every input in the framework from the last lesson was a point estimate: a single number for ADV, a single number for volatility, a single calibration constant Y. This lesson tests what happens when those numbers move against you, especially all at once, which is exactly the moment a capacity estimate most needs to hold up.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c2s1", "text": "The Three Inputs Most Likely to Move Against You", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c3",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c3s1", "text": "ADV, the calibration constant Y, and daily volatility are not independent sources of random noise. During genuine market stress, they tend to move together, and all in the same unfavorable direction: liquidity dries up, execution gets messier and less well-behaved, and volatility spikes. A capacity estimate built entirely on calm-market values for all three is being tested at exactly the wrong moment if it is only ever checked once, at launch.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c4",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c4s1", "text": "Stress-Testing the Nifty 50 Mean-Reversion Example", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c5",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c5s1", "text": "Recall the Chapter 4 base case: ADV Rs 200 crore, volatility 1.5%, Y of 0.7, turnover 25 times a year, giving a per-stock capacity of about Rs 1.16 crore. Now stress each input one at a time, then all together.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "c6",
+              "caption": "Sensitivity of per-stock capacity to stressed inputs",
+              "headers": ["Scenario", "ADV", "Y", "Volatility", "Capacity", "% of Base Case"],
+              "rows": [
+                { "cells": ["Base case", "Rs 200 Cr", "0.70", "1.5%", "Rs 1.16 Cr", "100%"] },
+                { "cells": ["ADV falls 30%", "Rs 140 Cr", "0.70", "1.5%", "Rs 0.81 Cr", "~70%"] },
+                { "cells": ["Y worsens to 1.0", "Rs 200 Cr", "1.00", "1.5%", "Rs 0.57 Cr", "~49%"] },
+                { "cells": ["Volatility doubles to 3%", "Rs 200 Cr", "0.70", "3.0%", "Rs 0.29 Cr", "~25%"] },
+                { "cells": ["All three combined", "Rs 140 Cr", "1.00", "3.0%", "Rs 0.10 Cr", "~9%"] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "c7",
+              "type": "warning",
+              "text": "The combined scenario is not the individual effects added together, it is them multiplied: 0.70 x 0.49 x 0.25 equals almost exactly the 9% that comes out of recomputing the formula directly. Three individually moderate stresses combine into one severe one, because capacity depends on ADV, Y, and volatility all at once, not on any single input in isolation."
+            },
+            {
+              "_type": "block",
+              "_key": "c8",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c8s1", "text": "Two More Assumptions Worth Questioning", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c9",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c9s1", "text": "Designed turnover is not always realized turnover. A volatile, whipsaw-prone period can trigger far more stop-outs and re-entries than the strategy's design assumed, quietly pushing realized turnover above the number the original capacity estimate used, and since capacity falls with the square of turnover, this alone can matter enormously. And the position-independence assumption behind aggregating capacity across a book, or across sleeves in Chapter 5, is itself a calm-market approximation. Correlation between positions and between strategies tends to rise during genuine stress, the same crisis-correlation problem from the end of the last chapter, meaning the aggregation step in the framework is least reliable exactly when it is most needed.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c10",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c10s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "c11",
+              "variant": "numericInput",
+              "title": "Combine Two Stresses",
+              "prompt": "If ADV falls 30% and volatility doubles, but Y stays at its base value of 0.7, what percentage of the original base-case capacity remains?",
+              "correctValue": 17.5,
+              "tolerance": 1,
+              "unit": "%",
+              "explanation": "ADV falling 30% leaves a ratio of 0.70. Volatility doubling leaves a capacity ratio of 1 divided by 2 squared, or 0.25, since capacity depends on volatility squared. Combined: 0.70 x 0.25 = 0.175, or 17.5% of the original capacity."
+            },
+            {
+              "_type": "block",
+              "_key": "c12",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c12s1", "text": "What This Means for the Safety Margin", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c13",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c13s1", "text": "This is exactly why Chapter 4 recommended operating at 60 to 70% of theoretical capacity rather than the full number. But this stress test shows even that margin can be insufficient against a genuinely severe, multi-factor shock. The practical answer is usually not an ever-larger static safety margin, which would sacrifice too much usable capacity in ordinary conditions, but a pre-planned, triggered response: specific, predefined actions, cutting size, widening participation caps' conservatism, or pausing the strategy, that activate automatically once realized ADV or realized volatility move materially away from the assumptions the original estimate was built on.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c14",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c14s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "c15",
+              "text": "A capacity estimate is only as good as the calm-market conditions it was built from. Stress-testing it, one input at a time and then all together, is what tells you whether your safety margin is a real buffer or just a smaller version of the same fragile number."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "c16",
+              "points": [
+                "ADV, the calibration constant Y, and volatility tend to move together and unfavorably during genuine market stress, not independently of each other.",
+                "Stressing all three inputs at once compounds multiplicatively, not additively, so moderate individual stresses can combine into a severe collapse in estimated capacity.",
+                "Realized turnover during volatile, whipsaw-prone periods can exceed a strategy's designed turnover, and correlation across positions or sleeves tends to rise during stress, undermining two assumptions the framework otherwise relies on.",
+                "A pre-planned, triggered response to deteriorating conditions is generally more practical than an ever-larger static safety margin, which would give up too much usable capacity in ordinary market conditions."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

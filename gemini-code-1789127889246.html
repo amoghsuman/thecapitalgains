@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Capital Gains | Modern Wealth Intelligence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0B0F19;
+            --surface-card: #111827;
+            --surface-card-hover: #1F2937;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --primary-green: #10B981;
+            --primary-green-glow: rgba(16, 185, 129, 0.2);
+            --text-main: #F9FAFB;
+            --text-sub: #9CA3AF;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-main); overflow-x: hidden; line-height: 1.5; }
+
+        /* Background Glows */
+        .glow-1 { position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: 600px; height: 400px; background: radial-gradient(circle, var(--primary-green-glow) 0%, transparent 70%); pointer-events: none; }
+
+        /* Navigation */
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 8%; border-bottom: 1px solid var(--border-color); background: rgba(11, 15, 25, 0.8); backdrop-filter: blur(12px); sticky: top; z-index: 50; }
+        .brand { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.5px; display: flex; align-items: center; gap: 8px; }
+        .brand-icon { width: 12px; height: 12px; background: var(--primary-green); border-radius: 50%; box-shadow: 0 0 10px var(--primary-green); }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a { color: var(--text-sub); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--text-main); }
+        
+        .btn { padding: 0.65rem 1.25rem; border-radius: 8px; font-weight: 600; font-size: 0.875rem; text-decoration: none; transition: all 0.2s; border: none; cursor: pointer; }
+        .btn-ghost { color: var(--text-main); background: transparent; }
+        .btn-primary { background: var(--primary-green); color: #000; box-shadow: 0 0 20px var(--primary-green-glow); }
+        .btn-primary:hover { background: #059669; color: #fff; }
+
+        /* Hero */
+        .hero { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 6rem 1rem 4rem; max-width: 900px; margin: 0 auto; position: relative; }
+        .tag { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: var(--primary-green); font-size: 0.8rem; font-weight: 700; padding: 0.35rem 0.9rem; border-radius: 100px; margin-bottom: 1.5rem; letter-spacing: 0.5px; }
+        .hero h1 { font-size: 3.5rem; font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 1.25rem; }
+        .hero h1 span { background: linear-gradient(135deg, #FFF, var(--text-sub)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { font-size: 1.125rem; color: var(--text-sub); max-width: 600px; margin-bottom: 2.5rem; }
+
+        /* Live Tax Calculator Widget Demo */
+        .demo-widget { width: 100%; max-width: 800px; background: var(--surface-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 2rem; margin-top: 1rem; text-align: left; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .widget-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1.5rem; }
+        .widget-title { font-size: 0.95rem; font-weight: 700; color: var(--text-sub); text-transform: uppercase; letter-spacing: 0.5px; }
+        .widget-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        
+        .input-group label { display: block; font-size: 0.85rem; color: var(--text-sub); margin-bottom: 0.5rem; }
+        .input-group input { width: 100%; background: var(--bg-dark); border: 1px solid var(--border-color); padding: 0.75rem 1rem; border-radius: 8px; color: var(--text-main); font-size: 1rem; outline: none; }
+        .input-group input:focus { border-color: var(--primary-green); }
+
+        .stat-card { background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; text-align: right; }
+        .stat-label { font-size: 0.75rem; color: var(--text-sub); margin-bottom: 0.25rem; }
+        .stat-value { font-size: 1.5rem; font-weight: 700; color: var(--primary-green); }
+
+        /* Feature Grid */
+        .features { padding: 5rem 8%; max-width: 1200px; margin: 0 auto; }
+        .section-header { text-align: center; margin-bottom: 3.5rem; }
+        .section-header h2 { font-size: 2.25rem; font-weight: 800; letter-spacing: -1px; }
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+        .f-card { background: var(--surface-card); border: 1px solid var(--border-color); padding: 2rem; border-radius: 12px; transition: border 0.2s; }
+        .f-card:hover { border-color: rgba(255,255,255,0.2); }
+        .f-icon { font-size: 1.5rem; margin-bottom: 1rem; display: inline-block; }
+        .f-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .f-card p { font-size: 0.9rem; color: var(--text-sub); }
+
+        /* Footer */
+        footer { border-top: 1px solid var(--border-color); padding: 3rem 8%; text-align: center; font-size: 0.85rem; color: var(--text-sub); }
+    </style>
+</head>
+<body>
+
+    <div class="glow-1"></div>
+
+    <nav>
+        <div class="brand">
+            <div class="brand-icon"></div>
+            The Capital Gains
+        </div>
+        <ul class="nav-links">
+            <li><a href="#features">Platform</a></li>
+            <li><a href="#calculator">Tax Engine</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+        </ul>
+        <div style="display: flex; gap: 0.5rem;">
+            <a href="#" class="btn btn-ghost">Log In</a>
+            <a href="#" class="btn btn-primary">Start Free Trial</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <span class="tag">AUTOMATED PORTFOLIO TAX OPTIMIZATION</span>
+        <h1>Stop losing profits to <span>unnecessary tax drag.</span></h1>
+        <p>Real-time capital gains tracking, automated tax-loss harvesting, and seamless multi-broker portfolio integration.</p>
+
+        <!-- Interactive Widget Preview -->
+        <div class="demo-widget" id="calculator">
+            <div class="widget-header">
+                <span class="widget-title">Live Capital Gains Estimator</span>
+                <span style="font-size: 0.8rem; color: var(--primary-green); font-weight: 600;">● Engine Active</span>
+            </div>
+            <div class="widget-grid">
+                <div>
+                    <div class="input-group" style="margin-bottom: 1rem;">
+                        <label>Realized Capital Gains (Annual)</label>
+                        <input type="text" id="gains" value="₹ 5,000,000" oninput="calculateTax()">
+                    </div>
+                    <div class="input-group">
+                        <label>Unrealized Portfolio Losses Available</label>
+                        <input type="text" id="losses" value="₹ 1,200,000" oninput="calculateTax()">
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; justify-content: space-between;">
+                    <div class="stat-card">
+                        <div class="stat-label">Estimated Tax Without Harvesting</div>
+                        <div class="stat-value" id="tax-old" style="color: #EF4444;">₹ 1,000,000</div>
+                    </div>
+                    <div class="stat-card" style="border-color: var(--primary-green);">
+                        <div class="stat-label">Tax After Harvesting</div>
+                        <div class="stat-value" id="tax-new">₹ 760,000</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="features" id="features">
+        <div class="section-header">
+            <h2>Built for High-Growth Portfolios</h2>
+        </div>
+        <div class="feature-grid">
+            <div class="f-card">
+                <div class="f-icon">⚡</div>
+                <h3>Real-Time Loss Harvesting</h3>
+                <p>Identifies underperforming assets in your portfolio dynamically so you can offset realized short-term and long-term gains before tax deadlines.</p>
+            </div>
+            <div class="f-card">
+                <div class="f-icon">🔒</div>
+                <h3>Bank-Grade API Sync</h3>
+                <p>Connect direct broker feeds and exchanges securely without sharing execution rights or account passwords.</p>
+            </div>
+            <div class="f-card">
+                <div class="f-icon">📊</div>
+                <h3>Audit-Ready Tax Reporting</h3>
+                <p>Export pre-formatted Schedule CG reports tailored for instant filing with local tax authorities and accountants.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 The Capital Gains Technology Inc. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function calculateTax() {
+            let gains = parseFloat(document.getElementById('gains').value.replace(/[^0-9.-]+/g,"")) || 0;
+            let losses = parseFloat(document.getElementById('losses').value.replace(/[^0-9.-]+/g,"")) || 0;
+            
+            let taxOld = gains * 0.20; // assumed flat rate
+            let netGains = Math.max(0, gains - losses);
+            let taxNew = netGains * 0.20;
+
+            document.getElementById('tax-old').innerText = '₹ ' + taxOld.toLocaleString('en-IN');
+            document.getElementById('tax-new').innerText = '₹ ' + taxNew.toLocaleString('en-IN');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,759 @@
+{
+  "courseSlug": "valuation-methods-dcf-relative-valuation-and-when-to-use-each",
+  "chapters": [
+    {
+      "title": "Chapter 3: Completing and Stress-Testing the DCF",
+      "lessons": [
+        {
+          "title": "Reverse DCF: What Is the Market Already Pricing In?",
+          "slug": "reverse-dcf-what-is-the-market-already-pricing-in",
+          "body": [
+            {
+              "_key": "k2",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k1",
+                  "_type": "span",
+                  "text": "Every DCF so far has worked forwards: forecast cash flows, discount them, arrive at a value, compare it with the price. That approach has a weakness you have now seen several times. Your own forecast anchors you. Build a model expecting a stock to look cheap and, somehow, it usually does. A reverse DCF flips the process around. It starts with the price the market is paying today and asks what the future would have to look like to justify it.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "bigIdea",
+              "text": "A reverse DCF does not ask what a stock is worth. It asks what you would have to believe to pay today's price. Your job then shifts from predicting the future to judging whether the market's implied future is plausible.",
+              "_key": "k3"
+            },
+            {
+              "_key": "k5",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k4",
+                  "_type": "span",
+                  "text": "How a Reverse DCF Works",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k10",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k6",
+                  "_type": "span",
+                  "text": "The market price is a DCF that someone has already solved. A reverse DCF, an approach popularised by Alfred Rappaport and Michael Mauboussin under the name ",
+                  "marks": []
+                },
+                {
+                  "_key": "k8",
+                  "_type": "span",
+                  "text": "expectations investing",
+                  "marks": [
+                    "k7"
+                  ]
+                },
+                {
+                  "_key": "k9",
+                  "_type": "span",
+                  "text": ", recovers the assumptions buried inside it.",
+                  "marks": []
+                }
+              ],
+              "markDefs": [
+                {
+                  "_key": "k7",
+                  "_type": "glossaryTerm",
+                  "definition": "An approach that starts from a stock's current price, works out the performance expectations embedded in it, and then assesses whether those expectations are likely to be beaten or missed."
+                }
+              ]
+            },
+            {
+              "_key": "k13",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k11",
+                  "_type": "span",
+                  "text": "Fix the discount rate.",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_key": "k12",
+                  "_type": "span",
+                  "text": " Use your WACC or cost of equity. This is the one input you estimate independently.",
+                  "marks": []
+                }
+              ],
+              "markDefs": [],
+              "listItem": "number",
+              "level": 1
+            },
+            {
+              "_key": "k16",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k14",
+                  "_type": "span",
+                  "text": "Fix every input except one.",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_key": "k15",
+                  "_type": "span",
+                  "text": " Usually margins, reinvestment and terminal assumptions are held at reasonable levels.",
+                  "marks": []
+                }
+              ],
+              "markDefs": [],
+              "listItem": "number",
+              "level": 1
+            },
+            {
+              "_key": "k19",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k17",
+                  "_type": "span",
+                  "text": "Solve for the remaining input.",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_key": "k18",
+                  "_type": "span",
+                  "text": " Find the revenue growth, margin or length of the high-growth period that makes the DCF value equal the market price. In Excel, Goal Seek does this in seconds.",
+                  "marks": []
+                }
+              ],
+              "markDefs": [],
+              "listItem": "number",
+              "level": 1
+            },
+            {
+              "_key": "k22",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k20",
+                  "_type": "span",
+                  "text": "Judge the answer.",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_key": "k21",
+                  "_type": "span",
+                  "text": " Compare the implied figure with the company's history, its industry and its physical constraints.",
+                  "marks": []
+                }
+              ],
+              "markDefs": [],
+              "listItem": "number",
+              "level": 1
+            },
+            {
+              "_type": "comparison",
+              "title": "Forward DCF vs reverse DCF",
+              "columns": [
+                {
+                  "_key": "k23",
+                  "label": "Forward DCF",
+                  "points": [
+                    "Starts with: your forecast",
+                    "Solves for: value per share",
+                    "Question: what is this worth?",
+                    "Main risk: anchoring on your own story",
+                    "Best for: businesses you can forecast with some confidence"
+                  ]
+                },
+                {
+                  "_key": "k24",
+                  "label": "Reverse DCF",
+                  "points": [
+                    "Starts with: the market price",
+                    "Solves for: implied growth, margin or duration",
+                    "Question: what must I believe to pay this price?",
+                    "Main risk: treating one implied path as the only one",
+                    "Best for: expensive stocks, fast growers and debates about \"priced in\""
+                  ]
+                }
+              ],
+              "_key": "k25"
+            },
+            {
+              "_key": "k27",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k26",
+                  "_type": "span",
+                  "text": "Example 1: What Is Priced Into Kaveri Ridge at ₹300?",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k29",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k28",
+                  "_type": "span",
+                  "text": "Use the full Kaveri Ridge model from the last three lessons, with WACC at 11.5%, perpetual growth at 5% and the royalty dispute at 50%. The base case forecast grows revenue at an average of 8.8% a year for five years and values the shares at ₹248.6. Now solve backwards from ₹300.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "k30",
+                  "label": "Implied revenue growth",
+                  "value": "17.6% a year",
+                  "context": "Years 1 to 5, margin held at 15.4%"
+                },
+                {
+                  "_key": "k31",
+                  "label": "Base case growth",
+                  "value": "8.8% a year",
+                  "context": "Average over years 1 to 5"
+                },
+                {
+                  "_key": "k32",
+                  "label": "Implied EBIT margin",
+                  "value": "17.4%",
+                  "context": "Base case growth, sustained forever"
+                },
+                {
+                  "_key": "k33",
+                  "label": "Current EBIT margin",
+                  "value": "15.4%",
+                  "context": "Last reported year"
+                }
+              ],
+              "_key": "k34"
+            },
+            {
+              "_key": "k36",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k35",
+                  "_type": "span",
+                  "text": "At a 15.4% margin, ₹300 requires revenue to grow 17.6% a year for five years, reaching about ₹14,606 crore. Even if cement realisations rose 3% a year, that means selling roughly 25.2 million tonnes in year 5. Kaveri Ridge's capacity after its current expansion is 20 million tonnes. The market is either expecting another major expansion that has not been announced, or a margin meaningfully above today's 15.4%.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k38",
+              "_type": "block",
+              "style": "h3",
+              "children": [
+                {
+                  "_key": "k37",
+                  "_type": "span",
+                  "text": "More than one path to the same price",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k40",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k39",
+                  "_type": "span",
+                  "text": "A reverse DCF on one variable can mislead you into thinking there is only one way the price can be justified. Solve for growth at several different margins, and you get the full set of combinations the market price allows.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "table",
+              "caption": "Revenue growth needed in years 1 to 5 to justify ₹300, at different EBIT margins",
+              "headers": [
+                "EBIT margin (sustained)",
+                "Implied revenue growth, years 1 to 5",
+                "Reading"
+              ],
+              "rows": [
+                {
+                  "_key": "k41",
+                  "_type": "tableRow",
+                  "cells": [
+                    "14.0%",
+                    "26.3% a year",
+                    "Far beyond capacity and industry demand"
+                  ]
+                },
+                {
+                  "_key": "k42",
+                  "_type": "tableRow",
+                  "cells": [
+                    "15.4%",
+                    "17.6% a year",
+                    "Demanding but conceivable with new capacity"
+                  ]
+                },
+                {
+                  "_key": "k43",
+                  "_type": "tableRow",
+                  "cells": [
+                    "16.5%",
+                    "12.3% a year",
+                    "Demanding but conceivable with new capacity"
+                  ]
+                },
+                {
+                  "_key": "k44",
+                  "_type": "tableRow",
+                  "cells": [
+                    "17.0%",
+                    "10.3% a year",
+                    "Demanding but conceivable with new capacity"
+                  ]
+                }
+              ],
+              "_key": "k45"
+            },
+            {
+              "_type": "callout",
+              "type": "insight",
+              "text": "This is the real output of a reverse DCF: a short list of stories that fit the price. For Kaveri Ridge, the most plausible story is an EBIT margin of about 17% to 17.4%, roughly two percentage points above today's level and sustained through every future cycle, rather than extraordinary growth. You can now research one specific question: is a cement company with Kaveri Ridge's cost position likely to hold margins that high through good years and bad?",
+              "_key": "k46"
+            },
+            {
+              "_key": "k48",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k47",
+                  "_type": "span",
+                  "text": "Example 2: The 80-Times-Cash-Flow Consumer Stock",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k50",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k49",
+                  "_type": "span",
+                  "text": "Reverse DCFs are most revealing for expensive stocks. Himalayan Brands Ltd is a fictional NSE-listed FMCG company with strong brands in packaged foods and personal care. Its shares trade at ₹2,400. Last year it generated free cash flow to equity of ₹30 per share, so the stock trades at 80 times free cash flow. Use a 11.0% cost of equity and a 5.0% perpetual growth rate after the high-growth period.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "keyFact",
+              "label": "Value with no high-growth period at all",
+              "value": "₹525 per share",
+              "context": "₹30 × 1.05 ÷ (11% - 5%). The remaining ₹1,875 of the ₹2,400 price, about 78%, is the market paying for growth above 5%.",
+              "_key": "k51"
+            },
+            {
+              "_key": "k53",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k52",
+                  "_type": "span",
+                  "text": "Now ask the more useful question: how fast must free cash flow grow, and for how long, to justify ₹2,400?",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "table",
+              "caption": "Himalayan Brands: implied free cash flow growth to justify ₹2,400 per share",
+              "headers": [
+                "Years of high growth",
+                "Implied annual FCF growth",
+                "FCF per share at the end",
+                "FCF multiplied by"
+              ],
+              "rows": [
+                {
+                  "_key": "k54",
+                  "_type": "tableRow",
+                  "cells": [
+                    "5 years",
+                    "45.6%",
+                    "₹196",
+                    "6.5×"
+                  ]
+                },
+                {
+                  "_key": "k55",
+                  "_type": "tableRow",
+                  "cells": [
+                    "10 years",
+                    "25.4%",
+                    "₹288",
+                    "9.6×"
+                  ]
+                },
+                {
+                  "_key": "k56",
+                  "_type": "tableRow",
+                  "cells": [
+                    "15 years",
+                    "19.3%",
+                    "₹426",
+                    "14.2×"
+                  ]
+                },
+                {
+                  "_key": "k57",
+                  "_type": "tableRow",
+                  "cells": [
+                    "20 years",
+                    "16.4%",
+                    "₹631",
+                    "21.0×"
+                  ]
+                },
+                {
+                  "_key": "k58",
+                  "_type": "tableRow",
+                  "cells": [
+                    "25 years",
+                    "14.8%",
+                    "₹939",
+                    "31.3×"
+                  ]
+                }
+              ],
+              "_key": "k59"
+            },
+            {
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Himalayan Brands: the growth-duration trade-off priced in at ₹2,400",
+              "xAxisLabel": "Years of high growth",
+              "yAxisLabel": "Implied annual FCF growth (%)",
+              "data": [
+                {
+                  "_key": "k60",
+                  "label": "5",
+                  "value": 45.6
+                },
+                {
+                  "_key": "k61",
+                  "label": "10",
+                  "value": 25.4
+                },
+                {
+                  "_key": "k62",
+                  "label": "15",
+                  "value": 19.3
+                },
+                {
+                  "_key": "k63",
+                  "label": "20",
+                  "value": 16.4
+                },
+                {
+                  "_key": "k64",
+                  "label": "25",
+                  "value": 14.8
+                }
+              ],
+              "_key": "k65"
+            },
+            {
+              "_key": "k67",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k66",
+                  "_type": "span",
+                  "text": "The price does not demand a specific growth rate. It demands a combination of growth and duration. If you believe Himalayan Brands can grow free cash flow at about 19.3% a year for 15 years, ₹2,400 is fair. If you think its brands and distribution can only sustain above-average growth for 5 years, you would need 45.6% a year to justify the same price.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k69",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k68",
+                  "_type": "span",
+                  "text": "Now judge it. Open the company's ten-year history on screener.in and compare. How fast has free cash flow actually grown? How many listed Indian FMCG companies have compounded cash flow at the implied rate for the implied period? If the answer is \"very few, and not this one\", the stock is priced for an outcome the evidence does not support, however good the company is.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "callout",
+              "type": "warning",
+              "text": "A great company and a great investment are different things. A reverse DCF often shows that a high-quality business is priced for even higher quality. You do not lose money because a company disappoints in absolute terms. You lose money when it delivers less than the price already assumed.",
+              "_key": "k70"
+            },
+            {
+              "_key": "k72",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k71",
+                  "_type": "span",
+                  "text": "How to Judge an Implied Expectation",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "table",
+              "caption": "Tests for any implied growth rate, margin or duration",
+              "headers": [
+                "Test",
+                "Question to ask",
+                "Where to look"
+              ],
+              "rows": [
+                {
+                  "_key": "k73",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Company history",
+                    "Has the company ever delivered this, for this long?",
+                    "Ten-year compounded growth and margins on screener.in"
+                  ]
+                },
+                {
+                  "_key": "k74",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Industry base rates",
+                    "How many peers have sustained this?",
+                    "Peer comparisons across listed Indian and global companies"
+                  ]
+                },
+                {
+                  "_key": "k75",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Physical limits",
+                    "Does it require capacity, stores or people the company does not have?",
+                    "Capacity data, capex plans, store counts in investor presentations"
+                  ]
+                },
+                {
+                  "_key": "k76",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Market size",
+                    "Would the implied revenue exceed a sensible share of its market?",
+                    "Industry reports, management commentary on market size"
+                  ]
+                },
+                {
+                  "_key": "k77",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Competition",
+                    "Would margins this high attract new entrants or capacity?",
+                    "Announcements of new capacity, entry of large groups"
+                  ]
+                },
+                {
+                  "_key": "k78",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Guidance",
+                    "Is the implied path above or below what management targets?",
+                    "Earnings call transcripts and investor day presentations"
+                  ]
+                }
+              ],
+              "_key": "k79"
+            },
+            {
+              "_type": "comparison",
+              "title": "What a reverse DCF tells you",
+              "columns": [
+                {
+                  "_key": "k80",
+                  "label": "It can tell you",
+                  "points": [
+                    "Whether a price requires exceptional or ordinary performance",
+                    "Which variable the market is betting on",
+                    "What to research to form a view",
+                    "When a \"cheap\" stock is actually pricing in decline"
+                  ]
+                },
+                {
+                  "_key": "k81",
+                  "label": "It cannot tell you",
+                  "points": [
+                    "Whether the market is right",
+                    "When the price will change",
+                    "The correct discount rate: that remains your judgement",
+                    "Which of several implied paths the market has in mind"
+                  ]
+                }
+              ],
+              "_key": "k82"
+            },
+            {
+              "_key": "k84",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k83",
+                  "_type": "span",
+                  "text": "Reverse DCFs work on cheap stocks too. A PSU trading at 5 times earnings may be pricing in steady decline for a decade. If your research suggests the business will merely stagnate rather than shrink, the implied expectation is too pessimistic, and that gap is the opportunity.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k86",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k85",
+                  "_type": "span",
+                  "text": "Check Your Understanding",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "The simplest reverse DCF",
+              "prompt": "A stock trades at ₹500. Next year's free cash flow to equity is expected to be ₹20 per share, and the cost of equity is 12%. If cash flow grows at a constant rate forever, what growth rate does the price imply, in %?",
+              "correctValue": 7.999999999999999,
+              "tolerance": 0.05,
+              "unit": "%",
+              "explanation": "Rearranging price = FCFE ÷ (Ke - g) gives g = Ke - FCFE ÷ price = 12% - (₹20 ÷ ₹500) = 12% - 4% = 8.0%. The market is assuming 8% growth forever, which is above the long-term growth rate most practitioners would accept, so the price relies on a long period of high growth.",
+              "_key": "k87"
+            },
+            {
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Interpreting the result",
+              "question": "A reverse DCF shows that a private bank's share price implies loan book growth of 18% a year for 15 years. Over the last ten years it has grown its loan book at 20% a year, but the largest private banks have slowed to the mid-teens as they have grown. What is the best conclusion?",
+              "options": [
+                "The stock is undervalued because 18% is below its 20% history",
+                "The stock is overvalued because no bank can grow at 18%",
+                "The price assumes the bank sustains close to its past growth for a long time, even as it gets larger; research whether its size and funding allow that",
+                "The reverse DCF is unreliable because it disagrees with the historical growth rate"
+              ],
+              "correctIndex": 2,
+              "explanation": "The implied expectation is demanding but not impossible. Past growth was achieved from a smaller base, and base rates show large banks slowing. The reverse DCF has turned a vague valuation debate into a specific research question: can this bank keep growing near 18% for 15 years as it scales?",
+              "_key": "k88"
+            },
+            {
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "Where it starts",
+              "textWithBlank": "A reverse DCF starts with the current market ___ and solves for the assumptions that justify it.",
+              "correctAnswers": [
+                "price",
+                "value",
+                "share price",
+                "valuation"
+              ],
+              "explanation": "The market price is treated as the answer, and the model works backwards to find the growth, margin or duration it implies.",
+              "_key": "k89"
+            },
+            {
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "What is a quick-commerce platform pricing in?",
+              "scenario": "Rhea, a Gurugram-based product manager, holds shares in a listed quick-commerce and food delivery platform. It has an enterprise value of about ₹1,50,000 crore and revenue of ₹10,000 crore, and it is roughly break-even. She wants to know what the price implies. She assumes: the company generates little free cash flow for 10 years while it grows; by year 11 it reaches a mature EBIT margin of 20.0%; after that it grows at 6.0% forever with a 20.0% return on new capital; its WACC is 12.0% and its tax rate 25.0%.",
+              "prompt": "Set up the reverse DCF. What revenue must the company reach by year 10, and what annual growth rate does that imply?",
+              "modelAnswer": "1. With little free cash flow for ten years, almost all of today's enterprise value must come from the terminal value. So the terminal value at year 10 must be worth today's EV grown at WACC: ₹1,50,000 × (1.12)¹⁰ = about ₹4,65,877 crore.\n2. Terminal value = NOPAT in year 11 × (1 - g ÷ RONIC) ÷ (WACC - g). With g of 6% and RONIC of 20%, the reinvestment rate is 30%, so TV = NOPAT × 0.70 ÷ 0.06. Required year 11 NOPAT = ₹4,65,877 × 0.06 ÷ 0.70 = about ₹39,932 crore.\n3. EBIT = NOPAT ÷ (1 - 0.25) = about ₹53,243 crore. At a 20% EBIT margin, year 11 revenue = about ₹2,66,216 crore, so year 10 revenue = ₹2,66,216 ÷ 1.06 = about ₹2,51,147 crore.\n4. Growing from ₹10,000 crore to about ₹2,51,147 crore in ten years requires roughly 38.0% a year, a 25.1-fold increase, while also moving from break-even to a 20% EBIT margin.\n\nWhat Rhea should research: is a market large enough to support that revenue; can a 20% EBIT margin survive intense competition from other well-funded platforms; and how sensitive is the answer to a lower margin or a longer period of losses? If any one of these falls short, the implied expectations are not met. This does not prove the stock is overvalued, but it shows exactly how much must go right.",
+              "_key": "k90"
+            },
+            {
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Run a reverse DCF on a stock you own",
+              "steps": [
+                "Build a simple DCF with separate input cells for revenue growth, margin, reinvestment, WACC and perpetual growth.",
+                "Enter a reasonable WACC and perpetual growth rate, and hold margin and reinvestment at their recent averages.",
+                "Use Data, What-If Analysis, Goal Seek: set the value-per-share cell to the current market price by changing the revenue growth cell.",
+                "Repeat, this time solving for margin with growth held at its historical average.",
+                "Compare both implied figures with the company's ten-year history on screener.in, its peers and its capacity or store plans.",
+                "Write one sentence: \"At today's price, the market expects...\" Then decide whether you think it is too optimistic, too pessimistic or about right."
+              ],
+              "_key": "k91"
+            },
+            {
+              "_type": "keyTakeaways",
+              "points": [
+                "A reverse DCF starts with the market price and solves for the growth, margin or duration it implies.",
+                "It reduces anchoring on your own forecast and turns valuation debates into specific research questions.",
+                "A price can be justified by many combinations of growth and margin, so solve for more than one variable.",
+                "For expensive stocks, the trade-off between growth rate and growth duration is often the key insight.",
+                "Judge implied expectations against company history, industry base rates, physical capacity, market size and competition.",
+                "A great company can be a poor investment if the price already assumes more than it is likely to deliver."
+              ],
+              "_key": "k92"
+            },
+            {
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice. Kaveri Ridge Cement Ltd, Himalayan Brands Ltd, the other companies described and the individuals named are fictional, and all figures are illustrative. Consult a SEBI-registered investment adviser before making investment decisions.",
+              "_key": "k93"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

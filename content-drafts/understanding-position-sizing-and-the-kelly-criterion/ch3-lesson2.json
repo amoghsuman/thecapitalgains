@@ -1,0 +1,273 @@
+{
+  "courseSlug": "understanding-position-sizing-and-the-kelly-criterion",
+  "chapters": [
+    {
+      "title": "Chapter 3: Fractional Kelly and Practical Adjustments",
+      "lessons": [
+        {
+          "title": "Half-Kelly and Quarter-Kelly: The Growth-Versus-Volatility Tradeoff",
+          "slug": "half-kelly-and-quarter-kelly-the-growth-versus-volatility-tradeoff",
+          "body": [
+            {
+              "_key": "c3l2-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2-001s1", "_type": "span", "marks": [], "text": "Lesson 3.1 showed that full Kelly carries a 50% chance of a 50% drawdown, and that dropping to any fraction below full Kelly always improves the growth-to-risk trade-off. What it did not yet answer is exactly how much safer half-Kelly or quarter-Kelly actually are, in the same drawdown terms. This lesson generalizes the drawdown formula to any fraction of full Kelly, and uses it to compare half and quarter Kelly directly." }
+              ]
+            },
+            {
+              "_key": "c3l2-002",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2-002s1", "_type": "span", "marks": [], "text": "Generalizing the Drawdown Formula" }
+              ]
+            },
+            {
+              "_key": "c3l2-003",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2-003s1", "_type": "span", "marks": [], "text": "Betting a fraction c of full Kelly means using f = c·f* instead of f*. Redo the drift and volatility calculation from Lesson 3.1's collapsible with this substitution." }
+              ]
+            },
+            {
+              "_key": "c3l2-004",
+              "_type": "collapsible",
+              "title": "The algebra, for the curious",
+              "content": [
+                {
+                  "_key": "c3l2-004a",
+                  "_type": "mathBlock",
+                  "latex": "m_c = g(cf^{*}) = \\dfrac{\\mu^2}{\\sigma^2}\\left(c - \\dfrac{c^2}{2}\\right), \\qquad v_c = cf^{*}\\sigma = \\dfrac{c\\mu}{\\sigma}"
+                },
+                {
+                  "_key": "c3l2-004b",
+                  "_type": "mathBlock",
+                  "latex": "\\dfrac{2m_c}{v_c^{2}} = \\dfrac{2(c - c^2/2)}{c^2} = \\dfrac{2-c}{c}"
+                },
+                {
+                  "_key": "c3l2-004c",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    { "_key": "c3l2-004cs1", "_type": "span", "marks": [], "text": "Every μ and σ term cancels exactly, just as it did in Lesson 3.1, leaving a result that depends only on c and the drawdown size d." }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c3l2-005",
+              "_type": "mathBlock",
+              "latex": "P(\\text{drawdown ever} \\ge d \\mid \\text{fraction } c) = (1-d)^{\\frac{2-c}{c}}",
+              "caption": "Setting c = 1 recovers Lesson 3.1's formula exactly: (1−d)^1 = 1−d"
+            },
+            {
+              "_key": "c3l2-006",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This single formula contains Lesson 3.1's result as the special case c = 1. It also shows exactly how much the drawdown exponent grows as c shrinks: at c = 0.5, the exponent (2−c)/c becomes 3, which means drawdown probabilities get cubed rather than left at the first power. That is a large structural change from a single change of one input."
+            },
+            {
+              "_key": "c3l2-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2-007s1", "_type": "span", "marks": [], "text": "What Half-Kelly and Quarter-Kelly Actually Buy You" }
+              ]
+            },
+            {
+              "_key": "c3l2-008",
+              "_type": "table",
+              "caption": "Growth retained (from Lesson 3.1) vs probability of ever seeing a 50% drawdown",
+              "headers": ["Fraction of full Kelly (c)", "% of full-Kelly growth kept", "P(50% drawdown, ever)"],
+              "rows": [
+                { "_key": "c3l2-008r1", "_type": "tableRow", "cells": ["100% (full Kelly)", "100.00%", "50.0%"] },
+                { "_key": "c3l2-008r2", "_type": "tableRow", "cells": ["75%", "93.75%", "31.5%"] },
+                { "_key": "c3l2-008r3", "_type": "tableRow", "cells": ["50% (half-Kelly)", "75.00%", "12.5%"] },
+                { "_key": "c3l2-008r4", "_type": "tableRow", "cells": ["25% (quarter-Kelly)", "43.75%", "0.78%"] }
+              ]
+            },
+            {
+              "_key": "c3l2-009",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "P(ever seeing a 50% drawdown) vs fraction of full Kelly",
+              "xAxisLabel": "Fraction of full Kelly (c)",
+              "yAxisLabel": "Probability (%)",
+              "data": [
+                { "_key": "c3l2-009d1", "label": "25%", "value": 0.78 },
+                { "_key": "c3l2-009d2", "label": "50%", "value": 12.5 },
+                { "_key": "c3l2-009d3", "label": "75%", "value": 31.5 },
+                { "_key": "c3l2-009d4", "label": "100%", "value": 50.0 }
+              ]
+            },
+            {
+              "_key": "c3l2-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2-010s1", "_type": "span", "marks": [], "text": "Halving the bet size cuts the chance of a 50% drawdown from a coin flip down to roughly one in eight, while still keeping three-quarters of the maximum possible growth rate. This is precisely why half-Kelly, not full Kelly, is the fraction most often cited as a sensible practical default in the trading and quant literature." }
+              ]
+            },
+            {
+              "_key": "c3l2-011",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "A smaller drawdown at half-Kelly",
+              "prompt": "Using P(drawdown ≥ d | c) = (1−d)^((2−c)/c), what is the probability of ever seeing at least a 30% drawdown at half-Kelly (c = 0.5)? Give your answer as a percentage, rounded to one decimal.",
+              "correctValue": 34.3,
+              "tolerance": 0.3,
+              "unit": "%",
+              "explanation": "At c = 0.5, the exponent (2 − c)/c = 1.5/0.5 = 3. P = (1 − 0.30)³ = 0.7³ = 0.343, or 34.3%."
+            },
+            {
+              "_key": "c3l2-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2-012s1", "_type": "span", "marks": [], "text": "Applying This to Chapter 2's Examples" }
+              ]
+            },
+            {
+              "_key": "c3l2-013",
+              "_type": "table",
+              "caption": "Full, half, and quarter Kelly for three archetypes from Chapter 2",
+              "headers": ["Archetype", "Full Kelly (f*)", "Half-Kelly", "Quarter-Kelly"],
+              "rows": [
+                { "_key": "c3l2-013r1", "_type": "tableRow", "cells": ["Bank Nifty options seller", "21.25%", "10.63%", "5.31%"] },
+                { "_key": "c3l2-013r2", "_type": "tableRow", "cells": ["Nifty swing trader", "20.00%", "10.00%", "5.00%"] },
+                { "_key": "c3l2-013r3", "_type": "tableRow", "cells": ["Diversified Nifty 50 position", "312.50%", "156.25%", "78.13%"] }
+              ]
+            },
+            {
+              "_key": "c3l2-014",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Notice the diversified Nifty position: even at quarter-Kelly, the formula still asks for 78% of capital in leverage terms. Fractional Kelly reduces the drawdown risk of a given position; it does not, by itself, shrink an unreasonably large full-Kelly number down to something an unlevered account can hold. Lesson 3.3 and Chapter 4 add the remaining pieces needed to arrive at a genuinely practical number here."
+            },
+            {
+              "_key": "c3l2-015",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Half-Kelly for the options seller",
+              "prompt": "The Bank Nifty options seller's full Kelly fraction is 21.25%. What is the half-Kelly fraction, as a percentage rounded to two decimals?",
+              "correctValue": 10.63,
+              "tolerance": 0.05,
+              "unit": "%",
+              "explanation": "Half-Kelly is simply f*/2 = 21.25% / 2 = 10.625%, rounding to 10.63%."
+            },
+            {
+              "_key": "c3l2-016",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2-016s1", "_type": "span", "marks": [], "text": "Choosing Between Half and Quarter, and Everything In Between" }
+              ]
+            },
+            {
+              "_key": "c3l2-017",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2-017s1", "_type": "span", "marks": [], "text": "There is no universally correct fraction. Three factors should push the choice up or down for a specific trader and a specific system:" }
+              ]
+            },
+            {
+              "_key": "c3l2-018",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2-018s1", "_type": "span", "marks": ["strong"], "text": "Confidence in the inputs. " },
+                { "_key": "c3l2-018s2", "_type": "span", "marks": [], "text": "A system backtested on 300 trades with a tight confidence interval on p can justify a larger fraction than one backtested on 30. Lesson 3.3 turns this into a specific adjustment." }
+              ]
+            },
+            {
+              "_key": "c3l2-019",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2-019s1", "_type": "span", "marks": ["strong"], "text": "Ability to survive a drawdown. " },
+                { "_key": "c3l2-019s2", "_type": "span", "marks": [], "text": "A drawdown that only dents a trader's confidence is very different from one that triggers a margin call, forces a job change, or ends a career. The same probability of a 50% drawdown means something different to different people and different accounts." }
+              ]
+            },
+            {
+              "_key": "c3l2-020",
+              "_type": "block",
+              "style": "normal",
+              "listItem": "bullet",
+              "level": 1,
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2-020s1", "_type": "span", "marks": ["strong"], "text": "How concentrated the bet is. " },
+                { "_key": "c3l2-020s2", "_type": "span", "marks": [], "text": "A fraction sized for one position among many diversified holdings can reasonably run higher than the same fraction placed on a single undiversified bet. Chapter 4 builds this out properly." }
+              ]
+            },
+            {
+              "_key": "c3l2-021",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c3l2-021s1", "_type": "span", "marks": [], "text": "As a worked example of using the drawdown formula directly to choose a fraction: suppose a trader decides they can tolerate no more than a 15% chance of ever seeing a 50% drawdown. Solving (1 − 0.5)^((2−c)/c) = 0.15 for c gives c ≈ 0.535, just above half-Kelly. This is a useful way to read the earlier table in reverse: pick the maximum drawdown probability you can genuinely live with, and let it tell you which fraction of full Kelly to trade, rather than picking a fraction first and hoping the resulting risk is tolerable." }
+              ]
+            },
+            {
+              "_key": "c3l2-022",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Recommend a fraction",
+              "scenario": "A trader runs a single, concentrated Bank Nifty options-selling strategy as their only source of income, with no other diversified holdings. The strategy has 85 backtested trades and a moderately wide confidence interval on its win rate. Full Kelly for this system works out to 21.25% of capital.",
+              "prompt": "Using the three factors from this lesson, recommend whether this trader should be closer to half-Kelly or quarter-Kelly, and explain why.",
+              "modelAnswer": "Closer to quarter-Kelly. All three factors point the same direction here: the sample size (85 trades) gives only moderate confidence in the win-rate estimate, this is the trader's sole income source, meaning a large drawdown is not just uncomfortable but potentially catastrophic, and the position is concentrated rather than one among several diversified bets. Any one of these factors alone might justify half-Kelly; having all three together argues for sizing meaningfully below it, closer to quarter-Kelly's 5.31%, until either the track record lengthens or the strategy becomes one of several diversified positions."
+            },
+            {
+              "_key": "c3l2-023",
+              "_type": "flashcardSet",
+              "title": "Fractional Kelly: Core Terms",
+              "cards": [
+                { "_key": "c3l2-023f1", "term": "Fractional Kelly", "definition": "Betting some fraction c of full Kelly (f = c·f*), trading off some growth rate for a large reduction in drawdown probability." },
+                { "_key": "c3l2-023f2", "term": "Half-Kelly", "definition": "c = 0.5. Retains 75% of full-Kelly growth while cutting the probability of a 50% drawdown from 50% to roughly 12.5%. The most commonly cited practical default." },
+                { "_key": "c3l2-023f3", "term": "Quarter-Kelly", "definition": "c = 0.25. Retains under half of full-Kelly growth but drops the probability of a 50% drawdown to under 1%. Favoured for less certain edges or highly concentrated bets." },
+                { "_key": "c3l2-023f4", "term": "Drawdown exponent, (2−c)/c", "definition": "The power that (1−d) is raised to in the generalized drawdown formula. It grows sharply as c shrinks, which is why small reductions in bet size produce large reductions in drawdown risk." }
+              ]
+            },
+            {
+              "_key": "c3l2-024",
+              "_type": "keyTakeaways",
+              "points": [
+                "The drawdown formula generalizes to P(drawdown ≥ d | c) = (1−d)^((2−c)/c), with Lesson 3.1's result as the special case c = 1.",
+                "Half-Kelly retains 75% of full-Kelly growth while cutting the chance of a 50% drawdown from 50% to about 12.5%.",
+                "Quarter-Kelly retains under half the growth but drops the chance of a 50% drawdown below 1%.",
+                "Fractional Kelly shrinks drawdown risk for a given full-Kelly number; it does not by itself fix a full-Kelly fraction that is already unreasonably large, such as a leveraged index position.",
+                "Choosing a specific fraction should weigh confidence in the inputs, ability to survive a drawdown financially and psychologically, and how concentrated the position is."
+              ]
+            },
+            {
+              "_key": "c3l2-025",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "The drawdown probabilities in this lesson come from a continuous-time, idealized model and are meant to build intuition about relative risk across fractions of Kelly, not to be read as precise guarantees for any specific trading account. This lesson is for education only and is not investment or trading advice."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

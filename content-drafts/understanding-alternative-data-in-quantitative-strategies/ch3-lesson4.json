@@ -1,0 +1,343 @@
+{
+  "courseSlug": "understanding-alternative-data-in-quantitative-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 3: Sourcing Alternative Data: Vendors, Costs, and Compliance",
+      "lessons": [
+        {
+          "title": "Build vs Buy: In-House Scraping Pipelines vs Third-Party Vendors",
+          "slug": "build-vs-buy-in-house-scraping-pipelines-vs-third-party-vendors",
+          "body": [
+            {
+              "_key": "c3l4k001",
+              "_type": "bigIdea",
+              "text": "Buying a dataset buys you speed. Building one buys you a moat, if and only if you actually finish maintaining it longer than your competitors are willing to."
+            },
+            {
+              "_key": "c3l4k002",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l4k002s1",
+                  "_type": "span",
+                  "text": "This question has been sitting underneath the entire course: India's thinner vendor layer from Chapter 1, the vendor longevity risk from earlier in this chapter, and the SEBI compliance overhead of scaling your own data operation all point toward the same decision. This closing lesson of the chapter gives you a real framework for making that call, with actual numbers, not just intuition.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l4k003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l4k003s1",
+                  "_type": "span",
+                  "text": "Six Factors in the Build vs Buy Decision",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l4k004",
+              "_type": "table",
+              "caption": "Neither option wins on every factor, which is exactly why this needs a framework rather than a gut call",
+              "headers": ["Factor", "Building In-House", "Buying From a Vendor"],
+              "rows": [
+                {
+                  "_key": "c3l4k004r1",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Time to first signal",
+                    "Slower, since you build the pipeline before you can even test a hypothesis",
+                    "Faster, a trial dataset can arrive within days"
+                  ]
+                },
+                {
+                  "_key": "c3l4k004r2",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Ongoing maintenance burden",
+                    "You own it, including every time a scraped website changes its layout",
+                    "The vendor owns it, and their engineering cost is built into your subscription"
+                  ]
+                },
+                {
+                  "_key": "c3l4k004r3",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Uniqueness and moat potential",
+                    "Potentially exclusive to you, extending the shallow decay curve from Chapter 1",
+                    "By definition also available to any other paying subscriber, capping how unique your edge can be"
+                  ]
+                },
+                {
+                  "_key": "c3l4k004r4",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Historical backfill",
+                    "Usually thin or nonexistent at first, unless an open archive can be reprocessed",
+                    "Often available immediately as a paid add-on, as covered in the pricing lesson"
+                  ]
+                },
+                {
+                  "_key": "c3l4k004r5",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Vendor dependency risk",
+                    "None, since you control the pipeline end to end",
+                    "Real, and must be actively managed with the mitigations from the vendor landscape lesson"
+                  ]
+                },
+                {
+                  "_key": "c3l4k004r6",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Compliance and legal overhead",
+                    "Sits entirely with your desk: scraping terms, DPDP obligations, and everything covered in the previous lesson",
+                    "Substantially shared with the vendor, though never fully transferred away from you"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c3l4k005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l4k005s1",
+                  "_type": "span",
+                  "text": "Total Cost of Ownership: Build Is Rarely Just the Build Cost",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l4k006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c3l4m001",
+                  "_type": "glossaryTerm",
+                  "definition": "The tendency for a scraper to break whenever the target website changes its layout, its underlying HTML structure, or its anti-bot measures, requiring ongoing engineering time just to keep an existing pipeline working, separate from any new feature development."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c3l4k006s1",
+                  "_type": "span",
+                  "text": "The single most common mistake in a build vs buy comparison is pricing only the initial build and forgetting the tax that keeps getting paid afterward. Websites redesign, government portals change their HTML without notice, and anti-bot measures get tightened, a pattern engineers call ",
+                  "marks": []
+                },
+                {
+                  "_key": "c3l4k006s2",
+                  "_type": "span",
+                  "text": "scraper rot",
+                  "marks": ["c3l4m001"]
+                },
+                {
+                  "_key": "c3l4k006s3",
+                  "_type": "span",
+                  "text": ". A fair comparison needs a Total Cost of Ownership across a realistic time horizon, one-time build cost plus ongoing maintenance and infrastructure, compared against a vendor's subscription plus any one-time backfill fee, both projected over the same number of years.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l4k007",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Calculate a 3-Year Build TCO",
+              "prompt": "Your desk estimates an in-house build will cost ₹4.5 lakh as a one-time build cost in year one, plus ₹7.4 lakh per year in ongoing maintenance and infrastructure across all three years. What is the total 3-year cost of ownership for the build option, in ₹ lakh?",
+              "correctValue": 26.7,
+              "tolerance": 0.1,
+              "unit": "₹ lakh",
+              "explanation": "3-year build TCO = one-time build cost + (annual maintenance and infrastructure x 3 years) = 4.5 + (7.4 x 3) = 4.5 + 22.2 = 26.7 lakh. This is the number that should be compared against a vendor's full 3-year subscription cost, not against the vendor's single-year price alone."
+            },
+            {
+              "_key": "c3l4k008",
+              "_type": "chart",
+              "chartType": "bar",
+              "title": "3-year TCO comparison: build vs buy for the same dataset",
+              "xAxisLabel": "Option",
+              "yAxisLabel": "3-year total cost (₹ lakh)",
+              "data": [
+                { "_key": "c3l4k008d1", "label": "Build (in-house)", "value": 26.7 },
+                { "_key": "c3l4k008d2", "label": "Buy (vendor: ₹3 lakh backfill + ₹10 lakh/year)", "value": 33.0 }
+              ]
+            },
+            {
+              "_key": "c3l4k009",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Cheaper Is Not Automatically Better",
+              "scenario": "In the example above, building in-house comes out roughly ₹6.3 lakh cheaper over three years than buying the vendor product. A junior team member argues this settles the decision in favour of building.",
+              "prompt": "What is missing from an argument that treats the lower 3-year TCO as the deciding factor on its own?",
+              "modelAnswer": "Cost is only one of the six factors from this lesson's framework, and a roughly 6.3 lakh saving over three years has to be weighed against the other five. Building delays time to first signal, which matters if a competing desk could reach the same insight faster by buying. It leaves the desk fully exposed to scraper rot and compliance overhead with no vendor absorbing any of that risk. It also has weak or no historical backfill unless an open archive exists to reprocess, which can be a hard blocker if the strategy needs several years of clean history to pass a backtest review. The saving is real and worth having, but only after confirming the team can actually deliver and sustain the build, that backfill needs are met, and that the moat this build creates, being harder for competitors to replicate, is worth more than the speed a vendor would have provided."
+            },
+            {
+              "_key": "c3l4k010",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l4k010s1",
+                  "_type": "span",
+                  "text": "A Category-by-Category Default for the Indian Market",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l4k011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l4k011s1",
+                  "_type": "span",
+                  "text": "Chapter 2's five categories do not all default the same way. Here is a starting point, based on what is realistically buildable versus what genuinely requires vendor-scale infrastructure.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l4k012",
+              "_type": "table",
+              "caption": "A starting default, always re-verified against your own six-dimension scorecard",
+              "headers": ["Category", "Typical India Default", "Why"],
+              "rows": [
+                {
+                  "_key": "c3l4k012r1",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Web and app data",
+                    "Build for narrow, targeted scraping; buy for broad app usage estimation",
+                    "A small scraper for a specific need is cheap to build, but estimating app usage at scale needs a large modelling panel few desks can replicate"
+                  ]
+                },
+                {
+                  "_key": "c3l4k012r2",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Satellite and geolocation data",
+                    "Almost always buy",
+                    "Satellite tasking and large device panels require capital intensity far beyond most quant desks"
+                  ]
+                },
+                {
+                  "_key": "c3l4k012r3",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Transaction and payment data",
+                    "Build for public aggregate data like NPCI's UPI releases, buy for card spend panels",
+                    "You cannot independently source card network data, but government-published aggregates are free and legitimate to collect"
+                  ]
+                },
+                {
+                  "_key": "c3l4k012r4",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Text and sentiment data",
+                    "Build for filing scraping, buy for broad social media sentiment at scale",
+                    "Filing feeds are thin, fast-decaying, and well suited to a small in-house pipeline; social scale requires infrastructure few desks want to own"
+                  ]
+                },
+                {
+                  "_key": "c3l4k012r5",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Supply chain and corporate data",
+                    "Build for GST, VAHAN, and MCA21; buy for shipment-level global customs data",
+                    "India's government portals are free and directly accessible, but replicating a global customs aggregator's coverage is unrealistic"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c3l4k013",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l4k013s1",
+                  "_type": "span",
+                  "text": "Hybrid Approaches: The Realistic Middle Ground",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l4k014",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c3l4k014s1",
+                  "_type": "span",
+                  "text": "In practice, few desks pick one path for an entire dataset. A common hybrid buys a vendor's historical backfill to pass an initial backtest review quickly, then builds an in-house live feed once the signal is validated and the ongoing subscription cost becomes harder to justify at scale. Another common hybrid buys the hard, capital-intensive layer, satellite imagery processed into a usable index, for instance, while building the easy, free layer, a government portal scrape, entirely in-house.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c3l4k015",
+              "_type": "collapsible",
+              "title": "The sunk cost trap: don't defend a build out of pride",
+              "content": [
+                {
+                  "_key": "c3l4k015b1",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c3l4k015b1s1",
+                      "_type": "span",
+                      "text": "A team that has spent months building and maintaining a pipeline can develop a natural reluctance to abandon it, even after a vendor eventually enters the market with a superior, lower-cost product covering the same ground. Run the six-dimension scorecard and the TCO comparison fresh whenever a credible new vendor appears, exactly as if you had never built anything, and let the current numbers decide, not the sunk cost of what you already built.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c3l4k016",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Build vs buy is not a one-time decision made per dataset category, it is a decision you should be willing to reverse. The desk that builds well is the one that keeps re-testing whether building was still the right call, not the one that built once and stopped asking."
+            },
+            {
+              "_key": "c3l4k017",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "The cost figures in this lesson are illustrative examples for teaching the framework, not benchmarks for any specific real dataset or vendor. Always build your own cost estimates from actual quotes and your own team's engineering capacity before making a build vs buy decision."
+            },
+            {
+              "_key": "c3l4k018",
+              "_type": "keyTakeaways",
+              "points": [
+                "Weigh build vs buy across six factors: time to first signal, ongoing maintenance burden, uniqueness and moat potential, historical backfill, vendor dependency risk, and compliance overhead",
+                "Total Cost of Ownership must include ongoing maintenance and infrastructure for a build, not just the initial development cost, since scraper rot from changing websites is a real, recurring tax",
+                "A lower 3-year TCO for building in-house does not automatically make it the right choice once time-to-signal, backfill needs, and sustained engineering capacity are weighed in",
+                "India's five alt data categories do not default the same way: web scraping and government-portal categories (UPI aggregates, GST e-way bills, VAHAN, MCA21) often favour building, while satellite imagery, card panels, and global shipment data usually favour buying",
+                "Hybrid approaches, buying backfill while building the live feed, or buying the capital-intensive layer while building the free layer, are common and often the most realistic path",
+                "Revisit build vs buy decisions whenever a credible new vendor appears, using the same fresh scorecard and TCO comparison, rather than defending an existing build out of sunk cost"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

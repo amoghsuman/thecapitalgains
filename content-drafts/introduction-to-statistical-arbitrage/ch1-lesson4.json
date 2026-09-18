@@ -1,0 +1,221 @@
+{
+  "courseSlug": "introduction-to-statistical-arbitrage",
+  "chapters": [
+    {
+      "title": "Chapter 1: What Statistical Arbitrage Actually Is",
+      "lessons": [
+        {
+          "title": "Case Study: Why Two Similar Indian Stocks Can Still Offer a Trade",
+          "slug": "case-study-why-two-similar-indian-stocks-can-still-offer-a-trade",
+          "body": [
+            {
+              "_key": "sa4-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa4-001s1", "_type": "span", "marks": [], "text": "In the second week of a quarterly results season, Berger Paints reports numbers that catch the market off guard: volume growth well below expectations, with management pointing to channel destocking as dealers pared back inventory. The stock falls roughly 9 percent over two trading sessions. A week later, Asian Paints reports a broadly in-line quarter, nothing exciting, nothing alarming, and its stock barely moves. Two companies that have moved together for years, selling into the same decorative paints demand and exposed to the same crude-oil-linked input costs, have just had their prices pulled apart by a single quarter. This is the moment a stat arb trader has to decide something: is this a trade, or is it nothing? (All figures in this case study are illustrative.)" }
+              ]
+            },
+            {
+              "_key": "sa4-002",
+              "_type": "bigIdea",
+              "text": "Two companies can share almost the same business, the same customers, and the same cost structure, and still see their stock prices pulled apart for a quarter or two by news that affects only one of them. Whether that gap is a trade depends entirely on whether the shared story that normally ties the two companies together is still intact."
+            },
+            {
+              "_key": "sa4-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa4-003s1", "_type": "span", "marks": [], "text": "The Setup: Two Paint Companies, One Shared Story" }
+              ]
+            },
+            {
+              "_key": "sa4-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa4-004s1", "_type": "span", "marks": [], "text": "Asian Paints and Berger Paints are the two largest listed players in India's decorative paints market. Both sell overwhelmingly through the same kind of dealer network, both depend on the same drivers of demand, new home completions and the repainting cycle in existing homes, and both source a large share of raw materials, titanium dioxide, solvents, and other inputs, from the same crude-oil-linked supply chains. When crude prices rise, both companies' margins come under pressure in the same direction. When festive-season repainting demand is strong, both benefit together. This is exactly the kind of shared economic exposure that makes a pair worth watching for stat arb, the same kind of link Lesson 1 described between Maruti Suzuki and Mahindra & Mahindra." }
+              ]
+            },
+            {
+              "_key": "sa4-005",
+              "_type": "keyFact",
+              "label": "Shared cost driver",
+              "value": "Crude-oil-linked inputs (titanium dioxide, solvents)",
+              "context": "A large share of raw material costs for both companies, illustrative. When one company's margins move on input costs, the other's usually move in the same direction."
+            },
+            {
+              "_key": "sa4-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa4-006s1", "_type": "span", "marks": [], "text": "The Trigger: A One-Quarter Divergence" }
+              ]
+            },
+            {
+              "_key": "sa4-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa4-007s1", "_type": "span", "marks": [], "text": "The table below lays out exactly what moved. Berger's post-results drop and Asian Paints' near-flat quarter, taken together, are what pushed their price ratio from comfortably inside its usual range to notably outside it." }
+              ]
+            },
+            {
+              "_key": "sa4-008",
+              "_type": "table",
+              "caption": "Berger Paints' Q2 miss vs Asian Paints' in-line quarter (illustrative)",
+              "headers": ["", "Before Results", "After Results"],
+              "rows": [
+                { "_key": "sa4-008r1", "_type": "tableRow", "cells": ["Asian Paints price", "₹2,900", "₹2,930 (+1%)"] },
+                { "_key": "sa4-008r2", "_type": "tableRow", "cells": ["Berger Paints price", "₹690", "₹628 (−9%)"] },
+                { "_key": "sa4-008r3", "_type": "tableRow", "cells": ["Asian Paints / Berger Paints ratio", "4.20", "4.67 (+11%)"] }
+              ]
+            },
+            {
+              "_key": "sa4-009",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Asian Paints / Berger Paints ratio around results week (illustrative)",
+              "xAxisLabel": "Trading week",
+              "yAxisLabel": "Asian Paints price ÷ Berger Paints price",
+              "data": [
+                { "_key": "sa4-009d1", "label": "1" },
+                { "_key": "sa4-009d2", "label": "2" },
+                { "_key": "sa4-009d3", "label": "3" },
+                { "_key": "sa4-009d4", "label": "4" },
+                { "_key": "sa4-009d5", "label": "5 (results)" },
+                { "_key": "sa4-009d6", "label": "6" },
+                { "_key": "sa4-009d7", "label": "7" },
+                { "_key": "sa4-009d8", "label": "8" }
+              ],
+              "series": [
+                {
+                  "_key": "sa4-009se1",
+                  "label": "Asian Paints / Berger Paints ratio",
+                  "values": [4.18, 4.21, 4.16, 4.20, 4.67, 4.65, 4.70, 4.68]
+                }
+              ]
+            },
+            {
+              "_key": "sa4-010",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "sa4-010s1", "label": "Berger Paints move on results", "value": "−9% over two sessions", "context": "Blamed on channel destocking ahead of expected price actions, illustrative" },
+                { "_key": "sa4-010s2", "label": "Asian Paints move over same period", "value": "+1%", "context": "Results broadly in line with expectations, illustrative" },
+                { "_key": "sa4-010s3", "label": "Ratio move", "value": "4.20 → 4.67 (+11%)", "context": "Jumped sharply on the earnings gap and has not reverted in the three weeks since" },
+                { "_key": "sa4-010s4", "label": "Historical ratio range (illustrative)", "value": "~4.10 to 4.40", "context": "The post-results ratio sits well outside this range, the kind of stretch flagged in Lesson 3" }
+              ]
+            },
+            {
+              "_key": "sa4-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa4-011s1", "_type": "span", "marks": [], "text": "The Judgment Call: Permanent Repricing or Temporary Overreaction?" }
+              ]
+            },
+            {
+              "_key": "sa4-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa4-012s1", "_type": "span", "marks": [], "text": "There is a real case that this gap should not close. India's decorative paints industry has a genuine structural risk on the horizon: Grasim Industries, part of the Aditya Birla Group, entered the category through its Birla Opus brand, with an aggressive dealer-acquisition and pricing push aimed squarely at the incumbents. If Berger's channel destocking is not a one-off timing issue but an early sign of it losing dealer shelf space to this new entrant faster than Asian Paints is, then Berger's underperformance is not noise, it is the market correctly repricing two companies whose competitive positions are no longer as similar as they used to be. In that world, the ratio does not revert. It has moved to a new, permanently higher level." }
+              ]
+            },
+            {
+              "_key": "sa4-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa4-013s1", "_type": "span", "marks": [], "text": "There is an equally real case the other way. Channel destocking is, by its nature, a timing effect: dealers reduce inventory in one quarter, and unless underlying sell-through to end consumers has actually weakened, that inventory typically gets rebuilt in the following one or two quarters, showing up as a bounce back in reported volumes. Both Berger and Asian Paints face the same Birla Opus threat, roughly in proportion to their existing market share, so a genuine shift in the competitive landscape should, in principle, pressure both stocks' standing relative to the sector, not necessarily the ratio between the two of them specifically. If nothing about their relative competitive position against each other has actually changed, and the miss really was a channel timing issue, the historical link should reassert itself once the next quarter's numbers normalize." }
+              ]
+            },
+            {
+              "_key": "sa4-014",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Notice what is actually happening here: before any statistics get involved, you are making an economic argument about whether the shared story between two companies still holds. Chapter 3's cointegration tests are powerful, but they test whether a relationship has held statistically in the past. They cannot tell you, on their own, whether a company-specific narrative, like a new competitor, is about to break that relationship going forward. Both kinds of reasoning, economic and statistical, are needed, and neither replaces the other."
+            },
+            {
+              "_key": "sa4-015",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa4-015s1", "_type": "span", "marks": [], "text": "What a Disciplined Trader Would Do Next (Not Trade Yet)" }
+              ]
+            },
+            {
+              "_key": "sa4-016",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa4-016s1", "_type": "span", "marks": [], "text": "Faced with a ratio sitting well outside its normal range and two competing, equally plausible stories, a disciplined trader does not place a trade on conviction alone. The next steps are unglamorous but essential: pull several years of price history for the pair and check how the ratio behaved after previous one-off misses, weigh management's destocking explanation against whatever dealer-level data is available, and run the formal cointegration test from Chapter 3 on the longer history rather than trusting how the last eight weeks look on a chart. Only once the relationship checks out statistically, and the economic story still looks intact rather than structurally broken, does sizing an actual position, covered from Chapter 4 onward, become the next question, not before." }
+              ]
+            },
+            {
+              "_key": "sa4-017",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Should he trade it now?",
+              "scenario": "It is the week after Berger's results. The Asian Paints / Berger Paints ratio has jumped from its normal 4.10 to 4.40 range to 4.67 and has not moved back in three weeks. A friend wants to short the spread immediately, short Asian Paints and long Berger Paints, betting purely on reversion.",
+              "prompt": "What would you tell him before he places the trade?",
+              "modelAnswer": "Tell him the jump alone is not enough. He needs to check whether this looks like previous one-off misses that reverted, run a formal test of the relationship over a longer history rather than trusting three weeks of data, and form a view on whether Berger's channel destocking is genuinely temporary or an early sign of it losing ground to Birla Opus specifically, not just facing the same industry-wide threat Asian Paints also faces. Trading purely on \"it looks stretched\" skips both the economic reasoning and the statistical testing this course builds toward."
+            },
+            {
+              "_key": "sa4-018",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "What would make this divergence structural rather than temporary?",
+              "question": "Which of the following, if true, would most support the case that the Asian Paints / Berger Paints ratio has moved to a new permanent level rather than one that will revert?",
+              "options": [
+                "Berger's channel destocking reverses next quarter as dealers rebuild inventory",
+                "Berger is losing dealer shelf space to Birla Opus meaningfully faster than Asian Paints is",
+                "Both stocks fall together on a broad market selloff the following week",
+                "Crude oil prices, a shared input cost for both companies, rise 5 percent"
+              ],
+              "correctIndex": 1,
+              "explanation": "If Berger is losing competitive ground to a new entrant specifically faster than Asian Paints is, the two companies' relative positions have genuinely changed, which is exactly the kind of structural shift that can break a historical relationship for good rather than being a temporary, reversible gap."
+            },
+            {
+              "_key": "sa4-019",
+              "_type": "flashcardSet",
+              "title": "Case Study: Core Terms",
+              "cards": [
+                { "_key": "sa4-019f1", "term": "Channel destocking", "definition": "A temporary reduction in the inventory dealers or distributors hold, which can depress reported sales for a quarter without reflecting a real change in end-consumer demand." },
+                { "_key": "sa4-019f2", "term": "Structural break", "definition": "A genuine, lasting change in the relationship between two securities, caused by a real shift in their underlying businesses, after which the old historical relationship no longer applies." },
+                { "_key": "sa4-019f3", "term": "Temporary overreaction", "definition": "A price move that overstates the actual change in a company's fundamentals, and that is expected to partly reverse once the market re-assesses the news." }
+              ]
+            },
+            {
+              "_key": "sa4-020",
+              "_type": "keyTakeaways",
+              "points": [
+                "Two companies can share almost the same business and cost structure and still see their prices pulled apart for a quarter or two by news specific to just one of them.",
+                "Whether a stretched spread is a trade depends on whether the shared economic story that normally ties the two companies together is still intact, not just on how far the ratio has moved.",
+                "A real, ongoing threat to an entire industry, like a disruptive new competitor, can create a genuine structural break in a relationship. A timing issue like channel destocking usually does not.",
+                "Economic reasoning and formal statistical testing are both needed. Chapter 3's cointegration tests confirm a relationship held in the past; they cannot, on their own, tell you whether a specific new narrative is about to break it.",
+                "A disciplined trader checks a longer price history, the pattern after previous similar misses, and the formal statistical test, before sizing any position off a single quarter's divergence."
+              ]
+            },
+            {
+              "_key": "sa4-021",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This case study is illustrative. Asian Paints and Berger Paints price levels, the ratio range, and the quarterly results described here are hypothetical and constructed for teaching purposes, not actual historical data. The reference to Grasim Industries' Birla Opus entering the decorative paints market reflects a real, publicly known industry development, used here only as background context, not as a comment on any specific quarter's actual results. This is not investment advice or a recommendation to trade any security named here. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

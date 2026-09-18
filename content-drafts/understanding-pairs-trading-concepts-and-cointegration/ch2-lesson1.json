@@ -1,0 +1,241 @@
+{
+  "courseSlug": "understanding-pairs-trading-concepts-and-cointegration",
+  "chapters": [
+    {
+      "title": "Chapter 2: The Spread and the Z-Score",
+      "lessons": [
+        {
+          "title": "Building the Spread: Price Ratios vs Regression-Based Hedge Ratios",
+          "slug": "building-the-spread-price-ratios-vs-regression-based-hedge-ratios",
+          "body": [
+            {
+              "_key": "p5-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p5-001s1", "_type": "span", "marks": [], "text": "Chapter 1 sized the HDFC Bank / ICICI Bank pair using a naive hedge ratio, simply dividing one stock's price by the other's. That number, 1.375, tells you how to balance rupee exposure today. It tells you nothing about how the two stocks have actually moved relative to each other historically, which is the entire basis of a pairs trade. Two stocks can be priced in a 1.375 ratio today and still have a long history where a 1 percent move in ICICI Bank corresponds to a 1.2 percent move in HDFC Bank, not a 1.375 percent move. A real spread, the thing you actually track for divergence and convergence, needs to be built on that historical relationship, not on today's price levels alone." }
+              ]
+            },
+            {
+              "_key": "p5-002",
+              "_type": "bigIdea",
+              "text": "The spread is not just a price difference or a price ratio. It is built using a hedge ratio estimated from regressing one stock's price history against the other's, so the spread captures how the two stocks actually move together, not just where their prices happen to sit today."
+            },
+            {
+              "_key": "p5-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p5-003s1", "_type": "span", "marks": [], "text": "Why the Price Ratio Falls Short" }
+              ]
+            },
+            {
+              "_key": "p5-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p5-004s1", "_type": "span", "marks": [], "text": "The price-ratio hedge ratio from Chapter 1 answers a narrow question: what quantity of Stock B, at current prices, has the same rupee value as one share of Stock A. It says nothing about volatility. If HDFC Bank tends to swing harder than ICICI Bank on the same piece of sector news, sizing the position purely on relative price levels leaves you carrying more effective risk on one leg than the other, even though the rupee values match on day one. A hedge ratio built from historical price behavior fixes this by directly measuring how much one stock has actually moved for a given move in the other." }
+              ]
+            },
+            {
+              "_key": "p5-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p5-005s1", "_type": "span", "marks": [], "text": "The Regression-Based Hedge Ratio" }
+              ]
+            },
+            {
+              "_key": "p5-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "p5-006m1", "_type": "glossaryTerm", "definition": "A statistical method that fits the straight line through a set of data points that minimizes the total squared distance between the line and the actual points, commonly used to estimate how one variable moves in relation to another." }
+              ],
+              "children": [
+                { "_key": "p5-006s1", "_type": "span", "marks": [], "text": "The standard approach is to run an " },
+                { "_key": "p5-006s2", "_type": "span", "marks": ["p5-006m1"], "text": "ordinary least squares (OLS) regression" },
+                { "_key": "p5-006s3", "_type": "span", "marks": [], "text": " of one stock's price series against the other's, using the same historical window you would use to check correlation, typically 90 to 180 trading days. Pick one stock as the dependent variable, usually the one whose direction you have the stronger conviction on, and regress it against the other. The slope coefficient this regression produces, commonly called beta in this context, is the hedge ratio: it tells you, on average over that window, how many rupees of movement in Stock A have accompanied one rupee of movement in Stock B." }
+              ]
+            },
+            {
+              "_key": "p5-007",
+              "_type": "mathBlock",
+              "latex": "P_{A,t} = \\alpha + \\beta \\, P_{B,t} + \\varepsilon_t \\qquad \\text{Spread}_t = P_{A,t} - \\beta \\, P_{B,t}",
+              "caption": "Regress Stock A's price on Stock B's price. The slope β is the hedge ratio; the spread is what is left over after removing β times Stock B's price from Stock A's price."
+            },
+            {
+              "_key": "p5-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p5-008s1", "_type": "span", "marks": [], "text": "This is a two-line calculation in Python using something like numpy's polyfit or statsmodels' OLS, feeding in the two stocks' closing prices over your chosen window. The intercept, alpha, is usually discarded for trading purposes, and beta becomes your hedge ratio going forward, until you recompute it on updated data. The spread itself, Stock A's price minus beta times Stock B's price, is a new time series in rupees, and it is this series, not the raw prices, that you actually watch for a pairs trade." }
+              ]
+            },
+            {
+              "_key": "p5-009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p5-009s1", "_type": "span", "marks": [], "text": "Worked Example: Regression Beta for HDFC Bank / ICICI Bank" }
+              ]
+            },
+            {
+              "_key": "p5-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p5-010s1", "_type": "span", "marks": [], "text": "Running a 180-day OLS regression of HDFC Bank's price against ICICI Bank's price gives an illustrative beta of 1.28, noticeably below the naive price-ratio hedge ratio of 1.375 from Chapter 1. This tells you that, historically, HDFC Bank has moved somewhat less per rupee of ICICI Bank movement than the current price levels alone would suggest, so the price-ratio approach was actually oversizing the short leg relative to how the two stocks really co-move. With HDFC Bank at ₹1,650 and ICICI Bank at ₹1,200 (illustrative), today's spread is 1,650 minus 1.28 times 1,200, which works out to ₹114." }
+              ]
+            },
+            {
+              "_key": "p5-011",
+              "_type": "table",
+              "caption": "Naive price-ratio hedge ratio vs regression-based hedge ratio (illustrative)",
+              "headers": ["Method", "Hedge ratio", "Basis"],
+              "rows": [
+                { "_key": "p5-011r1", "cells": ["Price ratio (Chapter 1)", "1.375", "Current price of HDFC Bank ÷ current price of ICICI Bank"] },
+                { "_key": "p5-011r2", "cells": ["OLS regression beta", "1.28", "Slope from regressing 180 days of HDFC Bank price on ICICI Bank price"] }
+              ]
+            },
+            {
+              "_key": "p5-012",
+              "_type": "callout",
+              "type": "insight",
+              "text": "The two hedge ratios do not have to match, and usually will not. The price ratio reflects where the stocks trade today. The regression beta reflects how they have actually co-moved. When the two diverge meaningfully, it is worth asking why, sometimes it signals one stock has structurally rerated relative to the other."
+            },
+            {
+              "_key": "p5-013",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Regression-based spread over time (illustrative, ₹)",
+              "xAxisLabel": "Trading week",
+              "yAxisLabel": "Spread (₹)",
+              "data": [
+                { "_key": "p5-013d1", "label": "1", "value": 128 },
+                { "_key": "p5-013d2", "label": "2", "value": 122 },
+                { "_key": "p5-013d3", "label": "3", "value": 115 },
+                { "_key": "p5-013d4", "label": "4", "value": 98 },
+                { "_key": "p5-013d5", "label": "5", "value": 88 },
+                { "_key": "p5-013d6", "label": "6", "value": 82 },
+                { "_key": "p5-013d7", "label": "7", "value": 91 },
+                { "_key": "p5-013d8", "label": "8", "value": 102 },
+                { "_key": "p5-013d9", "label": "9", "value": 112 },
+                { "_key": "p5-013d10", "label": "10", "value": 118 },
+                { "_key": "p5-013d11", "label": "11", "value": 121 },
+                { "_key": "p5-013d12", "label": "12", "value": 114 }
+              ]
+            },
+            {
+              "_key": "p5-014",
+              "_type": "callout",
+              "type": "warning",
+              "text": "A regression run on too short a window overfits to a handful of recent, possibly unusual days. A regression run on too long a window can blend together periods where the true relationship was actually different, for instance before and after a major merger or a management change. There is no single correct window length, 90 to 180 trading days is a common practical range, and Chapter 3's cointegration test gives you a more rigorous way to judge whether your chosen window and hedge ratio are producing a genuinely stable spread."
+            },
+            {
+              "_key": "p5-015",
+              "_type": "comparison",
+              "title": "Price ratio vs regression beta as a hedge ratio"
+              ,
+              "columns": [
+                {
+                  "_key": "p5-015c1",
+                  "label": "Price ratio",
+                  "points": [
+                    "Trivial to calculate, needs only today's two prices",
+                    "Ignores how the stocks have actually co-moved historically",
+                    "Can oversize or undersize the hedge if one stock is structurally more volatile",
+                    "A reasonable quick estimate, not a basis for a real spread"
+                  ]
+                },
+                {
+                  "_key": "p5-015c2",
+                  "label": "Regression beta",
+                  "points": [
+                    "Needs a historical price window and a regression, a few lines of Python",
+                    "Reflects the actual historical relationship between the two stocks' moves",
+                    "Sensitive to the chosen lookback window length",
+                    "The basis for a real spread series and the z-score signal in Lesson 2"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "p5-016",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "p5-016s1", "label": "Typical regression lookback window", "value": "90 to 180 trading days", "context": "Long enough to estimate a stable relationship, short enough to stay relevant to current market conditions" },
+                { "_key": "p5-016s2", "label": "What beta measures", "value": "Historical co-movement", "context": "Not current price levels, unlike the naive price-ratio hedge ratio" },
+                { "_key": "p5-016s3", "label": "Spread formula", "value": "P(A) − β × P(B)", "context": "A new rupee-denominated time series, tracked for divergence and convergence" },
+                { "_key": "p5-016s4", "label": "How often beta is recalculated", "value": "Periodically", "context": "A fixed beta drifts stale over time; Chapter 5 topics like rolling windows address this in more advanced courses" }
+              ]
+            },
+            {
+              "_key": "p5-017",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Calculate the spread",
+              "prompt": "Asian Paints trades at ₹3,200 and Berger Paints trades at ₹620. A 180-day OLS regression of Asian Paints on Berger Paints gives a beta of 4.5. What is today's spread value, in rupees?",
+              "correctValue": 410,
+              "tolerance": 5,
+              "unit": "₹",
+              "explanation": "Spread = P(Asian Paints) − β × P(Berger Paints) = 3,200 − (4.5 × 620) = 3,200 − 2,790 = ₹410."
+            },
+            {
+              "_key": "p5-018",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "What the regression beta captures",
+              "question": "A regression-based hedge ratio is generally considered more reliable for pairs trading than a simple price ratio because it:",
+              "options": [
+                "Is easier and faster to calculate on any given day",
+                "Captures how the two stocks have actually moved relative to each other historically, not just their current prices",
+                "Always produces a lower hedge ratio than the price ratio",
+                "Eliminates the need to ever recalculate the hedge ratio again"
+              ],
+              "correctIndex": 1,
+              "explanation": "The regression beta is estimated from historical price data and reflects the actual relationship between how the two stocks move, while the price ratio only reflects where they happen to trade right now. It is not always lower, and it still needs periodic recalculation as new data comes in."
+            },
+            {
+              "_key": "p5-019",
+              "_type": "flashcardSet",
+              "title": "Building the Spread: Core Terms",
+              "cards": [
+                { "_key": "p5-019f1", "term": "Ordinary least squares (OLS) regression", "definition": "A statistical method that fits the line minimizing total squared error between the line and a set of data points, used here to estimate the historical relationship between two stocks' prices." },
+                { "_key": "p5-019f2", "term": "Regression beta", "definition": "The slope coefficient from an OLS regression of one stock's price on another's, used as a hedge ratio because it reflects historical co-movement rather than current price levels." },
+                { "_key": "p5-019f3", "term": "Spread", "definition": "The rupee-denominated series formed by subtracting beta times one stock's price from the other stock's price, tracked over time for divergence and convergence." },
+                { "_key": "p5-019f4", "term": "Lookback window", "definition": "The historical period of price data, commonly 90 to 180 trading days, used to estimate a regression beta or a correlation coefficient." },
+                { "_key": "p5-019f5", "term": "Intercept (alpha)", "definition": "The constant term produced by an OLS regression, generally discarded for pairs trading purposes, since only the slope (beta) is used as the hedge ratio." }
+              ]
+            },
+            {
+              "_key": "p5-020",
+              "_type": "keyTakeaways",
+              "points": [
+                "A naive price-ratio hedge ratio only reflects today's prices, not how two stocks have actually co-moved historically.",
+                "A regression-based hedge ratio, the slope (beta) from an OLS regression of one stock's price on the other's, captures the real historical relationship between the two.",
+                "The spread is a new rupee-denominated series, Stock A's price minus beta times Stock B's price, and it is this series, not raw prices, that a pairs trader actually tracks.",
+                "The regression beta and the price ratio will usually differ, and a meaningful gap between them is worth investigating rather than ignoring.",
+                "The lookback window used for the regression matters: too short overfits to recent noise, too long can blend together periods where the true relationship was different.",
+                "A regression beta on its own does not confirm a pair is safe to trade. Chapter 3's cointegration test is the formal check for whether the resulting spread is stable enough to build a real trading signal on."
+              ]
+            },
+            {
+              "_key": "p5-021",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice or a recommendation to buy, sell, or short any security named here. All prices, beta values, and spread figures are illustrative and do not represent actual historical data. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

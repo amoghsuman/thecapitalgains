@@ -1,0 +1,248 @@
+{
+  "courseSlug": "building-an-angel-investment-portfolio-diversification-and-follow-on-strategy",
+  "chapters": [
+    {
+      "title": "Chapter 1: From Power Law to Portfolio Strategy",
+      "lessons": [
+        {
+          "title": "How Many Startups Do You Actually Need? The Shots-on-Goal Math",
+          "slug": "how-many-startups-do-you-actually-need-the-shots-on-goal-math",
+          "body": [
+            {
+              "_key": "c1l2-001",
+              "_type": "bigIdea",
+              "text": "You do not choose how many startups to back based on how much conviction you feel. You choose it based on how many attempts it takes, at your actual hit rate, before missing the outlier entirely stops being the likely outcome."
+            },
+            {
+              "_key": "c1l2-002",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l2-002s1", "_type": "span", "text": "In the last lesson, the illustrative 20-startup portfolio had 2 positions out of 20, 10%, that cleared 10x or better, and those two positions supplied the overwhelming majority of the portfolio's return. That 10% is a hit rate. This lesson turns it into a different question: if your hit rate for a genuine 10x-plus outcome is roughly 10%, how many positions do you actually need before you can reasonably expect to catch at least one? The answer is not intuitive, and it is not \"as many as you can afford.\" It is a specific piece of binomial probability, and it has a real trade-off on the other side of it.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c1l2-003",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l2-003s1", "_type": "span", "text": "The Binomial Math of Catching at Least One Outlier", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c1l2-004",
+              "_type": "mathBlock",
+              "latex": "P(\\text{at least one hit}) = 1 - (1-p)^n",
+              "caption": "p = probability that any single position independently clears your outlier threshold (e.g. 10x), n = number of positions in the portfolio"
+            },
+            {
+              "_key": "c1l2-005",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l2-005s1", "_type": "span", "text": "This treats every position as an independent coin flip with probability p of being an outlier, which is a simplification, real startups are not independent of each other or of the broader funding cycle, but it is close enough to be genuinely useful for sizing decisions. Using the 10% hit rate carried over from the previous lesson, here is what happens to your odds of catching at least one outlier as position count rises.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c1l2-006",
+              "_type": "table",
+              "caption": "Probability of catching at least one 10x-plus position, at a 10% per-position hit rate",
+              "headers": ["Number of Positions (n)", "P(at Least One 10x+ Hit)"],
+              "rows": [
+                { "_key": "c1l2-006r1", "_type": "tableRow", "cells": ["5", "41.0%"] },
+                { "_key": "c1l2-006r2", "_type": "tableRow", "cells": ["10", "65.1%"] },
+                { "_key": "c1l2-006r3", "_type": "tableRow", "cells": ["15", "79.4%"] },
+                { "_key": "c1l2-006r4", "_type": "tableRow", "cells": ["20", "87.8%"] },
+                { "_key": "c1l2-006r5", "_type": "tableRow", "cells": ["25", "92.8%"] },
+                { "_key": "c1l2-006r6", "_type": "tableRow", "cells": ["30", "95.8%"] }
+              ]
+            },
+            {
+              "_key": "c1l2-007",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "P(at Least One 10x+ Hit) vs. Number of Positions",
+              "xAxisLabel": "Number of Positions",
+              "yAxisLabel": "Probability (%)",
+              "data": [
+                { "_key": "c1l2-007d1", "label": "5", "value": 41.0 },
+                { "_key": "c1l2-007d2", "label": "10", "value": 65.1 },
+                { "_key": "c1l2-007d3", "label": "15", "value": 79.4 },
+                { "_key": "c1l2-007d4", "label": "20", "value": 87.8 },
+                { "_key": "c1l2-007d5", "label": "25", "value": 92.8 },
+                { "_key": "c1l2-007d6", "label": "30", "value": 95.8 }
+              ]
+            },
+            {
+              "_key": "c1l2-008",
+              "_type": "keyFact",
+              "label": "The Cost of Going Too Thin",
+              "value": "At n = 5, you have a 59% chance of missing entirely",
+              "context": "With only 5 positions at a 10% hit rate, it is more likely than not that none of them clears 10x. That is not bad luck, it is the base rate at that portfolio size."
+            },
+            {
+              "_key": "c1l2-009",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Notice the curve bends: going from 5 to 20 positions (4x the count) takes your odds from 41% to 87.8%, roughly doubling them. Going from 20 to 30 (1.5x the count) only adds about 8 more points, from 87.8% to 95.8%. The first 15 to 20 positions buy you most of the improvement. Beyond that, each additional position adds real but shrinking value, while consuming capital you may need elsewhere."
+            },
+            {
+              "_key": "c1l2-010",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Apply the Formula to a Thinner Pipeline",
+              "prompt": "Your own deal flow is narrower than average. You estimate only a 6% chance that any single position clears 10x. If you build an 18-position portfolio, what is the probability of catching at least one 10x-plus outcome? Answer in percent, e.g. 70.0 for 70.0%.",
+              "correctValue": 67.2,
+              "tolerance": 1,
+              "unit": "%",
+              "explanation": "P = 1 − (1 − 0.06)^18 = 1 − 0.94^18 ≈ 1 − 0.328 = 0.672, or 67.2%. A lower per-position hit rate pulls the whole curve down and to the right: you need more positions than in the 10% case to reach the same odds of catching an outlier."
+            },
+            {
+              "_key": "c1l2-011",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l2-011s1", "_type": "span", "text": "The Trade-off: Breadth Costs You Depth", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c1l2-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l2-012s1", "_type": "span", "text": "The probability math alone argues for as many positions as possible. It cannot, because capital is finite and because the previous lesson already showed that under-sizing your eventual winner is nearly as damaging as missing it. Spread ₹1 crore across more and more positions and the average cheque shrinks fast.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c1l2-013",
+              "_type": "table",
+              "caption": "Average cheque size on a fixed ₹1 crore corpus",
+              "headers": ["Number of Positions", "Average Cheque Size", "P(at Least One 10x+ Hit, at 10% rate)"],
+              "rows": [
+                { "_key": "c1l2-013r1", "_type": "tableRow", "cells": ["10", "₹10,00,000", "65.1%"] },
+                { "_key": "c1l2-013r2", "_type": "tableRow", "cells": ["15", "₹6,66,667", "79.4%"] },
+                { "_key": "c1l2-013r3", "_type": "tableRow", "cells": ["20", "₹5,00,000", "87.8%"] },
+                { "_key": "c1l2-013r4", "_type": "tableRow", "cells": ["25", "₹4,00,000", "92.8%"] },
+                { "_key": "c1l2-013r5", "_type": "tableRow", "cells": ["30", "₹3,33,333", "95.8%"] }
+              ]
+            },
+            {
+              "_key": "c1l2-014",
+              "_type": "callout",
+              "type": "warning",
+              "text": "This table only counts capital for initial cheques. It has not set aside a single rupee for follow-on rounds into your winners once they show real signal, which Chapter 4 treats as its own decision. Deploy the full ₹1 crore into initial positions with nothing held back, and you may catch your outlier only to be unable to defend your ownership in it as later rounds dilute you. In practice, the position count you can responsibly support is lower than the raw probability table suggests, once a reserve is carved out."
+            },
+            {
+              "_key": "c1l2-015",
+              "_type": "donutChart",
+              "title": "A Common Starting Split of a ₹1 Crore Angel Corpus",
+              "data": [
+                { "_key": "c1l2-015d1", "label": "Initial Cheques", "value": 60 },
+                { "_key": "c1l2-015d2", "label": "Reserved for Follow-Ons", "value": 40 }
+              ]
+            },
+            {
+              "_key": "c1l2-016",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c1l2-016s1", "_type": "span", "text": "A 60/40 initial-to-reserve split is a common starting point among individual angels, not a rule. Against ₹1 crore, that leaves ₹60 lakh for initial cheques, which supports roughly 12 positions at ₹5 lakh each rather than 20, before a single follow-on decision is made. Recompute the shots-on-goal table using only the capital actually earmarked for first cheques, not your total corpus, or the odds you are working from will be optimistic.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "c1l2-017",
+              "_type": "comparison",
+              "title": "Fewer, Larger Positions vs. More, Smaller Positions",
+              "columns": [
+                {
+                  "_key": "c1l2-017c1",
+                  "label": "Fewer, Larger Positions (e.g. 10-12)",
+                  "points": [
+                    "Meaningful ownership and cheque size in each company you back",
+                    "Easier to do real diligence on each one within limited time",
+                    "Lower probability of catching a 10x+ outcome at all, per the table above"
+                  ]
+                },
+                {
+                  "_key": "c1l2-017c2",
+                  "label": "More, Smaller Positions (e.g. 25-30)",
+                  "points": [
+                    "Meaningfully higher odds that at least one outlier shows up in the portfolio",
+                    "Cheques risk becoming too small to be worth a founder's cap table slot, or your own reserve capacity",
+                    "Diligence per company necessarily gets shallower as count rises"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c1l2-018",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "SEBI's Angel Fund framework, a category of Alternative Investment Fund under the SEBI (AIF) Regulations, also sets a minimum investment ticket size per investee company for angel funds pooling money from multiple investors. That floor changes from time to time through SEBI circulars, so if you are investing through a registered angel fund or AIF rather than writing direct personal cheques, check the current minimum before assuming you can spread capital as thin as an individual investor technically could."
+            },
+            {
+              "_key": "c1l2-019",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Twelve Deep Positions or Twenty-Five Thin Ones",
+              "scenario": "You have ₹1 crore to deploy over the next two years as a solo angel, with no plans to raise a formal fund. You are deciding between two plans: Plan A, 12 positions at roughly ₹8 lakh each, with almost nothing held back for follow-ons; Plan B, 25 positions at roughly ₹4 lakh each, again with little reserved.",
+              "prompt": "Which plan would you actually recommend adjusting, and what specifically would you change about it, using this lesson's math?",
+              "modelAnswer": "Neither plan as stated is well-built, because both spend the entire ₹1 crore on initial cheques and leave nothing for follow-ons, which the previous callout flagged as a real risk. Plan A's 12 positions give meaningful cheque size but land around a 65 to 70% chance of catching a 10x+ outcome at a 10% hit rate, uncomfortably close to a coin flip on catching nothing at all. Plan B's 25 positions push that probability past 90%, but at ₹4 lakh a cheque, some of those tickets may be too small to matter if diluted early, and diligence quality per company likely drops with 25 names to track. The better fix is to pull back the initial-cheque budget to something like ₹55 to 60 lakh (leaving the rest as reserve), and size positions around 15 to 18 at roughly ₹3.5 to 4 lakh each, which keeps the odds of catching an outlier reasonably high (comfortably past 75 to 80%) while still leaving capital to defend a winner once it starts showing signal."
+            },
+            {
+              "_key": "c1l2-020",
+              "_type": "flashcardSet",
+              "title": "Terms From This Lesson",
+              "cards": [
+                { "_key": "c1l2-020c1", "term": "Shots on Goal", "definition": "The number of independent startup bets in a portfolio, framed as attempts at catching a rare outlier outcome rather than as individually analysed stock picks." },
+                { "_key": "c1l2-020c2", "term": "Hit Rate (p)", "definition": "The probability that any single position, independently, clears a defined outlier threshold (commonly 10x or better) by the time it exits." },
+                { "_key": "c1l2-020c3", "term": "Binomial Probability of At Least One Hit", "definition": "1 minus the probability of missing on every single position: P = 1 − (1 − p)^n, where n is the number of positions." },
+                { "_key": "c1l2-020c4", "term": "Breadth vs. Depth Trade-off", "definition": "The tension between holding more positions (raising the odds of catching an outlier) and holding fewer, larger ones (raising the ownership and impact of each position), given a fixed pool of capital." },
+                { "_key": "c1l2-020c5", "term": "Reserve Ratio", "definition": "The share of total angel capital deliberately held back from initial cheques, to be deployed later into follow-on rounds for positions that show real signal. Covered in full in Chapter 4." }
+              ]
+            },
+            {
+              "_key": "c1l2-021",
+              "_type": "collapsible",
+              "title": "What the Angel Investing Research Literature Suggests",
+              "content": [
+                {
+                  "_key": "c1l2-021a",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    { "_key": "c1l2-021as1", "_type": "span", "text": "A frequently cited study by Robert Wiltbank and Warren Boeker, published through the Kauffman Foundation, examined several thousand angel investments made through organised angel groups and found that portfolios built up to around 20 or more investments, combined with more hours of diligence per deal, were associated with meaningfully better realised returns than smaller, more concentrated portfolios in their sample.", "marks": [] }
+                  ]
+                },
+                {
+                  "_key": "c1l2-021b",
+                  "_type": "callout",
+                  "type": "disclaimer",
+                  "text": "This research was conducted on US and UK angel group data from a specific historical period, not on Indian angel investors, and angel group deal flow, valuations and exit routes differ in important ways from India's market. Treat it as supporting evidence for the general shape of this lesson's math, not as proof of an exact number for an Indian portfolio."
+                }
+              ]
+            },
+            {
+              "_key": "c1l2-022",
+              "_type": "keyTakeaways",
+              "points": [
+                "The probability of catching at least one outlier position follows P = 1 − (1 − p)^n, and it rises fast at first, then flattens",
+                "At a realistic 10% hit rate, portfolios below about 15 positions carry a genuinely uncomfortable chance of missing every outlier entirely",
+                "Most of the probability gain happens by around 20 to 25 positions, beyond which each added position helps less while still consuming capital",
+                "More positions means smaller average cheques on fixed capital, which risks the under-sizing problem from the previous lesson",
+                "Any position count decision has to be made against capital actually earmarked for initial cheques, after a follow-on reserve is set aside, not against total corpus"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

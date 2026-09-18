@@ -1,0 +1,170 @@
+{
+  "courseSlug": "advanced-risk-management-value-at-risk-and-stress-testing",
+  "chapters": [
+    {
+      "title": "Chapter 5: Portfolio Risk Decomposition (Marginal, Component, and Incremental VaR)",
+      "lessons": [
+        {
+          "title": "Marginal VaR: The Risk Contribution of the Next Rupee",
+          "slug": "marginal-var-the-risk-contribution-of-the-next-rupee",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "p1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "p1s1", "text": "Marginal VaR answers the narrowest, most precise version of the decomposition question from the last lesson: if you added one more rupee to a specific position, holding everything else fixed, how much would total portfolio VaR change? It is a sensitivity, not a share of the total, but it turns out to be the exact building block that share is built from.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "keyFact",
+              "_key": "p2",
+              "label": "Marginal VaR",
+              "value": "The rate of change of portfolio VaR with respect to a small increase in one position's size",
+              "context": "A per-rupee sensitivity. Multiply it by the position's actual size and you get its Component VaR, covered next lesson."
+            },
+            {
+              "_type": "mathBlock",
+              "_key": "p3",
+              "latex": "\\text{MVaR}_i = z_\\alpha \\cdot \\frac{\\sigma_i\\left(x_i + x_j\\rho_{ij}\\right)}{\\sigma_P}",
+              "caption": "Marginal VaR for asset i in a two-asset portfolio. x_i is asset i's rupee volatility (position value times its own volatility), rho is the correlation between the two assets, sigma_P is total portfolio volatility. For larger portfolios this generalizes to a covariance-matrix expression, the two-asset version here makes the mechanics visible."
+            },
+            {
+              "_type": "block",
+              "_key": "p4",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "p4s1", "text": "Computing Marginal VaR for the Nifty-Gold Portfolio", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "p5",
+              "caption": "Recap of the portfolio's inputs",
+              "headers": ["Input", "Value"],
+              "rows": [
+                { "cells": ["Nifty futures value, volatility", "Rs 50,00,000, 1.2%"] },
+                { "cells": ["Gold value, volatility", "Rs 30,00,000, 1.0%"] },
+                { "cells": ["Correlation", "-0.10"] },
+                { "cells": ["Portfolio volatility (rupee terms)", "Rs 64,343"] },
+                { "cells": ["Confidence level, z-score", "99%, 2.326"] }
+              ]
+            },
+            {
+              "_type": "statGrid",
+              "_key": "p6",
+              "stats": [
+                { "label": "Marginal VaR, Nifty (per Rs 1,00,000 added)", "value": "Rs 2,472.67", "context": "z x 0.012 x (60,000 + 30,000 x -0.10) / 64,343" },
+                { "label": "Marginal VaR, Gold (per Rs 1,00,000 added)", "value": "Rs 867.60", "context": "z x 0.010 x (30,000 + 60,000 x -0.10) / 64,343" },
+                { "label": "Ratio", "value": "2.85x", "context": "Nifty's marginal risk contribution per rupee is nearly triple gold's" }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "p7",
+              "type": "insight",
+              "text": "Read this literally: adding another Rs 1,00,000 to the Nifty position raises portfolio VaR by about Rs 2,473. Adding the same Rs 1,00,000 to gold instead raises portfolio VaR by only about Rs 868, less than a third as much, even though gold's own standalone volatility, 1.0%, is not dramatically lower than Nifty's 1.2%. The gap is almost entirely about correlation, gold's negative correlation with Nifty means an extra rupee there mostly offsets existing risk rather than adding fresh risk."
+            },
+            {
+              "_type": "block",
+              "_key": "p8",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "p8s1", "text": "A Preview: From Marginal to Component", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "p9",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "p9s1", "text": "Marginal VaR is a per-rupee rate. Multiply it by the position's actual full size, not just Rs 1,00,000, and something remarkable happens.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "p10",
+              "caption": "Marginal VaR (per rupee) times full position size",
+              "headers": ["Position", "Marginal VaR (per rupee)", "Position size", "Marginal VaR x Size"],
+              "rows": [
+                { "cells": ["Nifty futures", "0.024727", "Rs 50,00,000", "Rs 1,23,633"] },
+                { "cells": ["Gold", "0.008676", "Rs 30,00,000", "Rs 26,028"] },
+                { "cells": ["Sum", "", "", "Rs 1,49,661"] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "p11",
+              "type": "insight",
+              "text": "Rs 1,23,633 plus Rs 26,028 equals Rs 1,49,661, exactly the total portfolio VaR computed back in Chapter 2, to the rupee. This is not a coincidence or a rounding accident, it follows directly from VaR's positive homogeneity property from Chapter 3, and it means marginal VaR, multiplied by position size, gives you an exact, fully additive attribution of total risk across every position. This exact attribution has a name, Component VaR, and it is the subject of the next lesson."
+            },
+            {
+              "_type": "callout",
+              "_key": "p12",
+              "type": "warning",
+              "text": "Now resolve the last lesson's teaser. The naive guess, prorating by standalone VaR, gave Nifty about 66.7% of total risk and gold about 33.3%. The actual, exact attribution gives Nifty roughly 82.6% (Rs 1,23,633 of Rs 1,49,661) and gold only about 17.4%. The naive guess did not just get the split slightly wrong, it overstated gold's true contribution to portfolio risk by nearly double. Gold's diversification benefit is real, but it does not mean gold is carrying a third of the book's risk, it is carrying closer to a sixth."
+            },
+            {
+              "_type": "block",
+              "_key": "p13",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "p13s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "p14",
+              "variant": "numericInput",
+              "title": "Marginal VaR Under a Different Correlation",
+              "prompt": "Using the same Nifty and gold volatilities and position sizes, if the correlation between them were 0 instead of -0.10, portfolio volatility would be Rs 67,082 (you can take this as given). What would Nifty's marginal VaR be, per Rs 1,00,000 added, at 99% confidence? Use the formula MVaR = z x sigma_i x (x_i + x_j x rho) / sigma_P, noting rho = 0 simplifies the x_j term away.",
+              "correctValue": 2496.53,
+              "tolerance": 20,
+              "unit": "Rs",
+              "explanation": "With rho = 0, the formula simplifies to MVaR_Nifty = z x sigma_Nifty x x_Nifty / sigma_P = 2.326 x 0.012 x 60,000 / 67,082, which is approximately Rs 0.024965 per rupee, or Rs 2,496.53 per Rs 1,00,000. Note this is higher than the -0.10 correlation case's Rs 2,472.67, since a less negative correlation means gold offsets less of Nifty's risk, so each additional rupee of Nifty now contributes slightly more to the total."
+            },
+            {
+              "_type": "exercise",
+              "_key": "p15",
+              "variant": "scenario",
+              "title": "Using Marginal VaR to Choose Where to Add Risk",
+              "scenario": "A desk has Rs 5,00,000 of fresh capital to deploy and is deciding whether to add it to the existing Nifty position or the existing gold position, in the same portfolio used throughout this lesson. The desk's mandate is to grow the book while keeping portfolio VaR as low as possible for a given amount of new capital deployed.",
+              "prompt": "Based on the marginal VaR figures computed in this lesson, which position should the extra capital go to, and roughly how much less would portfolio VaR rise compared to the other choice?",
+              "modelAnswer": "The capital should go to gold, not Nifty. Marginal VaR per Rs 1,00,000 is Rs 2,472.67 for Nifty versus Rs 867.60 for gold, so adding Rs 5,00,000 to Nifty would raise portfolio VaR by roughly Rs 12,363, while adding the same amount to gold would raise it by only roughly Rs 4,338, a difference of about Rs 8,025. This is exactly the kind of decision marginal VaR is built for: comparing the risk cost of deploying the next rupee in one place versus another, not just looking at which position has lower standalone risk."
+            },
+            {
+              "_type": "block",
+              "_key": "p16",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "p16s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "p17",
+              "text": "Marginal VaR is not about how risky a position is on its own, it is about how much riskier the whole portfolio gets from one more rupee of it. That distinction is exactly what standalone VaR cannot capture."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "p18",
+              "points": [
+                "Marginal VaR measures how much portfolio VaR changes per rupee added to a specific position, holding everything else fixed.",
+                "It depends heavily on correlation with the rest of the portfolio, not just the position's own volatility, gold's marginal VaR per rupee was less than a third of Nifty's despite having a comparable standalone volatility.",
+                "Multiplying marginal VaR by a position's actual full size produces a number that, summed across all positions, equals total portfolio VaR exactly, a direct consequence of VaR's positive homogeneity property from Chapter 3.",
+                "This resolved the earlier naive guess: Nifty's true share of this portfolio's risk is roughly 82.6%, not the 66.7% a standalone-VaR proration would have suggested, gold's true contribution is smaller than its standalone risk implies.",
+                "The next lesson formalizes this exact attribution as Component VaR, and extends it into a full risk-budgeting table across an entire book."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

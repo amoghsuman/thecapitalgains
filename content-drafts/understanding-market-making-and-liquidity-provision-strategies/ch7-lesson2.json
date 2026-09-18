@@ -1,0 +1,215 @@
+{
+  "courseSlug": "understanding-market-making-and-liquidity-provision-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 7: Market Making Across Asset Classes",
+      "lessons": [
+        {
+          "title": "Market Making in Commodity Derivatives: MCX Gold and Crude Oil",
+          "slug": "market-making-in-commodity-derivatives-mcx-gold-and-crude-oil",
+          "body": [
+            {
+              "_key": "mmc7l2b01",
+              "_type": "bigIdea",
+              "text": "A commodity contract can end with an actual physical good changing hands, and its price can move because of a wedding season calendar or a tanker route, not just because someone knows something. Both of these are risks equity and currency market makers never have to think about."
+            },
+            {
+              "_key": "mmc7l2b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc7l2b02s1",
+                  "_type": "span",
+                  "text": "MCX: A Different Exchange, A Different Regulatory History",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc7l2b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc7l2b03s1",
+                  "_type": "span",
+                  "text": "Gold, silver, crude oil, and other commodity futures in India trade primarily on the Multi Commodity Exchange, MCX, a separate exchange from NSE and BSE. Commodity derivatives were not always regulated the same way as securities: they were originally overseen by the Forward Markets Commission, a separate regulator, until it was merged into SEBI in 2015, following renewed scrutiny of commodity market oversight after a major payment crisis at a commodity spot exchange. Since that merger, SEBI has regulated commodity derivatives directly, so the algorithmic trading and risk control framework from Chapter 5 applies to an MCX market maker in essentially the same way it applies on NSE.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc7l2b04",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc7l2b04s1",
+                  "_type": "span",
+                  "text": "The Underlying Is Itself Layered: Global Benchmarks, USDINR, and Domestic Policy",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc7l2b05",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc7l2b05s1",
+                  "_type": "span",
+                  "text": "MCX gold and crude oil prices are not set independently in India; they are derived from international benchmark prices, gold quoted internationally in dollars per ounce, crude oil quoted against global benchmarks, converted into rupees at the prevailing USDINR rate, and then further adjusted for import duties and other domestic levies. A market maker's fair value calculation here has to track three moving parts at once: the international benchmark price itself, the USDINR rate covered in the previous lesson, and any domestic policy change to duties or taxes. A move in any one of these three, even with the other two unchanged, moves the fair value a market maker is quoting against.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc7l2b06",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This means an MCX commodity market maker inherits every risk driver from the previous lesson's USDINR discussion as an input to its own pricing, on top of the commodity-specific risks covered in this lesson. A rupee depreciation alone, with the international gold price unchanged, still raises the rupee-denominated fair value a gold market maker has to quote against."
+            },
+            {
+              "_key": "mmc7l2b07",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc7l2b07s1",
+                  "_type": "span",
+                  "text": "Physical Delivery: What Happens When the Contract Doesn't Just Cash-Settle",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc7l2b08",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "mmc7l2m01",
+                  "_type": "glossaryTerm",
+                  "definition": "A settlement process, used for several MCX contracts including gold and silver, in which a position still open at expiry results in an actual transfer of the physical commodity, meeting exchange-specified purity and warehousing requirements, rather than a cash payment based on a final settlement price."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "mmc7l2b08s1",
+                  "_type": "span",
+                  "text": "Every derivatives contract covered so far in this course, Nifty and Bank Nifty options, USDINR futures, cash-settles: money changes hands based on a final price, and nothing physical is ever exchanged. Several MCX contracts, gold and silver among them, instead allow for ",
+                  "marks": []
+                },
+                {
+                  "_key": "mmc7l2b08s2",
+                  "_type": "span",
+                  "text": "physical delivery",
+                  "marks": ["mmc7l2m01"]
+                },
+                {
+                  "_key": "mmc7l2b08s3",
+                  "_type": "span",
+                  "text": " if a position remains open into expiry, meeting the exchange's purity and warehousing specifications rather than settling in cash. A market maker holding inventory into expiry on such a contract is not just carrying price risk anymore; it is carrying the operational reality of actually taking or making delivery of a physical commodity, with logistics and quality requirements that a cash-settled position never involves. This is precisely why market making desks trading physically-deliverable contracts typically enforce hard rules to flatten or roll such positions well ahead of expiry, a stricter version of the expiry-day discipline covered in Chapter 3's case study.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc7l2b09",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "Which specific MCX contracts settle by physical delivery versus cash, and the exact delivery specifications and timelines, are set by the exchange and can vary by commodity and contract. Crude oil, for instance, is generally cash-settled against an international benchmark rather than physically delivered. Check current MCX contract specifications directly rather than assuming any particular commodity's settlement method from this lesson alone."
+            },
+            {
+              "_key": "mmc7l2b10",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc7l2b10s1",
+                  "_type": "span",
+                  "text": "Two Kinds of One-Sided Flow: Geopolitical Shock vs Seasonal Demand",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc7l2b11",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc7l2b11s1",
+                  "_type": "span",
+                  "text": "Crude oil order flow can turn sharply one-sided around OPEC+ production decisions or a genuine supply disruption, a tanker route disrupted, a producing region facing conflict, which behaves much like the macro-driven informed flow covered in the previous lesson: sudden, hard to predict in timing, and priced through the same wider spreads and heightened VPIN readings covered in Chapter 4. Gold order flow turns one-sided for a very different reason: India's physical gold demand has a strong, well-known seasonal pattern tied to festivals and the wedding season, around occasions like Akshaya Tritiya and Dhanteras. This flow is genuinely one-sided in the Chapter 3 sense, inventory can build up quickly, but it is not informed trading in the Chapter 4 sense at all; it is predictable, calendar-driven demand that a market maker can see coming well in advance rather than needing to detect in real time.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc7l2b12",
+              "_type": "table",
+              "caption": "Two very different sources of one-sided flow on MCX",
+              "headers": ["Source", "Predictability", "Right Response"],
+              "rows": [
+                { "_key": "mmc7l2b12r1", "_type": "tableRow", "cells": ["OPEC+ decisions and geopolitical supply shocks (crude oil)", "Timing largely unpredictable, though the calendar of scheduled OPEC+ meetings is known", "Widen spreads and monitor VPIN, as covered in Chapter 4"] },
+                { "_key": "mmc7l2b12r2", "_type": "tableRow", "cells": ["Festival and wedding season demand (gold)", "Highly predictable, tied to a known annual calendar", "Plan inventory and risk limits in advance, rather than reacting defensively in real time"] }
+              ]
+            },
+            {
+              "_key": "mmc7l2b13",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This is a useful reminder that Chapter 3's inventory risk and Chapter 4's adverse selection are genuinely separate problems. Seasonal gold demand can build a large, real inventory imbalance without any of it being informed trading at all, which is exactly why a market maker needs both toolkits, not just the one that happens to be more famous."
+            },
+            {
+              "_key": "mmc7l2b14",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Diagnosing Two Different Weeks",
+              "scenario": "An MCX crude oil desk sees a sudden, sharp burst of one-sided buying immediately after an unexpected OPEC+ production cut announcement. Two weeks later, an MCX gold desk sees several days of steady, one-sided physical demand building up in the run-up to Dhanteras.",
+              "prompt": "Should both desks respond to their respective one-sided flow in the same way? Explain using this lesson's distinction.",
+              "modelAnswer": "No, the two situations call for different responses despite both being one-sided flow. The crude oil desk is facing a genuine, hard-to-predict-in-timing informational shock, closer to Chapter 4's adverse selection framework, and should respond by widening spreads and watching VPIN or similar order flow toxicity signals in real time. The gold desk is facing predictable, calendar-driven seasonal demand that was foreseeable well in advance; the right response there is proactive planning, adjusting risk limits and inventory capacity ahead of the known festival dates, rather than treating it as a real-time informed-trading signal the way the crude oil desk should."
+            },
+            {
+              "_key": "mmc7l2b15",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why Physical Delivery Changes the Calculus",
+              "question": "Why does a market maker holding inventory into expiry on a physically-deliverable MCX gold contract face a different problem than a market maker holding inventory into expiry on a cash-settled Nifty option?",
+              "options": [
+                "There is no difference; both simply settle based on a final price",
+                "The gold position may trigger actual physical delivery obligations, including meeting purity and warehousing requirements, rather than a straightforward cash settlement",
+                "Gold contracts have no expiry date at all",
+                "Cash-settled contracts are always riskier than physically-deliverable ones"
+              ],
+              "correctIndex": 1,
+              "explanation": "A cash-settled Nifty option resolves purely as a cash payment based on a final settlement price, exactly as covered in earlier chapters. A physically-deliverable gold contract left open at expiry can instead result in an actual transfer of physical gold meeting exchange specifications, which is an operational and logistical obligation with no equivalent in a cash-settled index option."
+            },
+            {
+              "_key": "mmc7l2b16",
+              "_type": "keyTakeaways",
+              "points": [
+                "Commodity derivatives in India trade primarily on MCX, regulated by SEBI since the 2015 merger of the erstwhile Forward Markets Commission, with Chapter 5's algorithmic trading framework applying much as it does on NSE",
+                "MCX gold and crude oil fair values are layered on top of international benchmark prices, the USDINR rate from the previous lesson, and domestic duties and taxes, all moving independently",
+                "Some MCX contracts, including gold and silver, allow physical delivery at expiry, which turns unmanaged inventory into a genuine logistical and quality-compliance obligation, not just a cash settlement",
+                "Crude oil's one-sided flow is often genuinely informational, tied to OPEC+ decisions and geopolitical supply risk, closer to Chapter 4's adverse selection framework",
+                "Gold's one-sided flow is often driven by predictable, calendar-based seasonal demand, which is a Chapter 3 inventory problem to plan for in advance rather than a Chapter 4 informed-trading problem to detect in real time",
+                "The next lesson pulls these differences together into a single framework for how the three-cost spread decomposition itself shifts across equity, currency, and commodity market making"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

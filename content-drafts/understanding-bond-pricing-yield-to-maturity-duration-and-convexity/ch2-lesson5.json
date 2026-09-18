@@ -1,0 +1,423 @@
+{
+  "courseSlug": "understanding-bond-pricing-yield-to-maturity-duration-and-convexity",
+  "chapters": [
+    {
+      "title": "Chapter 2: Yield Measures and What They Really Mean",
+      "lessons": [
+        {
+          "title": "Semi-Annual Compounding and Comparing G-Sec Yields with FD Rates",
+          "slug": "semi-annual-compounding-and-comparing-g-sec-yields-with-fd-rates",
+          "body": [
+            {
+              "_key": "c2l5-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l5-001s1",
+                  "_type": "span",
+                  "text": "A 5-year G-Sec on RBI Retail Direct shows a yield of 7.10%. Your bank offers a 5-year FD at 7.00%. An AAA PSU NCD on the NSE lists a yield of 7.25%. Which pays the most? You cannot tell yet, because these three numbers are measured in three different ways. The G-Sec yield assumes compounding twice a year, the FD compounds four times a year, and the NCD once. Comparing them directly is like comparing a price in rupees per kilo with one in rupees per 250 grams. This lesson gives you the conversion so you never compare mismatched yields again.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l5-002",
+              "_type": "bigIdea",
+              "text": "A quoted yield is meaningless without its compounding frequency. Before comparing any two fixed income returns, convert both to the same basis, usually the effective annual yield."
+            },
+            {
+              "_key": "c2l5-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l5-003s1",
+                  "_type": "span",
+                  "text": "How a G-Sec Yield Is Quoted",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l5-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c2l5-004m1",
+                  "_type": "glossaryTerm",
+                  "definition": "A stated annual rate that ignores compounding within the year. For a G-Sec, it is simply twice the half-yearly rate. Also called the annual percentage rate or bond-equivalent yield."
+                },
+                {
+                  "_key": "c2l5-004m2",
+                  "_type": "glossaryTerm",
+                  "definition": "The actual return over one year after allowing for compounding within the year. The only fair basis for comparing rates with different compounding frequencies."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c2l5-004s1",
+                  "_type": "span",
+                  "text": "Recall how you priced G-Secs in Chapter 1: you halved the annual yield and discounted over half-year periods. So when a G-Sec is quoted at a 7.10% YTM, the underlying rate is really 3.55% every six months. The 7.10% is a ",
+                  "marks": []
+                },
+                {
+                  "_key": "c2l5-004s2",
+                  "_type": "span",
+                  "text": "nominal annual yield",
+                  "marks": ["c2l5-004m1"]
+                },
+                {
+                  "_key": "c2l5-004s3",
+                  "_type": "span",
+                  "text": ", the half-year rate multiplied by two. But 3.55% earned in the first half-year itself earns 3.55% in the second, so the true one-year return, the ",
+                  "marks": []
+                },
+                {
+                  "_key": "c2l5-004s4",
+                  "_type": "span",
+                  "text": "effective annual yield",
+                  "marks": ["c2l5-004m2"]
+                },
+                {
+                  "_key": "c2l5-004s5",
+                  "_type": "span",
+                  "text": ", is slightly higher.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l5-005",
+              "_type": "mathBlock",
+              "latex": "\\text{Effective Annual Yield} = \\left(1 + \\frac{r}{m}\\right)^{m} - 1",
+              "caption": "r = nominal annual rate, m = compounding periods per year. 7.10% G-Sec: (1 + 0.071 ÷ 2)² − 1 = 7.23%."
+            },
+            {
+              "_key": "c2l5-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l5-006s1",
+                  "_type": "span",
+                  "text": "Same 7%, Five Different Returns",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l5-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l5-007s1",
+                  "_type": "span",
+                  "text": "The more often interest compounds, the more a given nominal rate is actually worth. Here is a 7.00% nominal rate at the compounding frequencies you will meet in Indian fixed income.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l5-008",
+              "_type": "table",
+              "caption": "7.00% nominal rate at different compounding frequencies",
+              "headers": ["Compounding", "Periods per year", "Where you see it", "Effective annual yield"],
+              "rows": [
+                { "_key": "c2l5-008r1", "_type": "tableRow", "cells": ["Annual", "1", "Most corporate bonds and NCDs, annual-pay PSU bonds", "7.0000%"] },
+                { "_key": "c2l5-008r2", "_type": "tableRow", "cells": ["Semi-annual", "2", "G-Secs and SDLs", "7.1225%"] },
+                { "_key": "c2l5-008r3", "_type": "tableRow", "cells": ["Quarterly", "4", "Bank fixed deposits (cumulative)", "7.1859%"] },
+                { "_key": "c2l5-008r4", "_type": "tableRow", "cells": ["Monthly", "12", "Some monthly-compounding products", "7.2290%"] },
+                { "_key": "c2l5-008r5", "_type": "tableRow", "cells": ["Daily", "365", "Theoretical upper range", "7.2501%"] }
+              ]
+            },
+            {
+              "_key": "c2l5-009",
+              "_type": "chart",
+              "chartType": "bar",
+              "title": "Effective Annual Yield of a 7.00% Nominal Rate (%)",
+              "xAxisLabel": "Compounding frequency",
+              "yAxisLabel": "Effective annual yield (%)",
+              "data": [
+                { "_key": "c2l5-009d1", "label": "Annual", "value": 7.0000 },
+                { "_key": "c2l5-009d2", "label": "Semi-annual", "value": 7.1225 },
+                { "_key": "c2l5-009d3", "label": "Quarterly", "value": 7.1859 },
+                { "_key": "c2l5-009d4", "label": "Monthly", "value": 7.2290 },
+                { "_key": "c2l5-009d5", "label": "Daily", "value": 7.2501 }
+              ]
+            },
+            {
+              "_key": "c2l5-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l5-010s1",
+                  "_type": "span",
+                  "text": "The gaps look small, 12 basis points between annual and semi-annual, 19 between annual and quarterly. But in fixed income, that is often the entire difference between two competing products. On ₹25 lakh, 19 basis points is ₹4,750 a year, every year.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l5-011",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Convert a G-Sec yield",
+              "prompt": "An illustrative 10-year G-Sec is quoted at a 7.25% YTM on RBI Retail Direct. What is its effective annual yield? Round to two decimal places.",
+              "correctValue": 7.38,
+              "tolerance": 0.01,
+              "unit": "%",
+              "explanation": "Half-year rate = 7.25% ÷ 2 = 3.625%. Effective annual yield = 1.03625² − 1 = 7.38%. In Excel: =EFFECT(7.25%, 2)."
+            },
+            {
+              "_key": "c2l5-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l5-012s1",
+                  "_type": "span",
+                  "text": "Putting the G-Sec, FD and NCD on One Basis",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l5-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l5-013s1",
+                  "_type": "span",
+                  "text": "Back to the opening question. Indian banks typically compound interest on term deposits quarterly, so a 7.00% FD is a quarterly-compounded nominal rate. The G-Sec's 7.10% is semi-annual. The annual-pay NCD's 7.25% already compounds once a year, so its nominal and effective yields are the same.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l5-014",
+              "_type": "table",
+              "caption": "Three quoted rates converted to a common basis (illustrative)",
+              "headers": ["Product", "Quoted rate", "Compounding", "Effective annual yield", "Semi-annual equivalent (G-Sec basis)"],
+              "rows": [
+                { "_key": "c2l5-014r1", "_type": "tableRow", "cells": ["5-year G-Sec", "7.10%", "Semi-annual", "7.23%", "7.10%"] },
+                { "_key": "c2l5-014r2", "_type": "tableRow", "cells": ["5-year bank FD", "7.00%", "Quarterly", "7.19%", "7.06%"] },
+                { "_key": "c2l5-014r3", "_type": "tableRow", "cells": ["5-year AAA PSU NCD", "7.25%", "Annual", "7.25%", "7.12%"] }
+              ]
+            },
+            {
+              "_key": "c2l5-015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l5-015s1",
+                  "_type": "span",
+                  "text": "On a like-for-like basis, the NCD still leads, but by only 2 basis points over the G-Sec, not the 15 the headline numbers suggest. And the FD's 7.00% is closer to the G-Sec than it looks: just 4 basis points behind on an effective basis, not 10. With a gap that thin, credit risk, liquidity and tax, not the headline yield, should decide.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l5-016",
+              "_type": "mathBlock",
+              "latex": "r_{m_2} = m_2 \\times \\left[\\left(1 + \\frac{r_{m_1}}{m_1}\\right)^{m_1/m_2} - 1\\right]",
+              "caption": "Converts a nominal rate compounded m₁ times a year into the equivalent rate compounded m₂ times a year. FD at 7.00% quarterly to semi-annual: 2 × (1.0175² − 1) = 7.06%."
+            },
+            {
+              "_key": "c2l5-017",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Put an FD on the G-Sec basis",
+              "prompt": "Your bank offers a 7.10% FD, compounded quarterly. Convert it to a semi-annually compounded rate so you can compare it directly with G-Sec yields. Round to two decimal places.",
+              "correctValue": 7.16,
+              "tolerance": 0.01,
+              "unit": "%",
+              "explanation": "Quarterly rate = 7.10% ÷ 4 = 1.775%. Two quarters compound to 1.01775² − 1 = 3.5815% per half-year. Doubling gives 7.16% on a semi-annual basis. So a 7.10% FD beats a 7.10% G-Sec by about 6 basis points before considering tax, liquidity and deposit insurance limits."
+            },
+            {
+              "_key": "c2l5-018",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Always check how a product compounds before comparing. Public issue NCD documents usually show both the coupon and the \"effective yield\" for each series; monthly-payout series often carry a lower coupon than annual-payout ones for exactly this reason. Bank FD pages sometimes show an \"annualised yield\" for cumulative deposits that already includes compounding over the whole term, which is not the same as the effective annual yield. When in doubt, rebuild the calculation yourself."
+            },
+            {
+              "_key": "c2l5-019",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Spot the fair comparison",
+              "question": "Which pair of rates can be compared directly without any conversion?",
+              "options": [
+                "A 7.20% G-Sec YTM and a 7.20% annual-coupon NCD YTM",
+                "A 7.20% G-Sec YTM and a 7.20% quarterly-compounded FD rate",
+                "A 7.20% G-Sec YTM and a 7.20% SDL YTM",
+                "A 7.20% FD rate and a 7.20% annual-coupon NCD YTM"
+              ],
+              "correctIndex": 2,
+              "explanation": "G-Secs and SDLs both pay semi-annual coupons, and their yields are quoted on the same semi-annual basis, so they compare directly. Every other pair mixes compounding frequencies: the G-Sec is semi-annual, the FD quarterly and the NCD annual."
+            },
+            {
+              "_key": "c2l5-020",
+              "_type": "collapsible",
+              "title": "Converting T-bill yields",
+              "content": [
+                {
+                  "_key": "c2l5-021",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c2l5-021s1",
+                      "_type": "span",
+                      "text": "T-bill yields are a special case. As you saw in Chapter 1, RBI annualises them with simple interest: the gain as a percentage of price, scaled by 365 ÷ days. There is no compounding at all. For a 364-day bill this barely matters, because the holding period is almost exactly a year. For a 91-day bill it does, because you could roll the money into a new bill four times a year.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c2l5-022",
+                  "_type": "mathBlock",
+                  "latex": "\\text{EAY}_{\\text{T-bill}} = \\left(\\frac{100}{P}\\right)^{365/\\text{days}} - 1",
+                  "caption": "91-day T-bill at ₹98.35: simple yield 6.73%, effective annual yield (1.016777)^(365/91) − 1 = 6.90%, semi-annual equivalent about 6.79%."
+                },
+                {
+                  "_key": "c2l5-023",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c2l5-023s1",
+                      "_type": "span",
+                      "text": "So a 91-day T-bill quoted at 6.73% is really worth about 6.79% on the G-Sec basis, assuming you can roll it over at the same yield. The effective figure is the one to use when comparing T-bills with G-Secs, FDs or liquid funds.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c2l5-024",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l5-024s1",
+                  "_type": "span",
+                  "text": "Yield Is Not the Whole Comparison",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l5-025",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c2l5-025s1",
+                  "_type": "span",
+                  "text": "Once yields are on the same basis, the remaining differences between FDs and bonds often matter more than a few basis points. Remember the reinvestment assumption from Lesson 3: a cumulative FD compounds automatically at a guaranteed rate, while a G-Sec's YTM is only achieved if you reinvest every coupon at the YTM yourself.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c2l5-026",
+              "_type": "comparison",
+              "title": "Bank FD vs G-Sec Beyond the Yield",
+              "columns": [
+                {
+                  "_key": "c2l5-026c1",
+                  "label": "Bank fixed deposit",
+                  "points": [
+                    "Cumulative option compounds automatically at a locked rate: no reinvestment risk",
+                    "DICGC insurance covers only up to ₹5 lakh per depositor per bank, principal and interest combined",
+                    "Premature withdrawal is at a known value, usually with a small penalty",
+                    "No price risk: the value never falls if rates rise",
+                    "Senior citizens usually get a higher rate"
+                  ]
+                },
+                {
+                  "_key": "c2l5-026c2",
+                  "label": "G-Sec on RBI Retail Direct",
+                  "points": [
+                    "Coupons paid out semi-annually: you must reinvest them to earn the YTM",
+                    "Sovereign backing on the entire amount, with no insurance cap",
+                    "Can be sold before maturity, but only at the market price of the day",
+                    "Price rises if rates fall and falls if rates rise",
+                    "Same yield for every investor, no age-based rate"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c2l5-027",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "Name the Excel function",
+              "textWithBlank": "In Excel or Google Sheets, the function that converts a nominal rate and its compounding frequency into an effective annual rate is ___.",
+              "correctAnswers": ["EFFECT", "=EFFECT", "EFFECT()"],
+              "explanation": "=EFFECT(nominal rate, periods per year) returns the effective annual rate, for example =EFFECT(7.10%, 2) returns 7.23%. Its partner, =NOMINAL(effective rate, periods per year), converts back to a nominal rate."
+            },
+            {
+              "_key": "c2l5-028",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "The Subramaniams' ₹10 lakh",
+              "scenario": "Mr and Mrs Subramaniam, both retired and living in Chennai, want to invest ₹10 lakh for five years. They have three illustrative options: (1) a 5-year senior citizen FD at their bank at 7.50%, compounded quarterly, cumulative; (2) a 5-year G-Sec on RBI Retail Direct at a 7.30% YTM, bought at par; (3) a 5-year AAA-rated PSU NCD on the NSE at a 7.40% YTM with an annual coupon, bought at par. Mr Subramaniam says: \"The FD is only 20 basis points above the G-Sec and 10 above the NCD. The bonds are safer, so the difference hardly matters.\"",
+              "prompt": "Convert all three to effective annual yields, estimate what ₹10 lakh grows to in each over five years, and advise them on the factors that should decide the choice.",
+              "modelAnswer": "1. Effective annual yields: FD = (1 + 0.075 ÷ 4)⁴ − 1 = 7.71%. G-Sec = (1 + 0.073 ÷ 2)² − 1 = 7.43%. NCD = 7.40% (already annual).\n2. The FD's real lead is about 28 bps over the G-Sec and 31 bps over the NCD, wider than Mr Subramaniam's 20 and 10 bps.\n3. Five-year outcomes on ₹10 lakh: FD cumulative = ₹10,00,000 × 1.01875²⁰ = ₹14,49,948. G-Sec, if every ₹36,500 coupon is reinvested at 7.30% = ₹10,00,000 × 1.0365¹⁰ = ₹14,31,176. NCD, if every ₹74,000 coupon is reinvested at 7.40% = ₹14,28,964.\n4. If G-Sec coupons can only be reinvested at 6%, its outcome falls to about ₹14,18,432, a gap of over ₹31,000 behind the FD. The FD's compounding is locked in; the bonds' is not.\n5. Factors that should decide: (a) Deposit insurance: DICGC covers only ₹5 lakh per depositor per bank including interest, so they should split the FD across two banks or across both their names, or hold part in the G-Sec, which is sovereign on the full amount. (b) Credit risk: the G-Sec carries no credit risk; the AAA NCD carries a small amount. (c) Liquidity: the FD can be broken at a small, known penalty; the bonds can be sold, but at the market price on that day. (d) Income needs: if they need regular income rather than a lump sum, compare the FD's quarterly payout option with the G-Sec's semi-annual coupons. (e) Tax: interest from all three is taxed at their slab rate, so it does not change the ranking here, but TDS and filing treatment can differ and are worth checking with their CA.\n6. Conclusion: the FD offers the highest locked-in return on this comparison, provided they respect the insurance limit. Mr Subramaniam's instinct that the bonds are safer holds only beyond ₹5 lakh per bank."
+            },
+            {
+              "_key": "c2l5-029",
+              "_type": "flashcardSet",
+              "title": "Compounding and Yield Bases",
+              "cards": [
+                { "_key": "c2l5-029f1", "term": "Nominal annual yield", "definition": "The periodic rate multiplied by the number of periods per year. Ignores compounding within the year." },
+                { "_key": "c2l5-029f2", "term": "Effective annual yield", "definition": "(1 + r ÷ m)^m − 1. The true one-year return including compounding." },
+                { "_key": "c2l5-029f3", "term": "G-Sec yield basis", "definition": "Semi-annual: twice the half-yearly rate." },
+                { "_key": "c2l5-029f4", "term": "Bank FD compounding", "definition": "Typically quarterly for cumulative term deposits in India." },
+                { "_key": "c2l5-029f5", "term": "T-bill yield basis", "definition": "Simple interest annualised by 365 ÷ days, with no compounding." },
+                { "_key": "c2l5-029f6", "term": "EFFECT and NOMINAL", "definition": "Excel functions that convert nominal to effective annual rates and back." }
+              ]
+            },
+            {
+              "_key": "c2l5-030",
+              "_type": "keyTakeaways",
+              "points": [
+                "A G-Sec YTM is a semi-annual nominal rate: twice the half-yearly rate. Its effective annual yield is slightly higher.",
+                "Effective annual yield = (1 + r ÷ m)^m − 1. More frequent compounding means a higher effective yield from the same quoted rate.",
+                "Indian bank FDs typically compound quarterly, most NCDs annually and G-Secs semi-annually, so their headline rates are not directly comparable.",
+                "A 7.00% quarterly FD is 7.19% effective, a 7.10% G-Sec is 7.23% and a 7.25% annual NCD is 7.25%: gaps of a few basis points, not 10 or 15.",
+                "T-bill yields use simple interest; convert them to an effective basis before comparing.",
+                "After converting, weigh reinvestment risk, deposit insurance limits, credit risk, liquidity and tax before choosing."
+              ]
+            },
+            {
+              "_key": "c2l5-031",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment or tax advice. FD rates, bond yields and investors are illustrative; actual rates, compounding conventions and payout terms vary by bank, issuer and product, so check the terms before investing. DICGC insurance limits and tax rules can change. Consult a SEBI-registered investment adviser or a chartered accountant for decisions about your own money."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,248 @@
+{
+  "courseSlug": "understanding-pairs-trading-concepts-and-cointegration",
+  "chapters": [
+    {
+      "title": "Chapter 4: Screening, Trading, and Managing a Pair",
+      "lessons": [
+        {
+          "title": "Costs, Slippage, and Practical Constraints for Indian Traders",
+          "slug": "costs-slippage-and-practical-constraints-for-indian-traders",
+          "body": [
+            {
+              "_key": "p17-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p17-001s1", "_type": "span", "marks": [], "text": "Every worked example so far computed a clean profit: the spread moves from an entry z-score back to zero, and the gap you captured is the reward. Real trading has four legs, not a single clean number. You buy Stock A and sell Stock B to enter, then sell Stock A and buy Stock B to exit, and every one of those four transactions carries a cost. Before you can trust a z-score-driven edge, you need to know whether that edge actually survives contact with statutory charges and slippage." }
+              ]
+            },
+            {
+              "_key": "p17-002",
+              "_type": "bigIdea",
+              "text": "A pairs trade's round-trip cost, statutory charges plus slippage across all four legs, has to be smaller than the expected profit from the spread reverting, or the statistical edge from Chapter 3 is illusory in practice. Costs do not scale down just because the position is market neutral, and a trade that looks profitable on the z-score chart alone can still lose money after execution."
+            },
+            {
+              "_key": "p17-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p17-003s1", "_type": "span", "marks": [], "text": "The Four-Leg Reality" }
+              ]
+            },
+            {
+              "_key": "p17-004",
+              "_type": "table",
+              "caption": "Every pairs trade has four transactions, not two",
+              "headers": ["Stage", "Long leg (Stock A)", "Short leg (Stock B)"],
+              "rows": [
+                { "_key": "p17-004r1", "cells": ["Entry", "Buy (delivery)", "Sell (futures)"] },
+                { "_key": "p17-004r2", "cells": ["Exit", "Sell (delivery)", "Buy back (futures)"] }
+              ]
+            },
+            {
+              "_key": "p17-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p17-005s1", "_type": "span", "marks": [], "text": "Statutory Costs on Each Leg" }
+              ]
+            },
+            {
+              "_key": "p17-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "p17-006m1", "_type": "glossaryTerm", "definition": "A tax levied on the value of securities transactions in India, at different rates for equity delivery, intraday, and derivatives trades, collected automatically by the exchange." }
+              ],
+              "children": [
+                { "_key": "p17-006s1", "_type": "span", "marks": [], "text": "The Securities Transaction Tax, or " },
+                { "_key": "p17-006s2", "_type": "span", "marks": ["p17-006m1"], "text": "STT" },
+                { "_key": "p17-006s3", "_type": "span", "marks": [], "text": ", is charged on cash equity delivery trades on both the buy and sell sides, and on futures trades typically only on the sell side, at a much lower rate. On top of STT sit exchange transaction charges, SEBI turnover fees, stamp duty on the buy side, and 18 percent GST on brokerage and exchange charges, all individually small but additive across four legs. Discount brokers such as Zerodha commonly charge zero brokerage on equity delivery trades and a flat fee per executed order on futures, a pricing structure that has made running multi-leg strategies like this one far cheaper than it once was. These specific rates change periodically with union budgets and exchange circulars, so treat the figures below as illustrative and verify current rates with your broker before sizing a real trade." }
+              ]
+            },
+            {
+              "_key": "p17-007",
+              "_type": "table",
+              "caption": "Illustrative statutory cost components (verify current rates before trading)",
+              "headers": ["Cost", "Cash delivery leg", "Futures leg"],
+              "rows": [
+                { "_key": "p17-007r1", "cells": ["STT", "≈0.1% on both buy and sell", "≈0.02%, sell side only"] },
+                { "_key": "p17-007r2", "cells": ["Brokerage", "Often ₹0 on discount brokers", "Flat fee per order (e.g. ≈₹20)"] },
+                { "_key": "p17-007r3", "cells": ["Exchange charges + GST + stamp duty", "Small, typically <0.01% combined", "Small, typically <0.01% combined"] }
+              ]
+            },
+            {
+              "_key": "p17-008",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p17-008s1", "_type": "span", "marks": [], "text": "Slippage: Often the Bigger Cost" }
+              ]
+            },
+            {
+              "_key": "p17-009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p17-009s1", "_type": "span", "marks": [], "text": "Statutory charges are fixed and predictable. Slippage, the gap between the price you wanted and the price you actually got by crossing the bid-ask spread, is not, and for a liquid, retail-sized trade it is often the larger of the two costs, especially across four legs entered and exited close together in time. This is exactly why Chapter 1's comparison of a strong versus weak candidate pair flagged liquidity: a pair where one leg is thinly traded, like a small-cap NBFC against a large private bank, can look statistically attractive and still be expensive to actually trade, because every entry and exit crosses a wider spread on the illiquid side." }
+              ]
+            },
+            {
+              "_key": "p17-010",
+              "_type": "callout",
+              "type": "warning",
+              "text": "A statistically significant cointegration result says nothing about whether the pair is cheap to trade. Liquidity and typical bid-ask spread on both legs should be checked before sizing a position, not assumed just because the correlation and cointegration numbers looked strong."
+            },
+            {
+              "_key": "p17-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p17-011s1", "_type": "span", "marks": [], "text": "Worked Example: Does the Edge Survive Costs?" }
+              ]
+            },
+            {
+              "_key": "p17-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p17-012s1", "_type": "span", "marks": [], "text": "Take the lot-adjusted HDFC Bank / ICICI Bank position from Lesson 2: 547 shares long HDFC Bank, one futures lot (700 shares) short ICICI Bank, total turnover across both legs of about ₹17,42,550 on entry. Entering at z equal to negative 2 and exiting at z equal to 0, using the spread's standard deviation of about ₹14.3, captures roughly 2 times ₹14.3, or ₹28.6, of spread movement. On 547 shares, that is an illustrative gross profit of about ₹15,644." }
+              ]
+            },
+            {
+              "_key": "p17-013",
+              "_type": "keyFact",
+              "label": "Illustrative round-trip cost estimate",
+              "value": "≈0.15% of total turnover ≈ ₹5,228",
+              "context": "Combining STT, brokerage, exchange charges, GST, stamp duty, and slippage across all four legs, on total turnover of roughly ₹34,85,100 (entry plus exit)"
+            },
+            {
+              "_key": "p17-014",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "p17-014s1", "label": "Illustrative gross profit", "value": "≈ ₹15,644", "context": "From the spread moving 2σ (₹28.6) on a 547-share position" },
+                { "_key": "p17-014s2", "label": "Illustrative round-trip cost", "value": "≈ ₹5,228", "context": "Roughly 0.15% of total four-leg turnover, statutory charges plus slippage" },
+                { "_key": "p17-014s3", "label": "Illustrative net profit after costs", "value": "≈ ₹10,416", "context": "Costs consumed roughly a third of the gross reversion profit in this illustration" },
+                { "_key": "p17-014s4", "label": "Implication", "value": "Costs are a real, not negligible, drag", "context": "A smaller spread move, or a less liquid pair, could easily be cost-negative even with a statistically valid signal" }
+              ]
+            },
+            {
+              "_key": "p17-015",
+              "_type": "callout",
+              "type": "insight",
+              "text": "In this illustration, the trade is still solidly profitable after costs, but costs took roughly a third of the gross edge. A pair with a smaller typical spread move, wider bid-ask spreads, or a tighter entry threshold could see costs eat most or all of the theoretical profit, even on a pair that passed Chapter 3's cointegration test convincingly."
+            },
+            {
+              "_key": "p17-016",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "p17-016s1", "_type": "span", "marks": [], "text": "Regulatory and Practical Constraints" }
+              ]
+            },
+            {
+              "_key": "p17-017",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "p17-017s1", "_type": "span", "marks": [], "text": "A pairs trading system that places orders automatically off a z-score rule, exactly what this course has built toward, falls under SEBI's algorithmic trading framework. In practice, this means registering the strategy through your broker, receiving a unique algo ID that tags every order placed by the system, and staying within any order-frequency or turnover thresholds your broker enforces on API-based trading. Broker APIs like Zerodha's Kite Connect also impose their own practical rate limits on how many orders you can place per second and per day, a real constraint if you are running several pairs at once with overlapping rebalancing needs. None of this is optional paperwork, it is the compliance layer that makes systematic, broker-API-driven pairs trading legal to run in India." }
+              ]
+            },
+            {
+              "_key": "p17-018",
+              "_type": "toolLink",
+              "label": "Zerodha brokerage and charges calculator",
+              "url": "https://zerodha.com/brokerage-calculator",
+              "description": "A practical way to check current, exact statutory charges and brokerage for a specific trade size before relying on illustrative estimates like the ones in this lesson."
+            },
+            {
+              "_key": "p17-019",
+              "_type": "comparison",
+              "title": "Statutory costs vs slippage",
+              "columns": [
+                {
+                  "_key": "p17-019c1",
+                  "label": "Statutory costs (STT, brokerage, GST, etc.)",
+                  "points": [
+                    "Fixed, predictable rates set by regulation and your broker",
+                    "Easy to calculate exactly before placing a trade",
+                    "Individually small, but additive across four legs",
+                    "Change periodically with budgets and circulars, verify current rates"
+                  ]
+                },
+                {
+                  "_key": "p17-019c2",
+                  "label": "Slippage",
+                  "points": [
+                    "Depends on liquidity and bid-ask spread at the moment of execution",
+                    "Harder to estimate in advance, varies trade to trade",
+                    "Often the larger cost for a liquid trade, especially on a thin leg",
+                    "A strong reason to prefer liquid stocks even when a less liquid candidate tests well statistically"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "p17-020",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Does this trade clear its costs?",
+              "prompt": "A pairs trade has an illustrative gross profit of ₹4,000 from the spread reverting. Total round-trip costs, statutory charges plus slippage across all four legs, are estimated at ₹2,600. What is the net profit after costs, in rupees?",
+              "correctValue": 1400,
+              "tolerance": 10,
+              "unit": "₹",
+              "explanation": "Net profit = gross profit − round-trip costs = ₹4,000 − ₹2,600 = ₹1,400. Costs consumed 65% of the gross edge here, a reminder that a statistically valid signal with a small expected move can be barely profitable, or unprofitable, once real costs are included."
+            },
+            {
+              "_key": "p17-021",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "A statistically strong but expensive pair",
+              "scenario": "A screen surfaces a pair with an excellent Engle-Granger p-value of 0.004, but one leg is a thinly traded small-cap stock with a wide, noticeably variable bid-ask spread.",
+              "prompt": "Should the strength of the statistical result outweigh the liquidity concern? What would you check before trading this pair?",
+              "modelAnswer": "A strong statistical result does not offset a liquidity problem, the two are independent issues. Before trading this pair, check the typical bid-ask spread and average daily traded value on the illiquid leg, and estimate realistic slippage on entry and exit, not just the statutory charges. If slippage alone is likely to consume most or all of the expected profit from a typical spread reversion, the pair is not practically tradeable at meaningful size, regardless of how convincing the cointegration test looked."
+            },
+            {
+              "_key": "p17-022",
+              "_type": "flashcardSet",
+              "title": "Costs and Constraints: Core Terms",
+              "cards": [
+                { "_key": "p17-022f1", "term": "Securities Transaction Tax (STT)", "definition": "A tax on the value of securities transactions in India, charged at different rates for cash equity delivery and futures trades." },
+                { "_key": "p17-022f2", "term": "Slippage", "definition": "The gap between the intended trade price and the actual execution price, caused by crossing the bid-ask spread, often larger for less liquid stocks." },
+                { "_key": "p17-022f3", "term": "Round-trip cost", "definition": "The total cost, statutory charges plus slippage, of entering and exiting a position across all its legs." },
+                { "_key": "p17-022f4", "term": "Algo ID", "definition": "A unique identifier SEBI's algorithmic trading framework requires brokers to tag on orders placed by a rule-based or automated trading system." }
+              ]
+            },
+            {
+              "_key": "p17-023",
+              "_type": "keyTakeaways",
+              "points": [
+                "A pairs trade has four legs, not two, entry and exit on both the long and short side, and costs accrue on every one of them.",
+                "Statutory costs, STT, brokerage, exchange charges, GST, and stamp duty, are individually small but predictable and additive across four legs. Verify current rates before trading, since they change periodically.",
+                "Slippage from crossing the bid-ask spread is often the larger and less predictable cost, especially on a thinly traded leg.",
+                "In the worked HDFC Bank / ICICI Bank example, costs consumed roughly a third of the gross reversion profit, a real drag even on a solidly profitable illustrative trade.",
+                "Liquidity should be checked directly, not assumed from a strong cointegration result, since the two measure completely different things.",
+                "Running this course's z-score-driven system with real orders falls under SEBI's algorithmic trading framework, requiring broker registration and algo ID tagging, on top of the broker API's own practical rate limits."
+              ]
+            },
+            {
+              "_key": "p17-024",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice or a recommendation to buy, sell, or short any security named here. All costs, tax rates, brokerage figures, and profit estimates are illustrative and approximate; verify current rates with your broker and the exchange before trading. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

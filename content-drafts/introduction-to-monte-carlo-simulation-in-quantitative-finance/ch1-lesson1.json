@@ -1,0 +1,291 @@
+{
+  "courseSlug": "introduction-to-monte-carlo-simulation-in-quantitative-finance",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Simulate? Foundations of Monte Carlo Thinking",
+      "lessons": [
+        {
+          "title": "What Is a Monte Carlo Simulation and Why Finance Needs It",
+          "slug": "what-is-a-monte-carlo-simulation-and-why-finance-needs-it",
+          "body": [
+            {
+              "_key": "mc1l1-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mc1l1-001s1", "_type": "span", "marks": [], "text": "Priya is three years into a risk analyst role at a Mumbai-based asset management company. Her fund holds HDFC Bank, TCS, and Sun Pharma in different weights, and her manager wants a single number: what is the probability this fund loses more than 8% of its value over the next 90 trading days? Priya opens her formula sheet. There is a clean formula for a single stock's chance of falling below a level. There is no clean formula for three correlated stocks, each with its own volatility, over 90 days, with a payoff that depends on the whole path the portfolio takes, not just where it ends up. This is the exact kind of problem Monte Carlo simulation was built to answer, and it is where this course begins." }
+              ]
+            },
+            {
+              "_key": "mc1l1-002",
+              "_type": "bigIdea",
+              "text": "A Monte Carlo simulation answers a question you cannot solve with algebra by running the random process thousands or millions of times inside a computer, and counting what actually happens. The answer is not derived. It is observed, from repetition."
+            },
+            {
+              "_key": "mc1l1-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mc1l1-003s1", "_type": "span", "marks": [], "text": "What a Monte Carlo Simulation Actually Does" }
+              ]
+            },
+            {
+              "_key": "mc1l1-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mc1l1-004s1", "_type": "span", "marks": [], "text": "Strip away the finance jargon and a Monte Carlo simulation is just three repeated steps. First, build a model of the random process you care about, something with clear rules for how randomness enters. Second, use that model to generate one possible outcome, called a trial or a path. Third, repeat step two thousands or millions of times and look at the full spread of outcomes you got. The probability of any event you care about is simply the fraction of trials in which that event happened." }
+              ]
+            },
+            {
+              "_key": "mc1l1-005",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mc1l1-005s1", "_type": "span", "marks": [], "text": "Think of the simplest possible version: estimating the probability of rolling a six on a fair die. You already know the answer is 1/6, because you can count outcomes directly. But imagine you did not know the die was fair, or the rules were too complicated to count by hand. You could still get a good estimate by rolling the die a thousand times and counting how often a six came up. Roll it a million times, and your estimate gets sharper still. That is the entire idea. Finance uses it because most of its interesting questions are the equivalent of a die with rules too complicated to count by hand." }
+              ]
+            },
+            {
+              "_key": "mc1l1-006",
+              "_type": "keyFact",
+              "label": "Where the name comes from",
+              "value": "Los Alamos, 1940s",
+              "context": "Mathematician Stanislaw Ulam and colleagues on the Manhattan Project named the method after the Monte Carlo Casino in Monaco, where Ulam's uncle used to gamble. It reached finance in the 1970s, first for pricing options too complex for a direct formula."
+            },
+            {
+              "_key": "mc1l1-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mc1l1-007s1", "_type": "span", "marks": [], "text": "Where Finance Runs Into Problems Algebra Cannot Solve" }
+              ]
+            },
+            {
+              "_key": "mc1l1-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "mc1l1-008m1", "_type": "glossaryTerm", "definition": "A neat mathematical formula that gives an exact answer directly by plugging in numbers, with no need to simulate anything. The Black-Scholes formula for a plain vanilla European option is the best-known example in finance." }
+              ],
+              "children": [
+                { "_key": "mc1l1-008s1", "_type": "span", "marks": [], "text": "Some questions in finance do have a " },
+                { "_key": "mc1l1-008s2", "_type": "span", "marks": ["mc1l1-008m1"], "text": "closed-form solution" },
+                { "_key": "mc1l1-008s3", "_type": "span", "marks": [], "text": ", a formula you can compute directly. Pricing a plain vanilla European call option on a single stock is one of them, and that formula (Black-Scholes) is a later course's territory. But the moment a payoff depends on the entire path a price took, not just where it ended up, or on several assets moving together instead of just one, the algebra usually runs out. An option that pays based on the average price over 90 days. A fund that holds three correlated stocks. A retirement portfolio's outcome 25 years from now, contributed to every month, invested in assets whose future returns are inherently uncertain. None of these have a formula you can look up. All of them have a Monte Carlo simulation you can run." }
+              ]
+            },
+            {
+              "_key": "mc1l1-009",
+              "_type": "table",
+              "caption": "Where Monte Carlo shows up on a real desk",
+              "headers": ["Use Case", "Why a Formula Alone Falls Short"],
+              "rows": [
+                { "_key": "mc1l1-009r1", "_type": "tableRow", "cells": ["Pricing exotic options (Asian, barrier, basket)", "Payoff depends on the price path or on multiple assets, not one final price"] },
+                { "_key": "mc1l1-009r2", "_type": "tableRow", "cells": ["Value at Risk for a multi-asset portfolio", "Correlated assets with different volatilities have no simple combined formula"] },
+                { "_key": "mc1l1-009r3", "_type": "tableRow", "cells": ["SIP and retirement goal planning", "Decades of uncertain monthly returns compound in ways too messy for algebra"] },
+                { "_key": "mc1l1-009r4", "_type": "tableRow", "cells": ["Credit risk and probability of default", "Depends on many interacting factors with no tidy closed form"] },
+                { "_key": "mc1l1-009r5", "_type": "tableRow", "cells": ["Stress testing a trading book", "Needs thousands of plausible joint scenarios, not one number"] }
+              ]
+            },
+            {
+              "_key": "mc1l1-010",
+              "_type": "callout",
+              "type": "insight",
+              "text": "If you have ever traded options on an app like Zerodha and glanced at a \"probability of profit\" figure on a tool like Sensibull, that number did not come from a single formula either. It came from simulating thousands of possible price paths for the underlying and counting how many ended inside your profit zone. You have already been a consumer of Monte Carlo output, probably without knowing it."
+            },
+            {
+              "_key": "mc1l1-011",
+              "_type": "comparison",
+              "title": "Closed-Form Formula vs Monte Carlo Simulation",
+              "columns": [
+                {
+                  "_key": "mc1l1-011c1",
+                  "label": "Closed-Form Formula",
+                  "points": [
+                    "Gives an exact answer instantly, no repetition needed",
+                    "Only exists for problems mathematicians have already solved",
+                    "Breaks down for path-dependent payoffs or several correlated assets"
+                  ]
+                },
+                {
+                  "_key": "mc1l1-011c2",
+                  "label": "Monte Carlo Simulation",
+                  "points": [
+                    "Gives an approximate answer that sharpens as you run more trials",
+                    "Works on almost any problem you can code a model for",
+                    "Costs computing time, and needs enough trials to trust the answer"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "mc1l1-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mc1l1-012s1", "_type": "span", "marks": [], "text": "A Worked Example: A Question That Looks Like 50-50 but Is Not" }
+              ]
+            },
+            {
+              "_key": "mc1l1-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mc1l1-013s1", "_type": "span", "marks": [], "text": "Here is a toy problem small enough to reason through fully, which is exactly why it makes a good first example. Suppose HDFC Bank closes today at ₹1,650. Simplify wildly and assume that on each of the next 20 trading days, its closing price moves either up ₹5 or down ₹5 from the previous close, with equal 50% probability each day, independent of every other day. (This is obviously not how real stock prices behave. Chapter 3 replaces it with Geometric Brownian Motion, the model that actually fits.) Question: after 20 trading days, what is the probability the stock closes above ₹1,650, its starting price?" }
+              ]
+            },
+            {
+              "_key": "mc1l1-014",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mc1l1-014s1", "_type": "span", "marks": [], "text": "Most people's gut answer is 50%, since each individual day is a coin flip. That gut answer is wrong, and the reason it is wrong matters more than the number itself." }
+              ]
+            },
+            {
+              "_key": "mc1l1-015",
+              "_type": "codeBlock",
+              "language": "python",
+              "caption": "Estimating the probability by brute-force simulation",
+              "code": "import random\n\ndef simulate_one_path(days=20, tick=5, start_price=1650):\n    price = start_price\n    for _ in range(days):\n        price += tick if random.random() < 0.5 else -tick\n    return price\n\ntrials = 100_000\nabove_start = 0\n\nfor _ in range(trials):\n    final_price = simulate_one_path()\n    if final_price > 1650:\n        above_start += 1\n\nestimated_probability = above_start / trials\nprint(f\"Estimated probability: {estimated_probability:.4f}\")\n# Converges toward 0.4119, not 0.5"
+            },
+            {
+              "_key": "mc1l1-016",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Simulated estimate converging as trials increase",
+              "xAxisLabel": "Number of simulated trials",
+              "yAxisLabel": "Estimated probability of closing above ₹1,650",
+              "data": [
+                { "_key": "mc1l1-016d1", "label": "100" },
+                { "_key": "mc1l1-016d2", "label": "1,000" },
+                { "_key": "mc1l1-016d3", "label": "10,000" },
+                { "_key": "mc1l1-016d4", "label": "100,000" },
+                { "_key": "mc1l1-016d5", "label": "1,000,000" }
+              ],
+              "series": [
+                {
+                  "_key": "mc1l1-016se1",
+                  "label": "Simulated estimate",
+                  "values": [0.46, 0.398, 0.417, 0.4128, 0.4121]
+                }
+              ]
+            },
+            {
+              "_key": "mc1l1-017",
+              "_type": "callout",
+              "type": "insight",
+              "text": "The exact answer, worked out from the binomial formula rather than simulated, is 41.19%. Over 20 days, the stock closes above ₹1,650 only if the number of up-days exceeds the number of down-days. But with 20 days, a perfect tie (10 up, 10 down) is possible, and a tie leaves the price exactly where it started, not above it. That tied outcome, which happens about 17.6% of the time, eats entirely into the \"above\" side of the coin flip. It is why the true probability sits below 50%, and why intuition quietly misleads you here. Chapter 2 formalizes this using the binomial and normal distributions."
+            },
+            {
+              "_key": "mc1l1-018",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "mc1l1-018s1", "label": "Gut-feel guess", "value": "50%", "context": "Each day looks like a fair coin flip" },
+                { "_key": "mc1l1-018s2", "label": "Exact answer (binomial formula)", "value": "41.19%", "context": "Computable by hand for this simple case" },
+                { "_key": "mc1l1-018s3", "label": "Simulated estimate, 100,000 trials", "value": "~41.2%", "context": "Matches the exact answer closely" },
+                { "_key": "mc1l1-018s4", "label": "Why the gap from 50%", "value": "Ties don't count as \"above\"", "context": "A 10-up, 10-down tie leaves the price unchanged" }
+              ]
+            },
+            {
+              "_key": "mc1l1-019",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mc1l1-019s1", "_type": "span", "marks": [], "text": "Why Simulate When You Could Sometimes Calculate Exactly" }
+              ]
+            },
+            {
+              "_key": "mc1l1-020",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mc1l1-020s1", "_type": "span", "marks": [], "text": "The HDFC Bank example above is small and clean enough that you genuinely could solve it exactly, without simulating anything, using the binomial formula. That was the point of choosing it. It lets you check the simulation's answer against a known correct one, and see that the method actually works. Real desk problems rarely offer that luxury. The instant you have three correlated stocks instead of one coin-flip walk, or a payoff that depends on the average price over 90 days instead of a simple tie count, the exact formula either becomes extremely painful to derive or does not exist at all. Priya's 8%-loss question from the start of this lesson is exactly that kind of problem. Monte Carlo does not care how messy the model gets. It just runs the model over and over, and counts." }
+              ]
+            },
+            {
+              "_key": "mc1l1-021",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Test the coin-flip intuition",
+              "question": "A trader claims a symmetric up-or-down random walk will close \"above where it started\" exactly half the time, no matter how many days you run it. Based on the HDFC Bank example in this lesson, is this claim true?",
+              "options": [
+                "True, coin-flip walks are always 50-50 by symmetry, regardless of the number of days",
+                "False, ties become possible over an even number of days, and a tie counts as \"not above,\" pulling the true probability below 50%",
+                "True, but only because HDFC Bank is a large-cap, low-volatility stock",
+                "False, because stock prices can never fall below zero"
+              ],
+              "correctIndex": 1,
+              "explanation": "Over an even number of days, an exact tie between up-days and down-days is possible, and a tie leaves the price unchanged, not above the start. That possibility eats into the \"above\" side of the outcome, pulling the true probability under 50%. Over an odd number of days a tie is impossible, and the probability of closing above the start really would be exactly 50%, by symmetry."
+            },
+            {
+              "_key": "mc1l1-022",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Help Priya answer her manager",
+              "scenario": "You are interning on Priya's risk desk. Her manager wants the probability that a fund holding HDFC Bank, TCS, and Sun Pharma in different weights loses more than 8% of its value over the next 90 trading days. No formula in the textbook answers this directly, because the three stocks are correlated with each other and each has its own volatility.",
+              "prompt": "Based on what this lesson just showed you, sketch out how you would approach answering the manager's question, even though a clean algebra formula does not exist for it.",
+              "modelAnswer": "Build a model for how each stock's daily return behaves, and how the three stocks move together (their correlations). Use that model to generate one simulated 90-day path for the whole fund's value, a single trial. Repeat that thousands of times, generating thousands of independent 90-day paths. Count what fraction of those simulated paths end down more than 8%. That fraction is the Monte Carlo estimate of the probability the manager asked for. Chapters 2 and 3 build the exact tools needed for the \"model each stock's return and correlate them\" step; this lesson only had to establish that repeating and counting is the method."
+            },
+            {
+              "_key": "mc1l1-023",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mc1l1-023s1", "_type": "span", "marks": [], "text": "Where This Course Takes You" }
+              ]
+            },
+            {
+              "_key": "mc1l1-024",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mc1l1-024s1", "_type": "span", "marks": [], "text": "Chapter 2 builds the probability toolkit properly: which distributions real stock returns actually resemble, and why they rarely look as clean as a coin flip. Chapter 3 retires this lesson's toy random walk in favor of Geometric Brownian Motion, the model that genuinely describes how stock prices move, and simulates realistic price paths for real NSE stocks. Chapter 4 puts those simulated paths to work, pricing options and estimating risk, the two jobs Monte Carlo does most often on a real desk in Mumbai, London, or anywhere else." }
+              ]
+            },
+            {
+              "_key": "mc1l1-025",
+              "_type": "flashcardSet",
+              "title": "Core Terms From This Lesson",
+              "cards": [
+                { "_key": "mc1l1-025f1", "term": "Monte Carlo simulation", "definition": "Estimating the answer to a question by generating a random process thousands or millions of times and observing what actually happens, instead of solving for the answer with a formula." },
+                { "_key": "mc1l1-025f2", "term": "Trial (or path)", "definition": "One full run of the simulated random process, e.g. one simulated 20-day sequence of up-or-down price moves for a stock." },
+                { "_key": "mc1l1-025f3", "term": "Closed-form solution", "definition": "A formula that gives an exact answer directly by plugging in numbers, with no simulation required. Black-Scholes for a plain vanilla option is the classic finance example." },
+                { "_key": "mc1l1-025f4", "term": "Convergence", "definition": "The tendency of a simulated estimate to get closer to the true answer as the number of trials increases. Chapter 2 formalizes why this happens." }
+              ]
+            },
+            {
+              "_key": "mc1l1-026",
+              "_type": "keyTakeaways",
+              "points": [
+                "A Monte Carlo simulation estimates an answer by repeating a random process thousands or millions of times and counting outcomes, rather than solving for it with algebra.",
+                "Finance needs it whenever a payoff depends on an entire price path, or on several correlated assets, since these problems usually have no closed-form formula.",
+                "A single coin-flip day can be exactly 50-50 while a multi-day random walk built from those coin flips is not, because ties over an even number of days count as \"not above.\"",
+                "Simulated estimates converge toward the true answer as the number of trials grows; a few hundred trials are noisy, tens of thousands are usually close.",
+                "\"Probability of profit\" figures on options trading apps are a real-world, everyday output of exactly this kind of simulation.",
+                "This course builds up from this lesson's toy random walk to Geometric Brownian Motion, then to pricing options and estimating risk with simulation."
+              ]
+            },
+            {
+              "_key": "mc1l1-027",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to buy, sell, or hold any security named here. HDFC Bank, TCS, and Sun Pharma are used purely as illustrative examples; the price levels, probabilities, and simulated figures in this lesson are simplified and not live market data. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,472 @@
+{
+  "courseSlug": "understanding-bond-pricing-yield-to-maturity-duration-and-convexity",
+  "chapters": [
+    {
+      "title": "Chapter 4: Convexity: Where Duration Falls Short",
+      "lessons": [
+        {
+          "title": "Positive vs Negative Convexity: Callable Bonds and Capped Upside",
+          "slug": "positive-vs-negative-convexity-callable-bonds-and-capped-upside",
+          "body": [
+            {
+              "_key": "c4l3-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l3-001s1",
+                  "_type": "span",
+                  "text": "Everything so far has treated convexity as a gift: gains bigger than losses, a cushion in a sell-off, something you get for free by owning an ordinary bond. For one large class of Indian bonds, that gift is taken away. Bank Tier 2 and AT1 bonds, some PSU and NBFC NCDs, and securitised loan pools can behave in the opposite way: when yields fall, their prices stop rising, while in a sell-off they fall almost as hard as any other bond. That is negative convexity, and if you buy bank bonds on a yield-based pitch without understanding it, you are giving away the best part of a bond's payoff.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l3-002",
+              "_type": "bigIdea",
+              "text": "When you buy a callable bond, you are also selling the issuer an option. That option takes away your upside when yields fall but leaves your downside intact when yields rise. Convexity turns negative, and duration-based estimates overstate your gains."
+            },
+            {
+              "_key": "c4l3-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l3-003s1",
+                  "_type": "span",
+                  "text": "A Callable Bond Is Two Positions in One",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l3-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c4l3-004m1",
+                  "_type": "glossaryTerm",
+                  "definition": "A price-yield relationship where the price rises less for a fall in yields than it falls for an equal rise. Duration overstates gains and the bond's upside is capped."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c4l3-004s1",
+                  "_type": "span",
+                  "text": "Think of a callable bond as a package. You own an ordinary bond, and you have sold the issuer the right to buy it back at the call price. The value of what you hold is therefore the value of the ordinary bond minus the value of that option. When yields fall, the option becomes more valuable to the issuer, so more value is subtracted from what you own. That is what produces ",
+                  "marks": []
+                },
+                {
+                  "_key": "c4l3-004s2",
+                  "_type": "span",
+                  "text": "negative convexity",
+                  "marks": ["c4l3-004m1"]
+                },
+                {
+                  "_key": "c4l3-004s3",
+                  "_type": "span",
+                  "text": ".",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l3-005",
+              "_type": "mathBlock",
+              "latex": "P_{\\text{callable}} = P_{\\text{straight}} - P_{\\text{call option}}",
+              "caption": "The option value grows as yields fall and a call becomes more likely, and shrinks towards zero as yields rise above the coupon, when calling makes no sense for the issuer."
+            },
+            {
+              "_key": "c4l3-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l3-006s1",
+                  "_type": "span",
+                  "text": "The Same Bond, With and Without the Call",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l3-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l3-007s1",
+                  "_type": "span",
+                  "text": "Take the illustrative bank Tier 2 bond from Chapter 2: 8.50% annual coupon, 10 years to maturity, callable at par in 3 years. The table compares it with an otherwise identical bond that has no call option. Callable prices come from an illustrative option-adjusted model, the kind a dealer would run.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l3-008",
+              "_type": "table",
+              "caption": "8.50% coupon, 10-year bond: with and without a 3-year call at par (₹ per ₹100 face value)",
+              "headers": ["Market yield", "No call option (₹)", "Callable (₹)", "Value of the call you sold (₹)"],
+              "rows": [
+                { "_key": "c4l3-008r1", "_type": "tableRow", "cells": ["5%", "127.03", "109.65", "17.38"] },
+                { "_key": "c4l3-008r2", "_type": "tableRow", "cells": ["6%", "118.40", "107.00", "11.40"] },
+                { "_key": "c4l3-008r3", "_type": "tableRow", "cells": ["7%", "110.54", "104.63", "5.91"] },
+                { "_key": "c4l3-008r4", "_type": "tableRow", "cells": ["7.5%", "106.86", "103.42", "3.44"] },
+                { "_key": "c4l3-008r5", "_type": "tableRow", "cells": ["8%", "103.36", "101.97", "1.39"] },
+                { "_key": "c4l3-008r6", "_type": "tableRow", "cells": ["8.5%", "100.00", "100.00", "0.00"] },
+                { "_key": "c4l3-008r7", "_type": "tableRow", "cells": ["9%", "96.79", "96.79", "0.00"] },
+                { "_key": "c4l3-008r8", "_type": "tableRow", "cells": ["10%", "90.78", "90.78", "0.00"] },
+                { "_key": "c4l3-008r9", "_type": "tableRow", "cells": ["11%", "85.28", "85.28", "0.00"] }
+              ]
+            },
+            {
+              "_key": "c4l3-009",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Where the Callable Bond Stops Rising (₹ per ₹100 face value)",
+              "xAxisLabel": "Market yield (%)",
+              "yAxisLabel": "Price (₹)",
+              "data": [
+                { "_key": "c4l3-009d1", "label": "5" },
+                { "_key": "c4l3-009d2", "label": "6" },
+                { "_key": "c4l3-009d3", "label": "7" },
+                { "_key": "c4l3-009d4", "label": "7.5" },
+                { "_key": "c4l3-009d5", "label": "8" },
+                { "_key": "c4l3-009d6", "label": "8.5" },
+                { "_key": "c4l3-009d7", "label": "9" },
+                { "_key": "c4l3-009d8", "label": "10" },
+                { "_key": "c4l3-009d9", "label": "11" }
+              ],
+              "series": [
+                { "_key": "c4l3-009s1", "label": "No call option", "values": [127.03, 118.40, 110.54, 106.86, 103.36, 100.00, 96.79, 90.78, 85.28] },
+                { "_key": "c4l3-009s2", "label": "Callable at par in 3 years", "values": [109.65, 107.00, 104.63, 103.42, 101.97, 100.00, 96.79, 90.78, 85.28] }
+              ]
+            },
+            {
+              "_key": "c4l3-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l3-010s1",
+                  "_type": "span",
+                  "text": "On the right of the chart, where yields are above the 8.50% coupon, the two lines sit on top of each other. Calling would be pointless for the bank, so the call is worth nothing and the bond behaves normally. On the left, the lines separate dramatically. At a 5% yield the ordinary bond is worth ₹127.03 while the callable bond is worth only ₹109.65. You gave away ₹17.38 of upside, and the bank kept it.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l3-011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l3-011s1",
+                  "_type": "span",
+                  "text": "Notice the shape of the callable line between about 6% and 8.5%. Instead of bowing upwards like every price curve so far, it flattens and bends the other way. That region is where convexity is negative.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l3-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l3-012s1",
+                  "_type": "span",
+                  "text": "Measuring It: Effective Duration and Convexity",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l3-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l3-013s1",
+                  "_type": "span",
+                  "text": "The cash flow formulas from the last lesson cannot handle a bond whose cash flows might stop in three years. The effective measures from Chapter 3 and Chapter 4 can, because they simply reprice the bond either side of today's yield. With the bond trading at an 8% yield, using a 50 basis point step:",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l3-014",
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "c4l3-014s1",
+                  "label": "No call: effective duration",
+                  "value": "6.64",
+                  "context": "Convexity +59.6"
+                },
+                {
+                  "_key": "c4l3-014s2",
+                  "label": "Callable: effective duration",
+                  "value": "3.36",
+                  "context": "Convexity −200.3"
+                },
+                {
+                  "_key": "c4l3-014s3",
+                  "label": "Gain if yields fall 200 bps",
+                  "value": "+14.56% vs +4.94%",
+                  "context": "No call vs callable"
+                },
+                {
+                  "_key": "c4l3-014s4",
+                  "label": "Loss if yields rise 200 bps",
+                  "value": "−12.16% vs −10.97%",
+                  "context": "No call vs callable"
+                }
+              ]
+            },
+            {
+              "_key": "c4l3-015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l3-015s1",
+                  "_type": "span",
+                  "text": "Read those last two stats together. The callable bond captures barely a third of the ordinary bond's upside in a rally, but takes 90% of its loss in a sell-off. Its convexity is not just smaller, it is negative: the price change for a fall in yields (+4.94%) is less than half the price change for an equal rise (−10.97%). Every relationship you learned in Lesson 1 of this chapter is reversed.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l3-016",
+              "_type": "keyFact",
+              "label": "Duration overstates the callable bond's gain",
+              "value": "+3.36% estimated vs +2.61% actual",
+              "context": "For a 100 bp fall in yields. With an ordinary bond, duration understates the gain. With negative convexity, it flatters it."
+            },
+            {
+              "_key": "c4l3-017",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Calculate a negative convexity",
+              "prompt": "The callable bond trades at ₹101.97 at an 8% yield. Repriced at 7.50% it is worth ₹103.42, and at 8.50% it is worth ₹100.00. Using the effective convexity formula with Δy = 0.005, what is its convexity? Enter a negative number, rounded to the nearest whole number.",
+              "correctValue": -204,
+              "tolerance": 10,
+              "unit": "",
+              "explanation": "Numerator: 103.42 + 100.00 − 2 × 101.97 = −0.52. Denominator: 101.97 × 0.005² = 0.00254925. Convexity = −0.52 ÷ 0.00254925 ≈ −204. The negative sign is the whole point: unlike every bond so far, the convexity adjustment now subtracts from the duration estimate."
+            },
+            {
+              "_key": "c4l3-018",
+              "_type": "comparison",
+              "title": "Positive vs Negative Convexity",
+              "columns": [
+                {
+                  "_key": "c4l3-018c1",
+                  "label": "Positive convexity (ordinary bonds)",
+                  "points": [
+                    "Gains when yields fall exceed losses when yields rise",
+                    "Duration understates gains and overstates losses",
+                    "Duration grows as yields fall, so rallies accelerate",
+                    "G-Secs, SDLs, plain NCDs, T-bills, STRIPS"
+                  ]
+                },
+                {
+                  "_key": "c4l3-018c2",
+                  "label": "Negative convexity (bonds with embedded calls)",
+                  "points": [
+                    "Gains when yields fall are smaller than losses when yields rise",
+                    "Duration overstates gains; use effective measures",
+                    "Duration shrinks as yields fall, so rallies stall",
+                    "Bank Tier 2 and AT1 bonds, callable NCDs, securitised loan pools"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c4l3-019",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Spot the negative convexity",
+              "question": "Which of these illustrative instruments is most likely to show negative convexity when G-Sec yields fall sharply?",
+              "options": [
+                "A 10-year G-Sec with no embedded options",
+                "A 364-day Treasury bill",
+                "A bank Tier 2 bond trading at ₹104, callable at par in 18 months",
+                "A 5-year AAA PSU bond with an annual coupon and no call option"
+              ],
+              "correctIndex": 2,
+              "explanation": "The Tier 2 bond trades above its call price with a call date close by, so the market already expects it to be redeemed at ₹100. Further falls in yields cannot push its price much higher, which is exactly negative convexity. The other three have fixed cash flows and positive convexity."
+            },
+            {
+              "_key": "c4l3-020",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l3-020s1",
+                  "_type": "span",
+                  "text": "The Double Blow When Rates Fall",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l3-021",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c4l3-021s1",
+                  "_type": "span",
+                  "text": "Negative convexity hurts twice, and the second blow is the one investors forget. First, your price barely rises in the rally. Then the bond is actually called, your principal comes back, and you have to reinvest it in exactly the low-rate market that caused the call. That is reinvestment risk from Chapter 2 arriving at the worst possible moment. An ordinary G-Sec holder in the same rally keeps a high coupon for years and sits on a large price gain.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c4l3-022",
+              "_type": "callout",
+              "type": "warning",
+              "text": "AT1 bonds carry the mirror-image risk too. If a bank chooses not to call on the first call date, perhaps because replacing the capital has become expensive, you are left holding a perpetual bond with no maturity, and its duration jumps overnight. This is extension risk. It is one reason SEBI told mutual funds to value perpetual bonds as though they mature 100 years from issue rather than at the first call date. So AT1 holders face capped upside if the bond is called, and a sudden jump in rate risk if it is not."
+            },
+            {
+              "_key": "c4l3-023",
+              "_type": "collapsible",
+              "title": "Where else negative convexity shows up in India",
+              "content": [
+                {
+                  "_key": "c4l3-024",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c4l3-024s1",
+                      "_type": "span",
+                      "text": "Securitised home loan pools. ",
+                      "marks": ["strong"]
+                    },
+                    {
+                      "_key": "c4l3-024s2",
+                      "_type": "span",
+                      "text": "Pass-through certificates backed by housing loans behave like callable bonds, because borrowers refinance and prepay when lending rates fall. The pool shortens exactly when investors would most like it to stay long. Mutual funds and NBFCs are the usual buyers, not individuals.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c4l3-025",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c4l3-025s1",
+                      "_type": "span",
+                      "text": "Puttable bonds, in reverse. ",
+                      "marks": ["strong"]
+                    },
+                    {
+                      "_key": "c4l3-025s2",
+                      "_type": "span",
+                      "text": "A put option belongs to you, not the issuer, so it adds convexity rather than removing it. The bond's price is supported when yields rise, because you can hand it back at the put price.",
+                      "marks": []
+                    }
+                  ]
+                },
+                {
+                  "_key": "c4l3-026",
+                  "_type": "block",
+                  "style": "normal",
+                  "listItem": "bullet",
+                  "level": 1,
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c4l3-026s1",
+                      "_type": "span",
+                      "text": "Your own home loan, from the bank's side. ",
+                      "marks": ["strong"]
+                    },
+                    {
+                      "_key": "c4l3-026s2",
+                      "_type": "span",
+                      "text": "A floating rate home loan that you can prepay without penalty is a callable asset for the lender. When rates fall and borrowers refinance to another bank, the lender loses its high-yielding loan. That is the same negative convexity, seen from the other side of the table.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c4l3-027",
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "Name the effect",
+              "textWithBlank": "When a bond's price rises less for a fall in yields than it falls for an equal rise, the bond has ___ convexity.",
+              "correctAnswers": ["negative", "negative convexity"],
+              "explanation": "Negative convexity comes from options held by the issuer, such as a call or a borrower's right to prepay. The convexity adjustment then subtracts from the duration estimate instead of adding to it."
+            },
+            {
+              "_key": "c4l3-028",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Vivek's rate-cut hope",
+              "scenario": "Vivek Malhotra, the chartered accountant from Chapter 2, did buy ₹50 lakh face value of the illustrative bank Tier 2 bond: 8.50% annual coupon, callable at par in 3 years, now trading at ₹101.97 on an 8% yield basis. He reads that RBI may cut rates by 150 basis points over the next year and calls his wealth manager: \"If yields drop that much, my bond should jump about 10%, right? A 6.64 duration on a 150 bp move.\" His manager mentions that the bond's effective duration is only 3.36.",
+              "prompt": "Explain why Vivek's 10% expectation is wrong, estimate what he would actually gain, compare it with an ordinary bond, and set out what he should watch for.",
+              "modelAnswer": "1. Vivek used the duration of an ordinary 10-year 8.50% bond (6.64). For a callable bond, only the effective duration, calculated by repricing with the call in mind, is meaningful. Here that is 3.36.\n2. Even 3.36 overstates the gain, because the bond's convexity is about −200. Duration alone suggests +5.04% for a 150 bp fall; the convexity adjustment subtracts ½ × 200 × 0.015², about 2.25 percentage points. The two-term estimate is therefore about +2.8%, and full repricing of the model gives about +3.75%, because convexity itself changes over a move that large. Either way, roughly ₹1.9 lakh on his holding.\n3. An otherwise identical bond without the call would gain about 10.66% on the same move, roughly ₹5.5 lakh. Vivek gives up about two-thirds of the upside.\n4. The downside is not cut in the same proportion. If yields rise 150 bps instead, the callable bond falls about 8.09% against about 9.32% for the non-callable: he keeps most of the loss.\n5. What he should watch for: (a) a call at par in 3 years means his ₹101.97 price falls to ₹100 at redemption, so his yield to worst, not the coupon, is his real return; (b) if the bond is called he must reinvest ₹50 lakh at the lower rates that caused the call; (c) if the bank chooses not to call, he faces extension risk instead; (d) for a pure view on falling rates, an ordinary G-Sec or a gilt fund gives him the full convexity benefit without the call.\n6. The general rule: never apply an ordinary bond's duration to a bond with an embedded option. Ask for effective duration and effective convexity."
+            },
+            {
+              "_key": "c4l3-029",
+              "_type": "flashcardSet",
+              "title": "Negative Convexity",
+              "cards": [
+                { "_key": "c4l3-029f1", "term": "Negative convexity", "definition": "Price rises less when yields fall than it falls when yields rise by the same amount." },
+                { "_key": "c4l3-029f2", "term": "Callable bond value", "definition": "Value of the straight bond minus the value of the call option you sold to the issuer." },
+                { "_key": "c4l3-029f3", "term": "Price compression", "definition": "The flattening of a callable bond's price as yields fall and a call becomes likely." },
+                { "_key": "c4l3-029f4", "term": "Extension risk", "definition": "The risk that an issuer does not call, leaving you holding a much longer bond than expected." },
+                { "_key": "c4l3-029f5", "term": "Effective measures", "definition": "Duration and convexity from repricing, the only valid measures for bonds with embedded options." },
+                { "_key": "c4l3-029f6", "term": "Prepayment risk", "definition": "Negative convexity in securitised loan pools, caused by borrowers refinancing when rates fall." }
+              ]
+            },
+            {
+              "_key": "c4l3-030",
+              "_type": "keyTakeaways",
+              "points": [
+                "A callable bond equals an ordinary bond minus the call option you sold to the issuer.",
+                "As yields fall, that option gets more valuable to the issuer, so your price stops rising: negative convexity.",
+                "The illustrative Tier 2 bond gains only 4.94% when yields fall 200 bps but loses 10.97% when they rise 200 bps.",
+                "Its effective duration is 3.36 with convexity of about −200, against 6.64 and +59.6 for the same bond without a call.",
+                "With negative convexity, duration overstates your gains, the opposite of an ordinary bond.",
+                "A call in a rally also forces you to reinvest at lower rates, while a skipped call leaves you with extension risk.",
+                "Always ask for effective duration and effective convexity on any bond with an embedded option."
+              ]
+            },
+            {
+              "_key": "c4l3-031",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice. Bonds, prices and investors are illustrative, and callable bond prices come from a simplified option-adjusted model, not live market quotes. Real callable bond values depend on interest rate volatility, issuer behaviour and regulatory approval, and bank Tier 2 and AT1 bonds carry additional risks including coupon skip and write-down. Consult a SEBI-registered investment adviser before investing."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

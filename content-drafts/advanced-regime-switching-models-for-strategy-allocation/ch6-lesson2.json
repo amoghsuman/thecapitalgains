@@ -1,0 +1,210 @@
+{
+  "courseSlug": "advanced-regime-switching-models-for-strategy-allocation",
+  "chapters": [
+    {
+      "title": "Chapter 6: Portfolio and Capital Allocation Across Regimes",
+      "lessons": [
+        {
+          "title": "Dynamic Leverage: Scaling Exposure With Regime Confidence",
+          "slug": "dynamic-leverage-scaling-exposure-with-regime-confidence",
+          "body": [
+            {
+              "_key": "rswc6l2b01",
+              "_type": "bigIdea",
+              "text": "Lesson 1 assumed you know the regime for certain. Real life gives you a probability distribution over regimes, and dynamic leverage is what happens when you take that seriously instead of rounding it off to a single label."
+            },
+            {
+              "_key": "rswc6l2b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc6l2b02s1",
+                  "_type": "span",
+                  "text": "Lesson 1's regime-aware Kelly picked one regime, calm or stressed, and applied that regime's fitted mean and variance as though the model were certain. On any real day, the filtered probability from Chapter 4's statsmodels output is rarely a clean 0 or 1. This lesson replaces the hard pick with a probability-weighted blend, exactly the same discipline that made Chapter 2's binary flags whipsaw-prone in the first place.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc6l2b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc6l2b03s1",
+                  "_type": "span",
+                  "text": "Probability-Weighted Kelly: Blending Across Regimes",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc6l2b04",
+              "_type": "mathBlock",
+              "latex": "\\mu_{\\text{blend}} = \\sum_k P(k) \\, \\mu_k",
+              "caption": "The blended expected return: each regime's mean, weighted by its current probability"
+            },
+            {
+              "_key": "rswc6l2b05",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc6l2b05s1",
+                  "_type": "span",
+                  "text": "The blended mean is straightforward. The blended variance is not simply a probability-weighted average of the per-regime variances, and treating it that way is a genuine, easy-to-miss mistake. When you are uncertain which regime you are in, that uncertainty is itself a source of variance, on top of whatever variance exists within each regime. The correct formula is the law of total variance.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc6l2b06",
+              "_type": "mathBlock",
+              "latex": "\\sigma^2_{\\text{blend}} = \\underbrace{\\sum_k P(k)\\,\\sigma_k^2}_{\\text{within-regime}} + \\underbrace{\\sum_k P(k)\\,(\\mu_k - \\mu_{\\text{blend}})^2}_{\\text{between-regime}}",
+              "caption": "Law of total variance: expected within-regime variance, plus variance from not knowing which regime's mean applies"
+            },
+            {
+              "_key": "rswc6l2b07",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc6l2b07s1",
+                  "_type": "span",
+                  "text": "A Worked Example: A Day That's 60% Calm, 40% Stressed",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc6l2b08",
+              "_type": "table",
+              "caption": "Blending Chapter 3's Calm and Stressed parameters at P(Calm) = 0.60",
+              "headers": ["Quantity", "Value"],
+              "rows": [
+                {
+                  "_key": "rswc6l2b08r1",
+                  "_type": "tableRow",
+                  "cells": ["mu_blend = 0.60 × 0.06% + 0.40 × (-0.15%)", "-0.024%"]
+                },
+                {
+                  "_key": "rswc6l2b08r2",
+                  "_type": "tableRow",
+                  "cells": ["Within-regime variance", "0.00022735"]
+                },
+                {
+                  "_key": "rswc6l2b08r3",
+                  "_type": "tableRow",
+                  "cells": ["Between-regime variance", "0.0000010584"]
+                },
+                {
+                  "_key": "rswc6l2b08r4",
+                  "_type": "tableRow",
+                  "cells": ["Total blended variance", "0.0002284084"]
+                },
+                {
+                  "_key": "rswc6l2b08r5",
+                  "_type": "tableRow",
+                  "cells": ["Kelly f*, correct (with between-regime term)", "-1.05x"]
+                },
+                {
+                  "_key": "rswc6l2b08r6",
+                  "_type": "tableRow",
+                  "cells": ["Kelly f*, naive (ignoring between-regime term)", "-1.06x"]
+                }
+              ]
+            },
+            {
+              "_key": "rswc6l2b09",
+              "_type": "callout",
+              "type": "insight",
+              "text": "The correction is small here, about 0.5% of the Kelly fraction, because the calm and stressed regime means (0.06% and -0.15%) are close together relative to their variances (0.75% and 2.20% standard deviation). The correction is not always this small. It grows when regime means are more separated relative to their variances, exactly the setting Hamilton's original quarterly GNP application in Chapter 4 was closer to, where recession and expansion growth rates differ by much more, proportionally, than daily equity regime means typically do. Get the formula right regardless of how small the correction happens to be in any one case; you will not always be as lucky as this example."
+            },
+            {
+              "_key": "rswc6l2b10",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc6l2b10s1",
+                  "_type": "span",
+                  "text": "Turning Confidence Into a Leverage Multiplier",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc6l2b11",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc6l2b11s1",
+                  "_type": "span",
+                  "text": "Chapter 5's confidence formula, 2 times the distance of P(trend) from 0.5, applies here too, now against P(Calm). At P(Calm) = 0.60, confidence = 2 x |0.60 - 0.50| = 0.20, appropriately low for a reading this close to a coin flip. Combine three discounts multiplicatively: the blended Kelly fraction, the fractional-Kelly discount from Lesson 1, and this confidence scalar.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc6l2b12",
+              "_type": "keyFact",
+              "label": "From a raw Kelly fraction to an actual position",
+              "value": "-1.05x → -5.25% of capital",
+              "context": "0.25 (one-quarter Kelly) × -1.05 (blended Kelly) × 0.20 (confidence) = -0.0525, or -5.25% of capital. Three separate, independent discounts compound into a position more than 20 times smaller than the raw blended Kelly fraction alone."
+            },
+            {
+              "_key": "rswc6l2b13",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This is not three ways of saying the same thing. Fractional Kelly discounts for parameter estimation error, the fact that mu and sigma-squared are themselves uncertain. Confidence discounts for regime uncertainty, the fact that you don't know which regime you're in. They compound multiplicatively because they are addressing two genuinely different sources of risk, and collapsing them into a single fudge factor would hide exactly which risk is driving the final position size down."
+            },
+            {
+              "_key": "rswc6l2b14",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Confidence at a Different Probability Reading",
+              "prompt": "On a different day, P(Calm) = 0.72. Using confidence = 2 x |P(Calm) - 0.5|, what is the confidence value?",
+              "correctValue": 0.44,
+              "tolerance": 0.01,
+              "explanation": "confidence = 2 x |0.72 - 0.50| = 2 x 0.22 = 0.44. This is more than double the 0.20 confidence at P(Calm) = 0.60 in this lesson's worked example, reflecting a meaningfully more decisive regime read even though both days still fall short of full certainty."
+            },
+            {
+              "_key": "rswc6l2b15",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why Blend Instead of Switch",
+              "question": "Why does this lesson blend Kelly across regimes using P(Calm) and P(Stressed), instead of simply using whichever regime currently has the higher probability?",
+              "options": [
+                "Blending is more computationally efficient than picking the higher-probability regime",
+                "Using only the higher-probability regime is effectively a hard switch on a continuous probability, the same whipsaw-prone pattern Chapter 2 warned against, and it also discards the genuine information in exactly how uncertain the read is",
+                "The Kelly formula only accepts blended inputs and cannot use a single regime's parameters directly",
+                "Blending removes the need for the confidence-based leverage scalar entirely"
+              ],
+              "correctIndex": 1,
+              "explanation": "Picking 'whichever regime is currently more likely' turns a continuous probability into a hard binary choice, reintroducing exactly the threshold-driven whipsaw problem Chapter 2 spent a full lesson quantifying. Blending keeps the full probability information, and lets both the blended Kelly fraction and the separate confidence scalar respond smoothly as that probability drifts, rather than snapping to a new answer every time the higher-probability regime happens to flip."
+            },
+            {
+              "_key": "rswc6l2b16",
+              "_type": "keyTakeaways",
+              "points": [
+                "Real regime reads are probabilities, not certainties, so Kelly sizing should blend across regimes using those probabilities rather than picking a single regime's parameters",
+                "Blended variance is not a simple probability-weighted average of per-regime variances; the law of total variance adds a between-regime term for the uncertainty about which regime's mean actually applies",
+                "That correction was small in this lesson's equity-return example but grows larger when regime means are more separated relative to their variances, and should always be included regardless",
+                "Confidence, 2 x |P - 0.5|, converts regime uncertainty into a leverage multiplier that compounds with the fractional-Kelly discount from parameter estimation error",
+                "In this lesson's worked example, three independent discounts, blending, fractional Kelly, and confidence, reduced a raw -1.05x Kelly fraction to an actual position of roughly -5.25% of capital"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

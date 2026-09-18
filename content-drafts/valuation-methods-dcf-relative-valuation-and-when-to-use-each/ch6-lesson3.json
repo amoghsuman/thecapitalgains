@@ -1,0 +1,901 @@
+{
+  "courseSlug": "valuation-methods-dcf-relative-valuation-and-when-to-use-each",
+  "chapters": [
+    {
+      "title": "Chapter 6: Valuation in Practice",
+      "lessons": [
+        {
+          "title": "Case Study: Valuing a Nifty 50 Company with DCF and Relative Valuation",
+          "slug": "case-study-valuing-a-nifty-50-company-with-dcf-and-relative-valuation",
+          "body": [
+            {
+              "_key": "k2",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k1",
+                  "_type": "span",
+                  "text": "Everything in this course now comes together on one company. This is the full workflow an analyst follows: understand the business, read its history, forecast it, discount it, bridge to value per share, stress it, cross-check it against peers, and finally decide what to do. The company is Kaveri Ridge Cement, the fictional cement maker used throughout the course, so every number you are about to see traces back to a lesson you have already worked through. Its scale is deliberately modest, which keeps the arithmetic readable, but the process is identical for the largest company in the Nifty 50.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "bigIdea",
+              "text": "A complete valuation is not a number. It is a chain of linked judgements, each traceable to evidence, ending in a range, a stated preference between methods, and a price at which you would act.",
+              "_key": "k3"
+            },
+            {
+              "_type": "timeline",
+              "title": "The valuation workflow, start to finish",
+              "events": [
+                {
+                  "_key": "k4",
+                  "date": "Step 1",
+                  "title": "Understand the business",
+                  "description": "Capacity, volumes, realisations, cost structure, competitive position. Read the annual report and the latest investor presentation."
+                },
+                {
+                  "_key": "k5",
+                  "date": "Step 2",
+                  "title": "Read ten years of history",
+                  "description": "Growth, margins, ROCE, cash conversion and debt on screener.in. Decide what is normal for this business."
+                },
+                {
+                  "_key": "k6",
+                  "date": "Step 3",
+                  "title": "Forecast",
+                  "description": "Revenue from volume and price, margins from full-cycle averages, reinvestment tied to growth."
+                },
+                {
+                  "_key": "k7",
+                  "date": "Step 4",
+                  "title": "Set the discount rate",
+                  "description": "Bottom-up beta, cost of equity, after-tax cost of debt, market-value weights."
+                },
+                {
+                  "_key": "k8",
+                  "date": "Step 5",
+                  "title": "Terminal value",
+                  "description": "Perpetual growth with consistent reinvestment, cross-checked against an implied exit multiple."
+                },
+                {
+                  "_key": "k9",
+                  "date": "Step 6",
+                  "title": "Bridge to value per share",
+                  "description": "Add non-operating assets, subtract debt and claims, divide by diluted shares."
+                },
+                {
+                  "_key": "k10",
+                  "date": "Step 7",
+                  "title": "Stress test",
+                  "description": "Sensitivity tables and bear, base and bull scenarios."
+                },
+                {
+                  "_key": "k11",
+                  "date": "Step 8",
+                  "title": "Cross-check with multiples",
+                  "description": "Translate the DCF into implied multiples and compare with a true peer set."
+                },
+                {
+                  "_key": "k12",
+                  "date": "Step 9",
+                  "title": "Reverse DCF",
+                  "description": "Work out what the market price already assumes."
+                },
+                {
+                  "_key": "k13",
+                  "date": "Step 10",
+                  "title": "Decide",
+                  "description": "Choose the method you trust, state the range, and set the price at which you would buy."
+                }
+              ],
+              "_key": "k14"
+            },
+            {
+              "_key": "k16",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k15",
+                  "_type": "span",
+                  "text": "Steps 1 and 2: The Business and Its History",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k18",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k17",
+                  "_type": "span",
+                  "text": "Kaveri Ridge Cement runs 16 million tonnes of capacity in Karnataka, rising to 20 million tonnes as an expansion is commissioned. Last year it sold 13 million tonnes at an average realisation of ₹5,000 per tonne, giving revenue of ₹6,500 crore, EBITDA of ₹1,300 crore and EBIT of ₹1,000 crore, an EBIT margin of 15.4%. It carries gross borrowings of ₹1,700 crore against ₹200 crore of cash, owns 26% of a listed ready-mix concrete company, holds surplus land, and is contesting a ₹900 crore mining royalty and GST demand.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "k19",
+                  "label": "Revenue",
+                  "value": "₹6,500 cr",
+                  "context": "13 million tonnes at ₹5,000 per tonne"
+                },
+                {
+                  "_key": "k20",
+                  "label": "EBITDA",
+                  "value": "₹1,300 cr",
+                  "context": "EBIT margin 15.4%"
+                },
+                {
+                  "_key": "k21",
+                  "label": "Net debt",
+                  "value": "₹1,500 cr",
+                  "context": "Gross ₹1,700 crore less cash"
+                },
+                {
+                  "_key": "k22",
+                  "label": "Market price",
+                  "value": "₹300",
+                  "context": "25.6 crore diluted shares"
+                }
+              ],
+              "_key": "k23"
+            },
+            {
+              "_key": "k25",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k24",
+                  "_type": "span",
+                  "text": "Steps 3 to 5: Forecast, Discount Rate, Terminal Value",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k27",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k26",
+                  "_type": "span",
+                  "text": "The disciplined forecast from Chapter 2 grows revenue 9.0% to 10.0% as the new capacity fills, fading to 7.0%, holds the EBIT margin at its current 15.4% rather than assuming expansion, and ties reinvestment to growth through a sales-to-capital ratio of 1.2.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "table",
+              "caption": "Kaveri Ridge Cement: five-year forecast and present value (₹ crore)",
+              "headers": [
+                "Year",
+                "Revenue",
+                "NOPAT",
+                "Reinvestment",
+                "FCFF",
+                "PV at 11.5%"
+              ],
+              "rows": [
+                {
+                  "_key": "k28",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Year 1",
+                    "7,085",
+                    "818",
+                    "488",
+                    "330",
+                    "296"
+                  ]
+                },
+                {
+                  "_key": "k29",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Year 2",
+                    "7,794",
+                    "899",
+                    "590",
+                    "309",
+                    "248"
+                  ]
+                },
+                {
+                  "_key": "k30",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Year 3",
+                    "8,573",
+                    "989",
+                    "649",
+                    "340",
+                    "245"
+                  ]
+                },
+                {
+                  "_key": "k31",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Year 4",
+                    "9,259",
+                    "1,068",
+                    "572",
+                    "497",
+                    "321"
+                  ]
+                },
+                {
+                  "_key": "k32",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Year 5",
+                    "9,907",
+                    "1,143",
+                    "540",
+                    "603",
+                    "350"
+                  ]
+                },
+                {
+                  "_key": "k33",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Total",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "1,461"
+                  ]
+                }
+              ],
+              "_key": "k34"
+            },
+            {
+              "_type": "table",
+              "caption": "The discount rate, rebuilt",
+              "headers": [
+                "Input",
+                "Value",
+                "Source"
+              ],
+              "rows": [
+                {
+                  "_key": "k35",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Risk-free rate",
+                    "6.5%",
+                    "10-year Government of India bond yield"
+                  ]
+                },
+                {
+                  "_key": "k36",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Equity risk premium",
+                    "7.0%",
+                    "India ERP, applied consistently"
+                  ]
+                },
+                {
+                  "_key": "k37",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Unlevered beta",
+                    "0.75",
+                    "Average of four listed cement peers"
+                  ]
+                },
+                {
+                  "_key": "k38",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Levered beta",
+                    "0.86",
+                    "Relevered at net debt ÷ equity of 0.20"
+                  ]
+                },
+                {
+                  "_key": "k39",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Cost of equity",
+                    "12.5%",
+                    "6.5% + 0.86 × 7.0%"
+                  ]
+                },
+                {
+                  "_key": "k40",
+                  "_type": "tableRow",
+                  "cells": [
+                    "After-tax cost of debt",
+                    "6.4%",
+                    "8.5% pre-tax, taxed at 25.0%"
+                  ]
+                },
+                {
+                  "_key": "k41",
+                  "_type": "tableRow",
+                  "cells": [
+                    "WACC",
+                    "11.5%, used as 11.5%",
+                    "Market-value weights"
+                  ]
+                }
+              ],
+              "_key": "k42"
+            },
+            {
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "k43",
+                  "label": "PV of years 1 to 5",
+                  "value": "₹1,461 cr",
+                  "context": "The explicit forecast"
+                },
+                {
+                  "_key": "k44",
+                  "label": "Terminal value at year 5",
+                  "value": "₹11,363 cr",
+                  "context": "5% perpetual growth, 13% return on new capital"
+                },
+                {
+                  "_key": "k45",
+                  "label": "PV of terminal value",
+                  "value": "₹6,594 cr",
+                  "context": "81.9% of enterprise value"
+                },
+                {
+                  "_key": "k46",
+                  "label": "Enterprise value",
+                  "value": "₹8,054 cr",
+                  "context": "The operating business"
+                }
+              ],
+              "_key": "k47"
+            },
+            {
+              "_key": "k49",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k48",
+                  "_type": "span",
+                  "text": "Step 6: The Bridge to Value per Share",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "table",
+              "caption": "From enterprise value to value per share (₹ crore unless stated)",
+              "headers": [
+                "Item",
+                "Amount"
+              ],
+              "rows": [
+                {
+                  "_key": "k50",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Enterprise value",
+                    "8,054"
+                  ]
+                },
+                {
+                  "_key": "k51",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Add: cash and liquid investments",
+                    "+200"
+                  ]
+                },
+                {
+                  "_key": "k52",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Add: 26% stake in listed associate, at market value",
+                    "+240"
+                  ]
+                },
+                {
+                  "_key": "k53",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Add: surplus land, net of tax",
+                    "+120"
+                  ]
+                },
+                {
+                  "_key": "k54",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Less: borrowings",
+                    "-1,700"
+                  ]
+                },
+                {
+                  "_key": "k55",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Less: lease liabilities",
+                    "-60"
+                  ]
+                },
+                {
+                  "_key": "k56",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Less: non-controlling interest",
+                    "-90"
+                  ]
+                },
+                {
+                  "_key": "k57",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Less: unfunded gratuity",
+                    "-40"
+                  ]
+                },
+                {
+                  "_key": "k58",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Less: expected royalty and GST liability (50% of ₹900 crore)",
+                    "-450"
+                  ]
+                },
+                {
+                  "_key": "k59",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Equity value",
+                    "6,274"
+                  ]
+                },
+                {
+                  "_key": "k60",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Add: proceeds from 0.6 crore options at ₹150",
+                    "+90"
+                  ]
+                },
+                {
+                  "_key": "k61",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Value per share (25.6 crore diluted shares)",
+                    "₹248.6"
+                  ]
+                }
+              ],
+              "_key": "k62"
+            },
+            {
+              "_key": "k64",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k63",
+                  "_type": "span",
+                  "text": "Step 7: Stress Testing",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "table",
+              "caption": "Bear, base and bull scenarios",
+              "headers": [
+                "Scenario",
+                "Story",
+                "Value per share",
+                "Probability"
+              ],
+              "rows": [
+                {
+                  "_key": "k65",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Bear",
+                    "Price war as new capacity floods the region; royalty dispute lost in full; returns fall to WACC",
+                    "₹113.5",
+                    "25.0%"
+                  ]
+                },
+                {
+                  "_key": "k66",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Base",
+                    "Steady demand and pricing, expansion ramps as planned",
+                    "₹248.6",
+                    "50.0%"
+                  ]
+                },
+                {
+                  "_key": "k67",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Bull",
+                    "Infrastructure demand and consolidation lift realisations and utilisation",
+                    "₹363.5",
+                    "25.0%"
+                  ]
+                },
+                {
+                  "_key": "k68",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Probability-weighted",
+                    "",
+                    "₹243.6",
+                    "100%"
+                  ]
+                }
+              ],
+              "_key": "k69"
+            },
+            {
+              "_type": "callout",
+              "type": "insight",
+              "text": "The spread from ₹113.5 to ₹363.5 is the honest output of this model. Most of it comes from two assumptions: the EBIT margin through the cycle, and the outcome of the royalty dispute. Those are the two things worth researching further, and no amount of refining the discount rate will matter as much.",
+              "_key": "k70"
+            },
+            {
+              "_key": "k72",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k71",
+                  "_type": "span",
+                  "text": "Steps 8 and 9: Cross-Checks",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "table",
+              "caption": "The DCF, the market and the peer group, expressed the same way",
+              "headers": [
+                "Basis",
+                "Value per share",
+                "Implied P/E",
+                "Implied EV/EBITDA"
+              ],
+              "rows": [
+                {
+                  "_key": "k73",
+                  "_type": "tableRow",
+                  "cells": [
+                    "DCF, base case",
+                    "₹248.6",
+                    "9.6×",
+                    "6.20×"
+                  ]
+                },
+                {
+                  "_key": "k74",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Probability-weighted scenarios",
+                    "₹243.6",
+                    "9.4×",
+                    ""
+                  ]
+                },
+                {
+                  "_key": "k75",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Market price",
+                    "₹300",
+                    "11.6×",
+                    "7.06×"
+                  ]
+                },
+                {
+                  "_key": "k76",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Peer median EV/EBITDA",
+                    "₹322.3",
+                    "",
+                    "7.5×"
+                  ]
+                },
+                {
+                  "_key": "k77",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Peer median P/E",
+                    "₹360.9",
+                    "14×",
+                    ""
+                  ]
+                }
+              ],
+              "_key": "k78"
+            },
+            {
+              "_key": "k80",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k79",
+                  "_type": "span",
+                  "text": "The reverse DCF completes the picture. Holding everything else at the base case, the ₹300 market price requires revenue growth of 17.6% a year for five years, far beyond what the company's capacity allows, or an EBIT margin of 17.4% sustained through every future cycle, against today's 15.4%. Neither is impossible, but both are demanding.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "chart",
+              "chartType": "bar",
+              "title": "Kaveri Ridge Cement: every answer, side by side (₹ per share)",
+              "xAxisLabel": "Method",
+              "yAxisLabel": "₹ per share",
+              "data": [
+                {
+                  "_key": "k81",
+                  "label": "Bear case",
+                  "value": 114
+                },
+                {
+                  "_key": "k82",
+                  "label": "DCF base",
+                  "value": 249
+                },
+                {
+                  "_key": "k83",
+                  "label": "Weighted",
+                  "value": 244
+                },
+                {
+                  "_key": "k84",
+                  "label": "Market",
+                  "value": 300
+                },
+                {
+                  "_key": "k85",
+                  "label": "Peer EV/EBITDA",
+                  "value": 322
+                },
+                {
+                  "_key": "k86",
+                  "label": "Peer P/E",
+                  "value": 361
+                },
+                {
+                  "_key": "k87",
+                  "label": "Bull case",
+                  "value": 364
+                }
+              ],
+              "_key": "k88"
+            },
+            {
+              "_key": "k90",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k89",
+                  "_type": "span",
+                  "text": "Step 10: The Decision",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k92",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k91",
+                  "_type": "span",
+                  "text": "Now weigh the evidence. Cement is cyclical and Kaveri Ridge is leveraged, so from Chapter 4 the peer P/E of ₹360.9 is the least reliable answer. EV/EBITDA is a fairer cross-check, and at ₹322.3 it sits above the DCF, partly because peer multiples take no account of the royalty dispute that the DCF deducts. The DCF, built on the company's own capacity, costs and obligations, is the primary method, and the probability-weighted figure of ₹243.6 is the single most representative number.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "comparison",
+              "title": "The case for and against buying at ₹300",
+              "columns": [
+                {
+                  "_key": "k93",
+                  "label": "Arguments for",
+                  "points": [
+                    "Peer EV/EBITDA of 7.5× implies ₹322.3, above the current price",
+                    "The bull case is worth ₹363.5, well above ₹300",
+                    "The royalty dispute may be won outright, adding back most of a ₹900 crore deduction",
+                    "Enterprise value per tonne is below the cost of building new capacity"
+                  ]
+                },
+                {
+                  "_key": "k94",
+                  "label": "Arguments against",
+                  "points": [
+                    "The DCF base case is ₹248.6, below the market price",
+                    "The probability-weighted value is ₹243.6",
+                    "The price implies 17.6% revenue growth or a 17.4% margin",
+                    "The bear case of ₹113.5 is severe, and leverage makes it more likely to matter"
+                  ]
+                }
+              ],
+              "_key": "k95"
+            },
+            {
+              "_type": "keyFact",
+              "label": "The conclusion, stated as a decision rather than a number",
+              "value": "Fair value around ₹243.6; buy below ₹182.7",
+              "context": "A 25.0% margin of safety against the probability-weighted value gives a purchase price of ₹182.7. At ₹300, the right action is to do nothing and watch, with two specific triggers: the royalty ruling, and cement realisations through the next two quarters.",
+              "_key": "k96"
+            },
+            {
+              "_type": "callout",
+              "type": "warning",
+              "text": "Notice what this conclusion does not say. It does not predict the share price, and it does not claim the market is wrong. It says what has to be true for ₹300 to be justified, and at what price the odds would favour a buyer. The next lesson turns that into a repeatable rule.",
+              "_key": "k97"
+            },
+            {
+              "_key": "k99",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k98",
+                  "_type": "span",
+                  "text": "Do This Yourself",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Run the full workflow on a Nifty 50 company you own",
+              "steps": [
+                "Pick a company and read its latest annual report and investor presentation. Write three sentences on how it makes money.",
+                "On screener.in, note ten years of sales growth, EBIT margin, ROCE, cash from operations against net profit, and debt.",
+                "Build a five-year forecast from volume and price, or the equivalent drivers, holding margins near their multi-year average.",
+                "Estimate the cost of equity with a bottom-up beta, then WACC using market-value weights.",
+                "Calculate terminal value with consistent reinvestment, and check the implied exit multiple.",
+                "Build the bridge from enterprise value to equity value using the notes to the accounts, and divide by diluted shares.",
+                "Run a WACC and growth sensitivity table, then bear, base and bull scenarios.",
+                "Translate your DCF into an implied P/E and EV/EBITDA, and compare with a peer set you have curated yourself.",
+                "Run a reverse DCF on the current price and write down what it implies.",
+                "Write a one-page conclusion: fair value range, the method you trust most, the two assumptions that matter, and the price at which you would buy."
+              ],
+              "_key": "k100"
+            },
+            {
+              "_key": "k102",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k101",
+                  "_type": "span",
+                  "text": "Check Your Understanding",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Complete the bridge",
+              "prompt": "A company has an enterprise value of ₹9,000 crore, cash and non-operating assets of ₹500 crore, and total debt and other claims of ₹2,200 crore. It has 30 crore diluted shares and no option proceeds. What is its value per share, in ₹?",
+              "correctValue": 243.33333333333334,
+              "tolerance": 0.5,
+              "unit": "₹",
+              "explanation": "Equity value = ₹9,000 + ₹500 - ₹2,200 = ₹7,300 crore. Value per share = ₹7,300 ÷ 30 = ₹243.3.",
+              "_key": "k103"
+            },
+            {
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Margin of safety",
+              "prompt": "Your probability-weighted value for a stock is ₹280 and it trades at ₹210. What margin of safety does the current price offer, in %?",
+              "correctValue": 25,
+              "tolerance": 0.5,
+              "unit": "%",
+              "explanation": "Margin of safety = 1 - (₹210 ÷ ₹280) = 25.0%. The price sits 25.0% below your estimate of value, which is the buffer protecting you if your assumptions prove optimistic.",
+              "_key": "k104"
+            },
+            {
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Which number leads?",
+              "question": "For Kaveri Ridge, a leveraged and cyclical cement company with a large disputed tax demand, which single figure best represents its value?",
+              "options": [
+                "The peer P/E based value, because it reflects what the market pays for similar companies",
+                "The probability-weighted DCF value, because it is built on the company's own capacity, costs and obligations across several scenarios",
+                "The average of all five methods",
+                "The bull case, because cement demand in India is growing"
+              ],
+              "correctIndex": 1,
+              "explanation": "P/E comparisons are unreliable across companies with different leverage, and peer multiples ignore company-specific items such as the royalty dispute. The probability-weighted DCF captures the company's own economics and the range of outcomes. Averaging methods hides the disagreement that matters.",
+              "_key": "k105"
+            },
+            {
+              "_type": "exercise",
+              "variant": "fillInTheBlank",
+              "title": "The output of a valuation",
+              "textWithBlank": "A complete valuation ends not with a single number but with a ___, the method you trust most, and a price at which you would act.",
+              "correctAnswers": [
+                "range",
+                "value range",
+                "scenario range"
+              ],
+              "explanation": "A range with scenarios and a stated preference between methods is honest about uncertainty, and still supports a decision.",
+              "_key": "k106"
+            },
+            {
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Presenting to the investment committee",
+              "scenario": "You have completed this valuation of Kaveri Ridge Cement. An investment committee gives you three minutes. One member believes the stock is cheap because it trades below peer EV/EBITDA. Another says the DCF is worthless because \"nobody can forecast cement prices\". A third asks simply whether to buy.",
+              "prompt": "How do you present the work, and answer all three?",
+              "modelAnswer": "1. Open with the range, not a point. \"Our work gives a range of ₹113.5 to ₹363.5 per share, with a probability-weighted value of ₹243.6, against a market price of ₹300.\"\n\n2. To the peer multiple argument: the peer EV/EBITDA of 7.5× implies ₹322.3, but it ignores the ₹900 crore royalty and GST dispute, which we deduct at 50% probability, and it blends peers with lower leverage. Adjusted for those, the gap narrows substantially. The peer P/E number of ₹360.9 should be discounted entirely, because P/E is unreliable across companies with different debt levels.\n\n3. To the forecasting objection: this is exactly why we did not rely on a single forecast. We ran a sensitivity table across WACC and growth, three complete scenarios, and a reverse DCF. The reverse DCF is the strongest answer to the objection: at ₹300, the market requires 17.6% revenue growth for five years, which exceeds the company's post-expansion capacity, or a sustained 17.4% EBIT margin against today's 15.4%. We do not need to forecast cement prices precisely to judge whether those are likely.\n\n4. The recommendation: do not buy at ₹300. Fair value is around ₹243.6, and with a 25.0% margin of safety we would buy below ₹182.7. Two things would change our view: a favourable ruling on the royalty dispute, which would add most of the ₹450 crore we have deducted, and evidence that realisations are holding as the new regional capacity comes on stream. We will revisit on either trigger.",
+              "_key": "k107"
+            },
+            {
+              "_type": "keyTakeaways",
+              "points": [
+                "A full valuation runs from understanding the business to a stated decision, with every number traceable to evidence.",
+                "For Kaveri Ridge: enterprise value ₹8,054 crore, equity value per share ₹248.6 after the bridge, and a probability-weighted value of ₹243.6 across scenarios.",
+                "The terminal value carries most of the enterprise value, so scenarios and sensitivity tables matter more than precision in year three.",
+                "Cross-checks matter: the DCF implies 6.2 times EBITDA against a peer median of 7.5 times, and the gap is explained by leverage and the disputed tax demand.",
+                "The reverse DCF turns the market price into a testable claim: 17.6% growth or a 17.4% margin, neither supported by current capacity or history.",
+                "End with a range, the method you trust, the two assumptions that drive the answer, and the price at which you would buy."
+              ],
+              "_key": "k108"
+            },
+            {
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice. Kaveri Ridge Cement Ltd is fictional, its scale is deliberately small to keep the arithmetic readable, and all figures are illustrative. The workflow, not the numbers, is what transfers to a real Nifty 50 company. Consult a SEBI-registered investment adviser before making investment decisions.",
+              "_key": "k109"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

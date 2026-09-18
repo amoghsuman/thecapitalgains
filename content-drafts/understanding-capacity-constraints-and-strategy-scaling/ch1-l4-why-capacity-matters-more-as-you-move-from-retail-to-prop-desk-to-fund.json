@@ -1,0 +1,196 @@
+{
+  "courseSlug": "understanding-capacity-constraints-and-strategy-scaling",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Capacity Is the Silent Constraint on Every Strategy",
+      "lessons": [
+        {
+          "title": "Why Capacity Matters More as You Move From Retail to Prop Desk to Fund",
+          "slug": "why-capacity-matters-more-as-you-move-from-retail-to-prop-desk-to-fund",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "c1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c1s1", "text": "The case study in the last lesson happened to a strategy, but the same arc happens to careers. Where you sit in that arc, trading your own money, on a prop desk, or running a fund, changes how much capacity should be on your mind and who is actually responsible for tracking it. This closing lesson of the chapter maps that progression before the course moves into the mechanics of impact and liquidity in Chapter 2.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c2s1", "text": "Retail: Capacity Is Someone Else's Problem, For Now", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c3",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c3s1", "text": "If you are trading your own capital on Zerodha or a similar broker, up to a few lakh and often into low crores, capacity is close to irrelevant. Your order sizes are a rounding error against the daily volume of almost anything listed on the NSE, even a mid-tier small-cap. The right things to obsess over at this stage are finding an edge in the first place and executing it with discipline, not capacity math. That changes the moment your position sizes start approaching even 1 to 2 percent of a stock's average daily volume, which is worth checking for yourself if you trade illiquid names in any size.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c4",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c4s1", "text": "Prop Desk: Capacity Becomes a Design Constraint", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c5",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c5s1", "text": "On a proprietary trading desk allocating Rs 5 to 50 crore to a given strategy, capacity stops being an afterthought and becomes part of how the strategy is designed and sized from day one. Risk managers and strategy allocators routinely ask what a strategy's estimated capacity is before deciding how much capital it gets, and they size individual trades against participation limits rather than against however much capital happens to be sitting idle.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "keyFact",
+              "_key": "c6",
+              "label": "Typical prop desk participation cap",
+              "value": "5 to 10% of ADV per trade",
+              "context": "A common starting rule of thumb for how large a single order should be relative to a stock's average daily volume. Chapter 4 builds this into a proper capacity estimate."
+            },
+            {
+              "_type": "block",
+              "_key": "c7",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c7s1", "text": "Running a Fund: Capacity Becomes a Business Decision", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c8",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c8s1", "text": "At the scale of a SEBI-registered AIF or PMS, tens to hundreds of crore, capacity stops being a risk desk calculation and becomes a business and fiduciary decision. Should the fund close to new subscriptions once it nears its estimated ceiling. Should it launch a second, smaller strategy instead of overloading the first one. Should it diversify across asset classes to raise capacity at the portfolio level even though any single strategy inside it stays capacity constrained, the approach Chapter 5 covers in detail. Existing investors have a direct stake in how that decision gets made, since capital raised past a strategy's capacity dilutes the returns those investors are already earning.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "c9",
+              "type": "disclaimer",
+              "text": "This course explains the mechanics of capacity and scaling for educational purposes. It is not investment advice, and decisions about launching, allocating to, or investing in any fund should involve qualified, SEBI-registered professionals."
+            },
+            {
+              "_type": "block",
+              "_key": "c10",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c10s1", "text": "Retail vs Prop Desk vs Fund, Side by Side", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "c11",
+              "headers": ["Dimension", "Retail", "Prop Desk", "Fund (AIF or PMS)"],
+              "rows": [
+                { "cells": ["Typical capital", "Up to a few lakh, sometimes low crore", "Rs 5 to 50 crore per strategy", "Tens to hundreds of crore, sometimes more"] },
+                { "cells": ["Capacity awareness needed", "Minimal, orders are a rounding error", "Central to strategy design and allocation", "A fiduciary and business-level decision"] },
+                { "cells": ["Who manages it", "The trader, informally", "Risk managers and strategy allocators", "Fund manager, investment committee, and SEBI-mandated disclosures"] },
+                { "cells": ["Common failure mode", "Overtrading or poor risk management, rarely capacity", "Allocating past a strategy's estimated capacity under pressure to deploy capital", "Raising AUM for growth or fee revenue faster than the underlying strategies can absorb it"] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c12",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c12s1", "text": "The Same Question, Asked Differently at Each Stage", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c13",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c13s1", "text": "This is also why capacity questions come up so often when interviewing for prop trading and quant research roles. Expect versions of: how would you estimate the capacity of this strategy, what would you change about it as AUM grows tenfold, and how would you tell the difference between a strategy that is genuinely decaying and one that has simply outgrown its universe. Every one of these questions is really asking whether you separate a strategy's raw edge from the amount of capital that edge can actually hold, which is the entire point of this chapter.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c14",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c14s1", "text": "Chapter 1 Review", "marks": [] }
+              ]
+            },
+            {
+              "_type": "flashcardSet",
+              "_key": "c15",
+              "title": "Key Terms From Chapter 1",
+              "cards": [
+                { "term": "Capacity", "definition": "The AUM level at which a strategy's risk-adjusted returns fall below an acceptable threshold, not necessarily the point where returns hit zero." },
+                { "term": "Slippage", "definition": "The difference between a trade's expected execution price and the price actually achieved, driven mainly by order size relative to available liquidity." },
+                { "term": "Crowding", "definition": "The erosion of a trading edge that occurs when enough capital chases the same publicly identifiable signal, compressing the mispricing before any one participant can fully capture it." },
+                { "term": "Capacity-driven style drift", "definition": "The tendency for a scaling strategy to shift toward larger, more liquid, and more efficiently priced instruments just to keep position sizes reasonable, diluting the original edge in the process." }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c16",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c16s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "c17",
+              "variant": "checklist",
+              "title": "Before You Scale, Ask Yourself",
+              "steps": [
+                "Have I estimated this strategy's capacity, even roughly, rather than assumed it scales linearly?",
+                "What percentage of average daily volume would my positions represent at the new AUM level?",
+                "Is any part of this edge based on a signal that is public or easy for others to replicate?",
+                "Would I need to change the investable universe to keep position sizes reasonable, and if so, does the edge survive that change?",
+                "Am I scaling because the strategy can genuinely absorb it, or because there is pressure to deploy more capital?"
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "c18",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "c18s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "c19",
+              "text": "Capacity does not become important the day you launch a fund. It has been true of your strategy since the first trade. What changes as you move from retail to prop desk to fund is only who notices it, and how expensive it is to notice too late."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "c20",
+              "points": [
+                "At retail size, capacity is rarely a binding constraint, but it is worth checking your own position size against a stock's average daily volume once you trade illiquid names in any real size.",
+                "On a prop desk, capacity becomes an explicit design input, with participation limits shaping position sizing before capital is even deployed.",
+                "At fund scale, capacity decisions are fiduciary and business decisions, since capital raised past a strategy's capacity dilutes existing investors' returns.",
+                "Capacity questions are a standard, recurring theme in quant and prop trading interviews because they test whether a candidate can separate a strategy's raw edge from how much capital that edge can actually hold."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

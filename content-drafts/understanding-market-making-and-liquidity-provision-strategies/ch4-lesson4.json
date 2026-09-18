@@ -1,0 +1,209 @@
+{
+  "courseSlug": "understanding-market-making-and-liquidity-provision-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 4: Adverse Selection and Informed Order Flow",
+      "lessons": [
+        {
+          "title": "How Market Makers Widen Spreads Ahead of RBI Policy Days and Results Season",
+          "slug": "how-market-makers-widen-spreads-ahead-of-rbi-policy-days-and-results-season",
+          "body": [
+            {
+              "_key": "mmc4l4b01",
+              "_type": "bigIdea",
+              "text": "A scheduled event does not remove adverse selection risk; it just tells you exactly when to expect it. The real skill is not deciding whether to widen, it is deciding by how much, how early, and how fast to bring the spread back down afterward."
+            },
+            {
+              "_key": "mmc4l4b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc4l4b02s1",
+                  "_type": "span",
+                  "text": "The Indian Event Calendar a Market Maker Watches",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc4l4b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc4l4b03s1",
+                  "_type": "span",
+                  "text": "Unlike the surprise headline in Chapter 3's case study, several major sources of information risk in Indian markets arrive on a known calendar. The RBI's Monetary Policy Committee meets on a pre-announced bi-monthly schedule. The Union Budget is presented on a fixed date every year. Quarterly results season recurs four times a year as companies report earnings over a several-week window. The US Federal Reserve's FOMC decisions, though a foreign central bank's business, move Indian markets through global risk sentiment and capital flows on their own pre-announced schedule. A market maker that ignores this calendar is choosing to be surprised by events it had every opportunity to prepare for.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc4l4b04",
+              "_type": "table",
+              "caption": "Recurring scheduled events and what they mean for a market maker",
+              "headers": ["Event", "Typical Frequency", "Information Risk Created", "Most Affected Instruments"],
+              "rows": [
+                { "_key": "mmc4l4b04r1", "_type": "tableRow", "cells": ["RBI Monetary Policy Committee decision", "Bi-monthly, pre-scheduled", "Rate decision and policy stance surprise", "Bank Nifty and rate-sensitive stocks and their options"] },
+                { "_key": "mmc4l4b04r2", "_type": "tableRow", "cells": ["Union Budget", "Annual, fixed date", "Broad fiscal and sector-specific policy surprises", "Sector-specific stocks most, broader indices secondarily"] },
+                { "_key": "mmc4l4b04r3", "_type": "tableRow", "cells": ["Quarterly results season", "Recurring several-week window each quarter", "Company-specific earnings surprise", "Single-stock options, concentrated per-name as covered in Chapter 2"] },
+                { "_key": "mmc4l4b04r4", "_type": "tableRow", "cells": ["US Federal Reserve (FOMC) decision", "About eight times a year, pre-scheduled", "Global risk sentiment and capital flow shifts", "Index products broadly, diluted per-name as covered in Chapter 2"] }
+              ]
+            },
+            {
+              "_key": "mmc4l4b05",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc4l4b05s1",
+                  "_type": "span",
+                  "text": "Why a Known Date Does Not Remove the Risk",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc4l4b06",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc4l4b06s1",
+                  "_type": "span",
+                  "text": "Knowing exactly when an RBI decision or a company's results will be announced does not tell anyone, legally, what that decision or result will be. Right up until the announcement, genuine uncertainty about the outcome is at its peak, and the informed edge some participants have going in is typically built from sharper analysis and positioning rather than from illegally obtained advance knowledge. The moment the announcement is released, a second and different kind of asymmetry opens up: participants with faster infrastructure and faster parsing of the announcement can act on it before slower participants have even finished reading it, an advantage this course returns to directly in Chapter 5's discussion of colocation and latency.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc4l4b07",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc4l4b07s1",
+                  "_type": "span",
+                  "text": "The Widening Schedule: Before, During, and After",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc4l4b08",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Illustrative Spread Widening Around a Scheduled Announcement",
+              "xAxisLabel": "Time Relative to Announcement",
+              "yAxisLabel": "Quoted Spread (ticks)",
+              "data": [
+                { "_key": "mmc4l4b08d1", "label": "T-60min", "value": 2 },
+                { "_key": "mmc4l4b08d2", "label": "T-30min", "value": 3 },
+                { "_key": "mmc4l4b08d3", "label": "T-10min", "value": 5 },
+                { "_key": "mmc4l4b08d4", "label": "T-0 (release)", "value": 12 },
+                { "_key": "mmc4l4b08d5", "label": "T+5min", "value": 9 },
+                { "_key": "mmc4l4b08d6", "label": "T+15min", "value": 5 },
+                { "_key": "mmc4l4b08d7", "label": "T+30min", "value": 3 },
+                { "_key": "mmc4l4b08d8", "label": "T+60min", "value": 2 }
+              ]
+            },
+            {
+              "_key": "mmc4l4b09",
+              "_type": "table",
+              "caption": "A practical widening playbook by phase",
+              "headers": ["Phase", "Primary Driver", "Typical Market Maker Action"],
+              "rows": [
+                { "_key": "mmc4l4b09r1", "_type": "tableRow", "cells": ["Well before (T-60 to T-10 min)", "Rising expected volatility, an inventory-cost effect from Chapter 2", "Gradual, modest widening; reduce size on tick-constrained strikes"] },
+                { "_key": "mmc4l4b09r2", "_type": "tableRow", "cells": ["At release (T-0)", "Peak adverse selection, fastest participants act first", "Maximum widening, or a brief discretionary pause in quoting"] },
+                { "_key": "mmc4l4b09r3", "_type": "tableRow", "cells": ["Digestion window (T+5 to T+30 min)", "VPIN typically still elevated as flow works through the news", "Gradual narrowing, guided by falling VPIN readings rather than a fixed clock"] },
+                { "_key": "mmc4l4b09r4", "_type": "tableRow", "cells": ["Return to normal (T+30 min onward)", "Information broadly absorbed across participants", "Spread back to its usual cost-constrained or tick-constrained level"] }
+              ]
+            },
+            {
+              "_key": "mmc4l4b10",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Notice that the narrowing phase is deliberately tied to a signal, falling VPIN, rather than to a fixed number of minutes. Two announcements of the same type do not generate the same amount of genuine surprise every time; a rate decision that matches consensus digests far faster than one that shocks the market, and a spread schedule driven by a real-time signal adapts to that difference in a way a fixed clock cannot."
+            },
+            {
+              "_key": "mmc4l4b11",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc4l4b11s1",
+                  "_type": "span",
+                  "text": "Quote Pausing: When Widening Isn't Enough",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc4l4b12",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc4l4b12s1",
+                  "_type": "span",
+                  "text": "In the exact instant an announcement is released, before any trade has printed to give a clue about direction, even a very wide quote can still be mispriced, since there is genuinely no reliable signal yet to price around. Many market making operations handle this moment not by quoting extremely wide, but by briefly withdrawing their quote entirely for a matter of seconds, waiting for the first few prints to establish a rough direction before re-entering with a wide, skewed quote. This is a firm-level discretionary risk practice, not an exchange-mandated rule like the circuit filters and price bands covered in Chapter 5, and specific practices vary by desk and by instrument.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc4l4b13",
+              "_type": "callout",
+              "type": "warning",
+              "text": "There is a cost on both sides of this decision. Widening or pausing too late, waiting for a news headline to be fully confirmed before reacting, repeats the mistake the Chapter 3 case study's desk avoided by skewing early. Widening too aggressively on every single scheduled event, even the routine ones that turn out to carry little real surprise, gives up spread income and order flow to competitors willing to stay tighter through the same calendar date."
+            },
+            {
+              "_key": "mmc4l4b14",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Union Budget Day for a Sector-Specific Stock",
+              "scenario": "A market maker quotes options on a stock in a sector that historically sees large, budget-specific policy changes, such as customs duty or sector-specific tax treatment. The Union Budget is being presented at 11:00 today.",
+              "prompt": "Using the phased playbook from this lesson, describe how this market maker's quoting behaviour should evolve from 10:30 through 11:30, and why this stock likely warrants a larger reaction than a typical Nifty constituent with no special budget sensitivity.",
+              "modelAnswer": "From around 10:30, the market maker should begin gradually widening its spread and trimming size, reflecting rising expected volatility ahead of the announcement, consistent with the well-before phase of the playbook. Around 11:00, as the Budget speech covers this stock's sector, the market maker should widen sharply, potentially pausing briefly if the specific sector announcement triggers an abrupt, hard-to-price move, since this is the peak adverse selection window. From roughly 11:05 to 11:30, spreads should narrow gradually, tracking falling VPIN readings on this specific stock's options rather than a fixed number of minutes. This stock likely warrants a larger reaction than an average Nifty constituent because Chapter 2's index-dilution logic does not protect a single, sector-exposed stock the way it protects a diversified index; sector-specific Budget policy can move this one name sharply even if it barely moves Nifty as a whole."
+            },
+            {
+              "_key": "mmc4l4b15",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Fixed Clock or Live Signal?",
+              "question": "Why does this lesson recommend narrowing spreads back down based on falling VPIN readings rather than a fixed number of minutes after a scheduled announcement?",
+              "options": [
+                "Because VPIN is easier to calculate than tracking the clock",
+                "Because different announcements of the same type generate different amounts of genuine surprise, so a fixed time window does not adapt to how much information actually needs to be digested",
+                "Because exchange rules require using VPIN specifically for this purpose",
+                "Because a fixed clock would violate SEBI's algorithmic trading framework"
+              ],
+              "correctIndex": 1,
+              "explanation": "A rate decision that matches consensus expectations gets digested by the market far faster than one that surprises it sharply, even though both are the same type of scheduled event. A live signal like VPIN adapts to that difference in actual surprise, while a fixed time window treats every announcement of a given type identically regardless of how much real information it contained."
+            },
+            {
+              "_key": "mmc4l4b16",
+              "_type": "keyTakeaways",
+              "points": [
+                "RBI policy decisions, the Union Budget, results season, and US Fed decisions all arrive on a known calendar, which lets a market maker prepare rather than only react",
+                "A known date removes uncertainty about timing, not about outcome; genuine information asymmetry still peaks at and immediately after the announcement itself",
+                "A practical widening playbook moves through distinct phases: gradual pre-event widening from rising expected volatility, peak widening or a brief pause at the announcement, and gradual narrowing during the digestion window",
+                "Tying the narrowing phase to a live signal like falling VPIN, rather than a fixed clock, adapts to how much genuine surprise a specific announcement actually contained",
+                "Briefly withdrawing quotes at the instant of release is a discretionary firm-level risk practice, not an exchange-mandated rule",
+                "This closes the chapter's arc from Glosten-Milgrom's theory of why spreads widen with informed flow, through PIN and VPIN as ways to estimate and monitor that flow, to a practical, calendar-aware playbook for managing it around known Indian market events"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

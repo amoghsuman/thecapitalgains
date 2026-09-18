@@ -1,0 +1,295 @@
+{
+  "courseSlug": "advanced-machine-learning-techniques-for-trading-ensembles-and-deep-learning",
+  "chapters": [
+    {
+      "title": "Chapter 2: Ensemble Methods I: Bagging and Boosting",
+      "lessons": [
+        {
+          "title": "Case Study: A Gradient-Boosted Momentum Signal on the Nifty 200",
+          "slug": "case-study-a-gradient-boosted-momentum-signal-on-the-nifty-200",
+          "body": [
+            {
+              "_key": "amlc2l4b01",
+              "_type": "bigIdea",
+              "text": "This case study is the payoff for three lessons of discipline: triple-barrier labels instead of fixed-horizon returns, early stopping on a chronological split instead of a random one, and SHAP audits instead of trusting an accuracy number on faith. A believable, walk-forward tested signal that wins some years and loses others is worth more than an impressive-looking backtest that wins every single one."
+            },
+            {
+              "_key": "amlc2l4b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc2l4b02s1", "_type": "span", "text": "The Setup", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc2l4b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc2l4b03s1",
+                  "_type": "span",
+                  "text": "Universe: the Nifty 200, with delisted and removed constituents kept in the historical data to avoid the survivorship bias covered in Chapter 1. Features: the same six used in the previous lesson's SHAP example, 12-1 month momentum, RSI-14, 20-day realized volatility, volume trend ratio, PE z-score, and ROE trend, all point-in-time correct. Labels: triple-barrier, a 2x daily-volatility upper and lower barrier and a 10-day vertical barrier, exactly the specification from Chapter 1's labeling lesson. Model: XGBoost, tuned to this chapter's recipe, learning rate 0.02, max depth 3, 0.8 row and column subsampling, and early stopping on a strictly chronological validation split.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc2l4b04",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc2l4b04s1", "_type": "span", "text": "Walk-Forward Design", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc2l4b05",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc2l4b05s1",
+                  "_type": "span",
+                  "text": "The model is retrained every year on an expanding window: train on everything available through the end of the prior year, test on the full next year, never letting the model see a single day of the year it is being tested on. Five folds, 2020 through 2024, each with its own precision, Sharpe-like ratio, and SHAP profile reported separately, deliberately, so a strong average cannot hide a model that only really worked in one type of year.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc2l4b06",
+              "_type": "table",
+              "caption": "Expanding-window walk-forward schedule",
+              "headers": ["Fold", "Train Window", "Test Year"],
+              "rows": [
+                { "_key": "amlc2l4b06r1", "_type": "tableRow", "cells": ["1", "2015 to 2019", "2020"] },
+                { "_key": "amlc2l4b06r2", "_type": "tableRow", "cells": ["2", "2015 to 2020", "2021"] },
+                { "_key": "amlc2l4b06r3", "_type": "tableRow", "cells": ["3", "2015 to 2021", "2022"] },
+                { "_key": "amlc2l4b06r4", "_type": "tableRow", "cells": ["4", "2015 to 2022", "2023"] },
+                { "_key": "amlc2l4b06r5", "_type": "tableRow", "cells": ["5", "2015 to 2023", "2024"] }
+              ]
+            },
+            {
+              "_key": "amlc2l4b07",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "results = []\nfor test_year in range(2020, 2025):\n    train = data[data[\"year\"] < test_year]\n    test = data[data[\"year\"] == test_year]\n\n    X_train, y_train = train[features], train[\"label\"]\n    X_test, y_test = test[features], test[\"label\"]\n\n    # last 10% of X_train, chronologically, held out for early stopping\n    cut = int(len(X_train) * 0.9)\n    X_fit, X_es = X_train.iloc[:cut], X_train.iloc[cut:]\n    y_fit, y_es = y_train.iloc[:cut], y_train.iloc[cut:]\n\n    model = XGBClassifier(**xgb_params)\n    model.fit(X_fit, y_fit, eval_set=[(X_es, y_es)], verbose=False)\n\n    results.append(evaluate(model, X_test, y_test, test_year))",
+              "caption": "Note the early-stopping slice (X_es, y_es) is carved off the END of the training window, chronologically, never sampled randomly from within it."
+            },
+            {
+              "_key": "amlc2l4b08",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc2l4b08s1", "_type": "span", "text": "Walk-Forward Results", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc2l4b09",
+              "_type": "table",
+              "caption": "Illustrative walk-forward results, year by year",
+              "headers": ["Test Year", "Precision (Win Rate)", "Bets Taken", "Sharpe-Like Ratio"],
+              "rows": [
+                { "_key": "amlc2l4b09r1", "_type": "tableRow", "cells": ["2020", "51%", "612", "0.1"] },
+                { "_key": "amlc2l4b09r2", "_type": "tableRow", "cells": ["2021", "58%", "684", "1.2"] },
+                { "_key": "amlc2l4b09r3", "_type": "tableRow", "cells": ["2022", "50%", "701", "-0.2"] },
+                { "_key": "amlc2l4b09r4", "_type": "tableRow", "cells": ["2023", "57%", "658", "1.0"] },
+                { "_key": "amlc2l4b09r5", "_type": "tableRow", "cells": ["2024", "56%", "639", "0.9"] }
+              ]
+            },
+            {
+              "_key": "amlc2l4b10",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "These figures are an illustrative worked example built to show how walk-forward results should be reported and read, not a live or historical track record for any specific fund, strategy, or model. Building the actual dataset and running this exact backtest is left as this chapter's hands-on exercise."
+            },
+            {
+              "_key": "amlc2l4b11",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Illustrative: Signal Portfolio vs Nifty 200 Buy-and-Hold, Rebased to 100 (Start 2020 to End 2024)",
+              "xAxisLabel": "Period",
+              "yAxisLabel": "Index (rebased)",
+              "data": [
+                { "_key": "amlc2l4b11d1", "label": "Start 2020" },
+                { "_key": "amlc2l4b11d2", "label": "End 2020" },
+                { "_key": "amlc2l4b11d3", "label": "End 2021" },
+                { "_key": "amlc2l4b11d4", "label": "End 2022" },
+                { "_key": "amlc2l4b11d5", "label": "End 2023" },
+                { "_key": "amlc2l4b11d6", "label": "End 2024" }
+              ],
+              "series": [
+                { "_key": "amlc2l4b11s1", "label": "Signal Portfolio", "values": [100, 103, 124, 121, 148, 170] },
+                { "_key": "amlc2l4b11s2", "label": "Nifty 200 (Buy and Hold)", "values": [100, 114, 144, 150, 180, 198] }
+              ]
+            },
+            {
+              "_key": "amlc2l4b12",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Judge this signal by walk-forward precision and per-fold Sharpe, not by whether its cumulative return happened to beat a raw Nifty 200 buy-and-hold line over one specific five-year window that was itself in a strong secular bull phase for most of that period. A stock-selection signal's job is a better risk-adjusted outcome within the equity allocation you were already taking, exactly the Sharpe ratio lesson from Chapter 1's very first case study, not a guarantee of beating the benchmark's raw return every single year."
+            },
+            {
+              "_key": "amlc2l4b13",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc2l4b13s1", "_type": "span", "text": "SHAP Diagnostics on the Live Signal", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc2l4b14",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc2l4b14s1",
+                  "_type": "span",
+                  "text": "The previous lesson's SHAP ranking was computed once, on one aggregate dataset. A genuinely useful diagnostic goes further: compute the SHAP ranking separately for each walk-forward fold and check whether it holds steady or shifts. A ranking that holds steady across trending and choppy years is a stronger sign of a stable, structural relationship. A ranking that shifts in a way that tracks a known regime change is not necessarily a red flag, it can be exactly the kind of adaptive behavior Chapter 1 argued a good trading model needs, but it does mean the signal's strength is regime-conditional, not universal.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc2l4b15",
+              "_type": "table",
+              "caption": "Illustrative top three SHAP features by walk-forward test year",
+              "headers": ["Test Year", "1st", "2nd", "3rd"],
+              "rows": [
+                { "_key": "amlc2l4b15r1", "_type": "tableRow", "cells": ["2020", "20-Day Volatility", "RSI-14", "12-1 Month Momentum"] },
+                { "_key": "amlc2l4b15r2", "_type": "tableRow", "cells": ["2021", "12-1 Month Momentum", "RSI-14", "PE Z-Score"] },
+                { "_key": "amlc2l4b15r3", "_type": "tableRow", "cells": ["2022", "20-Day Volatility", "RSI-14", "12-1 Month Momentum"] },
+                { "_key": "amlc2l4b15r4", "_type": "tableRow", "cells": ["2023", "12-1 Month Momentum", "ROE Trend", "RSI-14"] },
+                { "_key": "amlc2l4b15r5", "_type": "tableRow", "cells": ["2024", "12-1 Month Momentum", "20-Day Volatility", "ROE Trend"] }
+              ]
+            },
+            {
+              "_key": "amlc2l4b16",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Momentum leads in 2021, 2023, and 2024, three years with reasonably sustained directional moves, and drops behind volatility and RSI-14 in 2020 and 2022, the two choppiest years in the sample and the two years with the weakest precision and Sharpe. That correspondence is not a coincidence, it is the momentum crash dynamic from Chapter 1's first lesson showing up directly inside the model's own SHAP profile, not just in its aggregate performance number."
+            },
+            {
+              "_key": "amlc2l4b17",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc2l4b17s1", "_type": "span", "text": "What Broke, and What the Model Got Right", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc2l4b18",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc2l4b18s1",
+                  "_type": "span",
+                  "text": "What broke: precision in 2020 and 2022 is barely above chance, and the model does not have a mechanism to know in advance that it has entered a regime its dominant feature is poorly suited to. What it got right: it never collapsed to worse than chance in any single year, its SHAP profile shifted in a direction that makes economic sense rather than randomly, and it stayed genuinely honest about its own uncertainty, rather than the runaway 90%+ in-sample accuracy an unconstrained single tree from this chapter's first lesson would have reported on the same data.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc2l4b19",
+              "_type": "keyFact",
+              "label": "Five-Year Walk-Forward Precision Range",
+              "value": "50% to 58%",
+              "context": "Consistent with the 52 to 55% typical range for next-day-style equity prediction from Chapter 1, with real, believable variation across regimes rather than a suspiciously uniform result."
+            },
+            {
+              "_key": "amlc2l4b20",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc2l4b20s1", "_type": "span", "text": "From Signal to Position: Where Meta-Labeling Would Go Next", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc2l4b21",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc2l4b21s1",
+                  "_type": "span",
+                  "text": "A precision that swings from 50% to 58% across regimes is exactly the situation Chapter 1's meta-labeling lesson was built for. Rather than sizing every signal identically, a meta-model trained on features like the current volatility regime and the primary model's own predicted probability could learn to size up in years that look like 2021, 2023, and 2024, and size down or skip entirely in years that look like 2020 and 2022, using the SHAP-profile shift from this lesson as one of its own input features. Building that meta-model is a natural next step, and one worth attempting on your own data before Chapter 3 introduces stacking as a second, complementary way to combine multiple models.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc2l4b22",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc2l4b22s1", "_type": "span", "text": "What's Next", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc2l4b23",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc2l4b23s1",
+                  "_type": "span",
+                  "text": "This chapter built one model at a time, bagging in one lesson, boosting in the next. Chapter 3 asks a different question: what happens when you combine several models, potentially built different ways, into a single stacked ensemble, and how do you tell whether the combination is genuinely adding value or just adding complexity.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc2l4b24",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Deciding Whether to Trust This Signal",
+              "scenario": "The walk-forward results above show precision ranging from about 51% in 2020 and 2022 to about 58% in 2021 and 2023, with SHAP's top feature shifting from 12-1 month momentum in trending years to 20-day volatility in the choppier years. A colleague wants to size this signal at full conviction across all market conditions starting next quarter.",
+              "prompt": "What would you push back on before agreeing to full-conviction sizing in every regime?",
+              "modelAnswer": "The walk-forward results themselves argue against uniform, full-conviction sizing. Performance is regime-dependent, not stable: precision drops toward the level of pure chance in the choppy years, and the fact that SHAP's leading feature shifts from momentum to volatility in those same years is corroborating evidence, not just noise, since it shows the model itself is leaning on a different, less reliable relationship when the trending regime that favors momentum is absent. Rather than sizing uniformly, the more defensible path is either a meta-labeling filter that reduces size or skips trades in low-confidence periods, or explicit regime conditioning that scales exposure down specifically when the model's SHAP profile looks like the weaker 2020 or 2022 folds rather than the stronger trending folds."
+            },
+            {
+              "_key": "amlc2l4b25",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Reading a SHAP Ranking That Changes Across Folds",
+              "question": "Across five walk-forward folds, 12-1 month momentum is the top SHAP feature in three trending years but drops behind volatility and RSI-14 in the two choppiest years. What is the most reasonable interpretation?",
+              "options": [
+                "The model is broken and should be discarded entirely",
+                "This instability is a bug in the SHAP calculation, not a real finding",
+                "The model is picking up a genuine, regime-dependent relationship, consistent with the non-stationarity and alpha decay covered in Chapter 1, rather than applying one single fixed rule",
+                "SHAP rankings should always be identical across folds if the model is any good"
+              ],
+              "correctIndex": 2,
+              "explanation": "A model whose SHAP profile shifts in a way that lines up with a known regime change, momentum mattering less once the market stops trending, is showing exactly the kind of adaptive, regime-sensitive behavior Chapter 1 argued markets require, rather than a fixed, always-on rule. That does not make the model perfect, its performance still degrades in that period, but a shifting SHAP ranking that tracks a real regime change is a sign of the model responding sensibly to changing conditions, not evidence that it is broken."
+            },
+            {
+              "_key": "amlc2l4b26",
+              "_type": "keyTakeaways",
+              "points": [
+                "A credible walk-forward case study reports results fold by fold, not just as a single averaged number, so a strong average cannot hide a model that only really worked in one type of year",
+                "This signal's precision ranged from 50% to 58% across five walk-forward years, consistent with Chapter 1's typical range and honestly weaker in choppy, range-bound years",
+                "Compute SHAP separately per walk-forward fold, not just once on the whole dataset, to check whether a feature's importance is stable or regime-dependent",
+                "This signal's SHAP ranking shifted from momentum-led in trending years to volatility-and-RSI-led in choppy years, directly echoing the momentum crash dynamic from Chapter 1's first lesson",
+                "Judge a stock-selection signal by walk-forward precision and risk-adjusted return per fold, not by whether it beat a raw benchmark return over one specific window",
+                "An uneven precision profile like this one is exactly the situation meta-labeling from Chapter 1 is built to address, and exactly what Chapter 3's stacking methods build on next"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

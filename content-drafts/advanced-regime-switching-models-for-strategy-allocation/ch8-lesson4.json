@@ -1,0 +1,216 @@
+{
+  "courseSlug": "advanced-regime-switching-models-for-strategy-allocation",
+  "chapters": [
+    {
+      "title": "Chapter 8: Risk Management Through Regime Transitions",
+      "lessons": [
+        {
+          "title": "Circuit Breakers and Kill Switches for Systematic Regime Strategies",
+          "slug": "circuit-breakers-and-kill-switches-for-systematic-regime-strategies",
+          "body": [
+            {
+              "_key": "rswc8l4b01",
+              "_type": "bigIdea",
+              "text": "Drawdown is only one failure mode. A live system also needs to detect and react to failures in its own inputs and infrastructure, not just failures showing up in its P&L."
+            },
+            {
+              "_key": "rswc8l4b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc8l4b02s1",
+                  "_type": "span",
+                  "text": "The previous lesson's drawdown ladder catches one kind of failure: the portfolio is losing money faster than the model anticipated. It cannot catch a different, equally real category: the model's inputs, or the model itself, have quietly become untrustworthy, even before that shows up as a loss. This lesson closes the chapter by broadening the risk stack to cover that gap.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc8l4b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc8l4b03s1",
+                  "_type": "span",
+                  "text": "Beyond Drawdown: A Taxonomy of Kill Switches",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc8l4b04",
+              "_type": "table",
+              "caption": "Four categories of kill switch, beyond pure drawdown",
+              "headers": ["Kill Switch Type", "Trigger Example", "Why It's Needed"],
+              "rows": [
+                {
+                  "_key": "rswc8l4b04r1",
+                  "_type": "tableRow",
+                  "cells": ["Data quality", "Missing data, stale prices, an implausible single-tick price jump", "Corrupted input data produces a corrupted regime read; garbage in, garbage out, no matter how good the model is"]
+                },
+                {
+                  "_key": "rswc8l4b04r2",
+                  "_type": "tableRow",
+                  "cells": ["Model health", "A fresh walk-forward refit's fitted transition matrix shifts wildly from recent history", "Distinguishes 'the market genuinely changed' from 'something may be wrong with the fit itself'"]
+                },
+                {
+                  "_key": "rswc8l4b04r3",
+                  "_type": "tableRow",
+                  "cells": ["Correlation structure", "Realized strategy correlations exceed the highest level ever seen in training data", "Signals a genuinely unprecedented market structure event, independent of what current P&L shows"]
+                },
+                {
+                  "_key": "rswc8l4b04r4",
+                  "_type": "tableRow",
+                  "cells": ["Single-day loss", "One day's loss exceeds an extreme threshold, e.g. 3 times the current regime's own daily volatility", "Tail risk materializing right now, before cumulative drawdown has climbed high enough to trigger Lesson 3's ladder"]
+                }
+              ]
+            },
+            {
+              "_key": "rswc8l4b05",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc8l4b05s1",
+                  "_type": "span",
+                  "text": "Data quality failures are worth taking especially seriously. A corrupted price feed does not just produce a wrong regime label, it can produce a confident wrong regime label, since the fitting and filtering machinery has no way to distinguish a genuine extreme move from a bad tick unless something checks the data itself first.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc8l4b06",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc8l4b06s1",
+                  "_type": "span",
+                  "text": "Kill Switches Are Binary; De-Risking Ladders Are Graduated",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc8l4b07",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc8l4b07s1",
+                  "_type": "span",
+                  "text": "Lesson 3's drawdown ladder is graduated, the response scales with the severity of the drawdown. A true kill switch is usually binary: fully halt, no partial response. That distinction is deliberate. A graduated response makes sense when you can still trust your inputs and just want less exposure. It makes no sense when the inputs themselves might be garbage, there is no safe reduced position size to fall back to if you cannot trust the data driving the position in the first place.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc8l4b08",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc8l4b08s1",
+                  "_type": "span",
+                  "text": "The Human-in-the-Loop Requirement",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc8l4b09",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc8l4b09s1",
+                  "_type": "span",
+                  "text": "A kill switch should require manual review before resuming, not auto-resume once the triggering condition clears on its own. An intermittent, flaky data feed that comes and goes could otherwise cause the system to flip in and out of a halted state repeatedly, and a kill switch event is exactly the situation where understanding why it fired matters before trusting the system again.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc8l4b10",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This is not the same thing Lesson 1 warned against, even though both involve a human stepping in. Lesson 1 warned against an ad hoc override of a functioning system, driven by gut feeling in the middle of an ordinary whipsaw the system was designed to handle. This lesson requires a human review only after an objective, pre-defined kill switch has already fired on its own criteria. The difference is who initiates the pause and on what evidence: a trader second-guessing a working system is the failure mode from Lesson 1; a pre-committed rule correctly halting a system that has hit a genuine, defined trigger, followed by a human confirming it is safe to resume, is exactly the discipline this lesson asks for."
+            },
+            {
+              "_key": "rswc8l4b11",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc8l4b11s1",
+                  "_type": "span",
+                  "text": "Closing the Chapter: A Complete Risk Stack",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc8l4b12",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "rswc8l4b12s1",
+                  "_type": "span",
+                  "text": "Four layers, built across this chapter, now sit on top of everything from Chapters 1 through 7: volatility-scaled stops and transaction cost budgets from Lesson 1, a transition penalty for freshly-entered regimes from Lesson 2, a model-independent drawdown ladder from Lesson 3, and, from this lesson, kill switches covering data quality, model health, correlation structure, and extreme single-day losses. None of these layers replace the modeling work from earlier chapters. They exist because that modeling work, however carefully built and validated, can still fail, and a serious systematic operation plans for that possibility rather than assuming it away. Chapter 9 assembles everything from this entire course, detection, strategy design, capital allocation, backtesting discipline, and this risk stack, into one complete, end-to-end system.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "rswc8l4b13",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Ladder or Kill Switch?",
+              "scenario": "Two separate incidents occur on the same live system in different weeks. In the first, cumulative drawdown reaches 8% after a string of ordinary losing trades, with no anomalies in the data. In the second, the price feed for Nifty futures suddenly reports a single tick that is 40% away from the previous price before immediately reverting, with no corresponding news or market-wide move.",
+              "prompt": "Which response, the graduated ladder or a binary kill switch, fits each incident, and why?",
+              "modelAnswer": "The first incident, an 8% drawdown from ordinary trading losses with trustworthy data, is exactly what Lesson 3's graduated ladder is built for: reduce exposure by 50% per the 5% to 10% band, but keep trading, since there is no reason to doubt the inputs, only the recent results. The second incident is a data quality problem, not a P&L problem, and should trigger a binary kill switch immediately: halt trading entirely, because a 40% single-tick jump with no corresponding market move is almost certainly bad data, and there is no safe reduced position size to fall back to when the input itself cannot be trusted. Continuing to trade at any size off a corrupted feed risks acting on information that was never real in the first place."
+            },
+            {
+              "_key": "rswc8l4b14",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why Kill Switches Require Manual Review",
+              "question": "Why should a kill switch require manual review before resuming, rather than automatically resuming once the triggering condition clears?",
+              "options": [
+                "Because automatic resumption is technically impossible to implement",
+                "Because an intermittent trigger, such as a flaky data feed, could otherwise cause repeated flip-flopping in and out of a halted state, and understanding why the switch fired matters before trusting the system again",
+                "Because manual review is required by SEBI for every systematic trading halt",
+                "Because kill switches should never be allowed to resume trading at all"
+              ],
+              "correctIndex": 1,
+              "explanation": "An automatically resuming kill switch tied to an intermittent condition can toggle on and off repeatedly, which is itself disruptive and risky. More importantly, a kill switch event is diagnostic information: understanding what caused it, bad data, a broken fit, an unprecedented correlation spike, should inform whether and how the system resumes, not be skipped in favor of resuming the instant the raw trigger condition happens to clear."
+            },
+            {
+              "_key": "rswc8l4b15",
+              "_type": "keyTakeaways",
+              "points": [
+                "Beyond drawdown, a live regime-switching system needs kill switches for data quality, model health, correlation structure, and extreme single-day losses",
+                "Data quality failures are especially dangerous because corrupted input data can produce a confident but completely wrong regime read",
+                "De-risking ladders are graduated because you can still trust the inputs and only want less exposure; kill switches are binary because there is no safe reduced size when the inputs themselves may not be trustworthy",
+                "Kill switches should require manual review before resuming, distinct from Lesson 1's warning against ad hoc overrides: the difference is a pre-defined, objective trigger firing versus a trader second-guessing a system that is working as designed",
+                "This chapter's complete risk stack, volatility-scaled stops, transaction cost budgets, the transition penalty, the drawdown ladder, and this lesson's kill switches, exists because even a carefully validated model can still fail, and Chapter 9 now assembles everything from this course into one complete system"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

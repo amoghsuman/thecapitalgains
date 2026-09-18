@@ -1,0 +1,168 @@
+{
+  "courseSlug": "introduction-to-machine-learning-for-trading-what-actually-works",
+  "chapters": [
+    {
+      "title": "Chapter 4: From Signal to Strategy",
+      "lessons": [
+        {
+          "title": "Transaction Costs, Slippage, and Indian Market Realities",
+          "slug": "transaction-costs-slippage-and-indian-market-realities",
+          "body": [
+            {
+              "_key": "mlt14-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt14-001s1", "_type": "span", "marks": [], "text": "Lesson 2 introduced Zerodha's flat ₹20 per order F&O brokerage as one piece of the cost puzzle, deliberately simplified to make the prediction-signal-execution framework clear. This lesson gives the complete, current cost stack, because the Union Budget presented on 1 February 2026 raised Securities Transaction Tax on both futures and options, effective 1 April 2026, exactly the kind of real regulatory shift a systematic trader has to track, and it directly changes how large a signal's edge needs to be to survive contact with the market." }
+              ]
+            },
+            {
+              "_key": "mlt14-002",
+              "_type": "bigIdea",
+              "text": "Trading costs in India are not one number. They are a stack of several distinct charges, brokerage, Securities Transaction Tax, stamp duty, exchange and SEBI charges, and GST, each with its own rate and its own rule for which side of a trade it applies to. Getting any one of them wrong in a backtest changes whether a real edge actually survives contact with the market."
+            },
+            {
+              "_key": "mlt14-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt14-003s1", "_type": "span", "marks": [], "text": "The Full Cost Stack, Current Rates" }
+              ]
+            },
+            {
+              "_key": "mlt14-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "mlt14-004m1", "_type": "glossaryTerm", "definition": "A tax levied on the purchase and sale of securities on Indian exchanges, with different rates depending on the segment, equity delivery, intraday, futures, or options, and different rules for which side of the trade it is charged on." }
+              ],
+              "children": [
+                { "_key": "mlt14-004s1", "_type": "span", "marks": [], "text": "Brokerage is charged per order by your broker, often free for equity delivery at discount brokers, and typically a flat fee such as ₹20 per executed order for intraday and F&O trades. " },
+                { "_key": "mlt14-004s2", "_type": "span", "marks": ["mlt14-004m1"], "text": "Securities Transaction Tax" },
+                { "_key": "mlt14-004s3", "_type": "span", "marks": [], "text": " is the largest and most segment-dependent cost, and it rose meaningfully for F&O traders on 1 April 2026, futures STT increased from 0.02% to 0.05% of the sell-side turnover, and options STT increased from 0.10% to 0.15% of the premium on the sell side, with the same 0.15% now applied to intrinsic value if an option is exercised. Stamp duty is much smaller, charged only on the buy side, and varies by segment. Exchange transaction charges and SEBI turnover fees are small, per-exchange charges. GST, at 18%, applies to brokerage and to exchange or SEBI charges, but not to STT or stamp duty, since those are themselves taxes rather than a service being charged for." }
+              ]
+            },
+            {
+              "_key": "mlt14-005",
+              "_type": "table",
+              "caption": "The full Indian trading cost stack, current rates",
+              "headers": ["Cost Component", "Equity Delivery", "Equity Intraday", "F&O Futures", "F&O Options"],
+              "rows": [
+                { "_key": "mlt14-005r1", "cells": ["Brokerage", "Often free (discount brokers)", "Flat per order, e.g. ₹20", "Flat per order, e.g. ₹20", "Flat per order, e.g. ₹20"] },
+                { "_key": "mlt14-005r2", "cells": ["STT", "0.1% (buy and sell)", "0.025% (sell only)", "0.05% (sell only)", "0.15% of premium (sell only); 0.15% of intrinsic value on exercise"] },
+                { "_key": "mlt14-005r3", "cells": ["Stamp duty", "0.015% (buy only)", "0.003% (buy only)", "0.002% (buy only)", "0.003% (buy only)"] },
+                { "_key": "mlt14-005r4", "cells": ["Exchange + SEBI charges", "Small, per-exchange", "Small, per-exchange", "Small, per-exchange", "Small, per-exchange"] },
+                { "_key": "mlt14-005r5", "cells": ["GST", "18% on brokerage and exchange/SEBI charges", "18% on brokerage and exchange/SEBI charges", "18% on brokerage and exchange/SEBI charges", "18% on brokerage and exchange/SEBI charges"] }
+              ]
+            },
+            {
+              "_key": "mlt14-006",
+              "_type": "callout",
+              "type": "warning",
+              "text": "The Budget 2026 change is not hypothetical. Futures STT rising from 0.02% to 0.05%, and options STT rising from 0.10% to 0.15% of premium, effective 1 April 2026, directly raises the bar every F&O signal in this course needs to clear. A strategy backtested using pre-2026 STT rates will look more profitable than it actually is under current rates, an easy, dated mistake to carry forward from an older tutorial or blog post."
+            },
+            {
+              "_key": "mlt14-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt14-007s1", "_type": "span", "marks": [], "text": "Slippage Is Not One Number Either" }
+              ]
+            },
+            {
+              "_key": "mlt14-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "mlt14-008m1", "_type": "glossaryTerm", "definition": "The tendency for a trade's own size to move the price against the trader, larger orders relative to available liquidity see worse average fill prices than smaller ones on the same instrument." }
+              ],
+              "children": [
+                { "_key": "mlt14-008s1", "_type": "span", "marks": [], "text": "Lesson 2 introduced slippage as a general concept. In practice, it scales with trade size relative to liquidity, an effect known as " },
+                { "_key": "mlt14-008s2", "_type": "span", "marks": ["mlt14-008m1"], "text": "market impact" },
+                { "_key": "mlt14-008s3", "_type": "span", "marks": [], "text": ". A modest order in Nifty or Bank Nifty futures, or in a liquid, near-the-money weekly option, typically fills close to the quoted price, because the bid-ask spread is tight and the order book is deep. The same size order in a thinly traded stock option, or a deep out-of-the-money strike with few active participants, can move the price meaningfully just from being placed, because the spread is wider and there is far less depth on either side. A backtest that applies one flat slippage assumption across very different instruments is quietly wrong for at least some of them." }
+              ]
+            },
+            {
+              "_key": "mlt14-009",
+              "_type": "codeBlock",
+              "language": "python",
+              "caption": "A worked options round trip, current 2026 rates (illustrative)",
+              "code": "# Illustrative Nifty options round trip, using post-April-2026 STT rates\nbuy_premium_value = 75_000     # total premium paid on entry\nsell_premium_value = 90_000    # total premium received on exit\n\nbrokerage = 20 * 2                                    # flat per order, entry + exit\nstt = 0.0015 * sell_premium_value                     # 0.15% of premium, sell side only\nstamp_duty = 0.00003 * buy_premium_value              # 0.003% of premium, buy side only\nexchange_sebi_charges = 15                            # illustrative, exchange + SEBI turnover fees\ngst = 0.18 * (brokerage + exchange_sebi_charges)      # GST applies to brokerage and exchange charges, not STT or stamp duty\n\ntotal_costs = brokerage + stt + stamp_duty + exchange_sebi_charges + gst\ngross_profit = sell_premium_value - buy_premium_value\nnet_profit = gross_profit - total_costs"
+            },
+            {
+              "_key": "mlt14-010",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "mlt14-010s1", "label": "Gross profit on this round trip", "value": "₹15,000", "context": "₹90,000 sell premium minus ₹75,000 buy premium" },
+                { "_key": "mlt14-010s2", "label": "Total costs (STT, brokerage, stamp duty, exchange/SEBI, GST)", "value": "₹202", "context": "STT alone, at the current 0.15% rate, accounts for ₹135 of this" },
+                { "_key": "mlt14-010s3", "label": "Net profit after all costs", "value": "₹14,798", "context": "Costs consumed about 1.3% of gross profit on this healthy winning trade" }
+              ]
+            },
+            {
+              "_key": "mlt14-011",
+              "_type": "callout",
+              "type": "insight",
+              "text": "On a single healthy winning trade like this, the full cost stack is a small drag, about 1.3% of gross profit here. The story changes completely for a high-frequency signal with a thin per-trade edge, exactly Lesson 2's ₹1,800-edge futures example, where a similar cost stack consumed roughly a third of the edge. Cost as a percentage of your average edge per trade, not cost as a percentage of one big winning trade, is the number that actually decides whether a strategy survives."
+            },
+            {
+              "_key": "mlt14-012",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "STT on options, current rates",
+              "question": "As of the rates that took effect on 1 April 2026, which of the following is true about STT on a Nifty options trade?",
+              "options": [
+                "STT is charged on the notional value of the underlying, not the option premium",
+                "STT is 0.15% of the option premium on the sell side, and 0.15% of intrinsic value if the option is exercised",
+                "STT on options was reduced in the 2026 Budget to make F&O trading cheaper",
+                "GST applies directly to the STT amount, making the effective STT rate higher than 0.15%"
+              ],
+              "correctIndex": 1,
+              "explanation": "STT on options is charged on the premium value, on the sell side, and rose from 0.10% to 0.15% effective 1 April 2026. If the option is instead exercised, the same 0.15% rate applies to the intrinsic value. GST applies to brokerage and exchange or SEBI charges, not to STT itself."
+            },
+            {
+              "_key": "mlt14-013",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Does a small-edge strategy survive the new rates?",
+              "scenario": "A strategy trades Nifty options 300 times a year. Each round trip has an average gross edge of only ₹180, before any costs. This lesson's worked example showed a round trip on a ₹75,000-to-₹90,000 premium swing carrying about ₹202 in total costs, mostly STT.",
+              "prompt": "Would you expect this 300-trade strategy to survive the current cost stack as comfortably as the worked example did? Reason through how each cost component would scale differently on a much smaller trade.",
+              "modelAnswer": "Not as comfortably. Most of the worked example's ₹202 cost figure, ₹135, came from STT at 0.15% of a large ₹90,000 sell-side premium value, so on a much smaller trade, STT in rupee terms would scale down roughly proportionally with the premium involved. The flat ₹40 round-trip brokerage and the small GST component, however, do not scale down with trade size at all, they stay roughly fixed. On a trade with only a ₹180 gross edge, these flat, non-scaling costs are likely to consume a far larger share of the edge than they did of the ₹15,000 gross profit in the worked example. This is exactly Lesson 2's warning restated: a signal's average edge per trade has to be checked directly against costs, never assumed to survive simply because a bigger, healthier example trade did."
+            },
+            {
+              "_key": "mlt14-014",
+              "_type": "flashcardSet",
+              "title": "Transaction Costs: Core Terms",
+              "cards": [
+                { "_key": "mlt14-014f1", "term": "Securities Transaction Tax (STT)", "definition": "A tax levied on the purchase and sale of securities on Indian exchanges, with different rates by segment and different rules for which side of the trade it is charged on." },
+                { "_key": "mlt14-014f2", "term": "Stamp duty", "definition": "A small, buy-side-only charge on Indian securities transactions, varying by segment." },
+                { "_key": "mlt14-014f3", "term": "Market impact", "definition": "The tendency for a trade's own size to move the price against the trader; larger orders relative to available liquidity see worse average fill prices than smaller ones on the same instrument." },
+                { "_key": "mlt14-014f4", "term": "Cost stack", "definition": "The full combination of brokerage, taxes, and fees applied to a trade, which must be totaled together, not estimated from a single component, to judge whether a strategy is genuinely profitable." },
+                { "_key": "mlt14-014f5", "term": "Flat cost drag", "definition": "The outsized impact fixed, non-scaling costs like flat brokerage have on a trade's profitability when the trade's own edge or size is small." }
+              ]
+            },
+            {
+              "_key": "mlt14-015",
+              "_type": "keyTakeaways",
+              "points": [
+                "Indian trading costs are a stack of distinct charges, brokerage, STT, stamp duty, exchange and SEBI fees, and GST, each with its own rate and rule for which side of a trade it applies to.",
+                "STT on F&O rose meaningfully effective 1 April 2026: futures from 0.02% to 0.05% of sell-side turnover, and options from 0.10% to 0.15% of premium, directly raising the bar for every F&O strategy's edge.",
+                "GST, at 18%, applies to brokerage and exchange or SEBI charges, but not to STT or stamp duty, since those are taxes rather than a service being charged for.",
+                "Slippage scales with trade size relative to liquidity, small on liquid instruments like index futures or near-the-money weekly options, and potentially large on illiquid stock options or deep out-of-the-money strikes.",
+                "Costs as a share of a strategy's average edge per trade, not as a share of one healthy winning trade, is what actually determines whether a strategy survives, since flat costs like brokerage disproportionately hurt small-edge, high-frequency strategies."
+              ]
+            },
+            {
+              "_key": "mlt14-016",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice. Code examples and all figures cited are simplified or illustrative and do not represent real trading results. Tax and charge rates, including STT, stamp duty, and GST, are presented as publicly reported and are subject to change; verify current rates directly with your broker, the exchanges, or SEBI before relying on them. Consult a SEBI-registered investment adviser, tax professional, or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

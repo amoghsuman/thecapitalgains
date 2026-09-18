@@ -1,0 +1,153 @@
+{
+  "courseSlug": "understanding-latency-colocation-and-infrastructure-in-hft",
+  "chapters": [
+    {
+      "lessons": [
+        {
+          "title": "NSE and BSE Order Entry Protocols — What Actually Gets Sent",
+          "slug": "nse-and-bse-order-entry-protocols-what-actually-gets-sent",
+          "body": [
+            {
+              "_key": "b1",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "b1s1", "_type": "span", "text": "An order is not just a price and a quantity travelling to an exchange. It is a specific sequence of bytes, arranged in a specific format that the exchange's gateway has been built to parse as fast as possible, and the choice of format is itself a latency decision.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b2",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "b2s1", "_type": "span", "text": "Two Kinds of Protocol: Human-Readable vs Binary", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b3",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "md3a", "_type": "glossaryTerm", "definition": "Financial Information eXchange: a widely used, text-based tag-value messaging standard for sending orders and market data between financial systems." }
+              ],
+              "children": [
+                { "_key": "b3s1", "_type": "span", "text": "Much of the financial industry communicates using the ", "marks": [] },
+                { "_key": "b3s2", "_type": "span", "text": "FIX protocol", "marks": ["md3a"] },
+                { "_key": "b3s3", "_type": "span", "text": " (Financial Information eXchange): a text-based, tag-value message format, where each field is sent as a small readable pair like 55=RELIANCE or 44=2850.50. FIX is flexible, well documented, and easy to debug, which is why so many order management systems speak it by default. That same readability is also its cost: a receiving system has to parse variable-length text fields one by one, and that parsing takes time a firm cannot afford in the last mile of a colocated order.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b4",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "md4a", "_type": "glossaryTerm", "definition": "A message format that encodes fields as raw binary data at fixed byte positions, rather than as readable text, so a receiving system can read a field's value directly without parsing text." }
+              ],
+              "children": [
+                { "_key": "b4s1", "_type": "span", "text": "For colocated, latency-critical order entry, NSE and BSE instead offer native ", "marks": [] },
+                { "_key": "b4s2", "_type": "span", "text": "binary protocols", "marks": ["md4a"] },
+                { "_key": "b4s3", "_type": "span", "text": ": fixed-size, tightly packed messages where every field sits at a known, unchanging byte offset. There is no text to parse and no field to search for. A receiving system, including an FPGA built exactly for this in Chapter 3, can read the price straight out of bytes 12 through 15 without interpreting a single character.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b5",
+              "_type": "table",
+              "caption": "FIX vs native binary order entry protocols",
+              "headers": ["Protocol", "Encoding", "Typical Use"],
+              "rows": [
+                { "_key": "b5r1", "_type": "tableRow", "cells": ["FIX", "Text-based tag-value pairs, variable length", "Broker and OMS connectivity, most non-latency-critical order flow"] },
+                { "_key": "b5r2", "_type": "tableRow", "cells": ["Native binary (NSE/BSE colo protocols)", "Fixed-size binary fields at known byte offsets", "Colocated, latency-critical order entry"] }
+              ]
+            },
+            {
+              "_key": "b6",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "b6s1", "_type": "span", "text": "What's Actually Inside an Order Message", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b7",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "md7a", "_type": "glossaryTerm", "definition": "A numeric identifier NSE assigns to each tradable instrument, used in order and market data messages instead of the instrument's text symbol, since numeric comparison is faster for a computer to process." }
+              ],
+              "children": [
+                { "_key": "b7s1", "_type": "span", "text": "Whichever protocol is used, an order message carries the same underlying information. Instead of a text symbol like RELIANCE, NSE identifies each tradable instrument by a numeric ", "marks": [] },
+                { "_key": "b7s2", "_type": "span", "text": "instrument token", "marks": ["md7a"] },
+                { "_key": "b7s3", "_type": "span", "text": ", since comparing and looking up a number is faster for a computer than comparing strings. Beyond the token, a typical order carries its type, limit or market, price, quantity, the client code it is being placed for, and, for any algorithmic order, a unique algo ID.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b8",
+              "_type": "table",
+              "caption": "Core fields inside a typical order message",
+              "headers": ["Field", "Purpose"],
+              "rows": [
+                { "_key": "b8r1", "_type": "tableRow", "cells": ["Instrument token", "Identifies which security or contract the order is for"] },
+                { "_key": "b8r2", "_type": "tableRow", "cells": ["Order type", "Limit, market, or other supported order variants"] },
+                { "_key": "b8r3", "_type": "tableRow", "cells": ["Price and quantity", "The economic terms of the order"] },
+                { "_key": "b8r4", "_type": "tableRow", "cells": ["Client code", "Identifies which underlying client the order belongs to"] },
+                { "_key": "b8r5", "_type": "tableRow", "cells": ["Algo ID", "A unique identifier tying the order back to a specific SEBI-approved algorithmic strategy"] }
+              ]
+            },
+            {
+              "_key": "b9",
+              "_type": "callout",
+              "type": "insight",
+              "text": "That last field, the algo ID, is not a technical nicety. The next chapter covers SEBI's algorithmic trading framework in detail, but the short version is that every algorithmic order in India has to be traceable back to a specific, approved strategy. The order message format you have just read is, in part, a compliance document."
+            },
+            {
+              "_key": "b10",
+              "_type": "block",
+              "style": "h3",
+              "markDefs": [],
+              "children": [
+                { "_key": "b10s1", "_type": "span", "text": "Redundant Gateways: Why One Path In Isn't Enough", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b11",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "b11s1", "_type": "span", "text": "Just as Chapter 2 covered redundant power and network paths inside a colo rack, exchanges typically expose multiple parallel order entry gateways to each member. A firm's own order routing logic monitors which gateway is currently responding fastest, and some firms will even send the same order down two gateways at once, cancelling whichever copy arrives second, trading a small amount of extra exchange messaging for protection against one gateway having a bad moment.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "b12",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Choosing a protocol",
+              "question": "A firm is building a new order entry connection purely for its slowest, least latency-sensitive order flow, for example occasional manual trades placed by a human trader. Which protocol is the more sensible choice, and why?",
+              "options": ["The native binary protocol, because it is always the better engineering choice", "FIX, because its easier debugging and industry-standard tooling outweigh a parsing cost that does not matter for this flow", "Neither, manual orders cannot use either protocol", "Whichever protocol is cheaper to license, since performance is identical"],
+              "correctIndex": 1,
+              "explanation": "When an order flow is not latency-sensitive, FIX's parsing overhead is irrelevant, and its readability, industry-standard tooling, and easier debugging make it the more practical choice. The native binary protocol earns its added complexity only when every microsecond of parsing time actually matters."
+            },
+            {
+              "_key": "b13",
+              "_type": "bigIdea",
+              "text": "The bytes an order travels in are not a neutral detail. They are a decision about which cost you are willing to pay: a human-readable format's parsing time, or a binary format's engineering and debugging overhead."
+            },
+            {
+              "_key": "b14",
+              "_type": "keyTakeaways",
+              "points": [
+                "FIX is a flexible, text-based, industry-standard protocol, but its variable-length text parsing costs time that latency-critical order flow cannot afford.",
+                "NSE and BSE offer native binary protocols for colocated order entry, using fixed-size fields at known byte offsets so a receiving system, including hardware like an FPGA, can read a value directly without parsing text.",
+                "A typical order message carries an instrument token, order type, price, quantity, client code, and, for algorithmic orders, a unique algo ID used for regulatory traceability.",
+                "Exchanges expose multiple parallel order entry gateways, and firms build their own routing logic to use, or even race across, whichever gateway is fastest at a given moment."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

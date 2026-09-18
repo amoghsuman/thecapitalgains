@@ -1,0 +1,256 @@
+{
+  "courseSlug": "advanced-machine-learning-techniques-for-trading-ensembles-and-deep-learning",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Machine Learning for Trading Is Different",
+      "lessons": [
+        {
+          "title": "Setting Up Your ML Toolkit: Data Pipelines for NSE and BSE with Python",
+          "slug": "setting-up-your-ml-toolkit-data-pipelines-for-nse-and-bse-with-python",
+          "body": [
+            {
+              "_key": "amlc1l4b01",
+              "_type": "bigIdea",
+              "text": "None of the ensembles in Chapters 2 and 3 or the neural networks in Chapter 4 can rescue a pipeline that feeds them survivorship-biased history, unadjusted corporate actions, or fundamentals the market did not actually know yet on the date you attached them. This lesson builds the pipeline the rest of the course assumes you already have."
+            },
+            {
+              "_key": "amlc1l4b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc1l4b02s1", "_type": "span", "text": "The Core Python Stack for This Course", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc1l4b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc1l4b03s1",
+                  "_type": "span",
+                  "text": "Every case study in this course runs on the same small set of Python libraries. You do not need all of them installed today, Chapters 2 and 4 will flag exactly when you need XGBoost or PyTorch, but it is worth knowing the full stack up front so the pipeline you build now has somewhere to plug into later.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc1l4b04",
+              "_type": "table",
+              "caption": "The stack this course builds on, chapter by chapter",
+              "headers": ["Library", "Used For"],
+              "rows": [
+                { "_key": "amlc1l4b04r1", "_type": "tableRow", "cells": ["pandas / numpy", "Data wrangling, returns, rolling volatility, the feature pipeline this lesson builds"] },
+                { "_key": "amlc1l4b04r2", "_type": "tableRow", "cells": ["scikit-learn", "Random forests, TimeSeriesSplit, metrics (Chapter 2)"] },
+                { "_key": "amlc1l4b04r3", "_type": "tableRow", "cells": ["XGBoost / LightGBM", "Gradient boosting (Chapter 2)"] },
+                { "_key": "amlc1l4b04r4", "_type": "tableRow", "cells": ["SHAP", "Interpreting what a tree ensemble actually learned (Chapter 2)"] },
+                { "_key": "amlc1l4b04r5", "_type": "tableRow", "cells": ["PyTorch", "LSTMs and 1D CNNs (Chapter 4)"] },
+                { "_key": "amlc1l4b04r6", "_type": "tableRow", "cells": ["pandas-ta", "Technical indicator features from OHLCV data"] },
+                { "_key": "amlc1l4b04r7", "_type": "tableRow", "cells": ["matplotlib / plotly", "Diagnostics: equity curves, feature distributions, SHAP plots"] }
+              ]
+            },
+            {
+              "_key": "amlc1l4b05",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc1l4b05s1", "_type": "span", "text": "Getting Price Data: NSE, BSE, and What's Realistic for a Research Desk", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc1l4b06",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc1l4b06s1",
+                  "_type": "span",
+                  "text": "Three realistic sources exist for Indian equity price history. NSE and BSE both publish daily bhavcopy archives, free, official, and exact, but delivered as one file per day that you have to stitch together yourself. A paid data vendor gives you cleaned, corporate-action-adjusted, survivorship-bias-free history in one query, worth the cost the moment you are managing real capital. For learning and prototyping, a free source like yfinance is good enough to build and test the pipeline in this lesson, as long as you know its rough edges going in.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc1l4b07",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "import yfinance as yf\n\n# .NS = NSE listing, .BO = BSE listing\ndf = yf.download(\n    \"RELIANCE.NS\",\n    start=\"2015-01-01\",\n    end=\"2024-12-31\",\n    auto_adjust=True,   # applies split/dividend adjustments to OHLC directly\n)\ndf.index.name = \"date\"\ndf = df.rename(columns=str.lower)",
+              "caption": "auto_adjust=True is doing real work here: without it, a stock split shows up as a fake overnight price crash in the raw close column."
+            },
+            {
+              "_key": "amlc1l4b08",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Free sources have real gaps. Mixing up the .NS and .BO suffix silently pulls the wrong exchange's data. Corporate action adjustments on free sources occasionally lag or misfire around unusual events (demergers, special dividends). And if your universe is built from today's index membership list, you are back to the survivorship bias problem from this chapter's second lesson, regardless of which price source you use."
+            },
+            {
+              "_key": "amlc1l4b09",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc1l4b09s1", "_type": "span", "text": "Building the Feature Pipeline: Point-in-Time Correctness", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc1l4b10",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "amlc1l4m01",
+                  "_type": "glossaryTerm",
+                  "definition": "Data as it was actually known and public on a given date, not as it was later revised or restated. A point-in-time dataset never lets a model see a number before the date that number was genuinely available to the market."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "amlc1l4b10s1",
+                  "_type": "span",
+                  "text": "Price data is naturally point-in-time: a close on a given date was genuinely known on that date. Fundamental data is not, and this is where most feature pipelines quietly leak the future. SEBI's listing regulations require companies to publish quarterly results within 45 days of quarter-end for most quarters, and within 60 days for the year-end quarter, and in practice most results land somewhere in that 30 to 45 day window. Merge a June-quarter ratio onto prices starting July 1, and the model is being handed information roughly a month and a half before the market actually had it, a leak in the same family as the ",
+                  "marks": []
+                },
+                { "_key": "amlc1l4b10s2", "_type": "span", "text": "point-in-time data", "marks": ["amlc1l4m01"] },
+                {
+                  "_key": "amlc1l4b10s3",
+                  "_type": "span",
+                  "text": " problem this lesson opened with.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc1l4b11",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "import pandas as pd\n\n# fundamentals[\"report_date\"] must be the actual public release date,\n# not the quarter-end date the ratios describe.\nprices = prices.sort_values(\"date\")\nfundamentals = fundamentals.sort_values(\"report_date\")\n\nmerged = pd.merge_asof(\n    prices,\n    fundamentals,\n    left_on=\"date\",\n    right_on=\"report_date\",\n    by=\"ticker\",\n    direction=\"backward\",   # only ever look at results already public on 'date'\n)",
+              "caption": "direction=\"backward\" is the whole trick: for every price row, pandas attaches the most recent fundamentals row whose report_date is on or before that date, never a future one."
+            },
+            {
+              "_key": "amlc1l4b12",
+              "_type": "donutChart",
+              "title": "Illustrative: A Typical Feature Set for This Course's Case Studies",
+              "data": [
+                { "_key": "amlc1l4b12d1", "label": "Price and volume derived", "value": 45 },
+                { "_key": "amlc1l4b12d2", "label": "Fundamental ratios", "value": 25 },
+                { "_key": "amlc1l4b12d3", "label": "Volatility and risk features", "value": 20 },
+                { "_key": "amlc1l4b12d4", "label": "Cross-sectional rank features", "value": 10 }
+              ]
+            },
+            {
+              "_key": "amlc1l4b13",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This breakdown is an illustrative starting mix, not a fixed rule. Chapter 2's tree-based case studies lean more heavily on price, volume, and fundamental features; Chapter 4's deep learning work draws almost entirely from raw price and volume sequences instead."
+            },
+            {
+              "_key": "amlc1l4b14",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc1l4b14s1", "_type": "span", "text": "Project Structure and Reproducibility", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc1l4b15",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc1l4b15s1",
+                  "_type": "span",
+                  "text": "Keep raw data, engineered features, and trained models in separate folders so a corrupted feature run never forces a re-download of years of bhavcopy files. Pin every library version in a requirements file, an XGBoost or PyTorch minor version bump can silently change results enough to break a walk-forward comparison. Fix your random seeds everywhere a seed can be set. None of this is glamorous, and all of it is the difference between a Chapter 2 result you can defend to a risk committee and one you cannot even reproduce yourself next week.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc1l4b16",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "Toolkit Readiness Checklist Before Chapter 2",
+              "steps": [
+                "Price and volume history pulled for your chosen universe (e.g. Nifty 200) including delisted or removed constituents, not just today's list",
+                "Corporate actions (splits, bonuses, dividends) adjusted for in the price series",
+                "A rolling volatility estimate (e.g. an EWMA of daily returns) computed and ready to size triple-barrier widths",
+                "Fundamental data merged with an as-of join using a realistic reporting lag, not the raw quarter-end date",
+                "A fixed random seed and a TimeSeriesSplit or walk-forward split configured, never a shuffled K-Fold",
+                "Library versions pinned in a requirements file so the pipeline is reproducible"
+              ]
+            },
+            {
+              "_key": "amlc1l4b17",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Spotting a Point-in-Time Leak",
+              "question": "A research team merges June-quarter (Q1 FY25) fundamental ratios onto price data starting July 1, 2024, the day after the quarter ends. What is the most likely problem?",
+              "options": [
+                "No problem, this is standard practice",
+                "The ratios were very likely not public yet on July 1, since Indian companies typically report 30 to 45 days after quarter-end, so this leaks future information into the model",
+                "Fundamental ratios should never be merged with price data at all",
+                "The problem only affects small-cap stocks"
+              ],
+              "correctIndex": 1,
+              "explanation": "SEBI's listing regulations give companies up to 45 days after most quarter-ends to publish results (60 days for the year-end quarter), and most results land in that window. Attaching June-quarter ratios starting July 1 assumes the market already knew results it had not yet seen, a point-in-time leak in the same family as the look-ahead bias covered in this chapter's first lesson. The fix is the as-of merge, lagged by a realistic reporting delay, shown earlier in this lesson."
+            },
+            {
+              "_key": "amlc1l4b18",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "amlc1l4b18s1", "_type": "span", "text": "What's Next", "marks": [] }
+              ]
+            },
+            {
+              "_key": "amlc1l4b19",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "amlc1l4b19s1",
+                  "_type": "span",
+                  "text": "With survivorship-bias-free history, adjusted prices, point-in-time fundamentals, and triple-barrier labels all in place, Chapter 2 starts building the first actual models: random forests and gradient boosting, the two workhorses of Role 1 and Role 2 combination and signal generation from the second lesson in this chapter.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "amlc1l4b20",
+              "_type": "flashcardSet",
+              "title": "Chapter 1 Glossary Recap",
+              "cards": [
+                { "_key": "amlc1l4b20c1", "term": "Alpha decay", "definition": "The tendency for a signal's predictive power to shrink over time, either because market conditions change or because enough capital starts trading on it and competes the edge away." },
+                { "_key": "amlc1l4b20c2", "term": "Look-ahead bias", "definition": "When a model, during training, backtesting, or cross-validation, has access to information that would not actually have been available at the real-world moment it is simulating a decision for." },
+                { "_key": "amlc1l4b20c3", "term": "Data snooping bias", "definition": "The inflation of a strategy's apparent performance from repeatedly testing variations, features, or hyperparameters against the same historical dataset until one of them looks good by chance." },
+                { "_key": "amlc1l4b20c4", "term": "Meta-labeling", "definition": "A secondary model that takes an existing primary signal and predicts whether to act on that specific bet and how large to size it, filtering out the primary signal's weakest calls." },
+                { "_key": "amlc1l4b20c5", "term": "Survivorship bias", "definition": "The distortion introduced when a historical dataset only includes entities that still exist today, silently excluding companies that were delisted, went bankrupt, merged, or were dropped from an index along the way." },
+                { "_key": "amlc1l4b20c6", "term": "Triple-barrier method", "definition": "A labeling technique that places an upper profit-take barrier, a lower stop-loss barrier, and a vertical time-based barrier around a position, and labels the outcome by whichever is touched first." },
+                { "_key": "amlc1l4b20c7", "term": "Point-in-time data", "definition": "Data as it was actually known and public on a given date, not as it was later revised or restated." }
+              ]
+            },
+            {
+              "_key": "amlc1l4b21",
+              "_type": "keyTakeaways",
+              "points": [
+                "This course's stack is pandas and numpy for data wrangling, scikit-learn and XGBoost or LightGBM for Chapter 2's ensembles, SHAP for interpretation, and PyTorch for Chapter 4's deep learning",
+                "Free sources like yfinance are good enough to learn on, but carry real risks: exchange suffix mixups, occasional corporate-action adjustment errors, and survivorship bias if the universe comes from today's index list",
+                "Fundamental data is not naturally point-in-time; Indian companies typically report 30 to 45 days after quarter-end, so a naive quarter-end merge leaks roughly a month and a half of future information",
+                "pandas' merge_asof with direction=\"backward\" is the standard, correct way to attach fundamentals using their actual public report date rather than the quarter-end date",
+                "Reproducibility, pinned library versions, fixed seeds, and separated data and feature folders, is what makes a result defensible rather than a one-time fluke",
+                "Chapter 1's constraints (non-stationarity, low signal-to-noise, overfitting from multiple testing, correct labeling, and now a clean data pipeline) apply to every model built from Chapter 2 onward, not just to this lesson"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

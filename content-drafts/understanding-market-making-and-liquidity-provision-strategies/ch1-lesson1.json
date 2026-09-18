@@ -1,0 +1,256 @@
+{
+  "courseSlug": "understanding-market-making-and-liquidity-provision-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 1: Foundations of Market Making and Liquidity",
+      "lessons": [
+        {
+          "title": "What Is Market Making? The Business of Buying and Selling Simultaneously",
+          "slug": "what-is-market-making-the-business-of-buying-and-selling-simultaneously",
+          "body": [
+            {
+              "_key": "mmc1l1b01",
+              "_type": "bigIdea",
+              "text": "A market maker does not try to guess whether Nifty goes up or down tomorrow. It tries to buy at one price and sell at a slightly higher price, thousands of times a day, and lets that small, repeated spread do the work that a single large directional bet never reliably will."
+            },
+            {
+              "_key": "mmc1l1b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc1l1b02s1",
+                  "_type": "span",
+                  "text": "Most people who trade Nifty options, Reliance futures, or Bank Nifty weeklies do it because they have a view: the index will rise, the stock will beat earnings, volatility will spike before a Union Budget. A market maker has no such view, or at least tries not to trade on one. Its business model is entirely different: quote a price at which it will buy an instrument and a price at which it will sell the same instrument, at the same moment, and stand ready to do either trade with whoever shows up next. The gap between those two prices, collected over thousands of small trades a day, is the market maker's revenue.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc1l1b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc1l1b03s1",
+                  "_type": "span",
+                  "text": "Reading the Order Book: Bid, Ask, and the Spread",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc1l1b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "mmc1l1m01",
+                  "_type": "glossaryTerm",
+                  "definition": "The best (highest) price at which someone is currently willing to buy an instrument, and the best (lowest) price at which someone is currently willing to sell it. Every NSE order book is organised around these two numbers."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "mmc1l1b04s1",
+                  "_type": "span",
+                  "text": "Every listed instrument on the NSE, from Nifty futures to a thinly traded stock option, has an order book: a running list of resting buy orders (bids) and resting sell orders (asks, also called offers), ranked by price. The ",
+                  "marks": []
+                },
+                {
+                  "_key": "mmc1l1b04s2",
+                  "_type": "span",
+                  "text": "best bid and best ask",
+                  "marks": ["mmc1l1m01"]
+                },
+                {
+                  "_key": "mmc1l1b04s3",
+                  "_type": "span",
+                  "text": " are what a retail trader sees at the top of the market depth window on Zerodha's Kite or any other broker terminal. A market maker's job is to be the one sitting on both sides of that book: it places a bid below the current fair value and an ask above it, and as long as neither side gets hit at a price that hurts it, it collects the gap, known as the spread, every time both sides trade.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc1l1b05",
+              "_type": "table",
+              "caption": "Illustrative order book, Nifty weekly ATM call option (not live market data)",
+              "headers": ["Bid Qty (lots)", "Bid Price (₹)", "Ask Price (₹)", "Ask Qty (lots)"],
+              "rows": [
+                { "_key": "mmc1l1b05r1", "_type": "tableRow", "cells": ["12", "142.00", "142.10", "9"] },
+                { "_key": "mmc1l1b05r2", "_type": "tableRow", "cells": ["20", "141.95", "142.15", "15"] },
+                { "_key": "mmc1l1b05r3", "_type": "tableRow", "cells": ["8", "141.90", "142.20", "18"] }
+              ]
+            },
+            {
+              "_key": "mmc1l1b06",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "The order book above is a constructed illustration to show how bids, asks, and the spread line up, not a screenshot of an actual traded contract. NSE's minimum tick size for index and stock option premiums is ₹0.05, so a two-tick spread of ₹0.10, as shown here, is realistic for a liquid, actively quoted contract."
+            },
+            {
+              "_key": "mmc1l1b07",
+              "_type": "keyFact",
+              "label": "What the Spread Actually Pays For",
+              "value": "₹0.10 per share, per completed round trip",
+              "context": "Buy at the ₹142.00 bid, sell at the ₹142.10 ask, and ₹0.10 per share is gross revenue, multiplied by lot size and by however many times this repeats in a day. It is small per trade and is meant to be, because it is collected relentlessly rather than staked on being right about direction."
+            },
+            {
+              "_key": "mmc1l1b08",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc1l1b08s1",
+                  "_type": "span",
+                  "text": "Not a Directional Bet: Market Makers vs Everyone Else",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc1l1b09",
+              "_type": "comparison",
+              "title": "Market Maker vs Directional Trader",
+              "columns": [
+                {
+                  "_key": "mmc1l1b09c1",
+                  "label": "Market Maker",
+                  "points": [
+                    "Quotes a bid and an ask on the same instrument at the same time",
+                    "Revenue comes from spread captured times volume traded",
+                    "Wants to end each session with inventory close to flat",
+                    "Success depends on managing many small, fast positions and the risks that come with them"
+                  ]
+                },
+                {
+                  "_key": "mmc1l1b09c2",
+                  "label": "Directional Trader",
+                  "points": [
+                    "Takes one side of the market because of a specific view",
+                    "Profit or loss depends on being right about direction and magnitude",
+                    "May hold a position for minutes, days, or months",
+                    "Success depends on the accuracy of a forecast, not on order flow"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "mmc1l1b10",
+              "_type": "callout",
+              "type": "insight",
+              "text": "A market maker's edge does not come from predicting Nifty's next move. It comes from being paid, through the spread, for the service of being available to trade instantly, in both directions, whenever someone else needs a counterparty right now."
+            },
+            {
+              "_key": "mmc1l1b11",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc1l1b11s1",
+                  "_type": "span",
+                  "text": "Why Markets Need Market Makers: The Liquidity Problem",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc1l1b12",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc1l1b12s1",
+                  "_type": "span",
+                  "text": "Nifty and Bank Nifty near-month futures, and their at-the-money weekly options, rarely need dedicated market makers, because so many participants, retail traders, arbitrage desks, and proprietary trading firms, are already quoting both sides constantly on their own. The problem shows up away from that liquid core: most individual stock options on NSE, and far-dated or deep out-of-the-money contracts across the board, can go an entire session with only a handful of trades, or none at all. An investor who needs to exit such a position can find no one resting on the other side at any reasonable price, and may have to cross a very wide spread, or fail to trade at all, just to get out.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc1l1b13",
+              "_type": "callout",
+              "type": "insight",
+              "text": "SEBI permits NSE and BSE to run a Liquidity Enhancement Scheme for contracts identified as illiquid, typically stock options and select futures. Under this scheme, the exchange appoints one or more market makers who are required to post firm, two-way quotes within a defined maximum spread and minimum order size, and are compensated, usually through fee waivers or cash incentives tied to how tightly and how continuously they quote, for doing so."
+            },
+            {
+              "_key": "mmc1l1b14",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc1l1b14s1",
+                  "_type": "span",
+                  "text": "A Day in the Life: How a Market Maker Actually Operates",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc1l1b15",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc1l1b15s1",
+                  "_type": "span",
+                  "text": "In practice, a market maker's system continuously recalculates a fair value for each instrument it quotes, based on the underlying's price, time to expiry, and implied volatility for an option, then posts a bid and ask around that fair value. The moment either side gets hit, say a seller lifts nothing and instead sells into the bid, the market maker's inventory changes instantly: it now holds a position it did not have a second ago. Its very next quote has to account for that new position, not just for fair value, because sitting on a large one-sided inventory is exactly the kind of directional exposure a market maker is meant to avoid. How to manage that inventory, and how to price the risk that the trader on the other side of a trade might simply know more than you do, are the subjects of the next two chapters.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc1l1b16",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "The Bank Nifty Option Market Maker's First Ten Minutes",
+              "scenario": "A market maker opens the session quoting a Bank Nifty weekly put at a bid of ₹85 and an ask of ₹87, with size available on both sides. Within the first few minutes, a large institutional sell order arrives and trades against the market maker's bid, filling the market maker's full bid quantity at ₹85.",
+              "prompt": "What has happened to the market maker's inventory as a result of this trade, and would you expect its next quote to stay centered where it was, or to shift? Why?",
+              "modelAnswer": "By buying at its own bid, the market maker now holds a long position in this put option that it did not have before. Sitting on that long inventory means it is now exposed to the put losing value if Bank Nifty rises, which is a directional risk it does not want. Its next quote should shift down and skew toward encouraging a sale rather than another purchase: for example, lowering both the bid and the ask slightly, so the bid becomes less attractive to sellers while the ask becomes more attractive to buyers, nudging its inventory back toward flat rather than staying centered on the old fair value."
+            },
+            {
+              "_key": "mmc1l1b17",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Spot the Market Maker",
+              "question": "Trader A continuously posts both a bid to buy a Reliance stock option and an ask to sell the same option, narrowing or widening the gap between the two depending on order flow. Trader B buys a large quantity of the same option because she expects Reliance's results to beat street estimates. Which of the two is behaving like a market maker?",
+              "options": [
+                "Trader A",
+                "Trader B",
+                "Both of them",
+                "Neither of them"
+              ],
+              "correctIndex": 0,
+              "explanation": "Trader A is quoting both sides of the market continuously and adjusting that quote to order flow rather than to a view on Reliance's results, which is the defining behaviour of a market maker. Trader B has taken a single directional position based on a specific forecast, which is ordinary directional trading, not market making, even though both are trading the same instrument."
+            },
+            {
+              "_key": "mmc1l1b18",
+              "_type": "callout",
+              "type": "warning",
+              "text": "It is tempting to read spread capture as risk-free income. It is not. A market maker that gets run over by a large, one-directional order flow, or that keeps quoting a stale price into news it has not priced in, can lose several days' worth of collected spread in a single trade. Chapters 3 and 4 build out exactly how inventory risk and informed order flow turn this into real risk, not just a mechanical toll collection business."
+            },
+            {
+              "_key": "mmc1l1b19",
+              "_type": "keyTakeaways",
+              "points": [
+                "A market maker simultaneously quotes a bid and an ask on the same instrument and profits from the spread between them, not from predicting direction",
+                "The order book's best bid and best ask, and the gap between them, are the raw material of the market making business",
+                "NSE's minimum tick size for option premiums is ₹0.05, which sets the smallest possible spread a market maker can quote",
+                "Most liquid instruments like Nifty near-month futures barely need dedicated market makers, but most stock options and far-dated contracts do",
+                "SEBI's Liquidity Enhancement Scheme lets exchanges appoint and incentivise market makers for identified illiquid derivative contracts",
+                "Every trade a market maker gets hit on changes its inventory instantly, and its next quote must respond to that new position, not just to fair value"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

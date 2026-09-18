@@ -1,0 +1,212 @@
+{
+  "courseSlug": "introduction-to-statistical-arbitrage",
+  "chapters": [
+    {
+      "title": "Chapter 7: From Pairs to Factors",
+      "lessons": [
+        {
+          "title": "Factor Orthogonalization: Removing Overlap Between Signals",
+          "slug": "factor-orthogonalization-removing-overlap-between-signals",
+          "body": [
+            {
+              "_key": "sa27-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa27-001s1", "_type": "span", "marks": [], "text": "Lessons 25 and 26 treated value, momentum, and mean-reversion as conceptually distinct ideas. Conceptually, they are. For real stocks, their actual scores often end up correlated with each other anyway, and combining correlated factors without realizing it quietly undoes the diversification benefit that was the entire reason to combine them in the first place." }
+              ]
+            },
+            {
+              "_key": "sa27-002",
+              "_type": "bigIdea",
+              "text": "When two factors' scores are correlated across your stock universe, combining them naively double-counts whatever they share, diluting the diversification you were trying to build. Orthogonalization, the exact same regression technique from Lesson 6, removes this overlap by keeping only the part of one factor that is not explained by another."
+            },
+            {
+              "_key": "sa27-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa27-003s1", "_type": "span", "marks": [], "text": "Why Factor Scores Overlap in Practice" }
+              ]
+            },
+            {
+              "_key": "sa27-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa27-004s1", "_type": "span", "marks": [], "text": "A stock that has rallied recently often also looks somewhat less cheap on some value metrics, simply because its price has risen. A genuinely undervalued stock catching up toward fair value can show both a low starting valuation and strong recent momentum at the same time. Two factors built to capture different ideas can still end up statistically entangled for real stocks, for reasons that have nothing to do with either factor being wrong." }
+              ]
+            },
+            {
+              "_key": "sa27-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa27-005s1", "_type": "span", "marks": [], "text": "Seeing the Overlap: Six Illustrative Stocks" }
+              ]
+            },
+            {
+              "_key": "sa27-006",
+              "_type": "table",
+              "caption": "Six illustrative stocks: raw value and momentum scores (z-scored, illustrative)",
+              "headers": ["Stock", "Value score", "Momentum score"],
+              "rows": [
+                { "_key": "sa27-006r1", "_type": "tableRow", "cells": ["A", "1.5", "1.2"] },
+                { "_key": "sa27-006r2", "_type": "tableRow", "cells": ["B", "0.8", "0.5"] },
+                { "_key": "sa27-006r3", "_type": "tableRow", "cells": ["C", "-0.3", "-0.2"] },
+                { "_key": "sa27-006r4", "_type": "tableRow", "cells": ["D", "-1.2", "-0.8"] },
+                { "_key": "sa27-006r5", "_type": "tableRow", "cells": ["E", "0.4", "1.8"] },
+                { "_key": "sa27-006r6", "_type": "tableRow", "cells": ["F", "-0.6", "-1.0"] }
+              ]
+            },
+            {
+              "_key": "sa27-007",
+              "_type": "keyFact",
+              "label": "Correlation between raw value and momentum scores",
+              "value": "\u2248 0.80",
+              "context": "A strong positive overlap in this illustrative sample: stocks that look cheap on value also tend to show strong recent momentum here, even though the two ideas are conceptually distinct."
+            },
+            {
+              "_key": "sa27-008",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa27-008s1", "_type": "span", "marks": [], "text": "Orthogonalizing Momentum Against Value" }
+              ]
+            },
+            {
+              "_key": "sa27-009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "sa27-009m1", "_type": "glossaryTerm", "definition": "Regressing one factor's scores against another's and keeping the residual, producing a version of the first factor that is, by construction, uncorrelated with the second." }
+              ],
+              "children": [
+                { "_key": "sa27-009s1", "_type": "span", "marks": [], "text": "The fix is called " },
+                { "_key": "sa27-009s2", "_type": "span", "marks": ["sa27-009m1"], "text": "orthogonalization" },
+                { "_key": "sa27-009s3", "_type": "span", "marks": [], "text": ": regress the momentum scores on the value scores, and keep only the residual, whatever part of a stock's momentum is not already explained by its value score, as the \"clean\" momentum signal." }
+              ]
+            },
+            {
+              "_key": "sa27-010",
+              "_type": "mathBlock",
+              "latex": "\\text{Momentum}_i = a + b \\times \\text{Value}_i + \\varepsilon_i \\qquad \\text{Clean Momentum}_i = \\varepsilon_i = \\text{Momentum}_i - (a + b \\times \\text{Value}_i)",
+              "caption": "This is the identical regression structure Lesson 6 used to build a hedge ratio spread, just applied to two factor scores across a stock universe instead of two stock prices across time. The residual, by construction, has zero correlation with Value."
+            },
+            {
+              "_key": "sa27-011",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "import numpy as np\n\nvalue = np.array([1.5, 0.8, -0.3, -1.2, 0.4, -0.6])\nmomentum = np.array([1.2, 0.5, -0.2, -0.8, 1.8, -1.0])\n\nb, a = np.polyfit(value, momentum, 1)\nclean_momentum = momentum - (a + b * value)\n\nprint(\"a:\", round(a, 2), \"b:\", round(b, 2))\nprint(\"Clean momentum:\", np.round(clean_momentum, 2))\n# a: 0.16  b: 0.9\n# Clean momentum: [-0.31 -0.38 -0.09  0.12  1.28 -0.62]",
+              "caption": "Orthogonalizing momentum against value with the same regression tool from Lesson 6"
+            },
+            {
+              "_key": "sa27-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa27-012s1", "_type": "span", "marks": [], "text": "Watch the Rankings Change" }
+              ]
+            },
+            {
+              "_key": "sa27-013",
+              "_type": "table",
+              "caption": "Raw vs orthogonalized momentum, and how the ranking changes",
+              "headers": ["Stock", "Raw momentum", "Raw rank", "Clean momentum", "Clean rank"],
+              "rows": [
+                { "_key": "sa27-013r1", "_type": "tableRow", "cells": ["E", "1.8", "1", "1.28", "1"] },
+                { "_key": "sa27-013r2", "_type": "tableRow", "cells": ["A", "1.2", "2", "-0.31", "4"] },
+                { "_key": "sa27-013r3", "_type": "tableRow", "cells": ["B", "0.5", "3", "-0.38", "5"] },
+                { "_key": "sa27-013r4", "_type": "tableRow", "cells": ["C", "-0.2", "4", "-0.09", "3"] },
+                { "_key": "sa27-013r5", "_type": "tableRow", "cells": ["D", "-0.8", "5", "0.12", "2"] },
+                { "_key": "sa27-013r6", "_type": "tableRow", "cells": ["F", "-1.0", "6", "-0.62", "6"] }
+              ]
+            },
+            {
+              "_key": "sa27-014",
+              "_type": "callout",
+              "type": "insight",
+              "text": "D's raw momentum looked like one of the worst in the group. Once its momentum is measured relative to what its very low value score would already predict, it turns out to be about average, not genuinely weak on momentum specifically. A's raw momentum looked like the second best. Once cleaned, it drops to fourth, most of its apparent momentum was really just riding the same overlap that made it look cheap on value too. E stays comfortably at the top in both rankings, exactly what you would want: its momentum is genuinely, distinctly strong, not just an echo of its value score."
+            },
+            {
+              "_key": "sa27-015",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa27-015s1", "_type": "span", "marks": [], "text": "A Practical Note: Order Matters With More Than Two Factors" }
+              ]
+            },
+            {
+              "_key": "sa27-016",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa27-016s1", "_type": "span", "marks": [], "text": "With more than two factors, this has to be done in some sequence: clean the second factor against the first, the third against both the first and second, and so on. The order itself is a judgment call, often based on which factor a desk considers more fundamental or trusts more, and changing that order can change the final orthogonalized scores. There is no single universally correct order, only a choice that should be made deliberately and consistently, not arbitrarily." }
+              ]
+            },
+            {
+              "_key": "sa27-017",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why orthogonalize at all?",
+              "question": "Two factors, value and momentum, show a correlation of about 0.80 across a stock universe. What is the main risk of combining their raw scores without addressing this overlap?",
+              "options": [
+                "The strategy will automatically become market-neutral",
+                "Combining two correlated factors overweights whatever they share, so the resulting portfolio behaves more like a single concentrated bet than two genuinely diversified signals",
+                "Correlated factors cannot be computed using regression",
+                "The overlap has no practical effect on the resulting portfolio"
+              ],
+              "correctIndex": 1,
+              "explanation": "When two factors are correlated, combining their raw scores double-counts the shared component, which means the resulting combination is less diversified than it appears, closer to one concentrated bet dressed up as two, undermining exactly the diversification benefit Lesson 25 argued for scaling up to multiple factors."
+            },
+            {
+              "_key": "sa27-018",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Orthogonalize a new stock's momentum",
+              "prompt": "A seventh stock has a Value score of 1.0 and a raw Momentum score of 0.3. Using this lesson's fitted relationship (a = 0.16, b = 0.90), what is its orthogonalized (clean) momentum score?",
+              "correctValue": -0.76,
+              "tolerance": 0.05,
+              "explanation": "Predicted momentum = 0.16 + 0.90 \u00d7 1.0 = 1.06. Clean momentum = actual \u2212 predicted = 0.3 \u2212 1.06 = \u22120.76."
+            },
+            {
+              "_key": "sa27-019",
+              "_type": "flashcardSet",
+              "title": "Orthogonalization: Core Terms",
+              "cards": [
+                { "_key": "sa27-019f1", "term": "Factor overlap", "definition": "Correlation between two conceptually distinct factors' scores across a stock universe, which causes combining them naively to overweight whatever they share." },
+                { "_key": "sa27-019f2", "term": "Orthogonalization", "definition": "Regressing one factor's scores against another's and keeping the residual, producing a version of the first factor that is, by construction, uncorrelated with the second." },
+                { "_key": "sa27-019f3", "term": "Clean (orthogonalized) score", "definition": "A factor score with the part explainable by another factor removed, isolating what is genuinely distinct about it." }
+              ]
+            },
+            {
+              "_key": "sa27-020",
+              "_type": "keyTakeaways",
+              "points": [
+                "Conceptually distinct factors, like value and momentum, can still show meaningful correlation across real stocks, in this lesson's illustrative sample, about 0.80.",
+                "Combining correlated factor scores without adjustment overweights whatever they share, undermining the diversification benefit that was the whole point of using multiple factors (Lesson 25).",
+                "Orthogonalization uses the exact same regression technique as Lesson 6's hedge ratio: regress one factor on another and keep the residual, which is uncorrelated with the first factor by construction.",
+                "In this lesson's worked example, orthogonalizing momentum against value meaningfully changed the ranking, one stock moved from near the bottom to second place, another dropped from second to fourth, once each stock's momentum was measured relative to what its value score would already predict.",
+                "With more than two factors, orthogonalization has to be done in some sequence, and the order chosen is a judgment call that should be made deliberately, since it can change the final results."
+              ]
+            },
+            {
+              "_key": "sa27-021",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice. All stock labels, factor scores, and computed values in this lesson are illustrative and hypothetical, not actual calculated data. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

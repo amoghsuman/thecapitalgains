@@ -1,0 +1,290 @@
+{
+  "courseSlug": "understanding-position-sizing-and-the-kelly-criterion",
+  "chapters": [
+    {
+      "title": "Chapter 2: Deriving the Kelly Criterion",
+      "lessons": [
+        {
+          "title": "The Coin-Flip Game: Building Kelly From First Principles",
+          "slug": "the-coin-flip-game-building-kelly-from-first-principles",
+          "body": [
+            {
+              "_key": "c2l1-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l1-001s1", "_type": "span", "marks": [], "text": "Chapter 1 showed that a 10% bet size grew a 55%-win-rate, even-money edge faster than either 5% or 30%. That number was not chosen for convenience. It is the output of a specific calculus problem, and this lesson solves that problem from scratch, using nothing beyond probability and a derivative." }
+              ]
+            },
+            {
+              "_key": "c2l1-002",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l1-002s1", "_type": "span", "marks": [], "text": "The Simplest Possible Bet" }
+              ]
+            },
+            {
+              "_key": "c2l1-003",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l1-003s1", "_type": "span", "marks": [], "text": "Set up the cleanest version of the problem. A bet wins with probability p and loses with probability q = 1 − p. A win pays even money: stake the same amount you could lose. You get to play this bet repeatedly, and before every round you choose what fraction f of your current capital to stake, never a fixed rupee amount. The question: which value of f grows your capital fastest over many rounds?" }
+              ]
+            },
+            {
+              "_key": "c2l1-004",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l1-004s1", "_type": "span", "marks": [], "text": "Why We Maximize Growth Rate, Not Expected Value" }
+              ]
+            },
+            {
+              "_key": "c2l1-005",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l1-005s1", "_type": "span", "marks": [], "text": "The obvious first instinct is to maximize expected profit on each individual bet. For an even-money bet, the expected return per rupee staked is straightforward:" }
+              ]
+            },
+            {
+              "_key": "c2l1-006",
+              "_type": "mathBlock",
+              "latex": "E[\\text{return per rupee staked}] = p \\cdot (+1) + q \\cdot (-1) = p - q",
+              "caption": "Positive whenever p > 0.5, and largest when the entire bankroll is staked"
+            },
+            {
+              "_key": "c2l1-007",
+              "_type": "callout",
+              "type": "warning",
+              "text": "This framing says: since p − q is largest in absolute contribution when the stake is largest, bet everything, every time. That is obviously wrong. Stake 100% of capital on every round and the very first loss, which will eventually happen since q > 0, takes the account to zero. From zero, no future edge can ever recover anything. Maximizing expected value per bet, in isolation, ignores that bets compound: what happens on round two depends entirely on what survived round one."
+            },
+            {
+              "_key": "c2l1-008",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l1-008s1", "_type": "span", "marks": [], "text": "Because capital compounds multiplicatively, the right quantity to optimize is not expected wealth after one bet, but the long-run growth rate of wealth across many bets. Define the growth rate over n rounds as the average log-return per round:" }
+              ]
+            },
+            {
+              "_key": "c2l1-009",
+              "_type": "mathBlock",
+              "latex": "g(f) = \\dfrac{1}{n}\\ln\\!\\left(\\dfrac{W_n}{W_0}\\right) \\;\\xrightarrow[n \\to \\infty]{}\\; p\\ln(1+f) + q\\ln(1-f)",
+              "caption": "By the law of large numbers, the sample fraction of wins converges to p, giving this closed form"
+            },
+            {
+              "_key": "c2l1-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l1-010s1", "_type": "span", "marks": [], "text": "This g(f) is exactly the function used to build Chapter 1's growth chart. Maximizing it, instead of the single-bet expected value, is the entire idea behind the Kelly Criterion." }
+              ]
+            },
+            {
+              "_key": "c2l1-011",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l1-011s1", "_type": "span", "marks": [], "text": "Finding the Growth-Maximizing Fraction" }
+              ]
+            },
+            {
+              "_key": "c2l1-012",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l1-012s1", "_type": "span", "marks": [], "text": "Treat g(f) as an ordinary calculus problem. Differentiate with respect to f and set the result to zero:" }
+              ]
+            },
+            {
+              "_key": "c2l1-013",
+              "_type": "mathBlock",
+              "latex": "g'(f) = \\dfrac{p}{1+f} - \\dfrac{q}{1-f} = 0"
+            },
+            {
+              "_key": "c2l1-014",
+              "_type": "mathBlock",
+              "latex": "p(1-f) = q(1+f) \\;\\Rightarrow\\; p - q = f(p+q) = f \\;\\Rightarrow\\; f^{*} = p - q",
+              "caption": "Since p + q = 1 by definition, the (p + q) term simply disappears"
+            },
+            {
+              "_key": "c2l1-015",
+              "_type": "collapsible",
+              "title": "Confirm this is a maximum, not just a critical point",
+              "content": [
+                {
+                  "_key": "c2l1-015a",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    { "_key": "c2l1-015as1", "_type": "span", "marks": [], "text": "Setting a derivative to zero finds a critical point, which could be a maximum, a minimum, or neither. Check the second derivative:" }
+                  ]
+                },
+                {
+                  "_key": "c2l1-015b",
+                  "_type": "mathBlock",
+                  "latex": "g''(f) = -\\dfrac{p}{(1+f)^2} - \\dfrac{q}{(1-f)^2}"
+                },
+                {
+                  "_key": "c2l1-015c",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    { "_key": "c2l1-015cs1", "_type": "span", "marks": [], "text": "Both terms are negative for any f strictly between −1 and 1, since p, q and every squared denominator are positive. g(f) is concave everywhere on this range, so the single critical point f* = p − q is guaranteed to be the global maximum, not a minimum or an inflection." }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c2l1-016",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l1-016s1", "_type": "span", "marks": [], "text": "Testing It on Chapter 1's Numbers" }
+              ]
+            },
+            {
+              "_key": "c2l1-017",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Solve for f*",
+              "prompt": "Using f* = p − q, what is the optimal bet fraction for the 55%-win-rate, even-money edge from Chapter 1?",
+              "correctValue": 0.10,
+              "tolerance": 0.005,
+              "explanation": "f* = 0.55 − 0.45 = 0.10, or 10% of capital per bet. This is precisely the fraction that grew fastest in Chapter 1's three-trader simulation. That result was not chosen by trial and error; it is the analytic solution to g'(f) = 0."
+            },
+            {
+              "_key": "c2l1-018",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l1-018s1", "_type": "span", "marks": [], "text": "Plotting g(f) across a range of bet sizes for this same edge makes the shape of the problem visible: a peak at f* = 0.10, and a curve that turns negative well before it reaches 30%." }
+              ]
+            },
+            {
+              "_key": "c2l1-019",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Growth rate g(f), p = 0.55, even-money bet",
+              "xAxisLabel": "Fraction of capital bet (f)",
+              "yAxisLabel": "Growth rate per trade (%)",
+              "data": [
+                { "_key": "c2l1-019d1", "label": "0.00", "value": 0.00 },
+                { "_key": "c2l1-019d2", "label": "0.05", "value": 0.38 },
+                { "_key": "c2l1-019d3", "label": "0.10", "value": 0.50 },
+                { "_key": "c2l1-019d4", "label": "0.15", "value": 0.37 },
+                { "_key": "c2l1-019d5", "label": "0.20", "value": -0.01 },
+                { "_key": "c2l1-019d6", "label": "0.25", "value": -0.67 },
+                { "_key": "c2l1-019d7", "label": "0.30", "value": -1.62 }
+              ]
+            },
+            {
+              "_key": "c2l1-020",
+              "_type": "callout",
+              "type": "insight",
+              "text": "The curve crosses back to roughly zero near f = 0.20, exactly double f*. This is a general property of the even-money case: growth turns negative once you bet more than twice the optimal fraction. Chapter 1's 30% bettor was betting three times f*, deep in the territory where the same positive edge produces negative long-run growth. Chapter 5 covers this 2×f* boundary in more detail."
+            },
+            {
+              "_key": "c2l1-021",
+              "_type": "table",
+              "caption": "Optimal fraction f* = p − q for even-money bets at different win rates",
+              "headers": ["Win rate (p)", "Edge (p − q)", "Optimal fraction (f*)"],
+              "rows": [
+                { "_key": "c2l1-021r1", "_type": "tableRow", "cells": ["50%", "0%", "0%"] },
+                { "_key": "c2l1-021r2", "_type": "tableRow", "cells": ["55%", "10%", "10%"] },
+                { "_key": "c2l1-021r3", "_type": "tableRow", "cells": ["60%", "20%", "20%"] },
+                { "_key": "c2l1-021r4", "_type": "tableRow", "cells": ["65%", "30%", "30%"] },
+                { "_key": "c2l1-021r5", "_type": "tableRow", "cells": ["70%", "40%", "40%"] },
+                { "_key": "c2l1-021r6", "_type": "tableRow", "cells": ["90%", "80%", "80%"] }
+              ]
+            },
+            {
+              "_key": "c2l1-022",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Reading the no-edge case",
+              "question": "According to f* = p − q, what does the formula say to bet when p = 0.50 exactly?",
+              "options": [
+                "50% of capital, matching the win probability",
+                "0% of capital, since there is no edge to exploit",
+                "100% of capital, since the payoff is even money",
+                "The formula cannot be applied when p = 0.50"
+              ],
+              "correctIndex": 1,
+              "explanation": "f* = p − q = 0.50 − 0.50 = 0. With no edge, the formula correctly says not to bet at all. Kelly sizing scales with edge; where there is no edge, there is no justified position, regardless of how the payoff is structured."
+            },
+            {
+              "_key": "c2l1-023",
+              "_type": "collapsible",
+              "title": "Verify f* by brute-force search in Python",
+              "content": [
+                {
+                  "_key": "c2l1-023a",
+                  "_type": "codeBlock",
+                  "language": "python",
+                  "caption": "Grid search over f confirms the calculus result",
+                  "code": "import math\n\np, q = 0.55, 0.45\n\ndef g(f):\n    return p * math.log(1 + f) + q * math.log(1 - f)\n\nbest_f, best_g = 0, g(0)\nf = 0.0001\nwhile f < 0.999:\n    val = g(f)\n    if val > best_g:\n        best_f, best_g = f, val\n    f += 0.0001\n\nprint(round(best_f, 3))   # 0.1 (matches f* = p - q = 0.10)"
+                }
+              ]
+            },
+            {
+              "_key": "c2l1-024",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l1-024s1", "_type": "span", "marks": [], "text": "What This Derivation Assumes, and What Comes Next" }
+              ]
+            },
+            {
+              "_key": "c2l1-025",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "c2l1-025s1", "_type": "span", "marks": [], "text": "f* = p − q only holds for an even-money bet, where a win and a loss are the same size. Lesson 1.2 showed that most real trades are not even money at all. A Bank Nifty option seller's average win and average loss are rarely equal, and a trend-following swing trader deliberately seeks payoff ratios far from 1:1. The next lesson repeats this exact derivation with a general payoff ratio b, and arrives at the formula this entire course is built around." }
+              ]
+            },
+            {
+              "_key": "c2l1-026",
+              "_type": "bigIdea",
+              "text": "f* = p − q is the growth-maximizing bet fraction for an even-money wager. It is the special case of the Kelly Criterion, not the whole formula, and the full version arrives in the next lesson."
+            },
+            {
+              "_key": "c2l1-027",
+              "_type": "keyTakeaways",
+              "points": [
+                "Maximizing expected value on a single bet leads to betting everything, which guarantees eventual ruin over repeated play.",
+                "Because bets compound multiplicatively, the correct objective is the long-run growth rate, g(f) = p ln(1+f) + q ln(1-f).",
+                "Solving g'(f) = 0 gives f* = p − q for an even-money bet, and the second derivative confirms it is a true maximum.",
+                "Growth turns negative once the bet fraction exceeds roughly 2×f*, which is exactly why Chapter 1's 30% bettor lost money on a genuinely positive-expectancy edge.",
+                "This formula assumes an even-money (1:1) payoff. The next lesson generalizes it to any payoff ratio b."
+              ]
+            },
+            {
+              "_key": "c2l1-028",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "f* here is the fraction that maximizes long-run growth under an idealized, repeated-bet model with known, fixed p and q. It is a mathematical target, not a recommendation to size real trades at this level. Chapter 3 explains in detail why almost no serious trader uses full Kelly in live markets. This lesson is for education only and is not investment or trading advice."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

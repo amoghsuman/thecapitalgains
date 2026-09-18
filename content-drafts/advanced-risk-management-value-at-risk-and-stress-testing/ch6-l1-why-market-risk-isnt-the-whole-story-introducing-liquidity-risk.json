@@ -1,0 +1,190 @@
+{
+  "courseSlug": "advanced-risk-management-value-at-risk-and-stress-testing",
+  "chapters": [
+    {
+      "title": "Chapter 6: Liquidity Risk and Liquidity-Adjusted VaR",
+      "lessons": [
+        {
+          "title": "Why Market Risk Isn't the Whole Story: Introducing Liquidity Risk",
+          "slug": "why-market-risk-isnt-the-whole-story-introducing-liquidity-risk",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "s1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "s1s1", "text": "Every VaR, Expected Shortfall, and stress test figure in this course so far has shared one quiet assumption: that you can mark a position at the current market price, and exit it at something close to that price whenever you choose. Liquidity risk is what happens when that assumption fails, and it tends to fail exactly when you most need it to hold, during a crisis, when everyone else wants to sell at the same time you do.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "keyFact",
+              "_key": "s2",
+              "label": "Liquidity Risk",
+              "value": "The risk that a position cannot be exited quickly without a significant price concession, or cannot be exited at all within a required timeframe",
+              "context": "A mark-to-market VaR figure assumes this risk away entirely."
+            },
+            {
+              "_type": "block",
+              "_key": "s3",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "s3s1", "text": "Two Kinds of Liquidity Risk", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "s4",
+              "caption": "Market liquidity risk vs funding liquidity risk",
+              "headers": ["", "Market (Asset) Liquidity Risk", "Funding Liquidity Risk"],
+              "rows": [
+                { "cells": ["What it's about", "How easily the asset itself can be traded without moving its price", "Whether you have enough cash or margin to meet your own obligations"] },
+                { "cells": ["Driven by", "Bid-ask spread, market depth, how large your order is relative to normal trading volume", "Margin calls, funding costs, loan covenants, redemption requests"] },
+                { "cells": ["Example", "A small-cap NSE stock where a large sell order moves the price well below the last traded price", "A leveraged position that gets a margin call the desk cannot meet without selling something"] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "s5",
+              "type": "warning",
+              "text": "These two feed each other in a crisis. A market move triggers a margin call, funding liquidity risk. Meeting that call forces a sale into a market that has already gotten thinner and more stressed, market liquidity risk, which pushes the price down further, potentially triggering more margin calls elsewhere. This self-reinforcing pattern, known as a liquidity spiral, is exactly the kind of correlated, compounding failure that a probability-based VaR model was never built to see, and is a central reason stress testing, Chapter 4's subject, exists as a separate discipline."
+            },
+            {
+              "_type": "block",
+              "_key": "s6",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "s6s1", "text": "India-Specific: When the Circuit Filter Traps You", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "s7",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "s7s1", "text": "Chapter 1 covered market-wide circuit breakers, the ones that halt the entire Nifty or Sensex for a period when the index itself moves 10%, 15%, or 20%. Individual securities on the NSE and BSE carry their own separate daily price bands, typically 2%, 5%, 10%, or 20% depending on the stock's liquidity category, and these behave very differently. When a thinly traded stock hits its lower circuit, trading in that specific stock can effectively freeze at that price, with sell orders queued and no buyers willing to transact, sometimes for several consecutive sessions.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "s8",
+              "caption": "A small-cap stock hitting a 5% lower circuit for four consecutive days, starting at Rs 100",
+              "headers": ["Day", "Closing price", "Cumulative decline"],
+              "rows": [
+                { "cells": ["1", "Rs 95.00", "-5.00%"] },
+                { "cells": ["2", "Rs 90.25", "-9.75%"] },
+                { "cells": ["3", "Rs 85.74", "-14.26%"] },
+                { "cells": ["4", "Rs 81.45", "-18.55%"] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "s9",
+              "type": "warning",
+              "text": "A mark-to-market VaR or stress test would show this position down 18.55% after four days, a real, calculable number. But that number describes a price nobody could necessarily transact at, if the stock is genuinely frozen at each lower circuit with no buyers, the position could not actually be sold on any of those four days at any of those prices. The gap between what a model marks a position at and what you could actually realize by selling it is precisely what liquidity risk measures, and it is exactly the concern behind SEBI's requirement, covered in Chapter 4, that small and mid cap mutual funds disclose how long it would plausibly take to liquidate their portfolios under stress."
+            },
+            {
+              "_type": "block",
+              "_key": "s10",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "s10s1", "text": "Why This Matters Most Exactly When You Need It Least", "marks": [] }
+              ]
+            },
+            {
+              "_type": "comparison",
+              "_key": "s11",
+              "title": "A Liquid Position vs an Illiquid Position, Same VaR Figure",
+              "columns": [
+                {
+                  "label": "Liquid Position (e.g. Nifty futures)",
+                  "points": [
+                    "Deep market, large daily trading volume relative to a typical position size",
+                    "Can typically be exited near the marked price even during a stressed session",
+                    "VaR is a reasonably honest estimate of realizable loss"
+                  ]
+                },
+                {
+                  "label": "Illiquid Position (e.g. a thinly traded small-cap stock)",
+                  "points": [
+                    "Wide bid-ask spread, thin market depth relative to position size",
+                    "Can freeze entirely at a circuit limit precisely during the sessions you most need to exit",
+                    "VaR understates the true risk, since it assumes an exit that may not be available"
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "s12",
+              "type": "insight",
+              "text": "Liquidity has a well-known property: it tends to be abundant exactly when you don't need it, and it disappears exactly when you do. A stock trades smoothly on an ordinary day, then the same stock can see its order book empty out within minutes once a broad selloff begins and everyone wants to exit at once. This is not a coincidence, it is a structural feature of markets under stress, and it is why liquidity risk deserves its own dedicated treatment rather than being folded into an ordinary VaR number."
+            },
+            {
+              "_type": "block",
+              "_key": "s13",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "s13s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "s14",
+              "variant": "scenario",
+              "title": "Diagnosing a Liquidity Spiral",
+              "scenario": "A leveraged fund holds a large position in a mid-cap stock. The stock falls sharply on weak earnings, triggering a margin call from the fund's broker. To meet the margin call, the fund must sell part of its stock position, but the stock has thin daily trading volume and is already close to its lower circuit.",
+              "prompt": "Identify the funding liquidity risk and the market liquidity risk in this scenario separately, and explain how they could reinforce each other.",
+              "modelAnswer": "The funding liquidity risk is the margin call itself, the fund's need for cash it does not currently have, forcing an immediate response regardless of market conditions. The market liquidity risk is that the specific stock the fund needs to sell is thinly traded and close to its lower circuit, meaning any sizable sell order is likely to move the price down sharply, or the stock could freeze at the circuit with no buyers at all. These reinforce each other in a spiral: selling into a thin market pushes the price down further, which can shrink the value of remaining collateral and trigger further margin calls, forcing more forced selling into an even thinner market."
+            },
+            {
+              "_type": "exercise",
+              "_key": "s15",
+              "variant": "quiz",
+              "title": "Quick Check",
+              "question": "A stock's last traded price shows a 14.26% cumulative decline after three consecutive lower-circuit days, with no buyers present on any of those days. What does this reveal about using that last traded price as a VaR input?",
+              "options": [
+                "The 14.26% figure is an accurate measure of the loss an investor could have realized by selling",
+                "The last traded price may substantially overstate what an investor could actually realize by selling, since no transactions were actually possible during the freeze",
+                "Circuit filters make VaR calculations more accurate, not less",
+                "This situation cannot happen for stocks with a 5% daily price band"
+              ],
+              "correctIndex": 1,
+              "explanation": "A price that formed with no actual buyers present is not necessarily a price anyone could transact at. If forced to sell during or immediately after such a freeze, the realizable price could be considerably worse than the last marked price, which is exactly the gap liquidity risk is concerned with."
+            },
+            {
+              "_type": "block",
+              "_key": "s16",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "s16s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "s17",
+              "text": "A VaR figure assumes you can sell at the marked price. Liquidity risk is the reminder that this assumption is a convenience, not a guarantee, and it tends to fail exactly during the crisis you built the VaR model to warn you about."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "s18",
+              "points": [
+                "Liquidity risk splits into market (asset) liquidity risk, how easily a position can be traded without moving its price, and funding liquidity risk, whether you have the cash or margin to meet your own obligations.",
+                "The two compound into a liquidity spiral: a margin call forces a sale into a thin market, which pushes prices down further, which can trigger more margin calls.",
+                "Individual NSE and BSE stocks carry their own daily price bands, and a thinly traded stock hitting its lower circuit repeatedly can freeze entirely, with a marked price nobody could actually transact at.",
+                "Four consecutive 5% lower-circuit days compound to an 18.55% decline, not a simple 20%, and if the stock is genuinely frozen with no buyers throughout, that marked loss may not reflect what an investor could have realized by selling.",
+                "Liquidity tends to be plentiful exactly when it is not needed and to disappear exactly when it is, which is why the next lesson builds a way to quantify this cost directly, rather than assuming it away."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

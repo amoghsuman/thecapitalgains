@@ -1,0 +1,280 @@
+{
+  "courseSlug": "understanding-risk-parity-and-advanced-portfolio-construction",
+  "chapters": [
+    {
+      "title": "Chapter 3: Advanced Risk Parity Techniques",
+      "lessons": [
+        {
+          "title": "Factor Risk Parity: Allocating Across Risk Factors, Not Just Assets",
+          "slug": "factor-risk-parity-allocating-across-risk-factors-not-just-assets",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "b1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b1s1", "text": "Every risk parity method this course has covered, plain ERC, HRP, all of it, allocates risk across asset classes: so much to equity, so much to debt, so much to gold. This lesson asks a question that quietly undermines that whole framing: is 'asset class' actually the right unit to balance risk across? What if two assets you have carefully weighted to look diversified are secretly both just different costumes worn by the same underlying risk factor?", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b2s1", "text": "The Hidden Problem: Shared Factors Behind 'Different' Assets", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b3",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b3s1", "text": "The last chapter's correlation regime lesson already hinted at this. In 2022, equity and debt stopped offsetting each other and started falling together, because both were secretly exposed to the same underlying driver: rising rates and inflation. That is not a coincidence, it is a preview of this lesson's whole point. Nifty 50, Nifty Bank, and Nifty IT are three separate line items in a portfolio spreadsheet, but if all three move together because they all ultimately track the same broad equity market factor, then splitting risk evenly across them is not the same as splitting risk evenly across genuinely independent sources of risk.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b4",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b4s1", "text": "From Asset Weights to Factor Exposures: A Quick PCA Primer", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b5",
+              "style": "normal",
+              "markDefs": [
+                { "_type": "glossaryTerm", "_key": "gt1", "definition": "A statistical technique that finds the orthogonal (mutually uncorrelated) directions of movement in a set of assets, ranked by how much variance each one explains, purely from the covariance matrix, with no economic labels attached upfront." }
+              ],
+              "children": [
+                { "_type": "span", "_key": "b5s1", "text": "One practical way to find a portfolio's real, independent risk factors, without needing an external macro dataset, is ", "marks": [] },
+                { "_type": "span", "_key": "b5s2", "text": "Principal Component Analysis", "marks": ["gt1"] },
+                { "_type": "span", "_key": "b5s3", "text": ", or PCA, applied directly to the covariance matrix you already have. PCA decomposes the covariance matrix into a set of eigenvectors, orthogonal directions of common movement, each paired with an eigenvalue that measures how much of the portfolio's total variance moves along that direction.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "mathBlock",
+              "_key": "b6",
+              "latex": "\\Sigma = V \\Lambda V^{T}, \\qquad \\text{Var}(w) = \\sum_{k=1}^{n} (w^{T} v_k)^2 \\lambda_k",
+              "caption": "The eigendecomposition of the covariance matrix, and the resulting portfolio variance decomposition. V holds the eigenvectors (the factors) as columns, Lambda holds the eigenvalues (each factor's variance) on the diagonal. Because eigenvectors are orthogonal by construction, this sum has no cross terms at all, unlike the asset-level risk contribution formula from chapter 2."
+            },
+            {
+              "_type": "block",
+              "_key": "b7",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b7s1", "text": "Case Study: What the Five-Asset Portfolio's Risk Really Looks Like in Factor Terms", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b8",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b8s1", "text": "Run PCA on the same five-asset covariance matrix from the last lesson, Nifty 50, Nifty Bank, Nifty IT, the 10-year G-Sec, and gold.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "b9",
+              "caption": "PCA factor decomposition of the five-asset covariance matrix (illustrative)",
+              "headers": ["Factor", "Variance explained", "Dominant loadings", "Interpretation"],
+              "rows": [
+                { "cells": ["PC1", "66.3%", "Nifty 50, Nifty Bank, Nifty IT all load heavily, same sign", "Broad equity / market factor"] },
+                { "cells": ["PC2", "14.7%", "Gold loads almost alone (0.97)", "Gold factor"] },
+                { "cells": ["PC3", "14.1%", "Nifty Bank and Nifty IT load with opposite signs", "Bank-vs-IT relative factor"] },
+                { "cells": ["PC4", "2.6%", "10-year G-Sec loads almost alone (-0.86)", "Rates / duration factor"] },
+                { "cells": ["PC5", "2.3%", "Small, mixed loadings across all five", "Residual / noise"] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "b10",
+              "type": "insight",
+              "text": "One factor, PC1, the broad equity factor, accounts for two-thirds of all the variance in this five-asset universe. That is because Nifty 50, Nifty Bank, and Nifty IT are, statistically, three highly correlated expressions of the same underlying equity market movement. The 10-year G-Sec's own dedicated factor, PC4, explains barely 2.6% of total variance, simply because G-Sec volatility is so much lower than equity's in absolute terms."
+            },
+            {
+              "_type": "block",
+              "_key": "b11",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b11s1", "text": "Now take the true ERC weights this course solved for on this same universe last lesson, 10.5% Nifty 50, 8.8% Nifty Bank, 9.7% Nifty IT, 51.4% G-Sec, 19.6% gold, a portfolio that gives every asset exactly 20% of portfolio risk. Translate that same portfolio into factor terms instead.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "statGrid",
+              "_key": "b12",
+              "stats": [
+                { "label": "Asset-level risk contribution (ERC)", "value": "20% each", "context": "Nifty 50, Nifty Bank, Nifty IT, G-Sec, Gold, by construction" },
+                { "label": "Factor-level risk contribution: PC1 (equity)", "value": "59.2%", "context": "Nearly three times the asset-level equity risk shares combined would suggest" },
+                { "label": "Factor-level risk contribution: PC4 (rates)", "value": "16.4%", "context": "Compare to G-Sec's 51.4% capital weight, a very different picture" }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "b13",
+              "type": "warning",
+              "text": "A portfolio that hands each of five assets exactly equal risk is, in factor terms, nearly 60% exposed to a single equity market factor, because three of those five 'independent' assets all lean on that same factor. Asset-level diversification and factor-level diversification are not the same thing, and a portfolio can look perfectly balanced by one measure while being quietly concentrated by the other."
+            },
+            {
+              "_type": "block",
+              "_key": "b14",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b14s1", "text": "Why You Usually Can't Just 'Fix' This by Solving for Equal Factor Risk", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b15",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b15s1", "text": "The obvious next move is to solve for portfolio weights that give each of the five factors equal risk contribution instead of each asset. Try it, and the result is instructive in an uncomfortable way.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "b16",
+              "caption": "Solving for equal risk contribution across all 5 PCA factors (illustrative, long-short weights)",
+              "headers": ["Asset", "Weight required"],
+              "rows": [
+                { "cells": ["Nifty 50", "+36.1%"] },
+                { "cells": ["Nifty Bank", "+13.7%"] },
+                { "cells": ["Nifty IT", "-18.1%"] },
+                { "cells": ["10-year G-Sec", "+107.9%"] },
+                { "cells": ["Gold", "-39.6%"] }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "b17",
+              "type": "warning",
+              "text": "This is chapter 1's error-maximization problem again, wearing a different outfit. PC4 and PC5, the rates factor and the noise factor, explain barely 5% of total variance combined. To force a meaningful, equal risk contribution out of a factor that naturally carries almost no variance, the optimizer has to take an enormous, and here a short, position, a G-Sec exposure of nearly 108% of capital funded partly by shorting Nifty IT and gold. Restricting the target to only the top 3 factors instead of all 5 does not fix this either, in this five-asset universe it produces positions exceeding 100% of capital on both the long and short side, because PC1, PC2, and PC3 have very different natural variance scales and there are not enough genuinely independent assets here to hit three very differently sized targets without large offsetting bets."
+            },
+            {
+              "_type": "block",
+              "_key": "b18",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b18s1", "text": "How Factor Decomposition Is Actually Used in Practice", "marks": [] }
+              ]
+            },
+            {
+              "_type": "comparison",
+              "_key": "b19",
+              "title": "Two Honest Uses of Factor Risk Analysis",
+              "columns": [
+                {
+                  "label": "As a diagnostic overlay (what this lesson mostly demonstrated)",
+                  "points": [
+                    "Keep an asset-level ERC or HRP portfolio as the primary weight-setting method",
+                    "Regularly decompose its factor risk contribution to catch hidden concentration, exactly as this lesson's case study did",
+                    "Low risk of the extreme long-short positions seen above, since you are only measuring, not re-optimizing"
+                  ]
+                },
+                {
+                  "label": "As the primary weight-setting method (institutional scale)",
+                  "points": [
+                    "Needs a genuinely large, diverse instrument set, dozens of assets and strategies across multiple countries, asset classes, and styles, not five broad Indian asset classes",
+                    "With enough independent instruments, there are enough real degrees of freedom to hit multiple factor targets without extreme leverage",
+                    "This is closer to how large multi-strategy risk parity funds actually operate, and it is a meaningfully larger undertaking than anything built in this course so far"
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b20",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b20s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "codeBlock",
+              "_key": "b21",
+              "language": "python",
+              "code": "import numpy as np\n\ndef factor_risk_contribution(weights, cov):\n    eigvals, eigvecs = np.linalg.eigh(cov)\n    order = np.argsort(eigvals)[::-1]\n    eigvals, eigvecs = eigvals[order], eigvecs[:, order]\n\n    exposures = eigvecs.T @ weights          # this portfolio's exposure to each factor\n    factor_var = exposures**2 * eigvals       # each factor's contribution to variance\n    port_var = weights @ cov @ weights\n    return eigvals / eigvals.sum(), factor_var / port_var  # variance explained, RC share\n\nvol = np.array([0.14, 0.18, 0.17, 0.05, 0.12])\ncorr = np.array([\n    [1.00, 0.85, 0.75, -0.08, 0.05],\n    [0.85, 1.00, 0.55, -0.05, 0.03],\n    [0.75, 0.55, 1.00, -0.05, 0.02],\n    [-0.08, -0.05, -0.05, 1.00, 0.00],\n    [0.05, 0.03, 0.02, 0.00, 1.00],\n])\ncov = np.outer(vol, vol) * corr\n\n# your existing ERC or HRP weights go here, this is diagnostic, not re-optimization\nweights = np.array([0.1054, 0.0883, 0.0972, 0.5135, 0.1956])\n\nvar_explained, rc_share = factor_risk_contribution(weights, cov)\nprint('Variance explained by factor:', np.round(var_explained * 100, 1))\nprint('This portfolio\\'s risk contribution by factor:', np.round(rc_share * 100, 1))",
+              "caption": "Run this against your own asset-level risk parity or HRP portfolio. It never touches your weights, it only tells you how concentrated your risk really is once you stop thinking in asset labels and start thinking in statistically independent factors."
+            },
+            {
+              "_type": "exercise",
+              "_key": "b22",
+              "variant": "scenario",
+              "title": "Reporting a Hidden Concentration",
+              "scenario": "You run the factor diagnostic above on your desk's live risk parity portfolio, which gives four asset classes equal 25% risk contribution each. The factor decomposition shows one PCA factor, which loads heavily and same-signed on two of your four assets, explains 68% of total portfolio risk.",
+              "prompt": "Given this lesson's case study showed that directly re-optimizing for equal factor risk in a small universe produced extreme long-short positions, what would you actually recommend instead?",
+              "modelAnswer": "Directly solving for equal risk across all the PCA factors is unlikely to be practical here either, for the same reason as the case study: a small universe with only four assets does not offer enough independent degrees of freedom to hit several factor targets without large offsetting long-short positions. More useful recommendations: flag the 68% concentration explicitly to whoever owns the portfolio's risk mandate, since asset-level equal risk contribution is clearly not delivering factor-level diversification here; consider whether the two assets sharing that factor could be replaced or supplemented with something less correlated to reduce the shared exposure structurally; and keep monitoring the factor decomposition regularly rather than treating it as a one-time finding, since factor loadings themselves can drift as correlations shift, exactly as the last lesson's regime discussion showed."
+            },
+            {
+              "_type": "exercise",
+              "_key": "b23",
+              "variant": "quiz",
+              "title": "Quick Check",
+              "question": "Why did attempting to equalize risk contribution across all 5 PCA factors in the case study require a G-Sec position of nearly 108% of capital, funded partly by shorting Nifty IT and gold?",
+              "options": [
+                "Because the covariance matrix used was singular",
+                "Because PC4 and PC5 naturally carry very little variance, so achieving a meaningful, equal risk contribution from them requires an unusually large exposure, mirroring the estimation-error amplification problem from chapter 1",
+                "Because G-Sec has the highest volatility of the five assets",
+                "Because SEBI requires a minimum 100% allocation to government securities in risk parity portfolios"
+              ],
+              "correctIndex": 1,
+              "explanation": "A factor's risk contribution is exposure squared times its own variance (eigenvalue). When a factor's eigenvalue is tiny, as PC4 and PC5's are here, only a very large exposure can multiply back up to a meaningful, equal-sized risk contribution. That large exposure requirement, not any data or regulatory issue, is exactly what produced the extreme long and short positions."
+            },
+            {
+              "_type": "flashcardSet",
+              "_key": "b24",
+              "title": "Chapter 3 Recap",
+              "cards": [
+                { "term": "Correlation regime", "definition": "A macro environment during which the correlation between asset classes stays relatively stable, before shifting when the environment changes, such as growth versus inflation-shock regimes." },
+                { "term": "Crisis correlation", "definition": "The tendency for correlations across many asset classes to converge upward during acute liquidity panics, as leveraged participants sell broadly to meet margin calls." },
+                { "term": "Hierarchical Risk Parity (HRP)", "definition": "A portfolio construction method using hierarchical clustering and recursive bisection to allocate risk without ever requiring the full covariance matrix to be well-conditioned." },
+                { "term": "Quasi-diagonalization", "definition": "Reordering a covariance matrix's rows and columns by clustering structure so correlated assets sit adjacent, without changing any underlying values." },
+                { "term": "Principal Component Analysis (PCA)", "definition": "A statistical technique that decomposes a covariance matrix into orthogonal factors (eigenvectors) ranked by how much variance each one explains (eigenvalues)." },
+                { "term": "Factor risk parity", "definition": "Allocating risk contribution across underlying statistical or economic factors rather than across asset classes, revealing concentration that asset-level risk parity can hide." }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "b25",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "b25s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "b26",
+              "text": "Asset-level risk parity balances risk across the labels on your portfolio spreadsheet. Factor risk parity asks whether those labels actually represent independent sources of risk, and often the honest answer is no. In this course's five-asset universe, a portfolio with textbook-perfect equal risk contribution across assets was still nearly 60% exposed to a single equity factor. Directly re-optimizing to fix that produced extreme, impractical positions, which is itself the lesson: factor decomposition is most useful as a diagnostic lens on top of an asset-level portfolio, not as a replacement weight-solving method, unless you are working with a genuinely large and diverse instrument set."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "b27",
+              "points": [
+                "Asset classes are not automatically independent risk sources. PCA on this course's five-asset universe found one factor, dominated by the three equity indices moving together, explaining 66.3% of total variance.",
+                "A portfolio with exact, textbook equal risk contribution across five assets (20% each) still showed 59.2% of its risk concentrated in that single equity factor once measured in factor terms, not asset terms.",
+                "Directly solving for equal risk contribution across all PCA factors, including the near-noise ones with tiny eigenvalues, produced extreme long-short positions (over 100% of capital in G-Sec, meaningful shorts in Nifty IT and gold), the same estimation-error-amplification problem from chapter 1, now appearing in factor space.",
+                "In practice, factor risk decomposition is most reliably used as a diagnostic overlay, run regularly on an existing asset-level ERC or HRP portfolio to catch hidden concentration, rather than as a direct weight-setting method for a small universe.",
+                "Solving for equal factor risk as the primary allocation method is more viable at institutional scale, with dozens of genuinely diverse instruments providing enough independent degrees of freedom to hit multiple factor targets without extreme leverage.",
+                "Chapter 4 turns from portfolio construction to honest evaluation: backtesting risk parity strategies, the mistakes that quietly inflate results, and how these strategies actually behaved in 2008, 2020, and 2022."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

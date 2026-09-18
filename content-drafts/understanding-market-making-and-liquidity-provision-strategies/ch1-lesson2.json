@@ -1,0 +1,254 @@
+{
+  "courseSlug": "understanding-market-making-and-liquidity-provision-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 1: Foundations of Market Making and Liquidity",
+      "lessons": [
+        {
+          "title": "The Order Book Explained: Bids, Asks, Depth, and the Best Price",
+          "slug": "the-order-book-explained-bids-asks-depth-and-the-best-price",
+          "body": [
+            {
+              "_key": "mmc1l2b01",
+              "_type": "bigIdea",
+              "text": "The best bid and best ask are only the top of the order book, not the whole of it. What sits beneath those two numbers, level after level of resting quantity, decides how much a real trade actually costs once it is bigger than a single line item."
+            },
+            {
+              "_key": "mmc1l2b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc1l2b02s1",
+                  "_type": "span",
+                  "text": "The previous lesson treated the order book as two numbers: a best bid and a best ask. That is enough to understand the spread, but it is not enough to understand liquidity. Behind the best bid sit more buy orders at slightly worse prices, and behind the best ask sit more sell orders at slightly worse prices. This stack of resting orders, at every price level away from the best price, is what traders mean by market depth, and it is what actually determines how a large order gets filled.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc1l2b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc1l2b03s1",
+                  "_type": "span",
+                  "text": "Price-Time Priority: How the Queue at Each Price Works",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc1l2b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "mmc1l2m01",
+                  "_type": "glossaryTerm",
+                  "definition": "The matching rule NSE's exchange system uses: among orders at the same price, the one placed earliest is filled first. Price always ranks first (a better price always trades before a worse one); time only decides the order among orders tied on price."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "mmc1l2b04s1",
+                  "_type": "span",
+                  "text": "NSE's matching engine, like almost every modern exchange, uses ",
+                  "marks": []
+                },
+                {
+                  "_key": "mmc1l2b04s2",
+                  "_type": "span",
+                  "text": "price-time priority",
+                  "marks": ["mmc1l2m01"]
+                },
+                {
+                  "_key": "mmc1l2b04s3",
+                  "_type": "span",
+                  "text": ". Orders are first ranked by price: a bid at ₹85.00 always fills before a bid at ₹84.95, and an ask at ₹85.10 always fills before an ask at ₹85.15. Among orders sitting at the exact same price, the one that arrived first is filled first, and every later order at that price waits its turn behind it. A resting order does not become more likely to fill just because a trader is watching it; its place in the queue is fixed the moment it is placed and only moves up as orders ahead of it are filled or cancelled.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc1l2b05",
+              "_type": "table",
+              "caption": "Illustrative queue at a single price level, ₹85.00 bid, in order of arrival",
+              "headers": ["Queue Position", "Order Arrival Time", "Quantity (lots)"],
+              "rows": [
+                { "_key": "mmc1l2b05r1", "_type": "tableRow", "cells": ["1st", "09:15:03", "40"] },
+                { "_key": "mmc1l2b05r2", "_type": "tableRow", "cells": ["2nd", "09:15:07", "60"] },
+                { "_key": "mmc1l2b05r3", "_type": "tableRow", "cells": ["3rd", "09:16:41", "25"] }
+              ]
+            },
+            {
+              "_key": "mmc1l2b06",
+              "_type": "callout",
+              "type": "insight",
+              "text": "If a sell order for 50 lots arrives and trades against the ₹85.00 bid, the 1st order in the queue (40 lots, placed at 09:15:03) is filled completely, and the 2nd order (placed at 09:15:07) is filled for the remaining 10 lots. The 3rd order does not get touched at all. This is exactly why market makers care about being early into a price level, not just about quoting the right price."
+            },
+            {
+              "_key": "mmc1l2b07",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc1l2b07s1",
+                  "_type": "span",
+                  "text": "Market Depth: Seeing Beyond the Top of the Book",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc1l2b08",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc1l2b08s1",
+                  "_type": "span",
+                  "text": "A retail trader on Zerodha's Kite, or any other NSE-registered broker terminal, sees five-level market depth for both cash and F&O instruments: the best five bid prices with their quantities, and the best five ask prices with theirs. That is already far more useful than the single best bid and ask, since it shows how quickly liquidity thins out as price moves away from the top. The full order book, every single resting order at every price level, is not published to retail terminals at all. It exists only inside NSE's matching engine and is accessible in close to real time only through the exchange's tick-by-tick (TBT) data feed, which is what proprietary trading firms and market makers running colocated servers actually consume, a topic this course returns to in Chapter 5.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc1l2b09",
+              "_type": "table",
+              "caption": "Illustrative 5-level market depth, a moderately liquid HDFC Bank stock option (not live market data)",
+              "headers": ["Bid Qty", "Bid Price (₹)", "Ask Price (₹)", "Ask Qty"],
+              "rows": [
+                { "_key": "mmc1l2b09r1", "_type": "tableRow", "cells": ["300", "85.00", "85.10", "250"] },
+                { "_key": "mmc1l2b09r2", "_type": "tableRow", "cells": ["450", "84.95", "85.15", "300"] },
+                { "_key": "mmc1l2b09r3", "_type": "tableRow", "cells": ["500", "84.90", "85.20", "400"] },
+                { "_key": "mmc1l2b09r4", "_type": "tableRow", "cells": ["350", "84.85", "85.25", "275"] },
+                { "_key": "mmc1l2b09r5", "_type": "tableRow", "cells": ["600", "84.80", "85.30", "500"] }
+              ]
+            },
+            {
+              "_key": "mmc1l2b10",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc1l2b10s1",
+                  "_type": "span",
+                  "text": "Why Depth Matters: Slippage When an Order Walks the Book",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc1l2b11",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "mmc1l2m02",
+                  "_type": "glossaryTerm",
+                  "definition": "The gap between the price a trader expected to pay or receive (usually the best bid or ask visible at the time) and the actual average price their order fills at. Slippage grows with order size and shrinks with depth."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "mmc1l2b11s1",
+                  "_type": "span",
+                  "text": "A market order only guarantees that it will fill, not that it will fill at the best price for its entire size. If a market buy order is bigger than the quantity resting at the best ask, it fills the best ask level completely and then keeps filling at the next level, and the next, until the full order size is satisfied, a process traders call walking the book. Every level past the first fills at a worse price, so the order's average fill price ends up worse than the best ask that was visible before the order was sent. This gap between the expected price and the actual average fill price is called ",
+                  "marks": []
+                },
+                {
+                  "_key": "mmc1l2b11s2",
+                  "_type": "span",
+                  "text": "slippage",
+                  "marks": ["mmc1l2m02"]
+                },
+                {
+                  "_key": "mmc1l2b11s3",
+                  "_type": "span",
+                  "text": ", and it is a direct, mechanical consequence of depth, not a random cost.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc1l2b12",
+              "_type": "mathBlock",
+              "latex": "\\bar{P} = \\frac{\\sum_i q_i \\cdot P_i}{\\sum_i q_i}",
+              "caption": "Average fill price for an order that walks through multiple depth levels: the quantity-weighted average of every price level it trades through."
+            },
+            {
+              "_key": "mmc1l2b13",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Compute the Average Fill Price",
+              "prompt": "Using the 5-level depth table above, a trader sends a market buy order for 900 units. It fills 250 units at the best ask of ₹85.10, then 300 units at the next level of ₹85.15, then the remaining 350 units at ₹85.20. What is the order's quantity-weighted average fill price, in rupees, rounded to two decimals?",
+              "correctValue": 85.16,
+              "tolerance": 0.02,
+              "unit": "₹",
+              "explanation": "Weighted average = (250 × 85.10 + 300 × 85.15 + 350 × 85.20) ÷ 900 = 76,640 ÷ 900 ≈ ₹85.16. The order paid roughly ₹0.06 per unit above the best ask of ₹85.10 purely because its size exceeded what was resting at the top of the book, which is slippage from walking the book, not from the market moving against the trader."
+            },
+            {
+              "_key": "mmc1l2b14",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Depth is a direct, observable proxy for liquidity. A book with thick quantity at every level can absorb large orders with almost no slippage. A book with thin depth, even if the spread looks tight at the very top, can move sharply against a trade the moment an order bigger than the top level shows up."
+            },
+            {
+              "_key": "mmc1l2b15",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Displayed depth is not a guarantee. Resting orders can be cancelled the instant before an incoming order reaches them, a behaviour sometimes called quote fading, especially from fast participants reacting to news or to the same signal a slower trader is acting on. What you see in the depth window is the state of the book a moment ago, not a promise about what it will look like when your order actually arrives."
+            },
+            {
+              "_key": "mmc1l2b16",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc1l2b16s1",
+                  "_type": "span",
+                  "text": "Depth From the Market Maker's Side of the Book",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc1l2b17",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc1l2b17s1",
+                  "_type": "span",
+                  "text": "A market maker does not just post one bid and one ask at the top of the book. It typically maintains resting quantity across several price levels on both sides, refreshing them continuously as the top of the book trades away, so that the book does not suddenly look empty the instant its best quote is hit. Deciding how much size to post at each level, and how quickly to replace what gets filled, is itself a risk decision, since posting too much size too close to the top can mean absorbing a large, unwanted position in a single burst of trading. That sizing and inventory decision is the subject of Chapter 3.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc1l2b18",
+              "_type": "keyTakeaways",
+              "points": [
+                "The order book is many price levels deep, not just a single best bid and best ask",
+                "NSE matches orders using price-time priority: better prices trade first, and among orders at the same price, the earliest one placed is filled first",
+                "Retail broker terminals like Zerodha's Kite show 5-level market depth; the full order book is only available through exchange feeds like NSE's tick-by-tick (TBT) data",
+                "A market order larger than the top depth level walks the book, filling at progressively worse prices, which produces slippage as a mechanical consequence of size versus depth",
+                "Displayed depth can be cancelled before an incoming order reaches it, so it should be read as a snapshot, not a guarantee",
+                "Market makers post size across multiple levels, not just the top, and sizing that carefully is itself a risk decision covered in the next chapter"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

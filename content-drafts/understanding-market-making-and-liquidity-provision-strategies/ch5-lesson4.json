@@ -1,0 +1,206 @@
+{
+  "courseSlug": "understanding-market-making-and-liquidity-provision-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 5: Market Microstructure and Execution Mechanics",
+      "lessons": [
+        {
+          "title": "Circuit Filters, Price Bands, and How They Constrain Market Maker Quotes",
+          "slug": "circuit-filters-price-bands-and-how-they-constrain-market-maker-quotes",
+          "body": [
+            {
+              "_key": "mmc5l4b01",
+              "_type": "bigIdea",
+              "text": "Every tool this course has covered assumes continuous trading is happening. Circuit filters exist precisely for the moments it stops, and a market maker's software has to handle that discontinuity gracefully rather than simply not have planned for it."
+            },
+            {
+              "_key": "mmc5l4b02",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc5l4b02s1",
+                  "_type": "span",
+                  "text": "Market-Wide Circuit Breakers: The Whole-Market Safety Valve",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc5l4b03",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "mmc5l4m01",
+                  "_type": "glossaryTerm",
+                  "definition": "A SEBI-mandated mechanism that halts trading across the entire market for a defined period once a benchmark index, Nifty or Sensex, moves beyond a specified percentage from its previous close, with the trigger levels and halt durations tiered by how large the move is and what time of day it happens."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "mmc5l4b03s1",
+                  "_type": "span",
+                  "text": "India's ",
+                  "marks": []
+                },
+                {
+                  "_key": "mmc5l4b03s2",
+                  "_type": "span",
+                  "text": "market-wide circuit breaker",
+                  "marks": ["mmc5l4m01"]
+                },
+                {
+                  "_key": "mmc5l4b03s3",
+                  "_type": "span",
+                  "text": " mechanism operates in three stages, calibrated to how extreme the index move is, based on either Nifty or Sensex, whichever is triggered first. A move of roughly 10% halts the entire market for a period; a move of roughly 15% halts it for longer; and a move of roughly 20% halts trading for the rest of the session entirely. The exact halt durations also depend on what time of day the trigger happens, with moves later in the session generally resulting in shorter halts, or in some cases none at all, than the same size move earlier in the day.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc5l4b04",
+              "_type": "table",
+              "caption": "The general shape of India's three-stage market-wide circuit breaker (illustrative structure, not the current exact figures)",
+              "headers": ["Index Move", "Typical Effect", "Scope"],
+              "rows": [
+                { "_key": "mmc5l4b04r1", "_type": "tableRow", "cells": ["~10%", "A tiered halt of the whole market, with duration depending on time of trigger", "All exchanges, all segments"] },
+                { "_key": "mmc5l4b04r2", "_type": "tableRow", "cells": ["~15%", "A longer market-wide halt than the 10% stage", "All exchanges, all segments"] },
+                { "_key": "mmc5l4b04r3", "_type": "tableRow", "cells": ["~20%", "Trading halted for the remainder of the session", "All exchanges, all segments"] }
+              ]
+            },
+            {
+              "_key": "mmc5l4b05",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "The exact trigger percentages and halt durations for India's market-wide circuit breaker are set by SEBI and can be revised. Treat the numbers above as illustrative of the three-stage structure, not as figures to rely on for a live system; check the current SEBI circular before building anything that depends on precise thresholds or durations."
+            },
+            {
+              "_key": "mmc5l4b06",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc5l4b06s1",
+                  "_type": "span",
+                  "text": "Stock-Level Price Bands vs Derivatives' Wider Operating Ranges",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc5l4b07",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc5l4b07s1",
+                  "_type": "span",
+                  "text": "Individual stocks in the cash market carry their own daily price bands, commonly called circuit limits, set by the exchange based on categories such as volatility and market capitalisation, typically somewhere in a range like 2%, 5%, 10%, or 20% from the previous close, beyond which the stock simply cannot trade further that session. Stocks that have listed derivatives, futures and options traded on them, are treated differently: rather than a tight, fixed daily band on the underlying stock itself, exchanges generally allow a much wider, dynamically adjusted operating range for these securities and their derivatives. The reason is not an oversight; a tight daily band on a stock's cash price, combined with an options or futures market on that same stock that needed to freely reflect changing information, would create exactly the kind of dislocation between the cash and derivatives markets that circuit filters are meant to prevent, not cause.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc5l4b08",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This is precisely why an options market maker's attention during a fast-moving session is on the underlying's price relative to the market-wide index circuit levels, rather than on a fixed daily band on the option premium itself. The option's own price is generally free to move with the underlying and with volatility; the market-wide circuit breaker is the safety mechanism that actually matters here, not a static per-stock limit."
+            },
+            {
+              "_key": "mmc5l4b09",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mmc5l4b09s1",
+                  "_type": "span",
+                  "text": "What Happens to a Market Maker's Quotes During a Halt",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc5l4b10",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "mmc5l4m02",
+                  "_type": "glossaryTerm",
+                  "definition": "A session, run when trading resumes after a halt, in which all buy and sell orders are collected and matched at a single price that best balances supply and demand, rather than trading continuously against a live order book, used to establish a fresh, orderly reopening price."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "mmc5l4b10s1",
+                  "_type": "span",
+                  "text": "The instant a market-wide circuit breaker triggers, no further execution happens anywhere; every resting order, including a market maker's own quotes, simply sits without trading. When the market reopens, it typically does so through a ",
+                  "marks": []
+                },
+                {
+                  "_key": "mmc5l4b10s2",
+                  "_type": "span",
+                  "text": "call auction",
+                  "marks": ["mmc5l4m02"]
+                },
+                {
+                  "_key": "mmc5l4b10s3",
+                  "_type": "span",
+                  "text": ", collecting fresh buy and sell interest and matching it at a single equilibrium price, rather than simply resuming continuous trading at whatever the last traded price happened to be before the halt. This means a market maker's pre-halt quote is not something it can simply leave resting and expect to be meaningful on reopening; it has to be withdrawn and rebuilt from scratch once trading resumes, priced against whatever new information emerged during the halt itself.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mmc5l4b11",
+              "_type": "callout",
+              "type": "warning",
+              "text": "A halt is an enforced holding period with zero ability to act, which is a more extreme version of the duration risk covered in Chapter 3. Any inventory a market maker is carrying the instant a circuit breaker triggers is fully exposed to whatever gap occurs between the pre-halt price and the reopening auction price, with no opportunity to skew, size-adjust, or unwind during the pause itself. This is exactly why disciplined inventory management during normal trading, well before any circuit level is anywhere close, matters as much as it does."
+            },
+            {
+              "_key": "mmc5l4b12",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Caught Long Into a Circuit Halt",
+              "scenario": "A market maker is running a moderately long inventory position when Nifty suddenly moves sharply enough to trigger a market-wide circuit breaker, halting trading market-wide with no warning.",
+              "prompt": "What can this market maker do about its inventory during the halt itself, and what does this imply about how it should have been managing that inventory in the minutes leading up to the halt?",
+              "modelAnswer": "During the halt itself, the market maker can do nothing at all about its existing inventory: no orders execute, so there is no way to skew, size-adjust, or unwind the position until trading resumes through the reopening call auction, and by then the price may have gapped significantly from where the position was built. This implies that the discipline covered in Chapter 3, skewing early and escalating to an aggressive unwind before a risk limit is breached, matters most in exactly the fast-moving conditions that can precede a circuit breaker, since once the halt actually triggers, all of that toolkit becomes completely unavailable until the market reopens."
+            },
+            {
+              "_key": "mmc5l4b13",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Which Safeguard Applies Where",
+              "question": "A stock has actively traded options and futures listed on it. Which statement best describes how price constraints typically apply to it?",
+              "options": [
+                "The stock, its options, and its futures all share the same tight, fixed daily price band",
+                "The stock's cash price generally has a much wider, dynamically adjusted operating range than a typical stock without listed derivatives, precisely so its options and futures can freely reflect changing information",
+                "Only the options and futures have price bands; the underlying stock has none at all",
+                "Derivatives contracts are entirely exempt from every price safeguard, including the market-wide circuit breaker"
+              ],
+              "correctIndex": 1,
+              "explanation": "Stocks with listed derivatives are generally given a much wider, dynamically adjusted operating range than the tight, fixed daily circuit limits applied to ordinary stocks, precisely to avoid a mismatch between a constrained cash price and options or futures markets that need to move freely with new information. This does not exempt them from the market-wide circuit breaker, which still applies across the entire market regardless of any individual stock's own band."
+            },
+            {
+              "_key": "mmc5l4b14",
+              "_type": "keyTakeaways",
+              "points": [
+                "India's market-wide circuit breaker halts trading across the entire market once a benchmark index moves beyond tiered percentage thresholds, with halt duration depending on both the size of the move and the time of day",
+                "Ordinary cash-market stocks carry their own fixed daily price bands, but stocks with listed derivatives generally get a much wider, dynamically adjusted operating range instead, to avoid dislocating the cash and derivatives markets from each other",
+                "An options market maker's attention during a fast-moving session belongs on the underlying's proximity to market-wide circuit levels, not on a fixed daily band on the option premium itself",
+                "During any halt, no execution occurs anywhere, and the market typically reopens through a call auction rather than resuming continuous trading at the pre-halt price",
+                "Inventory held into a halt is an enforced, unmanageable holding period, an extreme version of the duration risk from Chapter 3, with zero ability to skew or unwind until the reopening auction",
+                "This closes Chapter 5's arc from order types, through colocation and the regulatory obligations that govern algorithmic quoting, to the exchange-side safeguards that constrain how far any of it can move prices in a single session"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

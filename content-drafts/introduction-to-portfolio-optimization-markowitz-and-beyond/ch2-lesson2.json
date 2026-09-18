@@ -1,0 +1,247 @@
+{
+  "courseSlug": "introduction-to-portfolio-optimization-markowitz-and-beyond",
+  "chapters": [
+    {
+      "title": "Chapter 2: Covariance, Correlation, and the Mathematics of Diversification",
+      "lessons": [
+        {
+          "title": "Portfolio Variance for Two Assets: Where the Diversification Math Happens",
+          "slug": "portfolio-variance-for-two-assets-where-the-diversification-math-happens",
+          "body": [
+            {
+              "_key": "poc2l2-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc2l2-001s1", "_type": "span", "marks": [], "text": "Two lessons ago, finding the TCS and Maruti Suzuki portfolio's true risk, 1.50%, took an entire worked case study: building six months of combined portfolio returns by hand, then running Lesson 2's mean and standard deviation formulas over that new series. This lesson gets you to the same 1.50% in one line, using nothing but the two stocks' individual variances and their covariance. No combined series required." }
+              ]
+            },
+            {
+              "_key": "poc2l2-002",
+              "_type": "bigIdea",
+              "text": "Portfolio variance is NOT a weighted average of individual variances. It is a weighted average, plus a third term built from covariance. That third term is where diversification benefit lives, and it is the entire reason risk math is harder than the simple, exact weighted average that governs return."
+            },
+            {
+              "_key": "poc2l2-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc2l2-003s1", "_type": "span", "marks": [], "text": "Deriving the Formula" }
+              ]
+            },
+            {
+              "_key": "poc2l2-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc2l2-004s1", "_type": "span", "marks": [], "text": "Start from the definition. Portfolio return in any period is R_p = w1 R1 + w2 R2, the weighted average from Lesson 3. Portfolio variance is the variance of that sum." }
+              ]
+            },
+            {
+              "_key": "poc2l2-005",
+              "_type": "mathBlock",
+              "latex": "Var(R_p) = Var(w_1 R_1 + w_2 R_2)",
+              "caption": "Start here: portfolio variance is the variance of the weighted sum."
+            },
+            {
+              "_key": "poc2l2-006",
+              "_type": "mathBlock",
+              "latex": "= w_1^2 Var(R_1) + w_2^2 Var(R_2) + 2 w_1 w_2 \\, Cov(R_1, R_2)",
+              "caption": "Expanding the square of a sum of two deviations produces exactly three terms: two squared terms and one cross term."
+            },
+            {
+              "_key": "poc2l2-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc2l2-007s1", "_type": "span", "marks": [], "text": "This is the same algebra as expanding (a + b) squared into a squared, plus b squared, plus 2ab. Here, a is each period's deviation of R1 from its mean, scaled by w1, and b is the same for R2 scaled by w2. Averaging that expansion across all periods turns the squared terms into the two variances and the cross term into twice the covariance. Written out in the notation from Lessons 2 and 4:" }
+              ]
+            },
+            {
+              "_key": "poc2l2-008",
+              "_type": "mathBlock",
+              "latex": "\\sigma_p^2 = w_1^2 \\sigma_1^2 + w_2^2 \\sigma_2^2 + 2 w_1 w_2 \\, Cov_{12}",
+              "caption": "The two-asset portfolio variance formula, in standard deviation notation."
+            },
+            {
+              "_key": "poc2l2-009",
+              "_type": "mathBlock",
+              "latex": "\\sigma_p^2 = w_1^2 \\sigma_1^2 + w_2^2 \\sigma_2^2 + 2 w_1 w_2 \\, \\rho_{12} \\, \\sigma_1 \\sigma_2",
+              "caption": "The equivalent, and more commonly used, form, substituting Cov12 = correlation x sigma1 x sigma2 from Lesson 1."
+            },
+            {
+              "_key": "poc2l2-010",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc2l2-010s1", "_type": "span", "marks": [], "text": "Applying It: Predicting TCS + Maruti Suzuki's Risk in One Line" }
+              ]
+            },
+            {
+              "_key": "poc2l2-011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc2l2-011s1", "_type": "span", "marks": [], "text": "Every input is already sitting in Lessons 2 and 1: w1 = w2 = 0.5, sigma_TCS = 1.7078%, sigma_Maruti = 1.9791%, and Cov(TCS, Maruti) = 1.0833. Plug straight in." }
+              ]
+            },
+            {
+              "_key": "poc2l2-012",
+              "_type": "table",
+              "caption": "Building the portfolio variance term by term",
+              "headers": ["Term", "Calculation", "Value"],
+              "rows": [
+                { "_key": "poc2l2-012r1", "_type": "tableRow", "cells": ["w1^2 sigma1^2", "(0.5)^2 x (1.7078)^2", "0.7292"] },
+                { "_key": "poc2l2-012r2", "_type": "tableRow", "cells": ["w2^2 sigma2^2", "(0.5)^2 x (1.9791)^2", "0.9792"] },
+                { "_key": "poc2l2-012r3", "_type": "tableRow", "cells": ["2 w1 w2 Cov12", "2 x 0.5 x 0.5 x 1.0833", "0.5417"] },
+                { "_key": "poc2l2-012r4", "_type": "tableRow", "cells": ["Portfolio variance", "Sum of the three terms above", "2.2500"] }
+              ]
+            },
+            {
+              "_key": "poc2l2-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc2l2-013s1", "_type": "span", "marks": [], "text": "Portfolio variance is 2.25. Take the square root, and portfolio standard deviation is exactly 1.50%. That is precisely the number Chapter 1 found only after building an entire six-month combined return series by hand." }
+              ]
+            },
+            {
+              "_key": "poc2l2-014",
+              "_type": "callout",
+              "type": "insight",
+              "text": "This is the payoff for two chapters of setup. One formula, fed with each stock's own risk and one covariance number, reproduces in a single calculation what previously took a full worked case study to discover. This is exactly why the covariance matrix from Lesson 1 matters: once you have it, every portfolio's risk, for any set of weights, is one formula away."
+            },
+            {
+              "_key": "poc2l2-015",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc2l2-015s1", "_type": "span", "marks": [], "text": "Where the Naive Guess Actually Came From" }
+              ]
+            },
+            {
+              "_key": "poc2l2-016",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc2l2-016s1", "_type": "span", "marks": [], "text": "Lesson 4 asserted that the naive shortcut, weighting each stock's risk directly, is correct only when correlation equals exactly 1. Now that assertion can be proven, not just stated. Set correlation to 1 in the formula above, and the cross term becomes 2 w1 w2 sigma1 sigma2, which makes the whole expression a perfect square:" }
+              ]
+            },
+            {
+              "_key": "poc2l2-017",
+              "_type": "mathBlock",
+              "latex": "\\sigma_p^2 = w_1^2 \\sigma_1^2 + w_2^2 \\sigma_2^2 + 2 w_1 w_2 \\sigma_1 \\sigma_2 = (w_1 \\sigma_1 + w_2 \\sigma_2)^2 \\quad \\text{when } \\rho = 1",
+              "caption": "At correlation exactly 1, portfolio variance collapses to the square of the naive weighted average."
+            },
+            {
+              "_key": "poc2l2-018",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc2l2-018s1", "_type": "span", "marks": [], "text": "Taking the square root of both sides at correlation 1 gives sigma_p = w1 sigma1 + w2 sigma2, exactly the naive formula from Lesson 4. Plugging in TCS and Maruti Suzuki's actual weights and individual risks at a hypothetical correlation of 1 gives (0.5 x 1.7078) + (0.5 x 1.9791) = 1.8434%, precisely the 1.84% naive guess computed back in Lesson 4. The naive shortcut was never a rough approximation. It was the exact answer to a different, more extreme question: what would portfolio risk be if these two stocks moved in perfect lockstep? Since their real correlation is only 0.32, not 1, the real answer comes in lower." }
+              ]
+            },
+            {
+              "_key": "poc2l2-019",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Portfolio standard deviation as correlation varies (weights and individual risk fixed)",
+              "xAxisLabel": "Correlation between TCS and Maruti Suzuki",
+              "yAxisLabel": "Portfolio standard deviation (%)",
+              "data": [
+                { "_key": "poc2l2-019d1", "label": "-1.0" },
+                { "_key": "poc2l2-019d2", "label": "-0.5" },
+                { "_key": "poc2l2-019d3", "label": "0.0" },
+                { "_key": "poc2l2-019d4", "label": "0.32 (actual)" },
+                { "_key": "poc2l2-019d5", "label": "0.5" },
+                { "_key": "poc2l2-019d6", "label": "1.0 (naive guess)" }
+              ],
+              "series": [
+                { "_key": "poc2l2-019se1", "label": "Portfolio standard deviation", "values": [0.14, 0.93, 1.31, 1.50, 1.60, 1.84] }
+              ]
+            },
+            {
+              "_key": "poc2l2-020",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc2l2-020s1", "_type": "span", "marks": [], "text": "This is the full shape of diversification benefit for a fixed 50/50 mix of these two stocks. At correlation 1, on the far right, risk is at its worst-case maximum, the naive guess. As correlation falls, risk falls steadily, reaching almost zero as correlation approaches -1. The actual TCS and Maruti Suzuki point, at 0.32, sits comfortably on the downward slope, well short of the extreme, but already delivering a real, measurable benefit over the naive case." }
+              ]
+            },
+            {
+              "_key": "poc2l2-021",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Do not read the near-zero point at correlation -1 as achievable here. It exists because these two stocks happen to have close, but not identical, individual volatilities. If sigma1 and sigma2 were far apart, or the weights were not 50/50, correlation -1 would still minimize risk, but it would not drive it all the way to zero. Chapter 3 covers exactly how weights, not just correlation, shape this outcome."
+            },
+            {
+              "_key": "poc2l2-022",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Predict a new portfolio's risk directly",
+              "prompt": "A portfolio holds 60% in Stock A (standard deviation 3%) and 40% in Stock B (standard deviation 5%). The correlation between A and B is 0.2. What is the portfolio's standard deviation?",
+              "correctValue": 2.95,
+              "tolerance": 0.1,
+              "unit": "%",
+              "explanation": "Variance = (0.6)^2(3)^2 + (0.4)^2(5)^2 + 2(0.6)(0.4)(0.2)(3)(5) = 3.24 + 4.00 + 1.44 = 8.68. Standard deviation = the square root of 8.68, which is approximately 2.95%."
+            },
+            {
+              "_key": "poc2l2-023",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Direction of the effect",
+              "question": "Holding both stocks' weights and individual standard deviations fixed, as the correlation between them falls from +1 toward -1, what happens to portfolio variance?",
+              "options": [
+                "It rises steadily",
+                "It falls steadily",
+                "It stays exactly the same, since variance only depends on individual risk",
+                "It falls, then rises again, forming a U-shape"
+              ],
+              "correctIndex": 1,
+              "explanation": "The cross term, 2 w1 w2 rho sigma1 sigma2, is directly proportional to correlation, with everything else in it held fixed and positive. As correlation falls, that term shrinks and eventually turns negative, pulling portfolio variance down in a straight line, exactly as the chart in this lesson shows."
+            },
+            {
+              "_key": "poc2l2-024",
+              "_type": "flashcardSet",
+              "title": "Portfolio Variance: Core Terms",
+              "cards": [
+                { "_key": "poc2l2-024f1", "term": "Two-asset portfolio variance formula", "definition": "sigma_p^2 = w1^2 sigma1^2 + w2^2 sigma2^2 + 2 w1 w2 Cov12, or equivalently with 2 w1 w2 rho12 sigma1 sigma2 as the last term." },
+                { "_key": "poc2l2-024f2", "term": "Cross term", "definition": "The 2 w1 w2 Cov12 (or 2 w1 w2 rho sigma1 sigma2) term in the portfolio variance formula. The only term that depends on how the two assets move together, and the source of all diversification benefit." },
+                { "_key": "poc2l2-024f3", "term": "Correlation-1 case", "definition": "The special case where portfolio variance collapses to a perfect square, making the naive weighted-average-of-risks shortcut exactly correct. True only when the two assets are perfectly positively correlated." }
+              ]
+            },
+            {
+              "_key": "poc2l2-025",
+              "_type": "keyTakeaways",
+              "points": [
+                "Portfolio variance for two assets is w1^2 sigma1^2 + w2^2 sigma2^2 + 2 w1 w2 Cov12, not a simple weighted average of the two variances.",
+                "The cross term, built from covariance (or correlation), is the only place diversification benefit comes from. Set it to its maximum, correlation 1, and the formula collapses exactly to Lesson 4's naive shortcut.",
+                "Applied to TCS and Maruti Suzuki, this one formula reproduces the 1.50% standard deviation that Chapter 1 found only by building a full combined return series by hand.",
+                "As correlation falls from +1 toward -1, with weights and individual risks fixed, portfolio variance falls steadily. There is no threshold or tipping point, the relationship is direct and proportional.",
+                "The naive shortcut is not simply wrong; it is the exact answer to the special case where two assets move in perfect lockstep, a case real markets rarely produce among large-cap equities.",
+                "This two-asset formula, and the covariance matrix that feeds it, is the direct foundation for Chapter 3's efficient frontier, which just extends this same logic to many assets and many possible weight combinations at once."
+              ]
+            },
+            {
+              "_key": "poc2l2-026",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to buy or sell TCS, Maruti Suzuki, or any other security named here. All figures used in the examples and exercises are illustrative, not live or historical market data. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

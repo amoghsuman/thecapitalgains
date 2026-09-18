@@ -1,0 +1,269 @@
+{
+  "courseSlug": "introduction-to-portfolio-optimization-markowitz-and-beyond",
+  "chapters": [
+    {
+      "title": "Chapter 5: Beyond Markowitz: Fixing Mean-Variance Optimization",
+      "lessons": [
+        {
+          "title": "Risk Parity: An Alternative to Mean-Variance Optimization",
+          "slug": "risk-parity-an-alternative-to-mean-variance-optimization",
+          "body": [
+            {
+              "_key": "poc5l3-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc5l3-001s1", "_type": "span", "marks": [], "text": "Black-Litterman fixed Lesson 1's problem by anchoring expected returns to a stable equilibrium. Risk parity takes a more radical position: what if a portfolio simply did not need expected returns at all? Build the whole thing from the covariance matrix, the half of the inputs this chapter has already shown can actually be estimated with reasonable confidence, and leave return forecasting out entirely." }
+              ]
+            },
+            {
+              "_key": "poc5l3-002",
+              "_type": "bigIdea",
+              "text": "Equal-weighting a portfolio puts equal MONEY into each asset, not equal RISK. Risk parity fixes that mismatch directly: every asset contributes exactly the same share of total portfolio risk, regardless of how much capital that requires."
+            },
+            {
+              "_key": "poc5l3-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc5l3-003s1", "_type": "span", "marks": [], "text": "The Core Idea: Equal Risk, Not Equal Money" }
+              ]
+            },
+            {
+              "_key": "poc5l3-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc5l3-004s1", "_type": "span", "marks": [], "text": "Chapter 2's four-stock equal-weighted portfolio put 25% of the MONEY into each of TCS, Maruti Suzuki, HDFC Bank, and HUL, but nowhere near 25% of the RISK, since Maruti Suzuki's 28% volatility swamps HUL's 18% almost entirely once combined. A portfolio's total risk ends up dominated by its highest-volatility, most-correlated holdings, no matter how evenly the capital itself was split." }
+              ]
+            },
+            {
+              "_key": "poc5l3-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc5l3-005s1", "_type": "span", "marks": [], "text": "A First Pass: Weight Inversely to Volatility" }
+              ]
+            },
+            {
+              "_key": "poc5l3-006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc5l3-006s1", "_type": "span", "marks": [], "text": "The simplest fix gives each asset a weight inversely proportional to its own volatility, so calmer assets get more capital and volatile ones get less, then normalizes so the weights sum to 1." }
+              ]
+            },
+            {
+              "_key": "poc5l3-007",
+              "_type": "mathBlock",
+              "latex": "w_i \\propto \\frac{1}{\\sigma_i}",
+              "caption": "Naive risk parity: weight inversely proportional to each asset's own volatility, ignoring correlation entirely."
+            },
+            {
+              "_key": "poc5l3-008",
+              "_type": "table",
+              "caption": "Naive inverse-volatility weights, five stocks",
+              "headers": ["Stock", "Volatility", "Naive weight"],
+              "rows": [
+                { "_key": "poc5l3-008r1", "_type": "tableRow", "cells": ["TCS", "22%", "20.81%"] },
+                { "_key": "poc5l3-008r2", "_type": "tableRow", "cells": ["Maruti Suzuki", "28%", "16.35%"] },
+                { "_key": "poc5l3-008r3", "_type": "tableRow", "cells": ["HDFC Bank", "25%", "18.32%"] },
+                { "_key": "poc5l3-008r4", "_type": "tableRow", "cells": ["HUL", "18%", "25.44%"] },
+                { "_key": "poc5l3-008r5", "_type": "tableRow", "cells": ["Reliance", "24%", "19.08%"] }
+              ]
+            },
+            {
+              "_key": "poc5l3-009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc5l3-009s1", "_type": "span", "marks": [], "text": "The Catch: Correlation Still Matters" }
+              ]
+            },
+            {
+              "_key": "poc5l3-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "poc5l3-010m1", "_type": "glossaryTerm", "definition": "The share of a portfolio's total risk attributable to one specific holding, accounting for both that asset's own weight and its covariance with every other holding, not just its standalone volatility." }
+              ],
+              "children": [
+                { "_key": "poc5l3-010s1", "_type": "span", "marks": [], "text": "Check whether the naive weights above actually deliver equal risk. Each asset's true " },
+                { "_key": "poc5l3-010s2", "_type": "span", "marks": ["poc5l3-010m1"], "text": "risk contribution" },
+                { "_key": "poc5l3-010s3", "_type": "span", "marks": [], "text": " to the portfolio is w_i times that asset's row of the covariance matrix times the full weight vector, divided by total portfolio risk, the same covariance machinery from Chapter 2 and 3. Summed across all five assets, these contributions always add up to exactly the portfolio's total risk." }
+              ]
+            },
+            {
+              "_key": "poc5l3-011",
+              "_type": "table",
+              "caption": "Actual risk contribution under the naive inverse-vol weights (portfolio risk: 14.33%)",
+              "headers": ["Stock", "Weight", "Risk contribution (% of total risk)"],
+              "rows": [
+                { "_key": "poc5l3-011r1", "_type": "tableRow", "cells": ["TCS", "20.81%", "19.90%"] },
+                { "_key": "poc5l3-011r2", "_type": "tableRow", "cells": ["Maruti Suzuki", "16.35%", "20.92%"] },
+                { "_key": "poc5l3-011r3", "_type": "tableRow", "cells": ["HDFC Bank", "18.32%", "21.94%"] },
+                { "_key": "poc5l3-011r4", "_type": "tableRow", "cells": ["HUL", "25.44%", "16.33%"] },
+                { "_key": "poc5l3-011r5", "_type": "tableRow", "cells": ["Reliance", "19.08%", "20.92%"] }
+              ]
+            },
+            {
+              "_key": "poc5l3-012",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Not equal. HUL, despite receiving the LARGEST weight (25.44%) precisely because it is the calmest stock standalone, still ends up contributing the SMALLEST share of total risk (16.33%), while HDFC Bank contributes the most (21.94%) despite a smaller weight. The naive formula only looked at each stock's own volatility. It never accounted for how each stock covaries with the other four, exactly the gap Chapter 2 spent an entire chapter closing."
+            },
+            {
+              "_key": "poc5l3-013",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc5l3-013s1", "_type": "span", "marks": [], "text": "True Risk Parity: Equal Risk Contribution" }
+              ]
+            },
+            {
+              "_key": "poc5l3-014",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc5l3-014s1", "_type": "span", "marks": [], "text": "Genuine risk parity, sometimes called equal risk contribution (ERC), solves directly for the weights that make every asset's risk contribution identical, using the full covariance matrix rather than volatility alone. Unlike the minimum-variance formula from Chapter 3, there is no simple closed form for this beyond two assets, so real implementations solve it numerically." }
+              ]
+            },
+            {
+              "_key": "poc5l3-015",
+              "_type": "table",
+              "caption": "True equal-risk-contribution weights, five stocks",
+              "headers": ["Stock", "ERC weight", "Risk contribution"],
+              "rows": [
+                { "_key": "poc5l3-015r1", "_type": "tableRow", "cells": ["TCS", "20.69%", "20.00%"] },
+                { "_key": "poc5l3-015r2", "_type": "tableRow", "cells": ["Maruti Suzuki", "15.65%", "20.00%"] },
+                { "_key": "poc5l3-015r3", "_type": "tableRow", "cells": ["HDFC Bank", "16.86%", "20.00%"] },
+                { "_key": "poc5l3-015r4", "_type": "tableRow", "cells": ["HUL", "28.54%", "20.00%"] },
+                { "_key": "poc5l3-015r5", "_type": "tableRow", "cells": ["Reliance", "18.26%", "20.00%"] }
+              ]
+            },
+            {
+              "_key": "poc5l3-016",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Notice HUL's weight climbed from 25.44% under the naive approach to 28.54% under true risk parity, correcting exactly the under-contribution the naive table exposed. Every risk contribution now lands at precisely 20.00%, and the resulting portfolio risk, 14.11%, sits close to but not identical with the naive version's 14.33%."
+            },
+            {
+              "_key": "poc5l3-017",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc5l3-017s1", "_type": "span", "marks": [], "text": "Comparing Five Ways to Build the Same Portfolio" }
+              ]
+            },
+            {
+              "_key": "poc5l3-018",
+              "_type": "table",
+              "caption": "The same five stocks, five different construction philosophies",
+              "headers": ["Approach", "Uses covariance?", "Uses expected return?", "Portfolio risk"],
+              "rows": [
+                { "_key": "poc5l3-018r1", "_type": "tableRow", "cells": ["Equal-weight (Ch. 2/3)", "No", "No", "14.89%"] },
+                { "_key": "poc5l3-018r2", "_type": "tableRow", "cells": ["Naive inverse-volatility", "No", "No", "14.33%"] },
+                { "_key": "poc5l3-018r3", "_type": "tableRow", "cells": ["True risk parity (ERC)", "Yes", "No", "14.11%"] },
+                { "_key": "poc5l3-018r4", "_type": "tableRow", "cells": ["Minimum-variance (Ch. 3)", "Yes", "No", "13.43%"] },
+                { "_key": "poc5l3-018r5", "_type": "tableRow", "cells": ["Tangency / mean-variance optimal (Ch. 4)", "Yes", "Yes", "15.35%"] }
+              ]
+            },
+            {
+              "_key": "poc5l3-019",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Notice the pattern: risk parity sits neatly between equal-weight (ignores risk information entirely) and minimum-variance (uses risk information to chase the single lowest-risk portfolio possible, regardless of concentration). It is not the lowest-risk option here, and it is not trying to be. It aims for balance, not minimization, and it never touches the unreliable expected-return inputs that make the tangency portfolio's risk (and Lesson 1's instability) possible in the first place."
+            },
+            {
+              "_key": "poc5l3-020",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc5l3-020s1", "_type": "span", "marks": [], "text": "Risk Parity in Practice: Bridgewater's All Weather Approach" }
+              ]
+            },
+            {
+              "_key": "poc5l3-021",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc5l3-021s1", "_type": "span", "marks": [], "text": "Bridgewater Associates, founded by Ray Dalio, is widely credited with popularizing risk parity at institutional scale through its All Weather strategy, applying the same equal-risk-contribution logic across asset classes rather than individual stocks: equities, bonds, commodities, and inflation-linked assets, each contributing an equal share of total portfolio risk. Because government bonds are typically far less volatile than equities, achieving genuine risk parity between the two asset classes usually means leveraging the bond allocation up, borrowing to hold more bonds than the raw capital alone would allow, so its risk contribution can catch up to equities." }
+              ]
+            },
+            {
+              "_key": "poc5l3-022",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Risk parity is not a free upgrade. It still depends entirely on a reliable covariance matrix, and Chapters 1 and 2 already showed correlations shift, often sharply, during exactly the market stress periods when a stable risk allocation matters most. Ignoring expected returns is also a deliberate trade, not a neutral default: a low-volatility asset with genuinely poor prospects gets MORE capital under risk parity, not less, and the leverage often needed to make bond-heavy risk parity strategies return-competitive reintroduces the same real-world borrowing-cost frictions Lesson 1 of this chapter, and Chapter 4, already flagged."
+            },
+            {
+              "_key": "poc5l3-023",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Compute naive inverse-vol weights",
+              "prompt": "Three assets have volatilities of 10%, 20%, and 40%. Using naive inverse-volatility weighting, what weight goes to the LEAST volatile asset (10%)?",
+              "correctValue": 57.14,
+              "tolerance": 0.5,
+              "unit": "%",
+              "explanation": "Unnormalized weights: 1/10 = 0.100, 1/20 = 0.050, 1/40 = 0.025, summing to 0.175. The least volatile asset's weight: 0.100 / 0.175 = 0.5714, or 57.14%."
+            },
+            {
+              "_key": "poc5l3-024",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why naive inverse-vol fell short",
+              "question": "The naive inverse-volatility portfolio in this lesson produced risk contributions of 19.90%, 20.92%, 21.94%, 16.33%, and 20.92%, not equal, despite being built to balance risk. What best explains the gap?",
+              "options": [
+                "The volatility figures used must have been calculated incorrectly",
+                "Naive inverse-volatility weighting ignores correlation between assets, so it cannot capture each asset's true contribution to total portfolio risk, which depends on covariance, not standalone volatility alone",
+                "Risk contributions can never be made exactly equal for more than three assets",
+                "The portfolio needs a target expected return before risk contributions can be balanced"
+              ],
+              "correctIndex": 1,
+              "explanation": "An asset's true contribution to portfolio risk depends on the full covariance matrix, not just its own standalone volatility. Naive inverse-volatility weighting only looks at each asset in isolation, missing exactly the cross-asset relationships true risk parity (ERC) solves for directly."
+            },
+            {
+              "_key": "poc5l3-025",
+              "_type": "flashcardSet",
+              "title": "Risk Parity: Core Terms",
+              "cards": [
+                { "_key": "poc5l3-025f1", "term": "Naive inverse-volatility weighting", "definition": "Weighting each asset proportional to 1 over its own volatility, ignoring correlation. A rough approximation of risk parity, not the exact solution." },
+                { "_key": "poc5l3-025f2", "term": "Risk contribution", "definition": "The share of a portfolio's total risk attributable to one specific holding, based on its weight and its covariance with every other holding." },
+                { "_key": "poc5l3-025f3", "term": "Equal risk contribution (ERC) / true risk parity", "definition": "Weights solved so that every asset contributes an identical share of total portfolio risk, using the full covariance matrix but no expected-return input at all." }
+              ]
+            },
+            {
+              "_key": "poc5l3-026",
+              "_type": "keyTakeaways",
+              "points": [
+                "Risk parity's central move is building a portfolio using only the covariance matrix, deliberately excluding expected returns, the input Lesson 1 showed is hardest to estimate reliably.",
+                "Equal-weighting by capital is not the same as equal risk. High-volatility, highly correlated holdings can dominate a portfolio's actual risk even when each asset received the same rupee amount.",
+                "Naive inverse-volatility weighting is a rough shortcut, but it ignores correlation and does not actually deliver equal risk contribution once the full covariance matrix is accounted for.",
+                "True risk parity (equal risk contribution) solves numerically for weights where every asset contributes an identical share of total risk, correcting the naive approach's blind spot.",
+                "Compared side by side, risk parity's risk (14.11%) sits between equal-weight's (14.89%) and minimum-variance's (13.43%), reflecting its goal of balance rather than minimization.",
+                "Real-world risk parity, popularized at scale by Bridgewater's All Weather strategy, often needs leverage to make lower-volatility asset classes like bonds risk-competitive with equities, reintroducing the real borrowing-cost frictions this course flagged back in Chapter 4."
+              ]
+            },
+            {
+              "_key": "poc5l3-027",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice or a recommendation to buy, sell, or leverage any security, fund, or strategy named here. All weights, risk contributions, and figures used in this lesson are illustrative, not live or historical market data. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

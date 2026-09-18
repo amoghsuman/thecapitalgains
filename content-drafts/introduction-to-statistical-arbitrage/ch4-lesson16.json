@@ -1,0 +1,311 @@
+{
+  "courseSlug": "introduction-to-statistical-arbitrage",
+  "chapters": [
+    {
+      "title": "Chapter 4: Building a Simple Pairs Trade",
+      "lessons": [
+        {
+          "title": "Case Study: Walking Through a Full Pairs Trade From Signal to Exit",
+          "slug": "case-study-walking-through-a-full-pairs-trade-from-signal-to-exit",
+          "body": [
+            {
+              "_key": "sa16-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa16-001s1", "_type": "span", "marks": [], "text": "This case study does not introduce anything new. It follows one pair through the complete lifecycle covered across this course so far: screening, correlation, hedge ratio, cointegration, a z-score entry signal, position sizing, holding the trade, and a final exit, in that order, with real rupee numbers at every step. The pair: Bajaj Auto and Hero MotoCorp, two of India's largest two-wheeler manufacturers. (All prices and statistical output in this case study are illustrative.)" }
+              ]
+            },
+            {
+              "_key": "sa16-002",
+              "_type": "bigIdea",
+              "text": "Every tool built across this course so far, correlation, the regression-based spread, the cointegration test, the z-score, entry and exit rules, and position sizing, exists to answer one question in sequence: is this pair worth trading, and if so, exactly how? This case study runs that sequence start to finish, on one trade, all the way to a final profit and loss number."
+            },
+            {
+              "_key": "sa16-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa16-003s1", "_type": "span", "marks": [], "text": "Step 1: Screening, Why Bajaj Auto and Hero MotoCorp" }
+              ]
+            },
+            {
+              "_key": "sa16-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa16-004s1", "_type": "span", "marks": [], "text": "Both companies are among India's largest two-wheeler manufacturers, both sell overwhelmingly into the domestic market with heavy exposure to rural demand and the monsoon cycle, and both face the same input costs, steel, aluminium, and rubber. Both are large, F&O-eligible, highly liquid NSE stocks. By Lesson 13's screening criteria, this is exactly the kind of pair worth taking through the full pipeline." }
+              ]
+            },
+            {
+              "_key": "sa16-005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa16-005s1", "_type": "span", "marks": [], "text": "Step 2: Correlation and Hedge Ratio" }
+              ]
+            },
+            {
+              "_key": "sa16-006",
+              "_type": "table",
+              "caption": "Screening output (illustrative)",
+              "headers": ["Metric", "Value"],
+              "rows": [
+                { "_key": "sa16-006r1", "_type": "tableRow", "cells": ["Return correlation", "≈ 0.72"] },
+                { "_key": "sa16-006r2", "_type": "tableRow", "cells": ["Fitted hedge ratio (β), Bajaj Auto on Hero MotoCorp", "≈ 1.85"] }
+              ]
+            },
+            {
+              "_key": "sa16-007",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa16-007s1", "_type": "span", "marks": [], "text": "Step 3: The Cointegration Verdict" }
+              ]
+            },
+            {
+              "_key": "sa16-008",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "sa16-008s1", "label": "Engle-Granger test statistic", "value": "≈ -3.95", "context": "Past the 1% critical value of about -3.90" },
+                { "_key": "sa16-008s2", "label": "p-value", "value": "≈ 0.006", "context": "Reject the null of no cointegration" },
+                { "_key": "sa16-008s3", "label": "Verdict", "value": "Cointegrated", "context": "Confirmed with Lesson 11's method, not assumed from correlation alone" }
+              ]
+            },
+            {
+              "_key": "sa16-009",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa16-009s1", "_type": "span", "marks": [], "text": "Step 4: The Entry Signal" }
+              ]
+            },
+            {
+              "_key": "sa16-010",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa16-010s1", "_type": "span", "marks": [], "text": "On the day this case study begins, the spread's z-score reads -2.15, past the -2 entry threshold from Lesson 14. A negative z-score means the spread is unusually low: Bajaj Auto is trading cheap relative to what the fitted relationship with Hero MotoCorp would predict. The entry rule triggers a long-the-spread position: long Bajaj Auto, short Hero MotoCorp, in the β ratio." }
+              ]
+            },
+            {
+              "_key": "sa16-011",
+              "_type": "table",
+              "caption": "Entry conditions (illustrative)",
+              "headers": ["", "Value"],
+              "rows": [
+                { "_key": "sa16-011r1", "_type": "tableRow", "cells": ["Date", "Day 1 (entry)"] },
+                { "_key": "sa16-011r2", "_type": "tableRow", "cells": ["Bajaj Auto price", "₹9,000"] },
+                { "_key": "sa16-011r3", "_type": "tableRow", "cells": ["Hero MotoCorp price", "₹4,500"] },
+                { "_key": "sa16-011r4", "_type": "tableRow", "cells": ["Z-score", "-2.15"] },
+                { "_key": "sa16-011r5", "_type": "tableRow", "cells": ["Signal", "Long the spread"] }
+              ]
+            },
+            {
+              "_key": "sa16-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa16-012s1", "_type": "span", "marks": [], "text": "Step 5: Sizing the Position" }
+              ]
+            },
+            {
+              "_key": "sa16-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa16-013s1", "_type": "span", "marks": [], "text": "Targeting roughly ₹15 lakh in this pair, Lesson 15's method gives the share counts." }
+              ]
+            },
+            {
+              "_key": "sa16-014",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "bajaj_price = 9000\nhero_price = 4500\nbeta = 1.85\ntarget_capital = 1_500_000\n\ncost_per_unit = bajaj_price + beta * hero_price\nn_bajaj = round(target_capital / cost_per_unit)\nn_hero = round(n_bajaj * beta)\n\nprint(\"Bajaj Auto shares (long):\", n_bajaj)\nprint(\"Hero MotoCorp shares (short):\", n_hero)\nprint(\"Capital deployed:\", n_bajaj * bajaj_price + n_hero * hero_price)\n# Bajaj Auto shares (long): 87\n# Hero MotoCorp shares (short): 161\n# Capital deployed: 1507500",
+              "caption": "Sizing the position with Lesson 15's hedge-ratio method"
+            },
+            {
+              "_key": "sa16-015",
+              "_type": "table",
+              "caption": "The position (illustrative)",
+              "headers": ["Leg", "Shares", "Entry price", "Entry value"],
+              "rows": [
+                { "_key": "sa16-015r1", "_type": "tableRow", "cells": ["Bajaj Auto (long)", "87", "₹9,000", "₹7,83,000"] },
+                { "_key": "sa16-015r2", "_type": "tableRow", "cells": ["Hero MotoCorp (short)", "161", "₹4,500", "₹7,24,500"] },
+                { "_key": "sa16-015r3", "_type": "tableRow", "cells": ["Total capital deployed", "", "", "₹15,07,500"] }
+              ]
+            },
+            {
+              "_key": "sa16-016",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa16-016s1", "_type": "span", "marks": [], "text": "Step 6: Holding the Trade" }
+              ]
+            },
+            {
+              "_key": "sa16-017",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa16-017s1", "_type": "span", "marks": [], "text": "Over the following week, the spread does what the cointegration test and the entry signal both pointed toward: it reverts. The z-score moves steadily from -2.15 back toward zero." }
+              ]
+            },
+            {
+              "_key": "sa16-018",
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Z-score path from entry to exit (illustrative)",
+              "xAxisLabel": "Day",
+              "yAxisLabel": "Z-score",
+              "data": [
+                { "_key": "sa16-018d1", "label": "1" },
+                { "_key": "sa16-018d2", "label": "2" },
+                { "_key": "sa16-018d3", "label": "3" },
+                { "_key": "sa16-018d4", "label": "4" },
+                { "_key": "sa16-018d5", "label": "5" },
+                { "_key": "sa16-018d6", "label": "6" },
+                { "_key": "sa16-018d7", "label": "7" },
+                { "_key": "sa16-018d8", "label": "8" }
+              ],
+              "series": [
+                { "_key": "sa16-018se1", "label": "Z-score", "values": [-2.15, -1.80, -1.55, -1.20, -0.95, -0.60, -0.30, -0.10] }
+              ]
+            },
+            {
+              "_key": "sa16-019",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa16-019s1", "_type": "span", "marks": [], "text": "Step 7: Exit and Final P&L" }
+              ]
+            },
+            {
+              "_key": "sa16-020",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa16-020s1", "_type": "span", "marks": [], "text": "By Day 8, the z-score sits at -0.10, comfortably inside the ±0.5 exit band from Lesson 14. The position is closed." }
+              ]
+            },
+            {
+              "_key": "sa16-021",
+              "_type": "table",
+              "caption": "Exit and profit/loss (illustrative)",
+              "headers": ["Leg", "Entry price", "Exit price", "Shares", "P&L"],
+              "rows": [
+                { "_key": "sa16-021r1", "_type": "tableRow", "cells": ["Bajaj Auto (long)", "₹9,000", "₹9,270", "87", "+₹23,490"] },
+                { "_key": "sa16-021r2", "_type": "tableRow", "cells": ["Hero MotoCorp (short)", "₹4,500", "₹4,470", "161", "+₹4,830"] },
+                { "_key": "sa16-021r3", "_type": "tableRow", "cells": ["Total gross P&L", "", "", "", "+₹28,320"] }
+              ]
+            },
+            {
+              "_key": "sa16-022",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "sa16-022s1", "label": "Total gross P&L", "value": "+₹28,320", "context": "Before transaction costs" },
+                { "_key": "sa16-022s2", "label": "Capital deployed", "value": "₹15,07,500", "context": "From Step 5" },
+                { "_key": "sa16-022s3", "label": "Gross return on deployed capital", "value": "≈ +1.88%", "context": "28,320 ÷ 15,07,500" },
+                { "_key": "sa16-022s4", "label": "Holding period", "value": "7 trading days", "context": "Day 1 entry to Day 8 exit" }
+              ]
+            },
+            {
+              "_key": "sa16-023",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa16-023s1", "_type": "span", "marks": [], "text": "Reading the Result Honestly" }
+              ]
+            },
+            {
+              "_key": "sa16-024",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "sa16-024s1", "_type": "span", "marks": [], "text": "This is gross profit, before brokerage, Securities Transaction Tax, slippage on either leg, and any borrow cost on the short position, all of which Chapter 6 covers properly. It is also one trade. A single profitable outcome, chosen to walk through the mechanics cleanly, says nothing about how this pair, or this strategy, performs on average across many trades. Lesson 14 already showed what a losing version of this same setup looks like when the spread widens instead of reverting." }
+              ]
+            },
+            {
+              "_key": "sa16-025",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Do not read a single illustrative winning trade as evidence that this pipeline reliably produces roughly 1.9% in a week. Real performance depends on how often a screened, cointegrated pair actually reverts within its expected timeframe versus stopping out, a question only proper backtesting, covered in Chapter 6, can answer honestly."
+            },
+            {
+              "_key": "sa16-026",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Verify the short leg's P&L",
+              "prompt": "The Hero MotoCorp leg was 161 shares, short, entered at ₹4,500 and exited at ₹4,470. What is the profit in rupees on this leg?",
+              "correctValue": 4830,
+              "tolerance": 50,
+              "explanation": "A short position profits when the price falls. Profit = (entry price − exit price) × shares = (₹4,500 − ₹4,470) × 161 = ₹30 × 161 = ₹4,830."
+            },
+            {
+              "_key": "sa16-027",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "What actually drove the profit?",
+              "question": "In this case study, Bajaj Auto rose 3.0% while Hero MotoCorp fell about 0.67% over the holding period. What was the actual source of the trade's profit?",
+              "options": [
+                "The overall market rallying during the holding period",
+                "Bajaj Auto outperforming Hero MotoCorp, closing the gap the entry signal had identified, regardless of the market's direction",
+                "Bajaj Auto's absolute price being higher than Hero MotoCorp's",
+                "The stop-loss threshold being triggered"
+              ],
+              "correctIndex": 1,
+              "explanation": "The trade was structured to be neutral to broad market moves. Its profit came specifically from Bajaj Auto outperforming Hero MotoCorp, the relative move the entry z-score had flagged as unusually stretched, not from either stock's absolute price level or from a market-wide rally."
+            },
+            {
+              "_key": "sa16-028",
+              "_type": "exercise",
+              "variant": "checklist",
+              "title": "The Full Pairs Trade Lifecycle",
+              "steps": [
+                "Screen for economically sensible, liquid, F&O-eligible candidates (Lesson 13)",
+                "Check return correlation and build the regression-based hedge ratio spread (Lessons 5 and 6)",
+                "Confirm genuine cointegration with the Engle-Granger test, not correlation alone (Lessons 9 to 11)",
+                "Wait for the z-score to cross the entry threshold, and size the position using the hedge ratio (Lessons 7, 14, and 15)",
+                "Monitor the position against both the profit-taking band and the stop-loss threshold (Lesson 14)",
+                "Exit on reversion, or on the stop-loss or time-based stop if it doesn't come",
+                "Evaluate the result honestly; gross P&L is not the same as net P&L after costs (Chapter 6)"
+              ]
+            },
+            {
+              "_key": "sa16-029",
+              "_type": "keyTakeaways",
+              "points": [
+                "A pairs trade is one continuous pipeline, not a series of disconnected lessons: screening, correlation, hedge ratio, cointegration, z-score entry, position sizing, monitoring, and exit all feed into each other.",
+                "In this case study, a long-the-spread entry at z = -2.15 (long Bajaj Auto, short Hero MotoCorp) reverted to z = -0.10 within a week, producing a gross profit of about ₹28,320 on roughly ₹15.08 lakh deployed, about 1.88%.",
+                "The profit came specifically from Bajaj Auto outperforming Hero MotoCorp, the relative move the pair was structured to capture, not from the market's overall direction.",
+                "This result is gross, before transaction costs, and represents a single illustrative trade, not an expected or average outcome. Chapter 6 covers costs and honest backtesting.",
+                "The same pipeline, run on a pair that doesn't revert, produces the stop-loss outcome Lesson 14 already walked through. Both outcomes are normal parts of running this strategy."
+              ]
+            },
+            {
+              "_key": "sa16-030",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This case study is illustrative. All prices, correlation, hedge ratio, cointegration test output, z-scores, and profit and loss figures for Bajaj Auto and Hero MotoCorp are hypothetical and constructed for teaching purposes, not actual historical data or trading results. This is not investment advice or a recommendation to trade any security named here. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,334 @@
+{
+  "courseSlug": "understanding-alternative-data-in-quantitative-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Alternative Data Matters in Quant Research",
+      "lessons": [
+        {
+          "title": "Traditional vs Alternative Data: A Comparative Framework",
+          "slug": "traditional-vs-alternative-data-a-comparative-framework",
+          "body": [
+            {
+              "_key": "c1l3k001",
+              "_type": "bigIdea",
+              "text": "The right question is never 'is this dataset good.' It is 'good on which of six dimensions, and cheap enough for the edge it actually buys.'"
+            },
+            {
+              "_key": "c1l3k002",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3k002s1",
+                  "_type": "span",
+                  "text": "So far you have a definition of alternative data and an intuition for why it decays. What you do not yet have is a repeatable way to sit in front of a new data source, whether a vendor pitch or something your own team wants to build, and decide if it is worth a rupee of budget or a week of engineering time. That is what this lesson gives you: a six-dimension scorecard you can run on any dataset, traditional or alternative, in about fifteen minutes.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3k003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3k003s1",
+                  "_type": "span",
+                  "text": "Six Dimensions for Scoring Any Dataset",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3k004",
+              "_type": "table",
+              "caption": "Run every dataset, traditional or alternative, through these six questions",
+              "headers": ["Dimension", "The Question It Answers", "Why It Matters to a Quant Desk"],
+              "rows": [
+                {
+                  "_key": "c1l3k004r1",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Timeliness",
+                    "How far ahead of the official disclosure does this data arrive?",
+                    "Lead time is the raw material of an informational edge. Zero lead time means you are simply reading the same filing as everyone else"
+                  ]
+                },
+                {
+                  "_key": "c1l3k004r2",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Breadth of coverage",
+                    "What share of your investable universe does this source actually touch?",
+                    "A dataset covering three Nifty stocks builds a stock-picking edge. One covering a whole sector or index supports a portfolio-level strategy"
+                  ]
+                },
+                {
+                  "_key": "c1l3k004r3",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Historical depth",
+                    "How many years of clean, backfilled history exist to test a hypothesis on?",
+                    "Without at least a handful of market cycles, you cannot separate a real signal from a curve fit, however good the story sounds"
+                  ]
+                },
+                {
+                  "_key": "c1l3k004r4",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Signal-to-noise (directness)",
+                    "How close is the raw metric to the variable you actually care about, such as revenue or demand?",
+                    "A direct proxy needs light processing and fails predictably. An indirect proxy needs heavy modelling and can fail in ways you will not see coming"
+                  ]
+                },
+                {
+                  "_key": "c1l3k004r5",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Cost and accessibility",
+                    "What does it cost relative to the capital the resulting signal can deploy?",
+                    "A dataset that costs more per year than the strategy's expected profit at your capacity is not an edge, it is a subscription you cannot afford"
+                  ]
+                },
+                {
+                  "_key": "c1l3k004r6",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Compliance and legal risk",
+                    "Is this observed independently and legitimately, or does it depend on someone's breach of duty?",
+                    "This is the UPSI test from the previous lesson. A dataset can score five out of five on everything else and still be unusable"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c1l3k005",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3k005s1",
+                  "_type": "span",
+                  "text": "Case Study: SIAM Monthly Dispatches vs VAHAN Daily Registrations",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3k006",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "c1l3m001",
+                  "_type": "glossaryTerm",
+                  "definition": "The Society of Indian Automobile Manufacturers, an industry body that publishes monthly wholesale dispatch numbers, meaning vehicles shipped from manufacturer to dealer, across passenger vehicles, two-wheelers, commercial vehicles, and three-wheelers."
+                },
+                {
+                  "_key": "c1l3m002",
+                  "_type": "glossaryTerm",
+                  "definition": "A Ministry of Road Transport and Highways portal (vahan.parivahan.gov.in) that aggregates vehicle registration data from RTOs across India, viewable at near real-time frequency and broken down by state and vehicle category."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "c1l3k006s1",
+                  "_type": "span",
+                  "text": "The Indian auto sector gives a genuinely useful, well documented example of this framework in action, because two data sources sit right next to each other on the traditional-to-alternative spectrum. ",
+                  "marks": []
+                },
+                {
+                  "_key": "c1l3k006s2",
+                  "_type": "span",
+                  "text": "SIAM",
+                  "marks": ["c1l3m001"]
+                },
+                {
+                  "_key": "c1l3k006s3",
+                  "_type": "span",
+                  "text": " data is the traditional source: an established industry body, monthly frequency, aggregated at the company and segment level. ",
+                  "marks": []
+                },
+                {
+                  "_key": "c1l3k006s4",
+                  "_type": "span",
+                  "text": "VAHAN",
+                  "marks": ["c1l3m002"]
+                },
+                {
+                  "_key": "c1l3k006s5",
+                  "_type": "span",
+                  "text": " registration data is the alternative source: a government portal never built for equity research, updated far more frequently, and granular down to the state and RTO level. Several Indian brokerages already publish regular VAHAN-based auto trackers precisely because it measures something SIAM does not: actual retail registration by the end customer, rather than wholesale dispatch from the manufacturer to the dealer.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3k007",
+              "_type": "statGrid",
+              "stats": [
+                {
+                  "_key": "c1l3k007s1",
+                  "label": "SIAM release frequency",
+                  "value": "Monthly",
+                  "context": "Aggregated wholesale dispatch, published with a lag after month end"
+                },
+                {
+                  "_key": "c1l3k007s2",
+                  "label": "VAHAN update frequency",
+                  "value": "Near daily",
+                  "context": "State and RTO level retail registrations, visible as they are filed"
+                },
+                {
+                  "_key": "c1l3k007s3",
+                  "label": "What each one actually measures",
+                  "value": "Dispatch vs registration",
+                  "context": "SIAM: OEM to dealer. VAHAN: dealer to end customer. The two can diverge sharply during channel destocking or restocking"
+                }
+              ]
+            },
+            {
+              "_key": "c1l3k008",
+              "_type": "chart",
+              "chartType": "bar",
+              "title": "Scoring SIAM vs VAHAN on the six-dimension framework (1 = weak, 5 = strong)",
+              "xAxisLabel": "Dimension",
+              "yAxisLabel": "Score (1 to 5)",
+              "data": [
+                { "_key": "c1l3k008d0", "label": "Timeliness" },
+                { "_key": "c1l3k008d1", "label": "Breadth" },
+                { "_key": "c1l3k008d2", "label": "History" },
+                { "_key": "c1l3k008d3", "label": "Directness" },
+                { "_key": "c1l3k008d4", "label": "Cost" },
+                { "_key": "c1l3k008d5", "label": "Compliance" }
+              ],
+              "series": [
+                {
+                  "_key": "c1l3k008s1",
+                  "label": "SIAM (traditional)",
+                  "values": [2, 5, 5, 3, 5, 5]
+                },
+                {
+                  "_key": "c1l3k008s2",
+                  "label": "VAHAN (alternative)",
+                  "values": [5, 4, 3, 4, 4, 5]
+                }
+              ]
+            },
+            {
+              "_key": "c1l3k009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "c1l3k009s1",
+                  "_type": "span",
+                  "text": "Read the chart as a trade-off, not a verdict. SIAM wins on breadth, history, and cost, since it is free, covers every major manufacturer, and has years of clean monthly series to backtest against. VAHAN wins clearly on timeliness, because you can watch registrations accumulate through the month instead of waiting for a single release, and it scores a touch better on directness for retail-focused strategies since it measures the sale that actually reaches a customer, not the shipment that may sit in dealer inventory for weeks.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "c1l3k010",
+              "_type": "collapsible",
+              "title": "Where VAHAN's edge gets messier in practice",
+              "content": [
+                {
+                  "_key": "c1l3k010b1",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    {
+                      "_key": "c1l3k010b1s1",
+                      "_type": "span",
+                      "text": "A registration is not always same-day with the sale. Some dealers batch-register vehicles, some states have historically shown slower or inconsistent RTO data entry, and registrations exclude vehicles sold but not yet registered at month end. None of this makes VAHAN useless, but it means a naive day-by-day reading of VAHAN counts as 'today's sales' will be noisier than it looks. Serious desks smooth the daily series and validate it against SIAM's monthly aggregate every month rather than trusting either source alone.",
+                      "marks": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c1l3k011",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Compute a Weighted Composite Score",
+              "prompt": "Your desk weights the six dimensions as follows for a fast-turnover auto sector strategy: Timeliness 30%, Breadth 15%, History 10%, Directness 20%, Cost 10%, Compliance 15%. Using VAHAN's scores from the chart (Timeliness 5, Breadth 4, History 3, Directness 4, Cost 4, Compliance 5), what is VAHAN's weighted composite score out of 5, to one decimal place?",
+              "correctValue": 4.3,
+              "tolerance": 0.05,
+              "unit": "/5",
+              "explanation": "(5 x 0.30) + (4 x 0.15) + (3 x 0.10) + (4 x 0.20) + (4 x 0.10) + (5 x 0.15) = 1.50 + 0.60 + 0.30 + 0.80 + 0.40 + 0.75 = 4.35, which rounds to 4.3. The weighting matters as much as the raw scores: a desk that instead weighted History and Cost heavily, for a slow, capacity-heavy strategy, could easily see SIAM come out ahead on the same six numbers."
+            },
+            {
+              "_key": "c1l3k012",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "When Does the Traditional Source Win?",
+              "question": "A desk wants to backtest a 15-year mean-reversion strategy on aggregate two-wheeler industry volumes across full market cycles, including 2008 and 2020, and does not need an intra-month read. Which source should it rely on primarily?",
+              "options": [
+                "VAHAN, because it is more granular",
+                "SIAM, because historical depth and breadth matter far more here than intra-month timeliness",
+                "Neither, since only satellite data works for auto sector research",
+                "Both equally, since the weighting never changes across strategies"
+              ],
+              "correctIndex": 1,
+              "explanation": "This strategy has a long holding period and needs a long, clean, consistent history across cycles, which is exactly SIAM's strength. VAHAN's intra-month timeliness edge is close to worthless for a strategy that does not act within the month, and VAHAN's shorter, less consistent historical record makes it a weaker backbone for a 15-year backtest. The right dataset depends entirely on what the strategy needs, not on which source sounds more advanced."
+            },
+            {
+              "_key": "c1l3k013",
+              "_type": "comparison",
+              "title": "Where Each Source Type Sits by Default",
+              "columns": [
+                {
+                  "_key": "c1l3k013c1",
+                  "label": "Traditional Data, By Default",
+                  "points": [
+                    "Weak on timeliness, since everyone reads it at the same disclosure moment",
+                    "Strong on breadth, covering the full listed universe",
+                    "Strong on historical depth, often decades of clean series",
+                    "Strong on cost, usually free or bundled with a broker or terminal",
+                    "Strong on compliance, since it is built for public disclosure"
+                  ]
+                },
+                {
+                  "_key": "c1l3k013c2",
+                  "label": "Alternative Data, By Default",
+                  "points": [
+                    "Strong on timeliness, arriving ahead of or independent from disclosure",
+                    "Often weak on breadth, unless the vendor has scaled coverage",
+                    "Often weak on historical depth, especially for newer web or app data sources",
+                    "Often weak on cost, priced for the edge it claims to provide",
+                    "Variable on compliance, and must be checked case by case, never assumed"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "c1l3k014",
+              "_type": "callout",
+              "type": "insight",
+              "text": "Never ask whether a dataset is traditional or alternative as if that settles the matter. Score it on all six dimensions against what your specific strategy actually needs. A fast, narrow strategy and a slow, broad one will often prefer opposite datasets, using the exact same scorecard."
+            },
+            {
+              "_key": "c1l3k015",
+              "_type": "keyTakeaways",
+              "points": [
+                "Score any dataset, traditional or alternative, on six dimensions: timeliness, breadth of coverage, historical depth, signal-to-noise, cost, and compliance risk",
+                "SIAM's monthly wholesale dispatch data and VAHAN's near-daily state-level registration data sit on opposite ends of this framework within the same sector",
+                "VAHAN's timeliness and directness edge for retail demand comes with noise: registration timing lags, state-level data quality gaps, and the need for smoothing",
+                "A weighted composite score depends entirely on the strategy's own priorities, the same six raw scores can favour either dataset depending on the weights",
+                "Long-horizon, broad-universe strategies often prefer traditional data's depth and breadth; fast, narrow strategies often need alternative data's timeliness",
+                "Compliance and legal risk is a pass or fail gate, not just one more dimension to average in"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

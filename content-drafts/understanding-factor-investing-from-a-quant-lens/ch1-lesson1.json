@@ -1,0 +1,383 @@
+{
+  "courseSlug": "understanding-factor-investing-from-a-quant-lens",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Factors? Foundations of Factor Investing",
+      "lessons": [
+        {
+          "title": "What Is a Factor? From CAPM to the Fama-French Revolution",
+          "slug": "what-is-a-factor-from-capm-to-the-fama-french-revolution",
+          "body": [
+            {
+              "_key": "f1l1b01",
+              "_type": "bigIdea",
+              "text": "A factor is not a story about a great company. It is a measurable, persistent characteristic, cheapness, size, momentum, quality, that has explained why some baskets of stocks beat others, across decades and across markets, for reasons a single number called beta was never built to capture."
+            },
+            {
+              "_key": "f1l1b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "f1l1b02s1",
+                  "_type": "span",
+                  "text": "Every trader who has opened a Zerodha account and glanced at a stock's fundamentals on screener.in has run into the word 'beta' without necessarily asking where it came from or what it assumes. For nearly three decades after 1964, beta was treated as the entire explanation for why one stock earned more than another. This lesson traces how that single number, and the Capital Asset Pricing Model built around it, gave way to a family of models that now sit underneath every serious systematic strategy, including the factor indices SEBI-regulated asset managers run on the NSE today.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "f1l1b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "f1l1b03s1", "_type": "span", "text": "The CAPM World: One Factor, One Beta", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f1l1b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "f1l1m01",
+                  "_type": "glossaryTerm",
+                  "definition": "A stock's sensitivity to market-wide movements; the sole risk factor priced under the Capital Asset Pricing Model."
+                },
+                {
+                  "_key": "f1l1m02",
+                  "_type": "glossaryTerm",
+                  "definition": "Market-wide risk that affects nearly every stock and cannot be removed through diversification; the only risk CAPM assumes the market pays you to carry."
+                }
+              ],
+              "children": [
+                { "_key": "f1l1b04s1", "_type": "span", "text": "William Sharpe's Capital Asset Pricing Model, published in 1964, made one claim that shaped finance for a generation: the only reason a stock should earn more than the risk-free rate is its exposure to ", "marks": [] },
+                { "_key": "f1l1b04s2", "_type": "span", "text": "undiversifiable, market-wide risk", "marks": ["f1l1m02"] },
+                { "_key": "f1l1b04s3", "_type": "span", "text": ". This exposure is what ", "marks": [] },
+                { "_key": "f1l1b04s4", "_type": "span", "text": "beta", "marks": ["f1l1m01"] },
+                { "_key": "f1l1b04s5", "_type": "span", "text": " measures, how much a stock moves for every one-unit move in the broader market, in India's case the Nifty 50 or the BSE Sensex. A stock's own company-specific risk, a factory fire, a management change, a one-off lawsuit, is assumed to wash out once it sits inside a diversified portfolio, so the market does not reward you for carrying it.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f1l1b05",
+              "_type": "mathBlock",
+              "latex": "E(R_i) = R_f + \\beta_i \\left( E(R_m) - R_f \\right)",
+              "caption": "The CAPM: expected return depends on exactly one factor, exposure to the market premium"
+            },
+            {
+              "_key": "f1l1b06",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "f1l1b06s1", "_type": "span", "text": "Plug in numbers and CAPM becomes intuitive. If the risk-free rate, commonly proxied in India by the 91-day Treasury Bill yield, is 7%, and the Nifty 50's expected market premium over the risk-free rate is 8%, a defensive, low-beta private bank stock with a beta of 0.8 would be expected to return 7% + 0.8 x 8% = 13.4% a year. A high-beta, cyclical stock with a beta of 1.6 would be expected to return 7% + 1.6 x 8% = 19.8%. Under CAPM, that is the entire story. Two stocks with the same beta should earn the same expected return, regardless of whether one is a sturdy FMCG name and the other a leveraged infrastructure play.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f1l1b07",
+              "_type": "keyFact",
+              "label": "Beta of the market itself",
+              "value": "Exactly 1.0, by construction",
+              "context": "The Nifty 50 (or any broad index used as the market proxy) has a beta of 1 by definition, since beta measures a stock's movement relative to the market. A stock with beta above 1 amplifies the index's moves; below 1, it dampens them."
+            },
+            {
+              "_key": "f1l1b08",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "f1l1b08s1", "_type": "span", "text": "Where CAPM Started to Crack", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f1l1b09",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "f1l1b09s1", "_type": "span", "text": "CAPM's single-factor world held up in theory for about a decade before the cross-sectional data started arguing back. In 1977, Sanjoy Basu published a study showing that stocks with low price-to-earnings ratios earned higher risk-adjusted returns than stocks with high P/E ratios, even after controlling for beta. That should not have been possible if beta was the only thing markets priced. A screener.in style value screen, sorting stocks by P/E and buying the cheapest decile, was quietly beating what CAPM predicted.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f1l1b10",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "f1l1b10s1", "_type": "span", "text": "Four years later, Rolf Banz found something structurally similar on the other axis: small-capitalisation stocks earned higher average returns than large-capitalisation stocks with the same beta. This became known as the size effect. Neither the P/E anomaly nor the size effect fit inside a model with a single risk factor. Something beyond market exposure was being priced, and by the late 1980s it was clear beta alone could not explain the cross-section of stock returns.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f1l1b11",
+              "_type": "table",
+              "caption": "Two anomalies that broke the single-factor model",
+              "headers": ["Anomaly", "Researcher", "Year", "What It Found"],
+              "rows": [
+                { "_key": "f1l1b11r1", "_type": "tableRow", "cells": ["Price-to-earnings effect", "Sanjoy Basu", "1977", "Low P/E stocks outperformed high P/E stocks after adjusting for beta"] },
+                { "_key": "f1l1b11r2", "_type": "tableRow", "cells": ["Size effect", "Rolf Banz", "1981", "Small-cap stocks outperformed large-cap stocks with identical beta"] }
+              ]
+            },
+            {
+              "_key": "f1l1b12",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "f1l1b12s1", "_type": "span", "text": "The Fama-French Revolution: From One Factor to Three", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f1l1b13",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "f1l1m03",
+                  "_type": "glossaryTerm",
+                  "definition": "A coefficient measuring how sensitive a stock's or portfolio's returns are to a given factor, estimated the same way beta is estimated against the market, but against a size, value, momentum, or other factor portfolio instead."
+                }
+              ],
+              "children": [
+                { "_key": "f1l1b13s1", "_type": "span", "text": "Eugene Fama and Kenneth French formalised these anomalies in two landmark papers. Their 1992 study found that beta, on its own, had almost no power to explain the cross-section of US stock returns once you controlled for a company's size and its book-to-market ratio, a value proxy comparing accounting book value to market price. Their 1993 paper turned this into a working model: the three-factor model, which explains a stock's expected return using its exposure, or ", "marks": [] },
+                { "_key": "f1l1b13s2", "_type": "span", "text": "factor loading", "marks": ["f1l1m03"] },
+                { "_key": "f1l1b13s3", "_type": "span", "text": ", to three separate return drivers rather than one.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f1l1b14",
+              "_type": "mathBlock",
+              "latex": "R_i - R_f = \\alpha_i + \\beta_i (R_m - R_f) + s_i \\cdot SMB + h_i \\cdot HML + \\epsilon_i",
+              "caption": "The Fama-French three-factor model: market, size (Small Minus Big), and value (High Minus Low book-to-market)"
+            },
+            {
+              "_key": "f1l1b15",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "f1l1b15s1", "_type": "span", "text": "SMB, Small Minus Big, is the return of a portfolio long small-cap stocks and short large-cap stocks. HML, High Minus Low, is long stocks with a high book-to-market ratio, cheap, value-style stocks, and short stocks with a low book-to-market ratio, expensive, growth-style stocks. Once you regress a stock's returns against all three factors, whatever return is left unexplained is the model's alpha, the part CAPM used to lump entirely into a single beta coefficient.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f1l1b16",
+              "_type": "timeline",
+              "title": "From One Factor to Five: The Evolution of Asset Pricing Models",
+              "events": [
+                { "_key": "f1l1b16e1", "date": "1964", "title": "CAPM", "description": "William Sharpe formalises the single-factor model: expected return depends only on beta, exposure to the market." },
+                { "_key": "f1l1b16e2", "date": "1977", "title": "The P/E Anomaly", "description": "Sanjoy Basu shows low P/E stocks beat high P/E stocks after adjusting for beta, an early crack in CAPM." },
+                { "_key": "f1l1b16e3", "date": "1981", "title": "The Size Effect", "description": "Rolf Banz finds small-cap stocks outperform large-cap stocks of the same beta." },
+                { "_key": "f1l1b16e4", "date": "1993", "title": "Fama-French Three-Factor Model", "description": "Eugene Fama and Kenneth French add size (SMB) and value (HML) alongside the market factor." },
+                { "_key": "f1l1b16e5", "date": "1997", "title": "Carhart Four-Factor Model", "description": "Mark Carhart adds momentum (UMD, Up Minus Down) to explain persistence in mutual fund performance." },
+                { "_key": "f1l1b16e6", "date": "2015", "title": "Fama-French Five-Factor Model", "description": "Fama and French add profitability (RMW) and investment (CMA), extending the model to five factors." }
+              ]
+            },
+            {
+              "_key": "f1l1b17",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "f1l1b17s1", "_type": "span", "text": "Mark Carhart added a fourth factor in 1997 after noticing that funds which had outperformed in the recent past kept outperforming for several more months, a pattern the three-factor model could not explain. He called this factor UMD, Up Minus Down, built by going long recent winners and short recent losers. It remains the academic ancestor of every momentum strategy run on the NSE today, including systematic strategies that rebalance based on six- or twelve-month price performance.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f1l1b18",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "f1l1b18s1", "_type": "span", "text": "Fama and French themselves returned to the model in 2015 and added two more factors: RMW (Robust Minus Weak), capturing the tendency of highly profitable companies to outperform low-profitability ones, and CMA (Conservative Minus Aggressive), capturing the tendency of companies that invest conservatively to outperform those that invest aggressively. Five factors, one for the market and four describing the type of company you own, remain the closest thing quant finance has to a standard model today.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f1l1b19",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "f1l1b19st1", "label": "CAPM (1964)", "value": "1 factor", "context": "Market only" },
+                { "_key": "f1l1b19st2", "label": "Fama-French (1993)", "value": "3 factors", "context": "Market, size, value" },
+                { "_key": "f1l1b19st3", "label": "Carhart (1997)", "value": "4 factors", "context": "Adds momentum" },
+                { "_key": "f1l1b19st4", "label": "Fama-French (2015)", "value": "5 factors", "context": "Adds profitability, investment" }
+              ]
+            },
+            {
+              "_key": "f1l1b20",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "f1l1b20s1", "_type": "span", "text": "What Actually Qualifies as a Factor", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f1l1b21",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "f1l1b21s1", "_type": "span", "text": "Not every pattern that shows up in a backtest deserves to be called a factor. Quant researchers, and the index committees that build products like the ones now trading on the NSE, generally demand that a characteristic clear four tests before it gets treated as real.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f1l1b22",
+              "_type": "table",
+              "caption": "The four tests a characteristic must pass to be treated as a genuine factor, not a backtested accident",
+              "headers": ["Property", "What It Means"],
+              "rows": [
+                { "_key": "f1l1b22r1", "_type": "tableRow", "cells": ["Persistent", "The premium shows up across long stretches of history, not just one bull run or one decade"] },
+                { "_key": "f1l1b22r2", "_type": "tableRow", "cells": ["Pervasive", "It appears across different markets and geographies, not only in US large-caps or only on the NSE"] },
+                { "_key": "f1l1b22r3", "_type": "tableRow", "cells": ["Robust", "It survives small changes in definition, whether you sort on P/E or P/B, six-month or twelve-month momentum"] },
+                { "_key": "f1l1b22r4", "_type": "tableRow", "cells": ["Investable", "It survives real-world transaction costs, liquidity constraints, and taxes, not just a frictionless spreadsheet"] }
+              ]
+            },
+            {
+              "_key": "f1l1b23",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "f1l1b23s1", "_type": "span", "text": "Factors Are Already Live on the NSE", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f1l1b24",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "f1l1b24s1", "_type": "span", "text": "This is not a purely academic exercise. NSE Indices Limited runs a family of factor-based strategy indices that Indian asset managers track through ETFs and index funds, regulated under SEBI's mutual fund framework. If you have ever compared a value fund's holdings to a momentum fund's holdings on screener.in and wondered why they barely overlap, this is why: they are built on different factor loadings entirely.", "marks": [] }
+              ]
+            },
+            {
+              "_key": "f1l1b25",
+              "_type": "table",
+              "caption": "A sample of NSE factor indices and the Fama-French-style factor each one targets",
+              "headers": ["NSE Index", "Factor Targeted"],
+              "rows": [
+                { "_key": "f1l1b25r1", "_type": "tableRow", "cells": ["Nifty50 Value 20", "Value (HML-style)"] },
+                { "_key": "f1l1b25r2", "_type": "tableRow", "cells": ["Nifty200 Momentum 30", "Momentum (UMD-style)"] },
+                { "_key": "f1l1b25r3", "_type": "tableRow", "cells": ["Nifty Alpha 50", "Risk-adjusted momentum/alpha"] },
+                { "_key": "f1l1b25r4", "_type": "tableRow", "cells": ["Nifty200 Quality 30", "Quality (RMW-style)"] },
+                { "_key": "f1l1b25r5", "_type": "tableRow", "cells": ["Nifty100 Low Volatility 30", "Low volatility"] }
+              ]
+            },
+            {
+              "_key": "f1l1b26",
+              "_type": "comparison",
+              "title": "Single-Factor CAPM vs Multi-Factor Models",
+              "columns": [
+                {
+                  "_key": "f1l1b26c1",
+                  "label": "CAPM (One Factor)",
+                  "points": [
+                    "Only market exposure (beta) is assumed to be priced",
+                    "Predicts two stocks with equal beta earn equal expected returns",
+                    "Cannot explain the P/E anomaly or the size effect",
+                    "Simple to estimate, needs only one regression against the index"
+                  ]
+                },
+                {
+                  "_key": "f1l1b26c2",
+                  "label": "Multi-Factor Models",
+                  "points": [
+                    "Market, size, value, momentum, quality, and more can all be priced separately",
+                    "Two stocks with equal beta can have very different expected returns if their other factor loadings differ",
+                    "Explains a much larger share of the cross-section of historical returns",
+                    "Needs a regression against several factor portfolios, and a view on why each factor should persist"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "f1l1b27",
+              "_type": "collapsible",
+              "title": "Show me the math: what alpha actually means in a regression",
+              "content": [
+                {
+                  "_key": "f1l1b27b1",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    { "_key": "f1l1b27b1s1", "_type": "span", "text": "Run a regression of a stock's monthly excess returns against the market, size, and value factors, and you get back four numbers: three factor loadings (beta, s, h) and an intercept, alpha. Alpha is whatever average return is left over after the three factors have done their explaining. Under CAPM, everything that could not be explained by beta was dumped into alpha, which is why CAPM-era alpha numbers looked artificially large: they were partly compensation for size and value exposure that nobody was measuring. Once you add SMB and HML to the regression, a genuinely skill-driven manager's alpha should shrink towards a smaller, harder-to-achieve number, because some of what looked like stock-picking skill was really just a tilt towards small, cheap companies.", "marks": [] }
+                  ]
+                },
+                {
+                  "_key": "f1l1b27b2",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    { "_key": "f1l1b27b2s1", "_type": "span", "text": "This is precisely why fund fact sheets in India, and globally, increasingly report factor-adjusted performance alongside raw returns. A small-cap value fund in India that simply holds cheap, small NSE-listed companies can post strong headline returns without any genuine security-selection skill, because it is riding the size and value premiums, not beating them.", "marks": [] }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "f1l1b28",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Test Yourself: The Factor Timeline",
+              "question": "Which researcher added a momentum factor to the Fama-French three-factor model, and what did he call it?",
+              "options": [
+                "Sanjoy Basu, who called it the P/E factor",
+                "Mark Carhart, who called it UMD (Up Minus Down)",
+                "Rolf Banz, who called it the size factor",
+                "William Sharpe, who called it beta"
+              ],
+              "correctIndex": 1,
+              "explanation": "Mark Carhart added the momentum factor (UMD) in 1997, building on Fama and French's three-factor model, after observing that recent winning funds kept winning for several more months. Basu and Banz are associated with the P/E and size anomalies that motivated the original three-factor model, and Sharpe built the single-factor CAPM in 1964."
+            },
+            {
+              "_key": "f1l1b29",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Reading a Fund's Factor Loadings",
+              "scenario": "You run a regression of an NSE-listed smallcap fund's five-year monthly returns against the Fama-French-style market, size, value, and momentum factors. The regression shows a high positive loading on SMB, a modest positive loading on HML, a near-zero loading on the momentum factor, and an alpha that is statistically indistinguishable from zero.",
+              "prompt": "What does this tell you about where the fund's returns are actually coming from, and how would you describe this fund to an investor who believes the manager is a skilled stock-picker?",
+              "modelAnswer": "The fund's returns are being driven almost entirely by systematic exposure to two well-documented factors, size and value, not by manager skill. A near-zero, statistically insignificant alpha means that once you strip out the compensation the fund earned simply for holding small, cheap companies, there is no evidence of genuine security-selection skill left over. You would tell the investor that this fund behaves like a small-cap value strategy that could largely be replicated with a low-cost factor index or ETF tracking similar exposures, and that the manager's 'skill' as marketed is mostly a story being told about what is, statistically, a factor tilt."
+            },
+            {
+              "_key": "f1l1b30",
+              "_type": "callout",
+              "type": "insight",
+              "text": "The single most useful reframe in this lesson: a 'great stock picker' and a 'factor tilt' can produce identical-looking return streams. The only way to tell them apart is to run the regression. This is exactly what quant desks and factor-index providers do for a living."
+            },
+            {
+              "_key": "f1l1b31",
+              "_type": "flashcardSet",
+              "title": "Vocabulary Check: Terms From This Lesson",
+              "cards": [
+                { "_key": "f1l1b31c1", "term": "CAPM", "definition": "The Capital Asset Pricing Model (Sharpe, 1964): expected return depends only on beta, a stock's sensitivity to the market." },
+                { "_key": "f1l1b31c2", "term": "Beta", "definition": "A measure of a stock's sensitivity to market-wide movements; the sole risk factor in CAPM." },
+                { "_key": "f1l1b31c3", "term": "Factor loading", "definition": "A coefficient measuring how sensitive a stock's returns are to a given factor, estimated via regression against that factor's portfolio." },
+                { "_key": "f1l1b31c4", "term": "SMB / HML", "definition": "Small Minus Big and High Minus Low: the size and value factor portfolios from the Fama-French three-factor model." },
+                { "_key": "f1l1b31c5", "term": "Alpha (regression)", "definition": "The average return left unexplained after a stock's or fund's factor exposures have been accounted for; a proxy for genuine skill once factors are controlled for." }
+              ]
+            },
+            {
+              "_key": "f1l1b32",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "Index and fund names mentioned in this lesson (Nifty50 Value 20, Nifty200 Momentum 30, Nifty Alpha 50, Nifty200 Quality 30, Nifty100 Low Volatility 30, and any ETFs or index funds tracking them) are used only to illustrate how factor indices are implemented in India. This is not investment advice or a recommendation to buy any specific fund; verify current index methodology, constituent lists, and fund mandates directly with NSE Indices Limited and the respective AMC before making any decision."
+            },
+            {
+              "_key": "f1l1b33",
+              "_type": "keyTakeaways",
+              "points": [
+                "CAPM (1964) explained expected returns using a single factor, beta, a stock's sensitivity to the broader market",
+                "The P/E anomaly (Basu, 1977) and the size effect (Banz, 1981) showed returns that beta alone could not explain",
+                "Fama and French's three-factor model (1993) added size (SMB) and value (HML) alongside the market factor",
+                "Carhart's four-factor model (1997) added momentum (UMD); Fama-French's five-factor model (2015) added profitability (RMW) and investment (CMA)",
+                "A genuine factor must be persistent, pervasive across markets, robust to small definitional changes, and investable after real-world costs",
+                "NSE Indices Limited already runs factor-based strategy indices tracked by SEBI-regulated ETFs and index funds, built on these same academic factors",
+                "Regressing a fund's returns against factor portfolios separates genuine manager skill (alpha) from returns that are really just systematic factor exposure"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

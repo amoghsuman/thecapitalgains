@@ -1,0 +1,226 @@
+{
+  "courseSlug": "introduction-to-portfolio-optimization-markowitz-and-beyond",
+  "chapters": [
+    {
+      "title": "Chapter 5: Beyond Markowitz: Fixing Mean-Variance Optimization",
+      "lessons": [
+        {
+          "title": "Why Markowitz Breaks Down in Practice: Estimation Error and Unstable Weights",
+          "slug": "why-markowitz-breaks-down-in-practice-estimation-error-and-unstable-weights",
+          "body": [
+            {
+              "_key": "poc5l1-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc5l1-001s1", "_type": "span", "marks": [], "text": "Nearly every lesson since Chapter 3 has flagged a warning and moved on: unconstrained weights can go negative, estimation is imprecise, alpha is probably noise. This lesson stops moving on. Mean-variance optimization has one real, well-documented flaw at its core, and understanding it properly is the entire point of this chapter." }
+              ]
+            },
+            {
+              "_key": "poc5l1-002",
+              "_type": "bigIdea",
+              "text": "Mean-variance optimization does not just tolerate errors in its inputs. It actively hunts for them. Give it a set of noisy expected-return estimates, and it will pile weight into whichever one happens to look best, whether that number reflects real skill or pure statistical noise."
+            },
+            {
+              "_key": "poc5l1-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc5l1-003s1", "_type": "span", "marks": [], "text": "The Real Problem: You Cannot Estimate Expected Return Precisely" }
+              ]
+            },
+            {
+              "_key": "poc5l1-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc5l1-004s1", "_type": "span", "marks": [], "text": "Every expected return used in this course has been handed to you as a clean input. In the real world, that number has to be estimated, almost always from historical returns, and basic statistics says how uncertain that estimate is: the standard error of a sample mean falls with the square root of the number of years, not the number itself." }
+              ]
+            },
+            {
+              "_key": "poc5l1-005",
+              "_type": "mathBlock",
+              "latex": "SE(\\bar{R}) = \\frac{\\sigma}{\\sqrt{T}}",
+              "caption": "Standard error of an estimated mean return: annual volatility, divided by the square root of years of data."
+            },
+            {
+              "_key": "poc5l1-006",
+              "_type": "table",
+              "caption": "Standard error of a mean-return estimate for a 25%-volatility stock",
+              "headers": ["Years of data (T)", "Standard error", "Approximate 95% confidence interval"],
+              "rows": [
+                { "_key": "poc5l1-006r1", "_type": "tableRow", "cells": ["10", "7.91%", "± 15.50%"] },
+                { "_key": "poc5l1-006r2", "_type": "tableRow", "cells": ["20", "5.59%", "± 10.96%"] },
+                { "_key": "poc5l1-006r3", "_type": "tableRow", "cells": ["30", "4.56%", "± 8.95%"] },
+                { "_key": "poc5l1-006r4", "_type": "tableRow", "cells": ["50", "3.54%", "± 6.93%"] }
+              ]
+            },
+            {
+              "_key": "poc5l1-007",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Even 20 full years of returns for a 25%-volatility stock leaves a 95% confidence interval spanning roughly 11 percentage points around the estimated mean. A true expected return of 8% and a true expected return of 19% are both statistically consistent with the same 20-year sample average. This is not a small-sample problem that more patience fixes: doubling to 50 years only narrows the interval to about 7 points, and by then the company, sector, and economy the early years describe may barely resemble the one being invested in today."
+            },
+            {
+              "_key": "poc5l1-008",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc5l1-008s1", "_type": "span", "marks": [], "text": "Error Maximization: a One-Point Nudge, a Five-Point Swing" }
+              ]
+            },
+            {
+              "_key": "poc5l1-009",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc5l1-009s1", "_type": "span", "marks": [], "text": "Take Chapter 4's tangency portfolio and change exactly one input: TCS's assumed expected return, from 16% to 17%. A one-percentage-point nudge, tiny next to the roughly 11-point confidence interval just computed, well within ordinary sampling noise." }
+              ]
+            },
+            {
+              "_key": "poc5l1-010",
+              "_type": "table",
+              "caption": "Tangency portfolio weights, before and after a 1-point change to TCS's assumed return",
+              "headers": ["Stock", "Weight (TCS mu = 16%)", "Weight (TCS mu = 17%)", "Change"],
+              "rows": [
+                { "_key": "poc5l1-010r1", "_type": "tableRow", "cells": ["TCS", "27.29%", "32.18%", "+4.89 pts"] },
+                { "_key": "poc5l1-010r2", "_type": "tableRow", "cells": ["Maruti Suzuki", "25.32%", "23.60%", "-1.72 pts"] },
+                { "_key": "poc5l1-010r3", "_type": "tableRow", "cells": ["HDFC Bank", "18.19%", "17.13%", "-1.06 pts"] },
+                { "_key": "poc5l1-010r4", "_type": "tableRow", "cells": ["HUL", "16.88%", "16.24%", "-0.64 pts"] },
+                { "_key": "poc5l1-010r5", "_type": "tableRow", "cells": ["Reliance", "12.32%", "10.84%", "-1.48 pts"] }
+              ]
+            },
+            {
+              "_key": "poc5l1-011",
+              "_type": "callout",
+              "type": "insight",
+              "text": "A change smaller than typical estimation noise moved nearly five percentage points of the entire portfolio into a single stock. This behaviour has a name, coined by economist Richard Michaud in a well-known 1989 paper: error maximization. Mean-variance optimization cannot tell the difference between a genuinely superior expected return and an overestimate produced by pure sampling noise. It treats both identically, as a signal to allocate more capital, and systematically concentrates positions in exactly the inputs most likely to be wrong."
+            },
+            {
+              "_key": "poc5l1-012",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc5l1-012s1", "_type": "span", "marks": [], "text": "Variance and Covariance Are the More Trustworthy Half" }
+              ]
+            },
+            {
+              "_key": "poc5l1-013",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc5l1-013s1", "_type": "span", "marks": [], "text": "Not every input in this course's formulas is equally unreliable. Variance and covariance are estimated from squared deviations, which converge to their true values considerably faster than a mean does, and typically need far less data to pin down with reasonable confidence, even though Chapter 2 already showed correlations themselves shift during market stress. This asymmetry, risk estimated reasonably well, return estimated poorly, is exactly why minimum-variance portfolios, which need no expected return input at all, tend to hold up better out of sample than fully mean-variance-optimized ones in practice. Chapter 3's minimum-variance formula was never just a stepping stone toward the full optimization. In many real applications, it is the more robust answer on its own." }
+              ]
+            },
+            {
+              "_key": "poc5l1-014",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc5l1-014s1", "_type": "span", "marks": [], "text": "What the Industry Actually Does About It" }
+              ]
+            },
+            {
+              "_key": "poc5l1-015",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "poc5l1-015s1", "_type": "span", "marks": [], "text": "Nobody serious runs raw historical averages straight through the tangency-portfolio formula and trades the output. The rest of this chapter covers three real fixes, each aimed at a different part of this problem." }
+              ]
+            },
+            {
+              "_key": "poc5l1-016",
+              "_type": "comparison",
+              "title": "Where This Chapter Goes Next",
+              "columns": [
+                {
+                  "_key": "poc5l1-016c1",
+                  "label": "The problem",
+                  "points": [
+                    "Raw historical expected returns are extremely noisy",
+                    "Optimization concentrates in whichever input looks best, noise included",
+                    "Unconstrained weights can swing wildly from tiny input changes",
+                    "Pure historical estimation has no natural fix, only more (imperfect) data"
+                  ]
+                },
+                {
+                  "_key": "poc5l1-016c2",
+                  "label": "This chapter's fixes",
+                  "points": [
+                    "Lesson 2: Black-Litterman, blending CAPM's equilibrium returns with your own views",
+                    "Lesson 3: Risk parity, sidestepping expected-return estimation almost entirely",
+                    "Lesson 4: Factor-based construction, grounding returns in identifiable, persistent drivers",
+                    "Chapter 6: real-world constraints, like position caps, that limit how far any single error can concentrate a portfolio"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "poc5l1-017",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Compute a standard error",
+              "prompt": "A stock has an annual volatility of 30%. Using 15 years of historical return data, what is the standard error of its estimated mean return?",
+              "correctValue": 7.75,
+              "tolerance": 0.15,
+              "unit": "%",
+              "explanation": "SE = sigma / sqrt(T) = 30 / sqrt(15) = 30 / 3.873 = 7.75%. A 95% confidence interval would span roughly plus or minus 15.2 percentage points around the estimated mean."
+            },
+            {
+              "_key": "poc5l1-018",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Why error maximization happens",
+              "question": "Why does mean-variance optimization tend to load up on whichever asset has the highest ESTIMATED expected return, even when that estimate carries a large margin of error?",
+              "options": [
+                "Because the optimizer deliberately favors risky assets over safe ones",
+                "Because the optimizer has no way to distinguish a genuinely high true expected return from an overestimate caused by sampling noise, and mechanically treats a larger number as a stronger signal either way",
+                "Because expected return estimates from more than five years of data are always accurate",
+                "Because minimum-variance portfolios and mean-variance portfolios always produce identical weights"
+              ],
+              "correctIndex": 1,
+              "explanation": "The optimization formula has no concept of how RELIABLE an input is, only its numeric value. A noisy overestimate and a genuinely superior expected return look identical to the formula, so both get rewarded with more weight, which is exactly what Michaud's term \"error maximization\" describes."
+            },
+            {
+              "_key": "poc5l1-019",
+              "_type": "flashcardSet",
+              "title": "Estimation Error: Core Terms",
+              "cards": [
+                { "_key": "poc5l1-019f1", "term": "Standard error of the mean", "definition": "sigma / sqrt(T): how imprecise a historical average return estimate is, shrinking only with the square root of the number of years of data." },
+                { "_key": "poc5l1-019f2", "term": "Error maximization", "definition": "Richard Michaud's term for mean-variance optimization's tendency to concentrate weight in whichever asset has the highest estimated return, regardless of how reliable that estimate actually is." },
+                { "_key": "poc5l1-019f3", "term": "Estimation error asymmetry", "definition": "The fact that variance and covariance can typically be estimated with more precision than expected return, from the same historical data." }
+              ]
+            },
+            {
+              "_key": "poc5l1-020",
+              "_type": "keyTakeaways",
+              "points": [
+                "Expected return estimates carry large statistical uncertainty: even 20 years of data for a 25%-volatility stock leaves a 95% confidence interval spanning roughly 11 percentage points.",
+                "Mean-variance optimization cannot tell a genuinely high true expected return apart from an overestimate caused by noise, a behaviour known as error maximization.",
+                "A one-percentage-point change to a single input, smaller than typical estimation noise, shifted nearly five percentage points of an entire tangency portfolio into one stock.",
+                "Variance and covariance are estimated considerably more reliably than expected return from the same data, which is part of why minimum-variance portfolios tend to be more robust in practice than fully optimized ones.",
+                "None of this means mean-variance optimization is wrong. It means raw historical inputs, fed straight into the formula, are the actual weak point.",
+                "The rest of this chapter covers three real fixes the industry uses: Black-Litterman, risk parity, and factor-based construction, each addressing a different piece of this estimation problem."
+              ]
+            },
+            {
+              "_key": "poc5l1-021",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice. Historical and biographical references are presented as commonly documented, and all figures used in the examples and exercises are illustrative, not live or historical market data. Consult a SEBI-registered investment adviser before making investment decisions."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

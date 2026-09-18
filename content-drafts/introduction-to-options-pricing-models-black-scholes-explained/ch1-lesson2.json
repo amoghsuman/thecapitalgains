@@ -1,0 +1,300 @@
+{
+  "courseSlug": "introduction-to-options-pricing-models-black-scholes-explained",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Options Need a Pricing Model",
+      "lessons": [
+        {
+          "title": "Intrinsic Value, Time Value, and the Moneyness of an Option",
+          "slug": "intrinsic-value-time-value-and-the-moneyness-of-an-option",
+          "body": [
+            {
+              "_key": "k1",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k1s",
+                  "_type": "span",
+                  "text": "Where an Option Sits: In, At, or Out of the Money",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k2",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k2s1",
+                  "_type": "span",
+                  "text": "The previous lesson split every premium into intrinsic value and time value. Before you can use that split, you need a name for where an option's strike sits relative to the spot price. That name is ",
+                  "marks": []
+                },
+                {
+                  "_key": "k2s2",
+                  "_type": "span",
+                  "text": "moneyness",
+                  "marks": ["gd1"]
+                },
+                {
+                  "_key": "k2s3",
+                  "_type": "span",
+                  "text": ", and traders shorten it to three letters: ITM, ATM, and OTM. Calls and puts flip the rule, which is exactly where beginners trip.",
+                  "marks": []
+                }
+              ],
+              "markDefs": [
+                {
+                  "_key": "gd1",
+                  "_type": "glossaryTerm",
+                  "definition": "A classification of how an option's strike price compares with the current spot price of the underlying: in-the-money, at-the-money, or out-of-the-money."
+                }
+              ]
+            },
+            {
+              "_type": "table",
+              "caption": "Moneyness rules for calls vs puts",
+              "headers": [
+                "Classification",
+                "Call condition",
+                "Put condition",
+                "Has intrinsic value?"
+              ],
+              "rows": [
+                {
+                  "_key": "k3",
+                  "_type": "tableRow",
+                  "cells": [
+                    "In-the-money (ITM)",
+                    "Spot above strike (S > K)",
+                    "Spot below strike (S < K)",
+                    "Yes"
+                  ]
+                },
+                {
+                  "_key": "k4",
+                  "_type": "tableRow",
+                  "cells": [
+                    "At-the-money (ATM)",
+                    "Spot at or nearest to strike (S = K)",
+                    "Spot at or nearest to strike (S = K)",
+                    "No, or negligible"
+                  ]
+                },
+                {
+                  "_key": "k5",
+                  "_type": "tableRow",
+                  "cells": [
+                    "Out-of-the-money (OTM)",
+                    "Spot below strike (S < K)",
+                    "Spot above strike (S > K)",
+                    "No"
+                  ]
+                }
+              ],
+              "_key": "k6"
+            },
+            {
+              "_key": "k7",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k7s1",
+                  "_type": "span",
+                  "text": "A call is ITM when the stock has already run past the strike, because you could exercise it and buy below the market price right now. A put is ITM in the mirror-image case, when the stock has fallen below the strike, because you could exercise it and sell above the market price right now. Get the direction backwards for even one of the four cells above and every later calculation in this course breaks.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Flip the rule for puts",
+              "question": "Nifty is at 24,800. Is a 25,000 put ITM, ATM, or OTM?",
+              "options": [
+                "ITM, because Nifty is below the put's strike",
+                "OTM, because Nifty is below the put's strike",
+                "ATM, because 25,000 is close to 24,800",
+                "ITM, because all puts below 25,000 are automatically in the money"
+              ],
+              "correctIndex": 0,
+              "explanation": "A put is ITM when spot is below strike. Nifty at 24,800 is below the 25,000 strike, so this put is ITM by 200 points and already carries ₹200 of intrinsic value, even though the same 200-point gap would make a call OTM.",
+              "_key": "k8"
+            },
+            {
+              "_key": "k9",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k9s",
+                  "_type": "span",
+                  "text": "How Moneyness Shapes the Premium Split",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k10",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k10s1",
+                  "_type": "span",
+                  "text": "Time value is not spread evenly across strikes. It peaks at the ATM strike and shrinks as you move to either side, deep ITM or far OTM. Here is a full Nifty call chain, all seven days from the same expiry used in the last lesson, with spot still at 24,800.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "table",
+              "caption": "Illustrative Nifty call chain, spot at 24,800, 7 days to expiry",
+              "headers": [
+                "Strike",
+                "Moneyness",
+                "Premium",
+                "Intrinsic value",
+                "Time value"
+              ],
+              "rows": [
+                {
+                  "_key": "k11",
+                  "_type": "tableRow",
+                  "cells": ["24,400", "Deep ITM (400 pts)", "₹445", "₹400", "₹45"]
+                },
+                {
+                  "_key": "k12",
+                  "_type": "tableRow",
+                  "cells": ["24,600", "ITM (200 pts)", "₹275", "₹200", "₹75"]
+                },
+                {
+                  "_key": "k13",
+                  "_type": "tableRow",
+                  "cells": ["24,800", "ATM", "₹130", "₹0", "₹130"]
+                },
+                {
+                  "_key": "k14",
+                  "_type": "tableRow",
+                  "cells": ["25,000", "OTM (200 pts)", "₹50", "₹0", "₹50"]
+                },
+                {
+                  "_key": "k15",
+                  "_type": "tableRow",
+                  "cells": ["25,200", "Far OTM (400 pts)", "₹15", "₹0", "₹15"]
+                }
+              ],
+              "_key": "k16"
+            },
+            {
+              "_type": "chart",
+              "chartType": "line",
+              "title": "Time value across strikes (illustrative Nifty chain)",
+              "xAxisLabel": "Strike",
+              "yAxisLabel": "Time value (₹)",
+              "data": [
+                { "_key": "k17", "label": "24,400", "value": 45 },
+                { "_key": "k18", "label": "24,600", "value": 75 },
+                { "_key": "k19", "label": "24,800", "value": 130 },
+                { "_key": "k20", "label": "25,000", "value": 50 },
+                { "_key": "k21", "label": "25,200", "value": 15 }
+              ],
+              "_key": "k22"
+            },
+            {
+              "_key": "k23",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k23s1",
+                  "_type": "span",
+                  "text": "That hump shape is not a coincidence. At the ATM strike, nobody knows yet whether it will finish ITM or OTM, so uncertainty, and the price attached to it, is at its maximum. Move deep ITM and the outcome is nearly settled already: the option behaves almost like owning Nifty itself, so there is little uncertainty left to price. Move far OTM and the option is nearly certain to expire worthless, so there is little uncertainty left there either. This is also why ATM and near-ATM strikes usually carry the highest trading volume on the NSE option chain: they are where genuine uncertainty, and genuine disagreement about price, is concentrated.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "exercise",
+              "variant": "numericInput",
+              "prompt": "Nifty is at 24,800. A 24,600 call trades at ₹275. What is its time value, in rupees?",
+              "title": "Extract the time value",
+              "correctValue": 75,
+              "tolerance": 0,
+              "unit": "₹",
+              "explanation": "Intrinsic value is max(S − K, 0) = max(24,800 − 24,600, 0) = ₹200. Time value is the premium minus intrinsic value: ₹275 − ₹200 = ₹75.",
+              "_key": "k24"
+            },
+            {
+              "_key": "k25",
+              "_type": "block",
+              "style": "h2",
+              "children": [
+                {
+                  "_key": "k25s",
+                  "_type": "span",
+                  "text": "Choosing a Strike Is Not Free: The Moneyness Trade-off",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_key": "k26",
+              "_type": "block",
+              "style": "normal",
+              "children": [
+                {
+                  "_key": "k26s1",
+                  "_type": "span",
+                  "text": "Moneyness is not just a label. It is a trade-off every trader makes, often without realising it, the moment they pick a strike.",
+                  "marks": []
+                }
+              ],
+              "markDefs": []
+            },
+            {
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "ITM comfort or OTM leverage",
+              "scenario": "Kunal expects Nifty, at 24,800, to rally during the session. He has a fixed budget and is choosing between the 24,600 call at ₹275 (ITM, ₹200 of that is intrinsic value) and the 25,200 call at ₹15 (far OTM, all of it time value).",
+              "prompt": "What is Kunal actually trading off between these two strikes, beyond just the price difference?",
+              "modelAnswer": "The 24,600 call already has real intrinsic value and moves closely with Nifty, so a modest, believable rally of 100 to 150 points shows up meaningfully in its price, and even a flat session leaves most of that ₹275 intact as intrinsic value. It costs more per lot, which limits how many lots his budget buys.\n\nThe 25,200 call is cheap precisely because it needs Nifty to move over 400 points before it has any intrinsic value at all. Its low price buys far more lots for the same budget, so if Nifty does make a large, fast move past 25,200 before expiry, the percentage gain can be dramatic. But if Nifty only grinds up 100 to 150 points, as Kunal actually expects, this option can still expire worthless, because it is still deep OTM and time value keeps eroding every hour that passes.\n\nThe real trade-off is reliability versus leverage: the ITM call participates in an ordinary, believable move; the OTM call only pays off on an extreme move, and Chapter 4's Greeks (delta and theta specifically) are what let you put an exact number on both sides of that trade-off instead of guessing.",
+              "_key": "k27"
+            },
+            {
+              "_type": "bigIdea",
+              "text": "Moneyness is not a static label on an option. It tells you how much of the premium is already locked in as intrinsic value, and how much is still a live bet on uncertainty, which is exactly what you are paying for or against when you pick a strike.",
+              "_key": "k28"
+            },
+            {
+              "_type": "keyTakeaways",
+              "points": [
+                "A call is ITM when spot is above strike; a put is ITM when spot is below strike. The rule flips between the two.",
+                "ATM options carry the least intrinsic value but the most time value, because genuine uncertainty about the outcome peaks there.",
+                "Time value forms a hump across strikes: low deep ITM, highest at ATM, low again far OTM.",
+                "ITM strikes cost more but move closely with the underlying and keep some value even in a flat market. Far OTM strikes are cheap and offer leverage, but need a large, fast move to pay off before time value decays to zero.",
+                "Delta and theta, covered in Chapter 4, turn this reliability-versus-leverage trade-off into a precise number instead of a feeling."
+              ],
+              "_key": "k29"
+            },
+            {
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for education only and is not investment advice. The Nifty option chain, premiums, and Kunal's scenario are hypothetical illustrations of moneyness mechanics, not live market quotes. Always check the live option chain on NSE or your broker's terminal before trading, and consult a SEBI-registered advisor for personalised advice.",
+              "_key": "k30"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

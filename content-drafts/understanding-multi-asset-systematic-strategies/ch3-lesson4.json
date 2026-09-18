@@ -1,0 +1,244 @@
+{
+  "courseSlug": "understanding-multi-asset-systematic-strategies",
+  "chapters": [
+    {
+      "title": "Chapter 3: Correlation, Diversification, and the Multi-Asset Risk Engine",
+      "lessons": [
+        {
+          "title": "Building a Correlation Matrix Across Nifty, Gold, G-Secs, and USD-INR",
+          "slug": "building-a-correlation-matrix-across-nifty-gold-g-secs-and-usd-inr",
+          "body": [
+            {
+              "_key": "mac3l4b01",
+              "_type": "bigIdea",
+              "text": "A correlation matrix is not a report you generate once and file away. It is the single object a systematic multi-asset desk should be looking at before adding any new position, since it answers the one question that actually matters: does this new instrument genuinely add something, or is it just another way of holding an exposure you already have?"
+            },
+            {
+              "_key": "mac3l4b02",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac3l4b02s1",
+                  "_type": "span",
+                  "text": "The last two lessons covered how to measure a single pairwise correlation and how correlation behaves differently across different crisis types. This lesson puts that into practice by building an actual 4-by-4 correlation matrix across this course's four core instruments, Nifty 50, Gold, G-Sec futures, and USD-INR, and showing how to read it, validate it, and use it directly for portfolio decisions. Chapter 6's risk parity work runs entirely on a matrix built this way.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac3l4b03",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac3l4b03s1", "_type": "span", "text": "From Pairwise Correlations to a Full Matrix", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac3l4b04",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac3l4b04s1",
+                  "_type": "span",
+                  "text": "A correlation matrix simply arranges every pairwise correlation between a set of assets into a grid. It is symmetric, the correlation between Nifty and Gold is identical whichever direction you read it, and its diagonal is always exactly 1, since any asset is perfectly correlated with itself. For four assets, that means six genuinely distinct off-diagonal values to compute and interpret, matching the n(n-1)/2 combinatorics from Chapter 1's discussion of why this scales faster than the number of instruments alone.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac3l4b05",
+              "_type": "table",
+              "caption": "Illustrative Correlation Matrix: Nifty 50, Gold, G-Sec Futures, USD-INR (Calm Regime)",
+              "headers": ["", "Nifty 50", "Gold", "G-Sec Futures", "USD-INR"],
+              "rows": [
+                { "_key": "mac3l4b05r1", "_type": "tableRow", "cells": ["Nifty 50", "1.00", "0.08", "-0.05", "-0.35"] },
+                { "_key": "mac3l4b05r2", "_type": "tableRow", "cells": ["Gold", "0.08", "1.00", "0.25", "0.15"] },
+                { "_key": "mac3l4b05r3", "_type": "tableRow", "cells": ["G-Sec Futures", "-0.05", "0.25", "1.00", "0.05"] },
+                { "_key": "mac3l4b05r4", "_type": "tableRow", "cells": ["USD-INR", "-0.35", "0.15", "0.05", "1.00"] }
+              ]
+            },
+            {
+              "_key": "mac3l4b06",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This matrix is illustrative, built to reflect plausible calm-regime relationships between these four instruments based on the drivers covered across Chapter 2, not a computed output from an actual historical dataset. Build the real version from your own return series before using it to size any position."
+            },
+            {
+              "_key": "mac3l4b07",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac3l4b07s1", "_type": "span", "text": "Reading the Matrix: What Each Cell Tells a Systematic Desk", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac3l4b08",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac3l4b08s1",
+                  "_type": "span",
+                  "text": "Nifty and USD-INR carry the strongest relationship in this matrix, negative, since FII inflows tend to both lift Nifty and strengthen the rupee, pushing USD-INR down, at the same time, exactly the mechanism covered in Chapter 2's currency lesson. Gold and G-Sec futures show a modest positive correlation, both tending to benefit when risk appetite falls and rates are expected to ease. Nifty and Gold sit close to zero, confirming gold's role as a genuine diversifier against Indian equities in a calm regime. G-Secs and USD-INR sit close to zero as well, two instruments whose calm-regime drivers, RBI rate policy and currency flows, do not overlap much day to day.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac3l4b09",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac3l4b09s1", "_type": "span", "text": "A Valid Correlation Matrix Must Be Internally Consistent", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac3l4b10",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_key": "mac3l4m01",
+                  "_type": "glossaryTerm",
+                  "definition": "A mathematical property a valid correlation or covariance matrix must satisfy, roughly meaning the matrix cannot imply a negative variance for any possible combination of the assets. A matrix built from actual historical return data always satisfies this automatically; a matrix assembled by hand from individually estimated pairwise correlations might not."
+                }
+              ],
+              "children": [
+                {
+                  "_key": "mac3l4b10s1",
+                  "_type": "span",
+                  "text": "You cannot pick six pairwise correlations independently and always end up with a mathematically valid matrix. If Nifty and Gold were, hypothetically, correlated at 0.95, and Gold and G-Secs were correlated at 0.95, Nifty and G-Secs cannot then be correlated at -0.9, that combination is internally inconsistent, since two things each very closely tracking a third cannot simultaneously move in near-opposite directions from each other. A matrix must be ",
+                  "marks": []
+                },
+                { "_key": "mac3l4b10s2", "_type": "span", "text": "positive semi-definite", "marks": ["mac3l4m01"] },
+                {
+                  "_key": "mac3l4b10s3",
+                  "_type": "span",
+                  "text": " to be valid. Any matrix computed directly from actual return data will automatically satisfy this. The risk arises specifically when a matrix is assembled by hand, for instance when stress-testing a scenario using individually judged correlations, without checking that the combination is mathematically coherent.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac3l4b11",
+              "_type": "callout",
+              "type": "warning",
+              "text": "Chapter 9's stress-testing work sometimes calls for manually overriding correlations to simulate a hypothetical scenario, such as forcing equities and bonds to a specific positive correlation to mimic 2022. Always validate that a manually assembled matrix is positive semi-definite before running a portfolio calculation on it. An inconsistent matrix can produce a nonsensical, even negative, portfolio variance, and most statistical software will simply return an error or silently wrong number rather than warn you the input was invalid."
+            },
+            {
+              "_key": "mac3l4b12",
+              "_type": "codeBlock",
+              "language": "python",
+              "code": "import pandas as pd\nimport numpy as np\n\n# returns_df: columns are Nifty, Gold, GSec, USDINR log returns,\n# already aligned to a common trading calendar (see Chapter 1's alignment note)\ncorr_matrix = returns_df.corr()\n\n# A matrix built from real return data is automatically valid, but any\n# hand-assembled or manually overridden matrix should be checked before use.\neigenvalues = np.linalg.eigvalsh(corr_matrix.values)\nis_valid = np.all(eigenvalues >= -1e-8)  # small tolerance for floating point noise\nprint(f\"Matrix is positive semi-definite: {is_valid}\")",
+              "caption": "A minimal pandas and numpy workflow: compute the matrix from aligned return data, then validate it before using it in any downstream portfolio calculation."
+            },
+            {
+              "_key": "mac3l4b13",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mac3l4b13s1", "_type": "span", "text": "Using the Matrix for Portfolio Construction: Redundant vs Complementary Positions", "marks": [] }
+              ]
+            },
+            {
+              "_key": "mac3l4b14",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_key": "mac3l4b14s1",
+                  "_type": "span",
+                  "text": "Before adding any new instrument, a systematic desk should check its correlation row against everything already in the book. A candidate instrument with a high correlation to an existing position is largely redundant, it adds gross exposure and transaction cost without meaningfully changing the portfolio's risk profile. A candidate with low or negative correlation to the existing book is a genuine complement, the kind of addition that actually earns its place through Lesson 1's diversification math, not just through a story about why it should help.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_key": "mac3l4b15",
+              "_type": "comparison",
+              "title": "Redundant vs Complementary Additions to a Nifty-Heavy Book",
+              "columns": [
+                {
+                  "_key": "mac3l4b15c1",
+                  "label": "Redundant (High Correlation)",
+                  "points": [
+                    "Adding Bank Nifty futures alongside a large Nifty 50 position",
+                    "Both driven overwhelmingly by the same broad equity risk factor",
+                    "Adds gross exposure and cost without materially changing portfolio risk",
+                    "Easy mistake: mistaking \"a different index\" for \"a different asset class\""
+                  ]
+                },
+                {
+                  "_key": "mac3l4b15c2",
+                  "label": "Complementary (Low or Negative Correlation)",
+                  "points": [
+                    "Adding a USD-INR position alongside a large Nifty 50 position",
+                    "Correlation of -0.35 in the illustrative matrix means it tends to move opposite",
+                    "Meaningfully reduces portfolio variance per Lesson 1's formula",
+                    "The kind of addition the correlation matrix is built to surface"
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "mac3l4b16",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "The 'Diversified' Book That Was Really Two Positions",
+              "scenario": "A desk building on this lesson's illustrative matrix holds a large Nifty 50 futures position and, wanting to diversify, adds a Bank Nifty futures position of similar size, reasoning that it is a different index tracking a different sector mix.",
+              "prompt": "Using the correlation matrix framework from this lesson, evaluate whether this addition genuinely diversifies the book.",
+              "modelAnswer": "It does not, meaningfully. Bank Nifty and Nifty 50, while technically different indices, are both free-float market cap weighted Indian equity indices dominated by large, liquid names and share the same overwhelming driver: broad Indian equity market beta, the same point Chapter 2's equities lesson made about factor-diversified equity books. Their pairwise correlation would sit very high, likely well above 0.85, meaning this addition falls squarely into the redundant category from this lesson's comparison, adding gross exposure and cost without meaningfully changing the portfolio's actual risk profile. A genuinely diversifying addition, per the illustrative matrix, would be something like USD-INR or Gold, both showing far lower correlation to Nifty."
+            },
+            {
+              "_key": "mac3l4b17",
+              "_type": "exercise",
+              "variant": "numericInput",
+              "title": "Counting the Matrix's Distinct Entries",
+              "prompt": "For a correlation matrix covering 4 assets (Nifty, Gold, G-Sec Futures, USD-INR), how many distinct, non-diagonal pairwise correlation values does it contain, using n(n-1)/2?",
+              "correctValue": 6,
+              "tolerance": 0,
+              "explanation": "n(n-1)/2 with n=4 gives 4×3/2 = 6. These are exactly the six off-diagonal cells above the matrix's diagonal in this lesson's table: Nifty-Gold, Nifty-GSec, Nifty-USDINR, Gold-GSec, Gold-USDINR, and GSec-USDINR, each mirrored once below the diagonal by symmetry."
+            },
+            {
+              "_key": "mac3l4b18",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Validating a Hand-Built Matrix",
+              "question": "Why does a correlation matrix computed directly from real historical return data always satisfy the positive semi-definite requirement, while a hand-assembled matrix might not?",
+              "options": [
+                "Real data is always perfectly uncorrelated, avoiding the issue entirely",
+                "A matrix computed from actual data is mathematically derived from a real covariance structure, which is guaranteed to be internally consistent; individually chosen correlation values are not automatically constrained to be consistent with each other",
+                "Positive semi-definiteness only applies to matrices larger than 4 by 4",
+                "Hand-assembled matrices are always symmetric, which real data matrices are not"
+              ],
+              "correctIndex": 1,
+              "explanation": "A matrix computed from actual return data is, by construction, derived from a real underlying covariance structure and is therefore automatically internally consistent. When correlations are instead chosen individually, for instance during manual scenario construction, nothing enforces that the chosen values are mutually compatible, which is why hand-assembled matrices need an explicit validity check before use."
+            },
+            {
+              "_key": "mac3l4b19",
+              "_type": "keyTakeaways",
+              "points": [
+                "A correlation matrix is symmetric with a diagonal of 1, and a 4-asset matrix contains 6 distinct off-diagonal values to interpret",
+                "In this lesson's illustrative matrix, Nifty and USD-INR show the strongest relationship, negative, driven by FII flows moving both equities and the rupee together",
+                "A valid correlation matrix must be positive semi-definite; matrices computed from real return data satisfy this automatically, but hand-assembled or manually overridden matrices need explicit validation",
+                "Checking a candidate instrument's correlation row against the existing book distinguishes a redundant addition, like Bank Nifty alongside Nifty 50, from a genuinely complementary one, like USD-INR",
+                "A pandas .corr() call plus a numpy eigenvalue check is a minimal, practical workflow for building and validating a real correlation matrix",
+                "Chapter 6's risk parity approach runs directly on a matrix built this way, making the practices in this lesson a direct prerequisite for that later work"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

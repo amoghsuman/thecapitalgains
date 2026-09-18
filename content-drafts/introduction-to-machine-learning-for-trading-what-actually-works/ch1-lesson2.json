@@ -1,0 +1,208 @@
+{
+  "courseSlug": "introduction-to-machine-learning-for-trading-what-actually-works",
+  "chapters": [
+    {
+      "title": "Chapter 1: Why Most \"ML for Trading\" Content Gets It Wrong",
+      "lessons": [
+        {
+          "title": "What Problem Are You Actually Solving? Prediction vs Signal vs Execution",
+          "slug": "what-problem-are-you-actually-solving-prediction-vs-signal-vs-execution",
+          "body": [
+            {
+              "_key": "mlt2-001",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt2-001s1", "_type": "span", "marks": [], "text": "A quant analyst aspirant builds a classifier that predicts whether Bank Nifty closes higher or lower the next trading day, using five years of NSE data. On a held-out test set, it is right 58 percent of the time, comfortably better than a coin flip. Excited, he wires ₹2 lakh into a trading account, feeds the model's daily prediction straight into a full-size Bank Nifty futures trade every single day, and loses money steadily for three months. The model was not wrong. The model was never the problem. He had built a prediction and mistaken it for a strategy, without ever building the signal layer that decides when and how much to bet, or the execution layer that decides how the trade actually gets placed. This lesson separates those three problems, because most beginner ML-for-trading failures happen at the seam between them, not inside the model itself." }
+              ]
+            },
+            {
+              "_key": "mlt2-002",
+              "_type": "bigIdea",
+              "text": "A trading system built with machine learning has three separate layers: prediction (what is likely to happen), signal (what you should do about it, and how confidently), and execution (how the trade actually gets placed in the market). Each layer can fail independently. A model can predict well and still lose money if the signal layer bets too often or too aggressively, or if the execution layer bleeds the edge away in costs and slippage."
+            },
+            {
+              "_key": "mlt2-003",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt2-003s1", "_type": "span", "marks": [], "text": "Layer 1: Prediction, What Will Happen?" }
+              ]
+            },
+            {
+              "_key": "mlt2-004",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt2-004s1", "_type": "span", "marks": [], "text": "Prediction is the purely statistical part, and the part almost all 'ML for trading' tutorials stop at. You choose a target, will Nifty close higher tomorrow (classification), or by how much will Bank Nifty move over the next hour (regression), and you train a model to estimate it from historical features. This is evaluated using standard ML metrics: accuracy, precision, recall, or mean squared error, exactly as you would for predicting anything else, house prices or customer churn. Nothing about this step involves money, positions, or risk, and it is worth being explicit about that. A good score here, say 58 percent accuracy or a low mean squared error, tells you only that a statistical pattern exists in your test data. It says nothing yet about whether trading on that pattern is profitable." }
+              ]
+            },
+            {
+              "_key": "mlt2-005",
+              "_type": "table",
+              "caption": "Two common ways to frame a prediction target",
+              "headers": ["Framing", "What It Predicts", "Example Target", "Common Metric"],
+              "rows": [
+                { "_key": "mlt2-005r1", "cells": ["Classification", "Direction only", "Will Nifty close higher tomorrow? (yes/no)", "Accuracy, precision, recall"] },
+                { "_key": "mlt2-005r2", "cells": ["Regression", "Magnitude and direction", "What will Bank Nifty's return be over the next 60 minutes?", "Mean squared error, R-squared"] }
+              ]
+            },
+            {
+              "_key": "mlt2-006",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt2-006s1", "_type": "span", "marks": [], "text": "Layer 2: Signal, What Should You Do About It?" }
+              ]
+            },
+            {
+              "_key": "mlt2-007",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "mlt2-007m1", "_type": "glossaryTerm", "definition": "The minimum predicted probability or conviction level required before a signal acts on a prediction, filtering out low-conviction, near-random forecasts." }
+              ],
+              "children": [
+                { "_key": "mlt2-007s1", "_type": "span", "marks": [], "text": "A prediction becomes a signal only once you decide what to do with it, and that decision needs three answers. First, at what " },
+                { "_key": "mlt2-007s2", "_type": "span", "marks": ["mlt2-007m1"], "text": "confidence threshold" },
+                { "_key": "mlt2-007s3", "_type": "span", "marks": [], "text": " do you actually act? A model that outputs a 51 percent probability of 'up' every single day is not giving you 250 tradeable signals a year, it is giving you noise with a very slight lean, and trading every one of those days will drown the tiny edge in costs. Second, how much do you bet, and does the bet size scale with confidence? A signal at 68 percent probability reflects a different level of conviction than one at 52 percent, even if both cross your threshold. Third, does the resulting strategy actually beat a simple benchmark, buying and holding the Nifty, or even just holding cash at the prevailing risk-free rate, once you account for what you are about to give up in Layer 3? A prediction with 58 percent accuracy that only clears its threshold twenty times a year is a very different, and often far more trustworthy, signal than the same model firing a trade every single trading day." }
+              ]
+            },
+            {
+              "_key": "mlt2-008",
+              "_type": "statGrid",
+              "stats": [
+                { "_key": "mlt2-008s1", "label": "Trading every day the model 'leans up' (illustrative)", "value": "~230 trades/year", "context": "Average edge per trade is tiny, so accumulated costs can exceed the edge" },
+                { "_key": "mlt2-008s2", "label": "Trading only when confidence exceeds 62% (illustrative)", "value": "~35 trades/year", "context": "Far fewer trades, but each one reflects the model's strongest, most reliable conviction" },
+                { "_key": "mlt2-008s3", "label": "What actually changed between the two rows above", "value": "Same model, different signal rule", "context": "The prediction layer was untouched; only the decision rule for acting on it changed" }
+              ]
+            },
+            {
+              "_key": "mlt2-009",
+              "_type": "callout",
+              "type": "insight",
+              "text": "A signal must beat a benchmark, not just be 'better than random'. If a strategy trading Bank Nifty futures returns 14 percent a year before costs, that sounds good until you notice the Nifty itself returned 13 percent over the same period with far less effort and risk. The right question is never 'is my model better than a coin flip', it is 'is my model, after every cost in Layer 3, better than doing nothing or holding an index fund'."
+            },
+            {
+              "_key": "mlt2-010",
+              "_type": "block",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_key": "mlt2-010s1", "_type": "span", "marks": [], "text": "Layer 3: Execution, Can You Actually Get This Trade?" }
+              ]
+            },
+            {
+              "_key": "mlt2-011",
+              "_type": "block",
+              "style": "normal",
+              "markDefs": [
+                { "_key": "mlt2-011m1", "_type": "glossaryTerm", "definition": "The difference between the price a strategy expects to trade at and the price it actually receives once the order reaches the market." }
+              ],
+              "children": [
+                { "_key": "mlt2-011s1", "_type": "span", "marks": [], "text": "Execution is where a signal that looks profitable on paper meets the actual mechanics of the market. Four things matter here. Liquidity: a signal on a liquid instrument like Nifty or Bank Nifty index futures can usually be executed close to the quoted price, while the same signal on a thinly traded stock option can see the price move against you just from placing the order. Order type: a market order guarantees execution but not price, while a limit order guarantees price but might not fill at all if the market moves away first. Latency: the gap in time between your model generating a signal and your order actually reaching the NSE's matching engine, during which the price can move, especially around volatile windows like the market open or a results announcement. And plain transaction costs: on Zerodha, F&O orders are charged a flat ₹20 per executed order, or 0.03 percent of trade value, whichever is lower, on top of Securities Transaction Tax, exchange fees, and GST, all of which apply whether your model was right or wrong. Any of these can widen into meaningful " },
+                { "_key": "mlt2-011s2", "_type": "span", "marks": ["mlt2-011m1"], "text": "slippage" },
+                { "_key": "mlt2-011s3", "_type": "span", "marks": [], "text": " on the exact days volatility, and your model's conviction, are highest." }
+              ]
+            },
+            {
+              "_key": "mlt2-012",
+              "_type": "collapsible",
+              "title": "Show me the math: does a 35-trade-a-year signal survive execution costs?",
+              "content": [
+                {
+                  "_key": "mlt2-012c1",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    { "_key": "mlt2-012c1s1", "_type": "span", "marks": [], "text": "Take the 35-trades-a-year signal from Layer 2, on one lot of Bank Nifty futures per trade. These numbers are purely illustrative, meant to show the mechanics, not a real backtest." }
+                  ]
+                },
+                {
+                  "_key": "mlt2-012c2",
+                  "_type": "table",
+                  "caption": "Illustrative per-trade economics",
+                  "headers": ["Item", "Per Trade (illustrative)"],
+                  "rows": [
+                    { "_key": "mlt2-012c2r1", "cells": ["Average gross edge per trade (model's estimated advantage)", "+₹1,800"] },
+                    { "_key": "mlt2-012c2r2", "cells": ["Zerodha F&O brokerage (entry + exit, ₹20 each)", "-₹40"] },
+                    { "_key": "mlt2-012c2r3", "cells": ["Securities Transaction Tax + exchange charges + GST (approx.)", "-₹250"] },
+                    { "_key": "mlt2-012c2r4", "cells": ["Estimated slippage on entry and exit", "-₹300"] },
+                    { "_key": "mlt2-012c2r5", "cells": ["Net edge per trade after Layer 3", "+₹1,210"] }
+                  ]
+                },
+                {
+                  "_key": "mlt2-012c3",
+                  "_type": "block",
+                  "style": "normal",
+                  "markDefs": [],
+                  "children": [
+                    { "_key": "mlt2-012c3s1", "_type": "span", "marks": [], "text": "The signal survives here because the average edge per trade, ₹1,800, is large relative to total costs, about ₹590. The same 35-trade signal built on an instrument with a much smaller per-trade edge, or executed with wider slippage, could see this net figure turn negative even though Layers 1 and 2 were done correctly. This is exactly why execution cannot be an afterthought." }
+                  ]
+                }
+              ]
+            },
+            {
+              "_key": "mlt2-013",
+              "_type": "exercise",
+              "variant": "quiz",
+              "title": "Which layer failed?",
+              "question": "A trader's model correctly predicts Nifty's next-day direction 61% of the time on out-of-sample data. He trades every single day using this signal, placing market orders on illiquid weekly stock options he has never checked the open interest of, and the strategy loses money steadily. Which layer is the most likely primary point of failure?",
+              "options": [
+                "Layer 1 (Prediction), because 61% accuracy is not actually better than random",
+                "Layer 2 (Signal) and Layer 3 (Execution), because trading every day regardless of confidence and executing on illiquid options both add cost and noise that can erase a real prediction edge",
+                "There is no way to know without seeing the model's code",
+                "Layer 1 (Prediction), because classification models cannot be used for trading"
+              ],
+              "correctIndex": 1,
+              "explanation": "61 percent accuracy on genuine out-of-sample data is a real, usable edge, this is not a Layer 1 problem. Trading every day without a confidence threshold, and executing on illiquid options where slippage can be severe, are classic Layer 2 and Layer 3 problems. The prediction was likely fine. What sat on top of it was not."
+            },
+            {
+              "_key": "mlt2-014",
+              "_type": "exercise",
+              "variant": "scenario",
+              "title": "Diagnosing a strategy post-mortem",
+              "scenario": "A prop trading applicant shows you a strategy with 65% out-of-sample prediction accuracy and a realized Sharpe ratio of only 0.3 once actually traded on NSE stock futures, well below what the raw accuracy would suggest.",
+              "prompt": "List two specific questions you would ask about Layers 2 and 3 to explain the gap between a strong prediction accuracy and a weak realized Sharpe ratio.",
+              "modelAnswer": "First, on Layer 2: what confidence threshold, if any, does the strategy use before acting on a prediction, and how many trades per year does that produce? A model firing on every single prediction regardless of confidence dilutes a real edge with many low-conviction, near-random trades. Second, on Layer 3: what instrument is being traded, how liquid is it, and what does the strategy assume for slippage and costs versus what NSE order book depth actually supports? A 65 percent accurate model traded on thinly traded stock futures with unrealistic slippage assumptions can see most of its theoretical edge consumed before the Sharpe ratio is even calculated."
+            },
+            {
+              "_key": "mlt2-015",
+              "_type": "flashcardSet",
+              "title": "Prediction, Signal, Execution: Core Terms",
+              "cards": [
+                { "_key": "mlt2-015f1", "term": "Prediction", "definition": "The purely statistical output of a model: an estimate of direction, magnitude, or probability for a future value, evaluated with standard ML metrics like accuracy or mean squared error." },
+                { "_key": "mlt2-015f2", "term": "Signal", "definition": "The decision rule that turns a prediction into an action, including the confidence threshold to act on and how strongly to size the resulting position." },
+                { "_key": "mlt2-015f3", "term": "Execution", "definition": "The actual mechanics of placing a trade in the market, covering order type, liquidity, latency, and transaction costs." },
+                { "_key": "mlt2-015f4", "term": "Confidence threshold", "definition": "The minimum predicted probability or conviction level required before a signal acts on a prediction, filtering out low-conviction, near-random forecasts." },
+                { "_key": "mlt2-015f5", "term": "Slippage", "definition": "The difference between the price a strategy expects to trade at and the price it actually receives once the order reaches the market." }
+              ]
+            },
+            {
+              "_key": "mlt2-016",
+              "_type": "keyTakeaways",
+              "points": [
+                "Machine learning for trading has three separate layers: prediction (what will happen), signal (what to do about it and how confidently), and execution (how the trade actually gets placed). Each can fail independently of the others.",
+                "A statistically good prediction, such as 58 or 61 percent accuracy on genuine out-of-sample data, is a real edge, but it is not yet a strategy until it passes through a signal rule and survives real execution costs.",
+                "A signal needs a confidence threshold and a sizing rule; acting on every prediction regardless of conviction dilutes a real edge with near-random trades.",
+                "A signal must beat a realistic benchmark, such as holding the Nifty, after costs, not merely beat a coin flip before costs.",
+                "Execution costs, brokerage, Securities Transaction Tax, exchange fees, GST, and slippage, apply whether the trade was right or wrong, and can turn a real prediction edge into a losing live strategy if ignored."
+              ]
+            },
+            {
+              "_key": "mlt2-017",
+              "_type": "callout",
+              "type": "disclaimer",
+              "text": "This lesson is for educational purposes only and is not investment advice or a recommendation to trade any specific instrument named here. All figures describing trade economics, edges, and costs are illustrative and do not represent real backtested or live results. Brokerage and charge figures are indicative and subject to change by the broker and exchanges. Trading in equity derivatives carries a high risk of loss. Consult a SEBI-registered investment adviser or research analyst before trading."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

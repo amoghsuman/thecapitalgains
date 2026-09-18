@@ -1,0 +1,238 @@
+{
+  "courseSlug": "understanding-transaction-costs-and-slippage-in-backtests",
+  "chapters": [
+    {
+      "title": "Chapter 2: The Explicit Cost Stack",
+      "lessons": [
+        {
+          "title": "Zerodha and Discount Brokers: The Real Cost of a Round-Trip Trade",
+          "slug": "zerodha-and-discount-brokers-the-real-cost-of-a-round-trip-trade",
+          "body": [
+            {
+              "_type": "block",
+              "_key": "g1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "g1s1", "text": "Lesson 1 priced STT, exchange charges, SEBI fees, and stamp duty, none of which change no matter which broker you use. Brokerage is different. It is the one line item on the contract note the broker actually controls, and the gap between broker types is large enough to decide whether a high-turnover strategy is viable at all. This lesson prices that gap precisely, using Zerodha's well-documented discount brokerage structure as the reference point.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "g2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "g2s1", "text": "Full-Service vs Discount: Two Different Brokerage Models", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "g3",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "g3s1", "text": "Traditional full-service brokers such as ICICI Direct or HDFC Securities charge brokerage as a percentage of trade value, commonly in the region of 0.3% to 0.5% per side, in exchange for research, relationship management, and advisory services. Discount brokers such as Zerodha, Groww, and Upstox strip that away and charge either a flat fee per executed order or a small percentage, whichever is lower, and on equity delivery specifically, several discount brokers charge nothing at all.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "comparison",
+              "_key": "g4",
+              "title": "Full-Service vs Discount Brokerage",
+              "columns": [
+                {
+                  "_type": "comparisonColumn",
+                  "_key": "g4c1",
+                  "label": "Full-Service Broker",
+                  "points": [
+                    "Brokerage charged as a percentage of trade value, roughly 0.3% to 0.5% per side",
+                    "Scales up without limit as trade size grows",
+                    "Bundles research, advisory, and relationship management",
+                    "Dominates total trading cost for most trade sizes"
+                  ]
+                },
+                {
+                  "_type": "comparisonColumn",
+                  "_key": "g4c2",
+                  "label": "Discount Broker",
+                  "points": [
+                    "Brokerage is flat per order, or ₹0 to a small percentage, whichever is lower",
+                    "Caps out at a fixed rupee amount regardless of trade size",
+                    "No bundled research or advisory, execution only",
+                    "Often the smallest single line item on the contract note"
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "g5",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "g5s1", "text": "The \"Whichever Is Lower\" Mechanic", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "g6",
+              "style": "normal",
+              "markDefs": [
+                { "_type": "glossaryTerm", "_key": "gt1", "definition": "The order size at which a percentage-based fee and a flat fee produce the same rupee amount. Below it, the percentage rate applies and is cheaper; above it, the flat cap applies and is cheaper." }
+              ],
+              "children": [
+                { "_type": "span", "_key": "g6s1", "text": "Zerodha's intraday and F&O brokerage, widely used as the reference structure across the discount broker industry, is ₹20 flat per executed order, or 0.03% of turnover, whichever is lower. That single rule creates a ", "marks": [] },
+                { "_type": "span", "_key": "g6s2", "text": "breakeven order size", "marks": ["gt1"] },
+                { "_type": "span", "_key": "g6s3", "text": ": solve 0.03% of X equals ₹20, and X works out to roughly ₹66,667. Place an order smaller than that and you pay the percentage rate, which is less than ₹20. Place an order larger than that and the ₹20 flat cap kicks in, so brokerage stops growing entirely no matter how large the order gets.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "chart",
+              "_key": "g7",
+              "chartType": "line",
+              "title": "Brokerage vs Order Size Under a \"₹20 or 0.03%, Whichever Lower\" Rule",
+              "xAxisLabel": "Order Size (₹)",
+              "yAxisLabel": "Brokerage (₹)",
+              "data": [
+                { "label": "₹10,000", "value": 3 },
+                { "label": "₹30,000", "value": 9 },
+                { "label": "₹50,000", "value": 15 },
+                { "label": "₹66,667 (breakeven)", "value": 20 },
+                { "label": "₹1,00,000", "value": 20 },
+                { "label": "₹2,00,000", "value": 20 }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "g8",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "g8s1", "text": "Why This Matters for Backtesting Different Strategy Sizes", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "g9",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "g9s1", "text": "This kink matters more than it looks. Below the breakeven, brokerage behaves like a percentage cost and scales with every rupee traded, the same way STT does. Above the breakeven, it behaves like a fixed cost per order and, as trade size keeps growing, shrinks toward irrelevance as a share of trade value. A retail-scale intraday strategy placing ₹20,000 orders pays close to the full percentage rate on brokerage. A prop desk placing ₹20 lakh orders through the same broker pays the identical flat ₹20, a rate so small relative to trade size it barely shows up. Brokerage's relative importance shrinks with scale, while STT, which has no such cap, does not.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "g10",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "g10s1", "text": "Full Round-Trip Comparison: Discount vs Full-Service", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "g11",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "g11s1", "text": "Return to the ₹1,00,000 delivery round trip priced in Lesson 2 of Chapter 1, but this time through a full-service broker charging 0.5% brokerage per side instead of a discount broker's ₹0. Every statutory charge, STT, exchange transaction charges, SEBI fees, and stamp duty, stays exactly the same, since none of them depend on the broker. Only brokerage, and the GST charged on top of it, change.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "table",
+              "_key": "g12",
+              "caption": "Same ₹1,00,000 delivery round trip, two different brokers",
+              "headers": ["Charge", "Discount Broker (₹0 Brokerage)", "Full-Service Broker (0.5% Brokerage)"],
+              "rows": [
+                { "cells": ["Brokerage (both sides)", "₹0.00", "₹1,000.00"] },
+                { "cells": ["STT (both sides, unchanged)", "₹200.00", "₹200.00"] },
+                { "cells": ["Exchange charges (both sides, unchanged)", "₹5.94", "₹5.94"] },
+                { "cells": ["SEBI fee (both sides, unchanged)", "₹0.20", "₹0.20"] },
+                { "cells": ["Stamp duty (buy side, unchanged)", "₹15.00", "₹15.00"] },
+                { "cells": ["GST (18% on brokerage + exchange charges + SEBI fee)", "₹1.10", "₹181.10"] },
+                { "cells": ["Round-trip total", "₹222.24", "₹1,402.24"] }
+              ]
+            },
+            {
+              "_type": "statGrid",
+              "_key": "g13",
+              "stats": [
+                { "label": "Discount broker round-trip cost", "value": "₹222.24", "context": "On a ₹1,00,000 delivery round trip" },
+                { "label": "Full-service broker round-trip cost", "value": "₹1,402.24", "context": "Same trade, 0.5% brokerage per side" },
+                { "label": "Cost multiple", "value": "~6.3x", "context": "Driven entirely by the brokerage line item" }
+              ]
+            },
+            {
+              "_type": "callout",
+              "_key": "g14",
+              "type": "insight",
+              "text": "Statutory charges, STT, exchange fees, SEBI fees, and stamp duty, are identical no matter which broker executes the trade. Brokerage is the only line item a broker controls, and it is also the only line item that varies by an order of magnitude between broker types. For any cost-sensitive systematic strategy, the choice of broker is not a minor implementation detail, it is close to the single biggest lever an individual trader can pull."
+            },
+            {
+              "_type": "block",
+              "_key": "g15",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "g15s1", "text": "What This Means for Your Backtest's Broker Assumption", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "g16",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "g16s1", "text": "A backtest that never states which broker's fee schedule it assumes is quietly making a decision that can change the result by multiples, not percentages. The convention through the rest of this course, and a reasonable default for anyone actually planning to trade the strategy, is a discount broker's fee schedule, since that represents the realistic best case most retail and prop traders can actually access. But state the assumption explicitly in the backtest itself, and if the strategy is only viable under discount broker rates, know that going in rather than discovering it after switching brokers.", "marks": [] }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "g17",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "g17s1", "text": "Try It Yourself", "marks": [] }
+              ]
+            },
+            {
+              "_type": "exercise",
+              "_key": "g18",
+              "variant": "numericInput",
+              "title": "Quick Check",
+              "prompt": "You place an intraday order worth ₹40,000 through a discount broker charging ₹20 flat or 0.03% of turnover, whichever is lower. What brokerage, in rupees, do you pay on this order?",
+              "correctValue": 12,
+              "tolerance": 0,
+              "unit": "₹",
+              "explanation": "0.03% of ₹40,000 is ₹12, which is lower than the ₹20 flat fee, so ₹12 is what applies. This order sits below the roughly ₹66,667 breakeven, so the percentage rate, not the flat cap, determines the brokerage."
+            },
+            {
+              "_type": "block",
+              "_key": "g19",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                { "_type": "span", "_key": "g19s1", "text": "The Big Idea", "marks": [] }
+              ]
+            },
+            {
+              "_type": "bigIdea",
+              "_key": "g20",
+              "text": "Every statutory charge on a trade is fixed no matter who executes it. Brokerage is not, and the gap between a discount broker and a full-service broker can multiply a round trip's total cost several times over. Before modeling anything else, get the broker assumption right, because it is the single biggest cost lever you actually control."
+            },
+            {
+              "_type": "keyTakeaways",
+              "_key": "g21",
+              "points": [
+                "Brokerage is the only major charge on a trade that is broker-controlled rather than statutory; STT, exchange charges, SEBI fees, and stamp duty are identical across every broker.",
+                "Discount brokers commonly charge ₹0 on equity delivery and a flat fee or small percentage, whichever is lower, on intraday and F&O, creating a breakeven order size above which brokerage stops scaling with trade size at all.",
+                "On a ₹1,00,000 delivery round trip, a full-service broker's 0.5% brokerage pushed total cost to roughly 6.3 times what a discount broker charged for the identical trade.",
+                "A backtest should explicitly state which broker's fee schedule it assumes, since that single assumption can change total trading cost by multiples rather than by a percentage point or two."
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
