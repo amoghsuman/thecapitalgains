@@ -53,7 +53,7 @@ export default async function HomePage() {
     getFindYourPathData(),
   ]);
 
-  const courseCount = courses?.length || 6;
+  const courseCount = courses?.length ?? 0;
   const featuredCourse = courses?.find((c: CourseSummary) => c.slug === FEATURED_CARD_COURSE_SLUG) || courses?.[0];
   const activeFeaturedSlug = featuredCourse?.slug || FEATURED_CARD_COURSE_SLUG;
 
@@ -316,7 +316,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── CURATED TRACKS SHELF (Interactive with Filter Pills & Framer Motion) ── */}
-      <CuratedTracksSection totalCatalogCourseCount={courseCount} />
+      <CuratedTracksSection courses={courses ?? []} />
 
       {/* ── INSTITUTIONAL COMPARISON MATRIX ── */}
       <InstitutionalComparison />

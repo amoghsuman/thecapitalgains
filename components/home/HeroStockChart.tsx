@@ -10,69 +10,59 @@ import {
   Tooltip,
   ReferenceLine,
 } from "recharts";
-import { TrendingUp, Activity, BarChart2, ShieldCheck } from "lucide-react";
+import { TrendingUp } from "lucide-react";
 
 interface DataPoint {
   time: string;
   price: number;
-  ma20: number;
-  volume: number;
 }
 
-const TIMEFRAME_DATA: Record<string, { data: DataPoint[]; change: string; isPositive: boolean; high: string; low: string; label: string }> = {
+// Illustrative sample series for the card: not a real index and not a live
+// feed. Everything shown alongside the chart is derived from these points.
+const TIMEFRAME_DATA: Record<string, { data: DataPoint[]; label: string }> = {
   "1D": {
     label: "Intraday (5m)",
-    change: "+1.42%",
-    isPositive: true,
-    high: "₹2,548.80",
-    low: "₹2,492.10",
     data: [
-      { time: "09:15", price: 2495, ma20: 2490, volume: 180 },
-      { time: "10:00", price: 2508, ma20: 2498, volume: 240 },
-      { time: "10:45", price: 2502, ma20: 2503, volume: 160 },
-      { time: "11:30", price: 2515, ma20: 2507, volume: 310 },
-      { time: "12:15", price: 2522, ma20: 2512, volume: 190 },
-      { time: "13:00", price: 2519, ma20: 2516, volume: 140 },
-      { time: "13:45", price: 2534, ma20: 2521, volume: 380 },
-      { time: "14:30", price: 2542, ma20: 2528, volume: 420 },
-      { time: "15:30", price: 2538, ma20: 2533, volume: 290 },
+      { time: "09:15", price: 2495 },
+      { time: "10:00", price: 2508 },
+      { time: "10:45", price: 2502 },
+      { time: "11:30", price: 2515 },
+      { time: "12:15", price: 2522 },
+      { time: "13:00", price: 2519 },
+      { time: "13:45", price: 2534 },
+      { time: "14:30", price: 2542 },
+      { time: "15:30", price: 2538 },
     ],
   },
   "1M": {
     label: "Monthly Trend",
-    change: "+6.85%",
-    isPositive: true,
-    high: "₹2,560.00",
-    low: "₹2,360.50",
     data: [
-      { time: "W1", price: 2375, ma20: 2360, volume: 950 },
-      { time: "W2", price: 2410, ma20: 2385, volume: 1120 },
-      { time: "W3", price: 2390, ma20: 2395, volume: 880 },
-      { time: "W4", price: 2465, ma20: 2415, volume: 1420 },
-      { time: "W5", price: 2538, ma20: 2450, volume: 1680 },
+      { time: "W1", price: 2375 },
+      { time: "W2", price: 2410 },
+      { time: "W3", price: 2390 },
+      { time: "W4", price: 2465 },
+      { time: "W5", price: 2538 },
     ],
   },
   "1Y": {
     label: "Cycle Accumulation",
-    change: "+28.40%",
-    isPositive: true,
-    high: "₹2,580.00",
-    low: "₹1,940.00",
     data: [
-      { time: "Q1", price: 1980, ma20: 1950, volume: 4100 },
-      { time: "Q2", price: 2120, ma20: 2040, volume: 3800 },
-      { time: "Q3", price: 2280, ma20: 2160, volume: 4500 },
-      { time: "Q4", price: 2538, ma20: 2320, volume: 5200 },
+      { time: "Q1", price: 1980 },
+      { time: "Q2", price: 2120 },
+      { time: "Q3", price: 2280 },
+      { time: "Q4", price: 2538 },
     ],
   },
 };
 
 export default function HeroStockChart() {
   const [activeRange, setActiveRange] = useState<"1D" | "1M" | "1Y">("1D");
-  const [showIndicator, setShowIndicator] = useState(true);
 
   const current = TIMEFRAME_DATA[activeRange];
+  const firstPrice = current.data[0].price;
   const lastPrice = current.data[current.data.length - 1].price;
+  const changePct = ((lastPrice - firstPrice) / firstPrice) * 100;
+  const change = `${changePct >= 0 ? "+" : ""}${changePct.toFixed(2)}%`;
 
   return (
     <div className="mt-5 pt-4 border-t border-hairline/80">
@@ -84,9 +74,9 @@ export default function HeroStockChart() {
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="font-mono text-xs font-bold text-ink">NIFTY ALPHA 50</span>
+              <span className="font-mono text-xs font-bold text-ink">SAMPLE INDEX</span>
               <span className="font-mono text-[10px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-1.5 py-0.5 rounded">
-                {current.change}
+                {change}
               </span>
             </div>
             <div className="text-[10px] text-ink-dim font-mono">
@@ -130,10 +120,6 @@ export default function HeroStockChart() {
                 <stop offset="5%" stopColor="#1B3A2B" stopOpacity={0.28} />
                 <stop offset="95%" stopColor="#1B3A2B" stopOpacity={0.0} />
               </linearGradient>
-              <linearGradient id="maGlow" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#A9822F" stopOpacity={0.15} />
-                <stop offset="95%" stopColor="#A9822F" stopOpacity={0.0} />
-              </linearGradient>
             </defs>
 
             <XAxis
@@ -157,9 +143,6 @@ export default function HeroStockChart() {
                     <div className="bg-panel border border-hairline rounded-lg px-2.5 py-1.5 shadow-lg text-[11px] font-mono">
                       <div className="text-ink-dim text-[9px] uppercase tracking-wider">{data.time}</div>
                       <div className="font-bold text-ink text-xs">₹{data.price.toLocaleString("en-IN")}</div>
-                      {showIndicator && (
-                        <div className="text-[9px] text-gold-text">20 EMA: ₹{data.ma20}</div>
-                      )}
                     </div>
                   );
                 }
@@ -168,7 +151,7 @@ export default function HeroStockChart() {
             />
 
             <ReferenceLine
-              y={current.data[0].price}
+              y={firstPrice}
               stroke="rgba(110, 106, 95, 0.25)"
               strokeDasharray="3 3"
             />
@@ -182,42 +165,13 @@ export default function HeroStockChart() {
               isAnimationActive={true}
               animationDuration={800}
             />
-
-            {showIndicator && (
-              <Area
-                type="monotone"
-                dataKey="ma20"
-                stroke="#A9822F"
-                strokeWidth={1.2}
-                strokeDasharray="4 3"
-                fill="none"
-                isAnimationActive={true}
-                animationDuration={600}
-              />
-            )}
           </AreaChart>
         </ResponsiveContainer>
       </div>
 
-      {/* Footer Metrics & Overlay Controls */}
+      {/* Caption */}
       <div className="mt-2.5 flex items-center justify-between text-[10px] text-ink-dim font-mono">
-        <div className="flex items-center gap-3">
-          <span>H: <strong className="text-ink font-medium">{current.high}</strong></span>
-          <span>L: <strong className="text-ink font-medium">{current.low}</strong></span>
-        </div>
-
-        <button
-          type="button"
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            setShowIndicator(!showIndicator);
-          }}
-          className="inline-flex items-center gap-1 text-[9px] font-bold text-forest hover:text-forest-dark uppercase tracking-wider transition-colors"
-        >
-          <Activity className="w-3 h-3 text-gold" />
-          <span>{showIndicator ? "20 EMA (ON)" : "20 EMA (OFF)"}</span>
-        </button>
+        <span>Sample chart · illustrative data, not a live feed</span>
       </div>
     </div>
   );

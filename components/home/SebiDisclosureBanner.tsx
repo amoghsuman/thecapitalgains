@@ -22,7 +22,7 @@ export default function SebiDisclosureBanner() {
                     STATUTORY ASSURANCE
                   </span>
                   <span className="font-mono text-[10px] text-ink-dim tracking-wider uppercase">
-                    SEBI (IA) REGULATIONS 2013 · INDEPENDENT PEDAGOGY
+                    SEBI (RESEARCH ANALYSTS) REGULATIONS, 2014 · INDEPENDENT PEDAGOGY
                   </span>
                 </div>
                 <h4 className="text-sm sm:text-base font-bold text-olive mt-1">
@@ -86,7 +86,7 @@ export default function SebiDisclosureBanner() {
 
               <p>
                 <strong className="text-ink font-semibold">Educational Nature: </strong>
-                The content, research notes, financial screeners, and interactive models provided on The Capital Gains are strictly for educational and analytical purposes. They do not constitute personalized investment advice, financial planning, or an offer/solicitation to buy or sell securities under the SEBI (Investment Advisers) Regulations, 2013 or SEBI (Research Analysts) Regulations, 2014. Consult a SEBI-registered Investment Adviser before making financial decisions.
+                The content, research notes, financial screeners, and interactive models provided on The Capital Gains are strictly for educational and analytical purposes. They do not constitute personalized investment advice, financial planning, or an offer/solicitation to buy or sell securities under the SEBI (Research Analysts) Regulations, 2014. Consult a SEBI-registered Investment Adviser before making financial decisions.
               </p>
             </div>
           )}

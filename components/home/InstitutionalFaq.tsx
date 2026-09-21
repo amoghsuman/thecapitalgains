@@ -75,7 +75,7 @@ const FAQ_ITEMS: FaqItem[] = [
     categoryLabel: "Regulatory & Integrity",
     question: "Are your frameworks compliant with SEBI regulations and Indian taxation?",
     answer:
-      "Yes. All materials are educational and analytical frameworks, operating strictly under non-advisory educational boundaries in compliance with SEBI (Investment Advisers) Regulations, 2013. Furthermore, our curricula are explicitly tailored to Indian market reality: NSE/BSE contract lots, clearing settlement mechanics, India VIX cycles, and Indian capital gains taxation (STCG, LTCG, and Section 43(5) non-speculative business income for F&O).",
+      "Yes. All materials are educational and analytical frameworks, operating strictly under non-advisory educational boundaries in compliance with SEBI (Research Analysts) Regulations, 2014. Furthermore, our curricula are explicitly tailored to Indian market reality: NSE/BSE contract lots, clearing settlement mechanics, India VIX cycles, and Indian capital gains taxation (STCG, LTCG, and Section 43(5) non-speculative business income for F&O).",
     highlight: "Grounded in Indian statutory tax codes and SEBI regulatory standards.",
   },
 ];

@@ -19,14 +19,12 @@ interface Scenario {
     slug: string;
     chapter: string;
   };
-  retailFailureRate: string;
 }
 
 const SCENARIOS: Scenario[] = [
   {
     id: "iv-crush",
     tag: "DERIVATIVES & VOLATILITY",
-    retailFailureRate: "84% of retail option buyers fail this test",
     question: "A heavy-weight stock announces stellar earnings beating street estimates by 20%. Why did OTM call options bought right before results collapse 60% at 9:15 AM?",
     context: "Reliance/Infosys quarterly results day scenario with Implied Volatility elevated at 58% prior to market close.",
     options: [
@@ -79,7 +77,6 @@ const SCENARIOS: Scenario[] = [
       slug: "how-to-read-financial-statements",
       chapter: "Chapter 4: The Cash Flow Statement — Where Scams Unravel",
     },
-    retailFailureRate: "71% miss this forensic warning sign",
   },
   {
     id: "promoter-pledge-cascade",
@@ -108,7 +105,6 @@ const SCENARIOS: Scenario[] = [
       slug: "stock-market-from-zero",
       chapter: "Chapter 6: Corporate Governance & Red-Flag Audit Rules",
     },
-    retailFailureRate: "92% fail to monitor promoter pledge triggers",
   },
 ];
 
@@ -170,9 +166,6 @@ export default function InteractiveScenarioCheck() {
                 </span>
                 <span className="text-xs text-ink-dim font-medium">Case Study {activeScenarioIdx + 1} of {SCENARIOS.length}</span>
               </div>
-              <span className="font-mono text-[11px] text-[#B91C1C] bg-red-50/80 px-2.5 py-1 rounded-full border border-red-200/60 font-medium">
-                ⚠️ {scenario.retailFailureRate}
-              </span>
             </div>
 
             <h3 className="text-lg sm:text-xl font-bold text-olive leading-snug">

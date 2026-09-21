@@ -1,4 +1,5 @@
 import { Check, X, Shield, AlertTriangle, BookOpen } from "lucide-react";
+import { SEBI_FO_STATS, SEBI_FO_SOURCE } from "@/lib/home/sebiStats";
 
 export default function InstitutionalComparison() {
   const COMPARISONS = [
@@ -54,7 +55,7 @@ export default function InstitutionalComparison() {
               The Contrast: Noise vs. Institutional Rigor
             </h2>
             <p className="text-ink-dim text-base sm:text-lg mt-3.5 leading-relaxed">
-              Over 93% of active retail traders in Indian derivatives lose capital according to SEBI empirical research. Below is the structural divergence between speculative social hype and an audited institutional framework.
+              About 93% of individual traders in Indian equity F&amp;O lost money over FY22 to FY24, according to SEBI&apos;s own study. Below is the structural divergence between speculative social hype and an audited institutional framework.
             </p>
           </div>
 
@@ -70,8 +71,17 @@ export default function InstitutionalComparison() {
               </span>
             </div>
             <p className="text-ink font-medium text-xs sm:text-sm leading-relaxed">
-              Average retail loss: <span className="text-[#B91C1C] font-mono font-bold">₹1.25 Lakh/year</span>. 97% of losses stem from zero risk budgeting, lack of margin-of-safety models, and naked option purchases.
+              {SEBI_FO_STATS.map((stat, i) => (
+                <span key={stat.id}>
+                  <span className="text-[#B91C1C] font-mono font-bold">
+                    {i === 0 ? stat.value.charAt(0).toUpperCase() + stat.value.slice(1) : stat.value}
+                  </span>{" "}
+                  {stat.label}
+                  {i < SEBI_FO_STATS.length - 1 ? "; " : "."}
+                </span>
+              ))}
             </p>
+            <p className="font-mono text-[11px] text-ink-dim mt-2">Source: {SEBI_FO_SOURCE}</p>
           </div>
         </div>
 

@@ -51,12 +51,13 @@ export default function FeaturedPlaybookCard({
         >
           <div className="flex justify-between items-start mb-4">
             <div>
-              <div className="flex items-center gap-2 mb-1.5">
-                <span className="font-mono text-[10px] text-gold font-bold tracking-[0.16em] uppercase">
-                  {featuredCourse?.tag || "FLAGSHIP PLAYBOOK"}
-                </span>
-                <span className="text-[10px] text-ink-muted font-mono">· Level 01</span>
-              </div>
+              {featuredCourse?.tag && (
+                <div className="flex items-center gap-2 mb-1.5">
+                  <span className="font-mono text-[10px] text-gold font-bold tracking-[0.16em] uppercase">
+                    {featuredCourse.tag}
+                  </span>
+                </div>
+              )}
               <h3 className="text-xl sm:text-[22px] text-olive leading-snug font-bold">
                 {featuredCourse?.title || "Options Trading from Zero"}
               </h3>

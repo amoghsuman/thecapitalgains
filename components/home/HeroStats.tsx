@@ -48,11 +48,13 @@ interface HeroStatsProps {
 export default function HeroStats({ courseCount }: HeroStatsProps) {
   const stats = [
     {
-      value: courseCount || 6,
+      // Exact live count from getAllCourses(): no fallback number, no "+".
+      value: courseCount,
       prefix: "",
       suffix: "",
       label: "CURATED COURSES",
       subtitle: "Systematic modules",
+      showPlus: false,
     },
     {
       value: 1,
@@ -60,6 +62,7 @@ export default function HeroStats({ courseCount }: HeroStatsProps) {
       suffix: "",
       label: "RESEARCH STARTS AT",
       subtitle: "Micro-priced tier",
+      showPlus: false,
     },
     {
       value: 3,
@@ -67,6 +70,7 @@ export default function HeroStats({ courseCount }: HeroStatsProps) {
       suffix: "",
       label: "MODEL PORTFOLIOS",
       subtitle: "Live frameworks",
+      showPlus: true,
     },
   ];
 
@@ -76,7 +80,7 @@ export default function HeroStats({ courseCount }: HeroStatsProps) {
         <div key={s.label} className="space-y-1 group">
           <div className="text-2xl sm:text-3xl font-bold text-olive tracking-tight font-mono flex items-baseline">
             <AnimatedCounter value={s.value} prefix={s.prefix} suffix={s.suffix} />
-            {s.value > 1 && s.prefix === "" && (
+            {s.showPlus && (
               <span className="text-forest text-base ml-0.5 font-bold">+</span>
             )}
           </div>
