@@ -1,7 +1,8 @@
 import { redirect } from "next/navigation"
 import Link from "next/link"
 import { createClient } from "@/lib/supabase/server"
-import { getAllCourses } from "@/lib/sanity/queries"
+import { getLearnerStats } from "@/lib/dashboard/stats"
+import { getLearnerCatalog } from "@/lib/dashboard/catalog"
 import CourseProgressBar from "@/components/dashboard/CourseProgressBar"
 
 const TIER_LABELS: Record<string, string> = {
@@ -24,45 +25,24 @@ const TIER_BADGE: Record<string, { bg: string; color: string }> = {
   elite:      { bg: "#EDEFEE", color: "#1A1A18" },
 }
 
-function formatSlug(slug: string) {
-  return slug.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")
-}
-
 export default async function DashboardPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect("/auth/login")
 
-  const [{ data: sub }, { data: enrollments }, { data: progressRows }] = await Promise.all([
+  // Progress numbers come from the one shared function the home widget also
+  // uses (via /api/learner-stats), so the two surfaces always agree.
+  const [{ data: sub }, stats] = await Promise.all([
     supabase
       .from("subscriptions")
       .select("tier, status, current_period_end, current_period_start")
       .eq("user_id", user.id)
       .eq("status", "active")
       .single(),
-    supabase
-      .from("course_enrollments")
-      .select("course_slug, last_lesson_slug, last_accessed_at, completed_at")
-      .eq("user_id", user.id)
-      .order("last_accessed_at", { ascending: false }),
-    supabase
-      .from("lesson_progress")
-      .select("course_slug, lesson_slug")
-      .eq("user_id", user.id),
+    getLearnerCatalog().then((catalog) => getLearnerStats(supabase, user.id, catalog)),
   ])
 
-  const progressByCourse: Record<string, number> = {}
-  for (const row of progressRows ?? []) {
-    progressByCourse[row.course_slug] = (progressByCourse[row.course_slug] ?? 0) + 1
-  }
-
-  const allCourses = await getAllCourses()
-  const courseTitleMap: Record<string, string> = {}
-  const courseTotalLessonsMap: Record<string, number> = {}
-  for (const c of allCourses ?? []) {
-    courseTitleMap[c.slug] = c.title
-    courseTotalLessonsMap[c.slug] = c.lessonsCount || 12
-  }
+  const myCourses = stats.courses
 
   const tier = sub?.tier ?? "free"
   const tierLabel = TIER_LABELS[tier] ?? tier
@@ -82,11 +62,11 @@ export default async function DashboardPage() {
       })
     : null
 
-  const lastEnrollment = enrollments?.[0] ?? null
-  const resumeHref = lastEnrollment
-    ? lastEnrollment.last_lesson_slug
-      ? `/learn/${lastEnrollment.course_slug}/${lastEnrollment.last_lesson_slug}`
-      : `/courses/${lastEnrollment.course_slug}`
+  const lastCourse = myCourses[0] ?? null
+  const resumeHref = lastCourse
+    ? lastCourse.lastLessonSlug
+      ? `/learn/${lastCourse.slug}/${lastCourse.lastLessonSlug}`
+      : `/courses/${lastCourse.slug}`
     : null
 
   const card: React.CSSProperties = {
@@ -192,18 +172,18 @@ export default async function DashboardPage() {
         </div>
 
         {/* Continue Learning */}
-        {lastEnrollment && resumeHref && (
+        {lastCourse && resumeHref && (
           <div style={{ background: "var(--forest)", borderRadius: 16, padding: "28px", marginBottom: 20 }}>
             <p style={{ fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.4)", letterSpacing: "0.16em", textTransform: "uppercase", marginBottom: 8 }}>
               Continue Learning
             </p>
             <p style={{ fontSize: 20, fontWeight: 700, color: "#FFFFFF", marginBottom: 6 }}>
-              {courseTitleMap[lastEnrollment.course_slug] ?? formatSlug(lastEnrollment.course_slug)}
+              {lastCourse.title}
             </p>
             <div style={{ marginBottom: 20, maxWidth: 440 }}>
               <CourseProgressBar
-                completed={progressByCourse[lastEnrollment.course_slug] ?? 0}
-                total={courseTotalLessonsMap[lastEnrollment.course_slug] || 12}
+                completed={lastCourse.completed}
+                total={lastCourse.total}
                 variant="hero"
               />
             </div>
@@ -226,26 +206,29 @@ export default async function DashboardPage() {
         )}
 
         {/* My Courses */}
-        {enrollments && enrollments.length > 0 ? (
+        {myCourses.length > 0 ? (
           <div style={{ ...card, marginBottom: 20 }}>
             <p style={label}>My Courses</p>
             <div>
-              {enrollments.map((enr, idx) => {
-                const completed = progressByCourse[enr.course_slug] ?? 0
-                const totalLessons = courseTotalLessonsMap[enr.course_slug] || 12
-                const isCompleted = !!enr.completed_at || completed >= totalLessons
-                const lastAccessed = new Date(enr.last_accessed_at).toLocaleDateString("en-IN", {
-                  day: "numeric",
-                  month: "short",
-                  year: "numeric",
-                })
-                const href = enr.last_lesson_slug
-                  ? `/learn/${enr.course_slug}/${enr.last_lesson_slug}`
-                  : `/courses/${enr.course_slug}`
+              {myCourses.map((course, idx) => {
+                const completed = course.completed
+                const totalLessons = course.total
+                const isCompleted = course.isCompleted
+                const lastAccessed = course.lastAccessedAt
+                  ? new Date(course.lastAccessedAt).toLocaleDateString("en-IN", {
+                      day: "numeric",
+                      month: "short",
+                      year: "numeric",
+                      timeZone: "Asia/Kolkata",
+                    })
+                  : "not yet"
+                const href = course.lastLessonSlug
+                  ? `/learn/${course.slug}/${course.lastLessonSlug}`
+                  : `/courses/${course.slug}`
 
                 return (
                   <div
-                    key={enr.course_slug}
+                    key={course.slug}
                     style={{
                       display: "flex",
                       alignItems: "flex-start",
@@ -258,7 +241,7 @@ export default async function DashboardPage() {
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
                         <p style={{ fontSize: 14, fontWeight: 600, color: "var(--ink)", margin: 0 }}>
-                          {courseTitleMap[enr.course_slug] ?? formatSlug(enr.course_slug)}
+                          {course.title}
                         </p>
                         {isCompleted && (
                           <span style={{

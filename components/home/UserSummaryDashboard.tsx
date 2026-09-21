@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "motion/react";
 import { createClient } from "@/lib/supabase/client";
+import type { LearnerStats } from "@/lib/dashboard/stats";
 import {
   BookOpen,
   Flame,
@@ -24,70 +25,12 @@ interface UserProgressSummary {
   displayName: string;
 }
 
-function calculateStreakFromTimestamps(
-  timestamps: (string | undefined | null)[]
-): number {
-  const validTimestamps = timestamps.filter(
-    (t): t is string => typeof t === "string" && t.length > 0
-  );
-
-  if (validTimestamps.length === 0) return 0;
-
-  const dateSet = new Set<string>();
-  for (const ts of validTimestamps) {
-    const d = new Date(ts);
-    if (!isNaN(d.getTime())) {
-      const year = d.getFullYear();
-      const month = String(d.getMonth() + 1).padStart(2, "0");
-      const day = String(d.getDate()).padStart(2, "0");
-      dateSet.add(`${year}-${month}-${day}`);
-    }
-  }
-
-  if (dateSet.size === 0) return 0;
-
-  const formatDay = (d: Date) => {
-    const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, "0");
-    const day = String(d.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  };
-
-  const now = new Date();
-  const todayStr = formatDay(now);
-
-  const yesterday = new Date(now);
-  yesterday.setDate(yesterday.getDate() - 1);
-  const yesterdayStr = formatDay(yesterday);
-
-  let currentStreak = 0;
-  let checkDate = new Date(now);
-
-  if (dateSet.has(todayStr)) {
-    // Activity today
-    while (dateSet.has(formatDay(checkDate))) {
-      currentStreak++;
-      checkDate.setDate(checkDate.getDate() - 1);
-    }
-  } else if (dateSet.has(yesterdayStr)) {
-    // Activity yesterday (streak intact for today's lesson)
-    checkDate = new Date(yesterday);
-    while (dateSet.has(formatDay(checkDate))) {
-      currentStreak++;
-      checkDate.setDate(checkDate.getDate() - 1);
-    }
-  } else {
-    currentStreak = 0;
-  }
-
-  return currentStreak;
-}
-
-function formatCourseSlugToTitle(slug: string): string {
-  return slug
-    .split("-")
-    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(" ");
+// Numbers come from /api/learner-stats, which runs the same getLearnerStats()
+// as /dashboard on the server. The browser only checks who is signed in.
+async function fetchLearnerStats(signal: AbortSignal): Promise<LearnerStats | null> {
+  const res = await fetch("/api/learner-stats", { cache: "no-store", signal });
+  if (!res.ok) return null;
+  return (await res.json()) as LearnerStats;
 }
 
 export default function UserSummaryDashboard() {
@@ -96,8 +39,13 @@ export default function UserSummaryDashboard() {
 
   useEffect(() => {
     const supabase = createClient();
+    let controller: AbortController | null = null;
+    let cancelled = false;
 
     async function loadUserData() {
+      controller?.abort();
+      controller = new AbortController();
+
       try {
         const {
           data: { session },
@@ -105,56 +53,17 @@ export default function UserSummaryDashboard() {
 
         if (!session?.user) {
           setSummary(null);
-          setLoading(false);
           return;
         }
 
         const user = session.user;
+        const stats = await fetchLearnerStats(controller.signal);
+        if (cancelled) return;
 
-        // Fetch completed lesson progress
-        const { data: progressRows } = await supabase
-          .from("lesson_progress")
-          .select("course_slug, lesson_slug, last_accessed_at, created_at")
-          .eq("user_id", user.id);
-
-        const completedCount = progressRows?.length || 0;
-
-        // Collect timestamps for streak calculation
-        const timestamps = (progressRows || []).map(
-          (row: { last_accessed_at?: string; created_at?: string }) =>
-            row.last_accessed_at || row.created_at
-        );
-
-        // Fetch course enrollments to identify active course
-        const { data: enrollments } = await supabase
-          .from("course_enrollments")
-          .select("course_slug, last_lesson_slug, last_accessed_at")
-          .eq("user_id", user.id)
-          .order("last_accessed_at", { ascending: false })
-          .limit(1);
-
-        if (enrollments && enrollments.length > 0 && enrollments[0].last_accessed_at) {
-          timestamps.push(enrollments[0].last_accessed_at);
-        }
-
-        // Calculate streak
-        let calculatedStreak = calculateStreakFromTimestamps(timestamps);
-
-        // Check local storage fallback/override if user just completed a lesson offline
-        const streakStorageKey = `cg_user_streak_${user.id}`;
-        try {
-          const cachedStreak = localStorage.getItem(streakStorageKey);
-          if (cachedStreak) {
-            const parsed = parseInt(cachedStreak, 10);
-            if (!isNaN(parsed) && parsed > calculatedStreak) {
-              calculatedStreak = parsed;
-            }
-          }
-          if (calculatedStreak > 0) {
-            localStorage.setItem(streakStorageKey, calculatedStreak.toString());
-          }
-        } catch {
-          // localStorage disabled or not accessible
+        // Show nothing rather than zeros if the numbers could not be loaded.
+        if (!stats) {
+          setSummary(null);
+          return;
         }
 
         // Resolve display name
@@ -166,25 +75,25 @@ export default function UserSummaryDashboard() {
           rawName.trim().split(" ")[0].charAt(0).toUpperCase() +
           rawName.trim().split(" ")[0].slice(1);
 
-        let activeCourse = null;
-        if (enrollments && enrollments.length > 0 && enrollments[0].course_slug) {
-          activeCourse = {
-            slug: enrollments[0].course_slug,
-            title: formatCourseSlugToTitle(enrollments[0].course_slug),
-            lastLessonSlug: enrollments[0].last_lesson_slug || undefined,
-          };
-        }
+        const latest = stats.courses[0] ?? null;
 
         setSummary({
-          completedCount,
-          streak: calculatedStreak,
-          activeCourse,
+          completedCount: stats.lessonsCompleted,
+          streak: stats.currentStreakDays,
+          activeCourse: latest
+            ? {
+                slug: latest.slug,
+                title: latest.title,
+                lastLessonSlug: latest.lastLessonSlug ?? undefined,
+              }
+            : null,
           displayName: firstName,
         });
       } catch (err) {
+        if (err instanceof DOMException && err.name === "AbortError") return;
         console.error("Error loading user summary dashboard:", err);
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
     }
 
@@ -203,6 +112,8 @@ export default function UserSummaryDashboard() {
     });
 
     return () => {
+      cancelled = true;
+      controller?.abort();
       subscription.unsubscribe();
     };
   }, []);
