@@ -12,19 +12,25 @@
   /* "Ivory Ledger" palette — see tailwind.config.ts for the canonical token
      definitions. These CSS custom properties mirror the same values for
      plain-CSS rules (below) that can't use Tailwind utility classes. */
-  --ivory: #F7F4EC;
+  --ivory: #F8F6F0;
   --panel: #FFFFFF;
+  --olive: #1A281E;
+  --olive-dark: #121D15;
+  --olive-light: #2E4233;
+  --olive-surface: #EEF3EC;
+  --olive-tint: #6B7D68;
   --forest: #1B3A2B;
-  --forest-dark: #173224;
-  --forest-tint: #98A6A0;
-  --forest-surface: #EDEFEE;
-  --gold: #A9822F;
-  --gold-dark: #8A6825;
-  --gold-text: #6E5620;
-  --gold-surface: #F6F3EA;
-  --ink: #1A1A18;
-  --ink-dim: #6E6A5F;
-  --hairline: #DFD9C8;
+  --forest-dark: #132B20;
+  --forest-tint: #889B92;
+  --forest-surface: #EAF0EC;
+  --gold: #9B7728;
+  --gold-dark: #7D5E1B;
+  --gold-text: #7D5E1B;
+  --gold-surface: #F8F4EA;
+  --ink: #171815;
+  --ink-dim: #484B44;
+  --ink-muted: #73766D;
+  --hairline: #E3DDD2;
 }
 
 *, *::before, *::after {
@@ -39,26 +45,23 @@ html, body {
 
 /* ─────────────────────────────────────────────────────────────
    Site-wide responsive container.
-   One system for every page band: full-width and fluid, capped on
-   very large screens, with side padding that scales with the
-   viewport (clamp) instead of hard-coded gaps. This is what keeps
-   content edge-consistent across 320px → 1920px+ without leaving
-   large blank side areas on wide desktops.
+   Optimized to 1240px for balanced reading measure, cohesive card
+   proportions, and generous whitespace.
    ───────────────────────────────────────────────────────────── */
 .site-container {
   width: 100%;
-  max-width: 1760px;
+  max-width: 1240px;
   margin-inline: auto;
-  padding-inline: clamp(1.25rem, 4vw, 4rem);
+  padding-inline: clamp(1.25rem, 3.5vw, 2.5rem);
 }
 
 /* A slightly narrower band for reading-heavy / app content that
    would look over-stretched at full width (dashboard, etc.). */
 .site-container--narrow {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1040px;
   margin-inline: auto;
-  padding-inline: clamp(1.25rem, 4vw, 3rem);
+  padding-inline: clamp(1.25rem, 3.5vw, 2rem);
 }
 
 html {
@@ -76,7 +79,8 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-inter), system-ui, sans-serif;
-  color: var(--ink);
+  color: var(--olive);
+  letter-spacing: -0.02em;
 }
 
 p, li, span, div, a, button, input, textarea, label {
@@ -127,3 +131,18 @@ button, [role="button"], input[type="submit"], input[type="button"] {
   border-color: var(--forest);
   color: var(--forest);
 }
+
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: inline-flex;
+  animation: marquee 35s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+

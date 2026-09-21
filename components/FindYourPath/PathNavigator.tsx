@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
+import LearningRoadmap from "./LearningRoadmap";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 //
@@ -226,35 +227,36 @@ export function PathNavigator({ personas }: { personas: Persona[] }) {
   // ── Render ──────────────────────────────────────────────────────────────────
 
   return (
-    <section style={{ padding: "80px clamp(1.25rem, 4vw, 4rem)" }}>
+    <section className="py-20 md:py-24 bg-panel border-b border-hairline">
+      <div className="site-container">
 
-      <style>{`
-        @keyframes tcgConnectorDraw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
-        .tcg-connector-draw {
-          stroke-dasharray: 1;
-          stroke-dashoffset: 1;
-          animation: tcgConnectorDraw 0.9s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .tcg-connector-draw { animation: none; stroke-dashoffset: 0; }
-        }
-      `}</style>
+        <style>{`
+          @keyframes tcgConnectorDraw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+          .tcg-connector-draw {
+            stroke-dasharray: 1;
+            stroke-dashoffset: 1;
+            animation: tcgConnectorDraw 0.9s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .tcg-connector-draw { animation: none; stroke-dashoffset: 0; }
+          }
+        `}</style>
 
-      {/* Section heading */}
-      <div style={{ maxWidth: 1760, margin: "0 auto 20px" }}>
-        <p style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 600, color: "var(--gold)", marginBottom: 8 }}>
-          FIND YOUR PATH
-        </p>
-        <h2 style={{ fontSize: 28, fontWeight: 700, color: "var(--ink)", marginBottom: 6 }}>
-          Where do you start?
-        </h2>
-        <p style={{ fontSize: 14, color: "var(--ink-dim)" }}>
-          Select who you are, then your goal. We&apos;ll map your learning path.
-        </p>
-      </div>
+        {/* Section heading */}
+        <div className="mb-6">
+          <p style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 600, color: "var(--gold)", marginBottom: 8 }}>
+            FIND YOUR PATH
+          </p>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-olive tracking-tight mb-2">
+            Where do you start?
+          </h2>
+          <p className="text-sm sm:text-base text-ink-dim max-w-2xl">
+            Select who you are, then your goal. We&apos;ll map your learning path.
+          </p>
+        </div>
 
       {/* Harvey Ball legend */}
-      <div style={{ maxWidth: 1760, margin: "0 auto 16px", display: "flex", alignItems: "center", gap: 20, flexWrap: "wrap" as const }}>
+      <div className="w-full mb-4 flex items-center gap-5 flex-wrap">
         <span style={{ fontSize: 13, fontWeight: 700, color: "var(--ink-dim)", marginRight: 4 }}>
           Harvey Balls
         </span>
@@ -267,7 +269,7 @@ export function PathNavigator({ personas }: { personas: Persona[] }) {
       </div>
 
       {/* Grid container */}
-      <div style={{ maxWidth: 1760, margin: "0 auto", overflowX: "auto" }}>
+      <div className="w-full overflow-x-auto">
         <div
           ref={containerRef}
           style={{
@@ -482,6 +484,12 @@ export function PathNavigator({ personas }: { personas: Persona[] }) {
           </div>
 
         </div>
+      </div>
+
+      {/* Vertical Investor Progression Roadmap (Beginner → Advanced) */}
+      <div>
+        <LearningRoadmap />
+      </div>
       </div>
     </section>
   );

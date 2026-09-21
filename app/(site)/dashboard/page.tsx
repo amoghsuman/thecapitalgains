@@ -2,6 +2,7 @@ import { redirect } from "next/navigation"
 import Link from "next/link"
 import { createClient } from "@/lib/supabase/server"
 import { getAllCourses } from "@/lib/sanity/queries"
+import CourseProgressBar from "@/components/dashboard/CourseProgressBar"
 
 const TIER_LABELS: Record<string, string> = {
   free:       "Free",
@@ -57,8 +58,10 @@ export default async function DashboardPage() {
 
   const allCourses = await getAllCourses()
   const courseTitleMap: Record<string, string> = {}
+  const courseTotalLessonsMap: Record<string, number> = {}
   for (const c of allCourses ?? []) {
     courseTitleMap[c.slug] = c.title
+    courseTotalLessonsMap[c.slug] = c.lessonsCount || 12
   }
 
   const tier = sub?.tier ?? "free"
@@ -197,9 +200,13 @@ export default async function DashboardPage() {
             <p style={{ fontSize: 20, fontWeight: 700, color: "#FFFFFF", marginBottom: 6 }}>
               {courseTitleMap[lastEnrollment.course_slug] ?? formatSlug(lastEnrollment.course_slug)}
             </p>
-            <p style={{ fontSize: 13, color: "rgba(255,255,255,0.5)", marginBottom: 22 }}>
-              {(() => { const n = progressByCourse[lastEnrollment.course_slug] ?? 0; return `${n} ${n === 1 ? "lesson" : "lessons"} completed` })()}
-            </p>
+            <div style={{ marginBottom: 20, maxWidth: 440 }}>
+              <CourseProgressBar
+                completed={progressByCourse[lastEnrollment.course_slug] ?? 0}
+                total={courseTotalLessonsMap[lastEnrollment.course_slug] || 12}
+                variant="hero"
+              />
+            </div>
             <Link
               href={resumeHref}
               style={{
@@ -225,7 +232,8 @@ export default async function DashboardPage() {
             <div>
               {enrollments.map((enr, idx) => {
                 const completed = progressByCourse[enr.course_slug] ?? 0
-                const isCompleted = !!enr.completed_at
+                const totalLessons = courseTotalLessonsMap[enr.course_slug] || 12
+                const isCompleted = !!enr.completed_at || completed >= totalLessons
                 const lastAccessed = new Date(enr.last_accessed_at).toLocaleDateString("en-IN", {
                   day: "numeric",
                   month: "short",
@@ -242,32 +250,43 @@ export default async function DashboardPage() {
                       display: "flex",
                       alignItems: "flex-start",
                       justifyContent: "space-between",
-                      gap: 16,
-                      padding: "16px 0",
+                      gap: 20,
+                      padding: "18px 0",
                       borderTop: idx === 0 ? "none" : "1px solid var(--hairline)",
                     }}
                   >
                     <div style={{ flex: 1, minWidth: 0 }}>
-                      <p style={{ fontSize: 14, fontWeight: 600, color: "var(--ink)", marginBottom: 4 }}>
-                        {courseTitleMap[enr.course_slug] ?? formatSlug(enr.course_slug)}
+                      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
+                        <p style={{ fontSize: 14, fontWeight: 600, color: "var(--ink)", margin: 0 }}>
+                          {courseTitleMap[enr.course_slug] ?? formatSlug(enr.course_slug)}
+                        </p>
+                        {isCompleted && (
+                          <span style={{
+                            display: "inline-block",
+                            fontSize: 10,
+                            fontWeight: 600,
+                            background: "var(--forest-surface)",
+                            color: "var(--forest)",
+                            padding: "2px 8px",
+                            borderRadius: 999,
+                            fontFamily: "var(--font-inter)",
+                          }}>
+                            Completed
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Animated Course Progress Bar */}
+                      <div style={{ maxWidth: 360, marginBottom: 8 }}>
+                        <CourseProgressBar
+                          completed={completed}
+                          total={totalLessons}
+                        />
+                      </div>
+
+                      <p style={{ fontSize: 11, color: "var(--ink-dim)", fontFamily: "var(--font-inter)", margin: 0 }}>
+                        Last accessed {lastAccessed}
                       </p>
-                      <p style={{ fontSize: 11, color: "var(--ink-dim)", fontFamily: "var(--font-inter)", margin: 0, marginBottom: isCompleted ? 8 : 0 }}>
-                        {completed} {completed === 1 ? "lesson" : "lessons"} completed · Last accessed {lastAccessed}
-                      </p>
-                      {isCompleted && (
-                        <span style={{
-                          display: "inline-block",
-                          fontSize: 10,
-                          fontWeight: 600,
-                          background: "var(--forest-surface)",
-                          color: "var(--forest)",
-                          padding: "2px 8px",
-                          borderRadius: 999,
-                          fontFamily: "var(--font-inter)",
-                        }}>
-                          Completed
-                        </span>
-                      )}
                     </div>
                     <Link
                       href={href}
@@ -277,6 +296,7 @@ export default async function DashboardPage() {
                         fontWeight: 600,
                         color: "var(--forest)",
                         textDecoration: "none",
+                        marginTop: 4,
                       }}
                     >
                       Resume →
