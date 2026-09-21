@@ -1,63 +1,47 @@
 import { MetadataRoute } from "next";
+import { getAllCourses } from "@/lib/sanity/queries";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://thecapitalgains.com";
+export const revalidate = 3600;
+
+const BASE = "https://thecapitalgains.com";
+
+const STATIC_ROUTES: { path: string; changeFrequency: "weekly" | "monthly"; priority: number }[] = [
+  { path: "", changeFrequency: "weekly", priority: 1.0 },
+  { path: "/courses", changeFrequency: "weekly", priority: 0.8 },
+  { path: "/pricing", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/newsletter", changeFrequency: "monthly", priority: 0.5 },
+  { path: "/portfolios", changeFrequency: "monthly", priority: 0.5 },
+  { path: "/about", changeFrequency: "monthly", priority: 0.5 },
+  { path: "/terms", changeFrequency: "monthly", priority: 0.5 },
+  { path: "/privacy", changeFrequency: "monthly", priority: 0.5 },
+  { path: "/refund", changeFrequency: "monthly", priority: 0.5 },
+];
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
-  return [
-    {
-      url: base,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 1.0,
-    },
-    {
-      url: `${base}/courses`,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-    {
-      url: `${base}/pricing`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${base}/newsletter`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.5,
-    },
-    {
-      url: `${base}/portfolios`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.5,
-    },
-    {
-      url: `${base}/about`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.5,
-    },
-    {
-      url: `${base}/terms`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.5,
-    },
-    {
-      url: `${base}/privacy`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.5,
-    },
-    {
-      url: `${base}/refund`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.5,
-    },
-  ];
+  const staticEntries: MetadataRoute.Sitemap = STATIC_ROUTES.map((r) => ({
+    url: `${BASE}${r.path}`,
+    lastModified: now,
+    changeFrequency: r.changeFrequency,
+    priority: r.priority,
+  }));
+
+  // A Sanity outage must not take the whole sitemap down with it.
+  let courseSlugs: string[] = [];
+  try {
+    const courses: { slug?: string | null }[] = (await getAllCourses()) ?? [];
+    courseSlugs = courses.map((c) => c.slug).filter((s): s is string => Boolean(s));
+  } catch (err: unknown) {
+    console.error("[sitemap] course fetch failed:", err instanceof Error ? err.message : err);
+  }
+
+  const courseEntries: MetadataRoute.Sitemap = courseSlugs.map((slug) => ({
+    url: `${BASE}/courses/${slug}`,
+    lastModified: now,
+    changeFrequency: "weekly",
+    priority: 0.7,
+  }));
+
+  return [...staticEntries, ...courseEntries];
 }

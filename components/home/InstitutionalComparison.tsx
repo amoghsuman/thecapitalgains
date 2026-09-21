@@ -70,18 +70,17 @@ export default function InstitutionalComparison() {
                 SEBI Study Empirical Audit
               </span>
             </div>
-            <p className="text-ink font-medium text-xs sm:text-sm leading-relaxed">
-              {SEBI_FO_STATS.map((stat, i) => (
-                <span key={stat.id}>
-                  <span className="text-[#B91C1C] font-mono font-bold">
-                    {i === 0 ? stat.value.charAt(0).toUpperCase() + stat.value.slice(1) : stat.value}
-                  </span>{" "}
-                  {stat.label}
-                  {i < SEBI_FO_STATS.length - 1 ? "; " : "."}
-                </span>
+            <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1.5 text-xs sm:text-sm leading-snug">
+              {SEBI_FO_STATS.map((stat) => (
+                <div key={stat.id} className="contents">
+                  <dt className="text-[#B91C1C] font-mono font-bold whitespace-nowrap">{stat.value}</dt>
+                  <dd className="text-ink font-normal">{stat.label}</dd>
+                </div>
               ))}
+            </dl>
+            <p className="font-mono text-[11px] text-ink-dim mt-3">
+              Source: {SEBI_FO_SOURCE}. Figures approximate and rounded.
             </p>
-            <p className="font-mono text-[11px] text-ink-dim mt-2">Source: {SEBI_FO_SOURCE}</p>
           </div>
         </div>
 

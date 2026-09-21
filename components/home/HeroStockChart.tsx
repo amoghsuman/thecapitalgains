@@ -74,7 +74,7 @@ export default function HeroStockChart() {
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="font-mono text-xs font-bold text-ink">SAMPLE INDEX</span>
+              <span className="font-mono text-xs font-bold text-ink">Nifty Alpha 50</span>
               <span className="font-mono text-[10px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-1.5 py-0.5 rounded">
                 {change}
               </span>
