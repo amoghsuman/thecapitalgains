@@ -2,45 +2,52 @@ import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: [
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./lib/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
-      fontFamily: {
-        // Everything is Inter. The `mono` utility is intentionally mapped to
-        // Inter too so `font-mono` classes across the app render Inter, not a
-        // system monospace fallback.
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
-        mono: ["var(--font-inter)", "system-ui", "sans-serif"],
-      },
       colors: {
-        // "Ivory Ledger" palette — the single source of truth for brand
-        // color. Every color in the app should trace back to one of these
-        // seven tokens (or a documented tint of one) rather than a
-        // hardcoded hex value.
-        ivory: "#F7F4EC",
+        ivory: {
+          DEFAULT: "#F8F6F0",
+          light: "#FAF9F5",
+          dark: "#F0ECE1",
+        },
         panel: "#FFFFFF",
+        olive: {
+          DEFAULT: "#1A281E",
+          dark: "#121D15",
+          light: "#2E4233",
+          muted: "#4E6050",
+          surface: "#EEF3EC",
+          tint: "#6B7D68",
+        },
         forest: {
           DEFAULT: "#1B3A2B",
-          dark: "#173224",   // ~15% toward black — hover/active states
-          tint: "#98A6A0",   // ~55% toward white — light differentiator (e.g. PathNavigator step 3)
-          surface: "#EDEFEE", // ~8% toward white — pale badge/card fill
-          badge: "#E4EAE4",  // more saturated than `surface` — `surface` reads as flat grey at small-pill sizes (~10:1 contrast with `forest` text)
+          dark: "#132B20",
+          light: "#28523E",
+          tint: "#889B92",
+          surface: "#EAF0EC",
         },
         gold: {
-          DEFAULT: "#A9822F",
-          dark: "#8A6825",   // ~20% toward black — hover states
-          text: "#6E5620",   // ~25% toward black — body text on light-gold fills (AA contrast)
-          surface: "#F6F3EA", // ~10% toward white — pale badge/card fill
-          badge: "#F2E9D6",  // more saturated than `surface` — `surface` reads as flat grey at small-pill sizes; pair with `gold-text`, not `gold` DEFAULT (~2.9:1, fails AA) for the ~5.8:1 contrast
+          DEFAULT: "#9B7728",
+          dark: "#7D5E1B",
+          text: "#7D5E1B",
+          surface: "#F8F4EA",
+          light: "#BA984A",
         },
         ink: {
-          DEFAULT: "#1A1A18",
-          dim: "#6E6A5F",
+          DEFAULT: "#171815",
+          dim: "#484B44",
+          muted: "#73766D",
         },
-        hairline: "#DFD9C8",
+        hairline: "#E3DDD2",
+      },
+      fontFamily: {
+        sans: ["var(--font-inter)", "var(--font-course-sans)", "system-ui", "sans-serif"],
+        serif: ["var(--font-course-serif)", "Playfair Display", "Georgia", "serif"],
+        mono: ["var(--font-course-mono)", "DM Mono", "monospace"],
       },
     },
   },

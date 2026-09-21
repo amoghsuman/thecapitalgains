@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -50,71 +50,71 @@ export default function Navbar() {
   }
 
   return (
-    <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-500 ${
+    <header
+      id="main-navbar"
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-[rgba(247,244,236,0.85)] backdrop-blur-xl py-3"
-          : "bg-transparent py-6"
+          ? "bg-ivory/95 backdrop-blur-md border-b border-hairline shadow-xs py-3"
+          : "bg-ivory/80 backdrop-blur-sm border-b border-hairline/70 py-4"
       }`}
     >
       <div className="site-container flex items-center justify-between">
         {/* Logo */}
         <Link
           href="/"
-          className="flex items-center gap-2.5 group flex-shrink-0"
+          id="nav-brand-logo"
+          className="flex items-center gap-2.5 group flex-shrink-0 rounded-lg py-1 px-1.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-forest/40"
         >
-          <div className="w-2 h-2 rounded-full bg-forest shadow-[0_0_10px_rgba(27,58,43,0.8)] group-hover:scale-125 transition-transform" />
-          <span className={`font-black text-sm tracking-[0.15em] transition-colors uppercase ${
-            useDarkNav ? "text-ink" : "text-ink"
-          }`}>
+          <div className="w-2.5 h-2.5 rounded-full bg-forest shadow-[0_0_8px_rgba(27,58,43,0.5)] ring-2 ring-forest/20 group-hover:scale-110 transition-transform" />
+          <span className="font-black text-sm tracking-[0.16em] transition-colors uppercase text-olive group-hover:text-forest">
             THE CAPITAL GAINS
           </span>
         </Link>
 
-        {/* Desktop nav links - Fixed Pill Style */}
-        <div className="hidden lg:flex items-center p-1 bg-[rgba(26,26,24,0.04)] border border-hairline rounded-full backdrop-blur-xl">
+        {/* Desktop nav links - Fixed Pill Style with High Contrast */}
+        <nav
+          aria-label="Main Navigation"
+          className="hidden lg:flex items-center p-1 bg-olive-surface/80 border border-hairline rounded-full shadow-2xs"
+        >
           {[
             { label: "Courses", href: "/courses" },
             { label: "Portfolios", href: "/portfolios" },
             { label: "Pricing", href: "/pricing" },
             { label: "Newsletter", href: "/newsletter" },
           ].map((item) => {
-            const isActive = pathname === item.href;
+            const isActive =
+              pathname === item.href ||
+              (item.href !== "/" && pathname?.startsWith(item.href));
             return (
               <Link
                 key={item.label}
                 href={item.href}
-                className={`px-6 py-2 text-[12px] font-bold tracking-wider rounded-full transition-all ${
+                className={`px-5 py-1.5 text-[13px] font-bold tracking-tight rounded-full transition-all duration-150 ${
                   isActive
-                    ? "bg-panel text-ink shadow-lg"
-                    : useDarkNav
-                      ? "text-ink-dim hover:text-ink"
-                      : "text-ink-dim hover:text-ink"
+                    ? "bg-panel text-forest shadow-xs border border-hairline/80 font-extrabold"
+                    : "text-olive/80 hover:text-olive hover:bg-white/60"
                 }`}
               >
                 {item.label}
               </Link>
             );
           })}
-        </div>
+        </nav>
 
         {/* CTAs */}
-        <div className="hidden md:flex items-center gap-6">
+        <div className="hidden md:flex items-center gap-3">
           {user ? (
             <>
               <Link
                 href="/dashboard"
-                className={`text-[12px] font-bold tracking-widest uppercase transition-colors ${
-                  useDarkNav ? "text-ink-dim hover:text-ink" : "text-ink-dim hover:text-ink"
-                }`}
+                className="px-3.5 py-1.5 text-[12px] font-bold tracking-wider uppercase text-olive hover:text-forest hover:bg-olive-surface/60 rounded-lg transition-colors"
               >
                 My Account
               </Link>
               <button
+                type="button"
                 onClick={handleSignOut}
-                className={`text-[12px] font-bold tracking-widest uppercase transition-colors ${
-                  useDarkNav ? "text-ink-dim hover:text-ink" : "text-ink-dim hover:text-ink"
-                }`}
+                className="px-3.5 py-1.5 rounded-lg border border-hairline bg-panel text-olive hover:bg-olive-surface text-[12px] font-bold tracking-wider uppercase transition-colors shadow-2xs"
               >
                 Sign Out
               </button>
@@ -123,13 +123,14 @@ export default function Navbar() {
             <>
               <Link
                 href="/auth/login"
-                className={`text-[12px] font-bold tracking-widest uppercase transition-colors ${
-                  useDarkNav ? "text-ink-dim hover:text-ink" : "text-ink-dim hover:text-ink"
-                }`}
+                className="px-3.5 py-2 text-[12px] font-bold tracking-wider uppercase text-olive hover:text-forest hover:bg-olive-surface/60 rounded-lg transition-colors"
               >
                 Sign In
               </Link>
-              <Link href="/auth/signup" className="premium-button-primary !py-2.5 !px-6 text-[12px] font-extrabold tracking-widest uppercase">
+              <Link
+                href="/auth/signup"
+                className="inline-flex items-center justify-center px-5 py-2 rounded-xl bg-forest hover:bg-forest-dark text-white text-[12px] font-bold tracking-wider uppercase shadow-xs hover:shadow-sm transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+              >
                 Join Now
               </Link>
             </>
@@ -138,10 +139,12 @@ export default function Navbar() {
 
         {/* Mobile hamburger */}
         <button
-          className="lg:hidden transition-colors text-ink"
+          type="button"
+          aria-label={menuOpen ? "Close menu" : "Open navigation menu"}
+          className="lg:hidden p-2 rounded-xl border border-hairline bg-panel text-olive hover:bg-olive-surface transition-colors shadow-2xs focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-forest/40"
           onClick={() => setMenuOpen(!menuOpen)}
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
             {menuOpen ? (
               <path d="M6 18L18 6M6 6l12 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
             ) : (
@@ -153,37 +156,74 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="lg:hidden absolute top-full left-0 w-full border-t p-10 flex flex-col gap-6 shadow-2xl animate-in fade-in slide-in-from-top-4 duration-300 bg-panel border-hairline">
-          {[
-            { label: "Courses", href: "/courses" },
-            { label: "Portfolios", href: "/portfolios" },
-            { label: "Pricing", href: "/pricing" },
-            { label: "Newsletter", href: "/newsletter" },
-          ].map((item) => (
-            <Link
-              key={item.label}
-              href={item.href}
-              className="text-xl font-black tracking-tight text-ink"
-              onClick={() => setMenuOpen(false)}
-            >
-              {item.label}
-            </Link>
-          ))}
-          <div className="grid grid-cols-2 gap-4 pt-6 border-t border-hairline">
+        <div className="lg:hidden absolute top-full left-0 w-full border-b border-hairline p-6 flex flex-col gap-4 shadow-xl animate-in fade-in slide-in-from-top-2 duration-200 bg-panel/98 backdrop-blur-xl">
+          <div className="flex flex-col gap-1.5">
+            {[
+              { label: "Courses", href: "/courses" },
+              { label: "Portfolios", href: "/portfolios" },
+              { label: "Pricing", href: "/pricing" },
+              { label: "Newsletter", href: "/newsletter" },
+            ].map((item) => {
+              const isActive =
+                pathname === item.href ||
+                (item.href !== "/" && pathname?.startsWith(item.href));
+              return (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className={`px-4 py-3 rounded-xl text-sm font-bold tracking-tight flex items-center justify-between transition-colors ${
+                    isActive
+                      ? "bg-forest text-white"
+                      : "text-olive hover:bg-olive-surface"
+                  }`}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <span>{item.label}</span>
+                  <span className="font-mono text-xs opacity-60">→</span>
+                </Link>
+              );
+            })}
+          </div>
+
+          <div className="grid grid-cols-2 gap-3 pt-4 border-t border-hairline">
             {user ? (
               <>
-                <Link href="/dashboard" className="premium-button-outline text-center !py-3" onClick={() => setMenuOpen(false)}>My Account</Link>
-                <button onClick={handleSignOut} className="premium-button-primary text-center !py-3">Sign Out</button>
+                <Link
+                  href="/dashboard"
+                  className="px-4 py-2.5 rounded-xl border border-hairline bg-panel text-olive text-center text-xs font-bold tracking-wider uppercase hover:bg-olive-surface transition-colors"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  My Account
+                </Link>
+                <button
+                  type="button"
+                  onClick={handleSignOut}
+                  className="px-4 py-2.5 rounded-xl bg-forest text-white text-center text-xs font-bold tracking-wider uppercase hover:bg-forest-dark transition-colors"
+                >
+                  Sign Out
+                </button>
               </>
             ) : (
               <>
-                <Link href="/auth/login" className="premium-button-outline text-center !py-3">Sign In</Link>
-                <Link href="/auth/signup" className="premium-button-primary text-center !py-3">Join Now</Link>
+                <Link
+                  href="/auth/login"
+                  className="px-4 py-2.5 rounded-xl border border-hairline bg-panel text-olive text-center text-xs font-bold tracking-wider uppercase hover:bg-olive-surface transition-colors"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Sign In
+                </Link>
+                <Link
+                  href="/auth/signup"
+                  className="px-4 py-2.5 rounded-xl bg-forest text-white text-center text-xs font-bold tracking-wider uppercase hover:bg-forest-dark transition-colors"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Join Now
+                </Link>
               </>
             )}
           </div>
         </div>
       )}
-    </nav>
+    </header>
   );
 }
