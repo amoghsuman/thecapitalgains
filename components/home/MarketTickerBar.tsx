@@ -1,13 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { TrendingUp, TrendingDown, Activity } from "lucide-react";
-import {
-  fetchMarket,
-  isMarketError,
-  MARKET_POLL_MS,
-  type MarketSnapshot,
-} from "@/lib/market/client";
+import type { MarketSnapshot } from "@/lib/market/client";
+import { useMarketSnapshot } from "@/lib/market/useMarketSnapshot";
 
 interface TickerItem {
   symbol: string;
@@ -17,12 +12,19 @@ interface TickerItem {
   tag?: string;
 }
 
-type TickerState =
-  | { status: "loading" }
-  | { status: "error" }
-  | { status: "ready"; data: MarketSnapshot };
-
 const priceFormat = new Intl.NumberFormat("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const croreFormat = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 });
+
+function formatCrore(v: number): string {
+  const sign = v > 0 ? "+" : v < 0 ? "−" : "";
+  return `${sign}₹${croreFormat.format(Math.abs(v))} Cr`;
+}
+
+function formatSessionDate(iso: string): string {
+  const d = new Date(`${iso}T00:00:00Z`);
+  if (Number.isNaN(d.getTime())) return iso;
+  return d.toLocaleDateString("en-IN", { day: "numeric", month: "short", timeZone: "UTC" });
+}
 
 function toItems(data: MarketSnapshot): TickerItem[] {
   const items: TickerItem[] = data.indices.map((i) => ({
@@ -33,45 +35,22 @@ function toItems(data: MarketSnapshot): TickerItem[] {
     tag: "INDEX",
   }));
 
-  // NSE blocks server-side fetches of its FII/DII endpoint. Until a flows
-  // source is wired in lib/market/providers.ts, say so; never show numbers.
-  items.push({ symbol: "FII/DII FLOWS", value: "as of previous close, unavailable" });
+  // Flows are provisional NSE figures loaded into market_reference by the
+  // laptop refresh script; absent rows show as unavailable, never as numbers.
+  if (data.flows) {
+    const asOf = formatSessionDate(data.flows.asOf);
+    items.push({ symbol: "FII NET", value: formatCrore(data.flows.fii), change: `as of ${asOf} close`, isPositive: data.flows.fii >= 0, tag: "PROV." });
+    items.push({ symbol: "DII NET", value: formatCrore(data.flows.dii), change: `as of ${asOf} close`, isPositive: data.flows.dii >= 0, tag: "PROV." });
+  } else {
+    items.push({ symbol: "FII/DII FLOWS", value: "as of previous close, unavailable" });
+  }
   items.push({ symbol: "SOURCE", value: data.source, tag: "DELAYED" });
 
   return items;
 }
 
 export default function MarketTickerBar() {
-  const [state, setState] = useState<TickerState>({ status: "loading" });
-
-  // Poll /api/market every 60s, only while the tab is visible.
-  useEffect(() => {
-    let cancelled = false;
-    let controller: AbortController | null = null;
-
-    async function load() {
-      controller?.abort();
-      controller = new AbortController();
-      const result = await fetchMarket(controller.signal);
-      if (cancelled) return;
-      setState(isMarketError(result) ? { status: "error" } : { status: "ready", data: result });
-    }
-
-    function tick() {
-      if (document.visibilityState === "visible") void load();
-    }
-
-    void load();
-    const interval = window.setInterval(tick, MARKET_POLL_MS);
-    document.addEventListener("visibilitychange", tick);
-
-    return () => {
-      cancelled = true;
-      controller?.abort();
-      window.clearInterval(interval);
-      document.removeEventListener("visibilitychange", tick);
-    };
-  }, []);
+  const state = useMarketSnapshot();
 
   if (state.status === "loading") return null;
 

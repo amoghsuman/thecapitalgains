@@ -3,7 +3,8 @@ import { NextResponse } from 'next/server'
 
 export async function POST(request: Request) {
   try {
-    const { email } = await request.json()
+    const body: { email?: unknown; tag?: unknown } = await request.json()
+    const email = typeof body.email === 'string' ? body.email : ''
 
     if (!email || !email.includes('@')) {
       return NextResponse.json(
@@ -12,11 +13,16 @@ export async function POST(request: Request) {
       )
     }
 
+    // Optional tag (e.g. "portfolio-alerts") is stored in the existing
+    // `source` column so no schema change is needed. Only known tags are kept.
+    const ALLOWED_TAGS = ['portfolio-alerts'] as const
+    const tag = typeof body.tag === 'string' && (ALLOWED_TAGS as readonly string[]).includes(body.tag) ? body.tag : null
+
     const supabase = await createClient()
 
     const { error } = await supabase
       .from('newsletter_subscribers')
-      .insert({ email: email.toLowerCase().trim() })
+      .insert({ email: email.toLowerCase().trim(), ...(tag ? { source: tag } : {}) })
 
     if (error) {
       if (error.code === '23505') {

@@ -74,4 +74,32 @@ export const structure: StructureResolver = (S) =>
             .filter('_type == "learningPath"')
             .defaultOrdering([{ field: 'order', direction: 'asc' }])
         ),
+      S.divider(),
+      S.listItem()
+        .title('Model Portfolios')
+        .schemaType('portfolio')
+        .child(
+          S.documentList()
+            .title('Model Portfolios')
+            .filter('_type == "portfolio"')
+            .defaultOrdering([{ field: 'order', direction: 'asc' }])
+        ),
+      S.listItem()
+        .title('Market Datasets')
+        .schemaType('marketDataset')
+        .child(
+          S.documentList()
+            .title('Market Datasets')
+            .filter('_type == "marketDataset"')
+            .defaultOrdering([{ field: 'name', direction: 'asc' }])
+        ),
+      S.listItem()
+        .title('Testimonials')
+        .schemaType('testimonial')
+        .child(
+          S.documentList()
+            .title('Testimonials')
+            .filter('_type == "testimonial"')
+            .defaultOrdering([{ field: 'publishedAt', direction: 'desc' }])
+        ),
     ])

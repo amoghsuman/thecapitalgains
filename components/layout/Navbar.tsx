@@ -137,21 +137,23 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* Mobile hamburger */}
-        <button
-          type="button"
-          aria-label={menuOpen ? "Close menu" : "Open navigation menu"}
-          className="lg:hidden p-2 rounded-xl border border-hairline bg-panel text-olive hover:bg-olive-surface transition-colors shadow-2xs focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-forest/40"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-            {menuOpen ? (
-              <path d="M6 18L18 6M6 6l12 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-            ) : (
-              <path d="M4 8h16M4 16h16" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-            )}
-          </svg>
-        </button>
+        {/* Mobile controls: hamburger */}
+        <div className="flex md:hidden items-center gap-2">
+          <button
+            type="button"
+            aria-label={menuOpen ? "Close menu" : "Open navigation menu"}
+            className="p-2 rounded-xl border border-hairline bg-panel text-olive hover:bg-olive-surface transition-colors shadow-2xs focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-forest/40"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              {menuOpen ? (
+                <path d="M6 18L18 6M6 6l12 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+              ) : (
+                <path d="M4 8h16M4 16h16" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+              )}
+            </svg>
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}
