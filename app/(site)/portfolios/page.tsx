@@ -1,8 +1,13 @@
 import Link from "next/link";
 import { getPortfolios, getMarketDatasets } from "@/lib/sanity/queries";
 import PortfoliosSection from "@/components/portfolios/PortfoliosSection";
+import { createClient } from "@/lib/supabase/server";
+import { getActiveSubscriptions, researchTierOf } from "@/lib/subscription";
+import { canAccessResearch } from "@/lib/access";
 
-export const revalidate = 300;
+// Reading the visitor's Research subscription (cookies) makes this page
+// dynamic; the Sanity reads underneath are still cached by their own fetches.
+export const dynamic = "force-dynamic";
 
 const howItWorks = [
   {
@@ -22,7 +27,20 @@ const howItWorks = [
 // Server component: every number on this page comes from the `portfolio` and
 // `marketDataset` documents in Sanity, passed down as props.
 export default async function PortfoliosPage() {
-  const [portfolios, datasets] = await Promise.all([getPortfolios(), getMarketDatasets()]);
+  const supabase = await createClient();
+  const [portfolios, datasets, { data: { user } }] = await Promise.all([
+    getPortfolios(),
+    getMarketDatasets(),
+    supabase.auth.getUser(),
+  ]);
+
+  // Research row only: a Learn (Pro) subscription grants nothing here.
+  const subs = user ? await getActiveSubscriptions(supabase, user.id) : { learn: null, research: null };
+  const researchTier = researchTierOf(subs);
+  const hasPortfolioAccess = canAccessResearch(researchTier, "essential");
+  const researchRenewal = subs.research?.isCurrent && subs.research.currentPeriodEnd
+    ? new Date(subs.research.currentPeriodEnd).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })
+    : null;
 
   const anyIllustrative = portfolios.some((p) => p.dataStatus === "illustrative") ||
     datasets.some((d) => d.dataStatus === "illustrative");
@@ -35,7 +53,7 @@ export default async function PortfoliosPage() {
           Model Portfolios
         </div>
         <h1 className="text-4xl sm:text-5xl font-bold text-ink leading-[1.1] mb-3">
-          See how a model portfolio is built &amp; rebalanced
+          See how a model portfolio is built & rebalanced
         </h1>
         <p className="text-[16px] text-ink-dim max-w-2xl mb-4 leading-relaxed">
           Three model portfolios maintained for educational purposes, showing how allocation, selection, risk metrics, and rebalancing decisions are executed across Indian market cycles.
@@ -43,7 +61,7 @@ export default async function PortfoliosPage() {
         <div className="inline-flex items-center gap-2 bg-gold-surface border border-gold rounded-lg px-4 py-2.5">
           <span className="text-gold-text text-[13px]">⚠</span>
           <span className="font-mono text-[11px] text-gold-text tracking-wide">
-            Educational illustrations only &middot; Not investment advice &middot; Do not invest based on this content
+            Educational illustrations only · Not investment advice · Do not invest based on this content
           </span>
         </div>
 
@@ -67,7 +85,7 @@ export default async function PortfoliosPage() {
       <section className="site-container py-12">
         <div className="bg-forest rounded-2xl px-8 sm:px-10 py-10">
           <div className="font-mono text-[11px] text-[rgba(255,255,255,0.4)] tracking-widest uppercase mb-3">
-            Methodology &middot; Indian Equity Architecture
+            Methodology · Indian Equity Architecture
           </div>
           <h2 className="text-[28px] text-white mb-8">
             How these portfolios work in practice
@@ -96,18 +114,22 @@ export default async function PortfoliosPage() {
               Subscriber Access
             </div>
             <h3 className="text-[24px] font-bold text-ink mb-2">
-              Subscribe to follow along with rebalancing
+              {hasPortfolioAccess ? "You follow these portfolios" : "Subscribe to follow along with rebalancing"}
             </h3>
             <p className="text-[15px] text-ink-dim max-w-md">
-              Track how these portfolios evolve month by month with research teardowns and rebalancing notes.
+              {hasPortfolioAccess
+                ? `Research plan: ${researchTier === "premium" ? "Premium Research" : "Essential Research"}${researchRenewal ? ` · renews ${researchRenewal}` : ""}.`
+                : "Track how these portfolios evolve month by month with research teardowns and rebalancing notes. Included in Essential and Premium Research."}
             </p>
           </div>
-          <Link
-            href="/pricing"
-            className="bg-forest hover:bg-forest-dark text-white rounded-lg px-8 py-3 text-[14px] font-medium transition-colors whitespace-nowrap flex-shrink-0 shadow-xs"
-          >
-            Go Pro →
-          </Link>
+          {!hasPortfolioAccess && (
+            <Link
+              href="/pricing"
+              className="bg-forest hover:bg-forest-dark text-white rounded-lg px-8 py-3 text-[14px] font-medium transition-colors whitespace-nowrap flex-shrink-0 shadow-xs"
+            >
+              Subscribe to Research →
+            </Link>
+          )}
         </div>
       </section>
 

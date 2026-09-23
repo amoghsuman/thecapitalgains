@@ -44,6 +44,10 @@ interface CoursesCatalogProps {
   initialGroup: string;
   /** A LEARNING_PATHS value from ?path=, already validated by the page. */
   initialPath: string;
+  /** Free-text search from ?q= (the home search bar submits here). */
+  initialQ: string;
+  /** A LEVEL_PILLS value from ?level=, already validated by the page. */
+  initialLevel: string;
   /** Server-rendered heading block, shown at the top of the hero band. */
   header: ReactNode;
 }
@@ -55,13 +59,13 @@ function pathsForGroup(groupSlug: string): readonly string[] | null {
 
 // ─── Catalog ──────────────────────────────────────────────────────────────────
 
-export default function CoursesCatalog({ courses, initialGroup, initialPath, header }: CoursesCatalogProps) {
+export default function CoursesCatalog({ courses, initialGroup, initialPath, initialQ, initialLevel, header }: CoursesCatalogProps) {
   const pathname = usePathname();
 
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(initialQ);
   const [filterGroup, setFilterGroup] = useState(initialGroup);
   const [filterPath, setFilterPath] = useState(initialPath);
-  const [filterLevel, setFilterLevel] = useState("all");
+  const [filterLevel, setFilterLevel] = useState(initialLevel);
 
   // ── Progress state ──────────────────────────────────────────────────────────
   const [user, setUser] = useState<{ id: string } | null>(null);
@@ -111,20 +115,26 @@ export default function CoursesCatalog({ courses, initialGroup, initialPath, hea
     loadProgress();
   }, []);
 
-  // Keep ?group= and ?path= in step with the selection. history.replaceState is
-  // the App Router's shallow update: the URL changes, nothing is re-fetched.
+  // Keep ?group=, ?path=, ?level= and ?q= in step with the selection.
+  // history.replaceState is the App Router's shallow update: the URL changes,
+  // nothing is re-fetched.
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     if (filterGroup === "all") params.delete("group");
     else params.set("group", filterGroup);
     if (filterPath === "all") params.delete("path");
     else params.set("path", filterPath);
+    if (filterLevel === "all") params.delete("level");
+    else params.set("level", filterLevel);
+    const q = search.trim();
+    if (q) params.set("q", q);
+    else params.delete("q");
     const query = params.toString();
     const next = query ? `${pathname}?${query}` : pathname;
     if (next !== `${window.location.pathname}${window.location.search}`) {
       window.history.replaceState(null, "", next);
     }
-  }, [filterGroup, filterPath, pathname]);
+  }, [filterGroup, filterPath, filterLevel, search, pathname]);
 
   const uniquePaths = useMemo(() => {
     const seen = new Set<string>();
@@ -162,9 +172,14 @@ export default function CoursesCatalog({ courses, initialGroup, initialPath, hea
 
   const filtered = useMemo(() => {
     return courses.filter((c) => {
-      if (search) {
-        const q = search.toLowerCase();
-        if (!c.title?.toLowerCase().includes(q) && !c.description?.toLowerCase().includes(q)) return false;
+      // Case-insensitive match on title, description or any topic.
+      const q = search.trim().toLowerCase();
+      if (q) {
+        const hit =
+          c.title?.toLowerCase().includes(q) ||
+          c.description?.toLowerCase().includes(q) ||
+          (c.topics ?? []).some((t) => t.toLowerCase().includes(q));
+        if (!hit) return false;
       }
       if (filterLevel !== "all" && mapLevel(c.tag) !== filterLevel) return false;
       return true;

@@ -9,7 +9,7 @@ const STEPS = [
     title: "Mental Models",
     headline: "Understand the Core Idea",
     desc: "Deconstruct business quality, ROCE, and option payoff mechanics before placing orders. No jargon for the sake of jargon.",
-    metric: "12 Curated Playbooks",
+    metric: "", // filled from the live course count
     icon: BookOpen,
     href: "/courses",
   },
@@ -27,7 +27,7 @@ const STEPS = [
     title: "Position Sizing",
     headline: "Convert Conviction to Weight",
     desc: "Calculate downside risk budgets, position sizing rules, and asset allocation across market cap segments before pulling the trigger.",
-    metric: "3 Model Portfolios",
+    metric: "", // filled from the live portfolio count
     icon: Layers,
     href: "/portfolios",
   },
@@ -42,7 +42,19 @@ const STEPS = [
   },
 ];
 
-export default function TacticalExecutionFlow() {
+interface TacticalExecutionFlowProps {
+  /** Live count from getAllCourses(). */
+  courseCount: number;
+  /** Live count from getPortfolios(). */
+  portfolioCount: number;
+}
+
+export default function TacticalExecutionFlow({ courseCount, portfolioCount }: TacticalExecutionFlowProps) {
+  const steps = STEPS.map((s) => {
+    if (s.href === "/courses") return { ...s, metric: `${courseCount} Curated Playbooks` };
+    if (s.href === "/portfolios") return { ...s, metric: `${portfolioCount} Model Portfolio${portfolioCount === 1 ? "" : "s"}` };
+    return s;
+  });
   return (
     <section className="py-16 md:py-24 bg-panel border-b border-hairline">
       <div className="site-container space-y-12">
@@ -56,7 +68,7 @@ export default function TacticalExecutionFlow() {
               Follow the trail: A complete investing loop.
             </h2>
             <p className="text-sm sm:text-base text-ink-dim leading-relaxed">
-              True market edge isn&apos;t just finding an idea—it is the disciplined journey from foundational understanding, to forensic evidence, to risk-sized allocation and periodic review.
+              True market edge isn't just finding an idea—it is the disciplined journey from foundational understanding, to forensic evidence, to risk-sized allocation and periodic review.
             </p>
           </div>
           <Link
@@ -70,7 +82,7 @@ export default function TacticalExecutionFlow() {
 
         {/* 4-Step Connected Flow Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative">
-          {STEPS.map((s, idx) => {
+          {steps.map((s, idx) => {
             const Icon = s.icon;
             return (
               <div

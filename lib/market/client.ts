@@ -32,8 +32,12 @@ export type MarketFlows = {
   source: string;
 };
 
+import type { Sentiment } from "@/lib/market/sentiment";
+
 export type MarketSnapshot = {
   indices: MarketIndex[];
+  /** TCG Sentiment Index with the inputs it used; score null when no input is available. */
+  sentiment: Sentiment;
   /** FII/DII provisional flows from market_reference; null when not loaded yet. */
   flows: MarketFlows | null;
   reference: {

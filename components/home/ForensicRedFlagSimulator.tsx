@@ -190,7 +190,7 @@ export default function ForensicRedFlagSimulator() {
                 className="w-full accent-forest cursor-pointer"
               />
               <div className="flex justify-between text-[10px] font-mono text-ink-dim">
-                <span>0% (Arm&apos;s Length Only)</span>
+                <span>0% (Arm's Length Only)</span>
                 <span>45% (High Divergence Risk)</span>
               </div>
             </div>
@@ -285,7 +285,7 @@ export default function ForensicRedFlagSimulator() {
                   <span>INDIAN MARKET PRECEDENT</span>
                 </div>
                 <p className="text-xs text-ink-dim leading-relaxed italic bg-panel p-3 rounded-xl border border-hairline">
-                  &ldquo;{status.historicalCase}&rdquo;
+                  “{status.historicalCase}”
                 </p>
               </div>
             </div>

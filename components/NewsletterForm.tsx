@@ -33,7 +33,7 @@ export default function NewsletterForm({ dark = false }: { dark?: boolean }) {
   if (success) {
     return (
       <p className={`text-[14px] font-medium text-center ${dark ? 'text-[#6EE7A0]' : 'text-forest'}`}>
-        You&apos;re subscribed! Check your inbox.
+        You're subscribed! Check your inbox.
       </p>
     )
   }

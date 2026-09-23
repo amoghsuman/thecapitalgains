@@ -151,7 +151,7 @@ export default function MarketMythsSection({ facts }: MarketMythsSectionProps) {
             </div>
 
             <h3 className="text-lg sm:text-xl font-bold text-olive leading-relaxed">
-              &ldquo;{currentMyth.statement}&rdquo;
+              “{currentMyth.statement}”
             </h3>
           </div>
 
@@ -169,7 +169,7 @@ export default function MarketMythsSection({ facts }: MarketMythsSectionProps) {
                   className="p-4 rounded-xl border border-hairline bg-panel hover:bg-forest-surface hover:border-forest/50 text-olive font-bold text-sm flex items-center justify-center gap-2.5 transition-all shadow-2xs cursor-pointer group"
                 >
                   <ThumbsDown className="w-4 h-4 text-red-700 group-hover:scale-110 transition-transform" />
-                  <span>It&apos;s a Myth!</span>
+                  <span>It's a Myth!</span>
                 </button>
 
                 <button
@@ -179,7 +179,7 @@ export default function MarketMythsSection({ facts }: MarketMythsSectionProps) {
                   className="p-4 rounded-xl border border-hairline bg-panel hover:bg-forest-surface hover:border-forest/50 text-olive font-bold text-sm flex items-center justify-center gap-2.5 transition-all shadow-2xs cursor-pointer group"
                 >
                   <ThumbsUp className="w-4 h-4 text-forest group-hover:scale-110 transition-transform" />
-                  <span>It&apos;s a Fact!</span>
+                  <span>It's a Fact!</span>
                 </button>
               </div>
             </div>
@@ -219,7 +219,7 @@ export default function MarketMythsSection({ facts }: MarketMythsSectionProps) {
               <div className="p-5 bg-panel rounded-xl border border-hairline space-y-3">
                 <div className="flex items-center gap-2 text-xs font-mono font-bold text-gold uppercase tracking-wider">
                   <Lightbulb className="w-4 h-4 text-gold" />
-                  <span>Empirical Market Mechanics &amp; Mathematics</span>
+                  <span>Empirical Market Mechanics & Mathematics</span>
                 </div>
                 <p className="text-xs sm:text-sm text-ink-dim leading-relaxed">
                   {currentMyth.explanation}

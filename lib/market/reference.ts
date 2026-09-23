@@ -122,3 +122,41 @@ export function ageInDays(asOf: string | null | undefined, now: Date = new Date(
   if (Number.isNaN(t)) return Infinity;
   return (now.getTime() - t) / 86_400_000;
 }
+
+// ─── Dated history rows ───────────────────────────────────────────────────────
+//
+// The table is keyed one-row-per-key, so a series is stored as dated copies:
+// "fii_net_cr:2026-09-22". scripts/refresh-market-reference.mjs writes one per
+// session alongside the current row; the sentiment index reads them back.
+
+export type ReferencePoint = { asOf: string; value: number };
+
+export async function getReferenceHistory(key: ReferenceKey, limit = 300): Promise<ReferencePoint[]> {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!url || !anonKey) return [];
+
+  const params = new URLSearchParams({
+    select: "key,value,as_of",
+    key: `like.${key}:*`,
+    order: "as_of.asc",
+    limit: String(limit),
+  });
+
+  try {
+    const res = await fetch(`${url}/rest/v1/market_reference?${params.toString()}`, {
+      headers: { apikey: anonKey, Authorization: `Bearer ${anonKey}` },
+      next: { revalidate: REFERENCE_REVALIDATE_SECONDS },
+    });
+    if (!res.ok) return [];
+    const rows = (await res.json()) as Array<{ key: string; value: number | string | null; as_of: string | null }>;
+    const out: ReferencePoint[] = [];
+    for (const r of rows) {
+      const v = r.value === null ? NaN : Number(r.value);
+      if (Number.isFinite(v) && r.as_of) out.push({ asOf: r.as_of, value: v });
+    }
+    return out;
+  } catch {
+    return [];
+  }
+}

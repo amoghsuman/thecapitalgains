@@ -181,3 +181,30 @@ export function resolveService(
 export function resolveAllServices(live: Record<string, number> = {}): ResolvedService[] {
   return PLANS.map((p) => resolveService(p, live));
 }
+
+// ─── Stacks ───────────────────────────────────────────────────────────────────
+//
+// Learn (learner < pro) and Research (newsletter < essential < premium) are
+// independent entitlements: a user can hold one active subscription in each,
+// stored as separate `subscriptions` rows keyed (user_id, stack). The
+// `subscriptions.stack` check constraint mirrors this mapping.
+
+export type Stack = "learn" | "research";
+
+const RESEARCH_TIERS: ReadonlySet<string> = new Set(["newsletter", "essential", "premium"]);
+
+/** The stack a tier's subscription row lives in. Unknown or free tiers count as Learn. */
+export function stackOf(tier: string): Stack {
+  return RESEARCH_TIERS.has(tier) ? "research" : "learn";
+}
+
+/**
+ * The tier a Razorpay plan key (`<tier>_monthly` / `<tier>_annual`) maps to,
+ * or null when the key is not a subscription plan.
+ */
+export function tierOfPlanKey(planKey: string): Exclude<ServiceKey, "free" | "doubt" | "portfolio"> | null {
+  const tier = planKey.split("_")[0];
+  const plan = PLANS.find((p) => p.key === tier && p.billingType === "subscription");
+  if (!plan) return null;
+  return plan.key as Exclude<ServiceKey, "free" | "doubt" | "portfolio">;
+}

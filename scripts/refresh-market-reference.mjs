@@ -34,7 +34,9 @@
 //
 // WHAT IT WRITES (upsert by key, as_of = trade date, source + source_url set):
 //   fii_net_cr, dii_net_cr  — NSE FII/FPI & DII provisional net figures, ₹ crore,
-//                             combined NSE+BSE+MSEI capital-market segment
+//                             combined NSE+BSE+MSEI capital-market segment; each
+//                             session is also kept as a dated copy (key
+//                             "fii_net_cr:YYYY-MM-DD") for the sentiment index
 //   gsec_10y                — 10-year benchmark G-Sec yield, % p.a.
 // A value that cannot be fetched or parsed is skipped, never invented. A day
 // where only one of FII/DII parses is still written; the site's ticker only
@@ -210,14 +212,15 @@ function parseFiiDiiCsv(text) {
   return parsed
 }
 
+// Each session is written twice: the current row ("fii_net_cr") that the ticker
+// reads, and a dated copy ("fii_net_cr:2026-09-22") that accumulates into the
+// history the sentiment index needs (five sessions for the flows input).
 function flowsToRows(parsed, sourceUrl) {
-  return parsed.map((p) => ({
-    key: p.kind === 'fii' ? 'fii_net_cr' : 'dii_net_cr',
-    value: p.net,
-    as_of: p.tradeDate,
-    source: NSE_SOURCE,
-    source_url: sourceUrl,
-  }))
+  return parsed.flatMap((p) => {
+    const key = p.kind === 'fii' ? 'fii_net_cr' : 'dii_net_cr'
+    const row = { value: p.net, as_of: p.tradeDate, source: NSE_SOURCE, source_url: sourceUrl }
+    return [{ key, ...row }, { key: `${key}:${p.tradeDate}`, ...row }]
+  })
 }
 
 async function nseSession() {

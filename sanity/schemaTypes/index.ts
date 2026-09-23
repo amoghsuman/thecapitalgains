@@ -7,6 +7,7 @@ import { learningPathSchema } from './learningPath'
 import { portfolioSchema } from './portfolio'
 import { marketDatasetSchema } from './marketDataset'
 import { testimonialSchema } from './testimonial'
+import { learningPathMetaSchema } from './learningPathMeta'
 
 export const schemaTypes = [
   courseSchema,
@@ -17,6 +18,7 @@ export const schemaTypes = [
   portfolioSchema,
   marketDatasetSchema,
   testimonialSchema,
+  learningPathMetaSchema,
 ]
 
 export const schema: { types: SchemaTypeDefinition[] } = {

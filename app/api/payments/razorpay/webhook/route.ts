@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import crypto from "crypto";
 import { createClient } from "@supabase/supabase-js";
+import { applyRazorpayEvent, type RazorpayWebhookEvent } from "@/lib/payments/applyRazorpayEvent";
 
 export async function POST(req: NextRequest) {
   const body = await req.text();
@@ -17,84 +18,19 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
 
-  const event = JSON.parse(body);
+  const event = JSON.parse(body) as RazorpayWebhookEvent;
   console.log("Webhook event received:", event.event);
-
-  const sub = event?.payload?.subscription?.entity;
-  const payment = event?.payload?.payment?.entity;
-  const userId = sub?.notes?.user_id;
-  const planKey: string = sub?.notes?.plan_key ?? "";
-
-  console.log("userId:", userId, "planKey:", planKey, "sub:", sub?.id);
-
-  if (!userId) {
-    console.error("No user_id in webhook notes");
-    return NextResponse.json({ received: true });
-  }
-
-  const tier = planKey.startsWith("pro")
-    ? "pro"
-    : planKey.startsWith("learner")
-    ? "learner"
-    : planKey.startsWith("premium")
-    ? "premium"
-    : planKey.startsWith("essential")
-    ? "essential"
-    : planKey.startsWith("newsletter")
-    ? "newsletter"
-    : "free";
 
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!
-    );
+  );
 
-  switch (event.event) {
-    case "subscription.activated":
-    case "subscription.charged": {
-      const periodStart = sub.current_start
-        ? new Date(sub.current_start * 1000).toISOString()
-        : new Date().toISOString();
-      const periodEnd = sub.current_end
-        ? new Date(sub.current_end * 1000).toISOString()
-        : null;
-
-      const { error } = await supabase.from("subscriptions").upsert({
-        user_id: userId,
-        tier: tier,
-        billing_cycle: planKey.endsWith("annual") ? "annual" : "monthly",
-        amount_paise: sub.plan_id ? null : null,
-        status: "active",
-        razorpay_subscription_id: sub.id,
-        razorpay_plan_id: sub.plan_id ?? null,
-        razorpay_payment_id: payment?.id ?? null,
-        current_period_start: periodStart,
-        current_period_end: periodEnd,
-        updated_at: new Date().toISOString(),
-      }, { onConflict: "user_id" });
-
-      if (error) console.error("Supabase upsert error:", error);
-      else console.log("Subscription activated/charged for user:", userId);
-      break;
-    }
-
-    case "subscription.cancelled": {
-      const { error } = await supabase.from("subscriptions")
-        .update({ status: "cancelled", updated_at: new Date().toISOString() })
-        .eq("user_id", userId);
-      if (error) console.error("Supabase cancel error:", error);
-      break;
-    }
-
-    case "subscription.completed":
-    case "payment.failed": {
-      const { error } = await supabase.from("subscriptions")
-        .update({ status: "expired", updated_at: new Date().toISOString() })
-        .eq("user_id", userId);
-      if (error) console.error("Supabase expire error:", error);
-      break;
-    }
-  }
+  // All row writes live in lib/payments/applyRazorpayEvent.ts so they can be
+  // exercised without a signed request (scripts/check-webhook-stacks.mjs).
+  const result = await applyRazorpayEvent(supabase, event);
+  if (result.error) console.error("Webhook apply error:", result.error);
+  else console.log("Webhook applied:", result.action, "user:", result.userId, "stack:", result.stack);
 
   return NextResponse.json({ received: true });
 }

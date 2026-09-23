@@ -36,7 +36,7 @@ thecapitalgains.com
 - users (Supabase auth)
 - course_enrollments (user_id, course_slug, ...) — keyed by course **slug**, not Sanity `_id`
 - lesson_progress (user_id, course_slug, lesson_slug, ...) — keyed by course/lesson **slug**, not Sanity `_id`
-- subscriptions (user_id, plan, status, valid_until)
+- subscriptions (user_id, stack, tier, status, current_period_end, …) — one row per user **per stack**, `UNIQUE (user_id, stack)` (migration `20260923140000_subscriptions_per_stack.sql`). `stack` is `learn` (tiers learner/pro) or `research` (newsletter/essential/premium); `stackOf(tier)` in `lib/plans.ts` and a check constraint keep the pairing honest. Read only through `lib/subscription.ts` (`getActiveSubscriptions` → `{ learn, research }`, `learnTierOf`, `researchTierOf`; a row is current when `status = active` and `current_period_end` is in the future). Course/lesson gates use the Learn row only; /portfolios and research features the Research row only.
 
 Note: the public site's `courses` and `lessons` are Sanity documents, not Supabase tables — Supabase only stores per-user state (enrollment, progress, subscriptions) referencing Sanity content by slug.
 
@@ -45,8 +45,8 @@ Note: the public site's `courses` and `lessons` are Sanity documents, not Supaba
 **Known regression risk**: any query against this Supabase `courses` table must paginate past Supabase/PostgREST's default 1000-row cap (`db-max-rows`) — a plain `.select('*')` silently returns at most 1000 rows with no error, it does not throw. `app/(site)/admin/courses/page.tsx`'s `load()` function does this correctly via a `.range()`-based fetch loop; if this dashboard's fetch logic is ever touched again, that pagination must be preserved, and the change must be tested against the real row count (currently 1302 — query `select count(*) from courses` directly, don't trust what the dashboard displays as ground truth) before considering the change complete. (A prior fix for this exact symptom was believed to exist before this pass, but a full git-history search found no commit that ever added `.range()` pagination to this file — worth keeping in mind if this surfaces again: check whether a fix actually landed, rather than assuming it once did.)
 
 ## Payment Logic
-- Subscription → Razorpay webhook → subscriptions table
-- Access: free lesson OR active subscription OR enrolled
+- Subscription → Razorpay webhook → `lib/payments/applyRazorpayEvent.ts` → subscriptions table. The stack comes from the plan key in the Razorpay notes; every write is scoped to (user_id, stack), so a Research event never touches the Learn row or vice versa (`scripts/check-webhook-stacks.mjs` proves this against an in-memory table).
+- Access: free lesson OR current Learn subscription OR enrolled
 
 ## Content Scripts
 - upload-courses.mjs — uploads course structure to Sanity (legacy Excel pipeline; embeds lessons the old way — not yet updated for standalone `lesson` documents)
@@ -57,6 +57,9 @@ Note: the public site's `courses` and `lessons` are Sanity documents, not Supaba
 - generate-lesson-content.mjs — generates lesson JSON for injection
 - seed-portfolios.mjs — creates the three `portfolio` and two `marketDataset` documents shown on /portfolios, all with `dataStatus: "illustrative"`. Dry run by default, `--apply` writes, `--force` overwrites existing documents. Reads the retired `lib/portfolios/portfolioData.ts` constant; that file has been deleted from the repo, so re-runs need `--source <path>` pointing at a copy recovered from git history.
 - backfill-durations.mjs — fills `duration` on every lesson (words / 200 wpm) and every course (sum of its lessons). Dry run by default, `--apply` writes, `--force` overwrites.
+- flag-featured-paths.mjs — creates/updates one `learningPathMeta` document per learning path in its FEATURED list (`_id learningPathMeta-<path>`, `featuredOnHome: true`, `homeOrder`) and un-flags any other featured one, so the list in the script is the whole home-page selection (`CuratedTracksSection` via `getFeaturedLearningPaths()`; paths with zero courses stay hidden). Note `learningPathMeta` is a separate document type from `learningPath`, which is the Find Your Path persona→goal join. Dry run by default, `--apply` writes.
+- retag-learning-paths.mjs — moves courses onto `mutual-funds-etfs` / `forensic-compliance` by explicit slug or whole-word title match (RULES at the top). Prints current vs proposed path per course; a course matching more than one rule is marked CONFLICT and skipped. Patches only `learningPath`. Dry run by default, `--apply` writes.
+- repair-subscriptions.mjs — Supabase, service role. For each user whose only subscription row is a Research tier, restores the Learn row that the old UNIQUE(user_id) webhook overwrote: from the latest learner/pro `subscription.activated`/`charged` row in `payment_events`, or from the MANUAL list in the script (which also writes a `payment_events` row of type `manual.restore` carrying the memo, since `subscriptions` has no memo column). Requires the per-stack migration; dry run by default, `--apply` writes.
 
 ## Content rules
 - No statistic, return, testimonial or audit claim appears in the UI without a source constant in `lib/` or a Sanity document. Illustrative or sample numbers carry that label on the panel that shows them. Live-data widgets label themselves "Sample data" whenever the feed is unavailable.

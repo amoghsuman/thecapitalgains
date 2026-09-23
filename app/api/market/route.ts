@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
-import { getQuotes, getExtendedQuotes, QUOTE_SOURCE } from "@/lib/market/providers";
-import { getReference, preferFresher } from "@/lib/market/reference";
+import { getQuotes, getExtendedQuotes, getDailyCloses, HISTORY_SYMBOLS, QUOTE_SOURCE } from "@/lib/market/providers";
+import { getReference, getReferenceHistory, preferFresher } from "@/lib/market/reference";
+import { computeSentiment } from "@/lib/market/sentiment";
 import { repoRate as repoRateConstant } from "@/lib/market/constants";
 import type { MarketResponse, MarketFlows } from "@/lib/market/client";
 
@@ -18,11 +19,29 @@ export async function GET() {
   let body: MarketResponse;
 
   try {
-    const [indices, extended, reference] = await Promise.all([
+    const [indices, extended, reference, niftyCloses, bankNiftyCloses, vixCloses, fiiHistory] = await Promise.all([
       getQuotes(),
       getExtendedQuotes(),
       getReference(["repo_rate", "gsec_10y", "fii_net_cr", "dii_net_cr"]),
+      getDailyCloses(HISTORY_SYMBOLS.nifty),
+      getDailyCloses(HISTORY_SYMBOLS.bankNifty),
+      getDailyCloses(HISTORY_SYMBOLS.vix),
+      getReferenceHistory("fii_net_cr"),
     ]);
+
+    const constituents = extended.constituents;
+    const breadthPct =
+      constituents && constituents.length > 0
+        ? (constituents.filter((c) => c.changePct > 0).length / constituents.length) * 100
+        : null;
+
+    const sentiment = computeSentiment({
+      niftyCloses,
+      bankNiftyCloses,
+      vixCloses,
+      breadthPct,
+      fiiNetHistory: fiiHistory.length > 0 ? fiiHistory.map((p) => p.value) : null,
+    });
 
     // Flows come only from market_reference (NSE blocks server fetches); both
     // rows must exist and share a session date, otherwise flows stay null.
@@ -38,6 +57,7 @@ export async function GET() {
 
     body = {
       indices,
+      sentiment,
       flows,
       reference: {
         repoRate: { value: repo.value, asOf: repo.asOf, source: repo.source },

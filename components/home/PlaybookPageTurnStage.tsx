@@ -47,7 +47,7 @@ function buildPages(facts: MarketFact[]): ChapterPage[] {
     ],
     graphPoints: [18, 22, 28, 25, 34, 42, 48, 55, 68],
     graphLabel: "Economic Book Value vs Intrinsic Compounding Trajectory",
-    targetCourseSlug: "financial-statements-deep-dive",
+    targetCourseSlug: "how-to-read-financial-statements",
   },
   {
     chapterNum: "CHAPTER 02",
@@ -120,9 +120,11 @@ function buildPages(facts: MarketFact[]): ChapterPage[] {
 
 interface PlaybookPageTurnStageProps {
   facts: MarketFact[];
+  /** Slugs of the courses that exist in Sanity (getAllCourses()); chapters whose course is missing show "Coming soon" and no link. */
+  courseSlugs: string[];
 }
 
-export default function PlaybookPageTurnStage({ facts }: PlaybookPageTurnStageProps) {
+export default function PlaybookPageTurnStage({ facts, courseSlugs }: PlaybookPageTurnStageProps) {
   const PLAYBOOK_PAGES = buildPages(facts);
   const [activePageIndex, setActivePageIndex] = useState(0);
   const [isFlipping, setIsFlipping] = useState(false);
@@ -400,13 +402,19 @@ export default function PlaybookPageTurnStage({ facts }: PlaybookPageTurnStagePr
                   </strong>
                 </div>
 
-                <Link
-                  href={`/courses/${currentPage.targetCourseSlug}`}
-                  className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-forest hover:bg-forest-dark text-white text-xs font-bold shadow-2xs hover:shadow-xs transition-all transform hover:-translate-y-0.5"
-                >
-                  <span>Open Full Chapter Course</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
+                {courseSlugs.includes(currentPage.targetCourseSlug) ? (
+                  <Link
+                    href={`/courses/${currentPage.targetCourseSlug}`}
+                    className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-forest hover:bg-forest-dark text-white text-xs font-bold shadow-2xs hover:shadow-xs transition-all transform hover:-translate-y-0.5"
+                  >
+                    <span>Open Full Chapter Course</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                ) : (
+                  <span className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-ivory border border-hairline text-ink-dim text-xs font-bold font-mono uppercase tracking-wider">
+                    Course coming soon
+                  </span>
+                )}
               </div>
             </div>
           </div>

@@ -94,6 +94,15 @@ export const structure: StructureResolver = (S) =>
             .defaultOrdering([{ field: 'name', direction: 'asc' }])
         ),
       S.listItem()
+        .title('Learning Paths (catalogue settings)')
+        .schemaType('learningPathMeta')
+        .child(
+          S.documentList()
+            .title('Learning Paths (catalogue settings)')
+            .filter('_type == "learningPathMeta"')
+            .defaultOrdering([{ field: 'homeOrder', direction: 'asc' }])
+        ),
+      S.listItem()
         .title('Testimonials')
         .schemaType('testimonial')
         .child(

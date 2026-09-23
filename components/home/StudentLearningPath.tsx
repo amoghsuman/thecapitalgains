@@ -35,6 +35,7 @@ interface Milestone {
   description: string;
   keySkills: string[];
   courseSlug: string;
+  /** Fallback only; the rendered title comes from Sanity when the course exists. */
   courseTitle: string;
   estimatedTime: string;
   checkpointExam: string;
@@ -53,8 +54,8 @@ function buildSteps(facts: MarketFact[]): Milestone[] {
     description:
       "Understand how NSE & BSE clearing works, order types (SL, SL-M, Limit, IOC), broker slippage, and the primary compounding mathematics behind long-term equity wealth.",
     keySkills: ["Order Book Mechanics", "Rule of 72 Compounding", "Zero-Tip Filter"],
-    courseSlug: "introduction-to-indian-stock-markets",
-    courseTitle: "Introduction to Indian Stock Markets",
+    courseSlug: "stock-market-from-zero",
+    courseTitle: "Stock Market From Zero",
     estimatedTime: "2-3 hrs",
     checkpointExam: "Market Microstructure & Order Entry Audit",
     institutionalTakeaway:
@@ -129,10 +130,15 @@ function buildSteps(facts: MarketFact[]): Milestone[] {
 
 interface StudentLearningPathProps {
   facts: MarketFact[];
+  /** Real course titles by slug from getAllCourses(). */
+  courseTitles: Record<string, string>;
 }
 
-export default function StudentLearningPath({ facts }: StudentLearningPathProps) {
-  const ROADMAP_STEPS = buildSteps(facts);
+export default function StudentLearningPath({ facts, courseTitles }: StudentLearningPathProps) {
+  const ROADMAP_STEPS = buildSteps(facts).map((step) => ({
+    ...step,
+    courseTitle: courseTitles[step.courseSlug] ?? step.courseTitle,
+  }));
   const [completedSteps, setCompletedSteps] = useState<number[]>([0, 1]); // Steps 1 and 2 completed by default to show progress
   const [activeStepIndex, setActiveStepIndex] = useState<number>(2); // Current active step
 

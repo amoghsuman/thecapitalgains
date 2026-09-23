@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getCourseBySlug } from "@/lib/sanity/queries";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/server"
+import { getActiveSubscriptions, learnTierOf } from "@/lib/subscription"
 import { LEARNING_PATHS } from "@/sanity/lib/learningPaths";
 import "@/app/premium-theme.css";
 
@@ -43,21 +44,8 @@ export default async function CourseDetailPage({
   let resumeLessonSlug = firstLessonSlug;
 
   if (user) {
-    const { data: sub } = await supabase
-      .from("subscriptions")
-      .select("tier, status, current_period_end")
-      .eq("user_id", user.id)
-      .eq("status", "active")
-      .single();
-
-    if (sub) {
-      const notExpired =
-        !sub.current_period_end ||
-        new Date(sub.current_period_end) > new Date();
-      if (notExpired) {
-        userTier = sub.tier ?? "free";
-      }
-    }
+    // Learn row only, same validity rule as the lesson reader and /dashboard.
+    userTier = learnTierOf(await getActiveSubscriptions(supabase, user.id));
 
     const { data: progressData } = await supabase
       .from("lesson_progress")
@@ -164,7 +152,7 @@ export default async function CourseDetailPage({
               {course.whatYouLearn?.length > 0 && (
                 <div className="bg-panel border border-hairline rounded-2xl p-6 shadow-sm">
                   <h2 className="text-[11px] font-bold text-ink-dim tracking-[0.2em] uppercase mb-4">
-                    What You&apos;ll Master
+                    What You'll Master
                   </h2>
                   <div className="space-y-3">
                     {course.whatYouLearn.map((point: string) => (

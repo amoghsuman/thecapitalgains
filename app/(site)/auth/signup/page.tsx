@@ -69,7 +69,7 @@ export default function SignupPage() {
               Check your email
             </h2>
             <p className="text-[14px] text-ink-dim leading-relaxed">
-              We&apos;ve sent a confirmation link to <span className="font-medium text-ink">{email}</span>. Click it to activate your account.
+              We've sent a confirmation link to <span className="font-medium text-ink">{email}</span>. Click it to activate your account.
             </p>
           </div>
           <p className="text-center text-[13px] text-ink-dim mt-5">

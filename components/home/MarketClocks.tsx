@@ -197,7 +197,7 @@ export default function MarketClocks() {
         </div>
         <div className="flex items-center gap-1.5 text-[10px] font-mono text-ink-dim">
           <Clock className="w-3 h-3 text-ink-muted" />
-          <span>Real-time Trading Windows &middot; Synchronized</span>
+          <span>Real-time Trading Windows · Synchronized</span>
         </div>
       </div>
 

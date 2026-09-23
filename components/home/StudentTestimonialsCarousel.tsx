@@ -113,7 +113,7 @@ export default function StudentTestimonialsCarousel({ testimonials }: StudentTes
             </div>
 
             {/* Quote */}
-            <p className="text-sm sm:text-base text-ink-dim leading-relaxed">&ldquo;{current.quote}&rdquo;</p>
+            <p className="text-sm sm:text-base text-ink-dim leading-relaxed">“{current.quote}”</p>
 
             {/* Student Info */}
             <div className="pt-6 border-t border-hairline flex flex-col sm:flex-row sm:items-center justify-between gap-4">

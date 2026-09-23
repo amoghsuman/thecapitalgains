@@ -9,13 +9,13 @@ export default function MarketIntelligenceHub() {
       <div className="site-container space-y-9">
         <div className="max-w-3xl">
           <div className="font-mono text-[11px] text-gold tracking-[0.16em] font-bold uppercase mb-2">
-            PRACTICAL INTEL &amp; LEXICON
+            PRACTICAL INTEL & LEXICON
           </div>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-olive tracking-tight">
-            Curiosity to Clarity: Market Sentiment &amp; Core Lexicon
+            Curiosity to Clarity: Market Sentiment & Core Lexicon
           </h2>
           <p className="text-ink-dim text-sm sm:text-base mt-2 leading-relaxed">
-            Monitor real-time behavioral sentiment on the Nifty 50 via our D3 telemetry gauge, and replace retail slang with institutional definitions from our curated weekly glossary.
+            Read our sentiment index, computed from volatility, breadth, momentum and flows, and replace retail slang with institutional definitions from our curated weekly glossary.
           </p>
         </div>
 

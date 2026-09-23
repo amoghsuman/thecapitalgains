@@ -76,9 +76,9 @@ export default function NotificationModal({ portfolio, isOpen, onClose }: Notifi
               <CheckCircle2 className="w-6 h-6" />
             </div>
             <div className="space-y-1">
-              <h4 className="text-base font-bold text-olive">You&apos;re on the list</h4>
+              <h4 className="text-base font-bold text-olive">You're on the list</h4>
               <p className="text-xs text-ink-dim max-w-xs mx-auto leading-relaxed">
-                We&apos;ll email you when <strong>{portfolio.name}</strong> is rebalanced.
+                We'll email you when <strong>{portfolio.name}</strong> is rebalanced.
               </p>
             </div>
             <button
@@ -94,7 +94,7 @@ export default function NotificationModal({ portfolio, isOpen, onClose }: Notifi
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
             <p className="text-xs text-ink-dim leading-relaxed">
-              Enter your email and we&apos;ll send a note with the reasoning whenever this portfolio&apos;s weights change.
+              Enter your email and we'll send a note with the reasoning whenever this portfolio's weights change.
             </p>
 
             <div className="space-y-1.5">

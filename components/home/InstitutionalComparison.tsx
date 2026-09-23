@@ -55,7 +55,7 @@ export default function InstitutionalComparison() {
               The Contrast: Noise vs. Institutional Rigor
             </h2>
             <p className="text-ink-dim text-base sm:text-lg mt-3.5 leading-relaxed">
-              About 93% of individual traders in Indian equity F&amp;O lost money over FY22 to FY24, according to SEBI&apos;s own study. Below is the structural divergence between speculative social hype and an audited institutional framework.
+              About 93% of individual traders in Indian equity F&O lost money over FY22 to FY24, according to SEBI's own study. Below is the structural divergence between speculative social hype and an audited institutional framework.
             </p>
           </div>
 

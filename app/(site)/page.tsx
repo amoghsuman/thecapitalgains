@@ -6,6 +6,8 @@ import {
   getFullCourseForReader,
   getFindYourPathData,
   getTestimonials,
+  getFeaturedLearningPaths,
+  getPortfolios,
 } from "@/lib/sanity/queries";
 import { PathNavigator } from "@/components/FindYourPath";
 import HeroCanvasBackground from "@/components/home/HeroCanvasBackground";
@@ -62,12 +64,14 @@ export type CourseSummary = {
 };
 
 export default async function HomePage() {
-  const [courses, featuredWhyPicked, featuredCourseForReader, findYourPathPersonas, testimonials]: [
+  const [courses, featuredWhyPicked, featuredCourseForReader, findYourPathPersonas, testimonials, featuredPaths, portfolios]: [
     CourseSummary[],
     string | null,
     Awaited<ReturnType<typeof getFullCourseForReader>>,
     Awaited<ReturnType<typeof getFindYourPathData>>,
-    Awaited<ReturnType<typeof getTestimonials>>
+    Awaited<ReturnType<typeof getTestimonials>>,
+    Awaited<ReturnType<typeof getFeaturedLearningPaths>>,
+    Awaited<ReturnType<typeof getPortfolios>>
   ] = await Promise.all([
     getAllCourses(),
     getCourseWhyPicked(FEATURED_CARD_COURSE_SLUG),
@@ -75,6 +79,10 @@ export default async function HomePage() {
     getFindYourPathData(),
     // Only consented testimonials come back; the section is omitted while empty.
     getTestimonials().catch(() => []),
+    // Paths flagged featuredOnHome in Sanity; empty until scripts/flag-featured-paths.mjs --apply runs.
+    getFeaturedLearningPaths().catch(() => []),
+    // Only the count is used here (QuickAccessCategories portfolios card).
+    getPortfolios().catch(() => []),
   ]);
 
   // Sourced facts: the market_reference table wins over the constants when it
@@ -82,6 +90,7 @@ export default async function HomePage() {
   const facts = buildMarketFacts({ reference: await getReference(["gsec_10y", "nifty_tri_cagr_inception"]) });
 
   const courseCount = courses?.length ?? 0;
+  const courseTitles: Record<string, string> = Object.fromEntries((courses ?? []).map((c) => [c.slug, c.title]));
   const featuredCourse = courses?.find((c: CourseSummary) => c.slug === FEATURED_CARD_COURSE_SLUG) || courses?.[0];
   const activeFeaturedSlug = featuredCourse?.slug || FEATURED_CARD_COURSE_SLUG;
   const featuredFirstLessonSlug = featuredCourseForReader?.chapters?.[0]?.lessons?.[0]?.slug ?? null;
@@ -121,7 +130,7 @@ export default async function HomePage() {
             </h1>
 
             <p className="text-base sm:text-lg text-ink-dim leading-relaxed max-w-xl">
-              Built explicitly for Indian equity, F&amp;O, and mutual fund investors tired of Telegram noise.
+              Built explicitly for Indian equity, F&O, and mutual fund investors tired of Telegram noise.
               Step-by-step institutional mental models, margin-of-safety screeners, and real market telemetry.
             </p>
 
@@ -185,6 +194,7 @@ export default async function HomePage() {
           {/* Right — Featured Playbook Card with Integrated Recharts & Framer Motion Hover Animations */}
           <FeaturedPlaybookCard
             href={featuredCardHref}
+            firstLessonHref={featuredFirstLessonSlug ? `/learn/${activeFeaturedSlug}/${featuredFirstLessonSlug}` : null}
             featuredCourse={featuredCourse}
             featuredWhyPicked={featuredWhyPicked}
           />
@@ -195,7 +205,7 @@ export default async function HomePage() {
       <MarketTickerBar />
 
       {/* ── QUICK ACCESS CORE DISCIPLINES ── */}
-      <QuickAccessCategories />
+      <QuickAccessCategories courses={courses ?? []} portfolioCount={portfolios.length} />
 
       {/* ── D3 NIFTY 50 REAL-TIME CONSTITUENT TREEMAP ── */}
       <section className="py-16 md:py-20 bg-ivory border-b border-hairline">
@@ -208,7 +218,7 @@ export default async function HomePage() {
       <MarketIntelligenceHub />
 
       {/* ── 01: TACTILE 3D PLAYBOOK STAGE (Page-turn investor field manual) ── */}
-      <PlaybookPageTurnStage facts={facts} />
+      <PlaybookPageTurnStage facts={facts} courseSlugs={(courses ?? []).map((c) => c.slug)} />
 
       {/* ── 02: THE MARKET OBSERVATORY (Orbital telemetry radar system) ── */}
       <MarketObservatoryRadar />
@@ -242,7 +252,7 @@ export default async function HomePage() {
       <WealthFrictionCompoundingLab />
 
       {/* ── 06: FROM CURIOSITY TO CONVICTION (4-Step Tactical Execution Flow) ── */}
-      <TacticalExecutionFlow />
+      <TacticalExecutionFlow courseCount={courseCount} portfolioCount={portfolios.length} />
 
       {/* ── 30-SECOND CONCEPT LOGIC QUIZ ── */}
       <div id="concept-logic-quiz-section">
@@ -289,7 +299,7 @@ export default async function HomePage() {
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-forest" />
-                    Worked mathematical exercises &amp; scenarios
+                    Worked mathematical exercises & scenarios
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-forest" />
@@ -328,7 +338,7 @@ export default async function HomePage() {
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-gold" />
-                    Forensic accounting &amp; red flag screening
+                    Forensic accounting & red flag screening
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-gold" />
@@ -364,7 +374,7 @@ export default async function HomePage() {
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-forest" />
-                    Dividend &amp; Income compounding book
+                    Dividend & Income compounding book
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-forest" />
@@ -384,7 +394,7 @@ export default async function HomePage() {
       <HomeCourseSearchBar courses={courses ?? []} />
 
       {/* ── CURATED TRACKS SHELF (Interactive with Filter Pills & Framer Motion) ── */}
-      <CuratedTracksSection courses={courses ?? []} />
+      {featuredPaths.length > 0 && <CuratedTracksSection courses={courses ?? []} featuredPaths={featuredPaths} />}
 
       {/* ── INSTITUTIONAL COMPARISON MATRIX ── */}
       <InstitutionalComparison />
@@ -447,7 +457,7 @@ export default async function HomePage() {
       <PathNavigator personas={findYourPathPersonas} />
 
       {/* ── VERTICAL LEARNING PATH ROADMAP (Foundations to Advanced Mastery) ── */}
-      <StudentLearningPath facts={facts} />
+      <StudentLearningPath facts={facts} courseTitles={courseTitles} />
 
       {/* ── VERIFIED STUDENT TESTIMONIALS CAROUSEL ── */}
       {testimonials.length > 0 && <StudentTestimonialsCarousel testimonials={testimonials} />}
