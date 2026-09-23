@@ -174,3 +174,93 @@ export async function getLessonContent(courseSlug: string, lessonSlug: string) {
     }
   `, { courseSlug, lessonSlug })
 }
+
+// ─── Model portfolios & market datasets (/portfolios) ─────────────────────────
+
+import type { Portfolio, MarketDataset } from '@/lib/portfolios/types'
+
+export async function getPortfolios(): Promise<Portfolio[]> {
+  return client.fetch(`
+    *[_type == "portfolio"] | order(order asc, name asc) {
+      _id,
+      name,
+      "slug": slug.current,
+      strategy,
+      inceptionDate,
+      dataStatus,
+      benchmark,
+      "profile": {
+        "horizon": profile.horizon,
+        "riskLabel": profile.riskLabel,
+        "rebalanceCadence": profile.rebalanceCadence,
+        "allocation": coalesce(profile.allocation[] { label, pct }, [])
+      },
+      "holdings": coalesce(holdings[] { symbol, name, sector, weight, entryDate, returnYtd }, []),
+      "monthlyReturns": coalesce(monthlyReturns[] { month, portfolioReturn, benchmarkReturn, topHolding, memo }, []),
+      "metrics": {
+        "cagr": metrics.cagr,
+        "sharpe": metrics.sharpe,
+        "winRate": metrics.winRate,
+        "bestMonth": metrics.bestMonth,
+        "worstMonth": metrics.worstMonth,
+        "avgMonthlyReturn": metrics.avgMonthlyReturn,
+        "annualisedVol": metrics.annualisedVol,
+        "benchmarkVol": metrics.benchmarkVol,
+        "maxDrawdown": metrics.maxDrawdown
+      }
+    }
+  `)
+}
+
+export async function getMarketDatasets(): Promise<MarketDataset[]> {
+  return client.fetch(`
+    *[_type == "marketDataset"] | order(name asc) {
+      _id,
+      name,
+      "slug": slug.current,
+      dataStatus,
+      asOf,
+      source,
+      "rows": coalesce(rows[] {
+        label,
+        sublabel,
+        "values": coalesce(values[] { key, value }, [])
+      }, [])
+    }
+  `)
+}
+
+// ─── Testimonials ─────────────────────────────────────────────────────────────
+//
+// Only testimonials with written consent are ever returned. The filter lives
+// here, not in the component, so no caller can accidentally show the rest.
+
+export type Testimonial = {
+  _id: string
+  name: string
+  role: string | null
+  city: string | null
+  quote: string
+  rating: number
+  consentReceived: boolean
+  consentDate: string | null
+  publishedAt: string | null
+  course: { title: string; slug: string } | null
+}
+
+export async function getTestimonials(): Promise<Testimonial[]> {
+  return client.fetch(`
+    *[_type == "testimonial" && consentReceived == true] | order(publishedAt desc, _createdAt desc) {
+      _id,
+      name,
+      role,
+      city,
+      quote,
+      rating,
+      consentReceived,
+      consentDate,
+      publishedAt,
+      "course": course->{ title, "slug": slug.current }
+    }
+  `)
+}

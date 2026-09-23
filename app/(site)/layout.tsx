@@ -4,6 +4,8 @@ import "../globals.css";
 import DisclaimerBar from "@/components/layout/DisclaimerBar";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import MarketTutorDrawer from "@/components/ai/MarketTutorDrawer";
+import { TUTOR_ENABLED } from "@/lib/ai/flags";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -49,6 +51,7 @@ export default function RootLayout({
         <main className="flex-1 w-full premium-hero-gradient">
           {children}
         </main>
+        {TUTOR_ENABLED && <MarketTutorDrawer />}
         <Footer />
       </body>
     </html>

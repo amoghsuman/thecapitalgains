@@ -25,6 +25,9 @@ import FlashcardSetBlock from "@/components/lesson/FlashcardSetBlock";
 import ToolLinkBlock from "@/components/lesson/ToolLinkBlock";
 import BigIdeaBlock from "@/components/lesson/BigIdeaBlock";
 import KeyTakeawaysBlock from "@/components/lesson/KeyTakeawaysBlock";
+import confetti from "canvas-confetti";
+import { Printer, Sparkles } from "lucide-react";
+import { TUTOR_ENABLED } from "@/lib/ai/flags";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -796,6 +799,8 @@ export default function ReaderPage() {
   const lessonIndex = allLessons.findIndex((l) => l.slug === activeLesson);
   const nextLesson = lessonIndex < allLessons.length - 1 ? allLessons[lessonIndex + 1] : null;
   const prevLesson = lessonIndex > 0 ? allLessons[lessonIndex - 1] : null;
+  const isFinalLesson = !nextLesson && lessonIndex >= 0;
+  const isFinalLessonCompleted = isFinalLesson && completedLessons.has(activeLesson);
   const progressPct = allLessons.length > 0 ? Math.round((completedLessons.size / allLessons.length) * 100) : 0;
 
   const currentMeta = allLessons.find((l) => l.slug === activeLesson) || allLessons.find((l) => l.slug === lessonSlug);
@@ -839,8 +844,44 @@ export default function ReaderPage() {
     if (nextLesson) setActiveLesson(nextLesson.slug);
   }
 
+  function triggerCelebrationConfetti() {
+    try {
+      // First burst - vibrant institutional gold & emerald
+      confetti({
+        particleCount: 80,
+        spread: 70,
+        origin: { y: 0.65 },
+        colors: ["#9B7728", "#1B3A2B", "#2E7D32", "#BA984A", "#FFFFFF"],
+      });
+
+      // Secondary bursts for celebratory flair
+      setTimeout(() => {
+        confetti({
+          particleCount: 50,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0.2, y: 0.7 },
+          colors: ["#9B7728", "#BA984A", "#1B3A2B"],
+        });
+      }, 200);
+
+      setTimeout(() => {
+        confetti({
+          particleCount: 50,
+          angle: 120,
+          spread: 55,
+          origin: { x: 0.8, y: 0.7 },
+          colors: ["#1B3A2B", "#28523E", "#D8A944"],
+        });
+      }, 400);
+    } catch (err) {
+      console.warn("Celebration animation could not trigger:", err);
+    }
+  }
+
   async function markFinalComplete() {
     setCompletedLessons((prev) => new Set([...prev, activeLesson]));
+    triggerCelebrationConfetti();
     if (userId) {
       const supabase = supabaseRef.current;
       const now = new Date().toISOString();
@@ -1033,7 +1074,49 @@ export default function ReaderPage() {
               <span className="font-mono text-[11px] text-ink-dim whitespace-nowrap">{progressPct}% complete</span>
             </div>
           </div>
-          {!authLoading && (
+          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+            {/* Ask AI Tutor contextual button */}
+            {TUTOR_ENABLED && (
+            <button
+              id="ask-tutor-toolbar-button"
+              type="button"
+              onClick={() => {
+                const event = new CustomEvent("open-capital-ai", {
+                  detail: {
+                    prompt: `Can you explain the key concepts and formulas in "${lesson?.title || 'this lesson'}" with a real Indian stock market example?`,
+                    context: {
+                      courseSlug,
+                      courseTitle: course?.title,
+                      lessonSlug: activeLesson,
+                      lessonTitle: lesson?.title,
+                    },
+                  },
+                });
+                window.dispatchEvent(event);
+              }}
+              aria-label="Ask Capital AI about this lesson"
+              title="Ask Capital AI about this lesson"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg border border-forest/30 bg-forest-surface hover:bg-forest hover:text-white text-forest font-mono text-[11px] font-semibold transition-colors cursor-pointer"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-gold" />
+              <span className="hidden sm:inline">Ask AI Tutor</span>
+            </button>
+            )}
+
+            {/* Print / Export PDF button */}
+            <button
+              id="export-lesson-pdf-button"
+              type="button"
+              onClick={() => window.print()}
+              aria-label="Export lesson as PDF"
+              title="Print / Save Lesson as clean PDF"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-lg border border-hairline bg-panel hover:bg-olive-surface/80 text-olive font-mono text-[11px] transition-colors cursor-pointer"
+            >
+              <Printer className="w-3.5 h-3.5 text-forest" />
+              <span className="hidden sm:inline">Export PDF</span>
+            </button>
+
+            {!authLoading && (
             isLoggedIn ? (
               <div className="flex items-center gap-3 font-mono text-[11px] text-ink-dim flex-shrink-0">
                 <Link href="/dashboard" className="hover:text-ink transition-colors hidden sm:inline">
@@ -1052,6 +1135,7 @@ export default function ReaderPage() {
               </Link>
             )
           )}
+          </div>
         </div>
 
         {/* Content area — flows naturally with the page; the outer wrapper has
@@ -1095,6 +1179,35 @@ export default function ReaderPage() {
               {/* Nav footer — stacks on narrow screens, sits as a row from
                   sm: up; both sides truncate long titles so a long prev/next
                   lesson name can never force an awkward wrap or overlap. */}
+              {isFinalLessonCompleted && (
+                <div
+                  id="course-completion-celebration-banner"
+                  className="mt-12 p-5 rounded-2xl bg-forest-surface border border-gold/40 flex items-center justify-between gap-4 flex-wrap"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center text-gold flex-shrink-0">
+                      <Sparkles className="w-5 h-5 text-gold animate-pulse" />
+                    </div>
+                    <div>
+                      <div className="font-bold text-ink text-sm sm:text-base">
+                        Course Completed! Congratulations 🎉
+                      </div>
+                      <div className="text-xs text-ink-dim font-mono mt-0.5">
+                        You have mastered all lessons in this curriculum track.
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={triggerCelebrationConfetti}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gold hover:bg-gold-dark text-white font-mono text-xs font-semibold shadow-xs transition-colors cursor-pointer"
+                  >
+                    <Sparkles className="w-3.5 h-3.5" />
+                    Celebrate Again
+                  </button>
+                </div>
+              )}
+
               <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mt-16 pt-8 border-t border-hairline">
                 {prevLesson && (
                   <button
@@ -1113,10 +1226,12 @@ export default function ReaderPage() {
                   </button>
                 ) : (
                   <button
+                    id="mark-course-complete-button"
                     onClick={markFinalComplete}
-                    className="sm:ml-auto bg-forest hover:bg-forest-dark text-white rounded-lg px-6 py-2.5 font-mono text-[13px] font-medium transition-colors"
+                    className="sm:ml-auto inline-flex items-center gap-2 bg-forest hover:bg-forest-dark text-white rounded-lg px-6 py-2.5 font-mono text-[13px] font-medium transition-all shadow-xs cursor-pointer"
                   >
-                    Mark complete ✓
+                    <Sparkles className="w-4 h-4 text-gold-surface" />
+                    <span>{isFinalLessonCompleted ? "Completed ✓" : "Mark complete ✓"}</span>
                   </button>
                 )}
               </div>

@@ -146,3 +146,88 @@ button, [role="button"], input[type="submit"], input[type="button"] {
   animation-play-state: paused;
 }
 
+/* ─────────────────────────────────────────────────────────────
+   Custom Print CSS Media Query: Clean, Professional PDF Export
+   ───────────────────────────────────────────────────────────── */
+@media print {
+  @page {
+    margin: 1.8cm 1.5cm;
+    size: A4;
+  }
+
+  /* Force light ledger background and dark crisp typography for PDF printers */
+  *, *::before, *::after {
+    color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  html, body {
+    background: #FFFFFF !important;
+    color: #171815 !important;
+    font-size: 11pt !important;
+    line-height: 1.6 !important;
+  }
+
+  /* Hide interactive, navigational, or floating chrome */
+  #main-navbar,
+  nav,
+  aside,
+  header,
+  footer,
+  .no-print,
+  button,
+  [role="button"],
+  .theme-toggle,
+  #theme-toggle-button,
+  .disclaimer-bar {
+    display: none !important;
+  }
+
+  /* Ensure lesson content occupies full paper measure */
+  .site-container,
+  .site-container--narrow,
+  main,
+  article,
+  .lesson-article-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+  }
+
+  /* Prevent awkward page splits across headings, formulas, and code blocks */
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+    break-after: avoid;
+    color: #1A281E !important;
+  }
+
+  p, blockquote, ul, ol {
+    orphans: 3;
+    widows: 3;
+  }
+
+  pre, code, table, figure, .border, .rounded-xl, .katex-display {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* Clean up borders for paper */
+  .border, [class*="border-"] {
+    border-color: #D1D5DB !important;
+  }
+
+  /* Print link targets neatly if relevant */
+  a[href^="http"]:after {
+    content: " (" attr(href) ")";
+    font-size: 80%;
+    color: #6B7280;
+  }
+}
+
+

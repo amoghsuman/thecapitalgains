@@ -55,6 +55,36 @@ Note: the public site's `courses` and `lessons` are Sanity documents, not Supaba
 - add-chapters-to-course.mjs — appends new chapters (+ their lesson stubs) to a course that **already exists** — refuses to run if the course doesn't exist yet (opposite safety direction from create-course-structure.mjs). Checks new lesson slugs for collisions against every lesson document in the project, not just this course (slugs must be unique platform-wide now that lessons are standalone documents) — aborts with nothing written if any collide. Warns (doesn't block) if a new chapter's title duplicates an existing one on the course. Defaults to appending at the end; optional `insertAtIndex` inserts at a specific position instead, splicing existing chapters — every existing chapter/lesson entry is carried through completely unmodified, only new array entries are ever added. Updates the course's `lessonsCount` to stay accurate. Supports `--dry-run`.
 - migrate-lessons-to-documents.mjs — one-time migration script (already run) that converted embedded lesson objects into standalone referenced `lesson` documents across all published courses. Kept for reference/audit trail; not part of the regular pipeline. Defaults to a dry run; `--apply` writes for real. Always backs up the pre-migration course state to `migration-backups/<timestamp>/` first.
 - generate-lesson-content.mjs — generates lesson JSON for injection
+- seed-portfolios.mjs — creates the three `portfolio` and two `marketDataset` documents shown on /portfolios, all with `dataStatus: "illustrative"`. Dry run by default, `--apply` writes, `--force` overwrites existing documents. Reads the retired `lib/portfolios/portfolioData.ts` constant; that file has been deleted from the repo, so re-runs need `--source <path>` pointing at a copy recovered from git history.
+- backfill-durations.mjs — fills `duration` on every lesson (words / 200 wpm) and every course (sum of its lessons). Dry run by default, `--apply` writes, `--force` overwrites.
+
+## Content rules
+- No statistic, return, testimonial or audit claim appears in the UI without a source constant in `lib/` or a Sanity document. Illustrative or sample numbers carry that label on the panel that shows them. Live-data widgets label themselves "Sample data" whenever the feed is unavailable.
+- Where those constants live:
+  - `lib/home/sebiStats.ts` — SEBI's F&O loss figures (`SEBI_FO_STATS`, `SEBI_FO_SOURCE`). Every F&O loss claim on the site uses this wording ("individual F&O traders") and these values.
+  - `lib/home/marketFacts.ts` — every other market statistic, typed `{ value, label, source, sourceUrl, asOf, kind }`. A value of `"TBD"` makes the UI hide that fact; never type a number here without a source.
+  - `lib/market/constants.ts` — slow-moving reference data (Nifty constituent weights, RBI repo rate) with source and as-of date.
+  - Sanity `portfolio` / `marketDataset` documents (`dataStatus`: illustrative | backtested | live) — every number on /portfolios. `testimonial` documents — only those with `consentReceived == true` are ever fetched (`getTestimonials`).
+- Live market data: `app/api/market/route.ts` → `lib/market/providers.ts` (Yahoo Finance; swap here to change feed) → `lib/market/client.ts` types → `lib/market/useMarketSnapshot.ts` hook. Any upstream field that fails is `null`, never a generated number; widgets show "Unavailable" for it.
+- Capital AI tutor: `app/api/chat/route.ts` requires a Supabase session, limits each user to 30 requests/hour via the `chat_usage` table (`supabase/migrations/20260923120000_chat_usage.sql`, function `increment_chat_usage`), keeps the last 12 turns at 2,000 chars each, and picks the model server-side. The whole feature is gated on `NEXT_PUBLIC_TUTOR_ENABLED === "true"` (`lib/ai/flags.ts`); the drawer is mounted once, in `app/(site)/layout.tsx`.
+
+## Data freshness
+Every published number has a `staleAfterDays` budget; once its `asOf` is older than that, the UI hides it (`isShowable` in `lib/home/marketFacts.ts`) and `/api/cron/reference` reports it. The `market_reference` table (`supabase/migrations/20260923130000_market_reference.sql`, read by `lib/market/reference.ts`, cached 1 h) can override a hand-curated constant when it holds a fresher row (`preferFresher`).
+
+| Fact | Refresh class | Where it is updated |
+|---|---|---|
+| Nifty 50 / Bank Nifty / Midcap 100, constituents, India VIX, Brent, USD/INR | live (60 s) | `lib/market/providers.ts` via Yahoo Finance; `/api/market` |
+| FII/DII provisional net flows (`fii_net_cr`, `dii_net_cr`) | daily laptop script | `scripts/refresh-market-reference.mjs` → `market_reference`. Warms NSE cookies, reads the reports page's own script to discover the combined NSE+BSE+MSEI CSV link (currently `/api/fiidiiTradeReact?csv=true`; the old `/api/fiidiiTRADE` is gone), parses it strictly (net must equal buy − sell), `as_of` = trade date. Manual fallback on blocked days: `--nse-csv <file>` with the CSV downloaded from https://www.nseindia.com/reports/fii-dii. A partial day (one of FII/DII) is written; the ticker shows flows only when both rows share a trade date. |
+| 10-year G-Sec yield (`gsec_10y`) | daily laptop script, fallback constant | script → `market_reference`; fallback `GSEC_10Y_FALLBACK` in `lib/home/marketFacts.ts` (7.02, as of 2026-09-11) |
+| Repo rate (`repo_rate`) | daily cron, fallback constant | `app/api/cron/reference` parses rbi.org.in → `market_reference`; fallback `repoRate` in `lib/market/constants.ts` (5.25, as of 2026-08-05, budget 75 d) |
+| Nifty 50 TRI since-inception CAGR (`nifty_tri_cagr_inception`) | daily cron (only if the page ever exposes it), else hand-curated | `NIFTY_TRI_CAGR` in `lib/home/marketFacts.ts` (12.41, as of 2026-06-30, budget 400 d); the cron cannot read the factsheet PDF |
+| Rule-of-72 doubling years, hurdle rate (G-Sec + 5%), deep-OTM probability (delta 0.08), direct-plan SIP saving | derived at render time | computed in `buildMarketFacts()` from the inputs above |
+| Returns concentration (₹10 lakh, Jul 1999 to May 2026, fully invested vs missing 15 best days) | hand-curated | `RETURNS_CONCENTRATION` in `lib/home/marketFacts.ts` (FundsIndia, as of 2026-05-31, budget 400 d) |
+| Nifty constituent weights | hand-curated | `niftyWeights` in `lib/market/constants.ts` (NSE factsheet, as of 2026-06-30, budget 400 d) |
+| SEBI F&O loss study figures | hand-curated | `lib/home/sebiStats.ts` (as of 2024-09-23, budget 730 d) |
+
+- `GET /api/cron/reference` — Vercel cron (`vercel.json`, 03:00 UTC daily), protected by `Authorization: Bearer $CRON_SECRET` (401 otherwise). Fetches the repo rate from rbi.org.in and, if the factsheets page ever exposes it, the Nifty TRI CAGR; upserts only parsed values; then audits every fact, constant and `market_reference` row against its budget. There is no admin-notification path on `/api/newsletter`, so stale items are logged at error level and returned as `stale[]` in the JSON.
+- `scripts/refresh-market-reference.mjs` — laptop-run (dry run by default, `--apply` writes with `SUPABASE_SERVICE_ROLE_KEY`). The README block at the top has the Windows Task Scheduler command for 19:00 IST on weekdays.
 
 ## Current Status
 - [x] Homepage

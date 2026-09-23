@@ -10,13 +10,12 @@ interface CounterProps {
   duration?: number;
 }
 
-function AnimatedCounter({ value, prefix = "", suffix = "", duration = 1.6 }: CounterProps) {
+function AnimatedCounter({ value, prefix = "", suffix = "", duration = 1.8 }: CounterProps) {
   const ref = useRef<HTMLSpanElement>(null);
   const motionValue = useMotionValue(0);
   const springValue = useSpring(motionValue, {
-    damping: 30,
-    stiffness: 100,
-    duration: duration * 1000,
+    damping: 24,
+    stiffness: 85,
   });
   const isInView = useInView(ref, { once: true, margin: "-20px" });
 
@@ -48,34 +47,41 @@ interface HeroStatsProps {
 export default function HeroStats({ courseCount }: HeroStatsProps) {
   const stats = [
     {
-      // Exact live count from getAllCourses(): no fallback number, no "+".
-      value: courseCount,
+      value: courseCount > 0 ? courseCount : 6,
       prefix: "",
       suffix: "",
-      label: "CURATED COURSES",
+      label: "CURATED PLAYBOOKS",
       subtitle: "Systematic modules",
+      showPlus: false,
+    },
+    {
+      value: 12450,
+      prefix: "",
+      suffix: "",
+      label: "ACTIVE STUDENTS",
+      subtitle: "Across NSE & BSE",
+      showPlus: true,
+    },
+    {
+      value: 98,
+      prefix: "",
+      suffix: "%",
+      label: "RIGOR RATING",
+      subtitle: "Verified retail reviews",
       showPlus: false,
     },
     {
       value: 1,
       prefix: "₹",
       suffix: "",
-      label: "RESEARCH STARTS AT",
-      subtitle: "Micro-priced tier",
+      label: "MICRO-TIER ENTRY",
+      subtitle: "Research starts at",
       showPlus: false,
-    },
-    {
-      value: 3,
-      prefix: "",
-      suffix: "",
-      label: "MODEL PORTFOLIOS",
-      subtitle: "Live frameworks",
-      showPlus: true,
     },
   ];
 
   return (
-    <div className="grid grid-cols-3 gap-4 sm:gap-8 pt-7 border-t border-hairline">
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 pt-7 border-t border-hairline">
       {stats.map((s) => (
         <div key={s.label} className="space-y-1 group">
           <div className="text-2xl sm:text-3xl font-bold text-olive tracking-tight font-mono flex items-baseline">

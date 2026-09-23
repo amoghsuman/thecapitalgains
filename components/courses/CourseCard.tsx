@@ -1,5 +1,7 @@
 import Link from "next/link";
 import LevelBadge from "./LevelBadge";
+import { estimateCourseReadingTime } from "@/lib/courses/readingTime";
+import { BookOpen } from "lucide-react";
 
 export type CourseCardData = {
   slug: string;
@@ -53,16 +55,31 @@ export default function CourseCard({ course }: { course: CourseCardData }) {
 
   const masterItems = (whatYouLearn ?? []).slice(0, 3);
   const topicChips = topics ?? [];
+  const readingTime = estimateCourseReadingTime({
+    description,
+    whatYouLearn,
+    topics,
+    lessonsCount: totalLessons,
+    duration,
+  });
 
   return (
     <div
       className="flex flex-col rounded-2xl border border-hairline bg-panel p-5 h-full
         hover:border-forest/40 hover:shadow-md motion-safe:transition-all motion-safe:duration-200"
     >
-      {/* 1. Badge row — level + optional flag badge, duration only on the right */}
+      {/* 1. Badge row — level + reading time badge + optional flag badge */}
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-1.5 flex-wrap">
           <LevelBadge level={tag} />
+          <span
+            id={`course-reading-time-${slug}`}
+            className="inline-flex items-center gap-1 bg-forest-surface text-forest text-[10px] font-semibold tracking-wide px-2.5 py-0.5 rounded-full whitespace-nowrap border border-forest/15"
+            title={`Calculated based on ~${readingTime.wordCountEstimate.toLocaleString()} words across syllabus`}
+          >
+            <BookOpen className="w-2.5 h-2.5" />
+            <span>{readingTime.formatted}</span>
+          </span>
           {badge && (
             <span className="inline-flex items-center bg-gold text-white text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full whitespace-nowrap">
               {badge}

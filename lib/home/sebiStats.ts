@@ -7,6 +7,8 @@
 
 const SOURCE = "SEBI, Analysis of Profits and Losses in the Equity Derivatives Segment, Sept 2024";
 const AS_OF = "2024-09-23";
+// The study is a fixed publication; re-check for a newer SEBI release every two years.
+export const SEBI_FO_STALE_AFTER_DAYS = 730;
 
 export type SebiStat = {
   id: string;
@@ -16,6 +18,7 @@ export type SebiStat = {
   label: string;
   source: string;
   asOf: string;
+  staleAfterDays: number;
 };
 
 export const SEBI_FO_STATS: SebiStat[] = [
@@ -25,6 +28,7 @@ export const SEBI_FO_STATS: SebiStat[] = [
     label: "of individual F&O traders lost money, FY22 to FY24",
     source: SOURCE,
     asOf: AS_OF, // TODO: verify against the PDF
+    staleAfterDays: SEBI_FO_STALE_AFTER_DAYS,
   },
   {
     id: "aggregate-loss-fy22-24",
@@ -32,6 +36,7 @@ export const SEBI_FO_STATS: SebiStat[] = [
     label: "aggregate losses over those three years",
     source: SOURCE,
     asOf: AS_OF, // TODO: verify against the PDF
+    staleAfterDays: SEBI_FO_STALE_AFTER_DAYS,
   },
   {
     id: "average-loss-fy22-24",
@@ -39,6 +44,7 @@ export const SEBI_FO_STATS: SebiStat[] = [
     label: "average loss per trader over the period",
     source: SOURCE,
     asOf: AS_OF, // TODO: verify against the PDF
+    staleAfterDays: SEBI_FO_STALE_AFTER_DAYS,
   },
   {
     id: "share-lost-fy24",
@@ -46,6 +52,7 @@ export const SEBI_FO_STATS: SebiStat[] = [
     label: "lost money in FY24 alone",
     source: SOURCE,
     asOf: AS_OF, // TODO: verify against the PDF
+    staleAfterDays: SEBI_FO_STALE_AFTER_DAYS,
   },
   {
     id: "average-loss-fy24",
@@ -53,6 +60,7 @@ export const SEBI_FO_STATS: SebiStat[] = [
     label: "average loss per loss-making trader, FY24",
     source: SOURCE,
     asOf: AS_OF, // TODO: verify against the PDF
+    staleAfterDays: SEBI_FO_STALE_AFTER_DAYS,
   },
 ];
 

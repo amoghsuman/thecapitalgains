@@ -2,11 +2,11 @@
 
 import { useEffect, useRef } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
+import HeroMarketDataOverlay from "@/components/home/HeroMarketDataOverlay";
 
 export default function HeroCanvasBackground() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-
   const { scrollY } = useScroll();
 
   const canvasY = useTransform(scrollY, [0, 600], [0, 80]);
@@ -19,7 +19,6 @@ export default function HeroCanvasBackground() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
@@ -46,74 +45,43 @@ export default function HeroCanvasBackground() {
       label?: string;
     }> = [];
 
-    const labels = ["NIFTY", "DELTA", "THETA", "IV", "PE 22.4", "CAGR", "BETA", "ROCE", "WACC", "GAMMA"];
+    const labels = ["NIFTY", "BANKNIFTY", "ROCE", "WACC", "FCF", "IV_P", "THETA", "DELTA", "ALPHA"];
 
+    // Decorative only: a fixed pseudo-random layout (mulberry32, seed 7) so the
+    // field is identical on every load and nothing here is a market value.
+    let seed = 7;
+    const rand = () => {
+      seed = (seed + 0x6d2b79f5) | 0;
+      let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
     for (let i = 0; i < nodeCount; i++) {
       nodes.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        radius: Math.random() * 2 + 1,
-        alpha: Math.random() * 0.35 + 0.15,
+        x: rand() * width,
+        y: rand() * height,
+        vx: (rand() - 0.5) * 0.35,
+        vy: (rand() - 0.5) * 0.35,
+        radius: rand() * 1.5 + 1,
+        alpha: rand() * 0.4 + 0.15,
         label: i < labels.length ? labels[i] : undefined,
       });
     }
 
-    let time = 0;
-
     const render = () => {
-      time += 0.007;
       ctx.clearRect(0, 0, width, height);
 
-      // Isometric grid lines
-      ctx.strokeStyle = "rgba(223, 217, 200, 0.35)";
-      ctx.lineWidth = 0.5;
-
-      const gridSize = 65;
+      // Subtle coordinate grid dots
+      const gridSize = 48;
+      ctx.fillStyle = "rgba(44, 94, 67, 0.04)";
       for (let x = 0; x < width; x += gridSize) {
-        ctx.beginPath();
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x, height);
-        ctx.stroke();
+        for (let y = 0; y < height; y += gridSize) {
+          ctx.beginPath();
+          ctx.arc(x, y, 0.8, 0, Math.PI * 2);
+          ctx.fill();
+        }
       }
 
-      for (let y = 0; y < height; y += gridSize) {
-        ctx.beginPath();
-        ctx.moveTo(0, y);
-        ctx.lineTo(width, y);
-        ctx.stroke();
-      }
-
-      // Smooth flowing sine price wave (Gold glow)
-      ctx.beginPath();
-      ctx.strokeStyle = "rgba(169, 130, 47, 0.18)";
-      ctx.lineWidth = 1.5;
-      for (let x = 0; x < width; x += 10) {
-        const y =
-          height * 0.65 +
-          Math.sin(x * 0.004 + time) * 32 +
-          Math.cos(x * 0.008 - time * 0.6) * 16;
-        if (x === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-      }
-      ctx.stroke();
-
-      // Second harmonic wave (Forest Green)
-      ctx.beginPath();
-      ctx.strokeStyle = "rgba(27, 58, 43, 0.14)";
-      ctx.lineWidth = 1.2;
-      for (let x = 0; x < width; x += 10) {
-        const y =
-          height * 0.45 +
-          Math.sin(x * 0.005 - time * 0.8) * 26 +
-          Math.sin(x * 0.002 + time * 0.5) * 18;
-        if (x === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-      }
-      ctx.stroke();
-
-      // Draw and link nodes
       for (let i = 0; i < nodes.length; i++) {
         const node = nodes[i];
         node.x += node.vx;
@@ -124,7 +92,7 @@ export default function HeroCanvasBackground() {
 
         ctx.beginPath();
         ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(27, 58, 43, ${node.alpha})`;
+        ctx.fillStyle = `rgba(44, 94, 67, ${node.alpha})`;
         ctx.fill();
 
         if (node.label && i % 3 === 0) {
@@ -163,6 +131,7 @@ export default function HeroCanvasBackground() {
 
   return (
     <div ref={containerRef} className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      {/* Background glowing gradients */}
       <motion.div
         style={{ y: glowOrbY, rotate: subtleRotate, opacity: opacityFade }}
         className="absolute -top-32 -left-20 w-96 h-96 rounded-full bg-gradient-to-br from-gold/10 via-forest/5 to-transparent blur-3xl"
@@ -171,6 +140,8 @@ export default function HeroCanvasBackground() {
         style={{ y: secondaryOrbY, rotate: counterRotate, opacity: opacityFade }}
         className="absolute top-1/4 -right-24 w-[480px] h-[480px] rounded-full bg-gradient-to-bl from-forest/10 via-gold/5 to-transparent blur-3xl"
       />
+
+      {/* Network Particle Canvas */}
       <motion.div
         style={{ y: canvasY, opacity: opacityFade }}
         className="absolute inset-0 w-full h-full"
@@ -181,6 +152,11 @@ export default function HeroCanvasBackground() {
           aria-hidden="true"
         />
       </motion.div>
+
+      {/* Cinematic Animated SVG Market Data Wave Overlay */}
+      <HeroMarketDataOverlay />
+
+      {/* Edge gradient blending */}
       <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-ivory via-ivory/40 to-transparent" />
       <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-ivory via-ivory/50 to-transparent" />
     </div>

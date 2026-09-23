@@ -1,27 +1,48 @@
 import Link from "next/link";
 import NewsletterForm from "@/components/NewsletterForm";
-import { getAllCourses, getCourseWhyPicked, getFullCourseForReader, getFindYourPathData } from "@/lib/sanity/queries";
+import {
+  getAllCourses,
+  getCourseWhyPicked,
+  getFullCourseForReader,
+  getFindYourPathData,
+  getTestimonials,
+} from "@/lib/sanity/queries";
 import { PathNavigator } from "@/components/FindYourPath";
 import HeroCanvasBackground from "@/components/home/HeroCanvasBackground";
 import HeroStats from "@/components/home/HeroStats";
 import UserSummaryDashboard from "@/components/home/UserSummaryDashboard";
 import FeaturedPlaybookCard from "@/components/home/FeaturedPlaybookCard";
 import MarketTickerBar from "@/components/home/MarketTickerBar";
+import PlaybookPageTurnStage from "@/components/home/PlaybookPageTurnStage";
+import MarketObservatoryRadar from "@/components/home/MarketObservatoryRadar";
 import InteractiveTerminalVisual from "@/components/home/InteractiveTerminalVisual";
+import ForensicRedFlagSimulator from "@/components/home/ForensicRedFlagSimulator";
+import WealthFrictionCompoundingLab from "@/components/home/WealthFrictionCompoundingLab";
+import TacticalExecutionFlow from "@/components/home/TacticalExecutionFlow";
+import MarketIntelligenceHub from "@/components/home/MarketIntelligenceHub";
+import ConceptLogicQuiz from "@/components/home/ConceptLogicQuiz";
+import StudentLearningPath from "@/components/home/StudentLearningPath";
+import MarketPulseToast from "@/components/home/MarketPulseToast";
 import InteractiveScenarioCheck from "@/components/home/InteractiveScenarioCheck";
 import InstitutionalComparison from "@/components/home/InstitutionalComparison";
 import SampleChapterTrigger from "@/components/home/SampleChapterTrigger";
 import CuratedTracksSection from "@/components/home/CuratedTracksSection";
+import MarketClocks from "@/components/home/MarketClocks";
+import NiftyConstituentTreemap from "@/components/home/NiftyConstituentTreemap";
+import MarketMythsSection from "@/components/home/MarketMythsSection";
+import QuickAccessCategories from "@/components/home/QuickAccessCategories";
+import HomeCourseSearchBar from "@/components/home/HomeCourseSearchBar";
+import StudentTestimonialsCarousel from "@/components/home/StudentTestimonialsCarousel";
 import InstitutionalFaq from "@/components/home/InstitutionalFaq";
 import SebiDisclosureBanner from "@/components/home/SebiDisclosureBanner";
 import FloatingJumpDock from "@/components/home/FloatingJumpDock";
+import { buildMarketFacts } from "@/lib/home/marketFacts";
+import { getReference } from "@/lib/market/reference";
 import "@/app/premium-theme.css";
 
 const FEATURED_CARD_COURSE_SLUG = "options-trading-from-zero";
 
-// Matches the projection in getAllCourses() (lib/sanity/queries.ts) exactly —
-// title/slug are always present (required in the Sanity schema), everything
-// else is an optional course field.
+// Matches the projection in getAllCourses() (lib/sanity/queries.ts) exactly
 export type CourseSummary = {
   _id: string;
   title: string;
@@ -41,22 +62,28 @@ export type CourseSummary = {
 };
 
 export default async function HomePage() {
-  const [courses, featuredWhyPicked, featuredCourseForReader, findYourPathPersonas]: [
+  const [courses, featuredWhyPicked, featuredCourseForReader, findYourPathPersonas, testimonials]: [
     CourseSummary[],
     string | null,
     Awaited<ReturnType<typeof getFullCourseForReader>>,
-    Awaited<ReturnType<typeof getFindYourPathData>>
+    Awaited<ReturnType<typeof getFindYourPathData>>,
+    Awaited<ReturnType<typeof getTestimonials>>
   ] = await Promise.all([
     getAllCourses(),
     getCourseWhyPicked(FEATURED_CARD_COURSE_SLUG),
     getFullCourseForReader(FEATURED_CARD_COURSE_SLUG),
     getFindYourPathData(),
+    // Only consented testimonials come back; the section is omitted while empty.
+    getTestimonials().catch(() => []),
   ]);
+
+  // Sourced facts: the market_reference table wins over the constants when it
+  // is fresher; every fact carries its as-of date and freshness budget.
+  const facts = buildMarketFacts({ reference: await getReference(["gsec_10y", "nifty_tri_cagr_inception"]) });
 
   const courseCount = courses?.length ?? 0;
   const featuredCourse = courses?.find((c: CourseSummary) => c.slug === FEATURED_CARD_COURSE_SLUG) || courses?.[0];
   const activeFeaturedSlug = featuredCourse?.slug || FEATURED_CARD_COURSE_SLUG;
-
   const featuredFirstLessonSlug = featuredCourseForReader?.chapters?.[0]?.lessons?.[0]?.slug ?? null;
   const featuredCardHref = featuredFirstLessonSlug
     ? `/learn/${activeFeaturedSlug}/${featuredFirstLessonSlug}`
@@ -148,6 +175,11 @@ export default async function HomePage() {
 
             {/* Animated Stats Row */}
             <HeroStats courseCount={courseCount} />
+
+            {/* Global vs Indian Market Time Observatory Clocks */}
+            <div className="pt-2">
+              <MarketClocks />
+            </div>
           </div>
 
           {/* Right — Featured Playbook Card with Integrated Recharts & Framer Motion Hover Animations */}
@@ -162,7 +194,26 @@ export default async function HomePage() {
       {/* ── LIVE MARKET TICKER BAR ── */}
       <MarketTickerBar />
 
-      {/* ── CINEMATIC INTERACTIVE TERMINAL VISUALIZER ── */}
+      {/* ── QUICK ACCESS CORE DISCIPLINES ── */}
+      <QuickAccessCategories />
+
+      {/* ── D3 NIFTY 50 REAL-TIME CONSTITUENT TREEMAP ── */}
+      <section className="py-16 md:py-20 bg-ivory border-b border-hairline">
+        <div className="site-container">
+          <NiftyConstituentTreemap />
+        </div>
+      </section>
+
+      {/* ── MARKET SENTIMENT GAUGE (D3) & GLOSSARY OF THE WEEK ── */}
+      <MarketIntelligenceHub />
+
+      {/* ── 01: TACTILE 3D PLAYBOOK STAGE (Page-turn investor field manual) ── */}
+      <PlaybookPageTurnStage facts={facts} />
+
+      {/* ── 02: THE MARKET OBSERVATORY (Orbital telemetry radar system) ── */}
+      <MarketObservatoryRadar />
+
+      {/* ── 03: APPLIED FINANCIAL LABS (Terminal simulator) ── */}
       <section className="py-16 md:py-20 bg-ivory border-b border-hairline">
         <div className="site-container space-y-9">
           <div className="max-w-3xl">
@@ -183,6 +234,20 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ── 04: FORENSIC BALANCE SHEET RED FLAG SIMULATOR ── */}
+      <ForensicRedFlagSimulator />
+
+      {/* ── 05: WEALTH FRICTION & TAX DRAG COMPOUNDING LAB ── */}
+      <WealthFrictionCompoundingLab />
+
+      {/* ── 06: FROM CURIOSITY TO CONVICTION (4-Step Tactical Execution Flow) ── */}
+      <TacticalExecutionFlow />
+
+      {/* ── 30-SECOND CONCEPT LOGIC QUIZ ── */}
+      <div id="concept-logic-quiz-section">
+        <ConceptLogicQuiz />
+      </div>
 
       {/* ── THE 3 PILLARS ── */}
       <section id="three-pillars-section" className="py-16 md:py-20 border-b border-hairline bg-panel">
@@ -224,7 +289,7 @@ export default async function HomePage() {
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-forest" />
-                    Worked mathematical exercises & scenarios
+                    Worked mathematical exercises &amp; scenarios
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-forest" />
@@ -263,7 +328,7 @@ export default async function HomePage() {
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-gold" />
-                    Forensic accounting & red flag screening
+                    Forensic accounting &amp; red flag screening
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-gold" />
@@ -299,7 +364,7 @@ export default async function HomePage() {
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-forest" />
-                    Dividend & Income compounding book
+                    Dividend &amp; Income compounding book
                   </li>
                   <li className="flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-forest" />
@@ -314,6 +379,9 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ── HOME COURSE INSTANT SEARCH BAR ── */}
+      <HomeCourseSearchBar courses={courses ?? []} />
 
       {/* ── CURATED TRACKS SHELF (Interactive with Filter Pills & Framer Motion) ── */}
       <CuratedTracksSection courses={courses ?? []} />
@@ -369,11 +437,20 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* ── MARKET MYTHS VS INSTITUTIONAL REALITIES (Interactive Voting Lab) ── */}
+      <MarketMythsSection facts={facts} />
+
       {/* ── REAL-WORLD MARKET CHALLENGE ── */}
       <InteractiveScenarioCheck />
 
       {/* ── INTERACTIVE PATH NAVIGATOR ── */}
       <PathNavigator personas={findYourPathPersonas} />
+
+      {/* ── VERTICAL LEARNING PATH ROADMAP (Foundations to Advanced Mastery) ── */}
+      <StudentLearningPath facts={facts} />
+
+      {/* ── VERIFIED STUDENT TESTIMONIALS CAROUSEL ── */}
+      {testimonials.length > 0 && <StudentTestimonialsCarousel testimonials={testimonials} />}
 
       {/* ── INSTITUTIONAL FAQ ACCORDION ── */}
       <InstitutionalFaq />
@@ -390,12 +467,15 @@ export default async function HomePage() {
               WEEKLY MARKET INTELLIGENCE
             </span>
           </div>
+
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-olive mb-3 tracking-tight">
             Join The Capital Gains Newsletter
           </h2>
+
           <p className="text-ink-dim mb-8 max-w-xl mx-auto font-medium text-sm sm:text-base leading-relaxed">
             Weekly deep-dives on Indian market trends, corporate accounting nuances, option volatility dynamics, and new curriculum releases. Zero spam, uncompromised signal.
           </p>
+
           <div className="max-w-md mx-auto bg-panel p-2 rounded-2xl shadow-xs border border-hairline">
             <NewsletterForm />
           </div>
@@ -404,7 +484,9 @@ export default async function HomePage() {
 
       {/* ── FLOATING QUICK-JUMP TABLE OF CONTENTS DOCK ── */}
       <FloatingJumpDock />
+
+      {/* ── MARKET PULSE NOTIFICATION TOAST (60s Auto-Refresh) ── */}
+      <MarketPulseToast facts={facts} />
     </div>
   );
 }
-
