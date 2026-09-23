@@ -175,3 +175,35 @@ export async function getExtendedQuotes(): Promise<ExtendedQuotes> {
     usdInr: parseSparkEntry("USD/INR", spark[USDINR_SYMBOL]),
   };
 }
+
+// ─── Daily close history (chart endpoint, cached an hour) ────────────────────
+//
+// Used only by the sentiment index. One request per symbol; a failure returns
+// null for that symbol and the index simply loses that input.
+
+type YahooHistoryResponse = {
+  chart?: {
+    result?: Array<{
+      timestamp?: number[] | null;
+      indicators?: { quote?: Array<{ close?: (number | null)[] | null }> | null } | null;
+    }> | null;
+  };
+};
+
+export async function getDailyCloses(symbol: string, range: "1y" | "2y" = "2y"): Promise<number[] | null> {
+  const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?range=${range}&interval=1d`;
+  try {
+    const res = await fetch(url, { headers: HEADERS, next: { revalidate: 3600 } });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const json = (await res.json()) as YahooHistoryResponse;
+    const closes = json.chart?.result?.[0]?.indicators?.quote?.[0]?.close ?? null;
+    if (!closes) throw new Error("no close series");
+    const clean = closes.filter((c): c is number => typeof c === "number" && Number.isFinite(c));
+    return clean.length > 0 ? clean : null;
+  } catch (err: unknown) {
+    console.error(`[market] history ${symbol} failed:`, err instanceof Error ? err.message : err);
+    return null;
+  }
+}
+
+export const HISTORY_SYMBOLS = { nifty: "^NSEI", bankNifty: "^NSEBANK", vix: "^INDIAVIX" } as const;

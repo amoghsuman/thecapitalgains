@@ -46,7 +46,7 @@ export default function DownloadPdfModal({ portfolio, isOpen, onClose }: Downloa
         <div className="p-3.5 bg-ivory rounded-xl border border-hairline text-xs space-y-1.5">
           <div className="font-semibold text-olive">Portfolio: {portfolio.name}</div>
           <p className="text-ink-dim leading-relaxed text-[11px]">
-            Opens your browser&apos;s print dialog, where you can save the page as a PDF.
+            Opens your browser's print dialog, where you can save the page as a PDF.
           </p>
         </div>
 

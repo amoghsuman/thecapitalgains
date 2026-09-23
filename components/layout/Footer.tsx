@@ -50,7 +50,7 @@ export default function Footer() {
             </p>
           </div>
           <p className="text-ink-dim text-[12px] font-mono">
-            &copy; {new Date().getFullYear()} The Capital Gains. All rights reserved.
+            © {new Date().getFullYear()} The Capital Gains. All rights reserved.
           </p>
         </div>
       </div>

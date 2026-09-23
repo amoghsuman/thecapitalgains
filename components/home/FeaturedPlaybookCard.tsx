@@ -17,13 +17,17 @@ import FeaturedCardTrendGraph from "./FeaturedCardTrendGraph";
 import type { CourseSummary } from "@/app/(site)/page";
 
 interface FeaturedPlaybookCardProps {
+  /** Course page, or the first lesson when the home page resolved one. */
   href: string;
+  /** /learn/<course>/<chapters[0].lessons[0].slug> from Sanity; null when the course has no lessons yet. */
+  firstLessonHref: string | null;
   featuredCourse?: CourseSummary | null;
   featuredWhyPicked?: string | null;
 }
 
 export default function FeaturedPlaybookCard({
   href,
+  firstLessonHref,
   featuredCourse,
   featuredWhyPicked,
 }: FeaturedPlaybookCardProps) {
@@ -41,10 +45,9 @@ export default function FeaturedPlaybookCard({
     setCursorPos(null);
   };
 
-  // Determine fast-track link: either direct preview lesson or course link
-  const fastTrackHref = href.startsWith("/learn/")
-    ? href
-    : (featuredCourse?.slug ? `/learn/${featuredCourse.slug}/free-preview` : href);
+  // Fast-track opens the course's real first lesson; with none published yet it
+  // falls back to the course page rather than guessing a lesson slug.
+  const fastTrackHref = firstLessonHref ?? href;
 
   const keyTakeaways = [
     "Vega decay vs IV crush during high-volatility events like earnings & Union Budget",
@@ -109,9 +112,13 @@ export default function FeaturedPlaybookCard({
             </Link>
             <div className="text-[12px] text-ink-dim mt-1.5 flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-forest" />
-              <span>{featuredCourse?.lessonsCount || 12} playbook modules</span>
-              <span>·</span>
-              <span>{featuredCourse?.duration || "~4 hrs study"}</span>
+              {typeof featuredCourse?.lessonsCount === "number" && featuredCourse.lessonsCount > 0 && (
+                <>
+                  <span>{featuredCourse.lessonsCount} playbook modules</span>
+                  <span>·</span>
+                </>
+              )}
+              <span>{featuredCourse?.duration || "Self-paced"}</span>
             </div>
           </div>
           <span className="bg-forest text-white font-mono text-[9px] font-bold rounded-md px-2.5 py-1 tracking-widest uppercase flex-shrink-0">

@@ -10,6 +10,7 @@ import katex from "katex";
 import { getFullCourseForReader, getLessonBySlug } from "@/lib/sanity/queries";
 import { createClient } from "@/lib/supabase/client";
 import { canAccessLesson, lessonLockReason } from "@/lib/access";
+import { getActiveSubscriptions, learnTierOf } from "@/lib/subscription";
 import ChartBlock from "@/components/lesson/ChartBlock";
 import PayoffDiagramBlock from "@/components/lesson/PayoffDiagramBlock";
 import CalculatorBlock from "@/components/lesson/CalculatorBlock";
@@ -719,16 +720,9 @@ export default function ReaderPage() {
       setIsLoggedIn(true);
       setUserId(user.id);
 
-      const { data: sub } = await supabase
-        .from("subscriptions")
-        .select("tier, status, current_period_end")
-        .eq("user_id", user.id)
-        .eq("status", "active")
-        .single();
-      if (sub) {
-        const isValid = !sub.current_period_end || new Date(sub.current_period_end) > new Date();
-        if (isValid) setUserTier(sub.tier);
-      }
+      // Same read and same validity rule as /dashboard (lib/subscription.ts).
+      // Learn row only: a Research subscription never unlocks a lesson.
+      setUserTier(learnTierOf(await getActiveSubscriptions(supabase, user.id)));
 
       const { data: progress } = await supabase
         .from("lesson_progress")

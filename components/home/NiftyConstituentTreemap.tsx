@@ -66,7 +66,13 @@ export default function NiftyConstituentTreemap() {
       .sum((d) => d.value ?? 0)
       .sort((a, b) => (b.value ?? 0) - (a.value ?? 0));
 
-    d3.treemap<TreemapDatum>().size([width, height]).paddingTop(18).paddingInner(3).round(true)(root);
+    // 2px between tiles; 4px inside each sector group (18px on top for its title).
+    d3.treemap<TreemapDatum>()
+      .size([width, height])
+      .paddingInner(2)
+      .paddingOuter(4)
+      .paddingTop(18)
+      .round(true)(root);
     const laidOut = root as TreemapNode;
 
     // Render SVG via D3
@@ -168,11 +174,11 @@ export default function NiftyConstituentTreemap() {
             NSE MARKET HEATMAP
           </div>
           <h3 className="text-xl sm:text-2xl font-bold text-olive">
-            NIFTY 50 Weight &amp; Momentum Treemap
+            NIFTY 50 Weight & Momentum Treemap
           </h3>
           <p className="text-xs sm:text-sm text-ink-dim max-w-2xl mt-0.5 leading-relaxed">
             D3-powered hierarchical market cap distribution. Tile dimensions scale proportionally to index constituent
-            weighting; colour maps the day&apos;s price change.
+            weighting; colour maps the day's price change.
           </p>
         </div>
 
@@ -193,7 +199,7 @@ export default function NiftyConstituentTreemap() {
       </div>
 
       {/* Sector filter pills */}
-      <div className="flex items-center gap-1.5 overflow-x-auto pb-2 border-b border-hairline">
+      <div className="flex items-center gap-1.5 flex-wrap pb-2 border-b border-hairline">
         <span className="font-mono text-[10px] text-ink-dim uppercase tracking-wider font-bold mr-1 shrink-0">
           Sectors:
         </span>
@@ -229,7 +235,7 @@ export default function NiftyConstituentTreemap() {
                 <span className="text-ink-dim text-[11px]">{selectedStock.sector}</span>
               </div>
               <div className="text-[11px] text-ink-dim">
-                Price: {selectedStock.price !== null ? `₹${selectedStock.price.toLocaleString("en-IN")}` : "Unavailable"} &middot;
+                Price: {selectedStock.price !== null ? `₹${selectedStock.price.toLocaleString("en-IN")}` : "Unavailable"} ·
                 Nifty Weight: {selectedStock.weight}%
               </div>
             </div>

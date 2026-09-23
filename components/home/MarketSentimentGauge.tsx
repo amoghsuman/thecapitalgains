@@ -6,138 +6,102 @@ import { Gauge } from "lucide-react";
 
 import { liveLabel } from "@/lib/market/client";
 import { useMarketSnapshot } from "@/lib/market/useMarketSnapshot";
+import type { Sentiment } from "@/lib/market/sentiment";
 
-// ─── Score ───────────────────────────────────────────────────────────────────
-//
-// For now the score is a function of India VIX alone. Mapping (linear, clamped):
-//   VIX 10 or lower  → 90 ("Extreme Greed": very low implied volatility)
-//   VIX 30 or higher → 10 ("Extreme Fear":  very high implied volatility)
-//   in between       → 90 − (VIX − 10) × 4
-// so VIX 15 → 70, VIX 20 → 50, VIX 25 → 30. FII flows and advance/decline
-// breadth are not yet part of the composite; they render as "Unavailable"
-// until a data source is wired in lib/market/providers.ts.
-const VIX_LOW = 10;
-const VIX_HIGH = 30;
+// The TCG Sentiment Index (lib/market/sentiment.ts) computed in /api/market:
+// volatility 0.30, breadth 0.25, momentum 0.20, flows 0.15, relative strength
+// 0.10, each scored as a percentile of its trailing 252-day range and the
+// composite renormalised over the inputs that are available.
 
-function scoreFromVix(vix: number): number {
-  const clamped = Math.min(VIX_HIGH, Math.max(VIX_LOW, vix));
-  return Math.round(90 - (clamped - VIX_LOW) * 4);
+// Geometry. The dial is a top semicircle: score 0 at 9 o'clock, 50 at 12,
+// 100 at 3 o'clock. d3.arc measures angles clockwise from 12 o'clock, so the
+// arc runs −π/2 → +π/2; needle and tick positions use the same convention
+// converted to SVG x/y (x = sin θ, y = −cos θ).
+const WIDTH = 240;
+const HEIGHT = 135;
+const RADIUS = Math.min(WIDTH, HEIGHT * 2) / 2 - 12;
+
+function dialAngle(score: number): number {
+  return -Math.PI / 2 + (score / 100) * Math.PI;
+}
+function dialPoint(score: number, r: number): { x: number; y: number } {
+  const a = dialAngle(score);
+  return { x: Math.sin(a) * r, y: -Math.cos(a) * r };
 }
 
-function labelFor(score: number): string {
-  if (score < 25) return "Extreme Fear";
-  if (score < 45) return "Fear";
-  if (score <= 55) return "Neutral";
-  if (score <= 75) return "Mild Greed";
-  return "Extreme Greed";
+const SEGMENTS = [
+  { from: 0, to: 20, color: "#e05252", label: "Extreme fear" },
+  { from: 20, to: 40, color: "#e88c38", label: "Fear" },
+  { from: 40, to: 60, color: "#d4a72c", label: "Neutral" },
+  { from: 60, to: 80, color: "#3b8a61", label: "Greed" },
+  { from: 80, to: 100, color: "#1d5c42", label: "Extreme greed" },
+];
+
+function descriptionFor(sentiment: Sentiment): string {
+  if (sentiment.score === null) return "No input is available right now, so no reading is shown.";
+  if (sentiment.score < 40) return "Fear regime: volatility, breadth or flows are stretched to the downside. Option premiums are rich; defined-risk structures and patience with entries matter more than direction.";
+  if (sentiment.score <= 60) return "Neutral regime: no input is at an extreme. Position size, not conviction, is the lever.";
+  return "Greed regime: calm volatility and broad participation. Hedges are cheap, and crowded trades build quietly in regimes like this.";
 }
 
-function descriptionFor(score: number): string {
-  if (score < 45) return "Implied volatility is elevated. Option premiums are expensive; defined-risk structures and patience with entries matter more than direction.";
-  if (score <= 55) return "Implied volatility is mid-range. Neither buyers nor sellers of options have a structural edge; position size, not conviction, is the lever.";
-  return "Implied volatility is subdued. Premiums are cheap for hedging, and calm regimes are where crowded trades quietly build.";
+function bandLabel(sentiment: Sentiment): string {
+  if (sentiment.band === null) return "Unavailable";
+  return sentiment.band.replace(/^\w/, (c) => c.toUpperCase());
 }
 
 export default function MarketSentimentGauge() {
   const market = useMarketSnapshot();
   const snapshot = market.status === "ready" ? market.data : null;
-  const vix = snapshot?.indiaVix ?? null;
-  const isLive = snapshot !== null && vix !== null;
-  // With no VIX quote the needle rests at neutral and the card says so.
-  const score = vix ? scoreFromVix(vix.last) : 50;
-  const label = vix ? labelFor(score) : "Unavailable";
+  const sentiment = snapshot?.sentiment ?? null;
+  const isLive = sentiment !== null && sentiment.score !== null;
+  // With no reading the needle rests at 50 and the card says so.
+  const score = sentiment?.score ?? 50;
   const svgRef = useRef<SVGSVGElement | null>(null);
 
   useEffect(() => {
     if (!svgRef.current) return;
 
-    const width = 240;
-    const height = 135;
-    const radius = Math.min(width, height * 2) / 2 - 12;
-
     const svg = d3.select(svgRef.current);
     svg.selectAll("*").remove();
 
-    const g = svg
-      .append("g")
-      .attr("transform", `translate(${width / 2}, ${height - 10})`);
+    const g = svg.append("g").attr("transform", `translate(${WIDTH / 2}, ${HEIGHT - 10})`);
 
     const arcGenerator = d3
       .arc<{ startAngle: number; endAngle: number }>()
-      .innerRadius(radius - 22)
-      .outerRadius(radius)
+      .innerRadius(RADIUS - 22)
+      .outerRadius(RADIUS)
       .cornerRadius(3);
 
-    const segments = [
-      { from: 0, to: 25, color: "#e05252", label: "Ext Fear" },
-      { from: 25, to: 45, color: "#e88c38", label: "Fear" },
-      { from: 45, to: 55, color: "#d4a72c", label: "Neutral" },
-      { from: 55, to: 75, color: "#3b8a61", label: "Greed" },
-      { from: 75, to: 100, color: "#1d5c42", label: "Ext Greed" },
-    ];
-
-    const scoreToRad = (val: number) => {
-      return -Math.PI / 2 + (val / 100) * Math.PI;
-    };
-
-    segments.forEach((seg) => {
-      const startAngle = scoreToRad(seg.from) + 0.015;
-      const endAngle = scoreToRad(seg.to) - 0.015;
-
+    // Coloured bands, 0 → 100 left to right.
+    SEGMENTS.forEach((seg) => {
       g.append("path")
-        .attr(
-          "d",
-          arcGenerator({
-            startAngle,
-            endAngle,
-          }) as string
-        )
+        .attr("d", arcGenerator({ startAngle: dialAngle(seg.from) + 0.015, endAngle: dialAngle(seg.to) - 0.015 }) as string)
         .attr("fill", seg.color)
-        .attr("opacity", 0.85);
+        .attr("opacity", isLive ? 0.85 : 0.35);
     });
 
-    const needleRad = scoreToRad(score);
-    const needleLength = radius - 16;
-    const needleBaseWidth = 5;
-
-    const topX = Math.cos(needleRad) * needleLength;
-    const topY = Math.sin(needleRad) * needleLength;
-    const leftX = Math.cos(needleRad - Math.PI / 2) * needleBaseWidth;
-    const leftY = Math.sin(needleRad - Math.PI / 2) * needleBaseWidth;
-    const rightX = Math.cos(needleRad + Math.PI / 2) * needleBaseWidth;
-    const rightY = Math.sin(needleRad + Math.PI / 2) * needleBaseWidth;
-
-    const needlePath = `M ${leftX} ${leftY} L ${topX} ${topY} L ${rightX} ${rightY} Z`;
-
+    // Needle: a thin triangle from the hub to the score on the dial.
+    const tip = dialPoint(score, RADIUS - 16);
+    const perp = dialAngle(score) + Math.PI / 2;
+    const baseW = 5;
+    const left = { x: Math.sin(perp) * baseW, y: -Math.cos(perp) * baseW };
+    const right = { x: -left.x, y: -left.y };
     g.append("path")
-      .attr("d", needlePath)
-      .attr("fill", "#1c2b24")
+      .attr("d", `M ${left.x} ${left.y} L ${tip.x} ${tip.y} L ${right.x} ${right.y} Z`)
+      .attr("fill", isLive ? "#1c2b24" : "#9aa39d")
       .attr("stroke", "#faf8f5")
       .attr("stroke-width", 1.2)
       .style("filter", "drop-shadow(0px 2px 4px rgba(0,0,0,0.25))");
 
-    g.append("circle")
-      .attr("cx", 0)
-      .attr("cy", 0)
-      .attr("r", 7)
-      .attr("fill", "#1c2b24")
-      .attr("stroke", "#b4832c")
-      .attr("stroke-width", 2);
+    g.append("circle").attr("cx", 0).attr("cy", 0).attr("r", 7).attr("fill", isLive ? "#1c2b24" : "#9aa39d").attr("stroke", "#b4832c").attr("stroke-width", 2);
+    g.append("circle").attr("cx", 0).attr("cy", 0).attr("r", 2.5).attr("fill", "#faf8f5");
 
-    g.append("circle")
-      .attr("cx", 0)
-      .attr("cy", 0)
-      .attr("r", 2.5)
-      .attr("fill", "#faf8f5");
-
-    const ticks = [0, 50, 100];
-    ticks.forEach((t) => {
-      const angle = scoreToRad(t);
-      const textX = Math.cos(angle) * (radius + 9);
-      const textY = Math.sin(angle) * (radius + 9);
+    // Tick labels at 0, 25, 50, 75, 100 just outside the arc.
+    [0, 25, 50, 75, 100].forEach((t) => {
+      const p = dialPoint(t, RADIUS + 10);
       g.append("text")
-        .attr("x", textX)
-        .attr("y", textY)
+        .attr("x", p.x)
+        .attr("y", p.y)
         .attr("text-anchor", "middle")
         .attr("dominant-baseline", "central")
         .attr("fill", "#718077")
@@ -145,13 +109,13 @@ export default function MarketSentimentGauge() {
         .attr("font-family", "monospace")
         .text(t);
     });
-  }, [score]);
+  }, [score, isLive]);
 
-  const getScoreBadgeColor = (score: number) => {
-    if (score < 25) return "bg-rose-100 text-rose-800 border-rose-200";
-    if (score < 45) return "bg-orange-100 text-orange-800 border-orange-200";
-    if (score <= 55) return "bg-amber-100 text-amber-800 border-amber-200";
-    if (score <= 75) return "bg-emerald-100 text-emerald-800 border-emerald-200";
+  const getScoreBadgeColor = (s: number) => {
+    if (s < 20) return "bg-rose-100 text-rose-800 border-rose-200";
+    if (s < 40) return "bg-orange-100 text-orange-800 border-orange-200";
+    if (s <= 60) return "bg-amber-100 text-amber-800 border-amber-200";
+    if (s <= 80) return "bg-emerald-100 text-emerald-800 border-emerald-200";
     return "bg-forest/15 text-forest border-forest/30";
   };
 
@@ -165,7 +129,7 @@ export default function MarketSentimentGauge() {
             </div>
             <div>
               <div className="font-mono text-[10px] text-gold tracking-widest uppercase font-bold">
-                D3 TELEMETRY
+                TCG SENTIMENT INDEX
               </div>
               <h3 className="text-sm sm:text-base font-bold text-olive">
                 Nifty 50 Sentiment Index
@@ -175,7 +139,7 @@ export default function MarketSentimentGauge() {
 
           <div className="flex items-center gap-2">
             <span className="font-mono text-[10px] text-ink-dim px-2 py-0.5 rounded-full border border-hairline bg-ivory whitespace-nowrap">
-              {isLive ? liveLabel(snapshot?.fetchedAt ?? "") : "Sample data"}
+              {isLive && snapshot ? liveLabel(snapshot.fetchedAt) : "Sample data"}
             </span>
             {isLive && (
               <div className={`font-mono text-xs font-bold px-2.5 py-0.5 rounded-full border ${getScoreBadgeColor(score)}`}>
@@ -186,54 +150,61 @@ export default function MarketSentimentGauge() {
         </div>
 
         <p className="text-xs text-ink-dim leading-relaxed mb-4">
-          Score derived from India VIX only (see the mapping in this component). FII flows and advance/decline breadth are not yet wired in.
+          Weighted composite of volatility (0.30), breadth (0.25), momentum (0.20), flows (0.15) and relative strength (0.10), each scored against its trailing 252-day range and renormalised over the inputs available.
         </p>
 
         <div className="flex flex-col items-center justify-center my-1 relative">
           <svg
             ref={svgRef}
-            width={240}
-            height={135}
+            width={WIDTH}
+            height={HEIGHT}
             className="overflow-visible"
-            aria-label={isLive ? `Market sentiment score ${score} out of 100 (${label})` : "Market sentiment unavailable"}
+            aria-label={isLive && sentiment ? `Sentiment score ${score} out of 100 (${bandLabel(sentiment)})` : "Sentiment index unavailable"}
           />
           <div className="text-center -mt-2">
             <div className="font-mono text-xs font-bold text-olive uppercase tracking-wider">
-              {label}
+              {sentiment ? bandLabel(sentiment) : "Unavailable"}
             </div>
             <div className="text-[10px] font-mono text-ink-dim">
-              {vix ? `VIX day change: ${vix.changePct >= 0 ? "+" : ""}${vix.changePct.toFixed(2)}%` : "Feed unavailable"}
+              {sentiment && sentiment.score !== null
+                ? `Coverage: ${Math.round(sentiment.coverage * 100)}% of weights available`
+                : "Feed unavailable"}
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-2 mt-4 pt-3 border-t border-hairline text-center font-mono">
-          <div className="p-2 rounded-lg bg-ivory border border-hairline">
-            <div className="text-[9px] text-ink-dim uppercase">India VIX</div>
-            <div className="text-xs font-bold text-olive mt-0.5">{vix ? vix.last.toFixed(2) : "Unavailable"}</div>
-            {snapshot && vix && <div className="text-[9px] text-ink-muted mt-0.5 truncate">Source: {snapshot.source}</div>}
-          </div>
-          <div className="p-2 rounded-lg bg-ivory border border-hairline">
-            <div className="text-[9px] text-ink-dim uppercase">FII Net Flow</div>
-            <div className="text-xs font-bold text-ink-dim mt-0.5 truncate">Unavailable</div>
-          </div>
-          <div className="p-2 rounded-lg bg-ivory border border-hairline">
-            <div className="text-[9px] text-ink-dim uppercase">Adv / Dec</div>
-            <div className="text-xs font-bold text-ink-dim mt-0.5">Unavailable</div>
-          </div>
-        </div>
+        {/* Inputs used, with unavailable ones marked */}
+        <ul className="mt-4 pt-3 border-t border-hairline space-y-1.5 font-mono text-[11px]">
+          {(sentiment?.inputs ?? []).map((input) => (
+            <li key={input.key} className="flex items-start justify-between gap-3">
+              <span className={input.available ? "text-ink" : "text-ink-dim line-through decoration-hairline"}>
+                {input.label} <span className="text-ink-muted">×{input.weight.toFixed(2)}</span>
+              </span>
+              <span className={`text-right shrink-0 ${input.available ? "text-olive font-bold" : "text-ink-dim"}`}>
+                {input.available && input.score !== null ? Math.round(input.score) : "Unavailable"}
+              </span>
+            </li>
+          ))}
+          {!sentiment && <li className="text-ink-dim">Inputs unavailable until the feed loads.</li>}
+        </ul>
 
         <div className="mt-3 p-2.5 rounded-xl bg-forest/5 border border-forest/15 text-[11px] text-[#2c3731] leading-relaxed">
           <span className="font-bold text-forest uppercase font-mono mr-1">Rigor Rule:</span>
-          {vix ? descriptionFor(score) : "No India VIX quote is available right now, so no regime reading is shown."}
+          {sentiment ? descriptionFor(sentiment) : "No reading until the feed loads."}
         </div>
       </div>
 
-      <div className="pt-4 mt-4 border-t border-hairline">
-        <div className="flex items-center justify-between text-[10px] font-mono text-ink-dim">
-          <span>INPUTS: INDIA VIX (LIVE) · FII FLOWS (UNAVAILABLE) · ADV/DEC (UNAVAILABLE)</span>
+      {sentiment && (
+        <div className="pt-4 mt-4 border-t border-hairline">
+          <div className="text-[10px] font-mono text-ink-dim space-y-0.5">
+            {sentiment.inputs.map((input) => (
+              <div key={input.key}>
+                <span className="text-ink font-semibold">{input.key}</span>: {input.note}
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

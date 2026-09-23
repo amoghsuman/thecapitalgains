@@ -1,16 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowUpRight, TrendingUp, Layers, FileSearch, ShieldCheck, PieChart, Activity, type LucideIcon } from "lucide-react";
+import { ArrowUpRight, TrendingUp, Layers, FileSearch, type LucideIcon } from "lucide-react";
+import { TRACK_GROUPS } from "@/lib/home/trackGroups";
+import type { CourseSummary } from "@/app/(site)/page";
+
+// Which courses a card counts: one learning path, or every path in a track group.
+type Scope = { path: string } | { group: string };
 
 interface CategoryCard {
   title: string;
   tag: string;
   desc: string;
-  stats: string;
   href: string;
   icon: LucideIcon;
   accentBg: string;
+  /** Omitted for the portfolios card, whose count comes from Sanity portfolios. */
+  scope?: Scope;
 }
 
 const CATEGORIES: CategoryCard[] = [
@@ -18,8 +24,8 @@ const CATEGORIES: CategoryCard[] = [
     title: "Options Trading & Volatility",
     tag: "F&O SPECIALIZATION",
     desc: "Delta hedging, Vega crush during earnings, iron condors, and mathematical margin management for Indian retail traders.",
-    stats: "8 Playbooks &middot; 42 Lessons",
-    href: "/courses?group=options-derivatives",
+    href: "/courses?path=options-derivatives",
+    scope: { path: "options-derivatives" },
     icon: TrendingUp,
     accentBg: "bg-forest-surface text-forest",
   },
@@ -27,7 +33,6 @@ const CATEGORIES: CategoryCard[] = [
     title: "Portfolio Management & Asset Allocation",
     tag: "WEALTH ARCHITECTURE",
     desc: "Rebalancing mechanics, cross-asset quilts, Sharpe frontier optimization, and dividend compounding across Indian cycles.",
-    stats: "6 Playbooks &middot; 34 Lessons",
     href: "/portfolios",
     icon: Layers,
     accentBg: "bg-gold-surface text-gold-text",
@@ -36,14 +41,41 @@ const CATEGORIES: CategoryCard[] = [
     title: "Forensic Accounting & Cash Flow Audits",
     tag: "FUNDAMENTAL RESEARCH",
     desc: "Uncovering promoter pledge traps, EBITDA-to-CFO divergence, working capital manipulation, and clean balance sheet screens.",
-    stats: "5 Playbooks &middot; 28 Lessons",
     href: "/courses?group=corporate-finance",
+    scope: { group: "corporate-finance" },
     icon: FileSearch,
     accentBg: "bg-forest-surface text-forest",
   },
 ];
 
-export default function QuickAccessCategories() {
+function pathsFor(scope: Scope): readonly string[] {
+  if ("path" in scope) return [scope.path];
+  return TRACK_GROUPS.find((g) => g.slug === scope.group)?.paths ?? [];
+}
+
+function plural(n: number, word: string): string {
+  return `${n} ${word}${n === 1 ? "" : "s"}`;
+}
+
+interface QuickAccessCategoriesProps {
+  courses: CourseSummary[];
+  /** Number of model portfolios published in Sanity (getPortfolios()). */
+  portfolioCount: number;
+}
+
+export default function QuickAccessCategories({ courses, portfolioCount }: QuickAccessCategoriesProps) {
+  const trackCount = new Set(courses.map((c) => c.learningPath).filter(Boolean)).size;
+
+  // Live counts: courses on the card's path(s) and the sum of their lessonsCount.
+  const statsFor = (cat: CategoryCard): string => {
+    if (!cat.scope) return plural(portfolioCount, "model portfolio");
+    const paths = pathsFor(cat.scope);
+    const inScope = courses.filter((c) => c.learningPath && paths.includes(c.learningPath));
+    const lessons = inScope.reduce((sum, c) => sum + (c.lessonsCount ?? 0), 0);
+    if (inScope.length === 0) return "Coming soon";
+    return `${plural(inScope.length, "Playbook")} · ${plural(lessons, "Lesson")}`;
+  };
+
   return (
     <section id="quick-access-categories" className="py-12 bg-ivory border-b border-hairline">
       <div className="site-container space-y-6">
@@ -64,7 +96,7 @@ export default function QuickAccessCategories() {
             href="/courses"
             className="text-xs font-mono font-bold text-forest hover:text-forest-dark inline-flex items-center gap-1 group py-1"
           >
-            <span>Explore All 32 Tracks</span>
+            <span>Explore All {trackCount} Tracks</span>
             <span className="group-hover:translate-x-1 transition-transform">→</span>
           </Link>
         </div>
@@ -101,7 +133,7 @@ export default function QuickAccessCategories() {
                 </div>
 
                 <div className="mt-5 pt-3 border-t border-hairline flex items-center justify-between text-xs font-mono text-ink-dim">
-                  <span className="font-semibold text-ink">{cat.stats}</span>
+                  <span className="font-semibold text-ink">{statsFor(cat)}</span>
                   <span className="text-forest font-bold group-hover:underline">Launch Track →</span>
                 </div>
               </Link>

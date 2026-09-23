@@ -56,7 +56,7 @@ export default function AssetClassQuilt({ dataset }: AssetClassQuiltProps) {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <div className="font-mono text-[10px] text-gold font-bold tracking-widest uppercase mb-1">
-            CYCLE ROTATION &amp; DEFENSE
+            CYCLE ROTATION & DEFENSE
           </div>
           <h3 className="text-xl sm:text-2xl font-bold text-olive">
             Asset Class Quilt (Periodic Table of Indian Returns)

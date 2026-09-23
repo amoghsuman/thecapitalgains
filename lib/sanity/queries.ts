@@ -264,3 +264,28 @@ export async function getTestimonials(): Promise<Testimonial[]> {
     }
   `)
 }
+
+// ─── Featured learning paths (home page tracks) ───────────────────────────────
+
+export type FeaturedLearningPath = {
+  path: string
+  homeOrder: number
+  blurb: string | null
+  /** Live count of courses on this path. */
+  courseCount: number
+}
+
+// Paths flagged featuredOnHome on their learningPathMeta document, ordered by
+// homeOrder, with a live course count. Paths with no courses are dropped here
+// so the home page never shows an empty track.
+export async function getFeaturedLearningPaths(): Promise<FeaturedLearningPath[]> {
+  const rows: FeaturedLearningPath[] = await client.fetch(`
+    *[_type == "learningPathMeta" && featuredOnHome == true] | order(homeOrder asc, path asc) {
+      path,
+      "homeOrder": coalesce(homeOrder, 99),
+      blurb,
+      "courseCount": count(*[_type == "course" && learningPath == ^.path])
+    }
+  `)
+  return rows.filter((r) => r.courseCount > 0)
+}

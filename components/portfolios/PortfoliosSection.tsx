@@ -68,7 +68,7 @@ export default function PortfoliosSection({ portfolios, datasets }: PortfoliosSe
               </span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-bold text-olive tracking-tight">
-              Model Portfolios &amp; Monthly Performance
+              Model Portfolios & Monthly Performance
             </h2>
             <p className="text-ink-dim text-sm sm:text-base leading-relaxed">
               Explore how transparent, systematic equity allocation, dividend compounding, and momentum risk-weighting are
@@ -170,7 +170,7 @@ export default function PortfoliosSection({ portfolios, datasets }: PortfoliosSe
           <div className="space-y-2">
             <div className="flex items-center justify-between text-[11px] font-mono text-ink-dim">
               <span className="font-bold text-olive">
-                KEY RISK &amp; RETURN METRICS ({currentPortfolio.name.toUpperCase()})
+                KEY RISK & RETURN METRICS ({currentPortfolio.name.toUpperCase()})
               </span>
               {periodLabel && <span>Model period: {periodLabel}</span>}
             </div>

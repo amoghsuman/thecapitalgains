@@ -226,7 +226,7 @@ export default function FeaturedCardTrendGraph({ cursorPos }: FeaturedCardTrendG
             textAnchor="end"
             className="font-mono text-[8px] fill-gold font-bold tracking-widest uppercase opacity-85"
           >
-            NIFTY_F&amp;O_DYNAMIC_SURFACE // +34.2%
+            NIFTY_F&O_DYNAMIC_SURFACE // +34.2%
           </text>
         </svg>
       </motion.div>

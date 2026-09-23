@@ -9,43 +9,45 @@ import { TRACK_GROUPS, learningPathTitle } from "@/lib/home/trackGroups";
 import { LEVELS, mapLevel, parseDurationHours, type Level } from "@/lib/courses/level";
 import { estimateCourseReadingTime } from "@/lib/courses/readingTime";
 import type { CourseSummary } from "@/app/(site)/page";
+import type { FeaturedLearningPath } from "@/lib/sanity/queries";
 
-const GROUP_EXCERPT: Record<string, string> = {
-  "retail-investing": "options-expiry-gamma",
-  "corporate-finance": "forensic-cfo-pat",
+// Sample excerpts per learning path (PlaybookSneakPeekDrawer ids).
+const PATH_EXCERPT: Record<string, string> = {
+  "options-derivatives": "options-expiry-gamma",
+  "forensic-compliance": "forensic-cfo-pat",
 };
 
-const VISIBLE_PATH_NAMES = 4;
-
-type GroupStats = {
+type PathStats = {
   courseCount: number;
   levelMix: Record<Level, number>;
   hours: number;
   timedCourses: number;
-  sampleOutcomes: string[];
   topCourses: CourseSummary[];
 };
 
 interface CuratedTracksSectionProps {
   courses: CourseSummary[];
+  /** Paths flagged featuredOnHome in Sanity (learningPathMeta), ordered by homeOrder, courseCount > 0. */
+  featuredPaths: FeaturedLearningPath[];
 }
 
-export default function CuratedTracksSection({ courses }: CuratedTracksSectionProps) {
+// Cards are the featured learning paths; the tabs filter them by track group.
+export default function CuratedTracksSection({ courses, featuredPaths }: CuratedTracksSectionProps) {
   const [activeGroup, setActiveGroup] = useState<string>("all");
   const [previewExcerptId, setPreviewExcerptId] = useState<string | null>(null);
   const [hoveredCourse, setHoveredCourse] = useState<CourseSummary | null>(null);
 
-  const statsByGroup = useMemo(() => {
-    const out: Record<string, GroupStats> = {};
-    for (const group of TRACK_GROUPS) {
-      const paths: readonly string[] = group.paths;
-      const inGroup = courses.filter((c) => c.learningPath && paths.includes(c.learningPath));
+  const statsByPath = useMemo(() => {
+    const out: Record<string, PathStats> = {};
+    for (const fp of featuredPaths) {
+      const inPath = courses
+        .filter((c) => c.learningPath === fp.path)
+        .sort((a, b) => (a.orderRank ?? 99) - (b.orderRank ?? 99));
       const levelMix: Record<Level, number> = { Beginner: 0, Intermediate: 0, Advanced: 0 };
       let hours = 0;
       let timedCourses = 0;
-      const sampleOutcomes: string[] = [];
 
-      for (const c of inGroup) {
+      for (const c of inPath) {
         const level = mapLevel(c.tag);
         if (level) levelMix[level] += 1;
         const h = parseDurationHours(c.duration);
@@ -53,24 +55,26 @@ export default function CuratedTracksSection({ courses }: CuratedTracksSectionPr
           hours += h;
           timedCourses += 1;
         }
-        if (c.whatYouLearn && c.whatYouLearn.length > 0 && sampleOutcomes.length < 3) {
-          sampleOutcomes.push(c.whatYouLearn[0]);
-        }
       }
 
-      out[group.slug] = {
-        courseCount: inGroup.length,
+      out[fp.path] = {
+        // Live count from getAllCourses(); the GROQ count travels with the path for parity.
+        courseCount: inPath.length || fp.courseCount,
         levelMix,
         hours,
         timedCourses,
-        sampleOutcomes,
-        topCourses: inGroup.slice(0, 3),
+        topCourses: inPath.slice(0, 3),
       };
     }
     return out;
-  }, [courses]);
+  }, [courses, featuredPaths]);
 
-  const filteredGroups = TRACK_GROUPS.filter((g) => activeGroup === "all" || g.slug === activeGroup);
+  const groupOf = (path: string) => TRACK_GROUPS.find((g) => (g.paths as readonly string[]).includes(path)) ?? null;
+  // Only groups that contain a featured path get a tab.
+  const groupTabs = TRACK_GROUPS.filter((g) => featuredPaths.some((fp) => (g.paths as readonly string[]).includes(fp.path)));
+  const visiblePaths = featuredPaths
+    .filter((fp) => (statsByPath[fp.path]?.courseCount ?? 0) > 0)
+    .filter((fp) => activeGroup === "all" || groupOf(fp.path)?.slug === activeGroup);
 
   return (
     <section id="curated-tracks-section" className="py-16 md:py-20 bg-ivory border-b border-hairline relative">
@@ -101,8 +105,12 @@ export default function CuratedTracksSection({ courses }: CuratedTracksSectionPr
         {/* Filter Tabs */}
         <div className="flex items-center gap-2 border-b border-hairline pb-4 overflow-x-auto">
           {[
-            { id: "all", label: "All Pathways", count: courses.length },
-            ...TRACK_GROUPS.map((g) => ({ id: g.slug, label: g.title, count: statsByGroup[g.slug]?.courseCount ?? 0 })),
+            { id: "all", label: "All Pathways", count: featuredPaths.length },
+            ...groupTabs.map((g) => ({
+              id: g.slug,
+              label: g.title,
+              count: featuredPaths.filter((fp) => (g.paths as readonly string[]).includes(fp.path)).length,
+            })),
           ].map((tab) => (
             <button
               key={tab.id}
@@ -128,19 +136,17 @@ export default function CuratedTracksSection({ courses }: CuratedTracksSectionPr
         {/* Dynamic Animated Tracks Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
           <AnimatePresence mode="popLayout">
-            {filteredGroups.map((group) => {
-              const stats = statsByGroup[group.slug];
+            {visiblePaths.map((fp) => {
+              const stats = statsByPath[fp.path];
               const hasCourses = stats.courseCount > 0;
-              const excerptId = GROUP_EXCERPT[group.slug];
-              const href = `/courses?group=${group.slug}`;
-              const names = group.paths.map(learningPathTitle);
-              const shown = names.slice(0, VISIBLE_PATH_NAMES);
-              const hiddenCount = names.length - shown.length;
+              const excerptId = PATH_EXCERPT[fp.path];
+              const href = `/courses?path=${fp.path}`;
+              const group = groupOf(fp.path);
               const mix = LEVELS.filter((l) => stats.levelMix[l] > 0).map((l) => `${stats.levelMix[l]} ${l}`);
 
               return (
                 <motion.div
-                  key={group.slug}
+                  key={fp.path}
                   layout
                   initial={{ opacity: 0, scale: 0.96 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -151,14 +157,18 @@ export default function CuratedTracksSection({ courses }: CuratedTracksSectionPr
                   <div className="space-y-2.5">
                     <h3 className="text-lg font-bold text-olive group-hover:text-forest transition-colors leading-snug">
                       <Link href={href} className="hover:underline">
-                        {group.title}
+                        {learningPathTitle(fp.path)}
                       </Link>
                     </h3>
 
                     {/* Metadata */}
                     <div className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 font-mono text-[11px] text-ink-muted">
-                      <span>{group.paths.length} paths</span>
-                      <span>·</span>
+                      {group && (
+                        <>
+                          <span>{group.title}</span>
+                          <span>·</span>
+                        </>
+                      )}
                       <span>
                         {hasCourses
                           ? `${stats.courseCount} ${stats.courseCount === 1 ? "course" : "courses"}`
@@ -207,11 +217,12 @@ export default function CuratedTracksSection({ courses }: CuratedTracksSectionPr
                       </div>
                     </div>
 
-                    {/* Learning path names compact */}
-                    <p className="text-[11px] text-ink-dim font-medium leading-relaxed line-clamp-2 pt-1">
-                      {shown.join(", ")}
-                      {hiddenCount > 0 && <span className="text-ink-muted">, +{hiddenCount} more</span>}
-                    </p>
+                    {/* Editor blurb from Sanity, when set */}
+                    {fp.blurb && (
+                      <p className="text-[11px] text-ink-dim font-medium leading-relaxed line-clamp-2 pt-1">
+                        {fp.blurb}
+                      </p>
+                    )}
                   </div>
 
                   <div className="mt-4 pt-3 border-t border-hairline flex items-center justify-between text-xs text-ink-dim">
@@ -254,7 +265,7 @@ export default function CuratedTracksSection({ courses }: CuratedTracksSectionPr
             <div className="flex items-start justify-between gap-3">
               <div>
                 <span className="font-mono text-[9px] font-bold text-gold uppercase tracking-widest bg-forest-surface px-2 py-0.5 rounded">
-                  Quick View &middot; Learning Outcomes
+                  Quick View · Learning Outcomes
                 </span>
                 <h4 className="font-bold text-sm sm:text-base text-olive mt-1 leading-snug">
                   {hoveredCourse.title}
@@ -298,7 +309,7 @@ export default function CuratedTracksSection({ courses }: CuratedTracksSectionPr
             <div className="pt-2 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="font-mono text-[11px] text-ink-dim">
-                  {hoveredCourse.duration || "Self-Paced"} &middot; {hoveredCourse.lessonsCount || 8} Lessons
+                  {hoveredCourse.duration || "Self-Paced"} · {hoveredCourse.lessonsCount || 8} Lessons
                 </span>
                 <span className="inline-flex items-center gap-1 font-mono text-[10px] text-forest bg-forest-surface px-2 py-0.5 rounded-full border border-forest/20">
                   <BookOpen className="w-2.5 h-2.5" />
@@ -314,7 +325,7 @@ export default function CuratedTracksSection({ courses }: CuratedTracksSectionPr
                 </span>
               </div>
               <Link
-                href={`/learn/${hoveredCourse.slug}`}
+                href={`/courses/${hoveredCourse.slug}`}
                 className="px-3.5 py-1.5 bg-forest hover:bg-forest-dark text-white rounded-lg text-xs font-mono font-bold inline-flex items-center gap-1 shadow-xs cursor-pointer"
               >
                 <span>Full Syllabus</span>

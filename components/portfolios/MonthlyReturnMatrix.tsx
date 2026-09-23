@@ -218,7 +218,7 @@ export default function MonthlyReturnMatrix({ portfolio }: MonthlyReturnMatrixPr
         </div>
 
         <div className="text-ink-muted">
-          * Click any cell above to inspect holding contribution &amp; macroeconomic teardown.
+          * Click any cell above to inspect holding contribution & macroeconomic teardown.
         </div>
       </div>
 
@@ -271,7 +271,7 @@ export default function MonthlyReturnMatrix({ portfolio }: MonthlyReturnMatrixPr
           {selectedCell.memo && (
             <div className="p-3 bg-panel rounded-xl border border-hairline text-xs space-y-1">
               <div className="font-mono text-[10px] text-gold font-bold uppercase tracking-wider">
-                Macroeconomic Context &amp; Allocation Memo:
+                Macroeconomic Context & Allocation Memo:
               </div>
               <p className="text-ink-dim leading-relaxed">{selectedCell.memo}</p>
             </div>

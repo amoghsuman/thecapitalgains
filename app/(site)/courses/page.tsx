@@ -44,6 +44,10 @@ export default async function CoursesPage({ searchParams }: { searchParams: Sear
   const pathParam = firstParam(searchParams.path);
   const initialGroup = TRACK_GROUPS.some((g) => g.slug === groupParam) && groupParam ? groupParam : "all";
   const initialPath = LEARNING_PATHS.some((p) => p.value === pathParam) && pathParam ? pathParam : "all";
+  const levelParam = firstParam(searchParams.level);
+  const initialLevel = LEVELS.some((l) => l === levelParam) && levelParam ? levelParam : "all";
+  // Free text; capped so a pasted novel cannot blow up the initial HTML.
+  const initialQ = (firstParam(searchParams.q) ?? "").trim().slice(0, 120);
 
   const trackCount = new Set(courses.map((c) => c.learningPath).filter(Boolean)).size;
 
@@ -83,6 +87,8 @@ export default async function CoursesPage({ searchParams }: { searchParams: Sear
         courses={courses}
         initialGroup={initialGroup}
         initialPath={initialPath}
+        initialQ={initialQ}
+        initialLevel={initialLevel}
         header={header}
       />
     </div>

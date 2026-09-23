@@ -330,7 +330,7 @@ export default function LearningRoadmap() {
               {/* Core Concepts Breakdown */}
               <div className="space-y-3 mb-6">
                 <div className="font-mono text-[10px] font-bold text-gold-text tracking-[0.18em] uppercase">
-                  MASTERED CONCEPTS &amp; SCREENERS
+                  MASTERED CONCEPTS & SCREENERS
                 </div>
 
                 <div className="grid grid-cols-1 gap-2.5">

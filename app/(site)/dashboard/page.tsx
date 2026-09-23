@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation"
 import Link from "next/link"
 import { createClient } from "@/lib/supabase/server"
+import { getActiveSubscriptions } from "@/lib/subscription"
 import { getLearnerStats } from "@/lib/dashboard/stats"
 import { getLearnerCatalog } from "@/lib/dashboard/catalog"
 import CourseProgressBar from "@/components/dashboard/CourseProgressBar"
@@ -32,21 +33,15 @@ export default async function DashboardPage() {
 
   // Progress numbers come from the one shared function the home widget also
   // uses (via /api/learner-stats), so the two surfaces always agree.
-  const [{ data: sub }, stats] = await Promise.all([
-    supabase
-      .from("subscriptions")
-      .select("tier, status, current_period_end, current_period_start")
-      .eq("user_id", user.id)
-      .eq("status", "active")
-      .single(),
+  const [subs, stats] = await Promise.all([
+    // Same read and same validity rule as the lesson reader (lib/subscription.ts):
+    // one row per stack, Learn and Research shown as separate cards.
+    getActiveSubscriptions(supabase, user.id),
     getLearnerCatalog().then((catalog) => getLearnerStats(supabase, user.id, catalog)),
   ])
 
   const myCourses = stats.courses
 
-  const tier = sub?.tier ?? "free"
-  const tierLabel = TIER_LABELS[tier] ?? tier
-  const badge = TIER_BADGE[tier] ?? TIER_BADGE.free
   const firstName = (user.user_metadata?.full_name as string | undefined)?.split(" ")[0] ?? null
 
   const memberSince = new Date(user.created_at).toLocaleDateString("en-IN", {
@@ -54,13 +49,24 @@ export default async function DashboardPage() {
     year: "numeric",
   })
 
-  const renewalDate = sub?.current_period_end
-    ? new Date(sub.current_period_end).toLocaleDateString("en-IN", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      })
-    : null
+  // A lapsed row (status still "active" but period ended) shows as Free here,
+  // exactly as the access gates treat it.
+  const stackCards = [
+    { key: "learn", heading: "Learn subscription", sub: subs.learn, upsell: "Upgrade to unlock every course and lesson." },
+    { key: "research", heading: "Research subscription", sub: subs.research, upsell: "Subscribe for the newsletter, model portfolios and research notes." },
+  ].map((c) => {
+    const isCurrent = c.sub?.isCurrent ?? false
+    const tier = isCurrent && c.sub ? c.sub.tier : "free"
+    return {
+      ...c,
+      isCurrent,
+      tierLabel: TIER_LABELS[tier] ?? tier,
+      badge: TIER_BADGE[tier] ?? TIER_BADGE.free,
+      renewalDate: isCurrent && c.sub?.currentPeriodEnd
+        ? new Date(c.sub.currentPeriodEnd).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })
+        : null,
+    }
+  })
 
   const lastCourse = myCourses[0] ?? null
   const resumeHref = lastCourse
@@ -99,24 +105,25 @@ export default async function DashboardPage() {
           </h1>
         </div>
 
-        {/* Subscription + Account */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 20 }}>
+        {/* Learn + Research subscriptions, then Account */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16, marginBottom: 20 }}>
 
-          <div style={card}>
-            <p style={label}>Subscription</p>
+          {stackCards.map((c) => (
+          <div key={c.key} style={card}>
+            <p style={label}>{c.heading}</p>
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
               <span style={{
                 fontSize: 12,
                 fontWeight: 700,
-                background: badge.bg,
-                color: badge.color,
+                background: c.badge.bg,
+                color: c.badge.color,
                 padding: "4px 12px",
                 borderRadius: 999,
                 fontFamily: "var(--font-inter)",
               }}>
-                {tierLabel}
+                {c.tierLabel}
               </span>
-              {sub && (
+              {c.isCurrent && (
                 <span style={{
                   fontSize: 11,
                   fontWeight: 600,
@@ -130,16 +137,16 @@ export default async function DashboardPage() {
                 </span>
               )}
             </div>
-            {renewalDate && (
+            {c.renewalDate && (
               <p style={{ fontSize: 13, color: "var(--ink-dim)", margin: 0 }}>
                 Renews on{" "}
-                <strong style={{ color: "var(--ink)" }}>{renewalDate}</strong>
+                <strong style={{ color: "var(--ink)" }}>{c.renewalDate}</strong>
               </p>
             )}
-            {!sub && (
+            {!c.isCurrent && (
               <>
                 <p style={{ fontSize: 13, color: "var(--ink-dim)", marginBottom: 16 }}>
-                  You are on the free plan. Upgrade to unlock all courses and research.
+                  {c.upsell}
                 </p>
                 <Link
                   href="/pricing"
@@ -159,6 +166,7 @@ export default async function DashboardPage() {
               </>
             )}
           </div>
+          ))}
 
           <div style={card}>
             <p style={label}>Account</p>

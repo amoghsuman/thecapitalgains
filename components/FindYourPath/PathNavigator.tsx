@@ -251,7 +251,7 @@ export function PathNavigator({ personas }: { personas: Persona[] }) {
             Where do you start?
           </h2>
           <p className="text-sm sm:text-base text-ink-dim max-w-2xl">
-            Select who you are, then your goal. We&apos;ll map your learning path.
+            Select who you are, then your goal. We'll map your learning path.
           </p>
         </div>
 
