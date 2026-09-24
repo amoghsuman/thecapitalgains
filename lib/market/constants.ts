@@ -11,6 +11,9 @@ export type NiftyConstituent = {
   weight: number;
 };
 
+/** Leads the weights source string whenever the stale reference copy below is served. */
+export const REFERENCE_WEIGHTS_PREFIX = "Reference weights";
+
 // STALE FALLBACK ONLY. The live list and weights come from
 // lib/market/providers.ts (getNifty50Constituents + getConstituentWeights:
 // NSE constituent CSV, free-float market cap from Yahoo). This copy is used

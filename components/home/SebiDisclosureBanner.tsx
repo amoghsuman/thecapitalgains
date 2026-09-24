@@ -76,9 +76,7 @@ export default function SebiDisclosureBanner() {
                   <AlertTriangle className="w-3.5 h-3.5 text-[#B91C1C]" />
                   <span>SEBI RISK DISCLOSURE ON DERIVATIVES TRADING</span>
                 </div>
-                <p>
-                  As per SEBI study published in January 2023: <strong>9 out of 10 individual traders</strong> in equity Futures and Options (F&O) segment incurred net losses. On average, loss makers registered net trading losses of approx. ₹50,000, and spent an additional 28% of net trading losses in transaction costs.
-                </p>
+                {/* The SEBI risk-disclosure paragraph now lives in components/layout/Footer.tsx. */}
                 <p>
                   Derivative instruments (Futures and Options) involve substantial risk of loss and are not suitable for all investors. The Capital Gains strictly teaches defined-risk hedging, payoff geometries, and volatility mathematics for educational purposes. We never advocate naked speculative positioning.
                 </p>

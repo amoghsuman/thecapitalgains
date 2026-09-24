@@ -261,7 +261,7 @@ export default function FindYourCourseSection({ courses, featuredPaths }: FindYo
               levelMix: { Beginner: 0, Intermediate: 0, Advanced: 0 },
               hours: 0,
             };
-            const parentGroup = TRACK_GROUPS.find((g) => g.paths.includes(fp.path));
+            const parentGroup = TRACK_GROUPS.find((g) => (g.paths as readonly string[]).includes(fp.path));
 
             return (
               <div

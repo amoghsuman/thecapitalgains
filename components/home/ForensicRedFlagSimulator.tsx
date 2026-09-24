@@ -296,7 +296,7 @@ export default function ForensicRedFlagSimulator() {
                 Course Module: Reading Notes to Accounts
               </span>
               <Link
-                href="/courses/financial-statements-deep-dive"
+                href="/courses/how-to-read-financial-statements"
                 className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-forest hover:bg-forest-dark text-white text-xs font-bold transition-all shadow-xs"
               >
                 <span>Master Forensic Analysis</span>

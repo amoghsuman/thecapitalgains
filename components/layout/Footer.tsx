@@ -43,10 +43,13 @@ export default function Footer() {
           <div className="bg-forest-surface border border-hairline rounded-2xl p-6 mb-8 max-w-4xl mx-auto">
             <p className="text-ink-dim text-[13px] leading-relaxed">
               Educational content only · Not investment advice · Trading involves risk of loss
-              <br />
-              <span className="block mt-2 opacity-60">
-                Please consult a SEBI-registered investment advisor or a research analyst before trading or investing
-              </span>
+            </p>
+            {/* SEBI-mandated F&O risk disclosure (moved verbatim from the former home-page SebiDisclosureBanner). */}
+            <p className="text-ink-dim text-[12px] leading-relaxed mt-3">
+              As per SEBI study published in January 2023: <strong>9 out of 10 individual traders</strong> in equity Futures and Options (F&O) segment incurred net losses. On average, loss makers registered net trading losses of approx. ₹50,000, and spent an additional 28% of net trading losses in transaction costs.
+            </p>
+            <p className="text-ink-dim text-[13px] leading-relaxed mt-2 opacity-60">
+              Please consult a SEBI-registered investment advisor or a research analyst before trading or investing
             </p>
           </div>
           <p className="text-ink-dim text-[12px] font-mono">

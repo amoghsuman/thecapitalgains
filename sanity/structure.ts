@@ -103,6 +103,24 @@ export const structure: StructureResolver = (S) =>
             .defaultOrdering([{ field: 'homeOrder', direction: 'asc' }])
         ),
       S.listItem()
+        .title('Glossary terms')
+        .schemaType('glossaryTerm')
+        .child(
+          S.documentList()
+            .title('Glossary terms')
+            .filter('_type == "glossaryTerm"')
+            .defaultOrdering([{ field: 'category', direction: 'asc' }, { field: 'order', direction: 'asc' }])
+        ),
+      S.listItem()
+        .title('Market fact cards')
+        .schemaType('marketFactCard')
+        .child(
+          S.documentList()
+            .title('Market fact cards')
+            .filter('_type == "marketFactCard"')
+            .defaultOrdering([{ field: 'order', direction: 'asc' }])
+        ),
+      S.listItem()
         .title('Testimonials')
         .schemaType('testimonial')
         .child(

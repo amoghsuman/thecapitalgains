@@ -8,6 +8,8 @@ import {
   getTestimonials,
   getFeaturedLearningPaths,
   getPortfolios,
+  getGlossaryTerms,
+  getMarketFactCards,
 } from "@/lib/sanity/queries";
 import { PathNavigator } from "@/components/FindYourPath";
 import HeroCanvasBackground from "@/components/home/HeroCanvasBackground";
@@ -54,14 +56,16 @@ export type CourseSummary = {
 };
 
 export default async function HomePage() {
-  const [courses, featuredWhyPicked, featuredCourseForReader, findYourPathPersonas, testimonials, featuredPaths, portfolios]: [
+  const [courses, featuredWhyPicked, featuredCourseForReader, findYourPathPersonas, testimonials, featuredPaths, portfolios, glossaryTerms, factCards]: [
     CourseSummary[],
     string | null,
     Awaited<ReturnType<typeof getFullCourseForReader>>,
     Awaited<ReturnType<typeof getFindYourPathData>>,
     Awaited<ReturnType<typeof getTestimonials>>,
     Awaited<ReturnType<typeof getFeaturedLearningPaths>>,
-    Awaited<ReturnType<typeof getPortfolios>>
+    Awaited<ReturnType<typeof getPortfolios>>,
+    Awaited<ReturnType<typeof getGlossaryTerms>>,
+    Awaited<ReturnType<typeof getMarketFactCards>>
   ] = await Promise.all([
     getAllCourses(),
     getCourseWhyPicked(FEATURED_CARD_COURSE_SLUG),
@@ -73,6 +77,9 @@ export default async function HomePage() {
     getFeaturedLearningPaths().catch(() => []),
     // Only the count is used here (QuickAccessCategories portfolios card).
     getPortfolios().catch(() => []),
+    // Weekly-rotated glossary terms and fact cards; empty until scripts/seed-glossary-facts.mjs --apply runs.
+    getGlossaryTerms().catch(() => []),
+    getMarketFactCards().catch(() => []),
   ]);
 
   // Sourced facts: the market_reference table wins over the constants when it
@@ -205,7 +212,7 @@ export default async function HomePage() {
       <HomeLabsSection />
 
       {/* ── MARKET DESK & TELEMETRY (Observatory Radar, Treemap, Sentiment, Glossary, Facts) ── */}
-      <MarketDeskSection courseTitles={marketNoteCourseTitles} facts={facts} />
+      <MarketDeskSection courseTitles={marketNoteCourseTitles} facts={facts} glossaryTerms={glossaryTerms} factCards={factCards} />
 
       {/* ── WHY US: THE CONTRAST (Noise vs Rigor, SEBI stats, 3 Pillars, Tested Myths) ── */}
       <WhyUsSection />
@@ -257,7 +264,7 @@ export default async function HomePage() {
       <FloatingJumpDock />
 
       {/* ── MARKET PULSE NOTIFICATION TOAST (60s Auto-Refresh) ── */}
-      <MarketPulseToast facts={facts} />
+      <MarketPulseToast facts={facts} cards={factCards} />
     </div>
   );
 }

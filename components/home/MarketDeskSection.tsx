@@ -10,15 +10,18 @@ import { MarketPulseStrip } from "./MarketPulseToast";
 import { useMarketSnapshot } from "@/lib/market/useMarketSnapshot";
 import { liveLabel } from "@/lib/market/client";
 import type { MarketFact } from "@/lib/home/marketFacts";
+import type { GlossaryTerm, MarketFactCard } from "@/lib/sanity/queries";
 
 interface MarketDeskSectionProps {
   courseTitles: Record<string, string>;
   facts: MarketFact[];
+  glossaryTerms: GlossaryTerm[];
+  factCards: MarketFactCard[];
 }
 
 type MarketDeskTab = "heatmap" | "sentiment" | "glossary";
 
-export default function MarketDeskSection({ courseTitles, facts }: MarketDeskSectionProps) {
+export default function MarketDeskSection({ courseTitles, facts, glossaryTerms, factCards }: MarketDeskSectionProps) {
   const [activeTab, setActiveTab] = useState<MarketDeskTab>("heatmap");
   const market = useMarketSnapshot();
   const isLive = market.status === "ready";
@@ -113,8 +116,8 @@ export default function MarketDeskSection({ courseTitles, facts }: MarketDeskSec
 
             {activeTab === "glossary" && (
               <div className="w-full space-y-4">
-                <GlossaryOfTheWeek />
-                <MarketPulseStrip facts={facts} />
+                <GlossaryOfTheWeek terms={glossaryTerms} />
+                <MarketPulseStrip facts={facts} cards={factCards} />
               </div>
             )}
           </div>

@@ -3,11 +3,16 @@
 import MarketSentimentGauge from "@/components/home/MarketSentimentGauge";
 import GlossaryOfTheWeek from "@/components/home/GlossaryOfTheWeek";
 
+import type { GlossaryTerm } from "@/lib/sanity/queries";
+
 interface MarketIntelligenceHubProps {
   courseTitles: Record<string, string>;
+  glossaryTerms: GlossaryTerm[];
 }
 
-export default function MarketIntelligenceHub({ courseTitles }: MarketIntelligenceHubProps) {
+// Superseded by MarketDeskSection on the home page; kept only until the old
+// layout is retired.
+export default function MarketIntelligenceHub({ courseTitles, glossaryTerms }: MarketIntelligenceHubProps) {
   return (
     <section id="market-intelligence-hub" className="py-16 md:py-20 bg-ivory border-b border-hairline">
       <div className="site-container space-y-9">
@@ -26,7 +31,7 @@ export default function MarketIntelligenceHub({ courseTitles }: MarketIntelligen
         {/* 2-Column Responsive Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-stretch">
           <MarketSentimentGauge courseTitles={courseTitles} />
-          <GlossaryOfTheWeek />
+          <GlossaryOfTheWeek terms={glossaryTerms} />
         </div>
       </div>
     </section>

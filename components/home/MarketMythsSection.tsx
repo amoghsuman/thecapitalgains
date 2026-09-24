@@ -19,6 +19,14 @@ interface MarketMyth {
   practicalTakeaway: string;
 }
 
+/** Short titles and verdicts for the myths below, for the "Myths, tested" tile on the home page. */
+export const MYTH_SUMMARIES: { id: string; title: string; verdict: string }[] = [
+  { id: "myth-1", title: "Weekly OTM option buying", verdict: "Debunked: mathematically destructive" },
+  { id: "myth-2", title: "A ₹20 stock is cheap", verdict: "Debunked: the nominal price illusion" },
+  { id: "myth-3", title: "Waiting in 100% cash", verdict: "Debunked: the cost of missing the best days" },
+  { id: "myth-4", title: "45 funds and 60 stocks diversify", verdict: "Debunked: closet indexing and expense drag" },
+];
+
 function buildMyths(facts: MarketFact[]): MarketMyth[] {
   const otmProbability = getFact(facts, "deepOtmExpiryProbability");
   const concentration = getFact(facts, "returnsConcentration");

@@ -4,11 +4,17 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Activity, X, ExternalLink, Sparkles, TrendingUp, ShieldAlert, Award } from "lucide-react";
 import Link from "next/link";
-import { SEBI_FO_STATS, SEBI_FO_SOURCE } from "@/lib/home/sebiStats";
 import { getFact, isShowable, provenance, type MarketFact as SourcedFact } from "@/lib/home/marketFacts";
+import { weekWindow } from "@/lib/home/weekRotation";
+import type { MarketFactCard } from "@/lib/sanity/queries";
 
-const sebiShare = SEBI_FO_STATS.find((s) => s.id === "share-lost-fy22-24");
-const sebiAggregate = SEBI_FO_STATS.find((s) => s.id === "aggregate-loss-fy22-24");
+// Cards: the two live-computed facts from lib/home/marketFacts.ts (rule of 72,
+// hurdle rate) plus the published `marketFactCard` documents from Sanity.
+// Everything else that used to be hard-coded here lives in Sanity now (seeded
+// by scripts/seed-glossary-facts.mjs; unsourced ones stay drafts).
+
+const STRIP_SIZE = 6;
+const DAY_MS = 86_400_000;
 
 interface MarketFact {
   id: string;
@@ -22,27 +28,16 @@ interface MarketFact {
   source?: string;
   /** When set, the toast is only shown if this fact is showable (has a value and is fresh). */
   requiresFact?: SourcedFact;
-  relatedCourseHref: string;
-  relatedCourseName: string;
+  relatedCourseHref?: string;
+  relatedCourseName?: string;
 }
 
-function buildToasts(facts: SourcedFact[]): MarketFact[] {
+// Live-computed cards; each is shown only while its fact is showable.
+function buildLiveCards(facts: SourcedFact[]): MarketFact[] {
   const cagr = getFact(facts, "niftyLongTermCagr");
   const doubling = getFact(facts, "doublingYears");
   const hurdle = getFact(facts, "hurdleRateAssumption");
-  return [
-  {
-    id: "f1",
-    badge: "SEBI DERIVATIVES STATS",
-    badgeColor: "bg-rose-50 text-rose-700 border-rose-200",
-    icon: "shield",
-    title: `${sebiShare?.value ?? ""} of individual F&O traders lost money`,
-    fact: `SEBI's study found ${sebiShare?.value ?? ""} ${sebiShare?.label ?? ""}, with ${sebiAggregate?.value ?? ""} ${sebiAggregate?.label ?? ""}.`,
-    stat: `${sebiAggregate?.value ?? ""} lost`,
-    source: `Source: ${SEBI_FO_SOURCE}`,
-    relatedCourseHref: "/courses/options-trading-from-zero",
-    relatedCourseName: "Options Trading From Zero",
-  },
+  const cards: MarketFact[] = [
   {
     id: "f2",
     badge: "COMPOUNDING LAW",
@@ -55,39 +50,6 @@ function buildToasts(facts: SourcedFact[]): MarketFact[] {
     requiresFact: doubling,
     relatedCourseHref: "/courses/mutual-funds-etfs-complete-guide",
     relatedCourseName: "Mutual Funds & ETFs Guide",
-  },
-  {
-    id: "f3",
-    badge: "FORENSIC ACCOUNTING",
-    badgeColor: "bg-amber-50 text-amber-800 border-amber-200",
-    icon: "sparkles",
-    title: "The CFO Divergence Warning",
-    fact: "In many governance collapses on Dalal Street, net profit kept growing on paper while operating cash flow (CFO) trended negative for two or more consecutive years. Profit is an opinion; cash is a fact.",
-    stat: "CFO vs PAT",
-    relatedCourseHref: "/courses/how-to-read-financial-statements",
-    relatedCourseName: "Financial Statements Playbook",
-  },
-  {
-    id: "f4",
-    badge: "TAX FRICTION",
-    badgeColor: "bg-forest-surface text-forest border-forest/20",
-    icon: "award",
-    title: "STCG 20% Drag vs Deferred LTCG",
-    fact: "An active trader realizing gains every month pays 20% STCG immediately, losing the exponential yield curve compared to deferred 12.5% LTCG after the 1-year threshold.",
-    stat: "20% STCG annual drag",
-    relatedCourseHref: "/courses/mutual-funds-etfs-complete-guide",
-    relatedCourseName: "Wealth Friction Lab",
-  },
-  {
-    id: "f5",
-    badge: "DERIVATIVES MECHANICS",
-    badgeColor: "bg-gold/15 text-gold-text border-gold/30",
-    icon: "trending",
-    title: "The Implied Volatility Trap",
-    fact: "Buying options right before Union Budget or corporate earnings often leads to a 40%+ loss within minutes of market open due to rapid Vega collapse (IV crush).",
-    stat: "Vega decay > Spot delta",
-    relatedCourseHref: "/courses/options-trading-from-zero",
-    relatedCourseName: "Options Trading From Zero",
   },
   {
     id: "f6",
@@ -103,16 +65,57 @@ function buildToasts(facts: SourcedFact[]): MarketFact[] {
     relatedCourseName: "Fundamental Analysis Playbook",
   },
   ];
+  return cards.filter((f) => !f.requiresFact || isShowable(f.requiresFact));
+}
+
+const CARD_BADGE_COLORS = [
+  "bg-rose-50 text-rose-700 border-rose-200",
+  "bg-amber-50 text-amber-800 border-amber-200",
+  "bg-forest-surface text-forest border-forest/20",
+  "bg-gold/15 text-gold-text border-gold/30",
+];
+
+function isFresh(card: MarketFactCard, now: Date): boolean {
+  const asOf = new Date(card.asOf);
+  if (Number.isNaN(asOf.getTime())) return false;
+  return (now.getTime() - asOf.getTime()) / DAY_MS <= card.staleAfterDays;
+}
+
+// Sanity cards → strip shape. Stale cards are dropped; a card whose course is
+// missing keeps its text but gets no reference link.
+function fromSanityCards(cards: MarketFactCard[], now: Date): MarketFact[] {
+  return cards
+    .filter((c) => isFresh(c, now))
+    .map((c, i) => ({
+      id: c._id,
+      badge: c.categoryLabel,
+      badgeColor: CARD_BADGE_COLORS[i % CARD_BADGE_COLORS.length],
+      icon: "sparkles" as const,
+      title: c.title,
+      fact: c.body,
+      stat: c.headlineValue ?? undefined,
+      source: `Source: ${c.source} · as of ${c.asOf}`,
+      relatedCourseHref: c.course ? `/courses/${c.course.slug}` : undefined,
+      relatedCourseName: c.course?.title,
+    }));
+}
+
+/** Live cards first, then Sanity cards; six per week by ISO-week rotation. */
+export function buildStripCards(facts: SourcedFact[], cards: MarketFactCard[], now: Date = new Date()): MarketFact[] {
+  const all = [...buildLiveCards(facts), ...fromSanityCards(cards, now)];
+  return weekWindow(all, STRIP_SIZE, now);
 }
 
 interface MarketPulseToastProps {
   /** From buildMarketFacts() on the server. */
   facts: SourcedFact[];
+  /** Published marketFactCard documents (getMarketFactCards()). */
+  cards: MarketFactCard[];
 }
 
-export default function MarketPulseToast({ facts }: MarketPulseToastProps) {
-  // Toasts whose figure is missing or stale are left out entirely.
-  const VISIBLE_FACTS = buildToasts(facts).filter((f) => !f.requiresFact || isShowable(f.requiresFact));
+export default function MarketPulseToast({ facts, cards }: MarketPulseToastProps) {
+  // Same six cards as the strip; missing or stale figures are left out entirely.
+  const VISIBLE_FACTS = buildStripCards(facts, cards);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
   const [isDismissed, setIsDismissed] = useState(false);
@@ -132,9 +135,9 @@ export default function MarketPulseToast({ facts }: MarketPulseToastProps) {
     return () => clearInterval(interval);
   }, [isDismissed, isPaused]);
 
-  if (isDismissed) return null;
+  if (isDismissed || VISIBLE_FACTS.length === 0) return null;
 
-  const currentFact = VISIBLE_FACTS[currentIndex];
+  const currentFact = VISIBLE_FACTS[currentIndex % VISIBLE_FACTS.length];
 
   return (
     <aside
@@ -222,16 +225,18 @@ export default function MarketPulseToast({ facts }: MarketPulseToastProps) {
             </p>
 
             {/* Action footer link */}
-            <div className="pt-2 border-t border-hairline/80 flex items-center justify-between text-[10px]">
-              <span className="text-ink-muted">Curriculum Reference:</span>
-              <Link
-                href={currentFact.relatedCourseHref}
-                className="inline-flex items-center gap-1 font-semibold text-forest hover:text-forest-dark group font-mono transition-colors"
-              >
-                <span>{currentFact.relatedCourseName}</span>
-                <ExternalLink className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </Link>
-            </div>
+            {currentFact.relatedCourseHref && currentFact.relatedCourseName && (
+              <div className="pt-2 border-t border-hairline/80 flex items-center justify-between text-[10px]">
+                <span className="text-ink-muted">Curriculum Reference:</span>
+                <Link
+                  href={currentFact.relatedCourseHref}
+                  className="inline-flex items-center gap-1 font-semibold text-forest hover:text-forest-dark group font-mono transition-colors"
+                >
+                  <span>{currentFact.relatedCourseName}</span>
+                  <ExternalLink className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </Link>
+              </div>
+            )}
 
             {/* Subtle progress indicator */}
             <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-forest/10 overflow-hidden">
@@ -253,8 +258,9 @@ export default function MarketPulseToast({ facts }: MarketPulseToastProps) {
   );
 }
 
-export function MarketPulseStrip({ facts }: MarketPulseToastProps) {
-  const visibleFacts = buildToasts(facts).filter((f) => !f.requiresFact || isShowable(f.requiresFact));
+export function MarketPulseStrip({ facts, cards }: MarketPulseToastProps) {
+  const visibleFacts = buildStripCards(facts, cards);
+  if (visibleFacts.length === 0) return null;
   return (
     <div className="mt-5 pt-4 border-t border-hairline space-y-3">
       <div className="flex items-center justify-between">
@@ -262,7 +268,7 @@ export function MarketPulseStrip({ facts }: MarketPulseToastProps) {
           <span className="w-1.5 h-1.5 rounded-full bg-forest" />
           <span>Curated Market Intelligence Facts</span>
         </div>
-        <span className="font-mono text-[10px] text-ink-muted">Sourced from Official Filings & Empirical Studies</span>
+        <span className="font-mono text-[10px] text-ink-muted">Each card cites its source and as-of date</span>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {visibleFacts.map((fact) => (
@@ -293,16 +299,18 @@ export function MarketPulseStrip({ facts }: MarketPulseToastProps) {
                 </div>
               )}
             </div>
-            <div className="pt-2 border-t border-hairline/60 flex items-center justify-between text-[10px]">
-              <span className="text-ink-muted">Reference:</span>
-              <Link
-                href={fact.relatedCourseHref}
-                className="inline-flex items-center gap-0.5 font-semibold text-forest hover:text-forest-dark font-mono"
-              >
-                <span>{fact.relatedCourseName}</span>
-                <ExternalLink className="w-2.5 h-2.5" />
-              </Link>
-            </div>
+            {fact.relatedCourseHref && fact.relatedCourseName && (
+              <div className="pt-2 border-t border-hairline/60 flex items-center justify-between text-[10px]">
+                <span className="text-ink-muted">Reference:</span>
+                <Link
+                  href={fact.relatedCourseHref}
+                  className="inline-flex items-center gap-0.5 font-semibold text-forest hover:text-forest-dark font-mono"
+                >
+                  <span>{fact.relatedCourseName}</span>
+                  <ExternalLink className="w-2.5 h-2.5" />
+                </Link>
+              </div>
+            )}
           </div>
         ))}
       </div>

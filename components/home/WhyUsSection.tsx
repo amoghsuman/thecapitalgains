@@ -2,6 +2,12 @@
 
 import { Check, X, Shield, AlertTriangle, BookOpen, Layers, BarChart2, ShieldCheck } from "lucide-react";
 import { SEBI_FO_STATS, SEBI_FO_SOURCE } from "@/lib/home/sebiStats";
+import { MYTH_SUMMARIES } from "@/components/home/MarketMythsSection";
+
+const sebiShare = SEBI_FO_STATS.find((s) => s.id === "share-lost-fy22-24");
+
+// Two of the myths from MarketMythsSection, title plus its one-line verdict.
+const MYTHS_TESTED = MYTH_SUMMARIES.slice(0, 2);
 
 const COMPARISONS = [
   {
@@ -45,25 +51,26 @@ export default function WhyUsSection() {
   return (
     <section id="why-us-section" className="py-16 md:py-24 bg-panel border-b border-hairline">
       <div className="site-container max-w-6xl space-y-12">
-        {/* Section Header + SEBI Figures Callout Side-by-Side on Desktop */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
-          <div className="max-w-[72ch]">
-            <div className="inline-flex items-center gap-2 font-mono text-[11px] text-gold tracking-[0.16em] font-bold uppercase mb-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-gold" />
-              <span>Doctrine · Noise vs. Institutional Rigor</span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-bold text-olive tracking-tight leading-[1.18]">
-              Why Us: The Contrast
-            </h2>
-            <p className="text-ink-dim text-base sm:text-lg mt-3.5 leading-relaxed">
-              About 93% of individual traders in Indian equity F&O lost money over FY22 to FY24, according to SEBI&apos;s own study. Below is the structural divergence between speculative social hype and an audited institutional framework.
-            </p>
+        {/* Section header */}
+        <div className="max-w-[72ch]">
+          <div className="inline-flex items-center gap-2 font-mono text-[11px] text-gold tracking-[0.16em] font-bold uppercase mb-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-gold" />
+            <span>Noise versus process</span>
           </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-bold text-olive tracking-tight leading-[1.18]">
+            Why 9 in 10 retail F&O traders lose, and what we do differently
+          </h2>
+          <p className="text-ink-dim text-base sm:text-lg mt-3.5 leading-relaxed">
+            {sebiShare ? `About ${sebiShare.value} ${sebiShare.label}, according to SEBI's own study.` : "SEBI's own study found that most individual F&O traders lose money."} Below is the structural divergence between speculative social hype and a disciplined, text-first process.
+          </p>
+        </div>
 
-          {/* SEBI Study Empirical Audit Card */}
+        {/* Comparison table beside the SEBI figures; stacked on mobile */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+          {/* SEBI Study Empirical Audit Card (rendered second in the DOM order on desktop via lg:order) */}
           <div
             id="sebi-data-audit-badge"
-            className="flex-shrink-0 bg-ivory border border-hairline rounded-2xl p-5 max-w-md shadow-2xs"
+            className="lg:col-span-4 lg:order-2 bg-ivory border border-hairline rounded-2xl p-5 shadow-2xs"
           >
             <div className="flex items-center gap-2 mb-2">
               <span className="w-2 h-2 rounded-full bg-[#B91C1C]" />
@@ -83,15 +90,14 @@ export default function WhyUsSection() {
               Source: {SEBI_FO_SOURCE}. Figures approximate and rounded.
             </p>
           </div>
-        </div>
 
         {/* Centerpiece: Noise vs Rigor Table */}
         <div
           id="institutional-comparison-matrix"
-          className="border border-hairline rounded-2xl overflow-hidden shadow-xs bg-panel"
+          className="lg:col-span-8 lg:order-1 border border-hairline rounded-2xl overflow-hidden shadow-xs bg-panel"
         >
           {/* Desktop Table Header */}
-          <div className="hidden md:grid grid-cols-12 bg-forest-surface/90 border-b border-hairline text-xs font-bold py-4 px-6 lg:px-8">
+          <div className="hidden md:grid grid-cols-12 bg-forest-surface/90 border-b border-hairline text-xs font-bold py-4 px-5 lg:px-6">
             <div className="col-span-3 text-ink-dim font-mono tracking-wider uppercase text-[11px]">
               EVALUATION CRITERIA
             </div>
@@ -111,7 +117,7 @@ export default function WhyUsSection() {
               <div
                 key={row.id}
                 id={`desktop-comparison-row-${row.id}`}
-                className="grid grid-cols-12 py-5 lg:py-6 px-6 lg:px-8 gap-6 items-start hover:bg-ivory/40 transition-colors group"
+                className="grid grid-cols-12 py-5 lg:py-6 px-5 lg:px-6 gap-4 lg:gap-5 items-start hover:bg-ivory/40 transition-colors group"
               >
                 {/* Criterion Column (3 cols) */}
                 <div className="col-span-3 space-y-1">
@@ -179,6 +185,7 @@ export default function WhyUsSection() {
               </div>
             ))}
           </div>
+        </div>
         </div>
 
         {/* Row of Four Principle Tiles */}
@@ -250,15 +257,11 @@ export default function WhyUsSection() {
                 Myths, Tested
               </h3>
               <ul className="space-y-2 text-[11px] text-ink-dim leading-relaxed">
-                <li className="border-l-2 border-rose-300 pl-2">
-                  <span className="font-semibold text-olive">Weekly OTM Buying:</span> Debunked (Mathematically destructive; theta decay permanently depletes capital).
-                </li>
-                <li className="border-l-2 border-rose-300 pl-2">
-                  <span className="font-semibold text-olive">₹20 Stock Cheapness:</span> Debunked (Nominal price illusion; valuation is measured by EV/EBITDA and FCF yields).
-                </li>
-                <li className="border-l-2 border-rose-300 pl-2">
-                  <span className="font-semibold text-olive">Waiting in 100% Cash:</span> Debunked (Cost of missing best days; top market gains cluster inside panics).
-                </li>
+                {MYTHS_TESTED.map((m) => (
+                  <li key={m.id} className="border-l-2 border-rose-300 pl-2">
+                    <span className="font-semibold text-olive">{m.title}:</span> {m.verdict}.
+                  </li>
+                ))}
               </ul>
             </div>
           </div>

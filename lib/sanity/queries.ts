@@ -289,3 +289,73 @@ export async function getFeaturedLearningPaths(): Promise<FeaturedLearningPath[]
   `)
   return rows.filter((r) => r.courseCount > 0)
 }
+
+// ─── Glossary terms and market fact cards (home page Market Desk) ────────────
+
+export type GlossaryCategory = "fundamentals" | "derivatives" | "valuation" | "wealth"
+
+export type GlossaryTerm = {
+  _id: string
+  term: string
+  category: GlossaryCategory
+  shortDefinition: string | null
+  definition: string
+  formula: string | null
+  retailTrap: string | null
+  /** null when the referenced course is missing or unpublished. */
+  course: { slug: string; title: string } | null
+  order: number
+}
+
+// Published terms only, ordered for the weekly rotation.
+export async function getGlossaryTerms(): Promise<GlossaryTerm[]> {
+  return client.fetch(`
+    *[_type == "glossaryTerm" && !(_id in path("drafts.**"))] | order(category asc, order asc, term asc) {
+      _id,
+      term,
+      category,
+      shortDefinition,
+      definition,
+      formula,
+      retailTrap,
+      "course": taughtInCourse->{ "slug": slug.current, title },
+      "order": coalesce(order, 99)
+    }
+  `)
+}
+
+export type MarketFactCard = {
+  _id: string
+  title: string
+  categoryLabel: string
+  headlineValue: string | null
+  body: string
+  source: string
+  sourceUrl: string | null
+  /** YYYY-MM-DD */
+  asOf: string
+  staleAfterDays: number
+  /** null when the referenced course is missing or unpublished; the card then shows no reference link. */
+  course: { slug: string; title: string } | null
+  order: number
+}
+
+// Published cards only. Staleness (asOf + staleAfterDays) is applied by the
+// component so the cut-off uses the viewer's date, not the fetch date.
+export async function getMarketFactCards(): Promise<MarketFactCard[]> {
+  return client.fetch(`
+    *[_type == "marketFactCard" && !(_id in path("drafts.**"))] | order(order asc, title asc) {
+      _id,
+      title,
+      categoryLabel,
+      headlineValue,
+      body,
+      source,
+      sourceUrl,
+      asOf,
+      "staleAfterDays": coalesce(staleAfterDays, 365),
+      "course": referenceCourse->{ "slug": slug.current, title },
+      "order": coalesce(order, 99)
+    }
+  `)
+}
