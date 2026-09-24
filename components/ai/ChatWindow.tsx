@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { FREE_TIER_NOTICE, resetLabel } from "@/lib/ai/tutorLimits";
 import { motion, AnimatePresence } from "motion/react";
 import {
   MessageSquare,
@@ -109,6 +110,11 @@ export default function ChatWindow({ isOpen, onClose, context }: ChatWindowProps
           errorText = data.error;
         } else if (data.error?.message) {
           errorText = data.error.message;
+        }
+        // Cap responses (429) carry the reset instant; show it inline.
+        if (res.status === 429 && typeof data.resetAt === "string") {
+          const at = resetLabel(data.resetAt);
+          if (at) errorText = `${errorText} (${at})`;
         }
         throw new Error(errorText);
       }
@@ -317,6 +323,7 @@ export default function ChatWindow({ isOpen, onClose, context }: ChatWindowProps
                 <Send className="w-3.5 h-3.5" />
               </button>
             </form>
+            <p className="mt-2 text-[10px] leading-snug text-ink-muted font-mono">{FREE_TIER_NOTICE}</p>
           </div>
         </motion.div>
       )}
