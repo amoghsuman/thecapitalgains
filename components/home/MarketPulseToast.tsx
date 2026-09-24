@@ -252,3 +252,60 @@ export default function MarketPulseToast({ facts }: MarketPulseToastProps) {
     </aside>
   );
 }
+
+export function MarketPulseStrip({ facts }: MarketPulseToastProps) {
+  const visibleFacts = buildToasts(facts).filter((f) => !f.requiresFact || isShowable(f.requiresFact));
+  return (
+    <div className="mt-5 pt-4 border-t border-hairline space-y-3">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-1.5 font-mono text-[10px] font-bold text-forest tracking-wider uppercase">
+          <span className="w-1.5 h-1.5 rounded-full bg-forest" />
+          <span>Curated Market Intelligence Facts</span>
+        </div>
+        <span className="font-mono text-[10px] text-ink-muted">Sourced from Official Filings & Empirical Studies</span>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        {visibleFacts.map((fact) => (
+          <div
+            key={fact.id}
+            className="p-3.5 rounded-xl bg-ivory border border-hairline hover:border-forest/30 transition-all flex flex-col justify-between"
+          >
+            <div>
+              <div className="flex items-center justify-between gap-1 mb-1.5">
+                <span className={`font-mono text-[9px] px-1.5 py-0.5 rounded border font-bold uppercase ${fact.badgeColor}`}>
+                  {fact.badge}
+                </span>
+                {fact.stat && (
+                  <span className="font-mono text-[10px] font-bold text-olive">
+                    {fact.stat}
+                  </span>
+                )}
+              </div>
+              <h5 className="text-xs font-bold text-olive mb-1 leading-snug">
+                {fact.title}
+              </h5>
+              <p className="text-[11px] text-ink-dim leading-relaxed mb-2">
+                {fact.fact}
+              </p>
+              {fact.source && (
+                <div className="font-mono text-[9px] text-ink-muted mb-2">
+                  {fact.source}
+                </div>
+              )}
+            </div>
+            <div className="pt-2 border-t border-hairline/60 flex items-center justify-between text-[10px]">
+              <span className="text-ink-muted">Reference:</span>
+              <Link
+                href={fact.relatedCourseHref}
+                className="inline-flex items-center gap-0.5 font-semibold text-forest hover:text-forest-dark font-mono"
+              >
+                <span>{fact.relatedCourseName}</span>
+                <ExternalLink className="w-2.5 h-2.5" />
+              </Link>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}

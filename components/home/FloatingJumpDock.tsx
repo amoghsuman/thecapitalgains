@@ -11,15 +11,11 @@ interface NavItem {
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { id: "intel", label: "Sentiment & Lexicon", targetId: "market-intelligence-hub" },
-  { id: "playbook", label: "Playbook", targetId: "tactile-playbook-stage" },
-  { id: "observatory", label: "Observatory", targetId: "market-observatory-section" },
-  { id: "labs", label: "Option Labs", targetId: "terminal-lab" },
-  { id: "forensic", label: "Forensic", targetId: "forensic-screener-section" },
-  { id: "wealth", label: "Friction", targetId: "wealth-friction-lab-section" },
-  { id: "quiz", label: "Quiz", targetId: "concept-logic-quiz-section" },
-  { id: "pillars", label: "Pillars", targetId: "three-pillars-section" },
-  { id: "tracks", label: "Tracks", targetId: "curated-tracks-section" },
+  { id: "courses", label: "Courses", targetId: "courses-section" },
+  { id: "labs", label: "Labs", targetId: "labs-section" },
+  { id: "market", label: "Market", targetId: "market-desk-section" },
+  { id: "why-us", label: "Why us", targetId: "why-us-section" },
+  { id: "roadmap", label: "Roadmap", targetId: "roadmap-section" },
   { id: "faq", label: "FAQ", targetId: "faq-section" },
 ];
 

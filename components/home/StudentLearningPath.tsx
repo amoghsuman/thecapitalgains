@@ -161,7 +161,7 @@ export default function StudentLearningPath({ facts, courseTitles }: StudentLear
   const activeStep = ROADMAP_STEPS[activeStepIndex];
 
   return (
-    <section id="student-learning-path" className="py-20 md:py-24 bg-panel border-b border-hairline">
+    <section id="roadmap-section" className="py-20 md:py-24 bg-panel border-b border-hairline scroll-mt-12">
       <div className="site-container space-y-12">
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-4 border-b border-hairline/80">
