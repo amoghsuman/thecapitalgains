@@ -204,6 +204,9 @@ export default function MarketObservatoryRadar() {
     }));
 
     let t = 0;
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const render = () => {
       t += 0.015;
@@ -225,7 +228,7 @@ export default function MarketObservatoryRadar() {
       });
 
       // Draw subtle rotating radar sweep line
-      const sweepAngle = t * 0.4;
+      const sweepAngle = prefersReducedMotion ? 0.8 : t * 0.4;
       const sweepRadius = 220;
       const sx = cx + Math.cos(sweepAngle) * sweepRadius;
       const sy = cy + Math.sin(sweepAngle) * sweepRadius;
@@ -243,7 +246,9 @@ export default function MarketObservatoryRadar() {
 
       // Render orbiting points
       particles.forEach((p, i) => {
-        p.angle += p.speed;
+        if (!prefersReducedMotion) {
+          p.angle += p.speed;
+        }
         const px = cx + Math.cos(p.angle) * p.orbitRadius;
         const py = cy + Math.sin(p.angle) * (p.orbitRadius * 0.78);
 
@@ -253,7 +258,9 @@ export default function MarketObservatoryRadar() {
         ctx.fill();
       });
 
-      animId = requestAnimationFrame(render);
+      if (!prefersReducedMotion) {
+        animId = requestAnimationFrame(render);
+      }
     };
 
     render();
@@ -299,7 +306,7 @@ export default function MarketObservatoryRadar() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           {/* LEFT: Orbital Radar Visualization (lg:col-span-6) */}
           <div className="lg:col-span-6 flex flex-col items-center">
-            <div className="w-full max-w-[480px] aspect-square relative rounded-3xl bg-[#07130f] border border-[#1d352b] p-4 sm:p-6 flex items-center justify-center shadow-[0_20px_60px_rgba(0,0,0,0.6)]">
+            <div className="w-full max-w-[480px] aspect-[4/3] sm:aspect-square relative rounded-3xl bg-[#07130f] border border-[#1d352b] p-4 sm:p-6 flex items-center justify-center shadow-[0_20px_60px_rgba(0,0,0,0.6)]">
               {/* Background Canvas Radar */}
               <canvas
                 ref={canvasRef}

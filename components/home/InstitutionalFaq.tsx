@@ -148,36 +148,57 @@ const FAQ_ITEMS: FaqItem[] = [
   },
 ];
 
-export default function InstitutionalFaq() {
+interface InstitutionalFaqProps {
+  maxQuestions?: number;
+  singleOpen?: boolean;
+}
+
+export default function InstitutionalFaq({
+  maxQuestions = 6,
+  singleOpen = true,
+}: InstitutionalFaqProps = {}) {
   const [activeCategory, setActiveCategory] = useState<"All" | FaqCategory>("All");
   const [searchQuery, setSearchQuery] = useState("");
-  // Individual expand/collapse set: each question toggles independently
+  // Single open ID or multiple open IDs
+  const [openId, setOpenId] = useState<string | null>("no-tips-advisory");
   const [openIds, setOpenIds] = useState<Set<string>>(new Set(["no-tips-advisory"]));
 
   const toggleItem = (id: string) => {
-    setOpenIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) {
-        next.delete(id);
-      } else {
-        next.add(id);
-      }
-      return next;
-    });
+    if (singleOpen) {
+      setOpenId((prev) => (prev === id ? null : id));
+    } else {
+      setOpenIds((prev) => {
+        const next = new Set(prev);
+        if (next.has(id)) {
+          next.delete(id);
+        } else {
+          next.add(id);
+        }
+        return next;
+      });
+    }
   };
 
   const expandAll = () => {
-    setOpenIds(new Set(filteredItems.map((item) => item.id)));
+    if (singleOpen) {
+      if (filteredItems.length > 0) setOpenId(filteredItems[0].id);
+    } else {
+      setOpenIds(new Set(filteredItems.map((item) => item.id)));
+    }
   };
 
   const collapseAll = () => {
-    setOpenIds(new Set());
+    if (singleOpen) {
+      setOpenId(null);
+    } else {
+      setOpenIds(new Set());
+    }
   };
 
   // Filter questions based on Category and Search Query
   const filteredItems = useMemo(() => {
     const q = searchQuery.toLowerCase().trim();
-    return FAQ_ITEMS.filter((item) => {
+    const items = FAQ_ITEMS.filter((item) => {
       const matchCategory = activeCategory === "All" || item.category === activeCategory;
       if (!matchCategory) return false;
       if (!q) return true;
@@ -189,7 +210,8 @@ export default function InstitutionalFaq() {
 
       return matchQuestion || matchAnswer || matchLabel || matchKeywords;
     });
-  }, [activeCategory, searchQuery]);
+    return maxQuestions ? items.slice(0, maxQuestions) : items;
+  }, [activeCategory, searchQuery, maxQuestions]);
 
   const categories: ("All" | FaqCategory)[] = ["All", "General", "Trading", "Research", "Pricing"];
 
@@ -292,7 +314,7 @@ export default function InstitutionalFaq() {
         <div className="space-y-3.5">
           {filteredItems.length > 0 ? (
             filteredItems.map((item) => {
-              const isOpen = openIds.has(item.id);
+              const isOpen = singleOpen ? openId === item.id : openIds.has(item.id);
               return (
                 <div
                   key={item.id}

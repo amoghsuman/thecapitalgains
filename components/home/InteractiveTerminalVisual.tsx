@@ -17,8 +17,19 @@ type LabMode = "options" | "valuation";
 
 type OptionStrategyKey = "bull-call" | "straddle" | "iron-condor" | "bear-put";
 
-export default function InteractiveTerminalVisual() {
-  const [activeTab, setActiveTab] = useState<LabMode>("options");
+interface InteractiveTerminalVisualProps {
+  initialTab?: LabMode;
+  forcedTab?: LabMode;
+  hideInternalTabs?: boolean;
+}
+
+export default function InteractiveTerminalVisual({
+  initialTab = "options",
+  forcedTab,
+  hideInternalTabs = false,
+}: InteractiveTerminalVisualProps = {}) {
+  const [internalTab, setInternalTab] = useState<LabMode>(initialTab);
+  const activeTab = forcedTab ?? internalTab;
 
   // Options Lab State
   const [strategy, setStrategy] = useState<OptionStrategyKey>("bull-call");
@@ -203,30 +214,32 @@ export default function InteractiveTerminalVisual() {
         </div>
 
         {/* Tab Switcher */}
-        <div className="flex items-center bg-panel border border-hairline rounded-lg p-0.5">
-          <button
-            onClick={() => setActiveTab("options")}
-            className={`px-3 py-1 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 ${
-              activeTab === "options"
-                ? "bg-olive text-white shadow-sm font-bold"
-                : "text-ink-dim hover:text-ink"
-            }`}
-          >
-            <Activity className="w-3.5 h-3.5" />
-            <span>Options & Greeks Lab</span>
-          </button>
-          <button
-            onClick={() => setActiveTab("valuation")}
-            className={`px-3 py-1 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 ${
-              activeTab === "valuation"
-                ? "bg-olive text-white shadow-sm font-bold"
-                : "text-ink-dim hover:text-ink"
-            }`}
-          >
-            <BarChart2 className="w-3.5 h-3.5" />
-            <span>DCF & Valuation Lab</span>
-          </button>
-        </div>
+        {!hideInternalTabs && (
+          <div className="flex items-center bg-panel border border-hairline rounded-lg p-0.5">
+            <button
+              onClick={() => setInternalTab("options")}
+              className={`px-3 py-1 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 ${
+                activeTab === "options"
+                  ? "bg-olive text-white shadow-sm font-bold"
+                  : "text-ink-dim hover:text-ink"
+              }`}
+            >
+              <Activity className="w-3.5 h-3.5" />
+              <span>Options & Greeks Lab</span>
+            </button>
+            <button
+              onClick={() => setInternalTab("valuation")}
+              className={`px-3 py-1 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 ${
+                activeTab === "valuation"
+                  ? "bg-olive text-white shadow-sm font-bold"
+                  : "text-ink-dim hover:text-ink"
+              }`}
+            >
+              <BarChart2 className="w-3.5 h-3.5" />
+              <span>DCF & Valuation Lab</span>
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Main Interactive Screen */}

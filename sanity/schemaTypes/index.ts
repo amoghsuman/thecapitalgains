@@ -8,6 +8,8 @@ import { portfolioSchema } from './portfolio'
 import { marketDatasetSchema } from './marketDataset'
 import { testimonialSchema } from './testimonial'
 import { learningPathMetaSchema } from './learningPathMeta'
+import { glossaryTermSchema } from './glossaryTerm'
+import { marketFactCardSchema } from './marketFactCard'
 
 export const schemaTypes = [
   courseSchema,
@@ -19,6 +21,8 @@ export const schemaTypes = [
   marketDatasetSchema,
   testimonialSchema,
   learningPathMetaSchema,
+  glossaryTermSchema,
+  marketFactCardSchema,
 ]
 
 export const schema: { types: SchemaTypeDefinition[] } = {

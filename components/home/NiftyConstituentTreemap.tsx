@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useMemo } from "react";
 import * as d3 from "d3";
 import { RefreshCw, ShieldCheck } from "lucide-react";
-import { niftyWeights, symbolAliases, type NiftyConstituent } from "@/lib/market/constants";
+import { niftyWeights, symbolAliases, REFERENCE_WEIGHTS_PREFIX, type NiftyConstituent } from "@/lib/market/constants";
 import { liveLabel, type MarketQuote, type MarketWeight } from "@/lib/market/client";
 import { useMarketSnapshot } from "@/lib/market/useMarketSnapshot";
 
@@ -51,11 +51,14 @@ export default function NiftyConstituentTreemap() {
 
   // Weights come from /api/market (NSE list + free-float market cap). The
   // constants copy is only the pre-hydration / feed-down fallback.
-  const weights: { list: MarketWeight[]; live: boolean } = useMemo(() => {
+  const weights: { list: MarketWeight[]; live: boolean; source: string | null } = useMemo(() => {
     if (market.status === "ready" && market.data.weights) {
-      return { list: market.data.weights.constituents, live: true };
+      const w = market.data.weights;
+      // The API serves the reference copy (labelled) when live float data is down.
+      const isReference = w.source.startsWith(REFERENCE_WEIGHTS_PREFIX);
+      return { list: w.constituents, live: !isReference, source: isReference ? w.source : null };
     }
-    return { list: niftyWeights.constituents.map((c): MarketWeight => ({ symbol: c.symbol, name: c.name, sector: c.sector, weight: c.weight })), live: false };
+    return { list: niftyWeights.constituents.map((c): MarketWeight => ({ symbol: c.symbol, name: c.name, sector: c.sector, weight: c.weight })), live: false, source: null };
   }, [market]);
 
   // Sector pills follow whichever list is showing; the selection survives a
@@ -365,7 +368,9 @@ export default function NiftyConstituentTreemap() {
           <span>
             {weights.live
               ? "Weights approximate (free-float market cap) · Prices delayed"
-              : "Weights: reference copy, pending live feed · Prices delayed"}
+              : weights.source
+                ? `${weights.source} · Prices delayed`
+                : "Weights: reference copy, pending live feed · Prices delayed"}
           </span>
         </div>
       </div>

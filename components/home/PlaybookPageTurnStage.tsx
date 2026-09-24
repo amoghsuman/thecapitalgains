@@ -122,9 +122,10 @@ interface PlaybookPageTurnStageProps {
   facts: MarketFact[];
   /** Slugs of the courses that exist in Sanity (getAllCourses()); chapters whose course is missing show "Coming soon" and no link. */
   courseSlugs: string[];
+  bare?: boolean;
 }
 
-export default function PlaybookPageTurnStage({ facts, courseSlugs }: PlaybookPageTurnStageProps) {
+export default function PlaybookPageTurnStage({ facts, courseSlugs, bare = false }: PlaybookPageTurnStageProps) {
   const PLAYBOOK_PAGES = buildPages(facts);
   const [activePageIndex, setActivePageIndex] = useState(0);
   const [isFlipping, setIsFlipping] = useState(false);
@@ -165,11 +166,13 @@ export default function PlaybookPageTurnStage({ facts, courseSlugs }: PlaybookPa
   const pathD = `M ${coordinates.join(" L ")}`;
 
   return (
-    <section id="tactile-playbook-stage" className="py-16 md:py-24 bg-ivory border-b border-hairline relative overflow-hidden">
+    <section id="tactile-playbook-stage" className={bare ? "relative" : "py-16 md:py-24 bg-ivory border-b border-hairline relative overflow-hidden"}>
       {/* Background ambient editorial texture accents */}
-      <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[radial-gradient(#1d2e28_1px,transparent_1px)] [background-size:20px_20px]" />
+      {!bare && (
+        <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[radial-gradient(#1d2e28_1px,transparent_1px)] [background-size:20px_20px]" />
+      )}
       
-      <div className="site-container relative z-10 space-y-10">
+      <div className={bare ? "space-y-6" : "site-container relative z-10 space-y-10"}>
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-2 border-b border-hairline/70">
           <div className="max-w-2xl space-y-2">
@@ -247,7 +250,7 @@ export default function PlaybookPageTurnStage({ facts, courseSlugs }: PlaybookPa
 
           {/* Open Book Spread Container */}
           <div
-            className={`grid grid-cols-1 lg:grid-cols-2 gap-0 relative bg-[#faf7f0] rounded-2xl border border-[#d8cfbd] shadow-[0_12px_32px_rgba(29,46,40,0.08)] transition-all duration-300 ${
+            className={`grid grid-cols-1 lg:grid-cols-2 gap-0 relative bg-[#faf7f0] rounded-2xl border border-[#d8cfbd] shadow-[0_12px_32px_rgba(29,46,40,0.08)] transition-all duration-300 motion-reduce:transition-none motion-reduce:transform-none motion-reduce:filter-none ${
               isFlipping ? "opacity-60 scale-[0.99] filter blur-[0.5px]" : "opacity-100 scale-100"
             }`}
           >

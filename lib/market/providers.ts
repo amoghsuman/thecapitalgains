@@ -3,7 +3,7 @@
 // to move from Yahoo Finance to Upstox, Kite or another feed without touching
 // the UI. Server-only: never import this from a client component.
 
-import { niftyWeights } from "@/lib/market/constants";
+import { niftyWeights, REFERENCE_WEIGHTS_PREFIX } from "@/lib/market/constants";
 
 export type IndexQuote = {
   name: string;
@@ -359,25 +359,46 @@ export async function getNifty50Constituents(): Promise<ConstituentList> {
 
 type YahooSession = { cookie: string; crumb: string; fetchedAt: number };
 let yahooSession: YahooSession | null = null;
+let yahooSessionCooldownUntil = 0;
 const YAHOO_SESSION_TTL_MS = 60 * 60 * 1000;
+const YAHOO_COOLDOWN_MS = 15 * 60 * 1000;
 
-async function getYahooSession(): Promise<YahooSession> {
+async function getYahooSession(): Promise<YahooSession | null> {
   if (yahooSession && Date.now() - yahooSession.fetchedAt < YAHOO_SESSION_TTL_MS) return yahooSession;
-  const seed = await fetch("https://fc.yahoo.com", {
-    headers: { "User-Agent": BROWSER_UA },
-    cache: "no-store",
-    redirect: "manual",
-  });
-  const cookie = (seed.headers.getSetCookie?.() ?? []).map((c) => c.split(";")[0]).join("; ");
-  if (!cookie) throw new Error("Yahoo: no session cookie");
-  const res = await fetch("https://query2.finance.yahoo.com/v1/test/getcrumb", {
-    headers: { "User-Agent": BROWSER_UA, Cookie: cookie },
-    cache: "no-store",
-  });
-  const crumb = (await res.text()).trim();
-  if (!res.ok || !crumb || crumb.includes("<")) throw new Error(`Yahoo: crumb HTTP ${res.status}`);
-  yahooSession = { cookie, crumb, fetchedAt: Date.now() };
-  return yahooSession;
+  if (Date.now() < yahooSessionCooldownUntil) return null;
+
+  try {
+    const seed = await fetch("https://fc.yahoo.com", {
+      headers: { "User-Agent": BROWSER_UA },
+      cache: "no-store",
+      redirect: "manual",
+    });
+    const cookie = (seed.headers.getSetCookie?.() ?? []).map((c) => c.split(";")[0]).join("; ");
+    if (!cookie) {
+      yahooSessionCooldownUntil = Date.now() + YAHOO_COOLDOWN_MS;
+      return null;
+    }
+    const res = await fetch("https://query2.finance.yahoo.com/v1/test/getcrumb", {
+      headers: { "User-Agent": BROWSER_UA, Cookie: cookie },
+      cache: "no-store",
+    });
+    if (!res.ok) {
+      yahooSessionCooldownUntil = Date.now() + YAHOO_COOLDOWN_MS;
+      console.warn(`[market] Yahoo crumb endpoint returned ${res.status}; activated 15-minute fallback mode`);
+      return null;
+    }
+    const crumb = (await res.text()).trim();
+    if (!crumb || crumb.includes("<")) {
+      yahooSessionCooldownUntil = Date.now() + YAHOO_COOLDOWN_MS;
+      return null;
+    }
+    yahooSession = { cookie, crumb, fetchedAt: Date.now() };
+    return yahooSession;
+  } catch (err: unknown) {
+    yahooSessionCooldownUntil = Date.now() + YAHOO_COOLDOWN_MS;
+    console.warn("[market] Yahoo session init failed:", err instanceof Error ? err.message : err);
+    return null;
+  }
 }
 
 type YahooQuoteSummary = {
@@ -397,16 +418,15 @@ type FloatReading = { floatShares: number; price: number };
 const floatMemo = new Map<string, { value: FloatReading; fetchedAt: number }>();
 const FLOAT_TTL_MS = 24 * 60 * 60 * 1000;
 
-async function fetchFloatReading(symbol: string): Promise<FloatReading | null> {
+async function fetchFloatReading(symbol: string, session: YahooSession): Promise<FloatReading | null> {
   const hit = floatMemo.get(symbol);
   if (hit && Date.now() - hit.fetchedAt < FLOAT_TTL_MS) return hit.value;
   try {
-    const { cookie, crumb } = await getYahooSession();
     const url = `https://query2.finance.yahoo.com/v10/finance/quoteSummary/${encodeURIComponent(
       `${symbol}.NS`
-    )}?modules=defaultKeyStatistics,price&crumb=${encodeURIComponent(crumb)}`;
+    )}?modules=defaultKeyStatistics,price&crumb=${encodeURIComponent(session.crumb)}`;
     const res = await fetch(url, {
-      headers: { "User-Agent": BROWSER_UA, Accept: "application/json", Cookie: cookie },
+      headers: { "User-Agent": BROWSER_UA, Accept: "application/json", Cookie: session.cookie },
       next: { revalidate: 86400 },
     });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -428,9 +448,33 @@ async function fetchFloatReading(symbol: string): Promise<FloatReading | null> {
 
 // Weight = float market cap / sum over the constituents that could be priced.
 // A symbol without a float reading is left out of the weights (and the sum),
-// never given a placeholder number. Null when fewer than 80% could be priced.
+// never given a placeholder number. When the Yahoo session is unavailable
+// (cooldown) or fewer than 80% of the list could be priced, the reference
+// weights from constants.ts are returned instead, labelled as such.
+// The stale copy in constants.ts, labelled so the treemap can say so. No
+// float market cap exists for these rows (0), only the factsheet weight.
+function referenceWeights(): ConstituentWeights {
+  return {
+    constituents: niftyWeights.constituents.map((c) => ({
+      symbol: c.symbol,
+      name: c.name,
+      sector: c.sector,
+      weight: c.weight,
+      floatMcap: 0,
+    })),
+    weightsAsOf: niftyWeights.asOf,
+    source: `${REFERENCE_WEIGHTS_PREFIX}, ${niftyWeights.source}, as of ${niftyWeights.asOf} (live float data unavailable)`,
+    approximate: true,
+  };
+}
+
 export async function getConstituentWeights(list: ConstituentList): Promise<ConstituentWeights | null> {
-  const readings = await Promise.all(list.constituents.map((c) => fetchFloatReading(c.symbol)));
+  const session = await getYahooSession();
+  if (!session) {
+    return referenceWeights();
+  }
+
+  const readings = await Promise.all(list.constituents.map((c) => fetchFloatReading(c.symbol, session)));
   const priced: ConstituentWeight[] = [];
   let total = 0;
   list.constituents.forEach((c, i) => {
@@ -441,8 +485,8 @@ export async function getConstituentWeights(list: ConstituentList): Promise<Cons
     priced.push({ ...c, weight: 0, floatMcap });
   });
   if (total <= 0 || priced.length < list.constituents.length * 0.8) {
-    console.error(`[market] weights: only ${priced.length}/${list.constituents.length} constituents priced`);
-    return null;
+    console.error(`[market] weights: only ${priced.length}/${list.constituents.length} constituents priced; using reference weights`);
+    return referenceWeights();
   }
   for (const p of priced) p.weight = Math.round((p.floatMcap / total) * 10000) / 100;
   priced.sort((a, b) => b.weight - a.weight);
