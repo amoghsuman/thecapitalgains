@@ -7,6 +7,7 @@ import { Gauge } from "lucide-react";
 import { liveLabel } from "@/lib/market/client";
 import { useMarketSnapshot } from "@/lib/market/useMarketSnapshot";
 import type { PublicSentiment, SentimentBand } from "@/lib/market/sentiment";
+import MarketNote from "@/components/home/MarketNote";
 
 // The TCG Sentiment Index (lib/market/sentiment.ts) computed in /api/market.
 // The methodology is proprietary: the client receives score, band, coverage
@@ -58,7 +59,12 @@ function bandLabel(sentiment: PublicSentiment): string {
   return sentiment.band.replace(/^\w/, (c) => c.toUpperCase());
 }
 
-export default function MarketSentimentGauge() {
+interface MarketSentimentGaugeProps {
+  /** slug → title for the courses the market-note tips link to. */
+  courseTitles: Record<string, string>;
+}
+
+export default function MarketSentimentGauge({ courseTitles }: MarketSentimentGaugeProps) {
   const market = useMarketSnapshot();
   const snapshot = market.status === "ready" ? market.data : null;
   const sentiment = snapshot?.sentiment ?? null;
@@ -191,6 +197,9 @@ export default function MarketSentimentGauge() {
           <span className="font-bold text-forest uppercase font-mono mr-1">Rigor Rule:</span>
           {descriptionFor(isLive ? sentiment : null)}
         </div>
+
+        {/* Live market note: renders nothing until the feed is up. */}
+        <MarketNote courseTitles={courseTitles} />
       </div>
     </div>
   );

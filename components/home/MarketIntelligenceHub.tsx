@@ -3,7 +3,11 @@
 import MarketSentimentGauge from "@/components/home/MarketSentimentGauge";
 import GlossaryOfTheWeek from "@/components/home/GlossaryOfTheWeek";
 
-export default function MarketIntelligenceHub() {
+interface MarketIntelligenceHubProps {
+  courseTitles: Record<string, string>;
+}
+
+export default function MarketIntelligenceHub({ courseTitles }: MarketIntelligenceHubProps) {
   return (
     <section id="market-intelligence-hub" className="py-16 md:py-20 bg-ivory border-b border-hairline">
       <div className="site-container space-y-9">
@@ -21,7 +25,7 @@ export default function MarketIntelligenceHub() {
 
         {/* 2-Column Responsive Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-stretch">
-          <MarketSentimentGauge />
+          <MarketSentimentGauge courseTitles={courseTitles} />
           <GlossaryOfTheWeek />
         </div>
       </div>

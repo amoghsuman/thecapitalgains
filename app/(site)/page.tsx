@@ -39,6 +39,7 @@ import InstitutionalFaq from "@/components/home/InstitutionalFaq";
 import SebiDisclosureBanner from "@/components/home/SebiDisclosureBanner";
 import FloatingJumpDock from "@/components/home/FloatingJumpDock";
 import { buildMarketFacts } from "@/lib/home/marketFacts";
+import { TIP_COURSE_SLUGS } from "@/lib/market/marketNote";
 import { getReference } from "@/lib/market/reference";
 import "@/app/premium-theme.css";
 
@@ -91,6 +92,10 @@ export default async function HomePage() {
 
   const courseCount = courses?.length ?? 0;
   const courseTitles: Record<string, string> = Object.fromEntries((courses ?? []).map((c) => [c.slug, c.title]));
+  // Only the courses the market-note tips can link to cross to the client.
+  const marketNoteCourseTitles: Record<string, string> = Object.fromEntries(
+    TIP_COURSE_SLUGS.filter((slug) => courseTitles[slug]).map((slug) => [slug, courseTitles[slug]])
+  );
   const featuredCourse = courses?.find((c: CourseSummary) => c.slug === FEATURED_CARD_COURSE_SLUG) || courses?.[0];
   const activeFeaturedSlug = featuredCourse?.slug || FEATURED_CARD_COURSE_SLUG;
   const featuredFirstLessonSlug = featuredCourseForReader?.chapters?.[0]?.lessons?.[0]?.slug ?? null;
@@ -215,7 +220,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── MARKET SENTIMENT GAUGE (D3) & GLOSSARY OF THE WEEK ── */}
-      <MarketIntelligenceHub />
+      <MarketIntelligenceHub courseTitles={marketNoteCourseTitles} />
 
       {/* ── 01: TACTILE 3D PLAYBOOK STAGE (Page-turn investor field manual) ── */}
       <PlaybookPageTurnStage facts={facts} courseSlugs={(courses ?? []).map((c) => c.slug)} />
