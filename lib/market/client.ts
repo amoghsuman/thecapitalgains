@@ -32,12 +32,28 @@ export type MarketFlows = {
   source: string;
 };
 
-import type { Sentiment } from "@/lib/market/sentiment";
+import type { PublicSentiment } from "@/lib/market/sentiment";
+
+export type MarketWeight = {
+  symbol: string;
+  name: string;
+  /** NSE industry group. */
+  sector: string;
+  /** Approximate index weight, % (free-float market cap share). */
+  weight: number;
+};
+
+export type MarketWeights = {
+  constituents: MarketWeight[];
+  weightsAsOf: string;
+  source: string;
+  approximate: true;
+};
 
 export type MarketSnapshot = {
   indices: MarketIndex[];
-  /** TCG Sentiment Index with the inputs it used; score null when no input is available. */
-  sentiment: Sentiment;
+  /** TCG Sentiment Index: score, band, coverage only (the inputs are proprietary and stay server-side). */
+  sentiment: PublicSentiment;
   /** FII/DII provisional flows from market_reference; null when not loaded yet. */
   flows: MarketFlows | null;
   reference: {
@@ -46,6 +62,8 @@ export type MarketSnapshot = {
   };
   /** Nifty constituents (NSE tickers, no suffix); null when the batch failed. */
   constituents: MarketQuote[] | null;
+  /** Approximate Nifty 50 weights (free-float market cap); null when they could not be derived. */
+  weights: MarketWeights | null;
   indiaVix: MarketQuote | null;
   brent: MarketQuote | null;
   usdInr: MarketQuote | null;

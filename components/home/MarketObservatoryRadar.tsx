@@ -8,25 +8,33 @@ import { liveLabel, type MarketQuote, type MarketSnapshot } from "@/lib/market/c
 import { useMarketSnapshot } from "@/lib/market/useMarketSnapshot";
 
 // Readouts: live values come from /api/market, the repo rate from
-// lib/market/constants.ts with its as-of date, and anything without a source
-// says "Unavailable" rather than showing a number.
+// lib/market/constants.ts with its as-of date. A feed that is down says
+// "Unavailable" for that value; nothing is shown that has no source at all.
 function fmtQuote(q: MarketQuote | null, prefix = "", digits = 2): string {
   return q ? `${prefix}${q.last.toLocaleString("en-IN", { maximumFractionDigits: digits, minimumFractionDigits: digits })}` : "Unavailable";
 }
 
 function indicatorText(kind: EcosystemNode["indicator"], data: MarketSnapshot | null): string {
   switch (kind) {
-    case "equities":
-      return "NIFTY 50 trailing P/E: Unavailable";
-    case "macro": {
-      const repo = data?.reference.repoRate ?? { value: repoRate.value, asOf: repoRate.asOf, source: repoRate.source };
+    case "equities": {
+      // 10Y G-Sec (market_reference row, else the FBIL constant, via /api/market)
+      // when the snapshot has it; otherwise the Nifty 50 day change.
       const gsec = data?.reference.gsec10y ?? null;
-      return `India 10Y G-Sec yield: ${gsec ? `${gsec.value.toFixed(2)}% (${asOfLabel(gsec.asOf)})` : "Unavailable"} · RBI repo rate: ${repo.value.toFixed(2)}% (${repo.source}, ${asOfLabel(repo.asOf)})`;
+      if (gsec) return `India 10Y G-Sec yield: ${gsec.value.toFixed(2)}% (${gsec.source}, ${asOfLabel(gsec.asOf)})`;
+      const nifty = data?.indices.find((i) => i.name === "Nifty 50") ?? null;
+      return nifty
+        ? `NIFTY 50 today: ${nifty.changePct >= 0 ? "+" : ""}${nifty.changePct.toFixed(2)}% · ${nifty.last.toLocaleString("en-IN", { maximumFractionDigits: 2, minimumFractionDigits: 2 })}`
+        : "NIFTY 50 today: Unavailable";
+    }
+    case "macro": {
+      // The G-Sec yield lives on the equities readout; this one is the policy rate.
+      const repo = data?.reference.repoRate ?? { value: repoRate.value, asOf: repoRate.asOf, source: repoRate.source };
+      return `RBI repo rate: ${repo.value.toFixed(2)}% (${repo.source}, ${asOfLabel(repo.asOf)})`;
     }
     case "crude":
       return `Brent crude: ${fmtQuote(data?.brent ?? null, "$")}/bbl · USD/INR: ${fmtQuote(data?.usdInr ?? null, "₹")}`;
     case "derivatives":
-      return `India VIX: ${fmtQuote(data?.indiaVix ?? null)} · NIFTY monthly PCR: Unavailable`;
+      return `India VIX: ${fmtQuote(data?.indiaVix ?? null)}`;
     case "allocation":
       return "House rule: max single-stock weight 10% · dry cash reserve 12%";
   }

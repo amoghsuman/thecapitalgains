@@ -11,7 +11,12 @@ export type NiftyConstituent = {
   weight: number;
 };
 
-// Seeded from the weights that were hard-coded in NiftyConstituentTreemap.
+// STALE FALLBACK ONLY. The live list and weights come from
+// lib/market/providers.ts (getNifty50Constituents + getConstituentWeights:
+// NSE constituent CSV, free-float market cap from Yahoo). This copy is used
+// only when the NSE list cannot be fetched, and /api/market flags it as such.
+// Seeded from the weights that were hard-coded in NiftyConstituentTreemap; it
+// is a 36-name subset and its weights predate the 2026 factsheets.
 export const niftyWeights: {
   asOf: string;
   source: string;
@@ -32,7 +37,6 @@ export const niftyWeights: {
     // Energy & Oil
     { symbol: "RELIANCE", name: "Reliance Industries", sector: "Energy & Oil", weight: 9.8 },
     { symbol: "ONGC", name: "Oil & Natural Gas Corp", sector: "Energy & Oil", weight: 1.6 },
-    { symbol: "BPCL", name: "Bharat Petroleum", sector: "Energy & Oil", weight: 0.8 },
     { symbol: "POWERGRID", name: "Power Grid Corp", sector: "Energy & Oil", weight: 1.4 },
     { symbol: "NTPC", name: "NTPC Limited", sector: "Energy & Oil", weight: 1.9 },
     // Information Technology
@@ -42,7 +46,12 @@ export const niftyWeights: {
     { symbol: "WIPRO", name: "Wipro Limited", sector: "Technology", weight: 0.9 },
     { symbol: "TECHM", name: "Tech Mahindra", sector: "Technology", weight: 1.1 },
     // Automobiles
-    { symbol: "TATAMOTORS", name: "Tata Motors Ltd", sector: "Automobile", weight: 2.2 },
+    // Tata Motors demerged on 2025-10-01: the listed company was renamed Tata
+    // Motors Passenger Vehicles (TMPV) and stays in the Nifty 50; the
+    // commercial-vehicle arm (Tata Motors Ltd, TMCV) was excluded on listing
+    // (NSE ind_nifty50list.csv, checked 2026-09-24). Weight carried over from the
+    // pre-demerger TATAMOTORS entry, pending the next factsheet refresh.
+    { symbol: "TMPV", name: "Tata Motors Passenger Vehicles", sector: "Automobile", weight: 2.2 },
     { symbol: "M&M", name: "Mahindra & Mahindra", sector: "Automobile", weight: 2.4 },
     { symbol: "MARUTI", name: "Maruti Suzuki India", sector: "Automobile", weight: 1.8 },
     { symbol: "BAJAJ-AUTO", name: "Bajaj Auto Ltd", sector: "Automobile", weight: 1.2 },
@@ -67,6 +76,31 @@ export const niftyWeights: {
     { symbol: "ULTRACEMCO", name: "UltraTech Cement", sector: "Materials", weight: 1.2 },
     { symbol: "TITAN", name: "Titan Company Ltd", sector: "Consumer", weight: 1.5 },
   ],
+};
+
+// Short labels for treemap tiles too narrow for the full NSE symbol. The full
+// symbol and company name still appear in the tile title and tooltip.
+export const symbolAliases: Record<string, string> = {
+  HINDUNILVR: "HUL",
+  TATACONSUM: "TATACONS",
+  "BAJAJ-AUTO": "BAJAJAUTO",
+  ADANIENT: "ADANI",
+  ADANIPORTS: "ADANIPORT",
+  ULTRACEMCO: "ULTRACEM",
+  HINDALCO: "HINDAL",
+  BHARTIARTL: "BHARTI",
+  BAJFINANCE: "BAJFIN",
+  KOTAKBANK: "KOTAK",
+  ICICIBANK: "ICICI",
+  HDFCBANK: "HDFCBK",
+  AXISBANK: "AXIS",
+  POWERGRID: "PGRID",
+  NESTLEIND: "NESTLE",
+  TATASTEEL: "TATASTL",
+  JSWSTEEL: "JSWSTL",
+  SUNPHARMA: "SUNPHRM",
+  HCLTECH: "HCL",
+  RELIANCE: "RIL",
 };
 
 // Hand-curated fallback; the market_reference table (key "repo_rate") wins
