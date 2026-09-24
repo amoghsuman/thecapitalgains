@@ -150,8 +150,8 @@ async function fetchSpark(symbols: string[]): Promise<Record<string, SparkEntry>
 
 // Every field is independently null when its quote is missing; a generated
 // number is never substituted.
-export async function getExtendedQuotes(): Promise<ExtendedQuotes> {
-  const constituentSymbols = niftyWeights.constituents.map((c) => `${c.symbol}.NS`);
+export async function getExtendedQuotes(constituentTickers: string[]): Promise<ExtendedQuotes> {
+  const constituentSymbols = constituentTickers.map((c) => `${c}.NS`);
   const all = [...constituentSymbols, VIX_SYMBOL, BRENT_SYMBOL, USDINR_SYMBOL];
 
   let spark: Record<string, SparkEntry>;
@@ -163,8 +163,8 @@ export async function getExtendedQuotes(): Promise<ExtendedQuotes> {
   }
 
   const constituents: SymbolQuote[] = [];
-  for (const c of niftyWeights.constituents) {
-    const q = parseSparkEntry(c.symbol, spark[`${c.symbol}.NS`]);
+  for (const symbol of constituentTickers) {
+    const q = parseSparkEntry(symbol, spark[`${symbol}.NS`]);
     if (q) constituents.push(q);
   }
 
@@ -207,3 +207,249 @@ export async function getDailyCloses(symbol: string, range: "1y" | "2y" = "2y"):
 }
 
 export const HISTORY_SYMBOLS = { nifty: "^NSEI", bankNifty: "^NSEBANK", vix: "^INDIAVIX" } as const;
+
+// ─── Nifty 50 constituents and approximate weights ────────────────────────────
+//
+// The constituent list comes from NSE's own CSV (browser UA; the www host is
+// tried with a cookie warm-up after the archives host). Weights are NOT the
+// official factsheet numbers: they are free-float market cap (Yahoo
+// quoteSummary floatShares × last price) as a share of the list's total, which
+// tracks the index method closely enough for a heatmap. If the list cannot be
+// fetched, the stale copy in lib/market/constants.ts is used and flagged.
+
+export type Nifty50Constituent = {
+  symbol: string;
+  name: string;
+  /** NSE's "Industry" column; the treemap groups by it. */
+  sector: string;
+};
+
+export type ConstituentList = {
+  constituents: Nifty50Constituent[];
+  /** "nse" for a fresh CSV, "fallback" for the stale copy in constants.ts. */
+  origin: "nse" | "fallback";
+  /** ISO date the list was obtained (or the fallback's factsheet date). */
+  asOf: string;
+};
+
+export type ConstituentWeight = Nifty50Constituent & {
+  /** Approximate index weight, % of the priced constituents. */
+  weight: number;
+  /** Free-float market cap, ₹ (floatShares × last price). */
+  floatMcap: number;
+};
+
+export type ConstituentWeights = {
+  constituents: ConstituentWeight[];
+  weightsAsOf: string;
+  source: string;
+  approximate: true;
+};
+
+export const WEIGHTS_SOURCE =
+  "Approximate, derived from free-float market cap (Yahoo Finance) against the NSE Nifty 50 constituent list";
+
+const NSE_LIST_URLS = [
+  "https://archives.nseindia.com/content/indices/ind_nifty50list.csv",
+  "https://www.nseindia.com/content/indices/ind_nifty50list.csv",
+];
+const NSE_HEADERS = {
+  "User-Agent": BROWSER_UA,
+  Accept: "text/csv,text/plain,*/*",
+  "Accept-Language": "en-US,en;q=0.9",
+  Referer: "https://www.nseindia.com/",
+};
+
+// RFC-4180-ish: quoted fields may contain commas.
+function parseCsvLine(line: string): string[] {
+  const out: string[] = [];
+  let cur = "";
+  let inQ = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (inQ) {
+      if (ch === '"' && line[i + 1] === '"') {
+        cur += '"';
+        i++;
+      } else if (ch === '"') inQ = false;
+      else cur += ch;
+    } else if (ch === '"') inQ = true;
+    else if (ch === ",") {
+      out.push(cur);
+      cur = "";
+    } else cur += ch;
+  }
+  out.push(cur);
+  return out.map((s) => s.trim());
+}
+
+function parseNiftyList(csv: string): Nifty50Constituent[] {
+  const lines = csv.split(/\r?\n/).filter((l) => l.trim().length > 0);
+  if (lines.length < 2) return [];
+  const header = parseCsvLine(lines[0]).map((h) => h.toLowerCase());
+  const iName = header.findIndex((h) => h.startsWith("company"));
+  const iInd = header.indexOf("industry");
+  const iSym = header.indexOf("symbol");
+  if (iName < 0 || iSym < 0) return [];
+  const out: Nifty50Constituent[] = [];
+  for (const line of lines.slice(1)) {
+    const f = parseCsvLine(line);
+    const symbol = f[iSym];
+    if (!symbol) continue;
+    out.push({ symbol, name: f[iName] ?? symbol, sector: (iInd >= 0 && f[iInd]) || "Other" });
+  }
+  return out;
+}
+
+// Cookie warm-up for the www host: NSE serves its CSVs only to sessions that
+// have loaded a page first. Best effort; an empty string means no cookies.
+async function warmNseCookies(): Promise<string> {
+  try {
+    const res = await fetch("https://www.nseindia.com/", { headers: NSE_HEADERS, cache: "no-store" });
+    const set = res.headers.getSetCookie?.() ?? [];
+    return set.map((c) => c.split(";")[0]).join("; ");
+  } catch {
+    return "";
+  }
+}
+
+async function fetchNiftyListCsv(): Promise<string> {
+  let lastErr: unknown = null;
+  for (const url of NSE_LIST_URLS) {
+    try {
+      const cookie = url.includes("www.nseindia.com") ? await warmNseCookies() : "";
+      const res = await fetch(url, {
+        headers: cookie ? { ...NSE_HEADERS, Cookie: cookie } : NSE_HEADERS,
+        next: { revalidate: 86400 },
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const text = await res.text();
+      if (!/symbol/i.test(text.slice(0, 200))) throw new Error("not a constituent CSV");
+      return text;
+    } catch (err: unknown) {
+      lastErr = err;
+      console.error(`[market] nifty list ${url} failed:`, err instanceof Error ? err.message : err);
+    }
+  }
+  throw lastErr instanceof Error ? lastErr : new Error("nifty list unavailable");
+}
+
+// Last successful list, so a transient NSE failure does not drop to the stale
+// constants copy while the process is alive.
+let lastGoodList: ConstituentList | null = null;
+
+export async function getNifty50Constituents(): Promise<ConstituentList> {
+  try {
+    const list = parseNiftyList(await fetchNiftyListCsv());
+    if (list.length < 40) throw new Error(`only ${list.length} rows parsed`);
+    lastGoodList = { constituents: list, origin: "nse", asOf: new Date().toISOString().slice(0, 10) };
+    return lastGoodList;
+  } catch (err: unknown) {
+    console.error("[market] nifty list unavailable, using fallback:", err instanceof Error ? err.message : err);
+    if (lastGoodList) return lastGoodList;
+    return {
+      constituents: niftyWeights.constituents.map((c) => ({ symbol: c.symbol, name: c.name, sector: c.sector })),
+      origin: "fallback",
+      asOf: niftyWeights.asOf,
+    };
+  }
+}
+
+// ─── Yahoo quoteSummary (needs a session cookie + crumb) ─────────────────────
+
+type YahooSession = { cookie: string; crumb: string; fetchedAt: number };
+let yahooSession: YahooSession | null = null;
+const YAHOO_SESSION_TTL_MS = 60 * 60 * 1000;
+
+async function getYahooSession(): Promise<YahooSession> {
+  if (yahooSession && Date.now() - yahooSession.fetchedAt < YAHOO_SESSION_TTL_MS) return yahooSession;
+  const seed = await fetch("https://fc.yahoo.com", {
+    headers: { "User-Agent": BROWSER_UA },
+    cache: "no-store",
+    redirect: "manual",
+  });
+  const cookie = (seed.headers.getSetCookie?.() ?? []).map((c) => c.split(";")[0]).join("; ");
+  if (!cookie) throw new Error("Yahoo: no session cookie");
+  const res = await fetch("https://query2.finance.yahoo.com/v1/test/getcrumb", {
+    headers: { "User-Agent": BROWSER_UA, Cookie: cookie },
+    cache: "no-store",
+  });
+  const crumb = (await res.text()).trim();
+  if (!res.ok || !crumb || crumb.includes("<")) throw new Error(`Yahoo: crumb HTTP ${res.status}`);
+  yahooSession = { cookie, crumb, fetchedAt: Date.now() };
+  return yahooSession;
+}
+
+type YahooQuoteSummary = {
+  quoteSummary?: {
+    result?: Array<{
+      defaultKeyStatistics?: { floatShares?: { raw?: number } | null } | null;
+      price?: { regularMarketPrice?: { raw?: number } | null } | null;
+    }> | null;
+    error?: { description?: string } | null;
+  };
+};
+
+type FloatReading = { floatShares: number; price: number };
+
+// Float shares move slowly; one read per symbol per day (Next fetch cache) plus
+// a process-level memo so a crumb rotation does not refetch every symbol.
+const floatMemo = new Map<string, { value: FloatReading; fetchedAt: number }>();
+const FLOAT_TTL_MS = 24 * 60 * 60 * 1000;
+
+async function fetchFloatReading(symbol: string): Promise<FloatReading | null> {
+  const hit = floatMemo.get(symbol);
+  if (hit && Date.now() - hit.fetchedAt < FLOAT_TTL_MS) return hit.value;
+  try {
+    const { cookie, crumb } = await getYahooSession();
+    const url = `https://query2.finance.yahoo.com/v10/finance/quoteSummary/${encodeURIComponent(
+      `${symbol}.NS`
+    )}?modules=defaultKeyStatistics,price&crumb=${encodeURIComponent(crumb)}`;
+    const res = await fetch(url, {
+      headers: { "User-Agent": BROWSER_UA, Accept: "application/json", Cookie: cookie },
+      next: { revalidate: 86400 },
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const json = (await res.json()) as YahooQuoteSummary;
+    const r = json.quoteSummary?.result?.[0];
+    const floatShares = r?.defaultKeyStatistics?.floatShares?.raw;
+    const price = r?.price?.regularMarketPrice?.raw;
+    if (typeof floatShares !== "number" || typeof price !== "number" || floatShares <= 0 || price <= 0) {
+      throw new Error(json.quoteSummary?.error?.description ?? "no float/price");
+    }
+    const value = { floatShares, price };
+    floatMemo.set(symbol, { value, fetchedAt: Date.now() });
+    return value;
+  } catch (err: unknown) {
+    console.error(`[market] float ${symbol} failed:`, err instanceof Error ? err.message : err);
+    return null;
+  }
+}
+
+// Weight = float market cap / sum over the constituents that could be priced.
+// A symbol without a float reading is left out of the weights (and the sum),
+// never given a placeholder number. Null when fewer than 80% could be priced.
+export async function getConstituentWeights(list: ConstituentList): Promise<ConstituentWeights | null> {
+  const readings = await Promise.all(list.constituents.map((c) => fetchFloatReading(c.symbol)));
+  const priced: ConstituentWeight[] = [];
+  let total = 0;
+  list.constituents.forEach((c, i) => {
+    const r = readings[i];
+    if (!r) return;
+    const floatMcap = r.floatShares * r.price;
+    total += floatMcap;
+    priced.push({ ...c, weight: 0, floatMcap });
+  });
+  if (total <= 0 || priced.length < list.constituents.length * 0.8) {
+    console.error(`[market] weights: only ${priced.length}/${list.constituents.length} constituents priced`);
+    return null;
+  }
+  for (const p of priced) p.weight = Math.round((p.floatMcap / total) * 10000) / 100;
+  priced.sort((a, b) => b.weight - a.weight);
+  return {
+    constituents: priced,
+    weightsAsOf: new Date().toISOString(),
+    source: `${WEIGHTS_SOURCE}${list.origin === "fallback" ? " (stale fallback list)" : ""}`,
+    approximate: true,
+  };
+}

@@ -6,12 +6,14 @@ import { Gauge } from "lucide-react";
 
 import { liveLabel } from "@/lib/market/client";
 import { useMarketSnapshot } from "@/lib/market/useMarketSnapshot";
-import type { Sentiment } from "@/lib/market/sentiment";
+import type { PublicSentiment, SentimentBand } from "@/lib/market/sentiment";
 
-// The TCG Sentiment Index (lib/market/sentiment.ts) computed in /api/market:
-// volatility 0.30, breadth 0.25, momentum 0.20, flows 0.15, relative strength
-// 0.10, each scored as a percentile of its trailing 252-day range and the
-// composite renormalised over the inputs that are available.
+// The TCG Sentiment Index (lib/market/sentiment.ts) computed in /api/market.
+// The methodology is proprietary: the client receives score, band, coverage
+// and computedAt only, and this card shows nothing about inputs or weights.
+
+// Below this share of inputs the reading is flagged as partial.
+const PARTIAL_COVERAGE = 0.6;
 
 // Geometry. The dial is a top semicircle: score 0 at 9 o'clock, 50 at 12,
 // 100 at 3 o'clock. d3.arc measures angles clockwise from 12 o'clock, so the
@@ -37,14 +39,21 @@ const SEGMENTS = [
   { from: 80, to: 100, color: "#1d5c42", label: "Extreme greed" },
 ];
 
-function descriptionFor(sentiment: Sentiment): string {
-  if (sentiment.score === null) return "No input is available right now, so no reading is shown.";
-  if (sentiment.score < 40) return "Fear regime: volatility, breadth or flows are stretched to the downside. Option premiums are rich; defined-risk structures and patience with entries matter more than direction.";
-  if (sentiment.score <= 60) return "Neutral regime: no input is at an extreme. Position size, not conviction, is the lever.";
-  return "Greed regime: calm volatility and broad participation. Hedges are cheap, and crowded trades build quietly in regimes like this.";
+// Rigor Rule copy keyed on the band alone.
+const RIGOR_RULE: Record<SentimentBand, string> = {
+  "extreme fear": "Extreme fear: premiums are at their richest and forced selling dominates. Buy only what you already researched, in tranches, with position size as the lever.",
+  fear: "Fear regime: option premiums are rich and entries are cheap but fragile. Defined-risk structures and patience with entries matter more than direction.",
+  neutral: "Neutral regime: nothing is at an extreme. Position size, not conviction, is the lever.",
+  greed: "Greed regime: calm markets and broad participation. Hedges are cheap, and crowded trades build quietly in regimes like this.",
+  "extreme greed": "Extreme greed: everyone is already in. Trim what has run, keep hedges on while they are cheap, and expect the next surprise to be to the downside.",
+};
+
+function descriptionFor(sentiment: PublicSentiment | null): string {
+  if (!sentiment || sentiment.band === null) return "No reading until the feed loads.";
+  return RIGOR_RULE[sentiment.band];
 }
 
-function bandLabel(sentiment: Sentiment): string {
+function bandLabel(sentiment: PublicSentiment): string {
   if (sentiment.band === null) return "Unavailable";
   return sentiment.band.replace(/^\w/, (c) => c.toUpperCase());
 }
@@ -54,6 +63,7 @@ export default function MarketSentimentGauge() {
   const snapshot = market.status === "ready" ? market.data : null;
   const sentiment = snapshot?.sentiment ?? null;
   const isLive = sentiment !== null && sentiment.score !== null;
+  const isPartial = isLive && sentiment.coverage < PARTIAL_COVERAGE;
   // With no reading the needle rests at 50 and the card says so.
   const score = sentiment?.score ?? 50;
   const svgRef = useRef<SVGSVGElement | null>(null);
@@ -129,10 +139,10 @@ export default function MarketSentimentGauge() {
             </div>
             <div>
               <div className="font-mono text-[10px] text-gold tracking-widest uppercase font-bold">
-                TCG SENTIMENT INDEX
+                NIFTY 50 · SENTIMENT
               </div>
               <h3 className="text-sm sm:text-base font-bold text-olive">
-                Nifty 50 Sentiment Index
+                TCG Sentiment Index
               </h3>
             </div>
           </div>
@@ -141,16 +151,22 @@ export default function MarketSentimentGauge() {
             <span className="font-mono text-[10px] text-ink-dim px-2 py-0.5 rounded-full border border-hairline bg-ivory whitespace-nowrap">
               {isLive && snapshot ? liveLabel(snapshot.fetchedAt) : "Sample data"}
             </span>
-            {isLive && (
-              <div className={`font-mono text-xs font-bold px-2.5 py-0.5 rounded-full border ${getScoreBadgeColor(score)}`}>
-                {score} / 100
-              </div>
+            {isPartial ? (
+              <span className="font-mono text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-amber-200 bg-amber-100 text-amber-800 whitespace-nowrap">
+                Partial data
+              </span>
+            ) : (
+              isLive && (
+                <div className={`font-mono text-xs font-bold px-2.5 py-0.5 rounded-full border ${getScoreBadgeColor(score)}`}>
+                  {score} / 100
+                </div>
+              )
             )}
           </div>
         </div>
 
         <p className="text-xs text-ink-dim leading-relaxed mb-4">
-          Weighted composite of volatility (0.30), breadth (0.25), momentum (0.20), flows (0.15) and relative strength (0.10), each scored against its trailing 252-day range and renormalised over the inputs available.
+          A proprietary composite of volatility, market breadth, momentum, institutional flows and relative strength for the Nifty 50.
         </p>
 
         <div className="flex flex-col items-center justify-center my-1 relative">
@@ -163,48 +179,19 @@ export default function MarketSentimentGauge() {
           />
           <div className="text-center -mt-2">
             <div className="font-mono text-xs font-bold text-olive uppercase tracking-wider">
-              {sentiment ? bandLabel(sentiment) : "Unavailable"}
+              {isLive && sentiment ? bandLabel(sentiment) : "Unavailable"}
             </div>
-            <div className="text-[10px] font-mono text-ink-dim">
-              {sentiment && sentiment.score !== null
-                ? `Coverage: ${Math.round(sentiment.coverage * 100)}% of weights available`
-                : "Feed unavailable"}
-            </div>
+            {isLive && !isPartial && (
+              <div className="text-[10px] font-mono text-ink-dim">{score} / 100</div>
+            )}
           </div>
         </div>
 
-        {/* Inputs used, with unavailable ones marked */}
-        <ul className="mt-4 pt-3 border-t border-hairline space-y-1.5 font-mono text-[11px]">
-          {(sentiment?.inputs ?? []).map((input) => (
-            <li key={input.key} className="flex items-start justify-between gap-3">
-              <span className={input.available ? "text-ink" : "text-ink-dim line-through decoration-hairline"}>
-                {input.label} <span className="text-ink-muted">×{input.weight.toFixed(2)}</span>
-              </span>
-              <span className={`text-right shrink-0 ${input.available ? "text-olive font-bold" : "text-ink-dim"}`}>
-                {input.available && input.score !== null ? Math.round(input.score) : "Unavailable"}
-              </span>
-            </li>
-          ))}
-          {!sentiment && <li className="text-ink-dim">Inputs unavailable until the feed loads.</li>}
-        </ul>
-
-        <div className="mt-3 p-2.5 rounded-xl bg-forest/5 border border-forest/15 text-[11px] text-[#2c3731] leading-relaxed">
+        <div className="mt-4 p-2.5 rounded-xl bg-forest/5 border border-forest/15 text-[11px] text-[#2c3731] leading-relaxed">
           <span className="font-bold text-forest uppercase font-mono mr-1">Rigor Rule:</span>
-          {sentiment ? descriptionFor(sentiment) : "No reading until the feed loads."}
+          {descriptionFor(isLive ? sentiment : null)}
         </div>
       </div>
-
-      {sentiment && (
-        <div className="pt-4 mt-4 border-t border-hairline">
-          <div className="text-[10px] font-mono text-ink-dim space-y-0.5">
-            {sentiment.inputs.map((input) => (
-              <div key={input.key}>
-                <span className="text-ink font-semibold">{input.key}</span>: {input.note}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 }

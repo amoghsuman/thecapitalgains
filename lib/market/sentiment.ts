@@ -14,6 +14,10 @@
 //
 // Bands: <20 extreme fear · 20–40 fear · 40–60 neutral · 60–80 greed · >80 extreme greed.
 // Pure functions only; the route (app/api/market) gathers the series.
+//
+// The methodology is proprietary: only PublicSentiment (score, band, coverage,
+// computedAt) leaves the server. The per-input breakdown stays in the full
+// Sentiment object for logs and server-side use.
 
 export type SentimentInputKey = "volatility" | "breadth" | "momentum" | "flows" | "relativeStrength";
 
@@ -31,15 +35,32 @@ export type SentimentInput = {
   note: string;
 };
 
-export type Sentiment = {
+/** What /api/market sends to the browser. Nothing about inputs or weights. */
+export type PublicSentiment = {
   /** 0–100, or null when no input is available. */
   score: number | null;
   band: SentimentBand | null;
-  inputs: SentimentInput[];
   /** Sum of the weights of the inputs that were available (1.0 = all). */
   coverage: number;
   computedAt: string;
 };
+
+/** Full server-side result; never serialised to the client. */
+export type Sentiment = PublicSentiment & {
+  inputs: SentimentInput[];
+};
+
+/** Strips the proprietary breakdown; the only shape the client may receive. */
+export function toPublicSentiment(s: Sentiment): PublicSentiment {
+  return { score: s.score, band: s.band, coverage: s.coverage, computedAt: s.computedAt };
+}
+
+/** One-line server log of the inputs behind a reading. */
+export function describeSentimentInputs(s: Sentiment): string {
+  return s.inputs
+    .map((i) => `${i.key}=${i.available && i.score !== null ? Math.round(i.score) : "n/a"}`)
+    .join(" ");
+}
 
 export const WEIGHTS: Record<SentimentInputKey, number> = {
   volatility: 0.3,

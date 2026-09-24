@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState, useMemo } from "react";
 import * as d3 from "d3";
 import { RefreshCw, ShieldCheck } from "lucide-react";
-import { niftyWeights, asOfLabel, type NiftyConstituent } from "@/lib/market/constants";
-import { liveLabel, type MarketQuote } from "@/lib/market/client";
+import { niftyWeights, symbolAliases, type NiftyConstituent } from "@/lib/market/constants";
+import { liveLabel, type MarketQuote, type MarketWeight } from "@/lib/market/client";
 import { useMarketSnapshot } from "@/lib/market/useMarketSnapshot";
 
 // A constituent joined with its live quote. `change`/`price` are null when
@@ -17,6 +17,29 @@ type Tile = NiftyConstituent & {
 type TreemapDatum = { name: string; children?: TreemapDatum[]; tile?: Tile; value?: number };
 type TreemapNode = d3.HierarchyRectangularNode<TreemapDatum>;
 
+// Label fitting: the symbol is tried at 12px, stepped down to 9px, then swapped
+// for its short alias; anything that still does not fit is dropped. Every
+// label is clipped to its own tile, so nothing can run into a neighbour.
+const LABEL_MAX_PX = 12;
+const LABEL_MIN_PX = 9;
+const LABEL_PAD = 6;
+/** Tiles shorter than this show the symbol only, no change %. */
+const MIN_HEIGHT_FOR_CHANGE = 44;
+
+function fitLabel(text: SVGTextElement, tileWidth: number, symbol: string): boolean {
+  const avail = tileWidth - LABEL_PAD;
+  const candidates = [symbol, symbolAliases[symbol]].filter((c): c is string => !!c && c.length > 0);
+  for (const label of candidates) {
+    text.textContent = label;
+    for (let px = LABEL_MAX_PX; px >= LABEL_MIN_PX; px--) {
+      text.setAttribute("font-size", `${px}px`);
+      if (text.getComputedTextLength() <= avail) return true;
+    }
+  }
+  text.textContent = "";
+  return false;
+}
+
 export default function NiftyConstituentTreemap() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [selectedStock, setSelectedStock] = useState<Tile | null>(null);
@@ -26,21 +49,33 @@ export default function NiftyConstituentTreemap() {
   const market = useMarketSnapshot();
   const isLive = market.status === "ready" && market.data.constituents !== null;
 
-  const sectors = useMemo(() => {
-    return ["All", ...Array.from(new Set(niftyWeights.constituents.map((s) => s.sector)))];
-  }, []);
+  // Weights come from /api/market (NSE list + free-float market cap). The
+  // constants copy is only the pre-hydration / feed-down fallback.
+  const weights: { list: MarketWeight[]; live: boolean } = useMemo(() => {
+    if (market.status === "ready" && market.data.weights) {
+      return { list: market.data.weights.constituents, live: true };
+    }
+    return { list: niftyWeights.constituents.map((c): MarketWeight => ({ symbol: c.symbol, name: c.name, sector: c.sector, weight: c.weight })), live: false };
+  }, [market]);
 
-  // Join weights (constants) with quotes (feed).
+  // Sector pills follow whichever list is showing; the selection survives a
+  // list change only if that sector still exists.
+  const sectors = useMemo(() => ["All", ...Array.from(new Set(weights.list.map((s) => s.sector))).sort()], [weights]);
+  useEffect(() => {
+    if (filterSector !== "All" && !sectors.includes(filterSector)) setFilterSector("All");
+  }, [sectors, filterSector]);
+
+  // Join weights with quotes (feed).
   const data: Tile[] = useMemo(() => {
     const quotes = new Map<string, MarketQuote>();
     if (market.status === "ready" && market.data.constituents) {
       for (const q of market.data.constituents) quotes.set(q.symbol, q);
     }
-    return niftyWeights.constituents.map((c) => {
+    return weights.list.map((c) => {
       const q = quotes.get(c.symbol);
       return { ...c, change: q ? q.changePct : null, price: q ? q.last : null };
     });
-  }, [market]);
+  }, [market, weights]);
 
   // D3 Treemap layout calculation
   useEffect(() => {
@@ -100,19 +135,47 @@ export default function NiftyConstituentTreemap() {
     // Sector Groups
     const sectorNodes = (laidOut.children ?? []) as TreemapNode[];
 
-    // Draw Sector Titles
+    // One clipPath per sector and per leaf so labels never cross tile edges.
+    const defs = svg.append("defs");
+    const clipId = (prefix: string, i: number) => `treemap-${reloadKey}-${prefix}-${i}`;
+    defs
+      .selectAll("clipPath.sector")
+      .data(sectorNodes)
+      .enter()
+      .append("clipPath")
+      .attr("class", "sector")
+      .attr("id", (_d, i) => clipId("s", i))
+      .append("rect")
+      .attr("x", (d) => d.x0)
+      .attr("y", (d) => d.y0)
+      .attr("width", (d) => Math.max(0, d.x1 - d.x0))
+      .attr("height", (d) => Math.max(0, d.y1 - d.y0));
+
+    // Draw Sector Titles, clipped to their group
     svg
       .selectAll("text.sector-title")
       .data(sectorNodes)
       .enter()
       .append("text")
       .attr("class", "sector-title font-mono text-[9px] font-bold fill-ink-dim tracking-wider uppercase")
+      .attr("clip-path", (_d, i) => `url(#${clipId("s", i)})`)
       .attr("x", (d) => d.x0 + 4)
       .attr("y", (d) => d.y0 + 12)
       .text((d) => d.data.name);
 
     // Leaf Nodes (Stocks)
     const leaves = laidOut.leaves() as TreemapNode[];
+
+    defs
+      .selectAll("clipPath.leaf")
+      .data(leaves)
+      .enter()
+      .append("clipPath")
+      .attr("class", "leaf")
+      .attr("id", (_d, i) => clipId("l", i))
+      .append("rect")
+      .attr("width", (d) => Math.max(0, d.x1 - d.x0))
+      .attr("height", (d) => Math.max(0, d.y1 - d.y0));
 
     const cell = svg
       .selectAll("g.leaf")
@@ -121,9 +184,13 @@ export default function NiftyConstituentTreemap() {
       .append("g")
       .attr("class", "leaf cursor-pointer group")
       .attr("transform", (d) => `translate(${d.x0},${d.y0})`)
+      .attr("clip-path", (_d, i) => `url(#${clipId("l", i)})`)
       .on("click", (_event, d) => {
         if (d.data.tile) setSelectedStock(d.data.tile);
       });
+
+    // Native tooltip: full symbol and company name, whatever the tile shows.
+    cell.append("title").text((d) => (d.data.tile ? `${d.data.tile.symbol} · ${d.data.tile.name}` : ""));
 
     // Rectangles
     cell
@@ -134,20 +201,22 @@ export default function NiftyConstituentTreemap() {
       .attr("rx", 6)
       .attr("class", "transition-all duration-300 stroke-panel/40 stroke-1 hover:brightness-110");
 
-    // Stock Symbol text
+    // Stock symbol, fitted to the tile (font stepped down, then alias, then dropped).
+    // Short tiles centre the symbol alone; taller ones leave room for the change %.
     cell
       .append("text")
       .attr("x", (d) => (d.x1 - d.x0) / 2)
-      .attr("y", (d) => (d.y1 - d.y0) / 2 - 3)
+      .attr("y", (d) => {
+        const h = d.y1 - d.y0;
+        return h < MIN_HEIGHT_FOR_CHANGE ? h / 2 + 4 : h / 2 - 3;
+      })
       .attr("text-anchor", "middle")
-      .attr("class", "font-mono font-bold fill-white text-[11px] sm:text-xs")
-      .text((d) => {
-        const w = d.x1 - d.x0;
-        const symbol = d.data.tile?.symbol ?? "";
-        return w > 50 ? symbol : w > 30 ? symbol.slice(0, 4) : "";
+      .attr("class", "font-mono font-bold fill-white")
+      .each(function (d) {
+        fitLabel(this, d.x1 - d.x0, d.data.tile?.symbol ?? "");
       });
 
-    // % Change Text
+    // % change, hidden on tiles under MIN_HEIGHT_FOR_CHANGE tall or too narrow.
     cell
       .append("text")
       .attr("x", (d) => (d.x1 - d.x0) / 2)
@@ -158,7 +227,7 @@ export default function NiftyConstituentTreemap() {
         const w = d.x1 - d.x0;
         const h = d.y1 - d.y0;
         const change = d.data.tile?.change;
-        if (w < 45 || h < 32 || change === null || change === undefined) return "";
+        if (w < 40 || h < MIN_HEIGHT_FOR_CHANGE || change === null || change === undefined) return "";
         return `${change > 0 ? "+" : ""}${change.toFixed(1)}%`;
       });
   }, [data, filterSector, reloadKey]);
@@ -236,7 +305,7 @@ export default function NiftyConstituentTreemap() {
               </div>
               <div className="text-[11px] text-ink-dim">
                 Price: {selectedStock.price !== null ? `₹${selectedStock.price.toLocaleString("en-IN")}` : "Unavailable"} ·
-                Nifty Weight: {selectedStock.weight}%
+                Nifty weight ≈{selectedStock.weight}%
               </div>
             </div>
 
@@ -294,8 +363,9 @@ export default function NiftyConstituentTreemap() {
         <div className="flex items-center gap-2">
           <ShieldCheck className="w-3.5 h-3.5 text-forest" />
           <span>
-            Weights: {niftyWeights.source}, {asOfLabel(niftyWeights.asOf)}
-            {isLive ? ` · Prices: ${market.data.source}` : ""}
+            {weights.live
+              ? "Weights approximate (free-float market cap) · Prices delayed"
+              : "Weights: reference copy, pending live feed · Prices delayed"}
           </span>
         </div>
       </div>

@@ -1,8 +1,17 @@
 import { NextResponse } from "next/server";
-import { getQuotes, getExtendedQuotes, getDailyCloses, HISTORY_SYMBOLS, QUOTE_SOURCE } from "@/lib/market/providers";
+import {
+  getQuotes,
+  getExtendedQuotes,
+  getDailyCloses,
+  getNifty50Constituents,
+  getConstituentWeights,
+  HISTORY_SYMBOLS,
+  QUOTE_SOURCE,
+} from "@/lib/market/providers";
 import { getReference, getReferenceHistory, preferFresher } from "@/lib/market/reference";
-import { computeSentiment } from "@/lib/market/sentiment";
+import { computeSentiment, describeSentimentInputs, toPublicSentiment } from "@/lib/market/sentiment";
 import { repoRate as repoRateConstant } from "@/lib/market/constants";
+import { GSEC_10Y_FALLBACK } from "@/lib/home/marketFacts";
 import type { MarketResponse, MarketFlows } from "@/lib/market/client";
 
 export const revalidate = 60;
@@ -19,9 +28,12 @@ export async function GET() {
   let body: MarketResponse;
 
   try {
-    const [indices, extended, reference, niftyCloses, bankNiftyCloses, vixCloses, fiiHistory] = await Promise.all([
+    // The constituent list (NSE CSV, daily) decides which symbols get priced.
+    const list = await getNifty50Constituents();
+    const [indices, extended, weights, reference, niftyCloses, bankNiftyCloses, vixCloses, fiiHistory] = await Promise.all([
       getQuotes(),
-      getExtendedQuotes(),
+      getExtendedQuotes(list.constituents.map((c) => c.symbol)),
+      getConstituentWeights(list),
       getReference(["repo_rate", "gsec_10y", "fii_net_cr", "dii_net_cr"]),
       getDailyCloses(HISTORY_SYMBOLS.nifty),
       getDailyCloses(HISTORY_SYMBOLS.bankNifty),
@@ -35,13 +47,16 @@ export async function GET() {
         ? (constituents.filter((c) => c.changePct > 0).length / constituents.length) * 100
         : null;
 
-    const sentiment = computeSentiment({
+    // Full breakdown is logged server-side only; the response carries the public shape.
+    const sentimentFull = computeSentiment({
       niftyCloses,
       bankNiftyCloses,
       vixCloses,
       breadthPct,
       fiiNetHistory: fiiHistory.length > 0 ? fiiHistory.map((p) => p.value) : null,
     });
+    console.log(`[sentiment] score=${sentimentFull.score ?? "n/a"} coverage=${sentimentFull.coverage} ${describeSentimentInputs(sentimentFull)}`);
+    const sentiment = toPublicSentiment(sentimentFull);
 
     // Flows come only from market_reference (NSE blocks server fetches); both
     // rows must exist and share a session date, otherwise flows stay null.
@@ -53,7 +68,10 @@ export async function GET() {
         : null;
 
     const repo = preferFresher(reference.repo_rate, repoRateConstant);
-    const gsec = reference.gsec_10y;
+    // The market_reference row wins when it is fresher than the hand-curated
+    // FBIL constant (same rule as buildMarketFacts); gsec10y is therefore never
+    // null unless neither exists.
+    const gsec = preferFresher(reference.gsec_10y, GSEC_10Y_FALLBACK);
 
     body = {
       indices,
@@ -61,12 +79,17 @@ export async function GET() {
       flows,
       reference: {
         repoRate: { value: repo.value, asOf: repo.asOf, source: repo.source },
-        gsec10y:
-          gsec && gsec.value !== null && gsec.asOf
-            ? { value: gsec.value, asOf: gsec.asOf, source: gsec.source ?? "FBIL" }
-            : null,
+        gsec10y: { value: gsec.value, asOf: gsec.asOf, source: gsec.source },
       },
       constituents: extended.constituents,
+      weights: weights
+        ? {
+            constituents: weights.constituents.map((w) => ({ symbol: w.symbol, name: w.name, sector: w.sector, weight: w.weight })),
+            weightsAsOf: weights.weightsAsOf,
+            source: weights.source,
+            approximate: true,
+          }
+        : null,
       indiaVix: extended.indiaVix,
       brent: extended.brent,
       usdInr: extended.usdInr,
